@@ -4,15 +4,7 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
-inkscape.files=assembler.svg \
-               bytearray.svg \
-               ejemplo.svg \
-               intarray.svg \
-               intlabels.svg \
-               spacearray.svg \
-               space.svg \
-               stringarray.svg \
-               string.svg
+inkscape.files=*.svg
 
 pdflatex.files=ASM_notes.tex
 

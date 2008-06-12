@@ -4,11 +4,7 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
-inkscape.files=checkout.svg \
-               commit.svg \
-               statetransition.svg \
-               updatecommit.svg \
-               update.svg
+inkscape.files=*.svg
 
 docbook.files=index.xml
 

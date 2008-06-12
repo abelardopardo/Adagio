@@ -5,12 +5,8 @@
 # variables as well as an explanation.
 #
 export.dst.dir=../scratch/Lab2
-export.files=index.es.html \
-             index.en.html \
-             project.en.png \
-             project.es.png \
-             tablestruct.en.png \
-             tablestruct.es.png
+export.files=index.e?.html \
+             *.e?.png
 
 clean.files=../scratch/Lab2
 

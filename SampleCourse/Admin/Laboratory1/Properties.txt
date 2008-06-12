@@ -9,7 +9,7 @@ export.files=buscarmain.s \
              buscar.s \
              index.html \
              square.s \
-             images/buscarstack.png
+             images/*.png
 
 clean.files=images \
 	    ../scratch/Lab1/images \

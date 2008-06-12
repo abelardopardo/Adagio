@@ -4,15 +4,9 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
-inkscape.files=project.en.svg \
-               project.es.svg \
-               tablestruct.en.svg \
-               tablestruct.es.svg
+inkscape.files=*.e?.svg 
 
 bilingualdb.files=problem.xml
 
-export.files=project.en.png \
-             project.es.png \
-             tablestruct.en.png \
-             tablestruct.es.png
+export.files=*.png
 
