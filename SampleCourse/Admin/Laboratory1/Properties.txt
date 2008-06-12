@@ -11,14 +11,15 @@ export.files=buscarmain.s \
              square.s \
              images/*.png
 
+subrecursive.dirs=../../Material/Author4/Problem1 \
+                   ../../Material/Author4/Problem2 
+
 clean.files=images \
 	    ../scratch/Lab1/images \
 	    ../scratch/Lab1
 
 laboratory.style.file=${ada.home}/XslStyles/Laboratory.xsl
 laboratory.files=index.xml
-laboratory.subdirs=../../Material/Author4/Problem1 \
-                   ../../Material/Author4/Problem2 
 
 mergestyles.src.dir=..
 mergestyles.master.style=Params.xml

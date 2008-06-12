@@ -4,16 +4,15 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
+subrecursive.dirs=Laboratory1 \
+                  Laboratory2 \
+		  Theory1 \
+		  Theory2 \
+		  Guide1 \
+		  Guide2
+
 export.dst.dir=scratch
 export.files=style.css images/**
 
 clean.files=scratch
-
-laboratory.dst.dir=
-laboratory.subdirs=Laboratory1 \
-                   Laboratory2 \
-		   Theory1 \
-		   Theory2 \
-		   Guide1 \
-		   Guide2
 

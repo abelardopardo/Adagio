@@ -7,16 +7,13 @@
 
       laboratory.src.dir: directory from where to take the source files
       laboratory.dst.dir: directory where the produced files are stored
-      laboratory.subdirs: Subdirectories to pre-process before the lab
       laboratory.output.format: Extension of the output file
       laboratory.style.file: Style file to be used
       laboratory.files: comma/space separated list of files to process
       laboratory.files: list of files to process with two languages
 
-      All directories in subdirs are first invoked with the basic goal that
-      includes export.processing setting basedir to the current dir of the
-      lab. It then invokes three times xsltproc to generate the regular HTML
-      document, the one with the solution and pguide profiles.
+      It invokes three times xsltproc to generate the regular HTML document, the
+      one with the solution and pguide profiles.
   -->
 
   <!-- Checks for availability of different binaries -->
@@ -30,7 +27,6 @@
   <property name="laboratory.style.file" 
 	    value="${ada.home}/XslStyles/Laboratory.xsl"/>
   <property name="laboratory.output.format"   value="html"/>
-  <property name="laboratory.subdirs"         value=""/>
   <property name="laboratory.files"           value=""/>
   <property name="laboratory.bilingual.files" value=""/>
 
@@ -39,9 +35,6 @@
   <property name="laboratory.creating.files"  value=""/>
   <property name="laboratory.manipulate.target" 
 	    value="xsltproc.processing"/>
-
-  <!-- Dirs with material required by the lab  -->
-  <filelist id="laboratory.dirlist" files="${laboratory.subdirs}"/>
 
   <!-- Create the regular file, solution and professor guide -->
   <target name="laboratory.manipulate.files">
@@ -98,12 +91,6 @@
     <!-- Create the dst directory -->
     <mkdir dir="${laboratory.dst.dir}" />
 
-    <!-- Call first all the subdirectories -->
-    <antcall target="subrecursive.processing" inheritAll="false">
-      <param name="subrecursive.dirs"    value="${laboratory.subdirs}"/>
-      <param name="subrecursive.dst.dir" value="${laboratory.dst.dir}"/>
-    </antcall>
-
     <!-- Create all the files (language neutral) -->
     <antcall target="laboratory.manipulate.files" inheritAll="false">
       <param name="laboratory.creating.files" value="${laboratory.files}"/>
@@ -133,12 +120,6 @@
 	  description="Remove files produced by laboratory">
 
     <echo>laboratory.clean          CALL(subrecursive.clean)</echo>
-
-    <!-- Call first all the subdirectories -->
-    <antcall target="subrecursive.clean" inheritAll="false">
-      <param name="subrecursive.dirs"    value="${laboratory.subdirs}"/>
-      <param name="subrecursive.dst.dir" value="${laboratory.dst.dir}"/>
-    </antcall>
 
     <!-- Create all the files (language neutral) -->
     <antcall target="laboratory.manipulate.files" inheritAll="false">
@@ -174,8 +155,7 @@
     laboratory.dst.dir       ="${laboratory.dst.dir}"
     laboratory.style.file    ="${laboratory.style.file}"
     laboratory.output.format ="${laboratory.out.format}"
-    laboratory.files         ="${laboratory.files}"
-    laboratory.subdirs       ="${laboratory.subdirs}</echo>
+    laboratory.files         ="${laboratory.files}"</echo>
   </target>
 
   <!-- If entering through this target, build.out is deleted -->

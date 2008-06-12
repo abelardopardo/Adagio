@@ -3,22 +3,37 @@
 <project name="Gather all target definitions" default="execute">
 
   <import file="SubRecursive.xml"/>
+
   <import file="Xfig.xml"/>
+
   <import file="Inkscape.xml"/>
+
   <import file="Gimp.xml"/>
+
   <import file="Convert.xml"/>
+
   <import file="Docbook.xml"/>
+
   <import file="BilingualDB.xml"/>
+
   <import file="Dblatex.xml"/>
+
   <import file="Pdflatex.xml"/>
+
   <import file="PDFnup.xml"/>
+
   <import file="Export.xml"/>
+
   <import file="Laboratory.xml"/>
 
   <import file="Cleaning.xml"/>
 
   <!-- Basic Target -->
   <target name="basic.execute">
+
+    <antcall target="subrecursive.processing" inheritAll="false">
+      <param name="subrecursive.dst.dir" value="${basedir}"/>
+    </antcall>
 
     <antcall target="copyfiles.processing" inheritAll="false"/>
 
@@ -73,6 +88,11 @@
     <antcall target="xfig.clean" inheritAll="false"/>
 
     <antcall target="copyfiles.clean" inheritAll="false"/>
+
+    <antcall target="subrecursive.processing" inheritAll="false">
+      <param name="subrecursive.dst.dir" value="${basedir}"/>
+      <param name="subrecursive.target"  value="clean"/>
+    </antcall>
 
     <antcall target="clean.clean" inheritAll="false"/>
 

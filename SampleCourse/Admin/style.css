@@ -29,7 +29,7 @@ div.informaltable table tbody tr td
   border: 1px solid black;
   }
 
-div#titlebox, div#tailbox, div.narrowcontent 
+div#titlebox, div#tailbox, div#narrowcontent
 { 
   margin-right: auto; 
   margin-left: auto;

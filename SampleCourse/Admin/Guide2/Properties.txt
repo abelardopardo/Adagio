@@ -4,6 +4,8 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
+subrecursive.dirs=../../Material/Author3
+
 export.dst.dir=../scratch/Guide2
 export.files=index.html *.png
 
@@ -14,7 +16,6 @@ docbook.files=index.xml
 
 clean.files=../scratch/Guide2
 
-laboratory.subdirs=../../Material/Author3
 
 mergestyles.src.dir=..
 mergestyles.master.style=Params.xml

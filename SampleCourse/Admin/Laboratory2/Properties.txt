@@ -4,6 +4,8 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
+subrecursive.dirs=../../Material/Author5
+
 export.dst.dir=../scratch/Lab2
 export.files=index.e?.html \
              *.e?.png
@@ -11,4 +13,3 @@ export.files=index.e?.html \
 clean.files=../scratch/Lab2
 
 laboratory.bilingual.files=index.xml
-laboratory.subdirs=../../Material/Author5
