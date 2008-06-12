@@ -14,5 +14,6 @@ laboratory.subdirs=Laboratory1 \
                    Laboratory2 \
 		   Theory1 \
 		   Theory2 \
-		   Guide1
+		   Guide1 \
+		   Guide2
 

@@ -15,13 +15,14 @@ Theory1:
    and independently of the author's directory (as long as
    the pdfjam package is installed, which provides pdfnup). The author uses
    some PPT and therefore no automatic processing is done (unless we fix
-   a glitch in ooffice to do batch processing efficiently)
+   a glitch in ooffice to do batch processing efficiently). The author is
+   Author6
 
 Theory2
    Similar scenario to the previous one but the slides are obtained with
    LaTeX processing. The 2up version in this case is locally produced 
    in the author's directory. This is simply to show the two options when
-   compared to the previous one.
+   compared to the previous one. The author is Author1
 
 Guide1
    This is an interesting directory. The only relevant file is Properties in
@@ -32,7 +33,15 @@ Guide1
    done with the proper assignments. A more suitable set of assignments would
    produce a local copy and then export the appropriate files to the scratch
    directory (if you see the result, in the scratch copy there is a xsl file
-   that slipped away).
+   that slipped away). The resource is taken from Author2
+
+Guide2
+   A more realistic example of a file that is processed by docbook but 
+   complemented by a set of figures, some of them derived with inkscape.
+   The Properties.txt file is such that an index.html is produced locally and
+   then exported to the scratch. In certain sense, it is a more complicated
+   version of the previous scenario (Guide 1). The author used for this
+   resource is Author3.
 
 A directory name scratch appears once the whole course is created. It is the
 dummy copy of the site. After reviewing that everything seems correct, then

@@ -8,3 +8,4 @@ inkscape.files=*.svg
 
 docbook.files=index.xml
 
+export.files=*.png

@@ -1,0 +1,20 @@
+#
+# Variables to define the processing step
+#
+# See ada.home/AntImports/Properties.txt for the complete list of these
+# variables as well as an explanation.
+#
+export.dst.dir=../scratch/Guide2
+export.files=index.html *.png
+
+docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
+docbook.src.dir=../../Material/Author3
+docbook.dst.dir=.
+docbook.files=index.xml
+
+clean.files=../scratch/Guide2
+
+laboratory.subdirs=../../Material/Author3
+
+mergestyles.src.dir=..
+mergestyles.master.style=Params.xml
