@@ -75,7 +75,7 @@
     <mkdir dir="${pdfnup.dst.dir}" />
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${pdfnup.src.dir}" parallel="false" dest="${pdfnup.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${pdfnup.dst.dir}" 
 	   append="yes" failonerror="true" executable="${pdfnup.exec}"
 	   output="build.out">
       <arg value="--nup"/>

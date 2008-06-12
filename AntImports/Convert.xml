@@ -82,7 +82,7 @@
     <mkdir dir="${convert.dst.dir}" />
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${convert.src.dir}" parallel="false" dest="${convert.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${convert.dst.dir}" 
 	   append="yes" failonerror="true" executable="${convert.exec}" 
 	   output="build.out">
       <srcfile />

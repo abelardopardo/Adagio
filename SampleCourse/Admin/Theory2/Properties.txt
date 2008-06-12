@@ -4,12 +4,10 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
-copyfiles.src.dir=../../Material/Author1
-copyfiles.dst.dir=.
-copyfiles.files=ASM_notes-1x2.pdf
-
 export.dst.dir=../scratch/Theory2
 export.files=ASM_notes-1x2.pdf
+
+laboratory.subdirs=../../Material/Author1
 
 clean.files=../scratch/Theory2
 

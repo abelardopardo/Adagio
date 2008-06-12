@@ -73,7 +73,7 @@
     <mkdir dir="${pdflatex.dst.dir}" />
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${pdflatex.src.dir}" parallel="false" dest="${pdflatex.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${pdflatex.dst.dir}" 
 	   append="yes" failonerror="true" executable="${pdflatex.exec}" 
 	   output="build.out">
       <arg value="-output-directory"/>

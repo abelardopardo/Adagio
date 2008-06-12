@@ -10,3 +10,4 @@ pdflatex.files=ASM_notes.tex
 
 pdfnup.files=ASM_notes.pdf
 
+export.files=ASM_notes-1x2.pdf

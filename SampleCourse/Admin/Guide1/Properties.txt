@@ -4,17 +4,20 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
+copyfiles.src.dir=../../Material/Author2
+copyfiles.dst.dir=../scratch/Guide1
+copyfiles.files=*.gif *.png
+
 docbook.src.dir=../../Material/Author2
 docbook.files=index.xml
-docbook.dst.dir=.
+docbook.dst.dir=../scratch/Guide1
+docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
 
-export.dst.dir=../scratch/Guide1
-export.files=index.html \
-             *.png
+# export.dst.dir=../scratch/Guide1
+# export.files=index.html \
+#              *.png
 
 clean.files=../scratch/Guide1
-
-laboratory.subdirs=../../Material/Author2
 
 mergestyles.src.dir=..
 mergestyles.master.style=Params.xml

@@ -85,7 +85,7 @@
     <!-- Create the dst directory -->
     <mkdir dir="${xfig.dst.dir}" />
 
-    <apply dir="${xfig.src.dir}" parallel="false"
+    <apply dir="${basedir}" parallel="false"
       dest="${xfig.dst.dir}" append="yes" failonerror="true"
       executable="${xfig.fig2dev.exec}" forwardslash="true" output="build.out">
       <arg value="-L"/>

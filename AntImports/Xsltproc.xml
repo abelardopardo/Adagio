@@ -123,7 +123,7 @@
     </dependset>
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${xsltproc.src.dir}" parallel="false" dest="${xsltproc.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${xsltproc.dst.dir}" 
 	   append="yes" failonerror="true" executable="${xsltproc.exec}" 
 	   output="build.out">
       <arg value="--xinclude"/>
@@ -150,6 +150,7 @@
       <param name="mergestyles.file.to.import" value="${xsltproc.style.file}"/>
     </antcall>
 
+    <!-- Flatten the import fileset to get the suffix for the new style -->
     <fileset id="xsltproc.import.fileset" file="${xsltproc.style.file}"/>
     <pathconvert property="xsltproc.output.suffix">
       <fileset refid="xsltproc.import.fileset"/>
@@ -168,7 +169,7 @@
     </dependset>
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${xsltproc.src.dir}" parallel="false" dest="${xsltproc.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${xsltproc.dst.dir}" 
 	   append="yes" failonerror="true" executable="${xsltproc.exec}" 
 	   output="build.out">
       <arg value="--xinclude"/>

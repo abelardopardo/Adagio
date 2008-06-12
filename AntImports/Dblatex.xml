@@ -74,7 +74,7 @@
     <mkdir dir="${dblatex.dst.dir}" />
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${dblatex.src.dir}" parallel="false" dest="${dblatex.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${dblatex.dst.dir}" 
 	   append="yes" failonerror="true" executable="${dblatex.exec}" 
 	   output="build.out">
       <arg value="-o"/>

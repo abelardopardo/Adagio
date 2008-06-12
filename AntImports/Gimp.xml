@@ -91,7 +91,7 @@
 
     <!-- Transform XCF files to PNG IN THE SAME DIRECTORY -->
     <!-- TARGET BROKEN IN WINDOWS. HAVE TO FIGURE OUT HOW TO INVOKE GIMP -->
-    <apply dir="${gimp.src.dir}" parallel="false" dest="${gimp.src.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${gimp.src.dir}" 
 	   append="yes"  failonerror="true" executable="${gimp.exec}" 
 	   output="build.out" osfamily="unix"
 	   input="${gimp.script.file}">

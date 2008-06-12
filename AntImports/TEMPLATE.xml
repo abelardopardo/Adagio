@@ -73,7 +73,7 @@
     <mkdir dir="${@NAME@.dst.dir}" />
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${@NAME@.src.dir}" parallel="false" dest="${@NAME@.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${@NAME@.dst.dir}" 
 	   append="yes" failonerror="true" executable="${@NAME@.exec}" 
 	   output="build.out">
       <arg value="???"/>

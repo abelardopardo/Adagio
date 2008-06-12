@@ -111,7 +111,7 @@
     </dependset>
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${mergestyles.src.dir}" parallel="false"
+    <apply dir="${basedir}" parallel="false"
 	   dest="${mergestyles.dst.dir}" append="yes" failonerror="true"
 	   executable="${mergestyles.exec}"  output="build.out">
       <arg value="--xinclude"/>

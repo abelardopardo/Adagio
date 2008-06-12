@@ -23,6 +23,17 @@ Theory2
    in the author's directory. This is simply to show the two options when
    compared to the previous one.
 
+Guide1
+   This is an interesting directory. The only relevant file is Properties in
+   which the variable assignment translates in an XML file and a bunch of
+   png files already in a remote directory are taken and processed such that
+   the result is directly produced in the scratch location. No intermediate
+   file is left in this directory. This is a very special case of what can be
+   done with the proper assignments. A more suitable set of assignments would
+   produce a local copy and then export the appropriate files to the scratch
+   directory (if you see the result, in the scratch copy there is a xsl file
+   that slipped away).
+
 A directory name scratch appears once the whole course is created. It is the
 dummy copy of the site. After reviewing that everything seems correct, then
 it is suitable to be published to a remote site.
