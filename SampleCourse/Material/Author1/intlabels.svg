@@ -1,0 +1,392 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: fig2dev Version 3.2 Patchlevel 5-alpha7 -->
+<!-- CreationDate: Tue May 22 20:18:51 2007 -->
+<!-- Magnification: 1.050 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="2.9in" height="2.1in" viewBox="3301 1404 3466 2576">
+<g style="stroke-width:.025in; stroke:black; fill:none">
+<!-- Line: box -->
+<rect x="4677" y="1417" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="4936" y="1629" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x03</text>
+<!-- Line: box -->
+<rect x="5716" y="1417" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5975" y="1629" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="6236" y="1417" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="6495" y="1629" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="5196" y="1417" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5456" y="1629" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="4677" y="1984" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="4936" y="2196" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x05</text>
+<!-- Line: box -->
+<rect x="5716" y="1984" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5975" y="2196" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="6236" y="1984" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="6495" y="2196" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="5196" y="1984" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5456" y="2196" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="5716" y="2267" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5975" y="2479" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="6236" y="2267" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="6495" y="2479" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="5196" y="2267" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5456" y="2479" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x12</text>
+<!-- Line: box -->
+<rect x="4677" y="2267" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="4936" y="2479" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0xAB</text>
+<!-- Line: box -->
+<rect x="4677" y="2551" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="4936" y="2763" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0xAB</text>
+<!-- Line: box -->
+<rect x="5716" y="2551" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5975" y="2763" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="6236" y="2551" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="6495" y="2763" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="5196" y="2551" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5456" y="2763" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x10</text>
+<!-- Line: box -->
+<rect x="4677" y="3118" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="4936" y="3330" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x38</text>
+<!-- Line: box -->
+<rect x="5716" y="3118" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5975" y="3330" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="6236" y="3118" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="6495" y="3330" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="5196" y="3118" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5456" y="3330" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="4677" y="3401" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="4936" y="3613" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x15</text>
+<!-- Line: box -->
+<rect x="5716" y="3401" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5975" y="3613" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="6236" y="3401" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="6495" y="3613" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="5196" y="3401" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5456" y="3613" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="4677" y="3685" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="4936" y="3897" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0xFA</text>
+<!-- Line: box -->
+<rect x="5716" y="3685" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5975" y="3897" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="6236" y="3685" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="6495" y="3897" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="5196" y="3685" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5456" y="3897" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x0F</text>
+<!-- Line: box -->
+<rect x="4677" y="1700" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="4936" y="1912" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x04</text>
+<!-- Line: box -->
+<rect x="5716" y="1700" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5975" y="1912" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="6236" y="1700" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="6495" y="1912" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="5196" y="1700" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5456" y="1912" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="4677" y="2834" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="4936" y="3046" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x38</text>
+<!-- Line: box -->
+<rect x="5716" y="2834" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5975" y="3046" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="6236" y="2834" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="6495" y="3046" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line: box -->
+<rect x="5196" y="2834" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="5456" y="3046" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Line -->
+<polyline points="4346,1794
+4551,1794
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="4534 1825
+4660 1794
+4534 1762
+4534 1825
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Text -->
+<text xml:space="preserve" x="3826" y="1865" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">nums + 4</text>
+<!-- Line -->
+<polyline points="4346,2077
+4551,2077
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="4534 2109
+4660 2077
+4534 2046
+4534 2109
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Text -->
+<text xml:space="preserve" x="3826" y="2148" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">nums + 8</text>
+<!-- Line -->
+<polyline points="4346,2384
+4551,2384
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="4534 2415
+4660 2384
+4534 2352
+4534 2415
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Text -->
+<text xml:space="preserve" x="3826" y="2454" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">nums + 12</text>
+<!-- Line -->
+<polyline points="4346,2666
+4551,2666
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="4534 2698
+4660 2666
+4534 2635
+4534 2698
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Text -->
+<text xml:space="preserve" x="3826" y="2738" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">nums + 16</text>
+<!-- Line -->
+<polyline points="4346,2950
+4551,2950
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="4534 2981
+4660 2950
+4534 2918
+4534 2981
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Text -->
+<text xml:space="preserve" x="3826" y="3020" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">nums + 20</text>
+<!-- Line -->
+<polyline points="4346,3256
+4551,3256
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="4534 3288
+4660 3256
+4534 3225
+4534 3288
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Text -->
+<text xml:space="preserve" x="3826" y="3327" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">nums + 24</text>
+<!-- Line -->
+<polyline points="4346,3539
+4551,3539
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="4534 3570
+4660 3539
+4534 3507
+4534 3570
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Text -->
+<text xml:space="preserve" x="3826" y="3610" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">nums + 28</text>
+<!-- Line -->
+<polyline points="4346,3822
+4551,3822
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="4534 3854
+4660 3822
+4534 3791
+4534 3854
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Text -->
+<text xml:space="preserve" x="3826" y="3901" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">nums + 32</text>
+<!-- Text -->
+<text xml:space="preserve" x="4346" y="1606" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">nums:</text>
+</g>
+</svg>

@@ -1,0 +1,82 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: fig2dev Version 3.2 Patchlevel 5-alpha7 -->
+<!-- CreationDate: Tue May 22 20:18:51 2007 -->
+<!-- Magnification: 1.000 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="2.7in" height="0.7in" viewBox="6565 3288 3272 849">
+<g style="stroke-width:.025in; stroke:black; fill:none">
+<!-- Line: box -->
+<rect x="7425" y="3300" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line: box -->
+<rect x="8025" y="3300" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line: box -->
+<rect x="8625" y="3300" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line: box -->
+<rect x="9225" y="3300" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="7725" y="3480" stroke="#000000" fill="#000000"  font-family="Times" font-style="normal" font-weight="normal" font-size="144" text-anchor="middle">0xAA</text>
+<!-- Text -->
+<text xml:space="preserve" x="8325" y="3480" stroke="#000000" fill="#000000"  font-family="Times" font-style="normal" font-weight="normal" font-size="144" text-anchor="middle">0xAA</text>
+<!-- Text -->
+<text xml:space="preserve" x="8925" y="3480" stroke="#000000" fill="#000000"  font-family="Times" font-style="normal" font-weight="normal" font-size="144" text-anchor="middle">0xAA</text>
+<!-- Text -->
+<text xml:space="preserve" x="9525" y="3480" stroke="#000000" fill="#000000"  font-family="Times" font-style="normal" font-weight="normal" font-size="144" text-anchor="middle">0xAA</text>
+<!-- Line: box -->
+<rect x="7425" y="3600" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line: box -->
+<rect x="8025" y="3600" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line: box -->
+<rect x="8625" y="3600" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line: box -->
+<rect x="9225" y="3600" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="7725" y="3780" stroke="#000000" fill="#000000"  font-family="Times" font-style="normal" font-weight="normal" font-size="144" text-anchor="middle">0xAA</text>
+<!-- Text -->
+<text xml:space="preserve" x="8325" y="3780" stroke="#000000" fill="#000000"  font-family="Times" font-style="normal" font-weight="normal" font-size="144" text-anchor="middle">0xAA</text>
+<!-- Text -->
+<text xml:space="preserve" x="8925" y="3780" stroke="#000000" fill="#000000"  font-family="Times" font-style="normal" font-weight="normal" font-size="144" text-anchor="middle">0xAA</text>
+<!-- Text -->
+<text xml:space="preserve" x="9525" y="3780" stroke="#000000" fill="#000000"  font-family="Times" font-style="normal" font-weight="normal" font-size="144" text-anchor="middle">0xAA</text>
+<!-- Line: box -->
+<rect x="7425" y="3900" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line: box -->
+<rect x="8025" y="3900" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="7350" y="3450" stroke="#000000" fill="#000000"  font-family="Times" font-style="normal" font-weight="normal" font-size="144" text-anchor="end">resultado:</text>
+<!-- Text -->
+<text xml:space="preserve" x="7725" y="4080" stroke="#000000" fill="#000000"  font-family="Times" font-style="normal" font-weight="normal" font-size="144" text-anchor="middle">0xAA</text>
+<!-- Text -->
+<text xml:space="preserve" x="8325" y="4080" stroke="#000000" fill="#000000"  font-family="Times" font-style="normal" font-weight="normal" font-size="144" text-anchor="middle">0xAA</text>
+</g>
+</svg>

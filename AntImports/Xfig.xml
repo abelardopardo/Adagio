@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Figure Processing with xfig" default="xfig">
+
+  <!--
+      Given the following properties:
+
+      xfig.src.dir: directory from where to take the source files
+      xfig.dst.dir: directory where the translated files are stored
+      xfig.files: Files to translate
+      xfig.output.format : Format to translate the xfigs
+      xfig.border : pixels to include the border in a figure (only xfig)
+      xfig.smooth : smooth factor for figures (only xfig)
+      xfig.extra.args: Other options to give to fig2dev
+
+      Process files in fileset with xfig. They are translated to the format
+      specified in mode with the pixels given in border and the smooth factor in
+      smooth.
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="InitialCheck.xml"/>
+
+  <!-- Property definition -->
+  <property name="xfig.exec"          value="xfig"/>
+  <property name="xfig.fig2dev.exec"  value="fig2dev"/>
+  <property name="xfig.src.dir"       value="${basedir}"/>
+  <property name="xfig.dst.dir"       value="${xfig.src.dir}"/>
+  <property name="xfig.output.format" value="png"/>
+  <property name="xfig.border"        value="2"/>
+  <property name="xfig.smooth"        value="4"/>
+  <property name="xfig.extra.args"    value=""/>
+  <property name="xfig.files"         value=""/>
+
+  <!-- Source files to be processed by xfig/fig2dev  -->
+  <fileset id="xfig.fileset" dir="${xfig.src.dir}"
+	   includes="${xfig.files}"/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="xfig.check.values" 
+	  depends="initial.check, xfig.dump.properties">
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="xfig.check">
+      <and>
+	<!-- The required binaries need to be available. -->
+	<available file="${xfig.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+	<available file="${xfig.fig2dev.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
+	empty definition of this variable. At least a . needs to be present -->
+        <not><equals arg1="${xfig.src.dir}" arg2=""/></not>
+	<!-- There must be some files defined -->
+        <not><equals arg1="${xfig.files}" arg2=""/></not>
+	<!-- Require a non-empty dst.dir as well -->
+        <not><equals arg1="${xfig.dst.dir}" arg2=""/></not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">    xfig.check          = "${xfig.check}"
+    xfig.fileset         = "${xfig.files}"</echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="xfig.processing.NOT" unless="xfig.check">
+    <echo>xfig.processing             ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Regular target. It is executed if the check property is true, and it has
+  as dependency the NOT target. That way, if the property is not set, this
+  target is not executed and instead, the one notifying the user of such event
+  is executed. -->
+  <target name="xfig.processing" 
+	  depends="xfig.check.values, xfig.processing.NOT"
+	  if="xfig.check" description="creates the figures from the fig files">
+
+    <echo>xfig.processing             RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Create the dst directory -->
+    <mkdir dir="${xfig.dst.dir}" />
+
+    <apply dir="${xfig.src.dir}" parallel="false"
+      dest="${xfig.dst.dir}" append="yes" failonerror="true"
+      executable="${xfig.fig2dev.exec}" forwardslash="true" output="build.out">
+      <arg value="-L"/>
+      <arg value="${xfig.output.format}"/>
+      <arg value="-b"/>
+      <arg value="${xfig.border}"/>
+      <arg value="-S"/>
+      <arg value="${xfig.smooth}"/>
+      <arg line="${xfig.extra.args}"/>
+      <srcfile/>
+      <targetfile/>
+      <fileset refid="xfig.fileset"/>
+      <!-- Mapper from source files to produced files -->
+      <mapper type="glob" from="*.fig" to="*.${xfig.output.format}"/>
+    </apply>    
+  </target>
+
+  <!-- Clean the produced files -->
+  <target name="xfig.clean" depends="xfig.check.values"
+	  if="xfig.check" 
+	  description="Clean files derived from the fig files"> 
+
+    <echo>xfig.clean             RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Obtain the fileset containing the produced files. This is done to be
+    able to display the deleted files (debugging) -->
+    <pathconvert property="xfig.target.fileset.property" pathsep=" ">
+      <fileset refid="xfig.fileset"/>
+      <chainedmapper>
+	<mapper type="glob" from="*.fig" to="*.${xfig.output.format}"/>
+	<mapper type="flatten"/>
+      </chainedmapper>
+    </pathconvert>
+
+    <!-- Dump explicitly the files to be deleted -->
+    <echo> deleted = ${xfig.target.fileset.property}</echo>
+
+    <!-- Perform the delete operation. The failonerror attributge is needed
+	 and must be set fo false because the dst directory might have been
+	 removed  -->
+    <delete failonerror="false">
+      <fileset dir="${xfig.dst.dir}"
+	       includes="${xfig.target.fileset.property}">
+	<include name="__bogus__file__to__avoid__empty__fileset"/>
+      </fileset>
+    </delete>
+
+    <!-- Backup and *.out files in figure dir -->
+    <delete>
+      <fileset dir="${xfig.src.dir}">
+        <include name="*.fig.bak"/>
+        <include name="fig2dev.out"/>
+      </fileset>
+    </delete>
+
+  </target>
+
+  <!-- Dump the properties defined in this script -->
+  <target name="xfig.dump.properties" depends="initial.check">
+    <echo level="info"> ------ Xfig properties ----
+    xfig.exec          ="${xfig.exec}"
+    xfig.fig2dev.exec  ="${xfig.fig2dev.exec}"
+    xfig.src.dir       ="${xfig.src.dir}"
+    xfig.dst.dir       ="${xfig.dst.dir}"
+    xfig.output.format ="${xfig.output.format}"
+    xfig.border        ="${xfig.border}"
+    xfig.smooth        ="${xfig.smooth}"
+    xfig.extra.args    ="${xfig.extra.args}"
+    xfig.files         ="${xfig.files}" </echo>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="xfig" depends="initial.delete.build.out, xfig.processing"/>
+</project>

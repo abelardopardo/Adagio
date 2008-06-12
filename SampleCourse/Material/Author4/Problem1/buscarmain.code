@@ -1,0 +1,34 @@
+	.text
+	.global main
+
+main:   
+	push %eax
+	push %ecx
+	push %edx
+
+	sub $4, %esp
+	push $16
+	push $array
+	push longitud
+	call buscar
+	add $8, %esp
+
+	push $formato
+	call printf
+	add $12, %esp
+
+	sub $4, %esp
+	push $2
+	push $array
+	push longitud
+	call buscar
+	add $8, %esp
+
+	push $formato
+	call printf
+	add $12, %esp
+
+	pop %edx
+	pop %ecx
+	pop %eax
+	ret

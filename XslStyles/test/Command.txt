@@ -1,0 +1,1 @@
+ant -q -Dbasedir=$PWD -propertyfile Props -f ../../../AntImports/AllTargets.xml

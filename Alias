@@ -1,0 +1,1 @@
+alias adado='ant -Dbasedir=$PWD -f /home/abel/Courses/ADA/AntImports/AllTargets.xml '

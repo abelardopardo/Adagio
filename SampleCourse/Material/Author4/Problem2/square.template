@@ -1,0 +1,12 @@
+        .data
+num:    .int 523
+res:    .space 4
+res2:   .space 4
+msg:    .string "Resultado %08x:%08x\n"
+        .text                   # Segmento de codigo
+        .global main            # Define main como simbolo global
+
+main:   # Inserta a partir de aquí las instrucciones de tu programa
+
+
+        ret      # Última instrucción del programa

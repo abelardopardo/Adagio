@@ -1,0 +1,33 @@
+Author that produces HTML document from Docbook using simply PNG that are
+screen captures. These PNGs then, do not need any additional processing, but
+need to be published side by side with the html
+
+The files to publish would be:
+
+index.html
+
+ark.png
+escritoriolleno.png
+firefox.png
+gnomeBIG.png
+gnome.png
+home.png
+iconbrowsers.png
+iconomenu.png
+iconterms.png
+kdedesktop.png
+kfind.png
+konqueror.png
+konsole.png
+kwrite.png
+xfce4BIG.png
+xfce4.png
+
+The command is:
+
+bash Command
+
+The command to clean all the produced files is:
+
+bash Command clean
+

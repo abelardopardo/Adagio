@@ -1,0 +1,47 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: fig2dev Version 3.2 Patchlevel 5-alpha7 -->
+<!-- CreationDate: Tue May 22 20:18:51 2007 -->
+<!-- Magnification: 1.000 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="3.1in" height="0.2in" viewBox="711 288 3726 249">
+<g style="stroke-width:.025in; stroke:black; fill:none">
+<!-- Line: box -->
+<rect x="2625" y="300" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="2925" y="480" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="144" text-anchor="middle">0xFF</text>
+<!-- Line: box -->
+<rect x="3225" y="300" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="3525" y="480" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="144" text-anchor="middle">0x41</text>
+<!-- Line: box -->
+<rect x="3825" y="300" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="4125" y="480" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="144" text-anchor="middle">0x62</text>
+<!-- Line: box -->
+<rect x="1425" y="300" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line: box -->
+<rect x="2025" y="300" width="600" height="225" rx="0" 
+style="stroke:#000000;stroke-width:7;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="1725" y="480" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="144" text-anchor="middle">0x26</text>
+<!-- Text -->
+<text xml:space="preserve" x="2325" y="480" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="144" text-anchor="middle">0xDD</text>
+<!-- Text -->
+<text xml:space="preserve" x="1050" y="450" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="144" text-anchor="middle">datos:</text>
+</g>
+</svg>

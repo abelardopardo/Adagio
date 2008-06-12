@@ -1,0 +1,4 @@
+	  .data
+array:	  .int 3, 5, 6, 9, 11, 16, 20
+longitud: .int 7
+formato:  .asciz "Busca %d: %d\n"

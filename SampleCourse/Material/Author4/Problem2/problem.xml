@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                    "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section lang="es" id="IntSquare">
+  <title>Cuadrado de un número entero</title>
+  
+  <para>
+    Al multiplicar dos números de igual número de dígitos en cualquier base, el
+    resultado obtenido tiene el doble de dígitos. Se pide escribir un programa en
+    ensamblador que eleve al cuadrado un número de 32 bits.
+  </para>
+
+  <para>
+    El contenido inicial de la sección de datos del programa es el que se
+    muestra en la siguiente figura:
+  </para>
+
+  <informalfigure>
+    <informaltable frame="all">
+      <tgroup cols="1" colsep="0" rowsep="0">
+        <?dbhtml cellpadding="5" ?>
+        <colspec colnum="1" colname="col1" align="left"/>
+        <tbody>
+          <row>
+            <entry align="left">
+              <programlisting><xi:include  href="square.data" parse="text"
+                  encoding="UTF-8"
+                  xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting> 
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+  </informalfigure>
+
+  <para>
+    Escribir el programa <ulink url="square.s"><filename>square.s</filename>
+    (del que se ofrece su estructura inicial)</ulink> que dado el entero de 32
+    bits almacenado en la etiqueta <code>num</code>, almacena en las posiciones
+    de memoria a partir de la etiqueta <code>res</code> el entero de 64 bits
+    resultante de elevarlo al cuadrado.  Además, utilizando el formato definido
+    por la etiqueta <code>msg</code>, imprime por pantalla los 64 bits del
+    resultado de más significativo a menos en hexadecimal. El resultado se debe
+    almacenar en memoria con estructura <foreignphrase>little
+    endian</foreignphrase>.
+  </para>
+  
+  <para>
+    Con los datos iniciales dados, el programa debe mostrar por pantalla:
+  </para>
+  
+  <programlisting><xi:include  href="square.out" parse="text" encoding="UTF-8"
+      xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+  
+  <note condition="solution">
+    <title>Solución</title>
+    <programlisting><xi:include  href="square.data" parse="text" encoding="UTF-8"
+        xmlns:xi="http://www.w3.org/2001/XInclude"/>
+      <xi:include  href="square.code" parse="text" encoding="UTF-8"
+        xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+  </note>
+  
+  <note condition="submit">
+    <title/>
+    <para>
+      Fichero <filename>square.s</filename> (entregar tan sólo el fichero de
+      texto con el programa, ni ficheros *.o ni el ejecutable).
+      <phrase condition="input">
+        <phrase condition="type">file</phrase>
+        <phrase condition="size">80</phrase>
+        <phrase condition="accept">text/plain,text/html</phrase>
+        <phrase condition="name">square.s</phrase>
+      </phrase>
+    </para>
+  </note>
+</section>

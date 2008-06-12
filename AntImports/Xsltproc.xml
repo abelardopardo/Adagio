@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Apply xsltproc and a style to a given file list"
+	 default="xsltproc">
+
+  <!--
+      Given the following properties:
+
+      xsltproc.src.dir: directory from where to take the source files
+      xsltproc.dst.dir: directory where the produced files are stored
+      xsltproc.files: List of files to process
+      xsltproc.style.file: Style file to be used
+      xsltproc.output.format: Extension of the output file
+      xsltproc.files: Comma separate list of files to process
+
+      Produce the aplication of a stylefile to the files in xsltproc.fileset
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="Mergestyles.xml"/>
+
+  <!-- Property definition -->
+  <property name="xsltproc.exec"           value="xsltproc"/>
+  <property name="xsltproc.src.dir"        value="${basedir}"/>
+  <property name="xsltproc.dst.dir"        value="${xsltproc.src.dir}"/>
+  <property name="xsltproc.style.file"     value=""/>
+  <property name="xsltproc.output.format"  value="html"/>
+  <property name="xsltproc.extra.args"     value=""/>
+  <property name="xsltproc.files"          value=""/>
+  <!-- Source files to be processed by xsltproc -->
+  <fileset id="xsltproc.fileset" dir="${xsltproc.src.dir}"
+	   includes="${xsltproc.files}"/>
+
+  <!-- Obtain the fileset containing the produced files. This is done to be
+       able to display the deleted files (debugging) -->
+  <pathconvert property="xsltproc.target.fileset.property" pathsep=" ">
+    <fileset refid="xsltproc.fileset"/>
+    <chainedmapper>
+      <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
+      <mapper type="flatten"/>
+    </chainedmapper>
+  </pathconvert>
+  <fileset id="xsltproc.target.fileset" dir="${xsltproc.dst.dir}"
+	   includes="${xsltproc.target.fileset.property}"/>
+  
+  <!-- Condition to detect if the stylefile needs to be pre-processed with
+  Mergestyles -->
+  <condition property="xsltproc.mergestyles">
+    <and>
+      <not><equals arg1="${mergestyles.master.style}" arg2=""/></not>
+      <not><equals arg1="${mergestyles.src.dir}" arg2=""/></not>
+      <available file="${mergestyles.src.dir}/${mergestyles.master.style}"/>
+    </and>
+  </condition>
+
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="xsltproc.check.values" 
+	  depends="initial.check, xsltproc.dump.properties"> 
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="xsltproc.check">
+      <and>
+	<!-- The required binaries need to be available. -->
+	<available file="${xsltproc.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
+	empty definition of this variable. At least a . needs to be present -->
+        <not><equals arg1="${xsltproc.src.dir}" arg2=""/></not>
+	<!-- There must be some files defined -->
+        <not><equals arg1="${xsltproc.files}" arg2=""/></not>
+	<!-- Require a non-empty dst.dir as well -->
+        <not><equals arg1="${xsltproc.dst.dir}" arg2=""/></not>
+	<!-- Require a non-empty style file -->
+        <not><equals arg1="${xsltproc.style.file}" arg2=""/></not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">    xsltproc.check          = "${xsltproc.check}"
+    xsltproc.fileset         = "${xsltproc.files}"</echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="xsltproc.processing.NOT" unless="xsltproc.check">
+    <echo>xsltproc.processing         ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Regular target. It is executed if the check property is true, and it has
+  as dependency the NOT target. That way, if the property is not set, this
+  target is not executed and instead, the one notifying the user of such event
+  is executed. -->
+  <target name="xsltproc.processing" 
+	  depends="xsltproc.check.values, xsltproc.processing.NOT"
+	  if="xsltproc.check"
+	  description="Apply a style to an XML file">
+
+    <!-- Create the dst directory -->
+    <mkdir dir="${xsltproc.dst.dir}" />
+
+    <!-- Only one of these two will truly execute -->
+    <antcall target="xsltproc.processing.nopreprocessing"/>
+    <antcall target="xsltproc.processing.preprocessing"/>
+  </target>
+
+  <target name="xsltproc.processing.nopreprocessing"
+	  unless="xsltproc.mergestyles"
+	  description="Apply a style to an XML file WITH NO pre-processing">
+
+    <echo>xsltproc.processing.nopre   RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Force the dependency checking on changes on the style sheet -->
+    <dependset>
+      <srcfileset file="${xsltproc.style.file}" />
+      <srcfileset dir="${ada.home}/XslStyles">
+	<include name="*.xsl" />
+      </srcfileset>
+      <targetfileset refid="xsltproc.target.fileset" />
+    </dependset>
+
+    <!-- Execute the command. Watch out for src.dir and dst.dir -->
+    <apply dir="${xsltproc.src.dir}" parallel="false" dest="${xsltproc.dst.dir}" 
+	   append="yes" failonerror="true" executable="${xsltproc.exec}" 
+	   output="build.out">
+      <arg value="--xinclude"/>
+      <arg value="--xincludestyle"/>
+      <arg line="${xsltproc.extra.args}"/>
+      <arg value="-o"/>
+      <targetfile/>
+      <arg value="${xsltproc.style.file}"/>
+      <fileset refid="xsltproc.fileset"/>
+      <!-- Mapper from source files to produced files -->
+      <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
+    </apply>    
+  </target>
+
+  <target name="xsltproc.processing.preprocessing"
+	  if="xsltproc.mergestyles"
+	  description="Apply a style to an XML file WITH pre-processing">
+
+    <echo>xsltproc.processing.prepr   RUN</echo>
+    <echo>${basedir}</echo>
+
+    <antcall target="mergestyles.processing" inheritAll="false">
+      <param name="mergestyles.dst.dir" value="${xsltproc.dst.dir}"/>
+      <param name="mergestyles.file.to.import" value="${xsltproc.style.file}"/>
+    </antcall>
+
+    <fileset id="xsltproc.import.fileset" file="${xsltproc.style.file}"/>
+    <pathconvert property="xsltproc.output.suffix">
+      <fileset refid="xsltproc.import.fileset"/>
+      <mapper type="flatten"/>
+    </pathconvert>
+
+    <echo level="info">xsltproc processed stylefile: ${xsltproc.dst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}</echo>
+
+    <!-- Force the dependency checking on changes on the style sheet -->
+    <dependset>
+      <srcfileset file="${xsltproc.dst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}"/>
+      <srcfileset dir="${ada.home}/XslStyles">
+	<include name="*.xsl" />
+      </srcfileset>
+      <targetfileset refid="xsltproc.target.fileset" />
+    </dependset>
+
+    <!-- Execute the command. Watch out for src.dir and dst.dir -->
+    <apply dir="${xsltproc.src.dir}" parallel="false" dest="${xsltproc.dst.dir}" 
+	   append="yes" failonerror="true" executable="${xsltproc.exec}" 
+	   output="build.out">
+      <arg value="--xinclude"/>
+      <arg value="--xincludestyle"/>
+      <arg line="${xsltproc.extra.args}"/>
+      <arg value="-o"/>
+      <targetfile/>
+      <arg value="${xsltproc.dst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}"/>
+      <fileset refid="xsltproc.fileset"/>
+      <!-- Mapper from source files to produced files -->
+      <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
+    </apply>    
+  </target>
+
+  <!-- Clean files produced by xsltproc -->
+  <target name="xsltproc.clean" depends="xsltproc.check.values"
+	  if="xsltproc.check" description="Remove files produced by xsltproc">
+
+    <echo>xsltproc.clean         RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Dump explicitly the files to be deleted -->
+    <echo> deleted = ${xsltproc.target.fileset.property}</echo>
+
+    <!-- This call has no effect if no mergestyles.master.style is given -->
+    <antcall target="mergestyles.clean" inheritAll="false">
+      <param name="mergestyles.dst.dir" value="${xsltproc.dst.dir}"/>
+      <param name="mergestyles.file.to.import" value="${xsltproc.style.file}"/>
+    </antcall>
+
+    <!-- Perform the delete operation. The failonerror attributge is needed
+	 and must be set fo false because the dst directory might have been
+	 removed  -->
+    <delete failonerror="false">
+      <fileset  dir="${xsltproc.dst.dir}"
+		includes="${xsltproc.target.fileset.property}">
+	<include name="__bogus__file__to__avoid__empty__fileset"/>
+      </fileset>
+    </delete>
+  </target>
+
+  <!-- Dump the properties defined in this script -->
+  <target name="xsltproc.dump.properties" depends="initial.check">
+    <echo level="info"> ------ xsltproc properties ----
+    xsltproc.exec            ="${xsltproc.exec}"
+    xsltproc.src.dir         ="${xsltproc.src.dir}"
+    xsltproc.dst.dir         ="${xsltproc.dst.dir}"
+    xsltproc.style.file      ="${xsltproc.style.file}"
+    xsltproc.output.format   ="${xsltproc.output.format}"
+    xsltproc.extra.args      ="${xsltproc.extra.args}"
+    xsltproc.files           ="${xsltproc.files}"
+    xsltproc.target.fileset  ="${xsltproc.target.fileset.property}
+    xsltproc.mergestyles     ="${xsltproc.mergestyles}"</echo>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="xsltproc" depends="initial.delete.build.out, xsltproc.processing"/>
+</project>

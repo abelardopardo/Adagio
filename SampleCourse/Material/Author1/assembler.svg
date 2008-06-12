@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Creator: fig2dev Version 3.2 Patchlevel 5-alpha7 -->
+<!-- CreationDate: Tue May 22 20:18:51 2007 -->
+<!-- Magnification: 1.050 -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="4.9in"
+   height="2.1in"
+   viewBox="3787 3199 5932 2529"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.45.1"
+   sodipodi:docname="assembler.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:docbase="/home/abel/Courses/TTAO/Material/ASM/Figures">
+  <metadata
+     id="metadata75">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs73">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path3237"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     inkscape:window-height="1000"
+     inkscape:window-width="1280"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="2.6984127"
+     inkscape:cx="220.5"
+     inkscape:cy="94.499992"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:current-layer="svg2" />
+  <rect
+     id="rect6"
+     style="fill:#ffffff;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     rx="110"
+     height="542"
+     width="1039"
+     y="4358"
+     x="8668" />
+  <rect
+     id="rect8"
+     style="fill:#ffffff;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     rx="110"
+     height="472"
+     width="944"
+     y="5244"
+     x="4866" />
+  <text
+     style="font-size:161.41496599px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.025in;font-family:Verdana;font-stretch:normal;font-variant:normal;text-align:center;writing-mode:lr;line-height:125%"
+     id="text10"
+     font-size="152"
+     font-weight="normal"
+     font-style="normal"
+     y="5536.666"
+     x="5340.0039"
+     xml:space="preserve"
+     sodipodi:linespacing="125%">ficheroN.s</text>
+  <rect
+     id="rect12"
+     style="fill:#ffffff;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     rx="110"
+     height="472"
+     width="944"
+     y="4251"
+     x="4866" />
+  <text
+     style="font-size:161.41496599px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.025in;font-family:Verdana;font-stretch:normal;font-variant:normal;text-align:center;writing-mode:lr;line-height:125%"
+     id="text14"
+     font-size="152"
+     font-weight="normal"
+     font-style="normal"
+     y="4543.666"
+     x="5340.0039"
+     xml:space="preserve"
+     sodipodi:linespacing="125%"><tspan
+       style="font-family:Verdana;font-size:161.41496599px;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:middle;text-align:center;writing-mode:lr;line-height:125%"
+       id="tspan3430">fichero2.s</tspan></text>
+  <rect
+     id="rect16"
+     style="fill:#ffffff;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     rx="110"
+     height="472"
+     width="944"
+     y="3685"
+     x="4866" />
+  <text
+     style="font-size:161.41496599;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.025in;font-family:Verdana"
+     id="text18"
+     font-size="152"
+     font-weight="normal"
+     font-style="normal"
+     y="3977.666"
+     x="5340.0039"
+     xml:space="preserve">fichero1.s</text>
+  <rect
+     id="rect26"
+     style="fill:#ffffff;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     rx="0"
+     height="377"
+     width="1252"
+     y="4440"
+     x="6412" />
+  <text
+     style="font-size:161.41496277px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.025in;font-family:Verdana"
+     id="text28"
+     font-size="152"
+     font-weight="normal"
+     font-style="normal"
+     y="4688.5972"
+     x="7029.8818"
+     xml:space="preserve"
+     sodipodi:linespacing="125%">Ensamblador</text>
+  <g
+     id="g2191"
+     transform="translate(6.5592082,6.6492072)">
+    <text
+       sodipodi:linespacing="125%"
+       xml:space="preserve"
+       x="9177.2754"
+       y="4549"
+       font-style="normal"
+       font-weight="normal"
+       font-size="152"
+       id="text30"
+       style="font-size:161.41496277px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.025in;font-family:Verdana">Fichero</text>
+    <text
+       sodipodi:linespacing="125%"
+       xml:space="preserve"
+       x="9177"
+       y="4785"
+       font-style="normal"
+       font-weight="normal"
+       font-size="152"
+       id="text32"
+       style="font-size:161.41496277px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.025in;font-family:Verdana">Ejecutable</text>
+  </g>
+  <polyline
+     id="polyline34"
+     style="fill:none;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     points="6094,4582 6285,4582 " />
+  <polygon
+     id="polygon36"
+     style="fill:#000000;stroke:#000000;stroke-width:8"
+     points="6268,4614 6394,4582 6268,4551 6268,4614 " />
+  <polyline
+     id="polyline38"
+     style="fill:none;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:50, 50"
+     points="5338,4771 5338,5196 " />
+  <polyline
+     id="polyline40"
+     style="fill:none;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     points="7665,4629 8542,4629 " />
+  <polygon
+     id="polygon42"
+     style="fill:#000000;stroke:#000000;stroke-width:8"
+     points="8525,4661 8651,4629 8525,4598 8525,4661 " />
+  <polyline
+     id="polyline44"
+     style="fill:none;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     points="4440,4629 4440,3921 4740,3921 " />
+  <polygon
+     id="polygon46"
+     style="fill:#000000;stroke:#000000;stroke-width:8"
+     points="4723,3952 4849,3921 4723,3889 4723,3952 " />
+  <polyline
+     id="polyline48"
+     style="fill:none;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     points="4440,4629 4440,5480 4740,5480 " />
+  <polygon
+     id="polygon50"
+     style="fill:#000000;stroke:#000000;stroke-width:8"
+     points="4723,5511 4849,5480 4723,5448 4723,5511 " />
+  <polyline
+     id="polyline52"
+     style="fill:none;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     points="4440,4488 4740,4488 " />
+  <polygon
+     id="polygon54"
+     style="fill:#000000;stroke:#000000;stroke-width:8"
+     points="4723,4519 4849,4488 4723,4456 4723,4519 " />
+  <polyline
+     id="polyline56"
+     style="fill:none;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     points="5811,3921 6094,3921 6094,4582 " />
+  <polyline
+     id="polyline58"
+     style="fill:none;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     points="5811,5433 6094,5433 6094,4582 " />
+  <polyline
+     id="polyline60"
+     style="fill:none;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+     points="5811,4488 6094,4488 " />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow1Lend)"
+     d="M 6992,4440 L 6992,3212 L 4062,3212 L 4062,4486.8056 L 4421.1874,4488.5417"
+     id="polyline62"
+     sodipodi:nodetypes="ccccc" />
+  <text
+     style="font-size:161.41496599px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.025in;font-family:Verdana;font-stretch:normal;font-variant:normal;text-align:center;writing-mode:lr;line-height:125%"
+     id="text66"
+     font-size="152"
+     font-weight="normal"
+     font-style="normal"
+     y="5007"
+     x="7039"
+     xml:space="preserve"
+     sodipodi:linespacing="125%">gcc -o programa f*.s</text>
+  <text
+     style="font-size:161.41496599px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.025in;font-family:Verdana;font-stretch:normal;font-variant:normal;text-align:center;writing-mode:lr;line-height:125%"
+     id="text68"
+     font-size="152"
+     font-weight="normal"
+     font-style="normal"
+     y="4157"
+     x="7228"
+     xml:space="preserve"
+     sodipodi:linespacing="125%">Error</text>
+  <text
+     style="font-size:161.41496599px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.025in;font-family:Verdana;font-stretch:normal;font-variant:normal;text-align:center;writing-mode:lr;line-height:125%"
+     id="text70"
+     font-size="152"
+     font-weight="normal"
+     font-style="normal"
+     y="4582"
+     x="8125"
+     xml:space="preserve"
+     sodipodi:linespacing="125%">Correcto</text>
+  <text
+     xml:space="preserve"
+     style="font-size:161.41496277px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+     x="5098.0215"
+     y="3636.0107"
+     id="text2195"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan2197"
+       x="5098.0215"
+       y="3636.0107">Editor</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+     x="6065.0874"
+     y="2589.1873"
+     id="text2199"><tspan
+       sodipodi:role="line"
+       id="tspan2201"
+       x="6065.0874"
+       y="2589.1873">E</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+     x="6179.7393"
+     y="3950.0579"
+     id="text2203"><tspan
+       sodipodi:role="line"
+       id="tspan2205"
+       x="6179.7393"
+       y="3950.0579"> </tspan></text>
+</svg>

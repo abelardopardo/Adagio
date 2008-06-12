@@ -1,0 +1,18 @@
+	.text
+	.global buscar
+
+# subrutina buscar
+#
+#    - entrada:
+#        (%ebp+ 8) tamaño del array 
+#        (%ebp+12) dirección del array 
+#        (%ebp+16) dato a buscar
+#    - salida:
+#        (%ebp+20) posición en que se encuentra,
+#                    o -1 si no se encuentra
+#
+buscar:		# Escribe a partir de aquí las instrucciones de la subrutina
+
+
+	
+	ret	# Final de la subrutina

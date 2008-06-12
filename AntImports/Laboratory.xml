@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Create documents for a lab" default="laboratory.processing">
+
+  <!--
+      Given the following properties and fileset:
+
+      laboratory.src.dir: directory from where to take the source files
+      laboratory.dst.dir: directory where the produced files are stored
+      laboratory.subdirs: Subdirectories to pre-process before the lab
+      laboratory.output.format: Extension of the output file
+      laboratory.style.file: Style file to be used
+      laboratory.files: comma/space separated list of files to process
+      laboratory.files: list of files to process with two languages
+
+      All directories in subdirs are first invoked with the basic goal that
+      includes export.processing setting basedir to the current dir of the
+      lab. It then invokes three times xsltproc to generate the regular HTML
+      document, the one with the solution and pguide profiles.
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="Cleaning.xml"/>
+  <import file="SubRecursive.xml"/>
+  <import file="Xsltproc.xml"/>
+
+  <!-- Property definition -->
+  <property name="laboratory.src.dir"       value="${basedir}"/>
+  <property name="laboratory.dst.dir"       value="${laboratory.src.dir}"/>
+  <property name="laboratory.style.file" 
+	    value="${ada.home}/XslStyles/Laboratory.xsl"/>
+  <property name="laboratory.output.format"   value="html"/>
+  <property name="laboratory.subdirs"         value=""/>
+  <property name="laboratory.files"           value=""/>
+  <property name="laboratory.bilingual.files" value=""/>
+
+  <!-- Internal properties -->
+  <property name="laboratory.profile.lang"    value=""/>
+  <property name="laboratory.creating.files"  value=""/>
+  <property name="laboratory.manipulate.target" 
+	    value="xsltproc.processing"/>
+
+  <!-- Dirs with material required by the lab  -->
+  <filelist id="laboratory.dirlist" files="${laboratory.subdirs}"/>
+
+  <!-- Create the regular file, solution and professor guide -->
+  <target name="laboratory.manipulate.files">
+    <echo>laboratory.processing       CALL(xsltproc.processing)</echo>
+
+    <!-- Call xsltproc with no extra options -->
+    <antcall target="${laboratory.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
+      <param name="xsltproc.output.format" value="${laboratory.output.format}"/>
+      <param name="xsltproc.files"         value="${laboratory.creating.files}"/>
+      <param name="xsltproc.extra.args"    value="${laboratory.profile.lang}"/>
+    </antcall>
+
+    <echo>laboratory.processing       CALL(xsltproc.processing solution)</echo>
+
+    <!-- Call xsltproc to generate the solution -->
+    <antcall target="${laboratory.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
+      <param name="xsltproc.output.format"
+	     value="solution.${laboratory.output.format}"/>
+      <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
+      <param name="xsltproc.extra.args" 
+	     value="--stringparam laboratory.include.solutions yes
+                    ${laboratory.profile.lang}"/>
+    </antcall>
+
+    <echo>laboratory.processing       CALL(xsltproc.processing profguide)</echo>
+
+    <!-- Call xsltproc to generate the professor guide -->
+    <antcall target="${laboratory.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
+      <param name="xsltproc.output.format"
+	     value="pguide.${laboratory.output.format}"/>
+      <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
+      <param name="xsltproc.extra.args" 
+	     value="--stringparam laboratory.include.guide yes
+                    --stringparam laboratory.include.solutions yes
+                    ${laboratory.profile.lang}"/>
+    </antcall>
+  </target>
+
+  <!-- Invoke xsltprocessing -->
+  <target name="laboratory.processing" depends="laboratory.dump.properties"
+	  description="Call Xsltprocessing">
+
+    <echo>laboratory.processing       CALL(subrecursive.processing)</echo>
+
+    <!-- Create the dst directory -->
+    <mkdir dir="${laboratory.dst.dir}" />
+
+    <!-- Call first all the subdirectories -->
+    <antcall target="subrecursive.processing" inheritAll="false">
+      <param name="subrecursive.dirs"    value="${laboratory.subdirs}"/>
+      <param name="subrecursive.dst.dir" value="${laboratory.dst.dir}"/>
+    </antcall>
+
+    <!-- Create all the files (language neutral) -->
+    <antcall target="laboratory.manipulate.files" inheritAll="false">
+      <param name="laboratory.creating.files" value="${laboratory.files}"/>
+    </antcall>
+
+    <!-- Create all the files in spanish -->
+    <antcall target="laboratory.manipulate.files" inheritAll="false">
+      <param name="laboratory.creating.files" 
+	     value="${laboratory.bilingual.files}"/>
+      <param name="laboratory.profile.lang"
+	     value="--stringparam profile.lang es"/>
+      <param name="laboratory.output.format"   value="es.html"/>
+    </antcall>
+
+    <!-- Create all the files in english -->
+    <antcall target="laboratory.manipulate.files" inheritAll="false">
+      <param name="laboratory.creating.files" 
+	     value="${laboratory.bilingual.files}"/>
+      <param name="laboratory.profile.lang"
+	     value="--stringparam profile.lang en"/>
+      <param name="laboratory.output.format"   value="en.html"/>
+    </antcall>
+  </target>
+
+  <!-- Clean files produced by laboratory -->
+  <target name="laboratory.clean" 
+	  description="Remove files produced by laboratory">
+
+    <echo>laboratory.clean          CALL(subrecursive.clean)</echo>
+
+    <!-- Call first all the subdirectories -->
+    <antcall target="subrecursive.clean" inheritAll="false">
+      <param name="subrecursive.dirs"    value="${laboratory.subdirs}"/>
+      <param name="subrecursive.dst.dir" value="${laboratory.dst.dir}"/>
+    </antcall>
+
+    <!-- Create all the files (language neutral) -->
+    <antcall target="laboratory.manipulate.files" inheritAll="false">
+      <param name="laboratory.creating.files" value="${laboratory.files}"/>
+      <param name="laboratory.manipulate.target" value="xsltproc.clean"/>
+    </antcall>
+
+    <!-- Delete all the files in spanish -->
+    <antcall target="laboratory.manipulate.files" inheritAll="false">
+      <param name="laboratory.creating.files" 
+	     value="${laboratory.bilingual.files}"/>
+      <param name="laboratory.profile.lang"
+	     value="--stringparam profile.lang es"/>
+      <param name="laboratory.output.format"   value="es.html"/>
+      <param name="laboratory.manipulate.target" value="xsltproc.clean"/>
+    </antcall>
+
+    <!-- Delete all the files in english -->
+    <antcall target="laboratory.manipulate.files" inheritAll="false">
+      <param name="laboratory.creating.files" 
+	     value="${laboratory.bilingual.files}"/>
+      <param name="laboratory.profile.lang"
+	     value="--stringparam profile.lang en"/>
+      <param name="laboratory.output.format"   value="en.html"/>
+      <param name="laboratory.manipulate.target" value="xsltproc.clean"/>
+    </antcall>
+
+  </target>
+
+  <target name="laboratory.dump.properties" depends="initial.check">
+    <echo level="info"> ------ Laboratory properties ----
+    laboratory.src.dir       ="${laboratory.src.dir}"
+    laboratory.dst.dir       ="${laboratory.dst.dir}"
+    laboratory.style.file    ="${laboratory.style.file}"
+    laboratory.output.format ="${laboratory.out.format}"
+    laboratory.files         ="${laboratory.files}"
+    laboratory.subdirs       ="${laboratory.subdirs}</echo>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="laboratory" depends="initial.delete.build.out, laboratory.processing"/>
+
+</project>
+

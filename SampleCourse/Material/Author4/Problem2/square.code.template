@@ -1,0 +1,7 @@
+        .text                   # Segmento de codigo
+        .global main            # Define main como simbolo global
+
+main:   # Inserta a partir de aquí las instrucciones de tu programa
+
+
+        ret      # Última instrucción del programa

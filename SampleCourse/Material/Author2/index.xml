@@ -1,0 +1,1636 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: HowToLinux.xml,v 1.1 2005/05/30 19:52:27 abel Exp $ -->
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+  "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section lang="es" id="sec:linuxintro">
+  <sectioninfo condition="rss.info">
+    <!-- item title -->
+    <xi:include
+      xpointer="xpointer(/section/title[position()=1])"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <modespec>
+      <olink condition="link">index.html?fromrss=1</olink>
+    </modespec>
+    <!-- Title: itunes:subtitle, Para: Description and itunes:summary -->
+    <abstract>
+      <formalpara>
+        <title>El entorno de trabajo en el sistema operativo Linux</title>
+	<para>
+	  El sistema operativo Linux ofrece un interfaz diferente para gestionar
+	  todos los programas y aplicaciones de un equipo. En este documento se
+	  revisan las principales herramientas y características de su entorno
+	  gráfico.
+	</para>
+      </formalpara>
+    </abstract>
+    <!-- Verbatin: pubDate -->
+    <pubdate></pubdate>
+    <!-- itunes:author -->
+    <author>
+      <firstname>Vicente</firstname><surname>Luque</surname>
+      <firstname>Abelardo</firstname><surname>Pardo</surname>
+    </author>
+    <!-- Category + itunes:keywords -->
+    <keywordset>
+      <keyword condition="category">Education</keyword>
+    </keywordset>
+  </sectioninfo>
+
+  <title>El entorno de trabajo en el sistema operativo Linux</title>
+
+  <para>
+    El sistema operativo Linux, al igual que otros sistemas, pone al alcance de
+    los usuarios los programas y aplicaciones necesarias para utilizar un
+    ordenador de forma eficiente. La primera pantalla que nos ofrece el sistema
+    es la de entrada o <foreignphrase>login</foreignphrase>. Antes incluso de
+    introducir nuestro nombre de usuario y palabra clave, el sistema operativo
+    ya está gestionando todos los dispositivos del ordenador.
+  </para>
+  
+  <para>
+    La razón por la que se debe introducir el usuario y la clave es porque en
+    Linux se asume que dicho equipo va a ser compartido por una comunidad de
+    usuarios distintos. Aunque todos ellos tienen ciertos datos y aplicaciones
+    que comparten, otros ficheros y configuraciones son particulares de cada
+    usuario. Una vez que se termina la sesión de trabajo, es muy importante que
+    se notifique al sistema. A este proceso se le conoce comúnmente con el
+    nombre de <foreignphrase>logout</foreignphrase> y hace que la máquina pase a
+    estar disponible para que pueda trabajar otro usuario.
+  </para>
+  
+  <para>
+    Por motivos de seguridad, es recomendable, cuando se termine una sesión,
+    permanecer ante el ordenador hasta que se vea que ofrece de nuevo la
+    pantalla de login. En este momento sí se puede estar seguro de que la sesión
+    ha terminado normalmente y otro usuario no va a acceder a nuestros ficheros.
+  </para>
+  
+  <para>
+    Los usuarios que no tienen instalado Linux en sus ordenadores personales
+    pueden utilizar distribuciones Linux que arrancan directamente desde un CD o
+    DVD. Este arranque (denominado <quote>Live</quote>) permite trabajar con
+    Linux y sus aplicaciones sin necesidad de instalar nada en el disco duro del
+    ordenador, aunque su funcionalidad estará también muy limitada.
+  </para>
+  
+  <para>
+    Las distribuciones <quote>Live</quote> son muy aconsejables para personas
+    que en su ordenador tienen otros sistemas operativos y no están seguros de
+    saber cómo instalar Linux. No obstante, si se desea, siempre se puede
+    realizar una instalación permanente en el ordenador. Esa instalación no es
+    obligatoria, pero permitirá liberar de uso la unidad del CD/DVD y permitirá
+    aprovechar mejor el hardware de la máquina. En el arranque
+    <quote>Live</quote> los ficheros no se encuentran en el disco duro, sino en
+    el CD/DVD (las aplicaciones) o en memoria principal (los ficheros de
+    usuario).
+  </para>
+  
+  <para>
+    Las distribuciones más recientes de Linux tienen un sistema de detección
+    automática de hardware, lo que permite manejar fácilmente periféricos tales
+    como memorias USB, cámaras digitales, reproductores MP3, webcams,
+    impresoras, escáners, tarjetas WIFI, etc. Y también incorporan gran cantidad
+    de software que permite manipular casi cualquier formato de fichero
+    multimedia (ficheros de vídeo, de audio, de procesadores de texto, de hojas
+    de cálculo, o presentaciones multimedia).
+  </para>
+
+  <para>
+    Existen varias distribuciones Linux <quote>Live</quote>. Una de ellas,
+    denominada LUC3M (<ulink
+    url="http://luc3m.uc3m.es/">http://luc3m.uc3m.es</ulink>) ha sido creada por
+    el Servicio de Informática de la Universidad Carlos III de Madrid.  Contiene
+    la gran mayoría de aplicaciones de prácticas que se realizan en casi todas
+    las titulaciones de la Universidad. LUC3M se distribuye libremente y en su
+    Web se incluye documentación de ayuda asequible incluso para personas que
+    parten de cero en conocimientos de Linux. También incluye foros donde se
+    resuelven dudas.
+  </para>
+  
+  <para>
+    El uso de distribuciones <quote>Live</quote> implica que los ficheros que
+    sean valiosos al finalizar la sesión deben ser guardados adecuadamente (en
+    memoria USB, transferidos a otro ordenador o a una partición formateada con
+    permiso de escritura) con el fin de que no desaparezca nuestro trabajo.
+    Ello es así porque nuestro directorio de trabajo en Linux
+    <quote>Live</quote> está simulado sobre memoria principal (RAM), no sobre
+    disco duro, razón por la cual un apagado de la máquina destruirá cualquier
+    dato que no haya sido convenientemente salvado.
+  </para>
+
+  <section>
+    <title>El escritorio</title>
+
+    <para>
+      Tras introducir el código de usuario y la palabra clave se nos ofrece una
+      pantalla en la que únicamente aparece un conjunto de iconos en uno o
+      varios de sus bordes. A esta pantalla se le denomina
+      <quote>escritorio</quote> porque se parece a una mesa de trabajo en la
+      que nos acabamos de sentar. En esa mesa se encuentran los mecanismos para
+      arrancar diferentes programas y se puede configurar de forma que
+      aparezcan los iconos de ficheros y/o programas encima de ella.
+    </para>
+
+    <para>
+      Existen diversos escritorios en Linux. Puede considerarse que el
+      escritorio es el interfaz gráfico que permite lanzar aplicaciones o
+      interactuar con las ventanas ya lanzadas. Los escritorios más conocidos
+      son <quote>GNOME</quote> y <quote>KDE</quote>, que a su vez son los más
+      completos y que ofrecen una mayor funcionalidad. Existen otros
+      escritorios más simples como Xfce, Icewm, fvwm que podemos usar si
+      nuestro ordenador tiene limitaciones de memoria o procesador, por
+      ejemplo. Lo habitual es que cada persona se acostumbre a manejar un
+      escritorio según sus gustos personales.
+    </para>
+
+    <para>
+      La utilización del escritorio depende de cada usuario. Hay usuarios que
+      prefieren tenerlo lleno de iconos para abrir documentos o recursos y
+      otros que prefieren no tener ningún icono en el escritorio. La estructura
+      del escritorio es algo que, por tanto, depende de cada usuario y que el
+      sistema se encarga de guardar de una sesión de trabajo a la siguiente. La
+      configuración de uno de ellos no suele compartirse con el resto. Existe
+      una configuración independiente para cada escritorio y usuario. Se
+      recomienda escoger un tipo de escritorio y mantenerlo durante todas las
+      sesiones de trabajo. En la <xref linkend="envintro:escritorios"/> se
+      muestran varios ejemplos de escritorios.
+    </para>
+
+    <figure id="envintro:escritorios">
+      <title>Diferentes tipos de escritorios</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="gnome.png"/>
+        </imageobject>
+        <caption>Escritorio tipo Gnome</caption>
+      </mediaobject>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="xfce4.png"/>
+        </imageobject>
+        <caption>Escritorio tipo Xfce4</caption>
+      </mediaobject>
+    </figure>
+
+    <para>
+      Aunque no es imprescindible, vamos a trabajar con el escritorio KDE, uno
+      de los más populares de Linux, y que se encuentra disponible en las
+      aulas. Existen otros muchos escritorios, pero, en general, comparten una
+      gran parte de funcionalidad común. Por lo tanto, conociendo uno de ellos
+      los demás son fáciles de manejar. La <xref
+        linkend="envintro:escritoriokde"/> muestra un
+      escritorio típico de KDE.
+    </para>
+    
+    <figure id="envintro:escritoriokde">
+      <title>Escritorio KDE</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="kdedesktop.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+    
+    <para>
+      Sobre el fondo del escritorio se van a situar cada una de las ventanas de
+      las aplicaciones que vayamos lanzando a lo largo de nuestra sesión de
+      trabajo. La gran mayoría de las ventanas tienen unos iconos en forma de
+      cuadrado <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="iconosmaxmin.gif"/>
+        </imageobject>
+	<textobject>
+	  <phrase>Iconos para operaciones sobre ventana</phrase>
+	</textobject>
+      </inlinemediaobject> en su parte superior derecha, uno para ocultar la
+      ventana, otro para maximizarla (que ocupe todo el escritorio) y otro (en
+      forma de aspa) para cerrarla. Podemos lanzar tantas ventanas de
+      aplicaciones como queramos, de forma que podemos tener varias de ellas
+      abiertas a la vez en el mismo escritorio. Conviene, eso sí, evitar que las
+      ventanas se superpongan entre sí para que no se tapen las unas a las otras
+      y para que al trabajar con cada una de ellas, las demás ventanas no queden
+      con partes ocultas. Si esto ocurre, nuestras sesiones de trabajo pueden
+      ser muy ineficientes. Un ejemplo posible de escritorio con tres ventanas
+      abiertas es el que aparece en la <xref
+      linkend="envintro:escritoriolleno"/>.
+    </para>
+
+    <figure id="envintro:escritoriolleno">
+      <title>Escritorio KDE con tres aplicaciones abiertas</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="escritoriolleno.png" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+    
+    <para>
+      Es habitual que el texto de cada ventana se pueda seleccionar con el
+      ratón o el teclado. Dado un texto seleccionado de una ventana, suele ser
+      posible (dependiendo de la aplicación):
+    </para>
+
+    <itemizedlist>
+      <listitem>
+        <para>
+          Borrarlo (tecla <keycap>SUPR</keycap> ó tecla <keycap>DEL</keycap>)
+        </para>
+      </listitem>
+      <listitem>
+        <para>Copiarlo (<keycombo><keycap>CTRL-C</keycap></keycombo>)</para>
+      </listitem>
+      <listitem>
+        <para>
+          Cortarlo (copiarlo + borrarlo)
+          <keycombo><keycap>CTRL-X</keycap></keycombo>
+        </para> 
+      </listitem>
+      <listitem>
+        <para>
+          Pegarlo (en la misma ventana o en otra)
+          <keycombo><keycap>CTRL-V</keycap></keycombo>
+        </para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>
+      Copiar y pegar es un ejercicio que hace que nuestras sesiones de trabajo
+      sean mucho más eficientes, pues se ahorra tiempo y se evitan los errores
+      típicos al teclear. Lo probaremos más adelante con el editor de texto.
+      Además de poder realizarlo con las combinaciones de teclas mencionadas
+      (comunes a la mayoría de las aplicaciones), cada aplicación suele tener
+      sus propios botones y menús para realizar estas acciones.
+    </para>
+
+    <section>
+      <title>Panel</title>
+
+      <para>
+        El panel es una barra de herramientas como la que aparece en la <xref
+          linkend="envintro:panel_inferior" />. Contiene iconos para las
+        aplicaciones más utilizadas, el reloj y los iconos de las ventanas o
+        aplicaciones abiertas en nuestra sesión de trabajo. Por su importancia,
+        vamos a fijarnos especialmente en la zona del panel que se usa para
+        esquematizar los escritorios virtuales y también en el menú.
+      </para>
+      
+      <para>
+        Con el fin de poder tener muchas ventanas abiertas sin que se
+        superpongan y sin que tengan un tamaño inadecuado (si quisiéramos
+        tenerlas varias sin iconizar y abiertas en el mismo escritorio no nos
+        cabrían), podemos tener varios escritorios virtuales, cada uno de los
+        cuales almacena sus propias ventanas. Por ejemplo, es muy útil tener al
+        menos un escritorio virtual dedicado exclusivamente a un navegador a
+        pantalla completa. En general, conviene poner cada aplicación que
+        necesita pantalla completa en un escritorio virtual distinto, evitando
+        así que se superpongan. Para saltar de un escritorio virtual a otro,
+        además de usar el ratón directamente sobre el panel, podemos usar las
+        teclas <keycombo><keycap>CTRL-TAB</keycap></keycombo>. De
+        todos los escritorios virtuales que tengamos, sólo uno estará activo en
+        cada momento (en el panel se verá reflejado cuál). Para saltar entre
+        las ventanas que están dentro del escritorio virtual activo, podemos
+        usar <keycombo><keycap>ALT-TAB</keycap></keycombo>.
+      </para>
+    
+      <figure id="envintro:panel_inferior">
+        <title>
+          Panel KDE con 4 escritorios virtuales, siendo el número 2 el que
+          está activo
+        </title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="panel_inferior.gif"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+    </section>
+
+    <section>
+      <title>Menú</title>
+    
+      <para>
+        En la parte izquierda del panel suele aparecer el icono del menú. En
+        KDE suele tener el aspecto de una K dentro de un engranaje
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="iconomenu.png" />
+          </imageobject>
+	  <textobject>
+	    <phrase>Icono del menú principal en el panel de KDE</phrase>
+	  </textobject>
+        </inlinemediaobject>. Otros escritorios usan otros símbolos (un
+        pingüino, una huella de pie, unas banderitas tipo Windows, un sol,
+        etc). Pulsando en ellos aparece un menú desplegable como el de la <xref
+          linkend="envintro:menukde" />. Con el menú podemos acceder a la
+        mayoría de las aplicaciones instaladas en el sistema, agrupadas por
+        categorías. Es posible que la ubicación concreta de las distintas
+        aplicaciones dentro del menú pueda variar de unos escritorios a otros,
+        pero suele ser fácil encontrarlas pese a que estén en un sitio distinto
+        al indicado en la <xref linkend="envintro:menukde" />.
+      </para>
+
+      <figure id="envintro:menukde">
+        <title>Menú desplegable de KDE</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="menukde.gif"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </section>
+
+    <section>
+      <title>Ejercicio</title>
+    
+      <para>
+        Dedicar 10 minutos a recorrer el menú intentando reconocer qué
+        aplicaciones hay y para qué puede servir cada una, sin entrar en
+        demasiados detalles sobre cada una (habrá muchas que nos sean
+        desconocidas). Elaborar un listado con aquellas cuya función sea
+        conocida (quizá porque existe un equivalente en Windows, en cuyo caso,
+        especificarlo) y poner ese listado en común en la pizarra con la
+        colaboración del profesor de prácticas. Probarlas un poco (abrirlas,
+        cerrarlas, repartirlas entre los distintos escritorios virtuales, ver
+        más o menos qué hacen). Probar a saltar entre escritorios virtuales y a
+        saltar entre ventanas dentro del mismo escritorio. La idea es reconocer
+        qué aplicaciones están instaladas en el sistema. Ojo, no abrir
+        demasiadas a la vez si no se quiere sobrecargar la máquina. En general,
+        conviene cerrar toda aplicación que no esté siendo utilizada.
+      </para>
+    </section>
+  </section>
+
+  <section>
+    <title>Aplicaciones básicas</title>
+
+    <section>
+      <title>Navegadores</title>
+
+      <para>
+        Existen varios navegadores Web utilizables desde
+        Linux. Los más conocidos son Mozilla, Firefox, Netscape, Opera y
+        Konqueror y suelen poder arrancarse con iconos como los que aparecen en
+        la <xref linkend="envintro:iconbrowsers" />. La mayoría de ellos
+        también se pueden lanzar desde el menú. Conviene saber
+        ajustar el tamaño de fuente para no forzar la vista con una
+        letra demasiado pequeña (verlo en las preferencias del
+        navegador). Otra posibilidad consiste en usar los comandos propios de
+        cada aplicación que permiten agrandar (o empequeñecer) el
+        tamaño de la letra. También es muy útil usar las
+        pestañas de navegación, para que al navegar no se nos
+        abran demasiadas ventanas que se superpongan entre sí. Los
+        navegadores mencionados en este párrafo permiten el uso de este
+        tipo de pestañas (al pinchar en un enlace con el botón de
+        la derecha del ratón, indicar que se quiere abrir el enlace en
+        una nueva pestaña de la misma ventana, en lugar de en una
+        ventana nueva).
+      </para> 
+
+      <figure id="envintro:iconbrowsers">
+        <title>Iconos para arrancar el navegador</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="iconbrowsers.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </section>
+
+    <section>
+      <title>Editores de texto</title>
+
+      <para>
+        Existen muchos editores de texto en Linux. Uno de los más
+        sencillos es <command>kwrite</command> (ver <xref
+          linkend="envintro:kwrite" />), muy parecido al block de notas de
+        Windows, esto es, sencillo de manejar, pero con una funcionalidad
+        bastante limitada. Un buen editor de textos debe permitir,
+        además de crear, abrir y guardar un fichero otras acciones
+        básicas de edición, como al menos, localizar
+        fácilmente una línea por su número de línea
+        (si se nos dice que tenemos un error en la línea 999 debemos
+        poder llegar allí con presteza) y debe tener comandos de
+        búsqueda de textos, sustitución de textos y permitir
+        deshacer cambios. No es necesario conocer todos los editores, pero
+        sí conviene conocer alguno en profundidad para poder usarlo
+        siempre que necesitemos editar algún texto. Editores potentes
+        son <command>emacs</command> y <command>vim</command>, por ejemplo.
+        <command>kwrite</command> es menos potente, pero más sencillo de
+        manejar. Existen muchos otros.
+      </para>
+
+      <figure id="envintro:kwrite">
+        <title>Editor de textos <command>kwrite</command></title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="kwrite.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>
+        El editor <command>emacs</command> es un editor de texto muy completo.
+        Permite facilitar mucho el trabajo del programador. Para editar un
+        fichero simplemente se necesita abrir su contenido. Si el fichero no
+        existe, el editor lo creará. Si ya existe, el editor lo abre y
+        muestra su contenido. Emacs es un editor que, aparte de permitir
+        comandos bastante complejos y potentes (el uso de expresiones regulares
+        puede ser muy útil en determinados ficheros) permite cambiar un
+        número enorme de sus características al gusto del
+        usuario. En el menú <command>Options</command>, en el apartado
+        <command>Customize Emacs</command> se encuentra la aplicación
+        para navegar entre todas las opciones posibles y poder cambiar sus
+        valores. De entre ellas cabe destacar <command>Syntax
+          Highlighting</command> y <command>Paren Match Highlighting</command>.
+        La primera, cuando se activa, hace que editor muestre las distintas
+        zonas del programas con colores. Mediante la combinación de
+        color y negrita, el código es mucho más fácil de
+        leer e identificar sus diferentes partes (comentarios, palabras clave,
+        constantes, variables, etc.) La segunda opción, <command>Paren
+          Match Highlighting</command> hace que cada vez que se cierre un
+        paréntesis o una llave, el editor resalta en un color diferente
+        su correspondiente apertura y permite detectar fácilmente si se
+        cierran adecuadamente todos los paréntesis y llaves, evitando
+        así errores sintácticos en nuestros programas.
+      </para>
+
+      <para>
+        Otra de las características que distingue a Emacs de otros
+        editores es que la mayoría de sus comandos tiene su
+        correspondiente <quote>atajos de teclado</quote> para su
+        ejecución. Conviene, conforme se utiliza este editor, intentar
+        usar estas combinaciones de teclas, pues tienen un efecto enorme en la
+        velocidad de trabajo ya que el uso del teclado es mucho más
+        rápido que el del ratón.
+      </para>
+      
+      <section>
+        <title>Ejercicio</title>
+
+        <para>
+          Usar el editor de texto para crear un fichero llamado
+          <filename>texto.txt</filename> dentro del directorio raíz de
+          la cuenta personal. Deberá copiarse el siguiente texto
+          (directamente desde el navegador), pegarlo dentro del editor,
+          corregir las faltas de ortografía y guardar el fichero con el
+          nombre indicado en el directorio indicado.
+      </para>
+
+        <programlisting>
+          Esto es un teksto que tengo que copiar y pegar en mi editor. No bale
+          si lo tekleo desde zero. La línea 4 tiene un azento en la i.
+        </programlisting>
+      </section>
+    </section>
+
+    <section>
+      <title>Administradores de archivos</title>
+
+      <para>
+        En Unix (Linux es un sistema Unix), las carpetas o directorios se
+        separan entre sí; con el carácter <quote><command>/</command></quote>
+        (barra hacia adelante). En Windows la barra que separa los directorios
+        es hacia atrás, es decir <quote><command>\</command></quote> (barra
+        inversa). Para poder navegar por los distintos directorios,
+        inspeccionar ficheros, renombrarlos, copiarlos, borrarlos o cambiarlos
+        de sitio, podemos usar un administrador de archivos como el que aparece
+        en la <xref linkend="envintro:konqueror"/>. La aplicación
+        <command>konqueror</command>, además de ser un navegador Web, es
+        también un administrador de archivos. Podemos invocarlo pulsando en el
+        icono que tiene el símbolo de casa 
+        <inlinemediaobject><imageobject><imagedata
+	fileref="pic/home.png"/></imageobject>
+	<textobject>
+	  <phrase>Icono con símbolo de una casa</phrase>
+	</textobject>
+	</inlinemediaobject> 
+        dentro del panel. Con ello se abrirá partiendo de nuestro directorio
+        principal de usuario.
+      </para>
+
+      <figure id="envintro:konqueror">
+        <title>Administrador de archivos <command>konqueror</command></title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="konqueror.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <section id="envintro:fileadmin:exercise">
+        <title>Ejercicio</title>
+        <para>
+          Usar el administrador de archivos para hacer una copia de
+          <filename>texto.txt</filename> de forma que se llame
+          <filename>texto2.txt</filename>. Borrar el fichero
+          <filename>texto.txt</filename>. Se trata de hacer una copia y borrar
+          el antiguo, no de directamente renombrarlo (algo que también se puede
+          hacer, pero que no es lo que se pide).
+        </para>
+
+        <para>Aproveche la ocasión para reorganizar su cuenta. No es
+          conveniente tener todos los ficheros en un mismo directorio. Al
+          contrario, crearemos un directorio para cada asignatura y moveremos
+          nuestros ficheros a la carpeta adecuada. Conviene borrar todos los
+          ficheros que no nos sirvan, para hacer espacio y agilizar las
+          búsquedas en nuestras carpetas. Cree una carpeta llamada
+          <filename>ttao</filename> para la asignatura de Arquitectura de
+          Ordenadores. Dentro de esa carpeta deberá ir creando un directorio
+          distinto en cada una de las siguientes prácticas de la asignatura.
+          Por ejemplo, puede llamarlas <filename>prac1</filename>,
+          <filename>prac2</filename>, y así; sucesivamente.
+        </para>
+      </section>
+    </section>
+
+    <section>
+      <title>Localizadores de archivos</title>
+
+      <para>
+        Cuando se desea localizar algún archivo de
+        entre muchos otros basándose en criterios como nombre,
+        tamaño, fechas de actualización, o incluso por contenido,
+        un localizador de archivos como <command>kfind</command>, que aparece
+        en la <xref linkend="envintro:kfind" />, puede ser útil.
+        <command>Kfind</command> recibe su nombre porque es una
+        aplicación gráfica basada en un comando muy potente y
+        versátil de Unix: el comando <command>find</command>.
+      </para>
+
+      <figure id="envintro:kfind">
+        <title>Localizador de archivos <command>kfind</command></title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="kfind.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <section id="envintro:kfind:exercise">
+        <title>Ejercicio</title>
+        <para>
+          Utilizar la aplicación <command>kfind</command> para buscar uno de
+          los ficheros que han sido creados en esta sesión.
+        </para>
+      </section>
+    </section>
+
+    <section>
+      <title>Consola de texto</title>
+
+      <para>
+        La consola de texto es el terminal en el que podemos introducir
+        comandos de línea para que sean ejecutados uno a uno. Usaremos
+        el terminal de texto para muchas tareas, como compilar, lanzar
+        programas, conectarnos a otras máquinas o lanzar comandos
+        avanzados en general que, normalmente debido al hecho de que necesitan
+        ciertos parámetros, no siempre pueden lanzarse desde el
+        menú (más orientado para las invocaciones simples y
+        frecuentes). En general, prácticamente cualquier
+        aplicación del menú puede lanzarse desde la consola de
+        texto, pero al revés no siempre es posible. El menú
+        sólo asocia los comandos más habituales al interfaz
+        gráfico desplegable, mientras que con la consola de texto
+        tenemos mucha más capacidad de especificar opciones, a costa,
+        eso sí, de usar un interfaz en modo texto. La <xref 
+          linkend="envintro:iconterms" /> muestra varios iconos usualmente
+        encontrables para lanzar la consola de texto desde el menú.
+      </para>
+
+      <figure id="envintro:iconterms">
+        <title>Iconos para arrancar la consola de texto</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="iconterms.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      
+      <para>
+        Al igual que muchos navegadores Web, la consola de texto
+        <command>konsole</command> puede presentar pestañas de forma que
+        en una misma ventana podemos tener distintas sesiones. Ello es
+        útil si no se quiere tener demasiadas ventanas de consola de
+        texto de tamaño pequeño o repartidas por los distintos
+        escritorios virtuales. Si se desea tener más de una consola de
+        texto en un mismo escritorio virtual, puede ser conveniente tener una
+        única ventana con dos pestañas o bien dos ventanas cada
+        una de ellas con una única pestaña pero que no se
+        superpongan (para ver ambas ventanas a la vez). La idea es que el
+        tamaño de cada ventana y el tamaño de fuente o de letra
+        del texto de cada ventana sean adecuados siempre para nuestra vista. La
+        <xref linkend="envintro:konsole" /> muestra una ventana de consola de
+        texto que tiene tres pestañas utilizables, siendo la tercera de
+        ellas la que está activa. El color del texto y del fondo,
+        así como los tamaños de fuente, suelen ser
+        personalizables.
+      </para>
+
+      <figure id="envintro:konsole">
+        <title>Consola de texto con tres pestañas utilizables</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="konsole.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>
+        La consola de texto es sin duda, un elemento básico para
+        nuestras prácticas y merece una atención especial. Dentro
+        de cada pestaña ejecuta un programa llamado intérprete de
+        comandos. El intérprete de comandos (también llamado
+        <quote>shell</quote>) simplemente lee línea a línea los
+        comandos que le mandemos ejecutar, y los va ejecutando según los
+        va leyendo. Con él, y con comandos como los que aparecen en la
+        <xref linkend= "envintro:unixcmd" />, podemos ordenar copiar
+        ficheros, borrarlos, renombrarlos o lanzar cualquier programa en
+        general (la <xref linkend="envintro:unixcmd" /> sólo
+        contiene unos pocos comandos muy básicos). Hay gran variedad de
+        estos intérpretes de comandos, siendo <command>bash</command> y
+        <command>tcsh</command> los más conocidos. Nosotros trabajaremos
+        con <command>bash</command>. Normalmente, un intérprete de
+        comandos no procesará un comando hasta no haber terminado de
+        ejecutar el comando anterior.
+      </para>
+
+      <para>
+        En todo momento el intérprete de comandos trabaja sobre una
+        carpeta concreta del sistema de ficheros que se denominará el
+        directorio actual. Cada intérprete de comandos en
+        ejecución, o mejor dicho, cada proceso en ejecución,
+        tiene su propio directorio actual, esto es, su propio directorio de
+        trabajo concreto del sistema. Por mucho que cambiemos de directorio de
+        trabajo en uno de ellos, los demás no se verán afectados
+        en absoluto. No hay problema en que varios programas se sitúen
+        en un mismo directorio de trabajo. Cuando se necesita acceder a un
+        fichero y sólo se proporciona el nombre (como en los siguientes
+        ejemplos), se asume que los ficheros mencionados están en ese
+        directorio actual. El comando para saber cuál es el directorio
+        actual es <command>pwd</command>.
+      </para>
+
+      <para>
+        Por lo tanto, el siguiente texto contiene las líneas que suponen
+        una solución (basada sólo en comandos, sin usar
+        <command>konqueror</command>) al ejercicio de la <xref
+          linkend="envintro:fileadmin:exercise"/>.
+      </para>
+
+      <programlisting>cp texto.txt texto2.txt
+rm texto.txt</programlisting>
+
+      <para>
+        Para cambiar el directorio actual en el que se encuentra el
+        intérprete se utiliza el comando <command>cd</command> seguido
+        del nombre de la nueva carpeta que queremos que sea el nuevo directorio
+        actual. Toda carpeta tiene a su vez dos subcarpetas con nombres
+        <quote><command>.</command></quote> y
+        <quote><command>..</command></quote>. La primera de ellas no es
+        más que una referencia a sí misma. Por tanto el comando
+        <command>cd .</command> hace que el intérprete cambie su
+        directorio actual al que ya tiene (no cambia). La segunda carpeta con
+        nombre <quote><command>..</command></quote> se refiere a la carpeta de
+        nivel superior, y por tanto se puede utilizar para subir al nivel
+        superior (directorio padre). Como consecuencia, el comando <command>cd
+          ..</command> cambia al directorio padre.
+      </para>
+
+      <para>
+        A continuación se muestra el resultado de utilizar unos comandos
+        en una sesión con el intérprete. Nótese que el
+        comando <command>ls</command> no muestra nada por pantalla cuando el
+        directorio está vacío. Igualmente, nótese que el
+        último comando <command>exit</command> termina la sesión
+        con el intérprete. Este comando, además, cierra la
+        ventana (o pestaña) que contiene al intérprete.
+      </para>
+
+      <programlisting>
+<prompt>shell$</prompt> pwd
+/home/10001234
+<prompt>shell$</prompt> ls
+<prompt>shell$</prompt> mkdir nombre
+<prompt>shell$</prompt> ls
+nombre
+<prompt>shell$</prompt> cd nombre
+<prompt>shell$</prompt> pwd
+/home/10001234/nombre
+<prompt>shell$</prompt> ls
+<prompt>shell$</prompt> cd ..
+<prompt>shell$</prompt> ls
+nombre
+<prompt>shell$</prompt> rmdir nombre
+<prompt>shell$</prompt> ls
+<prompt>shell$</prompt> pwd
+/home/10001234
+<prompt>shell$</prompt> exit
+      </programlisting>
+
+      <para>
+        En la secuencia anterior se puede comprobar como el intérprete
+        tiene por directorio actual al arrancar la carpeta
+        <command>/home/10001234</command>. A continuación se crea una
+        subcarpeta <command>nombre</command>, se cambia el directorio actual a
+        ella, se muestra su contenido con el comando <command>ls</command>
+        (obviamente está vacía pues se acaba de crear), se vuelve
+        a la carpeta inicial con el comando <command>cd ..</command>, se
+        utiliza el comando <command>rmdir</command> para borrar la carpeta
+        (para borrar una carpeta ésta debe estar vacía) y
+        finalmente muestra de nuevo el directorio actual que no ha cambiado.
+      </para>
+      
+      <para>
+        Podemos usar los cursores verticales del teclado (arriba y abajo) para
+        inspeccionar el histórico de comandos ya escritos en la
+        sesión. Esto es muy útil si se tiene que ejecutar otra
+        vez un comando ya escrito previamente, de forma que no hace falta
+        reescribirlo, sino localizarlo en el histórico.
+      </para>
+
+      <para>
+        Con los cursores horizontales (izquierda y derecha) podemos recorrer
+        los caracteres de un comando para modificarlo cómodamente, por
+        si requiere alguna modificación o variación, sin
+        necesidad de borrar según se retrocede (como si
+        estuviéramos en un editor). Los cursores proporcionan una manera
+        muy cómoda de evitar reescribir una y otra vez los mismos
+        comandos dentro de una misma sesión. También podemos usar
+        atajos de teclado. Con
+        <keycombo><keycap>CTRL-A</keycap></keycombo> posicionaremos el cursor
+        al principio de la línea (sin borrar nada). Con
+        <keycombo><keycap>CTRL-E</keycap></keycombo> lo posicionaremos al
+        final.
+      </para>
+
+      <para>
+        Un posible escritorio virtual de trabajo, para el desarrollo de
+        programas puede ser el siguiente: una ventana con un editor de texto en
+        el que editamos nuestra práctica y otra ventana ejecutando un
+        intérprete de comandos, dedicado a compilar/ejecutar el programa
+        que tenemos editándose en la ventana del editor. De esta forma
+        podemos corregir nuestro programa desde el editor con la
+        información visible en la ventana de
+        compilación/ejecución, y a su vez, podemos analizar los
+        resultados de ejecución o los errores de compilación
+        conforme al programa que estamos editando en el editor, todo ello en un
+        mismo escritorio virtual de trabajo. Podemos dedicar cada escritorio
+        virtual a tareas distintas evitando así que unas tareas nos
+        distraigan de las otras (navegador Web, correo electrónico,
+        redacción de documentos, etc.)
+      </para>
+
+      <section id="envintro:cpcat">
+        <title>Ejercicio</title>
+
+        <para>
+          Partiendo de la situación dejada tras la ejecución del
+          ejercicio de la <xref linkend="envintro:fileadmin:exercise" />,
+          ejecutar en una consola de texto los siguientes comandos. Analizar el
+          resultado tras la ejecución de cada comando. ¿Aparece
+          algún mensaje de error? ¿Por qué? ¿Se
+          aprecia para qué sirve el comando <command>cat</command>?
+          ¿Y para qué puede servir la opción
+          <command>-f</command> en el comando <command>rm</command>? Usar el
+          comando <command>man</command> para consultar el manual.
+        </para>
+
+        <programlisting>
+cp texto2.txt texto.txt
+cat texto.txt
+cat texto2.txt
+rm -f texto2.txt
+cat texto.txt
+cat texto2.txt
+        </programlisting>
+      </section>
+
+      <section id="envintro:cptexto">
+        <title>Ejercicio</title>
+
+        <para>
+          Partiendo de la situación dejada tras la ejecución del
+          ejercicio de la <xref linkend="envintro:cpcat"/>, crear, con comandos
+          en la consola de texto (sin usar el administrador de archivos) y
+          tecleando lo mínimo posible, copias de
+          <command>texto.txt</command> que se llamen
+          <command>texto2.txt</command>, <command>texto3.txt</command> y
+          <command>texto4.txt</command>. Usar los cursores para recorrer y
+          modificar los históricos de los comandos introducidos en el
+          ejercicio de la <xref linkend="envintro:cpcat" />.
+        </para>
+      </section>
+
+      <section>
+        <title>Ejercicio</title>
+      
+        <para>
+          Lanzar <command>konqueror</command>, pero no desde el panel, sino desde
+          la consola con el siguiente comando:
+        </para>
+        
+        <programlisting>konqueror</programlisting>
+
+        <para>
+          Aprecie como <command>konqueror</command> muestra ahora las copias
+          creadas por el ejercicio de la <xref linkend="envintro:cptexto"/>.
+          ¿Cómo queda el intérprete de comandos de la
+          pestaña desde la que se lanza <command>konqueror</command>
+          mientras el <command>konqueror</command> lanzado sigue abierto?
+          Aprecie cómo se recupera la usabilidad de ese
+          intérprete de comandos cuando se cierra ese
+          <command>konqueror</command>. Para evitar que un intérprete de
+          comandos quede así de bloqueado e inservible a la espera que
+          la aplicación lanzada termine o muera, podemos lanzar las
+          aplicaciones en segundo plano, de forma que el intérprete de
+          comandos siga leyendo y ejecutando comandos sin esperar que terminen
+          los comandos lanzados en segundo plano. Para lanzar una
+          aplicación en segundo plano, basta con añadirle un
+          símbolo <command>&amp;</command> al final del comando.
+          Comprobarlo.
+        </para>
+
+        <programlisting>konqueror &amp;</programlisting>
+      </section>
+    </section>
+    
+    <section>
+      <title>Otros programas</title>
+
+      <para>
+        Existen muchos otros programas disponibles en Linux. El administrador
+        puede instalarlos o desinstalarlos fácilmente, teniendo en
+        cuenta que la capacidad del disco duro es limitada. Existe un <ulink
+          url="http://www.it.uc3m.es/vlc/linuxsession/linuxsession_files/linux-windowa.shtml">listado 
+          de aplicaciones Linux por categorías contrastadas con sus
+          equivalentes Windows</ulink>. En general, puede apreciarse que en
+        Linux la variedad es mucho mayor.
+      </para>
+
+      <itemizedlist>
+        <listitem>
+          <para>
+            <command>ksnaphot</command>: capturador de pantallas (con
+            él se han capturado las imágenes que aparecen en esta
+            documentación)
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <command>korganizer</command>: agenda personal (muy útil
+            para planificarse el tiempo)
+          </para>
+        </listitem> 
+
+        <listitem>
+          <para>
+            <command>kcalc</command>: calculadora científica
+          </para>
+        </listitem>
+
+        <listitem>
+          <para><command>kalarm</command>: alertas</para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <command>kppp</command>: conexión a Internet por
+            módem
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <command>xine</command>: reproductor multimedia de vídeos y
+            ficheros de sonido
+          </para>
+        </listitem> 
+
+        <listitem>
+          <para>
+            <command>gimp</command>: editor de gráficos
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <command>OpenOffice</command>: aplicaciones de oficina: procesador
+            de texto, hoja de cálculo, presentaciones, etc.
+          </para>
+        </listitem> 
+        
+        <listitem>
+          <para>
+            Y muchas otras aplicaciones: (ver manual de cada una de ellas) 
+          </para>
+
+          <itemizedlist>
+            <listitem>
+              <para>
+                Que usan un interfaz gráfico: amsn, gaim, kfloppy,
+                kuickshow, etc.
+              </para>
+            </listitem>
+            
+            <listitem>
+              <para>
+                Que no necesariamente usan el interfaz gráfico: latex,
+                ispell, gcc, javac, etc.
+              </para>
+            </listitem> 
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+      
+      <para>
+        En general, existe en Internet mucho software disponible. Mucho
+        más del que puede caber en un DVD o en un ordenador personal.
+        Las distribuciones Linux traen muchos software básico, pero es
+        posible que en algún momento deseemos usar una aplicación
+        y nos demos cuenta de que no está instalada en nuestra
+        máquina.
+      </para>
+      
+      <para>
+        Una de las grandes ventajas de Linux como sistema operativo es la
+        facilidad para instalar nuevo software de forma segura en el ordenador,
+        evitando peligros como virus, troyanos o software malicioso en general.
+        Un ordenador Linux conectado a Internet puede ser fácilmente
+        actualizado con nuevo software de una forma segura, pues existen
+        mecanismos que aseguran que un software instalado no ha sido manipulado
+        indebidamente por personas con fines indeseables y garantiza que se
+        instalará todo lo necesario para el correcto funcionamiento de
+        lo que se va a instalar, así como que ninguna aplicación
+        previa dejará de funcionar por incompatibilidad con un nuevo
+        software. La mantenibilidad de una máquina Linux es mucho
+        más sencilla y eficaz que la de una máquina que use
+        sistema operativo Windows.
+      </para>
+
+    </section>
+
+    <section>
+      <title>Ejercicio (sólo si eres administrador de la máquina)</title>
+      
+      <para>
+        Vamos a instalar una aplicación que no viene en el CD/DVD. Para
+        ello hace falta ser administrador y que nuestra versión de LUC3M
+        sea igual o posterior a la 3.0 (las anteriores versiones no permiten la
+        instalación en modo <quote>Live</quote>). Los pasos a seguir son:
+      </para>
+      
+      <orderedlist>
+        <listitem>
+          <para>Abrir un terminal como administrador</para>
+        </listitem>
+        <listitem>
+          <para>
+            Añadir (si no la tiene ya) la siguiente línea al
+            fichero de texto /etc/apt/sources.list (con ello le diremos al
+            instalador una nueva fuente de la que traerse paquetes software
+            para ser instalados): 
+          </para>
+          <programlisting>
+deb http://deb.opera.com/opera/ stable non-free deb
+http://deb.opera.com/opera/ testing non-free deb
+http://deb.opera.com/opera/ unstable non-free
+          </programlisting>
+        </listitem>
+        <listitem>
+          <para>
+            Ejecutar el comando: <command>apt-get install opera</command>.
+            Linux buscará entre todas sus fuentes de dónde
+            conseguir tal paquete, averiguará todo lo necesario que debe
+            instalar, actualizar, desinstalar o cambiar para instalar este
+            programa, revisará las posibles inconsistencias entre esas
+            versiones de software y en general tomará todas sus
+            decisiones y no preguntará al usuario salvo en el caso de
+            cuestiones en las que haya decisiones importantes que tomar.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Opcionalmente se puede añadir un icono de acceso directo
+            desde el escritorio a la nueva aplicación instalada.
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+  </section>
+
+  <section>
+    <title>Permisos</title>
+
+    <para>
+      El administrador de archivos <command>konqueror</command> tiene en su
+      parte superior derecha una opción de visualización en forma
+      de árbol desplegable en lugar de la visualización por
+      iconos por defecto. La <xref linkend="envintro:konqueror_listado" />
+      muestra ese resultado. De esta forma, quedan a la vista numerosas
+      propiedades de cada fichero o directorio. Por ejemplo, además del
+      nombre, ahora se puede ver el tamaño, la fecha de última
+      modificación, el propietario del fichero y los permisos. Los
+      permisos son un mecanismo de seguridad que cada fichero o directorio
+      tiene asociado para indicar si las posibles acciones que pueden intentar
+      los distintos usuarios (crear, abrir, leer, escribir, listar, renombrar,
+      borrar ...) pueden llevarse a cabo o no según los perfiles de
+      usuarios.
+    </para>
+
+    <figure id="envintro:konqueror_listado">
+      <title>Konqueror mostrando su salida en forma detallada</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="konqueror_listado.gif" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>
+      Todo fichero o directorio tiene tres tripletas de permisos
+      <command>rwx</command>. El comando <command>ls</command>, con la
+      opción adecuada para mostrar el detalle (la opción es -l),
+      muestra a su salida un formato similar al de la <xref
+        linkend="envintro:formato_ls" />.
+    </para>
+
+    <figure id="envintro:formato_ls">
+      <title>Salida detallada del comando <command>ls</command></title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="formato_ls.gif"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>
+      La <xref linkend="envintro:rwx" /> y la <xref
+        linkend="envintro:rwxejem"/> muestran el significado de los permisos
+      <command>rwx</command>. 
+    </para>
+
+    <table frame="box" id="envintro:rwx">
+      <title>
+        Permisos <command>rwx</command> y su significado para ficheros o
+        directorios
+      </title>
+      <tgroup rowsep="1" colsep="1" cols="3">
+        <colspec colnum="1" colname="col1" align="center"/>
+        <colspec colnum="2" colname="col2" align="center"/>
+        <colspec colnum="3" colname="col3" align="center"/>
+        <thead>
+          <row>
+            <entry>Permiso</entry>
+            <entry>Significado para fichero</entry>
+            <entry>Significado para directorio</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry><command>r</command></entry>
+            <entry>Permiso de lectura</entry>
+            <entry>Permiso de listado</entry>
+          </row>
+          <row>
+            <entry><command>w</command></entry>
+            <entry>Permiso de escritura</entry>
+            <entry>Permiso de creación, borrado y renombrado</entry>
+          </row>
+          <row>
+            <entry><command>x</command></entry>
+            <entry>Permiso de ejecución</entry>
+            <entry>Permiso de cambio de directorio actual</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+    <table frame="box" id="envintro:rwxejem">
+      <title>
+        Ejemplos de combinaciones de permisos y su significado para fichero
+      </title>
+      <tgroup rowsep="1" colsep="1" cols="3">
+        <colspec colnum="1" colname="col1" align="center"/>
+        <colspec colnum="2" colname="col2" align="center"/>
+        <colspec colnum="3" colname="col3" align="center"/>
+        <thead>
+          <row>
+            <entry>Permiso</entry>
+            <entry>Valor numérico (en octal)</entry>
+            <entry>Significado para ficheros</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry><command>---</command></entry>
+            <entry>0</entry>
+            <entry>Ningún permiso</entry>
+          </row>
+          <row>
+            <entry><command>r--</command></entry>
+            <entry>4</entry>
+            <entry>Permiso de sólo lectura</entry>
+          </row>
+          <row>
+            <entry><command>r-x</command></entry>
+            <entry>5</entry>
+            <entry>Permisos de lectura y ejecución</entry>
+          </row>
+          <row>
+            <entry><command>rw-</command></entry>
+            <entry>6</entry>
+            <entry>Permisos de lectura y escritura</entry>
+          </row>
+          <row>
+            <entry><command>rwx</command></entry>
+            <entry>7</entry>
+            <entry>Todos los permisos</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+
+    <para>
+      Cada fichero o directorio define tres tripletas <command>rwx</command>:
+      Una para el usuario propietario el fichero
+      (<foreignphrase>user</foreignphrase>), otra para los usuarios de su mismo
+      grupo (<foreignphrase>group</foreignphrase>) y otra para el resto de los
+      usuarios (<foreignphrase>other</foreignphrase>) (por ese orden). En la
+      <xref linkend="envintro:rwxcomb" /> se muestran algunos ejemplos de
+      permisos habituales:
+    </para>
+
+    <table frame="box" id="envintro:rwxcomb">
+      <title>
+        Ejemplos de combinaciones de tripletas y su significado para ficheros
+      </title>
+      <tgroup rowsep="1" colsep="1" cols="3">
+        <colspec colnum="1" colname="col1" align="center"/>
+        <colspec colnum="2" colname="col2" align="center"/>
+        <colspec colnum="3" colname="col3" align="center"/>
+        <thead>
+          <row>
+            <entry>Permiso</entry>
+            <entry>Valor numérico (en octal)</entry>
+            <entry>Significado para el propietario</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry><command>rw-------</command></entry>
+            <entry>600</entry>
+            <entry>
+              <para>
+                Permisos de lectura y escritura para mí,
+                ningún permiso para los demás
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry><command>rw-r-----</command></entry>
+            <entry>640</entry>
+            <entry>
+              <para>
+                Permisos de lectura y escritura para mí, permiso de
+              lectura para los de mi grupo
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry><command>rw-rw----</command></entry>
+            <entry>660</entry>
+            <entry>
+              <para>
+                Permisos de lectura y escritura para mí y los de mi
+                grupo (peligroso)
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry><command>rwxr-x---</command></entry>
+            <entry>750</entry>
+            <entry>
+              <para>
+                Todos los permisos para mí y los de mi grupo (salvo
+                escritura)
+              </para>
+            </entry>
+          </row>
+          <row>
+            <entry><command>rwxr-xr-x</command></entry>
+            <entry>755</entry>
+            <entry>
+              <para>
+                Todos los permisos para todo el mundo, salvo los de escritura
+                para los demás
+              </para>
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+    <section>
+      <title>Ejercicio</title>
+
+      <para>
+        Ejecutar los siguientes comandos y comparar sus salidas. Analizar los
+        permisos que tienen los ficheros creados en los ejercicios anteriores y
+        también el que tiene el directorio actual (el directorio
+        <quote>.</quote>).
+      </para>
+      <programlisting>
+ls -l
+ls -la
+ls -l texto*.txt
+      </programlisting>
+    </section>
+
+  </section>
+
+  <section>
+    <title>Compactadores y compresores</title>
+
+    <para>
+      Los ficheros <command>zip</command>, <command>tgz</command>,
+      <command>tar.gz</command>, <command>tar.bz2</command> ó
+      <command>rar</command> que pueden llegar a nuestra cuenta son ficheros de
+      los que a su vez podemos extraer otros ficheros y directorios
+      situándolos en el lugar que deseemos. Estos formatos son
+      útiles porque ocupan menos espacio que los ficheros originales y
+      porque van comprimidos y aglutinados los unos con los otros dentro del
+      mismo archivo. La aplicación <command>ark</command> (similar al
+      Winzip de Windows) que aparece en la <xref linkend="envintro:ark" /> nos
+      puede servir para examinar su contenido y extraerlo al directorio que le
+      indiquemos, o también para generar nuestros propios archivos
+      comprimidos.
+    </para>
+
+    <figure id="envintro:ark">
+      <title>Aplicación <command>ark</command> (archivador)</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="ark.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>
+      La <xref linkend="envintro:comandosark" /> muestra una serie de comandos
+      que realizan tareas equivalentes a las que podemos manejar con
+      <command>ark</command>. En este caso, el comando depende del formato que
+      estemos usando. Los comandos se encuentran detallados en el
+      manual.
+    </para>
+    
+    <table frame="box" id="envintro:comandosark">
+      <title>Comandos Unix para manipular archivos</title>
+      <tgroup rowsep="1" colsep="1" cols="3">
+        <colspec colnum="1" colname="col1" align="center"/>
+        <colspec colnum="2" colname="col2" align="center"/>
+        <colspec colnum="3" colname="col3" align="center"/>
+        <thead>
+          <row>
+            <entry>Comando</entry>
+            <entry>Formato <command>zip</command></entry>
+            <entry>Formato <command>tgz</command></entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry><para>Ver el contenido</para></entry>
+            <entry><command>unzip -l fichero.zip</command></entry>
+            <entry><command>tar ztvf fichero.tgz</command></entry>
+          </row>
+          <row>
+            <entry>
+              <para>Extraer el contenido en <command>.</command></para>
+            </entry>
+            <entry><command>unzip fichero.zip</command></entry>
+            <entry><command>tar zxvf fichero.tgz</command></entry>
+          </row>
+          <row>
+            <entry><para>Generar un archivo</para></entry>
+            <entry><command>echo ficheros directorios | zip -r
+                -@</command></entry>
+            <entry>tar zxvf fichero.tgz ficheros diretorios</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </section>
+
+  <section>
+    <title>Cuota de disco</title>
+
+    <para>
+      Es habitual que los administradores de máquinas en las que el
+      número de usuarios es elevado decida poner un límite
+      superior al tamaño de la informaciónq que cada usuario
+      almacena en su cuenta (para evitar que se llene el disco). Debemos evitar
+      superar ese límite personal borrando aquellos ficheros que no nos
+      sean necesarios. El comando <command>quota</command> nos indicará
+      cuál es ese límite y cómo de cerca estamos para
+      alcanzarlo. El comando <command>du -sk .??* * | sort -n</command> nos
+      presenta los directorios y ficheros del directorio actual ordenados de
+      menor a mayor tamaño, incluyendo el tamaño (en KBytes) de
+      todo lo que cuelgue de los subdirectorios. Esto puede ser una pista de
+      mucha ayuda para determinar cuáles son los directorios que
+      más están ocupando en una cuenta y poder borrarlos primero.
+    </para>
+
+    <section>
+      <title>Ejercicio</title>
+      <para>
+        Comprobar el estado actual de la cuota y, si es necesario, hacer sitio
+        en la cuenta borrando lo que sobre o salvando la información a
+        otros repositorios (cuentas de correo, otras cuentas Unix, memorias
+        USB, etc.) o comprimiendo los ficheros más grandes que no sean
+        usados con frecuencia.
+      </para>
+    </section>
+  </section>
+
+  <section>
+    <title>Comandos básicos</title>
+
+    <para>
+      Los comandos Unix que se muestran en la <xref
+        linkend="envintro:unixcmd"/> permiten el manejo de ficheros,
+      directorios y permisos. Para más información detallada
+      sobre cada uno de ellos, puede usarse el comando de ayuda
+      <command>man</command>.
+    </para>
+      
+    <table frame="all" id="envintro:unixcmd">
+      <title>Comandos Unix que manipulan el sistema de ficheros</title>
+      <tgroup rowsep="1" colsep="1" cols="5">
+        <colspec colnum="1" colname="col1" align="center"/>
+        <colspec colnum="2" colname="col2" align="center"/>
+        <colspec colnum="3" colname="col3" align="center"/>
+        <colspec colnum="4" colname="col4" align="center"/>
+        <colspec colnum="5" colname="col5" align="center"/>
+        <thead>
+          <row>
+            <entry>Comando</entry>
+            <entry>Equivalente en MS/DOS</entry>
+            <entry>Función</entry>
+            <entry>Ejemplo</entry>
+            <entry>Descripción</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry><command>ls</command></entry>
+            <entry><command>dir</command></entry>
+            <entry>listado del contenido de directorios</entry>
+            <entry><command>ls -l $HOME</command></entry>
+            <entry>
+              <para>
+                Lista el directorio <command>$HOME</command> en formato
+                largo
+              </para>
+            </entry>
+          </row>
+          
+          <row>
+            <entry><command>cp</command></entry>
+            <entry><command>copy</command></entry>
+            <entry><para>copia de ficheros</para></entry>
+            <entry>
+              <para><command>cp forigen fdestino</command></para>
+              <para><command>cp ficheros directorio</command></para>
+            </entry>
+            <entry>
+              <para>
+                Crea en <command>fdestino</command> una copia de
+                <command>forigen</command>.
+              </para>
+              <para>El destino puede ser un directorio</para>
+            </entry>
+          </row>
+          
+          <row>
+            <entry><command>rm</command></entry>
+            <entry><command>del</command></entry>
+            <entry><para>borrado de ficheros y directorios</para></entry>
+            <entry><command>rm ficheros</command></entry>
+            <entry>
+              <para>Borra los ficheros que recibe como argumento</para>
+            </entry>
+          </row>
+          
+          <row>
+            <entry><command>mv</command></entry>
+            <entry>
+              <para><command>rename</command></para>
+              <para><command>move</command></para>
+            </entry>
+            <entry>
+              <para>
+                renombrado de ficheros y cambio de ubicación de
+                ficheros a otros directorios
+              </para>
+            </entry>
+            <entry>
+              <para><command>mv antiguo nuevo</command></para>
+              <para><command>mv ficheros directorio</command></para>
+            </entry>
+            <entry>
+              <para>Renombra o cambia enlaces de directorio</para>
+            </entry>
+          </row>
+          
+          <row>
+            <entry><command>diff</command></entry>
+            <entry></entry>
+            <entry>
+              <para>
+                comprobación de diferencias entre dos ficheros o
+                directorios
+              </para>
+            </entry>
+            <entry><command>diff fichero1 fichero2</command></entry>
+            <entry>
+              <para>
+                Lista las diferencias entre los dos ficheros
+                especificados. También permite trabajar con directorios
+              </para>
+            </entry>
+          </row>
+          
+          <row>
+            <entry><command>cat</command></entry>
+            <entry><command>type</command></entry>
+            <entry>
+              <para>volcar el contenido de los ficheros</para>
+            </entry>
+            <entry><command>cat ficheros</command></entry>
+            <entry>
+              <para>
+                Muestra el contenido de los ficheros por la pantalla (si la
+                salida estándar no está redireccionada a un pipe,
+                fichero o socket)
+              </para>
+            </entry>
+          </row>
+          
+          <row>
+            <entry><command>mkdir</command></entry>
+            <entry><command>md</command></entry>
+            <entry><para>creación de directorios</para></entry>
+            <entry><command>mkdir nuevodir</command></entry>
+            <entry><para>Crea nuevos directorios</para></entry>
+          </row>
+          
+          <row>
+            <entry><command>rmdir</command></entry>
+            <entry><command>rd</command></entry>
+            <entry><para>borrado de directorios</para></entry>
+            <entry><command>rmdir directorio</command></entry>
+            <entry>
+              <para>Borra directorios. Deben estar vacíos</para>
+            </entry>
+          </row>
+          
+          <row>
+            <entry><command>cd</command></entry>
+            <entry><command>cd</command></entry>
+            <entry><para>cambio de directorio actual</para></entry>
+            <entry><command>cd ..</command></entry>
+            <entry>
+              <para>
+                Cambia de directorio actual de trabajo (uno por proceso, es un
+                comando interno no delegable a ningún ejecutable
+                externo)
+              </para>
+            </entry>
+          </row>
+          
+          <row>
+            <entry><command>pwd</command></entry>
+            <entry><command>prompt $P$G</command></entry>
+            <entry>Muestra el directorio de trabajo</entry>
+            <entry><command>pwd</command></entry>
+            <entry>
+              <para>Muestra el directorio actual (comando interno)</para>
+            </entry>
+          </row>
+          
+          <row>
+            <entry><command>chmod</command></entry>
+            <entry><command>attrib</command></entry>
+            <entry><para>asigna/deniega permisos</para></entry>
+            <entry><command>chmod 700 $HOME</command></entry>
+            <entry>
+              <para>
+                Este ejemplo protege nuestro directorio
+                <command>$HOME</command> ante cualquier otro usuario
+              </para>
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+    <section>
+      <title>Ejercicio</title>
+      <para>
+        Ejecutar el comando <command>chmod</command> para que en un directorio,
+        y en todos los ficheros de su interior, sólo pueda acceder a su
+        conteniodo el propietario de la cuenta.
+      </para>
+    </section>
+  </section>
+
+  <section>
+    <title>Transferencia de ficheros entre ordenadores</title>
+
+    <para>
+      A menudo (especialmente si tenemos un Linux arrancado en
+      <quote>Live</quote>) es preciso llevarse los ficheros en los que se
+      está trabajando del ordenador en el que están almacenados a
+      otro ordenador. Hay múltiples formas de realizar esta
+      transferencia, y todas ellas tienen sus ventajas e inconvenientes. A
+      continuación se enumeran las más comunes.
+    </para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          Memorias USB: Estos dispositivos se conectan al puerto USB del
+          ordenador y son capaces de almacenar ficheros en su memoria interna.
+          No necesitan ser formateados y tanto Linux como Windows pueden leer y
+          escribir en ellos sin problemas. Dependiendo del escritorio en el que
+          estemos, su utilización en Linux puede ser muy simple o
+          requerir comandos especiales lanzados como administrador, pues antes
+          de ser utilizados necesitan ser montados (incorporados) en el sistema
+          de ficheros. Los sistemas Linux más modernos son capaces de
+          automontar estos dispositivos nada más son insertados en el
+          puerto USB. En cualquier caso, una vez transferidos los ficheros,
+          deben ser correctamente desmontados para que sus datos no queden
+          corruptos al ser extraídos. Consultar con los administradores
+          de sistemas la posibilidad de utilizar estos dispositivos.
+        </para>
+      </listitem>
+
+      <listitem>
+        <para>
+          Correo electrónico: El correo permite el intercambio de
+          ficheros entre dos ordenadores mediante su inclusión como
+          adjuntos en un mensaje. Este sistema tiene el inconveniente de que
+          los ficheros de gran tamaño suelen dar problemas al estar
+          limitada la cantidad de información que se almacena en una
+          cuenta de correo. Para el intercambio de ficheros de texto
+          pequeños es un sistema válido.
+        </para>
+      </listitem>
+
+      <listitem>
+        <para>
+          Programas de transferencias de ficheros: Existen programas
+          específicamente diseñados para depositar ficheros en
+          máquinas remotas (también para descargarlos de ellas).
+          ésta es una de las formas más efectivas de transferir
+          datos entre dos equipos, pero a su vez es la que más
+          requisitos tiene. Los programas requieren que el ordenador remoto
+          esté encendido en el momento de la transmisión y que
+          tenga funcionando un prigrama servidor al que nos podamos conectar
+          para realizar las transferencias, de forma similar a una
+          sesión de trabajo remota. Esto implica que se debe poder
+          acceder a un ordenador desde el exterior con un código de
+          usuario y clave. Debemos tener cuidado de que esa clave no vaya
+          desencriptada por la red para evitar que otros usuarios se conecten
+          en nuestro lugar.
+        </para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>
+      En todos los casos, salvo quizá en el último, conviene
+      compactar y comprimir los ficheros a transferir en un fichero zip o
+      <command>tgz</command>, transferir ese único fichero, y
+      descomprimirlo en la máquina destino. Las máquinas origen y
+      destino pueden funcionar con Windows o Linux indistintamente.
+    </para>
+
+    <section>
+      <title>Ejercicio</title>
+      <para>
+        Crear un fichero <command>zip</command> llamado
+        <command>ttao_prac1.zip</command> que contenga los ficheros del
+        directorio <command>$HOME/ttao/prac1</command>. Copiarlo a memoria USB
+        (o enviarlo adjunto por correo electrónico), dejar vacío
+        el directorio <command>$HOME/ttao/prac1</command> y volver a
+        descomprimir <command>ttao_prac1.zip</command> comprobando que todo
+        vuelve a quedar como al inicio de este ejercicio.
+      </para>
+    </section>
+  </section>
+</section>

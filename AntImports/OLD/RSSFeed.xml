@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="RSS Production" default="rss.processing" basedir=".">
+
+  <property name="style.dir" value="../../Style"/>
+
+  <property name="rss.src.dir"  value="."/>
+  <property name="rss.dst.dir"  value="."/>
+  <property name="rss.src.file" value="index.xml"/>
+  <property name="rss.dst.file" value="rss.xml"/>
+
+  <property name="rss.time.to.live"   value="30"/>
+  <property name="rss.title"          value="Rss title goes here"/>
+  <property name="rss.description"    value="Rss description goes here"/>
+  <property name="rss.main.site.url"  value="http://bogus.net"/>
+  <property name="rss.language"       value="en"/>
+  <property name="rss.copyright"      value="Copyright goes here"/>
+  <property name="rss.author.email"   value="author@bogus.net"/>
+  <property name="rss.author.name"    value="Author name goes here"/>
+  <property name="rss.subtitle"       value="Rss subtitle goes here"/>
+  <property name="rss.summary"        value="Rss summary goes here"/>
+  <property name="rss.explicit"       value="No"/>
+  <property name="rss.image.url"      value="http://image.net/bogusimage.png"/>
+  <property name="rss.image.desc"     value=""/>
+  <property name="rss.category"       value="Education"/>
+  <property name="rss.subcategory"    value="Higher Education"/>
+  <property name="rss.max.items"      value="10"/>
+  <property name="rss.check.pubdate"  value="0"/>
+  <property name="rss.force.date"     value=""/>
+  <property name="rss.self.atom.link" value=""/>
+  <property name="profile.lang"      value="es"/>
+  <property name="profile.revision"  value=""/>
+  <property name="default.lang"      value="${profile.lang}"/>
+
+  <import file="InitialCheck.xml" />
+
+  <!-- XML files the channel depends on -->
+  <fileset id="rss.depend.files" dir="${rss.src.dir}">
+    <include name="bogus.xml"/>
+  </fileset>
+
+  <!-- ================================================================ -->
+  <!--                        RSS PROCESSING                            -->
+  <!-- ================================================================ -->
+  <!-- Empty target suitable to be redefined -->
+  <target name="recursive.rss" depends="initial.check"/>
+
+  <target name="rss.processing" depends="initial.check"
+    description="Produces the XML file with RSS feed">
+
+    <!-- 
+    Fetch the date/time in RFC 822 format. I need this hack because the
+    EXSLT implementation of the date:time functions does not take into account
+    Daylight Savings Time!
+    -->
+    <exec executable="date" os="Linux" failonerror="true"
+      outputproperty="rss.date.rfc822">
+      <arg value="-R"/>
+    </exec>
+
+    <!-- Recursive calls to other directories to produce additional data -->
+    <antcall target="recursive.rss" inheritAll="false"/>
+
+    <echo>rss.processing: ${basedir}</echo>
+    <echo>profile/default lang: ${profile.lang}/${default.lang}</echo>
+    <echo>Revision: ${profile.revision}</echo>
+    <echo>Check pubdate: ${rss.check.pubdate}</echo>
+    <echo>Forcing Date: ${rss.force.date}</echo>
+    <echo>Current date: ${rss.date.rfc822}</echo>
+    <echo>RSS SrcDir: ${rss.src.dir}</echo>
+    <echo>StyleDir: ${style.dir}</echo>
+    <echo>RSS Dst Dir: ${rss.dst.dir}</echo>
+    <echo>RSS Dst File: ${rss.dst.file}</echo>
+    <echo>RSS title: ${rss.title}</echo>
+    <!-- Force dependency on files included in the result -->
+    <dependset>
+      <srcfileset dir="${rss.src.dir}">
+        <include name="${rss.src.file}"/>
+      </srcfileset>
+      <srcfileset dir="${style.dir}">
+        <include name="RSS.xsl"/>
+      </srcfileset>
+      <srcfileset refid="rss.depend.files"/>
+      <targetfileset dir="${rss.dst.dir}">
+        <include name="${rss.dst.file}"/>
+      </targetfileset>
+    </dependset>
+
+    <apply dir="${rss.src.dir}" parallel="false" dest="${rss.dst.dir}"
+      append="yes" executable="${xsltproc.exec}" os="Linux" output="build.out"
+      failonerror="true">
+      <fileset dir="${rss.src.dir}">
+        <include name="${rss.src.file}"/>
+      </fileset>
+      <arg value="-o"/>
+      <targetfile/>
+      <arg value="--xinclude"/>
+      <arg value="--stringparam"/>
+      <arg value="profile.lang"/>
+      <arg value="${profile.lang}"/>
+      <arg value="--stringparam"/>
+      <arg value="profile.revision"/>
+      <arg value="${profile.revision}"/>
+      <arg value="--stringparam"/>
+      <arg value="l10n.gentext.default.language"/>
+      <arg value="${default.lang}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.time.to.live"/>
+      <arg value="${rss.time.to.live}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.title"/>
+      <arg value="${rss.title}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.description"/>
+      <arg value="${rss.description}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.main.site.url"/>
+      <arg value="${rss.main.site.url}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.language"/>
+      <arg value="${rss.language}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.copyright"/>
+      <arg value="${rss.copyright}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.author.email"/>
+      <arg value="${rss.author.email}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.author.name"/>
+      <arg value="${rss.author.name}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.subtitle"/>
+      <arg value="${rss.subtitle}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.summary"/>
+      <arg value="${rss.summary}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.explicit"/>
+      <arg value="${rss.explicit}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.image.url"/>
+      <arg value="${rss.image.url}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.image.desc"/>
+      <arg value="${rss.image.desc}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.category"/>
+      <arg value="${rss.category}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.subcategory"/>
+      <arg value="${rss.subcategory}"/>
+      <arg value="--stringparam" />
+      <arg value="rss.check.pubdate" />
+      <arg value="${rss.check.pubdate}" />
+      <arg value="--stringparam"/>
+      <arg value="rss.force.date"/>
+      <arg value="${rss.force.date}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.date.rfc822"/>
+      <arg value="${rss.date.rfc822}"/>
+      <arg value="--stringparam"/>
+      <arg value="rss.self.atom.link"/>
+      <arg value="${rss.self.atom.link}" />
+      <arg value="${style.dir}/RSS.xsl" />
+      <srcfile />
+      <mapper type="glob" from="${rss.src.file}" to="${rss.dst.file}"/>
+    </apply>
+  </target>
+
+</project>

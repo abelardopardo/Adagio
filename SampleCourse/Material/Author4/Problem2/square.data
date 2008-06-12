@@ -1,0 +1,5 @@
+        .data
+num:    .int 523
+res:    .space 4
+res2:   .space 4
+msg:    .string "Resultado %08x:%08x\n"

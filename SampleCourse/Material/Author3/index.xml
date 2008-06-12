@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section lang="es" id="subversionhowto" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>El gestor de versiones Subversion</title>
+  <sectioninfo>
+    <!-- this string appears in several places, this is a way to avoid
+    unreliable changes -->
+    <contrib id="SVN_BASE_URL">https://flautin.it.uc3m.es/svn/ttao</contrib>
+  </sectioninfo>
+  <para>
+    Subversion es una herramienta que se utiliza para guardar copias de un
+    conjunto de directorios y ficheros en un depósito remoto. Este depósito se
+    utiliza principalmente para dos cosas: compartir estos ficheros con otros
+    usuarios, y guardar las diferentes versiones de estos ficheros a lo largo
+    del tiempo. Este tipo de herramientas se conocen genéricamente como
+    <quote>controladores de versiones</quote> y se utilizan con mucha frecuencia
+    en entornos de trabajo industriales, puesto que se necesita tanto compartir
+    ficheros entre los miembros de un equipo, como llevar un control sobre todos
+    los cambios que se hacen en ellos. Para poder utilizar esta aplicación se
+    necesitan dos programas, pero como usuario normal, sólo tienes que tener
+    instalado uno de ellos.
+  </para>
+  <para>
+    El primer programa se encarga de gestionar el depósito remoto y se ejecuta
+    en un ordenador con el que hay que conectarse a través de la red. Tú no
+    necesitas instalar ese programa, sino aquella entidad que facilite el
+    depósito remoto o servidor. El segundo programa se conoce normalmente como
+    el cliente y se ejecuta en tu ordenador personal. Su cometido es conectar
+    con el depósito remoto e intercambiar los ficheros necesarios en ambos
+    sentidos, tanto del depósito a tu carpeta local, como al revés, enviar de tu
+    carpeta local los ficheros al depósito.
+  </para>
+
+  <para>
+    En el caso de Linux, el nombre del programa cliente es simplemente
+    <code>svn</code> (es parte del paquete subversion) y es preciso tenerlo
+    instalado en tu distribución. Para saber si lo tienes instalado abre una
+    ventana con un intérprete de comandos o terminal y teclea el comando
+    <code>svn help</code>. Si se muestra un mensaje de ayuda en el que se
+    enumeran unos cuantos subcomandos tal y como se muestra en la siguiente
+    figura, el programa está disponible.
+  </para>
+
+  <informalfigure>
+    <mediaobject>
+      <imageobject>
+	<imagedata fileref="svnhelp.png"/>
+      </imageobject>
+      <textobject>
+        <phrase>Muestra del comando help</phrase>
+      </textobject>
+    </mediaobject>
+  </informalfigure>
+
+  <para>
+    En caso de no estar instalado, el sistema mostrará el mensaje de que
+    <code>svn</code> no se ha encontrado y debes, por tanto instalarlo antes de
+    seguir con esta guía. El programa cliente se invoca diciéndole la acción o
+    comando que queremos ejecutar, y el lugar del depósito común sobre el que
+    queremos hacer esa operación.
+  </para>
+
+  <para>
+    El lugar en el que está el depósito remoto se especifica a través de una URL
+    similar a la de una página web. En el caso de esta asignatura, el depósito
+    común de ficheros con tu copia personal de trabajo está en:
+  </para>
+
+  <programlisting><xi:include
+  xpointer="xpointer(//*[@id='SVN_BASE_URL']/text())"/>/Group_??</programlisting>
+
+  <para>
+    donde el sufijo <code>Group_??</code> lo debes reemplazar con el nombre de
+    tu grupo de prácticas una vez que lo hayas inscrito. El depósito tiene un
+    sistema de permisos por el cual los ficheros en ese lugar son sólo
+    accesibles únicamente por los miembros del grupo de prácticas y por los
+    profesores de la asignatura.
+  </para>
+
+  <section>
+    <title>Operaciones más comunes con Subversion</title>
+
+    <para>
+      Las operaciones más comunes que vas a realizar son dos: obtener ficheros
+      nuevos del depósito común, y mandar los cambios que has hecho en tus
+      ficheros para que queden almacenados en el depósito común. Pero antes de
+      obtener ficheros del depósito, podemos ver el contenido de este utilizando
+      el programa cliente con la orden list de la siguiente forma:
+    </para>
+    
+    <programlisting>svn --username 1000?????? list <xi:include
+  xpointer="xpointer(//*[@id='SVN_BASE_URL']/text())"/>/Group_??</programlisting> 
+    <para>
+      donde, de nuevo, debes reemplazar <code>Group_??</code> por el nombre de
+      tu grupo de prácticas, y como usuario has de introducir tu NIA de 9
+      dígitos (no incluyas el sufijo <code>@alumnos.uc3m.es</code>). Si la
+      conexión se realiza con éxito, verás que te pide un código de usuario y
+      clave. Debes utilizar los mismos datos que al entrar en CampusGlobal. Si
+      la autenticación se realiza con éxito, por pantalla aparece el contenido
+      del directorio especificado en el depósito común de ficheros tal y como se
+      muestra en la siguiente pantalla.
+    </para>
+
+    <informalfigure>
+      <mediaobject>
+	<imageobject>
+	  <imagedata fileref="svnlist.png"/>
+	</imageobject>
+        <textobject>
+          <phrase>Ejecución del comando list</phrase>
+        </textobject>
+      </mediaobject>
+    </informalfigure>
+
+    <para>
+      En caso de que este comando no se ejecute correctamente, debes revisar tu
+      conectividad de red, tu nombre de usuario/clave (de CampusGlobal) y
+      verificar que son correctas. Este primer comando ha sido para listar el
+      contenido del depósito remoto. Las operaciones para intercambiar
+      ficheros con este depósito remoto se describen a continuación.
+    </para>
+
+    <orderedlist>
+      <listitem>
+	<para>
+	  Obtener ficheros por primera vez del depósito remoto. Esta suele ser
+	  la primera operación que realizas con el programa cliente. Alguien ha
+	  creado en este depósito una primera versión de los ficheros con los
+	  que debes trabajar y están agrupados en un directorio. La primera
+	  operación es obtener una primera copia de estos datos. El comando a
+	  escribir tas el nombre <code>svn</code> es nombre
+	  <code>checkout</code> y el comando al completo es: <code>svn
+	  --username 1000????? checkout <xi:include
+	  xpointer="xpointer(//*[@id='SVN_BASE_URL']/text())"/>/Group_??</code>. Tras
+	  ejecutar este comando, debes ver por pantalla como aparecen unas
+	  líneas en las que se notifica que se están copiando desde el depósito
+	  remoto los ficheros de tu zona de trabajo y al terminar, se ha creado
+	  un directorio con nombre <code>Group_??</code>. La siguiente figura
+	  muestra este proceso:
+	</para>
+
+	<informalfigure>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="svncheckout.png"/>
+	    </imageobject>
+            <textobject>
+              <phrase>Ejecución del comando checkout</phrase>
+            </textobject>
+	  </mediaobject>
+	</informalfigure>
+
+	<para>
+	  Otra forma de ver este comando es que desde un estado inicial en el
+	  que en el depósito hay unos ficheros almacenados y en tu equipo
+	  personal no hay nada, pasas a un estado en el que ambos lugares
+	  tienen exactamente la misma información. Cuando esto sucede decimos
+	  que los contenidos están sincronizados. La siguiente figura ilustra
+	  esta transición.
+	</para>
+
+	<informalfigure>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="checkout.png"/>
+	    </imageobject>
+            <textobject>
+              <phrase>Ejecución del comando checkout</phrase>
+            </textobject>
+	  </mediaobject>
+	</informalfigure>
+
+	<para>
+	  Este comando se suele ejecutar una sola vez, cuando se quieren obtener
+	  una copia inicial de todos los ficheros en el depósito común. Una vez
+	  que se tiene esta copia, las siguientes operaciones, en lugar de
+	  volver a traerse todo, solo traen los cambios, tal y como se describe
+	  a continuación.
+	</para>
+      </listitem>
+
+      <listitem>
+	<para>
+	  Tras descargar la primera versión de los ficheros con el comando
+	  checkout, ahora existen dos copias de los mismos ficheros, la que está
+	  en el depósito común y la que tienes en tu propio directorio. A partir
+	  de ahora estas dos copias pueden cambiar de forma separada. Por
+	  ejemplo, ¿qué sucede si alguien pone una nueva versión de un fichero
+	  en el depósito común? En ese momento, tu ya no tienes la última
+	  versión, sino que es el depósito el que la tiene. El comando que se
+	  utiliza para obtener del depósito sólo aquellos ficheros que hayan
+	  cambiado respecto a la última vez que se hizo una copia es
+	  <code>update</code> y se debe ejecutar desde dentro de tu directorio
+	  local en el que quieres que se bajen las últimas versiones. Por tanto,
+	  y desde el directorio <code>Group_??</code>, el comando a ejecutar
+	  es: <code>svn --username 1000????? update <xi:include
+	  xpointer="xpointer(//*[@id='SVN_BASE_URL']/text())"/>/Group_??</code>. La
+	  siguiente figura muestra el efecto de este comando.
+	</para>
+
+	<informalfigure>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="svnupdate.png"/>
+	    </imageobject>
+            <textobject>
+              <phrase>Ejecución del comando update</phrase>
+            </textobject>
+	  </mediaobject>
+	</informalfigure>
+
+	<para>
+	  Como ves, el comando ha sido ejecutado desde dentro del directorio que
+	  previamente se ha obtenido con el comando <code>checkout</code>. Esta
+	  operación de <code>update</code> la debes hacer siempre que empieces
+	  una sesión de trabajo, de esta forma garantizas que tienes las
+	  versiones más recientes de tus ficheros. La siguiente figura muestra
+	  la transición del estado en el que los ficheros están sincronizados,
+	  al estado en el que en el depósito hay una versión modificada, y como
+	  el comando <code>update</code> los sincroniza de nuevo.
+	</para>
+
+	<informalfigure>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="update.png"/>
+	    </imageobject>
+            <textobject>
+              <phrase>Efecto del comando update</phrase>
+            </textobject>
+	  </mediaobject>
+	</informalfigure>
+      </listitem>
+
+      <listitem>
+	<para>
+	  En cuando modificas los ficheros almacenados en tu copia de trabajo,
+	  las dos versiones vuelven a tener datos diferentes. En este caso son
+	  los cambios en tu copia local los que deben reflejarse en el depósito
+	  remoto. Para ello se utiliza el commando <code>commit</code> desde el
+	  directorio local. El comando entero es <code>svn --username 1000?????
+	  commit -m 'comentario sobre los cambios'</code>. No hace falta
+	  especificar qué ficheros hay que enviar, la herramienta se encarga
+	  enviar los que hayan cambiado. La siguiente figura ilustra el efecto
+	  de este comando.
+	</para>
+
+	<informalfigure>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="svncommit.png"/>
+	    </imageobject>
+            <textobject>
+              <phrase>Ejemplo del comando commit</phrase>
+            </textobject>
+	  </mediaobject>
+	</informalfigure>
+
+	<para>
+	  Este comando se ha de ejecutar con mucha frecuencia, pues es la forma
+	  de tener la copia local y la remota con idénticos datos. La siguiente
+	  figura muestra la secuencia en la que modificas tus ficheros en la
+	  copia local y luego se envían al depósito mediante el comando
+	  <code>commit</code>. Este comando lo debes ejecutar muy a menudo (es
+	  una forma de guardar copias de seguridad de tus ficheros) y al menos
+	  siempre  que terminas una sesión de trabajo.
+	</para>
+
+	<informalfigure>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="commit.png"/>
+	    </imageobject>
+            <textobject>
+              <phrase>Efecto del comando commit</phrase>
+            </textobject>
+	  </mediaobject>
+	</informalfigure>
+      </listitem>
+    </orderedlist>
+  </section>
+
+  <section>
+    <title>Resumen de comandos en Subversion</title>
+    <para>
+      En la siguiente figura puedes ver un resumen de los comandos principales
+      de subversion así como la transición entre los diferentes estados. Fíjate
+      que si por cualquier motivo coincide que tienes una versión modificada de
+      ficheros locales, y que también están modificados en el depósito remoto,
+      primero has de ejecutar el comando <code>update</code> y a continuación
+      <code>commit</code> para volver a tener el contenido sincronizado.
+    </para>
+
+    <informalfigure>
+      <mediaobject>
+	<imageobject>
+	  <imagedata fileref="statetransition.png"/>
+	</imageobject>
+        <textobject>
+          <phrase>Resumen de comandos en subversion</phrase>
+        </textobject>
+      </mediaobject>
+    </informalfigure>
+  </section>
+</section>

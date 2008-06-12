@@ -1,0 +1,18 @@
+Author that produces LaTeX slides with figures processed by Inkscape to
+produce PNGs
+
+The final PDF is then post-processed to produce 2up document.
+
+The two files to publish would be:
+
+ASM_notes-1x2.pdf  
+ASM_notes.pdf
+
+The command is:
+
+bash Command
+
+The command to clean all the produced files is:
+
+bash Command clean
+

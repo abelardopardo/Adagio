@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Copy files outside the resource" default="export">
+
+  <!--
+      Given the following properties and file set:
+      
+      export.files: Filenames to export
+      export.src.dir: source directory for the files
+      export.dst.dir: destination dir
+
+      copies export.files from export.src.dir to export.dst.dir. The
+      copy is performed only if the two dirs are non empty and different
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="Copyfiles.xml"/>
+
+  <!-- Property definition -->
+  <property name="export.src.dir" value="${basedir}" />
+  <property name="export.dst.dir" value="${export.src.dir}" />
+  <property name="export.files"   value=""/>
+  <property name="export.dirs"    value=""/>
+
+  <!-- Regular target. It is executed if the check property is true, and it has
+  as dependency the NOT target. That way, if the property is not set, this
+  target is not executed and instead, the one notifying the user of such event
+  is executed. -->
+  <target name="export.processing" description="It only invokes copyfiles">
+
+    <echo>export.processing           CALL(copyfiles.processing)</echo>
+
+    <!-- Execute the command. Watch out for src.dir and dst.dir -->
+    <antcall target="copyfiles.processing" inheritAll="false">
+      <param name="copyfiles.src.dir"      value="${export.src.dir}" />
+      <param name="copyfiles.dst.dir"      value="${export.dst.dir}" />
+      <param name="copyfiles.files"        value="${export.files}"/>
+      <param name="copyfiles.dirs"        value="${export.dirs}"/>
+    </antcall>
+  </target>
+
+  <!-- Clean the produced files -->
+  <target name="export.clean" description="Delete files copied to dst">
+
+    <echo>export.clean           CALL(copyfiles.clean)</echo>
+
+    <antcall target="copyfiles.clean" inheritAll="false">
+      <param name="copyfiles.src.dir" value="${export.src.dir}" />
+      <param name="copyfiles.dst.dir" value="${export.dst.dir}" />
+      <param name="copyfiles.files"   value="${export.files}"/>
+      <param name="copyfiles.dirs"    value="${export.dirs}"/>
+    </antcall>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="export" depends="initial.delete.build.out, export.processing"/>
+</project>

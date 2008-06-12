@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Arbitrary file cleaning" default="clean.clean">
+
+  <!--
+      Given the following properties:
+
+      clean.src.dir: directory where the files are
+      clean.files: Set of files to delete
+
+      Delete the given files from the directory.
+  -->
+
+  <import file="InitialCheck.xml"/>
+
+  <property name="clean.src.dir" value="${basedir}"/>
+  <property name="clean.files"   value=""/>
+  
+  <!-- Set of files to delete -->
+  <filelist id="clean.filelist" dir="${clean.src.dir}"
+	    files="${clean.files}"/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="clean.check.values" 
+	  depends="initial.check, clean.dump.properties"> 
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="clean.check">
+      <and>
+	<not><equals arg1="${clean.src.dir}" arg2=""/></not>
+	<not><equals arg1="${clean.files}" arg2=""/></not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">    clean.check          = "${clean.check}"</echo>
+
+    <delete>
+      <fileset followsymlinks="false" dir="${basedir}" includes="*~"
+	       defaultexcludes="no"/>
+    </delete>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="clean.clean.NOT" unless="clean.check">
+    <echo>clean.clean            ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <target name="clean.clean" depends="clean.check.values, clean.clean.NOT"
+	  if="clean.check"
+	  description="Cleans local and recursive dirs">
+    
+    <echo>clean.clean            RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Dump explicitly the files to be deleted -->
+    <echo> deleted = ${clean.files}</echo>
+
+    <delete includeemptydirs="true">
+      <fileset dir=".">
+        <include name="build.out"/>
+      </fileset>
+      <filelist refid="clean.filelist"/>
+    </delete>
+  </target>
+
+  <target name="clean.dump.properties" depends="initial.check">
+    <echo level="info"> ------ Clean properties ----
+    clean.src.dir      = "${clean.src.dir}"
+    clean.files        = "${clean.files}"</echo>
+  </target>
+</project>

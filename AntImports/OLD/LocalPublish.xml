@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id: LocalPublish.xml,v 1.3 2005/09/06 12:37:48 abel Exp $ -->
+
+<project name="LocalBuild" default="local.build" basedir=".">
+  
+  <property name="scratch.dir"      value=""/>
+
+  <!-- ================================================================ -->
+  <!--                           FILESETS                               -->
+  <!-- ================================================================ -->
+
+  <!-- Files to be copied to the publication directory -->
+  <fileset id="topublish.files" dir="${basedir}">
+    <include name="bogus.file"/>
+  </fileset>
+
+  <!-- ================================================================ -->
+  <!--                       LOCAL PUBLISHING                           -->
+  <!-- ================================================================ -->
+
+  <!-- Empty target suitable to be redefined -->
+  <target name="recursive.publish" depends="initial.check"/>
+
+  <target name="local.publish"  depends="local.build"
+    if="scratch.dir"
+    description="Publish local files and calls recursive dirs">
+
+    <echo>local.publish: ${basedir}</echo>
+    <echo>scratch.dir:   ${scratch.dir}</echo>
+
+    <!-- Recursive calls to other directories to produce additional data -->
+    <antcall target="recursive.publish" inheritAll="false"/>
+
+    <!--                  Copy Files To Scratch Dir                     -->
+    <copy todir="${scratch.dir}">
+      <fileset refid="topublish.files"/>
+    </copy>
+
+  </target>
+
+</project>

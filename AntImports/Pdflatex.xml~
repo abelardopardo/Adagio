@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Process tex files with pdflatex" default="pdflatex.processing">
+
+  <!--
+      Given the following properties:
+
+      pdflatex.src.dir: directory from where to take the source files
+      pdflatex.dst.dir: directory where the produced files are stored
+      pdflatex.files: comma/space separated list of files to process
+
+      Produce a pdf file directly from a latex file using pdflatex
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="InitialCheck.xml"/>
+
+  <!-- Property definition -->
+  <property name="pdflatex.exec"           value="pdflatex"/>
+  <property name="pdflatex.src.dir"        value="${basedir}"/>
+  <property name="pdflatex.dst.dir"        value="${pdflatex.src.dir}"/>
+  <property name="pdflatex.files"          value=""/>
+  <!-- Source files to be processed by pdflatex -->
+  <filelist id="pdflatex.filelist" dir="${pdflatex.src.dir}"
+	    files="${pdflatex.files}"/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="pdflatex.check.values" 
+	  depends="initial.check, pdflatex.dump.properties">
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="pdflatex.check">
+      <and>
+	<!-- The required binaries need to be available. -->
+	<available file="${pdflatex.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
+	empty definition of this variable. At least a . needs to be present -->
+        <not><equals arg1="${pdflatex.src.dir}" arg2=""/></not>
+	<!-- There must be some files defined -->
+        <not><equals arg1="${pdflatex.files}" arg2=""/></not>
+	<!-- Require a non-empty dst.dir as well -->
+        <not><equals arg1="${pdflatex.dst.dir}" arg2=""/></not>
+      </and>
+    </condition>
+
+    <!-- Obtain the filelist containing the produced files. This is done to be
+    able to display the deleted files (debugging) -->
+    <pathconvert property="pdflatex.target.filelist.property" pathsep=" ">
+      <filelist refid="pdflatex.filelist"/>
+      <chainedmapper>
+	<mapper type="glob" from="*.tex" to="*.pdf"/>
+	<mapper type="flatten"/>
+      </chainedmapper>
+    </pathconvert>
+    <filelist id="pdflatex.target.filelist" dir="${pdflatex.dst.dir}"
+	      files="${pdflatex.target.filelist.property}"/>
+
+    <!-- Obtain the filelist containing the temporary files produced by latex -->
+    <pathconvert property="pdflatex.tmptarget.filelist.property" pathsep=" ">
+      <filelist refid="pdflatex.filelist"/>
+      <chainedmapper>
+	<compositemapper>
+	  <mapper type="glob" from="*.tex" to="*.pdf"/>
+	  <mapper type="glob" from="*.tex" to="*.aux"/>
+	  <mapper type="glob" from="*.tex" to="*.log"/>
+	  <mapper type="glob" from="*.tex" to="*.bbl"/>
+	  <mapper type="glob" from="*.tex" to="*.blg"/>
+	  <mapper type="glob" from="*.tex" to="*.idx"/>
+	  <mapper type="glob" from="*.tex" to="*.ilg"/>
+	  <mapper type="glob" from="*.tex" to="*.ind"/>
+	  <mapper type="glob" from="*.tex" to="*.lof"/>
+	  <mapper type="glob" from="*.tex" to="*.lot"/>
+	  <mapper type="glob" from="*.tex" to="*.toc"/>
+	  <mapper type="glob" from="*.tex" to="*.out"/>
+	</compositemapper>
+	<mapper type="flatten"/>
+      </chainedmapper>
+    </pathconvert>
+    <filelist id="pdflatex.tmptarget.filelist" dir="${pdflatex.dst.dir}"
+	      files="${pdflatex.tmptarget.filelist.property}"/>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">    pdflatex.check          = "${pdflatex.check}"
+    pdflatex.filelist           = "${pdflatex.files}"
+    pdflatex.target.filelist    = "${pdflatex.target.filelist.property}"
+    pdflatex.tmptarget.filelist = "${pdflatex.tmptarget.filelist.property}"
+    </echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="pdflatex.processing.NOT" unless="pdflatex.check">
+    <echo>pdflatex.processing         ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Regular target. It is executed if the check property is true, and it has
+  as dependency the NOT target. That way, if the property is not set, this
+  target is not executed and instead, the one notifying the user of such event
+  is executed. -->
+  <target name="pdflatex.processing" 
+	  depends="pdflatex.check.values, pdflatex.processing.NOT"
+	  if="pdflatex.check"
+	  description="Process the given files by pdflatex">
+
+    <echo>pdflatex.processing         RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Create the dst directory -->
+    <mkdir dir="${pdflatex.dst.dir}" />
+
+    <!-- Execute the command. Watch out for src.dir and dst.dir -->
+    <apply dir="${pdflatex.src.dir}" parallel="false" dest="${pdflatex.dst.dir}" 
+	   append="yes" failonerror="true" executable="${pdflatex.exec}" 
+	   output="build.out">
+      <arg value="-output-directory"/>
+      <arg value="${pdflatex.dst.dir}"/>
+      <filelist refid="pdflatex.filelist"/>
+      <!-- Mapper from source files to produced files -->
+      <mapper type="glob" from="*.tex" to="*.pdf"/>
+    </apply>    
+  </target>
+
+  <!-- Clean files produced by pdflatex -->
+  <target name="pdflatex.clean" depends="pdflatex.check.values"
+	  if="pdflatex.check" description="Remove files produced by pdflatex">
+
+    <echo>pdflatex.clean         RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Dump explicitly the files to be deleted -->
+    <echo> deleted = ${pdflatex.target.filelist.property}</echo>
+    <echo> deleted = ${pdflatex.tmptarget.filelist.property}</echo>
+
+    <!-- Perform the delete operation. The failonerror attributge is needed
+	 and must be set fo false because the dst directory might have been
+	 removed  -->
+    <delete failonerror="false">
+      <filelist refid="pdflatex.target.filelist"/>
+      <filelist refid="pdflatex.tmptarget.filelist"/>
+      <filelist files="${pdflatex.src.dir}/texput.log"/>
+    </delete>
+
+  </target>
+
+  <!-- Dump the properties defined in this script -->
+  <target name="pdflatex.dump.properties" depends="initial.check">
+    <echo level="info"> ------ pdflatex properties ----
+    pdflatex.exec     ="${pdflatex.exec}"
+    pdflatex.src.dir  ="${pdflatex.src.dir}"
+    pdflatex.dst.dir  ="${pdflatex.dst.dir}"
+    pdflatex.files    ="${pdflatex.files}"</echo>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="pdflatex" depends="initial.delete.build.out, pdflatex.processing"/>
+</project>

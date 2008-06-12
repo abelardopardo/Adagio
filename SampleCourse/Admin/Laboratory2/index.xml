@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+
+<chapter>
+  <chapterinfo condition="rss.info">
+    <title lang="es">Práctica 2</title>
+    <title lang="en">Lab 2</title>
+    <modespec>
+      <olink lang="es" condition="link">index.es.html?fromrss=1</olink>
+      <olink lang="en" condition="link">index.en.html?fromrss=1</olink>
+    </modespec>
+    <abstract>
+      <formalpara>
+        <title lang="es">Práctica 1 de la asignatura</title>
+        <title lang="en">Lab 1</title>
+        <para lang="es">
+	  Párrafo para explicar exactamente qué se hace aquí.
+        </para>
+        <para lang="en">
+	  Paragraph explaining exactly what is done here
+        </para>
+      </formalpara>
+    </abstract>
+    <pubdate></pubdate>
+    <author>
+      <firstname>Abelardo</firstname><surname>Pardo</surname>
+    </author>
+    <keywordset>
+      <keyword condition="category">Education</keyword>
+    </keywordset>
+  </chapterinfo>
+  <title lang="es">Práctica 2</title>
+  <title lang="en">Lab 2</title>
+  
+  <!-- Special mark in docbook including administrative information -->
+  <note condition="AdminInfo">
+    <!-- Hand in date to print a header with the date -->
+    <para lang="es" condition="handindate">21 de mayo de 2008 a las 13:00</para>
+    <para lang="en" condition="handindate">May 21st, 2008 at 13:00</para>
+    
+    <!-- Date in deadline format -->
+    <para condition="deadline.format">X 21/05/08/13/00 13:00</para>
+    
+    <!-- Absolute URL of the submission page -->
+    <para condition="handinlink">../HwGroups/downloadsubmit.html</para>
+
+    <para
+      condition="processor">https://asap.it.uc3m.es/servlet/admit?keyCode=ttao-hw6&amp;debugLevel=3</para>
+  </note>
+
+  <!-- Include the first exercise -->
+  <xi:include xml:base="./"
+    href="../../Material/Author5/problem.xml" 
+    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+</chapter>

@@ -1,0 +1,1227 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd" >
+
+<chapter id="TestFelderSilverman">
+  <?dbhtml filename="testfeldersilverman.html" ?>
+  <title>
+    <phrase lang="es">Test de Felder-Silverman</phrase>
+    <phrase lang="en">Felder-Silverman Test</phrase>
+  </title>
+  
+  <qandaset defaultlabel="number">
+    <?dbhtml toc="0" ?>
+
+    <qandaentry id="Q_01-1">
+      <question>
+        <para lang="es">
+          Entiendo mejor algo si:
+        </para>
+	<para lang="en">
+          I understand better if:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Lo practico
+        </para>
+	<para lang="en">
+          I practice it
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Pienso en ello
+        </para>
+	<para lang="en">
+          I think about it
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_02-2">
+      <question>
+        <para lang="es">
+          Me considero:
+        </para>
+	<para lang="en">
+          I consider myself
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Realista
+        </para>
+	<para lang="en">
+          Realistic
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Innovador
+        </para>
+	<para lang="en">
+          Innovative
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_03-3">
+      <question>
+        <para lang="es">
+          Cuando pienso algo acerca de lo que hice ayer es más probable que lo
+          haga basado en:
+        </para>
+	<para lang="en">
+          Whenever I think about what I did yesterday, it is more probable that
+          I do it based on:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Una imagen
+        </para>
+	<para lang="en">
+          An image
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Palabras
+        </para>
+	<para lang="en">
+          Words
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_04-4">
+      <question>
+        <para lang="es">
+          Tengo tendencia a entender:
+        </para>
+	<para lang="en">
+          I have a tendency to understand:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          los detalles de un tema pero no ver claramente su estructura
+          completa
+        </para>
+	<para lang="en">
+          the details of a topic but not see clearly its complete structure
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          la estructura completa pero no ver claramente los detalles
+        </para>
+	<para lang="en">
+          the complete structure but not see clearly the details.
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_05-1">
+      <question>
+        <para lang="es">
+          Cuando estoy aprendiendo algo nuevo me ayuda:
+        </para>
+	<para lang="en">
+          Whenever I'm learning something new, it helps me
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Hablar de ello
+        </para>
+	<para lang="en">
+          Talking about it
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Pensar en ello
+        </para>
+	<para lang="en">
+          Thinking about it
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_06-2">
+      <question>
+        <para lang="es">
+          Si yo fuera profesor preferiría dar un curso que:
+        </para>
+	<para lang="en">
+          If I were a teacher I would prefer to teach a course on:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Trate sobre hechos y situaciones reales de la vida
+        </para>
+	<para lang="en">
+          Real facts and real life situations.
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Trate con ideas y teorías
+        </para>
+	<para lang="en">
+          Ideas and theories
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_07-3">
+      <question>
+        <para lang="es">
+          Prefiero obtener información nueva de:
+        </para>
+	<para lang="en">
+          I prefer to obtain new information from:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Imágenes, diagramas, gráficas o mapas
+        </para>
+	<para lang="en">
+          Images, diagrams, graphics or maps.
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Instrucciones escritas o información verbal
+        </para>
+	<para lang="en">
+          Written instructions or verbal information.
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_08-4">
+      <question>
+        <para lang="es">
+          Una vez que entiendo
+        </para>
+	<para lang="en">
+          Once I understood
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Todas las partes entiendo el total
+        </para>
+	<para lang="en">
+          All the parts, I understand the whole idea
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          El total de algo entiendo cómo encajan sus partes
+        </para>
+	<para lang="en">
+          The whole idea, I understand how all its pieces fit together.
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_09-1">
+      <question>
+        <para lang="es">
+          En un grupo de estudio que trabaja con un material difícil es más
+          probable que:
+        </para>
+	<para lang="en">
+          In a study group working with difficult material it is more probable
+          that I 
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Participe y contribuya con ideas
+        </para>
+	<para lang="en">
+          will participate and contribute my ideas
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          No participe y sólo escuche
+        </para>
+	<para lang="en">
+          will not participate and only listen
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_10-2">
+      <question>
+        <para lang="es">
+          Es más fácil para mí aprender:
+        </para>
+	<para lang="en">
+          It is easier for me to lear:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Hechos
+        </para>
+	<para lang="en">
+          Facts
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Conceptos
+        </para>
+	<para lang="en">
+          Concepts
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_11-3">
+      <question>
+        <para lang="es">
+          En un libro con muchas imágenes y gráficas es más probable que:
+        </para>
+	<para lang="en">
+          In a book with plenty of images and graphics it is more probable that
+          I
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Revise cuidadosamente las imágenes y las gráficas
+        </para>
+	<para lang="en">
+          Carefully review the images and the graphs
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Me concentre en el texto escrito
+        </para>
+	<para lang="en">
+          Concentrate in the written text
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_12-4">
+      <question>
+        <para lang="es">
+          Cuando resuelvo problemas de matemáticas
+        </para>
+	<para lang="en">
+          When solving math problems I
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Generalmente trabajo sobre las soluciones con un paso a la vez
+        </para>
+	<para lang="en">
+          Generally work over the solutions one step at a time
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Frecuentemente sé cuáles son las soluciones pero luego tengo
+          dificultad para imaginarme los pasos para llegar a ellas
+        </para>
+	<para lang="en">
+          Frequently know which are the solutions but then I have difficulty to
+          imagine the steps to reach them
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_13-1">
+      <question>
+        <para lang="es">
+          En las clases a las que he asistido:
+        </para>
+	<para lang="en">
+          In the classes I attend I
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          He llegado a saber cómo son muchos de los estudiantes
+        </para>
+	<para lang="en">
+          Have got to know how most of the students are
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Raramente he llegado a saber cómo son muchos de los estudiantes
+        </para>
+	<para lang="en">
+          Have rarely got to know how are most of the students.
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_14-2">
+      <question>
+        <para lang="es">
+          Cuando leo temas que no son de ficción prefiero algo que me:
+        </para>
+	<para lang="en">
+          Whenever I read topics that are not fictional I prefer something that
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Enseñe nuevos hechos o me diga cómo hacer algo
+        </para>
+	<para lang="en">
+          Teaches me new facts or tells me how to do something
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Dé nuevas ideas en que pensar
+        </para>
+	<para lang="en">
+          Gives me new ideas to think about
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_15-3">
+      <question>
+        <para lang="es">
+          Me gusta cómo enseñan los profesores que:
+        </para>
+	<para lang="en">
+          I like those teachers that 
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Utilizan muchos esquemas en la pizarra
+        </para>
+	<para lang="en">
+          Use lots of schemes in the board.
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Explican extensamente
+        </para>
+	<para lang="en">
+          Explaing intensivelly
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_16-4">
+      <question>
+        <para lang="es">
+          Cuando estoy analizando un cuento o una novela
+        </para>
+	<para lang="en">
+          Whenever I'm analyzing a story or a novel I
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Pienso en los incidentes y trato de organizarlos para configurar los temas
+        </para>
+	<para lang="en">
+          Think about the scenes and try to organize them to configure the
+          overall plot
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Me doy cuenta de cuáles son los temas cuando termino de leer y luego
+          tengo que regresar y encontrar los incidentes que los demuestran
+        </para>
+	<para lang="en">
+          Realize what the plot is about when I finish reading and go back and
+          find the scenes that sustain them.
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_17-1">
+      <question>
+        <para lang="es">
+          Cuando comienzo a resolver un problema es más probable que:
+        </para>
+	<para lang="en">
+          Whenever I start to solve a problem it is more probable that I:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Comience a trabajar en su solución inmediatamente
+        </para>
+	<para lang="en">
+          Start to work on the solution immediately.
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Primero trate de entender completamente el problema
+        </para>
+	<para lang="en">
+          First try to understand the problem completely.
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_18-2">
+      <question>
+        <para lang="es">
+          Prefiero la idea de:
+        </para>
+	<para lang="en">
+          I prefer the idea of:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Certeza
+        </para>
+	<para lang="en">
+          Certainty
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Teoría
+        </para>
+	<para lang="en">
+          Theory
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_19-3">
+      <question>
+        <para lang="es">
+          Recuerdo mejor:
+        </para>
+	<para lang="en">
+          I remember better:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Lo que veo
+        </para>
+	<para lang="en">
+          What I see
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Lo que oigo
+        </para>
+	<para lang="en">
+          What I heard
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_20-4">
+      <question>
+        <para lang="es">
+          Es más importante para mí que un profesor:
+        </para>
+	<para lang="en">
+          It is more important to me that a professor:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Exponga el material en pasos secuenciales claros
+        </para>
+	<para lang="en">
+          Explains the material in clearly stated sequential steps
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Me dé un panorama general y relacione el material con otros temas
+        </para>
+	<para lang="en">
+          Gives me a panoramic view and relate the material with other topics
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_21-1">
+      <question>
+        <para lang="es">
+          Prefiero estudiar:
+        </para>
+	<para lang="en">
+          I prefer to study:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          En un grupo
+        </para>
+	<para lang="en">
+          In a group
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Solo
+        </para>
+	<para lang="en">
+          Alone
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_22-2">
+      <question>
+        <para lang="es">
+          Me considero:
+        </para>
+	<para lang="en">
+          I consider myself:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Cuidadoso en los detalles de mi trabajo
+        </para>
+	<para lang="en">
+          Careful with details in my job
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Creativo en la forma en que hago mi trabajo
+        </para>
+	<para lang="en">
+          Creative in the form in which I do my job
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_23-3">
+      <question>
+        <para lang="es">
+          Cuando alguien me da direcciones de nuevos lugares prefiero:
+        </para>
+	<para lang="en">
+          When somebody gives me directions to a new place I prefer:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Un mapa
+        </para>
+	<para lang="en">
+          I map
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Instrucciones escritas
+        </para>
+	<para lang="en">
+          Written instructions
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_24-4">
+      <question>
+        <para lang="es">
+          Aprendo:
+        </para>
+	<para lang="en">
+          I learn:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          A un paso constante. Si estudio con ahínco consigo lo que deseo
+        </para>
+	<para lang="en">
+          At a steady pace. If I study hard, I get what I want
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Con inicios y pausas. Me confundo y súbitamente lo entiendo
+        </para>
+	<para lang="en">
+          With ups and downs. I get confussed and suddently, I got it
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_25-1">
+      <question>
+        <para lang="es">
+          Prefiero primero:
+        </para>
+	<para lang="en">
+          I prefer first to:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Hacer algo y ver que sucede
+        </para>
+	<para lang="en">
+          Do something and see what happens
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Pensar cómo voy a hacer algo
+        </para>
+	<para lang="en">
+          Think how I'm going to do something
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_26-2">
+      <question>
+        <para lang="es">
+          Cuando leo por diversión, me gustan los escritores que:
+        </para>
+	<para lang="en">
+          When I read for fun, I like the writers that:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Dicen claramente lo que desean dar a entender
+        </para>
+	<para lang="en">
+          Clearly say what the want to explain
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Dicen las cosas en forma creativa e interesante
+        </para>
+	<para lang="en">
+          Say things in a creative and interesting way
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_27-3">
+      <question>
+        <para lang="es">
+          Cuando veo un esquema o bosquejo en clase, es más probable que
+          recuerde:
+        </para>
+	<para lang="en">
+          When I see a scheme or draft in class, it is more probable that I
+          remember
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          La imagen
+        </para>
+	<para lang="en">
+          The image
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Lo que el profesor diga acerca de ella
+        </para>
+	<para lang="en">
+          What the professor said about it
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_28-4">
+      <question>
+        <para lang="es">
+          Cuando me enfrento a un cuerpo de información
+        </para>
+	<para lang="en">
+          When I'm faced with a body of knowledge I:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Me concentro en los detalles y pierdo de vista el total de la misma
+        </para>
+	<para lang="en">
+          Concentrate on the details and loos track of the whole idea.
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Trato de entender el todo antes de ir a los detalles
+        </para>
+	<para lang="en">
+          Try to understand the whole idea before getting to the details
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_29-1">
+      <question>
+        <para lang="es">
+          Recuerdo más fácilmente algo:
+        </para>
+	<para lang="en">
+          I remember more easily something that:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Que he hecho
+        </para>
+	<para lang="en">
+          I've done
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          En lo que he pensado mucho
+        </para>
+	<para lang="en">
+          I've thought about it a lot
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_30-2">
+      <question>
+        <para lang="es">
+          Cuando tengo que hacer un trabajo, prefiero:
+        </para>
+	<para lang="en">
+          When I have to perform a job, I prefer to:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Dominar una forma de hacerlo
+        </para>
+	<para lang="en">
+          Control one way to do it.
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Intentar nuevas formas de hacerlo
+        </para>
+	<para lang="en">
+          Try new ways of doing it
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_31-3">
+      <question>
+        <para lang="es">
+          Cuando alguien me enseña datos, prefiero:
+        </para>
+	<para lang="en">
+          When somebody shows me data, I prefer:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Gráficas
+        </para>
+	<para lang="en">
+          Graphics
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Resúmenes de texto
+        </para>
+	<para lang="en">
+          Text summaries
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_32-4">
+      <question>
+        <para lang="es">
+          Cuando escribo un trabajo, es más probable que lo haga (piense o escriba):
+        </para>
+	<para lang="en">
+          When I write a document, It is more probable that I'll do it (write
+          or think about it):
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Desde el principio y avance
+        </para>
+	<para lang="en">
+          From the beginning and then advancing
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          En diferentes partes y luego las ordene
+        </para>
+	<para lang="en">
+          In different parts and then sort them
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_33-1">
+      <question>
+        <para lang="es">
+          Cuando tengo que trabajar en un proyecto de grupo, primero quiero
+          realizar una <quote>lluvia de ideas</quote>:
+        </para>
+	<para lang="en">
+          When I have to work in a group project, first I want to do some
+          brainstorming:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Donde cada uno contribuye con sus ideas
+        </para>
+	<para lang="en">
+          Where each one contributes ideas
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          En forma personal y luego juntarme con el grupo para compararlas
+        </para>
+	<para lang="en">
+          Personally and then get together with the rest of the group to share
+          them
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_34-2">
+      <question>
+        <para lang="es">
+          Considero que es mejor elogio llamar a alguien:
+        </para>
+	<para lang="en">
+          I consider that the best compliment is to call somebody:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Realista
+        </para>
+	<para lang="en">
+          Realistic
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Imaginativo
+        </para>
+	<para lang="en">
+          Imaginative
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_35-3">
+      <question>
+        <para lang="es">
+          Cuando conozco gente en una fiesta, es más probable que recuerde:
+        </para>
+	<para lang="en">
+          When I meet people at a party, it is more probable that I remember:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Cómo es su aspecto
+        </para>
+	<para lang="en">
+          The way they look
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Lo que dicen de sí mismos
+        </para>
+	<para lang="en">
+          What they say about themselves
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_36-4">
+      <question>
+        <para lang="es">
+          Cuando estoy aprendiendo un tema, prefiero:
+        </para>
+	<para lang="en">
+          When I'm absorving a topic, I prefer to:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Mantenerme concentrado en ese tema aprendiendo lo más que pueda de él
+        </para>
+	<para lang="en">
+          Keep concentrated in that topic learning as much as possible from it
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Hacer conexiones entre ese tema y temas relacionados
+        </para>
+	<para lang="en">
+          Make connections between this topic and other realted topics
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_37-1">
+      <question>
+        <para lang="es">
+          Me considero:
+        </para>
+	<para lang="en">
+          I consider myself:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Abierto
+        </para>
+	<para lang="en">
+          Open
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Reservado
+        </para>
+	<para lang="en">
+          Reserved
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_38-2">
+      <question>
+        <para lang="es">
+          Prefiero los cursos que dan más importancia a:
+        </para>
+	<para lang="en">
+          I prefer courses that give more importance to:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Material concreto (hechos, datos)
+        </para>
+	<para lang="en">
+          Concrete material (facts, data)
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Material abstracto (conceptos, teorías)
+        </para>
+	<para lang="en">
+          Abstract material (concepts, theories)
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_39-3">
+      <question>
+        <para lang="es">
+          Para divertirme, prefiero:
+        </para>
+	<para lang="en">
+          To have fun I prefer to:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Ver televisión
+        </para>
+	<para lang="en">
+          Watch TV
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Leer un libro
+        </para>
+	<para lang="en">
+          Read a book
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_40-4">
+      <question>
+        <para lang="es">
+          Algunos profesores inician sus clases haciendo un esquema de lo que
+          enseñarán. Estos esquemas son:
+        </para>
+	<para lang="en">
+          Some professors start their classes making a summary of what they
+          will cover. These summaries are:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Algo útil para mí
+        </para>
+	<para lang="en">
+          Somewhat useful to me
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Muy útiles para mí
+        </para>
+	<para lang="en">
+          Very useful to me
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_41-1">
+      <question>
+        <para lang="es">
+          La idea de hacer una tarea en grupo con una sola calificación para todos:
+        </para>
+	<para lang="en">
+          The idea to do an assignment with a group and obtain one single score
+          for everybody is something:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Me parece bien
+        </para>
+	<para lang="en">
+          I agree with
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          No me parece bien
+        </para>
+	<para lang="en">
+          I disagree with
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_42-2">
+      <question>
+        <para lang="es">
+          Cuando hago grandes cálculos:
+        </para>
+	<para lang="en">
+          When doing complex calculations I:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Tiendo a repetir todos mis pasos y revisar cuidadosamente mi trabajo
+        </para>
+	<para lang="en">
+          Tend to repeat all the steps and carefully review my work
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Me cansa hacer su revisión y tengo que esforzarme para hacerlo
+        </para>
+	<para lang="en">
+          Get tired when reviewing the results and I have to force it
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_43-3">
+      <question>
+        <para lang="es">
+          Tiendo a recordar lugares en los que he estado:
+        </para>
+	<para lang="en">
+          The places where I've been I tend to:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Fácilmente y con bastante exactitud
+        </para>
+	<para lang="en">
+          Easily remember them with great precission
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Con dificultad y sin mucho detalle
+        </para>
+	<para lang="en">
+          Barely remember them and their details.
+        </para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="Q_44-4">
+      <question>
+        <para lang="es">
+          Cuando resuelvo problemas en grupo, es más probable que yo pense en:
+        </para>
+	<para lang="en">
+          When I solve problems with a group, it is more probable that I think
+          about:
+        </para>
+      </question>
+      <answer>
+        <para lang="es">
+          Los pasos para la solución de problemas
+        </para>
+	<para lang="en">
+          The steps to solve the problem
+        </para>
+      </answer>
+      <answer>
+        <para lang="es">
+          Las posibles consecuencias o aplicaciones de la solución en
+          un amplio rango de campos
+        </para>
+	<para lang="en">
+          The possible consequences or applications of the solution in a wide
+          range of fields.
+        </para>
+      </answer>
+    </qandaentry>
+  </qandaset>
+
+</chapter>

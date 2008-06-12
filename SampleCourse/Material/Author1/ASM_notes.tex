@@ -1,0 +1,729 @@
+%
+% Revision $Id: SlidePrelude.tex,v 3.6 2005/02/16 08:45:14 abel Exp $
+%
+\documentclass[a4paper,landscape]{article}
+
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{calc}
+\usepackage[pdftex,usenames]{color}
+\usepackage{colortbl}
+\usepackage{enumerate}
+\usepackage[latin1]{inputenc}
+% \usepackage{isolatin1}
+\usepackage{marvosym}
+\usepackage{moreverb}
+
+\ifx\pdfoutput\undefined 
+\usepackage[dvips]{graphicx}
+\DeclareGraphicsExtensions{.eps}
+\else
+\usepackage[pdftex]{graphicx}
+%\usepackage[pdftex]{thumbpdf}       %%% thumbnails for pdflatex
+\DeclareGraphicsExtensions{.png,.pdf}
+\DeclareGraphicsRule{.120x120.png}{png}{*}{}
+%\pdfadjustspacing=1                %%% force LaTeX-like character spacing %%%
+\fi
+
+\usepackage{fancyhdr}
+\usepackage{amsfonts}
+\usepackage{multirow}
+\usepackage{times}
+\usepackage{verbatim}
+
+%
+% Slide definition
+%
+\newenvironment{slide}[1]{\chead{\Huge\bf #1}}
+                         {\vspace*{\stretch{1}}\newpage}
+\newenvironment{aslide}[1]{
+  \chead{\Huge\bf #1}
+  \addcontentsline{toc}{section}{#1}
+  \addtocounter{page}{-1}
+  }
+  {\vspace*{\stretch{1}}\newpage}
+\def\vs{\vspace*{\stretch{1}}}
+%
+% Set the lecture counter
+%
+\newcounter{lecture}
+\def\thelecture {\arabic{lecture}}
+
+%
+% Definitions of new environments and macros.
+%
+\newenvironment{myalgorithm}{
+  \begin{tabbing}
+    00\=00\=00\=00\=00\=00\=00\=00\=00\=00\=0 \kill
+    }{
+  \end{tabbing}
+  }
+\def\keyword#1{\mbox{\underbar{\bf #1}}}
+
+\newsavebox{\fmbox}
+\newenvironment{fmpage}[1]
+{\begin{lrbox}{\fmbox}\begin{minipage}{#1}}
+    {\end{minipage}\end{lrbox}\fbox{\usebox{\fmbox}}}
+
+% \definecolor{bkgndcolor}{rgb}{0.125,0.25,1}
+% \definecolor{normal}{rgb}{1,1,1}
+% \definecolor{colorA}{rgb}{1,1,0}
+% \definecolor{colorB}{rgb}{0,1,1}
+% \definecolor{colorC}{rgb}{0,1,0}
+% \definecolor{colorD}{rgb}{1,0,1}
+% \definecolor{colorE}{rgb}{1,0,0}
+
+% \definecolor{bkgndcolor}{rgb}{1,0.96,0.93} -->
+\definecolor{bkgndcolor}{rgb}{1,1,1}
+\definecolor{normal}{rgb}{0,0,0}
+\definecolor{colorA}{rgb}{1,0,0}
+\definecolor{colorB}{rgb}{0,0,1}
+% \definecolor{colorC}{rgb}{0.65,0.16,0.16}
+% \definecolor{colorD}{rgb}{1,0,1}
+% \definecolor{colorE}{rgb}{1,0,0}
+
+%
+% Font Declaration
+%
+% \renewcommand{\encodingdefault}{OT1} -->
+% \renewcommand{\familydefault}{lcmss} -->
+% \renewcommand{\seriesdefault}{m} -->
+% \renewcommand{\shapedefault}{n} -->
+
+%
+% Slide Text dimensions
+%
+\textwidth      = 277mm
+\textheight     = 165mm
+\evensidemargin = -15.4mm
+\oddsidemargin  = -15.4mm
+\topmargin      = -25.4mm
+\topskip        = 0mm
+\headheight     = 16mm
+\parindent      = 0mm
+
+% Use the fancyheadings package by Piet van Oostrum
+\pagestyle{fancy}
+
+\pagecolor{bkgndcolor}
+\color{normal}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Definitions for the head page
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\titleforpdf{Computer Architecture Course Overview}
+\def\subjectforpdf{Computer Architecture}
+
+\def\authorname{Abelardo Pardo}
+\def\authoremail{abel@it.uc3m.es}
+\def\authororg{Universidad Carlos III de Madrid}
+\def\authorsuborg{Departamento de Ingeniería Telemática}
+
+\def\lfoottext{El programa ensamblador}
+\def\rheadtext{ASM-\thepage}
+\def\cfoottext{Abelardo Pardo}
+\def\rfoottext{\copyright \authororg}
+\def\courseicon{ao.120x120.png}
+
+\def\coursename{Arquitectura de Ordenadores}
+
+\def\titletext{Juego de Instrucciones del Procesador Intel Pentium}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of Definitions for the head page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%
+% Where to go and fetch the figures
+%
+\graphicspath{{../../images/}{../../../Templates/images/}{../../../Material/ASM/Figures/}{../../../Material/Style/}}
+
+%
+% Make title page
+% 
+
+\usepackage[pdftex,colorlinks=true,linkcolor=normal]{hyperref} 
+\usepackage[spanish]{babel}
+
+\pdfinfo{
+  /Title (\titleforpdf)
+  /Subject (\subjectforpdf) 
+  /Author (\authorname)
+}
+
+\pdfcatalog{
+  /PageMode/UseNone
+}
+
+\lfoot{\lfoottext}
+\rhead{\rheadtext}
+\cfoot{\scriptsize\cfoottext}
+\rfoot{\scriptsize\rfoottext}
+
+% \definecolor{bkgndcolor}{rgb}{1,1,1}
+% \definecolor{normal}{rgb}{0,0,0}
+% \definecolor{colorA}{rgb}{1,0,0}
+% \definecolor{colorB}{rgb}{0,0,1}
+% \definecolor{colorC}{rgb}{0.65,0.16,0.16}
+
+\begin{document}
+\begin{LARGE}
+
+%
+% Title Page
+%
+\begin{titlepage}
+  \color{colorA}
+
+  \vs
+
+  \vs
+
+  \begin{center}
+    \huge\coursename
+    \begin{minipage}[h]{200pt}
+      \centerline{\color{black}\includegraphics{\courseicon}}
+    \end{minipage}
+  \end{center}
+
+  \vs
+
+  \centerline{\color{colorB}\huge\titletext}
+
+  \vs
+
+  \begin{center}
+    \authorname 
+    
+    {\color{black}\texttt{\authoremail}}
+  \end{center}
+
+  \vs
+
+  \begin{center}
+    \begin{minipage}[h]{120pt}
+      \centerline{\includegraphics{c3mlogo}}
+    \end{minipage}
+    \begin{minipage}[h]{250pt}
+      \centerline{\color{colorB}\authororg}
+      \centerline{\color{colorB}\large\authorsuborg}
+    \end{minipage}
+  \end{center}
+
+  \thispagestyle{empty}
+  \newpage
+\end{titlepage}
+
+\setcounter{page}{1}
+\color{blue}
+
+%
+% Slides
+%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                              Slides                                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%  slide 1 %%%%%
+\begin{slide}{Ensamblador del Pentium}
+  \begin{itemize}
+  \item Se ha presentado \textbf{\color{red}un subconjunto muy reducido de
+      instrucciones del Pentium}
+
+    \vs
+  \item Un \textbf{\color{red}programa ensamblador} se escribe con un editor
+    que escriba los ficheros en formato ASCII.
+
+    \vs
+  \item En este fichero se escribe \textbf{\color{red}la secuencia de
+      instrucciones a ejecutar} así como \textbf{\color{red}los datos que necesita
+      el programa}.
+
+    \vs
+  \item Estos dos tipos de información se diferencian en el fichero mediante
+    \textbf{\color{red}dos secciones diferentes}.
+
+    \vs
+  \item El comienzo de la \textbf{\color{red}sección de datos} se denota por la
+    palabra clave \texttt{\color{red}.data}.
+
+    \vs
+  \item El comienzo de la \textbf{\color{red}sección de instrucciones} se
+    denota por la palabra clave \texttt{\color{red}.text}.
+
+    \vs
+  \item En la sección de \textbf{\color{red}código} se especifica la
+    \textbf{\color{red}primera instrucción a ejecutar} precediéndola de un
+    nombre terminado en ':' y definiendo este nombre como global mediante la
+    palabra clave \textbf{\color{red}.globl} (o .global)
+
+    \vs
+  \item A los nombres terminados en ':' situados a la izquierda de las
+    instrucciones o datos se les denomina \textbf{\color{red}etiquetas}.
+  \end{itemize}
+
+\end{slide}
+
+%%%%%  slide 2 %%%%%
+\begin{slide}{Estructura Básica de un Programa Ensamblador}
+  \begin{alltt}\color{red}
+        .data /* Comienzo de la sección de datos */
+
+        /* Definición de los datos a manipular por el programa */
+ 
+        .text /* Comienzo de la sección de código */
+        .globl start
+
+ start: /* primera instrucción */
+
+        /* Instrucciones del programa */
+
+        ret /* Instrucción de terminación */\end{alltt}
+
+  \vs
+  \begin{itemize}
+  \item La primera instrucción del programa se comienza a ejecutar con
+    \textbf{\color{red}ciertos valores en los registros} y una cierta pila.
+    
+    \vs
+  \item El programa \textbf{\color{red}debe dejar los valores de los registros
+      y el estado de la pila idéntico a como estaba} antes de ejecutar la
+    instrucción de terminación \texttt{\color{red}ret}
+    
+    \vs
+  \item Esto implica que antes de utilizar un registro por primera vez
+    \textbf{\color{red}se debe guardar su contenido} para restaurarlo al
+    terminar.
+    
+    \vs
+  \item Para esto se utiliza \textbf{\color{red}la pila}.
+  \end{itemize}
+\end{slide}
+
+%%%%%  slide 3 %%%%%
+\begin{slide}{Salvar y Restaurar el Contexto de un Programa}
+  \begin{alltt}\color{red}
+ start: push %eax
+        push %ebx
+        push %ecx
+        push %edx
+
+        /* Instrucciones del programa que manipulan los 4 registros */
+
+        pop %edx
+        pop %ecx
+        pop %ebx
+        pop %eax
+
+        ret /* Instrucción de terminación */\end{alltt}
+
+  \begin{itemize}
+  \item Los registros se salvan en \textbf{\color{red}cualquier orden} al
+    principio del programa.
+    
+    \vs
+  \item Se restauran \textbf{\color{red}en el orden inverso} justo antes de
+    terminar el programa.
+
+    \vs
+  \item Se recomienda primero escribir el programa y \textbf{\color{red}al
+      final} escribir el código para salvar y restaurar los registros.
+
+    \vs
+  \item El registro \%esp o puntero de pila debe apuntar, antes de la instrucción
+    \texttt{\color{red}ret} a \textbf{\color{red}la misma posición que al
+      comenzar el programa}.
+  \end{itemize}
+\end{slide}
+
+%%%%%  slide 4 %%%%%
+\begin{slide}{Etiquetas}
+  \begin{itemize}
+  \item El ensamblador permite definir datos y código que
+    \textbf{\color{red}serán almacenados en memoria} antes de su
+    ejecución.
+
+    \vs
+  \item Al escribir programas es preciso referirse a
+    \textbf{\color{red}posiciones de memoria} en las que están almacenados datos,
+    o en las que hay una determinada instrucción.
+
+    \vs
+  \item ¿Cómo se puede saber la dirección de memoria en la
+    que \textbf{\color{red}estará almacenado} un dato o una instrucción?
+    
+    \vs
+  \item El ensamblador resuelve este problema mediante la definición de
+    \textbf{\color{red}etiquetas}.
+
+    \vs
+  \item Las etiquetas se anteponen a aquellos datos o instrucciones
+  \textbf{\color{red}que necesitan ser referenciadas}.
+    
+    \vs
+  \item \textbf{\color{red}Ejemplo:}
+    \begin{alltt}
+      msg:    .asciz "Hello World"
+              ...
+              push $msg
+    \end{alltt}
+
+    \vs
+  \item Los \textbf{\color{red}destinos} de las instrucciones de salto se
+    especifican como etiquetas.
+  \end{itemize}
+\end{slide}
+
+%%%%%  slide 5 %%%%%
+\begin{slide}{Valores de las Etiquetas}
+  \begin{itemize}
+  \item Cuando una instrucción referencia a una etiqueta \textbf{\color{red}el
+      ensamblador} se encarga de sustituir la etiqueta por su valor.
+
+    \vs
+  \item Para referirse a \textbf{\color{red}la posición de memoria} en la que
+    está la información con una determinada etiqueta se debe anteponer el
+    prefijo \textbf{\color{red}\$} al nombre de la etiqueta.
+
+    \vs
+  \item \textbf{\color{red}Ejemplo:} push \$msg
+
+    \vs
+  \item La excepción a esta regla son \textbf{\color{red}las instrucciones de
+      salto} en las que, a pesar de referirse a una etiqueta, no es preciso
+    incluir el prefijo.
+
+    \vs
+  \item El nombre de una etiqueta \textbf{\color{red}sin prefijo} se interpreta
+    como \textbf{\color{red}el contenido al que apunta}.
+
+    \vs
+  \item \textbf{\color{red}Ejemplo:}
+
+    \begin{alltt}
+msg:  .asciz "Hello World"
+      ...
+      mov $msg, %eax  /* Almacena en %eax la dirección de msg */
+      mov msg, %eax   /* Almacena en el registro %eax los */
+                      /* \textbf{\color{red}cuatro bytes de memoria almacenados a partir} */
+                      /* \textbf{\color{red}de la posición \texttt{msg}} (0x48656C6C). */
+    \end{alltt}
+  \end{itemize}
+
+\end{slide}
+
+%%%%%  slide 6 %%%%%
+\begin{slide}{El sufijo de Tamaño}
+  \begin{itemize}
+  \item Es posible que en una instrucción \textbf{\color{red}no se sepa con
+      exactitud el tamaño de un operando}.
+
+    \vs
+  \item \textbf{\color{red}Ejemplo:} mov \$-2, resultado
+
+    \vs
+  \item ¿Cuántos bytes deben transferirse a la \textbf{\color{red}posición de
+      memoria referida por la etiqueta \texttt{resultado}}?
+    
+    \vs
+  \item El ensamblador notifica esta anomalía que se soluciona añadiendo
+    al código de instrucción un \textbf{\color{red}sufijo de tamaño}.
+
+    \vs
+  \item Los posibles sufijos son: \textbf{\color{red}'b' para byte, 'w' para 16
+      bits y 'l' para 32 bits}.
+
+    \vs
+  \item Asumiendo 32 bits de tamaño de dato la instrucción corregida es:
+    \textbf{\color{red}movl \$-2, resultado}.
+    
+    \vs
+  \item Este sufijo sólo es necesario cuando \textbf{\color{red}ninguno de los
+      operandos} tiene un tamaño prefijado.
+
+    \vs
+  \item \textbf{\color{red}Ejemplo:} mov \$-2, \%eax \;\;\;\;\;/* Tamaño es 32
+  bits: \%eax = 0xFFFFFFFE */ 
+  \end{itemize}
+\end{slide}
+
+%%%%%  slide 7 %%%%%
+\begin{slide}{Definición de Datos Enteros}
+  \begin{itemize}
+  \item En la sección de datos se define una \textbf{\color{red}secuencia de
+      números enteros} mediante la palabra clave \texttt{\color{red}.int}
+
+    \vs
+  \item Los números deben ir separados por comas, y pueden escribirse en
+    \textbf{\color{red}decimal, binario (con prefijo 0b), octal (si empiezan
+      por 0) o hexadecimal (con prefijo 0x)}.
+
+    \vs
+  \item \textbf{\color{red}Ejemplo:}
+    \begin{alltt}
+tabla:  .int 0b1110, 2210, 3340, 0xAA0132FF
+    \end{alltt}
+
+    \vs
+    \begin{center}
+      \color{black}
+      \includegraphics[scale=1.1]{intarray}
+    \end{center}
+
+    \vs
+  \item Cada entero se almacena en \textbf{\color{red}cuatro bytes
+      consecutivos.}
+    
+    \vs
+  \item Los enteros se almacenan \textbf{\color{red}uno a continuación del
+      siguiente}.
+
+    \vs
+  \item No se almacena \textbf{\color{red}ningún dato referente al tamaño total
+      ocupado por la secuencia}.
+  \end{itemize}
+\end{slide}
+
+%%%%%  slide 8 %%%%%
+\begin{slide}{Definición de Bytes}
+  \begin{itemize}
+  \item Análoga a la definición de enteros, mediante la palabra clave
+    \texttt{\color{red}.byte} se puede definir una secuencia de bytes.
+
+    \vs
+  \item Los valores se separan \textbf{\color{red}por comas}.
+
+    \vs
+  \item Se almacenan en \textbf{\color{red}posiciones consecutivas de memoria}.
+
+    \vs
+  \item \textbf{\color{red}Ejemplo:}
+    \begin{alltt}
+valores:  .byte 38, 0b11011101, 0xFF
+    \end{alltt}
+    
+    \vs
+    \begin{center}
+      \color{black}
+      \includegraphics[scale=1.5]{bytearray}
+    \end{center}
+
+    \vs
+  \item Si el valor no puede ser representado por un byte, el ensamblador lo
+    \textbf{\color{red}trunca}  pero notifica de la anomalía.
+  
+  \vs
+  \begin{alltt}
+          .byte 323
+...
+****  Warning:value 0x143 truncated to 0x43
+  \end{alltt}
+  \end{itemize}
+\end{slide}
+
+%%%%%  slide 9 %%%%%
+\begin{slide}{Definición de Strings}
+  \begin{itemize}
+  \item Existen \textbf{\color{red}dos palabras clave} para definir una
+    secuencia de caracters ASCII.
+
+    \vs
+    \begin{itemize}
+    \item \texttt{\color{red}.asciz}: Almacena el string especificado pero
+      \texttt{\color{red}termina su representación con un byte con valor 0}. Se
+      puede detectar el \textbf{\color{red}final del string}.
+      
+      \vs
+    \item \texttt{\color{red}.ascii}: Almacena \textbf{\color{red}únicamente}
+      el string especificado.
+    \end{itemize}
+
+    \vs
+  \item \textbf{\color{red}Ejemplo:}
+
+    \vs
+    \begin{alltt}
+string1: .ascii "Mens. 1"
+string2: .asciz "Mens. 2"      
+    \end{alltt}
+
+    \vs
+    \begin{center}
+      \color{black}
+      \includegraphics[scale=1.5]{string}
+    \end{center}
+    
+    \vs
+  \item Los datos \textbf{\color{red}se almacenan de forma consecutiva}.
+
+    \begin{equation*}
+      \text{\$string1} + 7 = \text{\$string2}
+    \end{equation*}
+
+    \vs
+  \item La palabra clave \texttt{\color{red}.string} es
+    \textbf{\color{red}sinónimo} de \texttt{\color{red}.asciz}.
+
+    \vs
+  \item Cualquiera de las tres variantes admite una \textbf{\color{red}lista de
+      strings separados por comas}.
+  \end{itemize}
+\end{slide}
+
+%%%%%  slide 10 %%%%%
+\begin{slide}{Definición de Espacio en Blanco}
+  \begin{itemize}
+  \item Se puede definir una \textbf{\color{red}porción de memoria vacía}.
+
+    \vs
+  \item La palabra clave para definir esta porción es
+    \texttt{\color{red}.space <tamaño>, <relleno>}.
+    
+    \vs
+  \item El parámetro \texttt{\color{red}<tamaño>} es un número natural que
+    expresa el tamaño \textbf{\color{red}en bytes} del espacio definido.
+
+    \vs
+  \item El parámetro \texttt{\color{red}<relleno>} y la coma que le precede son
+    opcionales, y si estan presentes indican el valor con el que rellenar los
+    bytes de la porción de memoria. Si se omiten, se asume el valor
+    \textbf{\color{red}cero}.
+
+    \vs
+  \item \textbf{\color{red}Ejemplo:}
+    \begin{alltt}
+resultado:  .space 10, 0xAA
+    \end{alltt}
+
+    \vs
+    \begin{center}
+      \color{black}
+      \includegraphics[scale=1.5]{space}
+    \end{center}
+
+  \end{itemize}
+\end{slide}
+
+%%%%%  slide 11 %%%%%
+\begin{slide}{Aspectos de la Programación en Ensamblador}
+  \begin{itemize}
+  \item Aspectos a tener en cuenta cuando se \textbf{\color{red}escriben
+  programas en lenguaje ensamblador}
+
+    \vs
+    \begin{enumerate}
+    \item El valor de los registros y el puntero de pila antes de ejecutar la
+      última instrucción del programa \textbf{\color{red}deben ser idénticos a
+        los valores que tenían al comienzo}.
+
+      \vs
+    \item Debido al gran número de instrucciones disponibles y a la simplicidad
+      de las operaciones \textbf{\color{red}siempre hay más de una forma posible
+        de realizar una operación}. Se debe tratar de elegir la más rápida.
+      
+      \vs
+    \item Evitar las operaciones \textbf{\color{red}innecesarias} (por ejemplo,
+      salvar y restaurar todos los registros).
+
+      \vs
+    \item \textbf{\color{red}Indentar el código}. Las etiquetas a principio de
+      línea, las instrucciones todas a la misma altura (se tendrá en cuenta en
+      las prácticas).
+      
+      \vs
+    \item \textbf{\color{red}Comentar} el código a nivel de bloques. No es
+      preciso comentar cada instrucción, pero sí un conjunto de instrucciones
+      (se tendrá \textbf{\color{red}muy en cuenta} en las prácticas).
+    \end{enumerate}
+  \end{itemize}
+
+\end{slide}
+
+%%%%%  slide 12 %%%%%
+\begin{slide}{Ejemplo de Programación en Ensamblador}
+  \begin{minipage}[c]{\textwidth * \real{0.48}}
+    \begin{alltt}
+        .data
+num1:   .int 0x00545604
+num2:   .int 0x00A8F202
+num3:   .int 0x00340141
+resul1: .space 4
+resul2: .space 4
+resul3: .space 4
+        .text
+        .globl start
+start:  push %eax
+        mov num1, %eax
+        add $10, %eax
+        mov %eax, resul1
+        mov num2, %eax
+        add $20, %eax
+        mov %eax, resul2
+        mov num3, %eax
+        mov %eax, resul3
+        add $30, resul3
+        pop %eax
+        ret\end{alltt}
+  \end{minipage}
+  \hfil\vline\hfil\begin{minipage}[c]{\textwidth * \real{0.48}}
+    \begin{itemize}
+    \item El programa toma los valores almacenados en \texttt{\color{red}num1,
+        num2, num3}, les suma 10, 20 y 30 respectivamente, y los almacena en
+      \texttt{\color{red}resul1, resul2, resul3}
+      
+      \vs
+    \item El espacio para el resultado se reserva mediante la palabra clave
+    \textbf{\color{red}.space}.
+
+      \vs
+    \item No se puede realizar la suma y movimiento de dato
+      \textbf{\color{red}con una única instrucción para cada número}.
+
+      \vs
+    \item Se utiliza el registro \%eax para \textbf{\color{red}realizar las
+        operaciones}.
+      
+      \vs
+    \item El registro \%eax \textbf{\color{red}se salva al principio del
+        programa y restaura al final}.
+
+      \vs
+    \item Tanto la pila como los registros contienen al final del programa
+      \textbf{\color{red}los mismos datos que al principio}.
+      
+      \vs
+    \item El número a sumar se puede hacer \textbf{\color{red}sobre el
+        registro, o sobre memoria}.
+
+      \vs
+    \item El programa \textbf{\color{red}no escribe nada por pantalla}.
+
+      \vs
+    \item ¿Qué pasa si suprimimos la \textbf{\color{red}penúltima instrucción}?
+    \end{itemize}
+\end{minipage}
+\end{slide}
+
+% .data
+% .text
+% .global
+% .globl
+% .byte
+% .asciz
+% .string
+% .int
+% .space
+
+\end{LARGE}
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% compile-command: "ant local.build"
+%%% eval: (ispell-change-dictionary "castellano8")
+%%% TeX-master: t
+%%% End: 

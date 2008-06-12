@@ -1,0 +1,19 @@
+The following directories are obtained by combining the different contributions
+by the authors in ../Material
+
+Laboratory1: 
+   2 problems taken from ../Material/Author4/*
+   Three documents are produced: regular text, solutions and professor guide.
+
+Laboratory2:
+   1 problem taken from ../Material/Author5. It is bilingual, therefore
+   2 versions of text, solution and professor guide need to be produced.
+
+Theory1:
+   Theory session where the slides are made available as PDF as well as
+   de 2up format. This last one is produced automatically (as long as
+   the pdfjam package is installed, which provides pdfnup).
+
+A directory name scratch appears once the whole course is created. It is the
+dummy copy of the site. After reviewing that everything seems correct, then
+it is suitable to be published to a remote site.

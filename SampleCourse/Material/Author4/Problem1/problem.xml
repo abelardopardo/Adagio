@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                    "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section lang="es" id="BinarySearch">
+  <title>Búsqueda binaria de un número en un array ordenado</title>
+
+  <para>
+    La búsqueda de un número entero en una tabla de números se puede hacer
+    simplemente atravesando esta tabla y comparando cada número con el que se
+    busca. A esta técnica se le conoce con el nombre de <quote>búsqueda
+    lineal</quote>. Pero si los números de la tabla están ordenados, entonces se
+    puede hacer una búsqueda que requiere un número menor de comparaciones. Se
+    compara el número dado con el elemento en la mitad de la tabla, y el
+    resultado de la comparación permite descartar la mitad de la
+    tabla. Repitiendo este paso varias veces se obtienen cada vez porciones de
+    tabla más pequeños en los que debe estar el número hasta finalmente poder
+    decidir si el número está o no. A esta técnica se le conoce con el nombre de
+    <quote>búsqueda binaria</quote>.
+  </para>
+
+  <para>
+    Se pide escribir la subrutina en ensamblador con nombre <code>buscar</code>
+    en el fichero <ulink url="buscar.s"><filename>buscar.s</filename> (del que
+    se ofrece su estructura básica)</ulink>. Esta subrutina dada la dirección a
+    partir de la cual está almacenada una tabla de enteros en orden creciente,
+    su longitud, y un número, utiliza el método de búsqueda binaria para decidir
+    si el elemento está en la tabla. La rutina devuelve como resultado el índice
+    del elemento si está en la tabla o el valor -1 si no se encuentra.
+  </para>
+
+  <para>
+    La subrutina se debe codificar asumiendo que los parámetros y el espacio
+    para el resultado han sido previamente depositados en la pila tal y como se
+    muestra en la siguiente figura:
+  </para>
+
+  <informalfigure>
+    <mediaobject>
+      <imageobject>
+        <imagedata align="center" fileref="images/buscarstack.png"/>
+      </imageobject>
+    </mediaobject>
+  </informalfigure>
+  
+  <para>
+    Es fundamental que respetes esta estructura, pues es la que se asume para
+    las pruebas de programa. El algoritmo de búsqueda binaria se puede describir
+    con los siguientes pasos:
+  </para>
+  
+  <informaltable frame="all">
+    <tgroup cols="1" colsep="0" rowsep="0">
+      <colspec colnum="1" colname="col1" align="left"/>
+      <tbody>
+	<row>
+	  <entry align="left">
+	    <itemizedlist>
+	      <listitem>
+		<para>Variables locales: a, b, m (números enteros)</para>
+	      </listitem>
+	      <listitem>
+		<para>
+		  Parámetros: dato (número a buscar), array, longitud_array 
+		</para>
+	      </listitem>
+	      <listitem>
+		<para>Algoritmo:</para>
+		<orderedlist numeration="arabic">
+		  <listitem><para>a= 0, b= longitud_array - 1</para></listitem>
+		  <listitem><para>si a &gt; b entonces devuelve -1</para></listitem>
+		  <listitem><para>m= parte_entera((a + b) / 2)</para> </listitem>
+		  <listitem><para>si dato = array[m] devuelve m</para></listitem>
+		  <listitem>
+		    <para>
+		      si no, si dato &gt; array[m] entonces a= m + 1, salta a 2
+		    </para>
+		  </listitem>
+		  <listitem><para>si no, entonces b= m - 1, salta a 2</para></listitem>
+		</orderedlist>
+	      </listitem>
+	    </itemizedlist>
+	  </entry>
+	</row>
+      </tbody>
+    </tgroup>
+  </informaltable>
+
+  <para>
+    Se pide también escribir un segundo fichero con nombre <ulink
+    url="buscarmain.s"><filename>buscarmain.s</filename> (del que se ofrece su
+    estructura inicial)</ulink> el código <code>main</code> que llame dos veces
+    a la rutina <code>buscar</code>. La primera debe buscar un número que está,
+    y la segunda un número que no está. En ambos casos debe imprimir en pantalla
+    el resultado de la búsqueda. La estructura del fichero incluye los
+    siguientes datos iniciales:
+  </para>
+  
+  <informalfigure>
+    <informaltable frame="all">
+      <tgroup cols="1" colsep="0" rowsep="0">
+	<?dbhtml cellpadding="5" ?>
+	<colspec colnum="1" colname="col1" align="left"/>
+	<tbody>
+          <row>
+	    <entry align="left">
+	      <programlisting><xi:include  href="buscarmain.data" parse="text"
+	      encoding="UTF-8"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting> 
+	    </entry>
+	  </row>
+	</tbody>
+      </tgroup>
+    </informaltable>
+  </informalfigure>
+
+  <para>
+    Para obtener el ejecutable de este problema es preciso indicarle al
+    compilador que tiene que utilizar los dos ficheros. Por tanto el comando
+    para compilar es:
+  </para>
+
+  <programlisting>gcc -gstabs+ -o buscarmain buscar.s buscarmain.s</programlisting>
+
+  <para>
+    Con los datos contenidos en esta definición, el programa debe mostrar por
+    pantalla los siguientes mensajes:
+  </para>
+  
+  <programlisting><xi:include href="buscarmain.out" parse="text"
+      encoding="UTF-8"
+      xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+  
+  <note>
+    <title>Sugerencia</title>
+    <para>
+      La instrucción de división no es necesaria en este problema. Dado que el
+      divisor es siempre 2, puedes realizar esta división mediante un
+      desplazamiento lógico hacia la derecha (instrucción <code>sar</code>) de
+      un bit.
+    </para>
+  </note>
+  
+  <note condition="solution">
+    <title>Solución</title>
+    <para>Código de la subrutina</para>
+    <programlisting><xi:include  href="buscar.s" parse="text" encoding="UTF-8"
+        xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+    <para>Código del <emphasis>main</emphasis></para>
+    <programlisting><xi:include href="buscarmain.data" parse="text"
+    encoding="UTF-8" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+<xi:include href="buscarmain.code" parse="text" encoding="UTF-8"
+    xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+  </note>
+
+  <note condition="submit">
+    <para>
+      Fichero <filename>buscar.s</filename>, con el código de la subrutina
+      (entregar tan sólo el fichero de texto con el programa, ni ficheros *.o
+      ni el ejecutable).
+    <phrase condition="input">
+      <phrase condition="type">file</phrase>
+      <phrase condition="size">80</phrase>
+      <phrase condition="accept">text/plain,text/html</phrase>
+      <phrase condition="name">buscar.s</phrase>
+    </phrase>
+    </para>
+    <para>
+      Fichero <filename>buscarmain.s</filename>, con el código de main (entregar
+      tan sólo el fichero de texto con el programa, ni ficheros *.o ni el
+      ejecutable).
+    <phrase condition="input">
+      <phrase condition="type">file</phrase>
+      <phrase condition="size">80</phrase>
+      <phrase condition="accept">text/plain,text/html</phrase>
+      <phrase condition="name">buscarmain.s</phrase>
+    </phrase>
+    </para>
+  </note>
+</section>

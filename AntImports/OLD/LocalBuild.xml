@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id: LocalBuild.xml,v 1.4 2005/09/06 12:37:47 abel Exp $ -->
+
+<project name="LocalBuild" default="local.build" basedir=".">
+  
+  <!-- ================================================================ -->
+  <!--                           FILESETS                               -->
+  <!-- ================================================================ -->
+  <!-- Generic files to be directly copied to this directory -->
+  <fileset id="tocopy.files" dir="bogus.dir">
+    <include name="bogus.file"/>
+  </fileset>
+
+  <!-- ================================================================ -->
+  <!--                        LOCAL BUILDING                            -->
+  <!-- ================================================================ -->
+
+  <!-- Empty target suitable to be redefined -->
+  <target name="recursive.build" depends="initial.check"/>
+
+  <target name="local.build" depends="initial.check"
+    description="Creates the local files">
+
+    <echo>local.build: ${basedir}</echo>
+    <delete file="build.out"/>  
+
+    <!-- Recursive calls to other directories to produce additional data -->
+    <antcall target="recursive.build" inheritAll="false"/>
+
+    <!--                        Produce Files                           -->
+    <antcall target="style.processing"/>
+    <antcall target="xslt.processing"/>
+    <antcall target="latex2bitmap.processing"/>
+    <antcall target="plot.processing"/>
+    <antcall target="figure.processing"/>
+    <antcall target="figure.processing">
+      <param name="figure.mode" value="pdf"/>
+    </antcall>
+    <antcall target="figure.processing">
+      <param name="figure.mode" value="eps"/>
+    </antcall>
+    <antcall target="latex.processing"/>
+    <antcall target="pdflatex.processing"/>
+    <antcall target="pdfnup.processing"/>
+
+    <!--                  Copy Files To Current Dir                     -->
+    <copy todir=".">
+      <fileset refid="tocopy.files"/>
+    </copy>
+  </target>
+
+  <target name="localbuild.dump.properties" depends="initial.check"/>
+</project>

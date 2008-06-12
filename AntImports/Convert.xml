@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Image processing with convert" default="convert">
+
+  <!--
+      Given the following properties:
+      
+      convert.src.dir: Source directory from where to process files
+      convert.dst.dir: Directory where the files are stored
+      convert.geometry: Geometry for the images
+      convert.crop: Geometry to obtain after crop
+      convert.format: Format to process the file
+      convert.files: files to be processed
+
+      Process the files in convert.files with convert. This script is mainly
+      for chainging the geometry of a PNG file and cropping part of it. 
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="InitialCheck.xml" />
+
+  <!-- Property definition -->
+  <property name="convert.exec"     value="convert"/>
+  <property name="convert.src.dir"  value="${basedir}"/>
+  <property name="convert.dst.dir"  value="${convert.src.dir}"/>
+  <property name="convert.geometry" value=""/>
+  <property name="convert.crop"     value=""/>
+  <property name="convert.format"   value="png"/>
+  <property name="convert.files"    value=""/>
+  <!-- Source files to be processed by convert  -->
+  <fileset id="convert.fileset" dir="${convert.src.dir}"
+	   includes="${convert.files}"/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="convert.check.values" 
+	  depends="initial.check, convert.dump.properties">
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="convert.check">
+      <and>
+	<!-- The required binaries need to be available. -->
+	<available file="${convert.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
+	empty definition of this variable. At least a . needs to be present -->
+        <not><equals arg1="${convert.src.dir}" arg2=""/></not>
+	<!-- There must be some files defined -->
+        <not><equals arg1="${convert.files}" arg2=""/></not>
+	<!-- Require a non-empty dst.dir as well -->
+        <not><equals arg1="${convert.dst.dir}" arg2=""/></not>
+	<!-- Require a non-empty geometry -->
+        <not><equals arg1="${convert.geometry}" arg2=""/></not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">convert.check          = "${convert.check}"
+    convert.fileset        = "${convert.files}"</echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="convert.processing.NOT" unless="convert.check">
+    <echo>convert.processing          ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+    
+  <!-- Regular target. It is executed if the check property is true, and it has
+  as dependency the NOT target. That way, if the property is not set, this
+  target is not executed and instead, the one notifying the user of such event
+  is executed. -->
+  <target name="convert.processing" 
+	  depends="convert.check.values, convert.processing.NOT"
+	  if="convert.check"
+	  description="converts the given images">
+    
+    <echo>convert.processing          RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Create the dst directory -->
+    <mkdir dir="${convert.dst.dir}" />
+
+    <!-- Execute the command. Watch out for src.dir and dst.dir -->
+    <apply dir="${convert.src.dir}" parallel="false" dest="${convert.dst.dir}" 
+	   append="yes" failonerror="true" executable="${convert.exec}" 
+	   output="build.out">
+      <srcfile />
+      <arg value="-scale"/>
+      <arg value="${convert.geometry}" />
+      <arg line="${convert.crop}" />
+      <targetfile />
+      <fileset refid="convert.fileset"/>
+      <!-- Mapper from source files to produced files -->
+      <mapper type="glob" from="*.png" 
+        to="*.${convert.geometry}.${convert.format}"/>
+    </apply>
+  </target>
+
+  <!-- Clean files produced by convert -->
+  <target name="convert.clean" depends="convert.check.values"
+	  if="convert.check" description="Remove files produced by convert">
+    
+    <echo>convert.clean         RUN</echo>
+    <echo>${basedir}</echo>
+    
+    <!-- Obtain the fileset containing the produced files. This is done to be
+	 able to display the deleted files (debugging) -->
+    <pathconvert property="convert.target.fileset.property" pathsep=" ">
+      <fileset refid="convert.fileset"/>
+      <chainedmapper>
+        <mapper type="glob" from="*.${convert.format}"
+                to="*.${convert.geometry}.${convert.format}"/>
+        <mapper type="flatten"/>
+      </chainedmapper>
+    </pathconvert>
+
+    <!-- Dump explicitly the files to be deleted -->
+    <echo> deleted = ${convert.target.fileset.property}</echo>
+
+    <!-- Perform the delete operation. The failonerror attributge is needed
+	 and must be set fo false because the dst directory might have been
+	 removed  -->
+    <delete failonerror="false">
+      <fileset dir="${convert.dst.dir}"
+	       includes="${convert.target.fileset.property}">
+	<include name="__bogus__file__to__avoid__empty__fileset"/>
+      </fileset>
+    </delete>
+  </target>
+
+  <!-- Dump the properties defined in this script -->
+  <target name="convert.dump.properties" depends="initial.check">
+    <echo level="info"> ------ Convert properties ----
+    convert.exec     ="${convert.exec}"
+    convert.src.dir  ="${convert.src.dir}"
+    convert.dst.dir  ="${convert.dst.dir}"
+    convert.geometry ="${convert.geometry}"
+    convert.crop     ="${convert.crop}"
+    convert.format   ="${convert.format}"
+    convert.files    ="${convert.files}"</echo>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="convert" depends="initial.delete.build.out, convert.processing"/>
+</project>

@@ -1,0 +1,142 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: fig2dev Version 3.2 Patchlevel 5-alpha7 -->
+<!-- CreationDate: Tue May 22 20:18:51 2007 -->
+<!-- Magnification: 1.050 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="7.9in" height="4.1in" viewBox="-629 1606 9428 4973">
+<g style="stroke-width:.025in; stroke:black; fill:none">
+<!-- Text -->
+<text xml:space="preserve" x="1842" y="3496" stroke="#008f00" fill="#008f00"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">push %eax</text>
+<!-- Text -->
+<text xml:space="preserve" x="1842" y="3763" stroke="#008f00" fill="#008f00"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">push %ecx</text>
+<!-- Text -->
+<text xml:space="preserve" x="1842" y="4031" stroke="#008f00" fill="#008f00"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">push %edx</text>
+<!-- Text -->
+<text xml:space="preserve" x="1842" y="5511" stroke="#008f00" fill="#008f00"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">pop %edx</text>
+<!-- Text -->
+<text xml:space="preserve" x="1842" y="5779" stroke="#008f00" fill="#008f00"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">pop %ecx</text>
+<!-- Text -->
+<text xml:space="preserve" x="1842" y="6047" stroke="#008f00" fill="#008f00"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">pop %eax</text>
+<!-- Text -->
+<text xml:space="preserve" x="1108" y="2165" stroke="#803000" fill="#803000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">dato:</text>
+<!-- Text -->
+<text xml:space="preserve" x="1867" y="2142" stroke="#ff0000" fill="#ff0000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">.asciz "Mi primer programa ensamblador\n"</text>
+<!-- Line -->
+<polyline points="7018,4157
+6783,4157
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="6798 4120
+6655 4157
+6798 4193
+6798 4120
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Text -->
+<text xml:space="preserve" x="7071" y="4204" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="normal" font-weight="normal" font-size="152" text-anchor="start">C&#243;digo</text>
+<!-- Line -->
+<polyline points="6944,1984
+6783,1984
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="6798 1947
+6655 1984
+6798 2019
+6798 1947
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Text -->
+<text xml:space="preserve" x="7039" y="2039" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="normal" font-weight="normal" font-size="152" text-anchor="start">Definici&#243;n de datos</text>
+<!-- Line -->
+<polyline points="3167,4699
+3782,4699
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="3765 4734
+3910 4699
+3765 4662
+3765 4734
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Text -->
+<text xml:space="preserve" x="3981" y="4777" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="normal" font-weight="normal" font-size="152" text-anchor="start">Llamada a subrutina</text>
+<!-- Line -->
+<polyline points="708,2125
+708,3496
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line -->
+<polyline points="708,2125
+960,2125
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="943 2157
+1069 2125
+943 2094
+943 2157
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Line -->
+<polyline points="708,3496
+960,3496
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Arrowhead on XXXpoint -->
+<polygon points="943 3527
+1069 3496
+943 3464
+943 3527
+
+" style="stroke:#000000;stroke-width:8;
+fill:#000000;"/>
+<!-- Line: box -->
+<rect x="1039" y="1618" width="5574" height="731" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line: box -->
+<rect x="1039" y="2485" width="5574" height="4081" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line -->
+<polyline points="283,2881
+708,2881
+" style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="1867" y="4777" stroke="#008f00" fill="#008f00"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">call printf</text>
+<!-- Text -->
+<text xml:space="preserve" x="1867" y="5048" stroke="#008f00" fill="#008f00"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">add $4, %esp</text>
+<!-- Text -->
+<text xml:space="preserve" x="1867" y="4507" stroke="#008f00" fill="#008f00"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">push $dato</text>
+<!-- Text -->
+<text xml:space="preserve" x="1867" y="2702" stroke="#008f00" fill="#008f00"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">.text           # Comienzo del c&#243;digo</text>
+<!-- Text -->
+<text xml:space="preserve" x="1108" y="3516" stroke="#803000" fill="#803000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">main:</text>
+<!-- Text -->
+<text xml:space="preserve" x="1867" y="1900" stroke="#ff0000" fill="#ff0000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">.data           # Comienzo de los datos</text>
+<!-- Text -->
+<text xml:space="preserve" x="1867" y="2974" stroke="#008f00" fill="#008f00"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">.globl main     # Define main como global</text>
+<!-- Text -->
+<text xml:space="preserve" x="1867" y="6472" stroke="#008f00" fill="#008f00"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="start">ret             # Programa termina</text>
+<!-- Text -->
+<text xml:space="preserve" x="-614" y="2929" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="normal" font-weight="normal" font-size="152" text-anchor="start">Etiquetas</text>
+</g>
+</svg>

@@ -1,0 +1,23 @@
+The Author* dirs contain the following scenarios
+
+1.- Latex -> pdf -> pdf 2up (2up pdf file for students)
+
+2.- Docbook + lots of pngs (screen captures) -> Guide for the students
+
+3.- Docbook + *.svg + *.pngs (screen captures) -> Guide for the students
+
+4.- Two problems created in subdirs:
+    Problem1: docbook + svgs + code files to access. 
+              Ready to generate regular doc, solutions and professor guide
+
+    Problem2: docbook + svgs + code files
+              Ready to generate regular doc, solution and professor guide
+
+5.- Bilingual Docbook + bilingual *.svg figures.
+              Ready to generate doc, solution, guide and submission page.
+              Ready to generate one version per language (es, en supported)
+
+6.- Conventional PPT file. The translation PPT to PDF is not trivial to
+    automate in a generic environment (I have a macro in my ooffice instalation
+    but it is not easy to guarantee such macro in any environment). It is
+    then left for the user.

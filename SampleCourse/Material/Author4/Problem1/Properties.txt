@@ -1,0 +1,125 @@
+#
+# Properties to fire the different processing steps
+#
+#
+# The order is:
+#
+#        auxfiles.processing
+#        xfig.processing
+#        inkscape.processing
+#        gimp.processing
+#        convert.processing
+#        xsltproc.processing
+#        docbook.processing
+#        dblatex.processing
+#        pdflatex.processing
+#        pdfnup.processing
+#
+# Whenever a list of files is required, unless otherswise noted, it is a comma
+# or space separated of filenames (no paths).
+
+#
+# Copy auxiliary files from one location to another
+#
+# auxfiles.src.dir=.			# Directory from where to take the files
+# auxfiles.dst.dir=${auxfiles.src.dir}	# Destination
+# auxfiles.files=  			# List of files to copy
+
+#
+# From XFIG to a given format
+#
+# xfig.exec=xfig               # Name (no path) of the executable
+# xfig.fig2dev.exec=fig2dev    # Name (no path) of the translation binary
+# xfig.src.dir=.               # Source dir where fig files are
+# xfig.dst.dir=${xfig.src.dir} # Dest dir where translated figures are created
+# xfig.output.format=png       # Format to translate to from xfig
+# xfig.border=2                # Border to apply to the translation (for png)          
+# xfig.smooth=4                # Smooth factor for png (see man xfig)
+# xfig.extra.args=             # Addtnl. options to fig2dev
+# xfig.files=                  # List of *.fig files to process
+
+#
+# From Inkscape to a PNG using the export mechanism
+#
+# inkscape.exec=inkscape               # Name (no path) of the executable
+# inkscape.src.dir=.                   # Source dir where SVG files are
+inkscape.dst.dir=images
+inkscape.files=buscarstack.svg
+
+#
+# From Gimp XCF format to PNG
+#
+# gimp.exec=gimp	# Name (no path) of the executable
+# gimp.src.dir=.	# Source dir where the XCF files are
+# gimp.script.file=${ada.home}${file.separator}AntImports${file.separator}xcftopng.scm
+# gimp.files=		# List of *.xcf files to process
+
+#
+# Convert figures with the convert tool (modify geometry and/or crop)
+#
+# convert.exec=convert			# Name (no path) of the executable
+# convert.src.dir=. 			# Dir from where to take the figures
+# convert.dst.dir=${convert.src.dir} 	# Dir where to produce the figures
+# convert.geometry= 			# New geometry to scale the files
+# convert.crop= 			# Crop option for convert -crop geometry
+# convert.format=png 			# Output format
+# convert.files                         # List of files to be processed
+
+#
+# Generic Xsltproc processing
+#
+# xsltproc.exec=xsltproc		# Name (no path) of the executable
+# xsltproc.src.dir=.			# Dir from where xml files are taken
+# xsltproc.dst.dir=${xsltproc.src.dir}	# Dir where result is produced
+# xsltproc.style.file=			# Style to apply to all the files
+# xsltproc.output.format=html		# Output format
+# xsltproc.extra.args=			# Addtnl. args to pass to xsltproc
+# xsltproc.files=			# List of *.xml files to process
+
+#
+# Docbook processing
+#
+# docbook.src.dir=.			# Dir where the source files are
+# docbook.dst.dir=${docbook.src.dir}	# Dir to create the result
+# docbook.out.ext=html			# Output format
+# docbook.style.file=http://docbook.sourceforge.net/release/xsl/current/xhtml/profile-docbook.xsl # Default style to use
+docbook.files=problem.xml
+
+#
+# Generic dblatex processing
+#
+# dblatex.exec=dblatex			# Name (no path) of the executable
+# dblatex.src.dir=.			# Dir from where xml files are taken
+# dblatex.dst.dir=${dblatex.src.dir}	# Dir where result is produced
+# dblatex.extra.args=			# Addtnl. args to pass to dblatex
+# dblatex.files=			# List of *.xml files to process
+
+#
+# Pdflatex processing
+#
+# pdflatex.exec=pdflatex		# Name (no path) of the executable
+# pdflatex.src.dir=.			# Dir where the source files are
+# pdflatex.dst.dir=${pdflatex.src.dir}	# Dir to create the result
+# pdflatex.files=			# List of *.xml files to process
+
+#
+# For PDFnup processing (process PDF files and create n-up PDF files)
+#
+# pdfnup.exec=pdfnup			# Name (no path) of the executable
+# pdfnup.src.dir=.			# Dir from where PDF files are taken
+# pdfnup.dst.dir=${pdfnup.src.dir}	# Dest dir where files are created
+# pdfnup.nup.option=1x2			# Output Format to produce
+# pdfnup.files=				# List of *.pdf files to process
+
+#
+# For Export. Copy files outside of the resource
+#
+# export.src.dir=.			# Dir from where to take the files
+# export.dst.dir=${export.src.dir}	# Dir to export to
+export.files=images/buscarstack.png buscar.s buscarmain.s
+
+#
+# List of files to clean
+#
+# clean.src.dir=.
+clean.files=images

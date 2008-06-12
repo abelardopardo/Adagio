@@ -1,0 +1,22 @@
+	.text
+	.global main
+	
+main:	push %eax  # Salvar Registros  
+	push %ecx
+	push %edx
+
+	mov num, %eax      # Mover el número a EAX como primer operando 
+	imull num          # Multiplicar por sí mismo (atención al sufijo) 
+	mov %eax, res      # Almacenar el resultado 
+	mov %edx, res2     # Almacenar el resultado 
+
+	push res
+	push res2
+	push $msg
+	call printf
+	add $12, %esp
+
+	pop %edx           # Restaurar registros 
+	pop %ecx
+	pop %eax	
+	ret

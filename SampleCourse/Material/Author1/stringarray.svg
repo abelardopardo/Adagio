@@ -1,0 +1,169 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: fig2dev Version 3.2 Patchlevel 5-alpha7 -->
+<!-- CreationDate: Tue May 22 20:18:51 2007 -->
+<!-- Magnification: 1.050 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="2.2in" height="1.4in" viewBox="607 459 2617 1725">
+<g style="stroke-width:.025in; stroke:black; fill:none">
+<!-- Line: box -->
+<rect x="1133" y="472" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="1393" y="684" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x53</text>
+<!-- Line: box -->
+<rect x="1653" y="472" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="1912" y="684" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x20</text>
+<!-- Line: box -->
+<rect x="2173" y="472" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="2432" y="684" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x31</text>
+<!-- Line: box -->
+<rect x="2692" y="472" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="2952" y="684" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x53</text>
+<!-- Line: box -->
+<rect x="1653" y="755" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="1912" y="967" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x32</text>
+<!-- Line: box -->
+<rect x="2173" y="755" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="2432" y="967" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x53</text>
+<!-- Line: box -->
+<rect x="2692" y="755" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="2952" y="967" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x20</text>
+<!-- Line: box -->
+<rect x="1133" y="1039" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="1393" y="1251" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x33</text>
+<!-- Line: box -->
+<rect x="1133" y="755" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="1393" y="967" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x20</text>
+<!-- Line: box -->
+<rect x="2692" y="1039" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="2952" y="1251" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x20</text>
+<!-- Line: box -->
+<rect x="1133" y="1322" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="1393" y="1534" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x34</text>
+<!-- Line: box -->
+<rect x="2692" y="1322" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="2952" y="1534" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x20</text>
+<!-- Line: box -->
+<rect x="1133" y="1606" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="1393" y="1818" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x66</text>
+<!-- Line: box -->
+<rect x="1653" y="1606" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="1912" y="1818" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x69</text>
+<!-- Line: box -->
+<rect x="2173" y="1606" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="2432" y="1818" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x6E</text>
+<!-- Line: box -->
+<rect x="2692" y="1606" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="2952" y="1818" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x61</text>
+<!-- Line: box -->
+<rect x="1133" y="1889" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="1393" y="2101" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x6C</text>
+<!-- Line: box -->
+<rect x="1653" y="1889" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+fill:#87cfff;
+"/>
+<!-- Line: box -->
+<rect x="2173" y="1039" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line: box -->
+<rect x="2173" y="1322" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+"/>
+<!-- Line: box -->
+<rect x="1653" y="1039" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+fill:#87cfff;
+"/>
+<!-- Line: box -->
+<rect x="1653" y="1322" width="519" height="283" rx="0" 
+style="stroke:#000000;stroke-width:8;
+stroke-linejoin:miter; stroke-linecap:butt;
+fill:#87cfff;
+"/>
+<!-- Text -->
+<text xml:space="preserve" x="1912" y="2101" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Text -->
+<text xml:space="preserve" x="2432" y="1251" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x53</text>
+<!-- Text -->
+<text xml:space="preserve" x="1912" y="1251" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Text -->
+<text xml:space="preserve" x="2432" y="1534" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x53</text>
+<!-- Text -->
+<text xml:space="preserve" x="1912" y="1534" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">0x00</text>
+<!-- Text -->
+<text xml:space="preserve" x="850" y="661" stroke="#000000" fill="#000000"  font-family="AvantGarde" font-style="italic" font-weight="normal" font-size="152" text-anchor="middle">msg:</text>
+</g>
+</svg>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Recursively build other dirs" default="subrecursive">
+
+  <!--
+      Given the following properties:
+
+      subrecursive.dirs:   List of directories to call recursively
+      subrecursive.dst.dir: Export dir to give the recursive dirs
+      subrecursive.target: Target to execute in those directories
+
+      Perform target subrecursive.target in these directories. If the property
+      subrecursive.dst.dir is given, it overrides the export.dst.dir in the
+      subdirectory. If not given, such value is left to be set in the
+      subdirectory. This is to manipulate with the same script those directories
+      that produce material but do not state where to export it, from those that
+      do export material to a single given location.
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="InitialCheck.xml"/>
+  
+  <!-- Property definition -->
+  <property name="subrecursive.dst.dir" value=""/>
+  <property name="subrecursive.dirs"    value=""/>
+  <property name="subrecursive.target"  value=""/>
+  <!-- Dirs with material required by the lab  -->
+  <filelist id="subrecursive.dirlist" dir="${basedir}"
+	    files="${subrecursive.dirs}"/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="subrecursive.check.values" 
+	  depends="initial.check, subrecursive.dump.properties">
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="subrecursive.check">
+      <not><equals arg1="${subrecursive.dirs}" arg2=""/></not>
+    </condition>
+
+    <!-- Condition to detect if subrecursive.dst.dir is given -->
+    <condition property="subrecursive.dstdir.given">
+      <not><equals arg1="${subrecursive.dst.dir}" arg2=""/></not>
+    </condition>
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">    subrecursive.check          = "${subrecursive.check}"
+    subrecursive.dirs         = "${subrecursive.dirs}"
+    subrecursive.dst.dir      = "${subrecursive.dst.dir}"
+    subrecursive.dstdir.given = "${subrecursive.dstdir.given}"</echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="subrecursive.processing.NOT" unless="subrecursive.check">
+    <echo>subrecursive.processing      ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Regular target. It simply loops over all the subdirs and calls the given
+       target -->
+  <target name="subrecursive.processing" 
+	  depends="subrecursive.check.values, subrecursive.processing.NOT,
+		   subrecursive.processing.withdstdir,
+		   subrecursive.processing.nodstdir"
+	  if="subrecursive.check" description="Loop over the given dirs"/>
+
+  <target name="subrecursive.processing.withdstdir"
+	  if="subrecursive.dstdir.given">
+    <echo>subrecursive.processing.dst RUN</echo>
+    <echo>${basedir}</echo>
+
+    <echo level="info">    subrecursive.dirs="${subrecursive.dirs}"</echo>
+
+    <subant target="${subrecursive.target}" 
+	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
+	    inheritAll="false" inheritrefs="false">
+      <property name="export.dst.dir" value="${subrecursive.dst.dir}" />
+      <filelist refid="subrecursive.dirlist"/>
+    </subant>
+  </target>
+
+  <target name="subrecursive.processing.nodstdir"
+	  unless="subrecursive.dstdir.given">
+    <echo>subrecursive.proc..ng.nodst RUN</echo>
+    <echo>${basedir}</echo>
+
+    <echo level="info">    subrecursive.dirs="${subrecursive.dirs}"</echo>
+    <!-- Dirs with material required by the lab  -->
+    <filelist id="subrecursive.dirlist" dir="${basedir}"
+	      files="${subrecursive.dirs}"/> 
+
+    <subant target="${subrecursive.target}" 
+	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
+	    inheritAll="false" inheritrefs="false">
+      <filelist refid="subrecursive.dirlist"/>
+    </subant>
+  </target>
+
+  <!-- Clean the produced files -->
+  <target name="subrecursive.clean" 
+	  depends="subrecursive.check.values,
+		   subrecursive.clean.withdstdir,
+		   subrecursive.clean.nodstdir"
+    if="subrecursive.check" description="Delete files produced here"/>
+
+  <target name="subrecursive.clean.withdstdir"
+	  if="subrecursive.dstdir.given">
+    <echo>subrecursive.clean.dst    RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Call the subdirs with the basic.clean target -->
+    <subant target="clean" 
+	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
+	    inheritAll="false" inheritrefs="false">
+      <property name="export.dst.dir" value="${subrecursive.dst.dir}" />
+      <filelist refid="subrecursive.dirlist"/>
+    </subant>
+  </target>
+
+  <target name="subrecursive.clean.nodstdir"
+	  unless="subrecursive.dstdir.given">
+    <echo>subrecursive.clean.nodst  RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Call the subdirs with the basic.clean target -->
+    <subant target="clean" 
+	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
+	    inheritAll="false" inheritrefs="false">
+      <filelist refid="subrecursive.dirlist"/>
+    </subant>
+  </target>
+
+  <!-- Dump the properties defined in this script -->
+  <target name="subrecursive.dump.properties" depends="initial.check">
+    <echo level="info"> ------ Subrecursive properties ----
+    subrecursive.target="${subrecursive.target}"</echo>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="subrecursive" 
+	  depends="initial.delete.build.out, subrecursive.processing"/>
+</project>

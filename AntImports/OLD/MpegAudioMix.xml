@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Mix mpeg+audo and encode it" default="mixvideoaudio.tompeg" basedir=".">
+
+  <!-- Since the usual procedure to mix video and audio requires two files with
+  arbitrary names, since I couldn't find a way to use two filesets and select
+  respectively one file at a time from each of them, the template performs a
+  single mix procedure. An invocation of the target is required for each
+  mix. The same applies for the translation to flv format
+  -->
+
+<!--
+mencoder HowToUseWebChat.mpeg -audiofile *.mp3 -o aaa.mpeg -oac mp3lame -ovc
+  lavc
+  
+If with subtitles:
+mencoder -embeddedfonts -ass -ass-use-margins -ass-bottom-margin 60 
+         -ass-font-scale 0.5 -sub SUBTITILES.srt -utf8 MOVIE.mpeg
+-->
+
+  <property name="mixvideoaudio.videodir" value=""/>
+  <property name="mixvideoaudio.videosrc" value=""/>
+  <property name="mixvideoaudio.audiodir" value="${mixvideoaudio.videodir}"/>
+  <property name="mixvideoaudio.audiosrc" value=""/>
+  <property name="mixvideoaudio.videooutdir" value="${mixvideoaudio.videodir}"/>
+  <property name="mixvideoaudio.videooutfile" value=""/>
+  <property name="mixvideoaudio.bottom.margin" value="60"/>
+  <property name="mixvideoaudio.font.scale" value="0.5/"/>
+  <property name="mixvideoaudio.sub.fileoption" value=""/>
+
+  <target name="recursive.mixvideoaudio"/>
+
+  <!-- ================================================================ -->
+  <!--                  MIX MPEG and MP3 to MPEG                        -->
+  <!-- ================================================================ -->
+  <target name="mixvideoaudio.tompeg">
+
+    <!-- Recursive call to other directories to produce addditional data -->
+    <antcall target="recursive.mixvideoaudio" inheritAll="false"/>
+
+    <echo>mixaudiovideo.tompeg: ${basedir}</echo>
+    <dependset>
+      <srcfileset dir="${mixvideoaudio.videodir}">
+        <include name="${mixvideoaudio.videosrc}"/>
+      </srcfileset>
+      <srcfileset dir="${mixvideoaudio.audiodir}">
+        <include name="${mixvideoaudio.audiosrc}"/>
+      </srcfileset>
+      <targetfileset dir="${mixvideoaudio.videooutdir}">
+        <include name="${mixvideoaudio.videooutfile}"/>
+      </targetfileset>
+    </dependset>
+
+    <apply dir="." parallel="false" dest="${mixvideoaudio.videooutdir}"
+      append="yes" executable="${mencoder.exec}" os="Linux" output="build.out"
+      failonerror="true">
+      <fileset dir="${mixvideoaudio.videodir}">
+        <include name="${mixvideoaudio.videosrc}"/>
+      </fileset>
+      <srcfile />
+      <arg line="${mixvideoaudio.sub.fileoption}"/>
+      <arg value="-audiofile"/>
+      <arg value="${mixvideoaudio.audiodir}/${mixvideoaudio.audiosrc}"/>
+      <arg value="-oac"/>
+      <arg value="mp3lame"/>
+      <arg value="-ovc"/>
+      <arg value="lavc"/>
+      <arg value="-o"/>
+      <arg value="${mixvideoaudio.videooutdir}/${mixvideoaudio.videooutfile}"/>
+      <mapper type="glob" from="${mixvideoaudio.videosrc}" 
+        to="${mixvideoaudio.videooutfile}"/>
+    </apply>
+  </target>
+
+  <!-- ================================================================ -->
+  <!--                  MIX MPEG and MP3 to FLV                         -->
+  <!-- ================================================================ -->
+  <target name="mixvideoaudio.toflv">
+
+    <!-- Recursive call to other directories to produce addditional data -->
+    <antcall target="recursive.mixvideoaudio" inheritAll="false"/>
+
+    <echo>mixaudiovideo.toflv: ${basedir}</echo>
+    <dependset>
+      <srcfileset dir="${mixvideoaudio.videodir}">
+        <include name="${mixvideoaudio.videosrc}"/>
+      </srcfileset>
+      <srcfileset dir="${mixvideoaudio.audiodir}">
+        <include name="${mixvideoaudio.audiosrc}"/>
+      </srcfileset>
+      <targetfileset dir="${mixvideoaudio.videooutdir}">
+        <include name="${mixvideoaudio.videooutfile}"/>
+      </targetfileset>
+    </dependset>
+
+    <apply dir="." parallel="false" dest="${mixvideoaudio.videooutdir}"
+      append="yes" executable="${mencoder.exec}" os="Linux" output="build.out"
+      failonerror="true">
+      <fileset dir="${mixvideoaudio.videodir}">
+        <include name="${mixvideoaudio.videosrc}"/>
+      </fileset>
+      <srcfile />
+      <arg value="-audiofile"/>
+      <arg value="${mixvideoaudio.audiodir}/${mixvideoaudio.audiosrc}"/>
+      <arg value="-o"/>
+      <arg value="${mixvideoaudio.videooutdir}/${mixvideoaudio.videooutfile}"/>
+      <arg value="-of"/>
+      <arg value="lavf"/>
+      <arg value="-oac"/>
+      <arg value="mp3lame"/>
+      <arg value="-lameopts"/>
+      <arg value="abr:br=56"/>
+      <arg value="-ovc"/>
+      <arg value="lavc"/>
+      <arg value="-lavcopts"/>
+      <arg value="vcodec=flv:vbitrate=500:mbd=2:mv0:trell:v4mv:cbp:last_pred=3"/>
+      <arg value="-srate"/>
+      <arg value="22050"/>
+      <arg value="-lavfopts"/>
+      <arg value="i_certify_that_my_video_stream_does_not_use_b_frames"/>
+      <mapper type="glob" from="${mixvideoaudio.videosrc}" 
+        to="${mixvideoaudio.videooutfile}"/>
+    </apply>
+  </target>
+
+</project>
+

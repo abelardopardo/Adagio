@@ -1,0 +1,120 @@
+#
+# Properties to fire the different processing steps
+#
+#
+# The order is:
+#
+#        copyfiles.processing
+#        xfig.processing
+#        inkscape.processing
+#        gimp.processing
+#        convert.processing
+#        xsltproc.processing
+#        docbook.processing
+#        dblatex.processing
+#        pdflatex.processing
+#        pdfnup.processing
+# 	 export.processing
+#
+# Whenever a list of files is required, unless otherswise noted, it is a comma
+# or space separated of filenames (no paths).
+
+#
+# Copy auxiliary files from one location to another
+#
+copyfiles.src.dir=src
+copyfiles.dst.dir=dst
+copyfiles.files=f1.txt f2.txt
+
+#
+# From XFIG to a given format
+#
+# xfig.exec=xfig               # Name (no path) of the executable
+# xfig.fig2dev.exec=fig2dev    # Name (no path) of the translation binary
+xfig.src.dir=src
+xfig.dst.dir=dst
+# xfig.output.format=png       # Format to translate to from xfig
+# xfig.border=2                # Border to apply to the translation (for png)          
+# xfig.smooth=4                # Smooth factor for png (see man xfig)
+# xfig.extra.args=             # Addtnl. options to fig2dev
+xfig.files=hood.fig
+
+#
+# From Inkscape to a PNG using the export mechanism
+#
+# inkscape.exec=inkscape               # Name (no path) of the executable
+inkscape.src.dir=src
+inkscape.dst.dir=dst
+inkscape.files=labstructure.svg
+
+#
+# From Gimp XCF format to PNG
+#
+# gimp.exec=gimp	# Name (no path) of the executable
+gimp.src.dir=src
+# gimp.script.file=${ada.home}${file.separator}AntImports${file.separator}xcftopng.scm
+gimp.files=books.xcf cronometro.xcf
+
+#
+# Convert figures with the convert tool (modify geometry and/or crop)
+#
+# convert.exec=convert			# Name (no path) of the executable
+convert.src.dir=src
+convert.dst.dir=dst
+# convert.geometry= 			# New geometry to scale the files
+# convert.crop= 			# Crop option for convert -crop geometry
+# convert.format=png 			# Output format
+convert.files=agenda.png attention.png
+
+#
+# Generic Xsltproc processing
+#
+# xsltproc.exec=xsltproc		# Name (no path) of the executable
+xsltproc.src.dir=src
+xsltproc.dst.dir=dst
+xsltproc.style.file=${ada.home}/AntImports/tests/src/forxsltproc.xsl
+# xsltproc.output.format=html		# Output format
+# xsltproc.extra.args=			# Addtnl. args to pass to xsltproc
+xsltproc.files=forxsltproc.xml
+
+#
+# Docbook processing
+#
+docbook.src.dir=src
+docbook.dst.dir=dst
+# docbook.out.ext=html			# Output format
+# docbook.style.file=http://docbook.sourceforge.net/release/xsl/current/xhtml/profile-docbook.xsl # Default style to use
+docbook.files=docbooksrc.xml
+
+#
+# Generic dblatex processing
+#
+# dblatex.exec=dblatex			# Name (no path) of the executable
+# dblatex.src.dir=.			# Dir from where xml files are taken
+# dblatex.dst.dir=${dblatex.src.dir}	# Dir where result is produced
+# dblatex.extra.args=			# Addtnl. args to pass to dblatex
+# dblatex.files=			# List of *.xml files to process
+
+#
+# Pdflatex processing
+#
+# pdflatex.exec=pdflatex		# Name (no path) of the executable
+# pdflatex.src.dir=.			# Dir where the source files are
+# pdflatex.dst.dir=${pdflatex.src.dir}	# Dir to create the result
+# pdflatex.files=			# List of *.xml files to process
+
+#
+# For PDFnup processing (process PDF files and create n-up PDF files)
+#
+# pdfnup.exec=pdfnup			# Name (no path) of the executable
+pdfnup.src.dir=src
+pdfnup.dst.dir=dst
+# pdfnup.nup.option=1x2			# Output Format to produce
+pdfnup.files=SUB_notes.pdf
+
+#
+# For Export. Copy files outside of the resource
+#
+# export.src.dir=.			# Dir from where to take the files
+# export.dst.dir=${export.src.dir}	# Dir to export to
+# export.files=				# List of files to export

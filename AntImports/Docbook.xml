@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Apply stylesheet to docbook files" default="docbook">
+
+  <!--
+      Given the following properties:
+
+      docbook.src.dir: directory from where to take the source files
+      docbook.dst.dir: directory where the produced files are stored
+      docbook.style.file: Style file to be used
+      docbook.output.format: Extension of the output file
+      docbook.files: Comma separate list of files to process
+
+      Produce the aplication of a stylefile to the files in docbook.files
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="Xsltproc.xml"/>
+
+  <!-- Property definition -->
+  <property name="docbook.src.dir"        value="${basedir}"/>
+  <property name="docbook.dst.dir"        value="${docbook.src.dir}"/>
+  <property name="docbook.output.format"  value="html"/>
+  <property name="docbook.files"          value=""/>
+  <property name="docbook.style.file"     
+	    value="${ada.home}/XslStyles/DocbookProfile.xsl"/>
+
+  <!-- Invoke xsltprocessing -->
+  <target name="docbook.processing" 
+	  description="Call the xsltproc with the given style">
+
+    <echo>docbook.processing          CALL(xsltproc.processing)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.processing" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${docbook.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${docbook.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${docbook.style.file}"/>
+      <param name="xsltproc.output.format" value="${docbook.output.format}"/>
+      <param name="xsltproc.files"         value="${docbook.files}"/>
+    </antcall>
+  </target>
+
+  <!-- Clean files produced by docbook -->
+  <target name="docbook.clean" description="Remove files produced by docbook">
+
+    <echo>docbook.clean          CALL(xsltproc.clean)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.clean" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${docbook.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${docbook.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${docbook.style.file}"/>
+      <param name="xsltproc.output.format" value="${docbook.output.format}"/>
+      <param name="xsltproc.files"         value="${docbook.files}"/>
+    </antcall>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="docbook" depends="initial.delete.build.out, docbook.processing"/>
+</project>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Include here those definitions that are supposed to be shared among several Ant
+build templates
+-->
+
+<project name="Initial Checks" default="initial.check">
+
+
+  <!-- Load the local properties from .ant.properties -->
+  <property file=".ant.properties"/>
+
+  <!-- Load the properties from the user.home directory -->
+  <property file="${user.home}/.ant.properties"/>
+
+  <!-- Load the properties from the cygwin.user.home directory -->
+  <property file="${cygwin.user.home}/.ant.properties"/>
+
+  <!-- Default file name to load the propertyes -->
+  <property name="ada.local.property.file" value="Properties.txt"/>
+
+  <!-- Load the properties in the basedir directory -->
+  <property file="${basedir}/${ada.local.property.file}"/>
+
+  <!-- Directory where the toolkit is installed -->
+  <property name="ada.home" value="" />
+
+  <!-- Include the environment as a set of properties -->
+  <property environment="env"/>
+
+  <!-- Detect in which os-family is being executed -->
+  <condition  property="ada.os.family.windows" value="true">
+    <os family="windows"/>
+  </condition>
+  <condition  property="ada.os.family.unix" value="true">
+    <os family="unix"/>
+  </condition>
+
+  <!-- Define the file extensions -->
+  <condition  property="executable.file.extension" value=".exe">
+    <os family="windows"/>
+  </condition>
+  <condition  property="executable.file.extension" value="">
+    <os family="unix"/>
+  </condition>
+
+  <!-- Set the root path prefix to use cygwin in windows -->
+  <condition property="root.path.prefix" value="">
+    <os family="unix"/>
+  </condition>
+  <exec executable="cygpath" 
+	os="windows"
+	outputproperty="root.path.prefix">
+    <arg value="-d"/>
+    <arg value="/"/>
+  </exec>
+
+  <!-- Default location for the catalog -->
+  <property name="xml.catalog.file" 
+	    value="${root.path.prefix}${file.separator}etc${file.separator}xml${file.separator}catalog" />
+
+  <!-- Detect if the xml catalog file is properly detected -->
+  <condition property="xml.catalog.file.available" value="true">
+    <available file="${xml.catalog.file}" />
+  </condition>
+  
+  <!-- Empty target suitable to be redefined -->
+  <target name="initial.check.recursive"/>
+
+  <target name="ada.check.basics">
+    
+    <condition property="ada.check.home.property">
+      <and>
+        <not>
+	  <equals arg1="${ada.home}" arg2=""/>
+        </not>
+        <available file="${ada.home}" type="dir"/>
+      </and>
+    </condition>
+  </target>
+
+  <target name="initial.check" 
+	  depends="initial.check.dump, initial.check.recursive, ada.check.basics"
+	  unless="ada.check.home.property">
+    <echo> *** ERROR *** ada.home variable with incorrect value!
+  ada.home = "${ada.home}"
+  Include ada.home=DIR in the file ${user.home}/.ant.properties </echo>
+    <fail message="Include ada.home=DIR in the file ${user.home}/.ant.properties"/>
+  </target>
+
+  <target name="initial.check.dump" depends="initial.check.recursive">
+    <echo level="info">------ Global properties ----
+    basedir=${basedir}
+    user.dir=${user.dir}
+    executable.file.extension=${executable.file.extension}
+    ada.home=${ada.home}
+    root.path.prefix = ${root.path.prefix}
+    xml.catalog.file=${xml.catalog.file}
+    xml.catalog.file.available=${xml.catalog.file.available}    </echo>    
+  </target>
+
+  <!-- Target to reset the build.out --> 
+  <target name="initial.delete.build.out">
+    <delete file="build.out"/>
+  </target>
+</project>

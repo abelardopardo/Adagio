@@ -1,0 +1,1423 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="744.09448"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.45.1"
+   version="1.0"
+   sodipodi:docbase="/home/abel/Courses/TTAO/SubversionHowTo"
+   sodipodi:docname="statetransition.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/abel/Courses/TTAO/SubversionHowT/statetransition.png"
+   inkscape:export-xdpi="92.044762"
+   inkscape:export-ydpi="92.044762">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path3240"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.3089736"
+     inkscape:cx="526.18109"
+     inkscape:cy="372.04724"
+     inkscape:document-units="px"
+     inkscape:current-layer="g5080"
+     width="1052.3622px"
+     height="744.09449px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1176"
+     inkscape:window-x="0"
+     inkscape:window-y="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+       x="821.07843"
+       y="23.963398"
+       id="text2249"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan2251"
+         x="821.07843"
+         y="23.963398"><tspan
+   style="font-weight:bold"
+   id="tspan2259">Depósito</tspan>: https://flautin.it.uc3m.es/svn/ttao/GRUPO_???</tspan></text>
+    <g
+       id="g3754"
+       transform="translate(-252.31166,-15.983328)">
+      <text
+         sodipodi:linespacing="100%"
+         id="text3537"
+         y="53.531963"
+         x="401.74207"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         xml:space="preserve"><tspan
+           y="53.531963"
+           x="401.74207"
+           id="tspan3539"
+           sodipodi:role="line">Paso inicial. Una sola vez en el curso</tspan></text>
+      <g
+         id="g3735">
+        <rect
+           style="opacity:1;fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect3716"
+           width="198.83305"
+           height="123.12355"
+           x="302.41342"
+           y="60.257538"
+           rx="8.4121685"
+           ry="8.4121685" />
+        <g
+           id="g3718">
+          <g
+             id="g3699">
+            <rect
+               ry="8.4121685"
+               y="84.007484"
+               x="318.85538"
+               height="24.471762"
+               width="165.94913"
+               id="rect3468"
+               style="fill:#ffaaaa;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+               rx="8.4121685" />
+            <text
+               sodipodi:linespacing="100%"
+               id="text3470"
+               y="79.419014"
+               x="401.80652"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               xml:space="preserve"><tspan
+                 y="79.419014"
+                 x="401.80652"
+                 id="tspan3472"
+                 sodipodi:role="line">Comando</tspan></text>
+            <text
+               xml:space="preserve"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Courier New"
+               x="401.48718"
+               y="99.822563"
+               id="text2253"
+               sodipodi:linespacing="100%"><tspan
+                 sodipodi:role="line"
+                 id="tspan2255"
+                 x="401.48718"
+                 y="99.822563">svn checkout <tspan
+   style="font-weight:bold;font-family:Verdana"
+   id="tspan2257">Depósito</tspan></tspan></text>
+          </g>
+          <g
+             transform="translate(8.000002,0)"
+             id="g3707">
+            <g
+               transform="translate(190.40843,-278.3613)"
+               id="g3456">
+              <rect
+                 rx="8.4121675"
+                 style="opacity:1;fill:#ffe680;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 id="rect3454"
+                 width="171.30232"
+                 height="30.589701"
+                 x="117.77035"
+                 y="420.6084"
+                 ry="8.4121675" />
+              <text
+                 xml:space="preserve"
+                 style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+                 x="203.42737"
+                 y="433.25482"
+                 id="text3448"
+                 sodipodi:linespacing="100%"><tspan
+                   sodipodi:role="line"
+                   id="tspan3450"
+                   x="203.42737"
+                   y="433.25482">Crea directorio nuevo</tspan><tspan
+                   sodipodi:role="line"
+                   x="203.42737"
+                   y="445.25482"
+                   id="tspan3452">con contenido del depósito</tspan></text>
+            </g>
+            <text
+               xml:space="preserve"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               x="393.55746"
+               y="135.41901"
+               id="text3695"
+               sodipodi:linespacing="100%"><tspan
+                 sodipodi:role="line"
+                 id="tspan3697"
+                 x="393.55746"
+                 y="135.41901">Efecto</tspan></text>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g4030"
+       transform="translate(335.75891,-2.2942279)">
+      <g
+         transform="translate(4.5845327,0)"
+         id="g3955">
+        <rect
+           style="fill:#ffaaee;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect3505"
+           width="212.59842"
+           height="154.478"
+           x="11.530732"
+           y="30.585077"
+           rx="8.4121685"
+           ry="8.4121695" />
+        <g
+           id="g3934">
+          <g
+             transform="translate(8,0)"
+             id="g3889">
+            <g
+               id="g3442"
+               transform="translate(-84.239337,-208.3613)">
+              <path
+                 id="rect2188"
+                 d="M 115.34375,266.625 L 115.34375,336.5625 C 115.30591,336.85117 115.28125,337.14415 115.28125,337.4375 C 115.28125,344.81733 127.4564,350.81251 142.4375,350.8125 C 157.26995,350.8125 169.32452,344.93507 169.5625,337.65625 L 169.59375,337.65625 L 169.59375,266.625 L 115.34375,266.625 z "
+                 style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+              <path
+                 transform="matrix(0.9348717,0,0,1,8.8733271,-13.59485)"
+                 d="M 171.89041 280.75433 A 29.03038 13.369254 0 1 1  113.82965,280.75433 A 29.03038 13.369254 0 1 1  171.89041 280.75433 z"
+                 sodipodi:ry="13.369254"
+                 sodipodi:rx="29.03038"
+                 sodipodi:cy="280.75433"
+                 sodipodi:cx="142.86003"
+                 id="path2190"
+                 style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.03424633;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 sodipodi:type="arc" />
+              <text
+                 sodipodi:linespacing="100%"
+                 id="text2225"
+                 y="291.43097"
+                 x="142.15666"
+                 style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+                 xml:space="preserve"><tspan
+                   y="291.43097"
+                   x="142.15666"
+                   id="tspan2227"
+                   sodipodi:role="line">Depósito</tspan><tspan
+                   id="tspan3980"
+                   y="303.43097"
+                   x="142.15666"
+                   sodipodi:role="line">Remoto</tspan></text>
+            </g>
+            <text
+               xml:space="preserve"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               x="57.861248"
+               y="156.77222"
+               id="text3869"
+               sodipodi:linespacing="100%"><tspan
+                 sodipodi:role="line"
+                 id="tspan3871"
+                 x="57.861248"
+                 y="156.77222">Ficheros</tspan></text>
+          </g>
+          <g
+             transform="translate(0,7.4680166)"
+             id="g3879">
+            <g
+               id="g3436"
+               transform="translate(-124.23934,-228.88395)">
+              <path
+                 sodipodi:nodetypes="ccsscccc"
+                 style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 d="M 266.60731,295.62862 L 266.60731,310.5625 C 266.56947,310.85117 266.54481,311.14415 266.54481,311.4375 C 266.54481,318.81733 278.71996,324.81251 293.70106,324.8125 C 308.53351,324.8125 320.58808,318.93507 320.82606,311.65625 L 320.85731,311.65625 L 320.85731,295.62862 L 266.60731,295.62862 z "
+                 id="path2229" />
+              <path
+                 sodipodi:type="arc"
+                 style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.03424633;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 id="path2231"
+                 sodipodi:cx="142.86003"
+                 sodipodi:cy="280.75433"
+                 sodipodi:rx="29.03038"
+                 sodipodi:ry="13.369254"
+                 d="M 171.89041 280.75433 A 29.03038 13.369254 0 1 1  113.82965,280.75433 A 29.03038 13.369254 0 1 1  171.89041 280.75433 z"
+                 transform="matrix(0.9348717,0,0,1,160.14526,13.450446)" />
+              <text
+                 xml:space="preserve"
+                 style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+                 x="293.64539"
+                 y="318.31439"
+                 id="text2233"
+                 sodipodi:linespacing="100%"><tspan
+                   sodipodi:role="line"
+                   id="tspan2235"
+                   x="293.64539"
+                   y="318.31439">Local</tspan></text>
+            </g>
+            <text
+               xml:space="preserve"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               x="169.18925"
+               y="123.31354"
+               id="text3873"
+               sodipodi:linespacing="100%"><tspan
+                 sodipodi:role="line"
+                 id="tspan3875"
+                 x="169.18925"
+                 y="123.31354">Ningún</tspan><tspan
+                 sodipodi:role="line"
+                 x="169.18925"
+                 y="135.31354"
+                 id="tspan3877">Fichero</tspan></text>
+          </g>
+        </g>
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="M 117.82994,31.021031 L 117.82994,184.96711"
+           id="path6732"
+           sodipodi:nodetypes="cc" />
+        <text
+           xml:space="preserve"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+           x="169.44414"
+           y="48.943523"
+           id="text6875"
+           sodipodi:linespacing="100%"><tspan
+             sodipodi:role="line"
+             id="tspan6877"
+             x="169.44414"
+             y="48.943523">Tu ordenador</tspan></text>
+      </g>
+      <text
+         sodipodi:linespacing="100%"
+         id="text3976"
+         y="24.471777"
+         x="122.35881"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         xml:space="preserve"><tspan
+           y="24.471777"
+           x="122.35881"
+           id="tspan3978"
+           sodipodi:role="line">Estado Inicial</tspan></text>
+    </g>
+    <g
+       id="g6631"
+       transform="translate(-66.478223,0)">
+      <g
+         id="g4057"
+         transform="translate(98.351151,220)">
+        <rect
+           ry="8.4121695"
+           rx="8.4121685"
+           y="30.585077"
+           x="11.530732"
+           height="154.478"
+           width="212.59842"
+           id="rect4059"
+           style="fill:#ffaaee;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <g
+           id="g4061">
+          <g
+             id="g4063"
+             transform="translate(8,0)">
+            <g
+               transform="translate(-84.239337,-208.3613)"
+               id="g4065">
+              <path
+                 style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 d="M 115.34375,266.625 L 115.34375,336.5625 C 115.30591,336.85117 115.28125,337.14415 115.28125,337.4375 C 115.28125,344.81733 127.4564,350.81251 142.4375,350.8125 C 157.26995,350.8125 169.32452,344.93507 169.5625,337.65625 L 169.59375,337.65625 L 169.59375,266.625 L 115.34375,266.625 z "
+                 id="path4067" />
+              <path
+                 sodipodi:type="arc"
+                 style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.03424633;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 id="path4069"
+                 sodipodi:cx="142.86003"
+                 sodipodi:cy="280.75433"
+                 sodipodi:rx="29.03038"
+                 sodipodi:ry="13.369254"
+                 d="M 171.89041 280.75433 A 29.03038 13.369254 0 1 1  113.82965,280.75433 A 29.03038 13.369254 0 1 1  171.89041 280.75433 z"
+                 transform="matrix(0.9348717,0,0,1,8.8733271,-13.59485)" />
+              <text
+                 xml:space="preserve"
+                 style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+                 x="142.15666"
+                 y="291.43097"
+                 id="text4071"
+                 sodipodi:linespacing="100%"><tspan
+                   sodipodi:role="line"
+                   id="tspan4073"
+                   x="142.15666"
+                   y="291.43097">Depósito</tspan><tspan
+                   sodipodi:role="line"
+                   x="142.15666"
+                   y="303.43097"
+                   id="tspan4075">Remoto</tspan></text>
+            </g>
+            <text
+               sodipodi:linespacing="100%"
+               id="text4077"
+               y="156.77222"
+               x="57.861248"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               xml:space="preserve"><tspan
+                 y="156.77222"
+                 x="57.861248"
+                 id="tspan4079"
+                 sodipodi:role="line">Ficheros</tspan><tspan
+                 y="168.77222"
+                 x="57.861248"
+                 sodipodi:role="line"
+                 id="tspan6893">actualizados</tspan></text>
+          </g>
+          <g
+             id="g4081"
+             transform="translate(0,7.4680166)">
+            <g
+               transform="translate(-124.23934,-228.88395)"
+               id="g4083">
+              <path
+                 id="path4085"
+                 d="M 266.60731,295.62862 L 266.60731,310.5625 C 266.56947,310.85117 266.54481,311.14415 266.54481,311.4375 C 266.54481,318.81733 278.71996,324.81251 293.70106,324.8125 C 308.53351,324.8125 320.58808,318.93507 320.82606,311.65625 L 320.85731,311.65625 L 320.85731,295.62862 L 266.60731,295.62862 z "
+                 style="fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 sodipodi:nodetypes="ccsscccc" />
+              <path
+                 transform="matrix(0.9348717,0,0,1,160.14526,13.450446)"
+                 d="M 171.89041 280.75433 A 29.03038 13.369254 0 1 1  113.82965,280.75433 A 29.03038 13.369254 0 1 1  171.89041 280.75433 z"
+                 sodipodi:ry="13.369254"
+                 sodipodi:rx="29.03038"
+                 sodipodi:cy="280.75433"
+                 sodipodi:cx="142.86003"
+                 id="path4087"
+                 style="fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.03424633;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 sodipodi:type="arc" />
+              <text
+                 sodipodi:linespacing="100%"
+                 id="text4089"
+                 y="318.31439"
+                 x="293.64539"
+                 style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+                 xml:space="preserve"><tspan
+                   y="318.31439"
+                   x="293.64539"
+                   id="tspan4091"
+                   sodipodi:role="line">Local</tspan></text>
+            </g>
+            <text
+               sodipodi:linespacing="100%"
+               id="text4093"
+               y="123.31354"
+               x="169.18925"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               xml:space="preserve"><tspan
+                 id="tspan4097"
+                 y="123.31354"
+                 x="169.18925"
+                 sodipodi:role="line">Ficheros</tspan><tspan
+                 y="135.31354"
+                 x="169.18925"
+                 sodipodi:role="line"
+                 id="tspan6891">actualizados</tspan></text>
+          </g>
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+           x="169.44414"
+           y="48.187256"
+           id="text6879"
+           sodipodi:linespacing="100%"><tspan
+             sodipodi:role="line"
+             id="tspan6881"
+             x="169.44414"
+             y="48.187256">Tu ordenador</tspan></text>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         x="216.12543"
+         y="244.47177"
+         id="text4099"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan4101"
+           x="216.12543"
+           y="244.47177">Contenidos idénticos</tspan></text>
+    </g>
+    <g
+       transform="translate(647.2884,220)"
+       id="g5078">
+      <g
+         transform="translate(4.5845327,0)"
+         id="g5080">
+        <rect
+           style="fill:#ffaaee;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect5082"
+           width="212.59842"
+           height="154.478"
+           x="11.530732"
+           y="30.585077"
+           rx="8.4121685"
+           ry="8.4121695" />
+        <g
+           id="g5084">
+          <g
+             transform="translate(8,0)"
+             id="g5086">
+            <g
+               id="g5088"
+               transform="translate(-84.239337,-208.3613)">
+              <path
+                 id="path5090"
+                 d="M 115.34375,266.625 L 115.34375,336.5625 C 115.30591,336.85117 115.28125,337.14415 115.28125,337.4375 C 115.28125,344.81733 127.4564,350.81251 142.4375,350.8125 C 157.26995,350.8125 169.32452,344.93507 169.5625,337.65625 L 169.59375,337.65625 L 169.59375,266.625 L 115.34375,266.625 z "
+                 style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+              <path
+                 transform="matrix(0.9348717,0,0,1,8.8733271,-13.59485)"
+                 d="M 171.89041 280.75433 A 29.03038 13.369254 0 1 1  113.82965,280.75433 A 29.03038 13.369254 0 1 1  171.89041 280.75433 z"
+                 sodipodi:ry="13.369254"
+                 sodipodi:rx="29.03038"
+                 sodipodi:cy="280.75433"
+                 sodipodi:cx="142.86003"
+                 id="path5092"
+                 style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.03424633;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 sodipodi:type="arc" />
+              <text
+                 sodipodi:linespacing="100%"
+                 id="text5094"
+                 y="291.43097"
+                 x="142.15666"
+                 style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+                 xml:space="preserve"><tspan
+                   y="291.43097"
+                   x="142.15666"
+                   id="tspan5096"
+                   sodipodi:role="line">Depósito</tspan><tspan
+                   id="tspan5098"
+                   y="303.43097"
+                   x="142.15666"
+                   sodipodi:role="line">Remoto</tspan></text>
+            </g>
+            <text
+               xml:space="preserve"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               x="57.861248"
+               y="156.77222"
+               id="text5100"
+               sodipodi:linespacing="100%"><tspan
+                 sodipodi:role="line"
+                 x="57.861248"
+                 y="156.77222"
+                 id="tspan5132">Ficheros</tspan><tspan
+                 sodipodi:role="line"
+                 x="57.861248"
+                 y="168.77222"
+                 id="tspan5428">actualizados</tspan></text>
+          </g>
+          <g
+             transform="translate(0,7.4680166)"
+             id="g5104">
+            <g
+               id="g5106"
+               transform="translate(-124.23934,-228.88395)">
+              <path
+                 sodipodi:nodetypes="ccsscccc"
+                 style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 d="M 266.60731,295.62862 L 266.60731,310.5625 C 266.56947,310.85117 266.54481,311.14415 266.54481,311.4375 C 266.54481,318.81733 278.71996,324.81251 293.70106,324.8125 C 308.53351,324.8125 320.58808,318.93507 320.82606,311.65625 L 320.85731,311.65625 L 320.85731,295.62862 L 266.60731,295.62862 z "
+                 id="path5108" />
+              <path
+                 sodipodi:type="arc"
+                 style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.03424633;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 id="path5110"
+                 sodipodi:cx="142.86003"
+                 sodipodi:cy="280.75433"
+                 sodipodi:rx="29.03038"
+                 sodipodi:ry="13.369254"
+                 d="M 171.89041 280.75433 A 29.03038 13.369254 0 1 1  113.82965,280.75433 A 29.03038 13.369254 0 1 1  171.89041 280.75433 z"
+                 transform="matrix(0.9348717,0,0,1,160.14526,13.450446)" />
+              <text
+                 xml:space="preserve"
+                 style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+                 x="293.64539"
+                 y="318.31439"
+                 id="text5112"
+                 sodipodi:linespacing="100%"><tspan
+                   sodipodi:role="line"
+                   id="tspan5114"
+                   x="293.64539"
+                   y="318.31439">Local</tspan></text>
+            </g>
+            <text
+               xml:space="preserve"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               x="169.18925"
+               y="123.31354"
+               id="text5116"
+               sodipodi:linespacing="100%"><tspan
+                 sodipodi:role="line"
+                 x="169.18925"
+                 y="123.31354"
+                 id="tspan5118">Ficheros</tspan><tspan
+                 sodipodi:role="line"
+                 x="169.18925"
+                 y="135.31354"
+                 id="tspan5130">Modificados</tspan></text>
+          </g>
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+           x="170.68591"
+           y="49.045792"
+           id="text4306"
+           sodipodi:linespacing="100%"><tspan
+             sodipodi:role="line"
+             id="tspan4308"
+             x="170.68591"
+             y="49.045792">Tu ordenador</tspan></text>
+      </g>
+      <text
+         sodipodi:linespacing="100%"
+         id="text5120"
+         y="24.471777"
+         x="122.35881"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         xml:space="preserve"><tspan
+           y="24.471777"
+           x="122.35881"
+           id="tspan5122"
+           sodipodi:role="line">Cambios en copia local</tspan></text>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 255.89307,263.07143 L 661.04974,263.07143"
+       id="path5124"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+       x="458.19897"
+       y="256.90012"
+       id="text5126"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan5128"
+         x="458.19897"
+         y="256.90012">Ficheros locales modificados por el usuario</tspan></text>
+    <g
+       id="g5300"
+       transform="translate(-63.488958,-176)">
+      <text
+         xml:space="preserve"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         x="523.14203"
+         y="465.6499"
+         id="text5136"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan5138"
+           x="523.14203"
+           y="465.6499">Envío de cambios (Muy frecuente)</tspan></text>
+      <g
+         transform="translate(121.39995,412.11794)"
+         id="g5140">
+        <rect
+           ry="8.4121685"
+           rx="8.4121685"
+           y="60.257538"
+           x="302.41342"
+           height="123.12355"
+           width="198.83305"
+           id="rect5142"
+           style="opacity:1;fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <g
+           id="g5144">
+          <g
+             id="g5146">
+            <rect
+               rx="8.4121685"
+               style="fill:#ffaaaa;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+               id="rect5148"
+               width="172.70857"
+               height="24.471762"
+               x="314.95712"
+               y="84.007484"
+               ry="8.4121685" />
+            <text
+               xml:space="preserve"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               x="401.80652"
+               y="79.419014"
+               id="text5150"
+               sodipodi:linespacing="100%"><tspan
+                 sodipodi:role="line"
+                 id="tspan5152"
+                 x="401.80652"
+                 y="79.419014">Comando</tspan></text>
+            <text
+               sodipodi:linespacing="100%"
+               id="text5154"
+               y="99.822563"
+               x="401.48718"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Courier New"
+               xml:space="preserve"><tspan
+                 y="99.822563"
+                 x="401.48718"
+                 id="tspan5156"
+                 sodipodi:role="line">svn commit -m &quot;mensaje&quot;</tspan></text>
+          </g>
+          <g
+             id="g5160"
+             transform="translate(8.000002,0)">
+            <g
+               id="g5162"
+               transform="translate(190.40843,-278.3613)">
+              <rect
+                 ry="8.4121675"
+                 y="420.6084"
+                 x="117.77035"
+                 height="30.589701"
+                 width="171.30232"
+                 id="rect5164"
+                 style="opacity:1;fill:#ffe680;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 rx="8.4121675" />
+              <text
+                 sodipodi:linespacing="100%"
+                 id="text5166"
+                 y="433.25482"
+                 x="203.42737"
+                 style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+                 xml:space="preserve"><tspan
+                   id="tspan5170"
+                   y="433.25482"
+                   x="203.42737"
+                   sodipodi:role="line">Envía los cambios al</tspan><tspan
+                   y="445.25482"
+                   x="203.42737"
+                   sodipodi:role="line"
+                   id="tspan5324">depósito remoto</tspan></text>
+            </g>
+            <text
+               sodipodi:linespacing="100%"
+               id="text5172"
+               y="135.41901"
+               x="393.55746"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               xml:space="preserve"><tspan
+                 y="135.41901"
+                 x="393.55746"
+                 id="tspan5174"
+                 sodipodi:role="line">Efecto</tspan></text>
+          </g>
+        </g>
+      </g>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 663.2277,334.0162 L 561.13457,355.90695"
+       id="path5326"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 360.57001,353.08027 L 258.18728,324.91999"
+       id="path5328"
+       sodipodi:nodetypes="cc" />
+    <g
+       id="g6691"
+       transform="translate(-66.478217,0)">
+      <g
+         transform="translate(713.23634,708)"
+         id="g5376">
+        <g
+           transform="translate(4.5845327,0)"
+           id="g5378" />
+        <text
+           sodipodi:linespacing="100%"
+           id="text5422"
+           y="12.471777"
+           x="122.35881"
+           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+           xml:space="preserve"><tspan
+             y="12.471777"
+             x="122.35881"
+             id="tspan5424"
+             sodipodi:role="line">Tanto ficheros locales</tspan><tspan
+             id="tspan5432"
+             y="24.471777"
+             x="122.35881"
+             sodipodi:role="line">como remotos modificados</tspan></text>
+      </g>
+      <g
+         id="g5982"
+         transform="translate(718.35115,520)">
+        <rect
+           ry="8.4121695"
+           rx="8.4121685"
+           y="30.585077"
+           x="11.530732"
+           height="154.478"
+           width="212.59842"
+           id="rect5984"
+           style="fill:#ffaaee;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+        <g
+           id="g5986">
+          <g
+             id="g5988"
+             transform="translate(8,0)">
+            <g
+               transform="translate(-84.239337,-208.3613)"
+               id="g5990">
+              <path
+                 style="opacity:1;fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 d="M 115.34375,266.625 L 115.34375,336.5625 C 115.30591,336.85117 115.28125,337.14415 115.28125,337.4375 C 115.28125,344.81733 127.4564,350.81251 142.4375,350.8125 C 157.26995,350.8125 169.32452,344.93507 169.5625,337.65625 L 169.59375,337.65625 L 169.59375,266.625 L 115.34375,266.625 z "
+                 id="path5992" />
+              <path
+                 sodipodi:type="arc"
+                 style="opacity:1;fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.03424633;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 id="path5994"
+                 sodipodi:cx="142.86003"
+                 sodipodi:cy="280.75433"
+                 sodipodi:rx="29.03038"
+                 sodipodi:ry="13.369254"
+                 d="M 171.89041 280.75433 A 29.03038 13.369254 0 1 1  113.82965,280.75433 A 29.03038 13.369254 0 1 1  171.89041 280.75433 z"
+                 transform="matrix(0.9348717,0,0,1,8.8733271,-13.59485)" />
+              <text
+                 xml:space="preserve"
+                 style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+                 x="142.15666"
+                 y="291.43097"
+                 id="text5996"
+                 sodipodi:linespacing="100%"><tspan
+                   sodipodi:role="line"
+                   id="tspan5998"
+                   x="142.15666"
+                   y="291.43097">Depósito</tspan><tspan
+                   sodipodi:role="line"
+                   x="142.15666"
+                   y="303.43097"
+                   id="tspan6000">Remoto</tspan></text>
+            </g>
+            <text
+               sodipodi:linespacing="100%"
+               id="text6002"
+               y="156.77222"
+               x="57.861248"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               xml:space="preserve"><tspan
+                 id="tspan6004"
+                 y="156.77222"
+                 x="57.861248"
+                 sodipodi:role="line">Ficheros</tspan><tspan
+                 id="tspan6006"
+                 y="168.77222"
+                 x="57.861248"
+                 sodipodi:role="line">modificados</tspan></text>
+          </g>
+          <g
+             id="g6008"
+             transform="translate(0,7.4680166)">
+            <g
+               transform="translate(-124.23934,-228.88395)"
+               id="g6010">
+              <path
+                 id="path6012"
+                 d="M 266.60731,295.62862 L 266.60731,310.5625 C 266.56947,310.85117 266.54481,311.14415 266.54481,311.4375 C 266.54481,318.81733 278.71996,324.81251 293.70106,324.8125 C 308.53351,324.8125 320.58808,318.93507 320.82606,311.65625 L 320.85731,311.65625 L 320.85731,295.62862 L 266.60731,295.62862 z "
+                 style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 sodipodi:nodetypes="ccsscccc" />
+              <path
+                 transform="matrix(0.9348717,0,0,1,160.14526,13.450446)"
+                 d="M 171.89041 280.75433 A 29.03038 13.369254 0 1 1  113.82965,280.75433 A 29.03038 13.369254 0 1 1  171.89041 280.75433 z"
+                 sodipodi:ry="13.369254"
+                 sodipodi:rx="29.03038"
+                 sodipodi:cy="280.75433"
+                 sodipodi:cx="142.86003"
+                 id="path6014"
+                 style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.03424633;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 sodipodi:type="arc" />
+              <text
+                 sodipodi:linespacing="100%"
+                 id="text6016"
+                 y="318.31439"
+                 x="293.64539"
+                 style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+                 xml:space="preserve"><tspan
+                   y="318.31439"
+                   x="293.64539"
+                   id="tspan6018"
+                   sodipodi:role="line">Local</tspan></text>
+            </g>
+            <text
+               sodipodi:linespacing="100%"
+               id="text6020"
+               y="123.31354"
+               x="169.18925"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               xml:space="preserve"><tspan
+                 id="tspan6022"
+                 y="123.31354"
+                 x="169.18925"
+                 sodipodi:role="line">Ficheros</tspan><tspan
+                 id="tspan6024"
+                 y="135.31354"
+                 x="169.18925"
+                 sodipodi:role="line">Modificados</tspan></text>
+          </g>
+          <text
+             xml:space="preserve"
+             style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+             x="169.50859"
+             y="49.201584"
+             id="text6887"
+             sodipodi:linespacing="100%"><tspan
+               sodipodi:role="line"
+               id="tspan6889"
+               x="169.50859"
+               y="49.201584">Tu ordenador</tspan></text>
+        </g>
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="M 117.82994,30.608963 L 117.82994,185.03919"
+           id="path6738"
+           sodipodi:nodetypes="cc" />
+      </g>
+    </g>
+    <g
+       transform="translate(-63.462594,-2)"
+       id="g6054">
+      <text
+         sodipodi:linespacing="100%"
+         id="text6056"
+         y="465.6499"
+         x="523.14203"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         xml:space="preserve"><tspan
+           y="465.6499"
+           x="523.14203"
+           id="tspan6058"
+           sodipodi:role="line">Obtención de cambios del depósito</tspan></text>
+      <g
+         id="g6060"
+         transform="translate(121.39995,412.11794)">
+        <rect
+           style="opacity:1;fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect6062"
+           width="198.83305"
+           height="123.12355"
+           x="302.41342"
+           y="60.257538"
+           rx="8.4121685"
+           ry="8.4121685" />
+        <g
+           id="g6064">
+          <g
+             id="g6066">
+            <rect
+               ry="8.4121685"
+               y="84.007484"
+               x="318.85538"
+               height="24.471762"
+               width="165.94913"
+               id="rect6068"
+               style="fill:#ffaaaa;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+               rx="8.4121685" />
+            <text
+               sodipodi:linespacing="100%"
+               id="text6070"
+               y="79.419014"
+               x="401.80652"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               xml:space="preserve"><tspan
+                 y="79.419014"
+                 x="401.80652"
+                 id="tspan6072"
+                 sodipodi:role="line">Comando</tspan></text>
+            <text
+               xml:space="preserve"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Courier New"
+               x="401.48718"
+               y="99.822563"
+               id="text6074"
+               sodipodi:linespacing="100%"><tspan
+                 sodipodi:role="line"
+                 id="tspan6076"
+                 x="401.48718"
+                 y="99.822563">svn update</tspan></text>
+          </g>
+          <g
+             transform="translate(8.000002,0)"
+             id="g6078">
+            <g
+               transform="translate(190.40843,-278.3613)"
+               id="g6080">
+              <rect
+                 rx="8.4121675"
+                 style="opacity:1;fill:#ffe680;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+                 id="rect6082"
+                 width="171.30232"
+                 height="30.589701"
+                 x="117.77035"
+                 y="420.6084"
+                 ry="8.4121675" />
+              <text
+                 xml:space="preserve"
+                 style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+                 x="203.42737"
+                 y="433.25482"
+                 id="text6084"
+                 sodipodi:linespacing="100%"><tspan
+                   sodipodi:role="line"
+                   x="203.42737"
+                   y="433.25482"
+                   id="tspan6086">Obtiene nuevas versiones</tspan><tspan
+                   id="tspan6088"
+                   sodipodi:role="line"
+                   x="203.42737"
+                   y="445.25482">del depósito remoto</tspan></text>
+            </g>
+            <text
+               xml:space="preserve"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               x="393.55746"
+               y="135.41901"
+               id="text6090"
+               sodipodi:linespacing="100%"><tspan
+                 sodipodi:role="line"
+                 id="tspan6092"
+                 x="393.55746"
+                 y="135.41901">Efecto</tspan></text>
+          </g>
+        </g>
+      </g>
+    </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 149.70287,405.31354 L 149.70287,548.51158"
+       id="path6563"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+       x="94.882454"
+       y="464.96347"
+       id="text6681"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan6683"
+         x="94.882454"
+         y="464.96347">Alguien modifica</tspan><tspan
+         sodipodi:role="line"
+         x="94.882454"
+         y="476.96347"
+         id="tspan6685">ficheros en el</tspan><tspan
+         sodipodi:role="line"
+         x="94.882454"
+         y="488.96347"
+         id="tspan6687">depósito</tspan></text>
+    <path
+       sodipodi:nodetypes="cc"
+       id="path6689"
+       d="M 769.70287,405.31354 L 769.70287,548.51158"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow1Lend);stroke-opacity:1" />
+    <text
+       sodipodi:linespacing="100%"
+       id="text6720"
+       y="464.96347"
+       x="824.88245"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+       xml:space="preserve"><tspan
+         y="464.96347"
+         x="824.88245"
+         id="tspan6722"
+         sodipodi:role="line">Alguien modifica</tspan><tspan
+         id="tspan6724"
+         y="476.96347"
+         x="824.88245"
+         sodipodi:role="line">ficheros en el</tspan><tspan
+         id="tspan6726"
+         y="488.96347"
+         x="824.88245"
+         sodipodi:role="line">depósito</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 351.25473,98.164604 L 251.21512,98.164604"
+       id="path6728" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 149.70287,167.65005 L 149.70287,232.81098"
+       id="path6730" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 149.70287,250.58508 L 149.70287,405.0153"
+       id="path6734"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 769.70287,250.60897 L 769.70287,405.03919"
+       id="path6736"
+       sodipodi:nodetypes="cc" />
+    <g
+       id="g6849"
+       transform="translate(-66.478217,0)">
+      <text
+         sodipodi:linespacing="100%"
+         id="text5372"
+         y="722.4718"
+         x="216.12544"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         xml:space="preserve"><tspan
+           y="722.4718"
+           x="216.12544"
+           id="tspan5374"
+           sodipodi:role="line">Ficheros del depósito modificados</tspan></text>
+      <rect
+         ry="8.4121695"
+         rx="8.4121685"
+         y="550.58508"
+         x="109.88188"
+         height="154.478"
+         width="212.59842"
+         id="rect5334"
+         style="fill:#ffaaee;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <g
+         transform="translate(98.351148,520)"
+         id="g5336">
+        <g
+           id="g5338"
+           transform="translate(8,0)">
+          <g
+             transform="translate(-84.239337,-208.3613)"
+             id="g5340">
+            <path
+               style="opacity:1;fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+               d="M 115.34375,266.625 L 115.34375,336.5625 C 115.30591,336.85117 115.28125,337.14415 115.28125,337.4375 C 115.28125,344.81733 127.4564,350.81251 142.4375,350.8125 C 157.26995,350.8125 169.32452,344.93507 169.5625,337.65625 L 169.59375,337.65625 L 169.59375,266.625 L 115.34375,266.625 z "
+               id="path5342" />
+            <path
+               sodipodi:type="arc"
+               style="opacity:1;fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.03424633;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+               id="path5344"
+               sodipodi:cx="142.86003"
+               sodipodi:cy="280.75433"
+               sodipodi:rx="29.03038"
+               sodipodi:ry="13.369254"
+               d="M 171.89041 280.75433 A 29.03038 13.369254 0 1 1  113.82965,280.75433 A 29.03038 13.369254 0 1 1  171.89041 280.75433 z"
+               transform="matrix(0.9348717,0,0,1,8.8733271,-13.59485)" />
+            <text
+               xml:space="preserve"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               x="142.15666"
+               y="291.43097"
+               id="text5346"
+               sodipodi:linespacing="100%"><tspan
+                 sodipodi:role="line"
+                 id="tspan5348"
+                 x="142.15666"
+                 y="291.43097">Depósito</tspan><tspan
+                 sodipodi:role="line"
+                 x="142.15666"
+                 y="303.43097"
+                 id="tspan5350">Remoto</tspan></text>
+          </g>
+          <text
+             sodipodi:linespacing="100%"
+             id="text5352"
+             y="156.77222"
+             x="57.861248"
+             style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+             xml:space="preserve"><tspan
+               y="156.77222"
+               x="57.861248"
+               id="tspan5354"
+               sodipodi:role="line">Ficheros</tspan><tspan
+               y="168.77222"
+               x="57.861248"
+               sodipodi:role="line"
+               id="tspan6121">modificados</tspan></text>
+        </g>
+        <g
+           id="g5356"
+           transform="translate(0,7.4680166)">
+          <g
+             transform="translate(-124.23934,-228.88395)"
+             id="g5358">
+            <path
+               id="path5360"
+               d="M 266.60731,295.62862 L 266.60731,310.5625 C 266.56947,310.85117 266.54481,311.14415 266.54481,311.4375 C 266.54481,318.81733 278.71996,324.81251 293.70106,324.8125 C 308.53351,324.8125 320.58808,318.93507 320.82606,311.65625 L 320.85731,311.65625 L 320.85731,295.62862 L 266.60731,295.62862 z "
+               style="fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+               sodipodi:nodetypes="ccsscccc" />
+            <path
+               transform="matrix(0.9348717,0,0,1,160.14526,13.450446)"
+               d="M 171.89041 280.75433 A 29.03038 13.369254 0 1 1  113.82965,280.75433 A 29.03038 13.369254 0 1 1  171.89041 280.75433 z"
+               sodipodi:ry="13.369254"
+               sodipodi:rx="29.03038"
+               sodipodi:cy="280.75433"
+               sodipodi:cx="142.86003"
+               id="path5362"
+               style="fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.03424633;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+               sodipodi:type="arc" />
+            <text
+               sodipodi:linespacing="100%"
+               id="text5364"
+               y="318.31439"
+               x="293.64539"
+               style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+               xml:space="preserve"><tspan
+                 y="318.31439"
+                 x="293.64539"
+                 id="tspan5366"
+                 sodipodi:role="line">Local</tspan></text>
+          </g>
+          <text
+             sodipodi:linespacing="100%"
+             id="text5368"
+             y="123.31354"
+             x="169.18925"
+             style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+             xml:space="preserve"><tspan
+               id="tspan5370"
+               y="123.31354"
+               x="169.18925"
+               sodipodi:role="line">Ficheros</tspan><tspan
+               id="tspan5430"
+               y="135.31354"
+               x="169.18925"
+               sodipodi:role="line">actualizados</tspan></text>
+        </g>
+      </g>
+      <path
+         sodipodi:nodetypes="cc"
+         id="path6740"
+         d="M 216.18109,550.60896 L 216.18109,705.03919"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <text
+         xml:space="preserve"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         x="267.86267"
+         y="567.96509"
+         id="text6883"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan6885"
+           x="267.86267"
+           y="567.96509">Tu ordenador</tspan></text>
+    </g>
+    <path
+       sodipodi:nodetypes="cc"
+       id="path6895"
+       d="M 255.89307,637.48547 L 661.04974,637.48547"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow1Lend);stroke-opacity:1" />
+    <text
+       sodipodi:linespacing="100%"
+       id="text6897"
+       y="630.90015"
+       x="458.19897"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+       xml:space="preserve"><tspan
+         y="630.90015"
+         x="458.19897"
+         id="tspan6899"
+         sodipodi:role="line">Ficheros locales modificados por el usuario</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-mid:url(#Arrow1Lend);marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 663.08615,609.11742 C 663.08615,609.11742 559.27236,579.29247 559.08117,526.9076 C 558.8885,474.11856 661.36548,376.44451 661.36548,376.44451"
+       id="path6909"
+       sodipodi:nodetypes="csc" />
+    <path
+       sodipodi:nodetypes="csc"
+       id="path6911"
+       d="M 663.08615,609.11742 C 663.08615,609.11742 559.27236,579.29247 559.08117,526.9076 C 558.8885,474.11856 661.36548,376.44451 661.36548,376.44451"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-mid:url(#Arrow1Lend);marker-end:url(#Arrow1Lend);stroke-opacity:1" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-mid:url(#Arrow1Lend);marker-end:url(#Arrow1Lend);stroke-opacity:1"
+       d="M 256.17639,609.11742 C 256.17639,609.11742 359.99018,579.29247 360.18137,526.9076 C 360.37404,474.11856 257.89706,376.44451 257.89706,376.44451"
+       id="path6913"
+       sodipodi:nodetypes="csc" />
+    <g
+       id="g6922"
+       transform="translate(-67.492133,0)">
+      <path
+         sodipodi:nodetypes="cccccc"
+         id="rect6915"
+         d="M 427.92126,27.795149 L 427.92126,13.551823 C 427.92126,11.592361 429.49874,10.014901 431.4582,10.014901 L 448.42586,10.014901 C 450.38532,10.014901 451.96279,11.592361 451.96279,13.551823 L 451.96279,27.795149"
+         style="fill:#ffaaee;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text6918"
+         y="22.703293"
+         x="439.72693"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         xml:space="preserve"><tspan
+           y="22.703293"
+           x="439.72693"
+           id="tspan6920"
+           sodipodi:role="line">I</tspan></text>
+    </g>
+    <g
+       transform="translate(-375.68324,222.3276)"
+       id="g6927">
+      <path
+         style="fill:#ffaaee;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="M 427.92126,27.795149 L 427.92126,13.551823 C 427.92126,11.592361 429.49874,10.014901 431.4582,10.014901 L 448.42586,10.014901 C 450.38532,10.014901 451.96279,11.592361 451.96279,13.551823 L 451.96279,27.795149"
+         id="path6929"
+         sodipodi:nodetypes="cccccc" />
+      <text
+         xml:space="preserve"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         x="439.72693"
+         y="22.703293"
+         id="text6931"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan6933"
+           x="439.72693"
+           y="22.703293">A</tspan></text>
+    </g>
+    <g
+       id="g6935"
+       transform="translate(243.83646,222.3276)">
+      <path
+         sodipodi:nodetypes="cccccc"
+         id="path6937"
+         d="M 427.92126,27.795149 L 427.92126,13.551823 C 427.92126,11.592361 429.49874,10.014901 431.4582,10.014901 L 448.42586,10.014901 C 450.38532,10.014901 451.96279,11.592361 451.96279,13.551823 L 451.96279,27.795149"
+         style="fill:#ffaaee;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text6939"
+         y="22.703293"
+         x="439.72693"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         xml:space="preserve"><tspan
+           y="22.703293"
+           x="439.72693"
+           id="tspan6941"
+           sodipodi:role="line">B</tspan></text>
+    </g>
+    <g
+       id="g6959"
+       transform="translate(-375.68324,522.3037)">
+      <path
+         sodipodi:nodetypes="cccccc"
+         id="path6961"
+         d="M 427.92126,27.795149 L 427.92126,13.551823 C 427.92126,11.592361 429.49874,10.014901 431.4582,10.014901 L 448.42586,10.014901 C 450.38532,10.014901 451.96279,11.592361 451.96279,13.551823 L 451.96279,27.795149"
+         style="fill:#ffaaee;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text6963"
+         y="22.703293"
+         x="439.72693"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         xml:space="preserve"><tspan
+           y="22.703293"
+           x="439.72693"
+           id="tspan6965"
+           sodipodi:role="line">C</tspan></text>
+    </g>
+    <g
+       transform="translate(243.83646,522.3037)"
+       id="g6967">
+      <path
+         style="fill:#ffaaee;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
+         d="M 427.92126,27.795149 L 427.92126,13.551823 C 427.92126,11.592361 429.49874,10.014901 431.4582,10.014901 L 448.42586,10.014901 C 450.38532,10.014901 451.96279,11.592361 451.96279,13.551823 L 451.96279,27.795149"
+         id="path6969"
+         sodipodi:nodetypes="cccccc" />
+      <text
+         xml:space="preserve"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         x="439.72693"
+         y="22.703293"
+         id="text6971"
+         sodipodi:linespacing="100%"><tspan
+           sodipodi:role="line"
+           id="tspan6973"
+           x="439.72693"
+           y="22.703293">D</tspan></text>
+    </g>
+    <g
+       id="g7240"
+       transform="translate(-22,0)">
+      <rect
+         ry="3.536936"
+         rx="3.536936"
+         y="57.001869"
+         x="641.80023"
+         height="112.41715"
+         width="403.01932"
+         id="rect6993"
+         style="opacity:1;fill:#f2f2f2;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         sodipodi:linespacing="100%"
+         id="text6975"
+         y="74.913574"
+         x="655.72491"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         xml:space="preserve"><tspan
+           y="74.913574"
+           x="655.72491"
+           id="tspan6977"
+           sodipodi:role="line">Otros comandos: ([] significa parámetro opcional)</tspan><tspan
+           id="tspan6979"
+           y="86.913574"
+           x="655.72491"
+           sodipodi:role="line" /><tspan
+           id="tspan6981"
+           y="98.913574"
+           x="655.72491"
+           sodipodi:role="line">svn status [fichero]: Muestra la situación de un fichero</tspan><tspan
+           id="tspan6983"
+           y="110.91357"
+           x="655.72491"
+           sodipodi:role="line">svn log [fichero] : Muestra los comentarios de otras versiones</tspan><tspan
+           id="tspan6985"
+           y="122.91357"
+           x="655.72491"
+           sodipodi:role="line">svn delete fichero: Borra fichero del control de versiones</tspan><tspan
+           id="tspan6987"
+           y="134.91357"
+           x="655.72491"
+           sodipodi:role="line">svn add fichero: Añade el fichero al control de versiones</tspan><tspan
+           id="tspan6989"
+           y="146.91357"
+           x="655.72491"
+           sodipodi:role="line">svn rename f1 f2: Cambia de nombre a un fichero</tspan><tspan
+           id="tspan6991"
+           y="158.91357"
+           x="655.72491"
+           sodipodi:role="line">svn help: Muestra documentación sobre los comandos</tspan></text>
+    </g>
+  </g>
+</svg>
