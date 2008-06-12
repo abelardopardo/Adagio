@@ -11,8 +11,17 @@ Laboratory2:
 
 Theory1:
    Theory session where the slides are made available as PDF as well as
-   de 2up format. This last one is produced automatically (as long as
-   the pdfjam package is installed, which provides pdfnup).
+   de 2up format. This last one is produced automatically in this directory
+   and independently of the author's directory (as long as
+   the pdfjam package is installed, which provides pdfnup). The author uses
+   some PPT and therefore no automatic processing is done (unless we fix
+   a glitch in ooffice to do batch processing efficiently)
+
+Theory2
+   Similar scenario to the previous one but the slides are obtained with
+   LaTeX processing. The 2up version in this case is locally produced 
+   in the author's directory. This is simply to show the two options when
+   compared to the previous one.
 
 A directory name scratch appears once the whole course is created. It is the
 dummy copy of the site. After reviewing that everything seems correct, then

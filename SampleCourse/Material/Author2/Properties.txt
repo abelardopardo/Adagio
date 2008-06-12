@@ -6,3 +6,4 @@
 #
 docbook.files=index.xml
 
+export.files=*.png
