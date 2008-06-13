@@ -44,15 +44,15 @@
 
     <antcall target="xsltproc.processing" inheritAll="false"/>
 
-    <antcall target="dblatex.processing" inheritAll="false"/>
-
-    <antcall target="pdflatex.processing" inheritAll="false"/>
-
     <antcall target="docbook.processing" inheritAll="false"/>
 
     <antcall target="bilingualdb.processing" inheritAll="false"/>
 
     <antcall target="laboratory.processing" inheritAll="false"/>
+
+    <antcall target="pdflatex.processing" inheritAll="false"/>
+
+    <antcall target="dblatex.processing" inheritAll="false"/>
 
     <antcall target="pdfnup.processing" inheritAll="false"/>
 
@@ -66,15 +66,15 @@
 
     <antcall target="pdfnup.clean" inheritAll="false"/>
 
+    <antcall target="dblatex.clean" inheritAll="false"/>
+
+    <antcall target="pdflatex.clean" inheritAll="false"/>
+
     <antcall target="laboratory.clean" inheritAll="false"/>
 
     <antcall target="bilingualdb.clean" inheritAll="false"/>
 
     <antcall target="docbook.clean" inheritAll="false"/>
-
-    <antcall target="pdflatex.clean" inheritAll="false"/>
-
-    <antcall target="dblatex.clean" inheritAll="false"/>
 
     <antcall target="xsltproc.clean" inheritAll="false"/>
 
