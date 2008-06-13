@@ -4,6 +4,7 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
+
 subrecursive.dst.dir=
 subrecursive.dirs=Laboratory1 \
                   Laboratory2 \
@@ -12,8 +13,16 @@ subrecursive.dirs=Laboratory1 \
   		  Guide1 \
   		  Guide2
 
+mergestyles.master.style=Params.xml
+
+docbook.files=index.xml
+docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
+
 copyfiles.files=style.css images/**
 copyfiles.dst.dir=scratch
+
+export.dst.dir=scratch
+export.files=index.html
 
 clean.files=scratch
 

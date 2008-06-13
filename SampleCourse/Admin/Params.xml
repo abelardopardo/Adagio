@@ -2,6 +2,9 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   
+  <!-- This param is directly for docbook stylesheets -->
+  <xsl:param name="chapter.autolabel" select="0"/>
+
   <xsl:param name="ada.page.head.bigtitle" select="1"/>
   <xsl:param name="ada.course.name" select="'MI CURSO'" />
   <xsl:param name="ada.course.edition" select="'MI EDICION'"/>

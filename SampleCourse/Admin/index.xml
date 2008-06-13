@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<chapter lang="es">
+  <title>Mi asignatura</title>
+
+  <section id="teachingstaff">
+    <title>Plantilla docente</title>
+    <itemizedlist>
+      <listitem>
+        <ulink url="http://www.it.uc3m.es/abel">Abelardo Pardo (Coordinador)</ulink>
+      </listitem>
+      <listitem>
+        <ulink url="http://www.it.uc3m.es/pbasanta">Pablo Basanta Val </ulink>
+      </listitem>
+      <listitem>
+        <ulink url="http://www.it.uc3m.es/rcrespo">Raquel Crespo García </ulink>
+      </listitem>
+      <listitem>
+        <ulink url="http://www.it.uc3m.es/iria">Iria Estévez Ayres </ulink>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section id="sessions">
+    <title>Calendario detallado de sesiones</title>
+    <informaltable frame="none" id="tab:schedule">
+      <tgroup rowsep="1" colsep="1" cols="5">
+        <colspec colnum="1" colname="col1" align="center"/>
+        <colspec colnum="2" colname="col2" align="center"/>
+        <colspec colnum="3" colname="col3" align="left"/>
+        <colspec colnum="4" colname="col4" align="center"/>
+        <colspec colnum="5" colname="col5" align="center"/>
+        <thead>
+          <row>
+            <entry role="blue1head">#</entry>
+            <entry role="blue1head">Fecha</entry>
+            <entry role="blue1head" align="center">Contenido</entry>
+            <entry role="blue1head">Prof. Grupo 71/72</entry>
+            <entry role="blue1head">Material</entry>
+          </row>
+        </thead>
+        <tbody>
+	  <row>
+	    <entry>1</entry>
+	    <entry>10/10/10</entry>
+	    <entry>El tema de la primera sesión</entry>
+	    <entry>APS/APS</entry>
+	    <entry>
+	      <ulink url="Theory1/Introduction_ES.pdf">Documentación</ulink>,
+	      <ulink url="Theory1/Introduction_ES-1x2.pdf">A 2 páginas</ulink>
+	    </entry>
+	  </row>
+	  <row>
+	    <entry>2</entry>
+	    <entry>10/10/10</entry>
+	    <entry>El tema de la segunda sesión</entry>
+	    <entry>APS/APS</entry>
+	    <entry>
+	      <ulink url="Theory2/ASM_notes-1x2.pdf">Documentación</ulink>
+	    </entry>
+	  </row>
+	</tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+
+  <section id="labs">
+    <title>Calendario de sesiones de prácticas</title>
+    <informaltable frame="none" id="tab:homeworkmaterial">
+      <tgroup rowsep="1" colsep="1" cols="4">
+        <colspec colnum="1" colname="col1" align="center"/>
+        <colspec colnum="2" colname="col2" align="center"/>
+        <colspec colnum="3" colname="col3" align="center"/>
+        <colspec colnum="4" colname="col4" align="center"/>
+        <thead>
+          <row>
+            <entry role="blue1head">N</entry>
+            <entry role="blue1head">
+                  Enunciado
+                </entry>
+            <entry role="blue1head">
+                  Fecha de entrega
+                </entry>
+            <entry role="blue1head">
+                  Entrega y resultados
+                </entry>
+          </row>
+        </thead>
+        <tbody>
+	  <row>
+	    <entry>1</entry>
+	    <entry>
+	      <ulink url="Lab1/index.html">Enunciado</ulink>
+	    </entry>
+	    <entry>10 del 10 del 10</entry>
+	    <entry></entry>
+	  </row>
+	  <row>
+	    <entry>2</entry>
+	    <entry>
+	      <ulink url="Lab2/index.es.html">Enunciado en castellano</ulink>,
+	      <ulink url="Lab2/index.en.html">Handout in English</ulink>
+	    </entry>
+	    <entry>20 del 20 del 20</entry>
+	    <entry></entry>
+	  </row>
+	</tbody>
+      </tgroup>
+    </informaltable>
+  </section>
+
+  <section>
+    <title>Documentos auxiliares</title>
+    <para>
+      Los siguientes documentos son de lectura recomendada para la asignatura.
+    </para>
+
+    <orderedlist>
+      <listitem>
+	<para><ulink url="Guide1/index.html">Guía número uno</ulink></para>
+      </listitem>
+      <listitem>
+	<para><ulink url="Guide2/index.html">Guía número dos</ulink></para>
+      </listitem>
+    </orderedlist>
+  </section>
+</chapter>
