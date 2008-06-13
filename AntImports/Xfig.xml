@@ -60,8 +60,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    xfig.check          = "${xfig.check}"
-    xfig.fileset         = "${xfig.files}"</echo>
+    <echo level="info">    xfig.check          = "${xfig.check}"</echo>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -103,12 +102,19 @@
     </apply>    
   </target>
 
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="xfig.clean.NOT" unless="xfig.check">
+    <echo>xfig.clean                  ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
   <!-- Clean the produced files -->
-  <target name="xfig.clean" depends="xfig.check.values"
+  <target name="xfig.clean" depends="xfig.check.values, xfig.clean.NOT"
 	  if="xfig.check" 
 	  description="Clean files derived from the fig files"> 
 
-    <echo>xfig.clean             RUN</echo>
+    <echo>xfig.clean                  RUN</echo>
     <echo>${basedir}</echo>
 
     <!-- Obtain the fileset containing the produced files. This is done to be

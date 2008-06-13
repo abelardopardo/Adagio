@@ -60,7 +60,6 @@
 
     <!-- Dump the value of the properties just computed. -->
     <echo level="info">gimp.check          = "${gimp.check}"
-    gimp.fileset         = "${gimp.files}"
     gimp.target.fileset     = "${gimp.target.fileset.property}"</echo>
   </target>
 
@@ -112,11 +111,19 @@
     </fail>
   </target>
 
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="gimp.clean.NOT" unless="gimp.check">
+    <echo>gimp.clean                  ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+    
   <!-- Clean files produced by gimp -->
-  <target name="gimp.clean" depends="gimp.check.values"
+  <target name="gimp.clean" 
+	  depends="gimp.check.values, gimp.clean.NOT"
 	  if="gimp.check" description="Remove files produced by gimp">
     
-    <echo>gimp.clean             RUN</echo>
+    <echo>gimp.clean                  RUN</echo>
     <echo>${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->

@@ -48,8 +48,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    pdfnup.check          = "${pdfnup.check}"
-    pdfnup.fileset        = "${pdfnup.files}"</echo>
+    <echo level="info">    pdfnup.check          = "${pdfnup.check}"</echo>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -89,11 +88,18 @@
     </apply>    
   </target>
 
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="pdfnup.clean.NOT" unless="pdfnup.check">
+    <echo>pdfnup.clean                ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
   <!-- Clean files produced by pdfnup -->
-  <target name="pdfnup.clean" depends="pdfnup.check.values"
+  <target name="pdfnup.clean" depends="pdfnup.check.values, pdfnup.clean.NOT"
 	  if="pdfnup.check" description="Remove files produced by pdfnup">
 
-    <echo>pdfnup.clean           RUN</echo>
+    <echo>pdfnup.clean                RUN</echo>
     <echo>${basedir}</echo>
 
     <!-- Obtain the fileset containing the produced files. This is done to be

@@ -4,6 +4,16 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
+
+subrecursive.dirs=../../Material/Author4/Problem1 \
+                   ../../Material/Author4/Problem2 
+
+laboratory.style.file=${ada.home}/XslStyles/Laboratory.xsl
+laboratory.files=index.xml
+
+mergestyles.src.dir=..
+mergestyles.master.style=Params.xml
+
 export.dst.dir=../scratch/Lab1
 export.files=buscarmain.s \
              buscar.s \
@@ -11,15 +21,7 @@ export.files=buscarmain.s \
              square.s \
              images/*.png
 
-subrecursive.dirs=../../Material/Author4/Problem1 \
-                   ../../Material/Author4/Problem2 
-
 clean.files=images \
 	    ../scratch/Lab1/images \
 	    ../scratch/Lab1
 
-laboratory.style.file=${ada.home}/XslStyles/Laboratory.xsl
-laboratory.files=index.xml
-
-mergestyles.src.dir=..
-mergestyles.master.style=Params.xml

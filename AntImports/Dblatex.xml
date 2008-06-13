@@ -26,7 +26,7 @@
 	   includes="${dblatex.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
+       executing the regular targets. -->
   <target name="dblatex.check.values" 
 	  depends="initial.check, dblatex.dump.properties">
 
@@ -47,8 +47,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    dblatex.check          = "${dblatex.check}"
-    dblatex.fileset        = "${dblatex.files}"</echo>
+    <echo level="info">    dblatex.check          = "${dblatex.check}"</echo>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -86,11 +85,18 @@
     </apply>    
   </target>
 
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="dblatex.clean.NOT" unless="dblatex.check">
+    <echo>dblatex.clean               ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
   <!-- Clean files produced by dblatex -->
-  <target name="dblatex.clean" depends="dblatex.check.values"
+  <target name="dblatex.clean" depends="dblatex.check.values, dblatex.clean.NOT"
 	  if="dblatex.check" description="Remove files produced by dblatex">
 
-    <echo>dblatex.clean         RUN</echo>
+    <echo>dblatex.clean              RUN</echo>
     <echo>${basedir}</echo>
 
     <!-- Obtain the fileset containing the produced files. This is done to be

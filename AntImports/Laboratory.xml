@@ -36,57 +36,46 @@
   <property name="laboratory.manipulate.target" 
 	    value="xsltproc.processing"/>
 
-  <!-- Create the regular file, solution and professor guide -->
-  <target name="laboratory.manipulate.files">
-    <echo>laboratory.processing       CALL(xsltproc.processing)</echo>
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+       executing the regular targets. -->
+  <target name="laboratory.check.values" 
+	  depends="initial.check, laboratory.dump.properties">
 
-    <!-- Call xsltproc with no extra options -->
-    <antcall target="${laboratory.manipulate.target}" inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
-      <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
-      <param name="xsltproc.output.format" value="${laboratory.output.format}"/>
-      <param name="xsltproc.files"         value="${laboratory.creating.files}"/>
-      <param name="xsltproc.extra.args"    value="${laboratory.profile.lang}"/>
-    </antcall>
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="laboratory.check">
+      <and>
+	<!-- The src.dir needs to be non-empty. -->
+        <not><equals arg1="${laboratory.src.dir}" arg2=""/></not>
+	<!-- There must be some files defined -->
+	<or>
+	  <not><equals arg1="${laboratory.files}" arg2=""/></not>
+	  <not><equals arg1="${laboratory.bilingual.files}" arg2=""/></not>
+	</or>
+	<!-- Require a non-empty dst.dir -->
+        <not><equals arg1="${laboratory.dst.dir}" arg2=""/></not>
+	<!-- Require a non-empty and available stylesheet -->
+        <not><equals arg1="${laboratory.style.file}" arg2=""/></not>
+	<available file="${laboratory.style.file}"/>
+      </and>
+    </condition>
 
-    <echo>laboratory.processing       CALL(xsltproc.processing solution)</echo>
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">    laboratory.check          = "${laboratory.check}"</echo>
+  </target>
 
-    <!-- Call xsltproc to generate the solution -->
-    <antcall target="${laboratory.manipulate.target}" inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
-      <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
-      <param name="xsltproc.output.format"
-	     value="solution.${laboratory.output.format}"/>
-      <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
-      <param name="xsltproc.extra.args" 
-	     value="--stringparam laboratory.include.solutions yes
-                    ${laboratory.profile.lang}"/>
-    </antcall>
-
-    <echo>laboratory.processing       CALL(xsltproc.processing profguide)</echo>
-
-    <!-- Call xsltproc to generate the professor guide -->
-    <antcall target="${laboratory.manipulate.target}" inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
-      <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
-      <param name="xsltproc.output.format"
-	     value="pguide.${laboratory.output.format}"/>
-      <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
-      <param name="xsltproc.extra.args" 
-	     value="--stringparam laboratory.include.guide yes
-                    --stringparam laboratory.include.solutions yes
-                    ${laboratory.profile.lang}"/>
-    </antcall>
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="laboratory.processing.NOT" unless="laboratory.check">
+    <echo>laboratory.processing        ---</echo>
+    <echo>${basedir}</echo>
   </target>
 
   <!-- Invoke xsltprocessing -->
-  <target name="laboratory.processing" depends="laboratory.dump.properties"
-	  description="Call Xsltprocessing">
+  <target name="laboratory.processing" 
+	  depends="laboratory.check.values, laboratory.processing.NOT"
+	  if="laboratory.check" description="Call all the multiple xsltprocs">
 
-    <echo>laboratory.processing       CALL(subrecursive.processing)</echo>
+    <echo>laboratory.processing       CALL(xsltproc.processing 3 versions)</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${laboratory.dst.dir}" />
@@ -113,15 +102,26 @@
 	     value="--stringparam profile.lang en"/>
       <param name="laboratory.output.format"   value="en.html"/>
     </antcall>
+
+    <echo>laboratory.processing       END(xsltproc.processing 3 versions)</echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="laboratory.clean.NOT" unless="laboratory.check">
+    <echo>laboratory.clean            ---</echo>
+    <echo>${basedir}</echo>
   </target>
 
   <!-- Clean files produced by laboratory -->
   <target name="laboratory.clean" 
+	  depends="laboratory.check.values, laboratory.clean.NOT"
+	  if="laboratory.check"
 	  description="Remove files produced by laboratory">
 
-    <echo>laboratory.clean          CALL(subrecursive.clean)</echo>
+    <echo>laboratory.clean            CALL(xsltproc.processing 3 versions)</echo>
 
-    <!-- Create all the files (language neutral) -->
+    <!-- Delete all the language neutral files -->
     <antcall target="laboratory.manipulate.files" inheritAll="false">
       <param name="laboratory.creating.files" value="${laboratory.files}"/>
       <param name="laboratory.manipulate.target" value="xsltproc.clean"/>
@@ -147,6 +147,7 @@
       <param name="laboratory.manipulate.target" value="xsltproc.clean"/>
     </antcall>
 
+    <echo>laboratory.clean            END(xsltproc.processing 3 versions)</echo>
   </target>
 
   <target name="laboratory.dump.properties" depends="initial.check">
@@ -160,6 +161,47 @@
 
   <!-- If entering through this target, build.out is deleted -->
   <target name="laboratory" depends="initial.delete.build.out, laboratory.processing"/>
+
+  <!-- Create the regular file, solution and professor guide -->
+  <target name="laboratory.manipulate.files">
+
+    <!-- Call xsltproc with no extra options -->
+    <antcall target="${laboratory.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
+      <param name="xsltproc.output.format" value="${laboratory.output.format}"/>
+      <param name="xsltproc.files"         value="${laboratory.creating.files}"/>
+      <param name="xsltproc.extra.args"    value="${laboratory.profile.lang}"/>
+    </antcall>
+
+    <!-- Call xsltproc to generate the solution -->
+    <antcall target="${laboratory.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
+      <param name="xsltproc.output.format"
+	     value="solution.${laboratory.output.format}"/>
+      <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
+      <param name="xsltproc.extra.args" 
+	     value="--stringparam laboratory.include.solutions yes
+                    ${laboratory.profile.lang}"/>
+    </antcall>
+
+    <!-- Call xsltproc to generate the professor guide -->
+    <antcall target="${laboratory.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
+      <param name="xsltproc.output.format"
+	     value="pguide.${laboratory.output.format}"/>
+      <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
+      <param name="xsltproc.extra.args" 
+	     value="--stringparam laboratory.include.guide yes
+                    --stringparam laboratory.include.solutions yes
+                    ${laboratory.profile.lang}"/>
+    </antcall>
+  </target>
 
 </project>
 

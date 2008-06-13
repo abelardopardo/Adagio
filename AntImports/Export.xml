@@ -37,12 +37,14 @@
       <param name="copyfiles.files"        value="${export.files}"/>
       <param name="copyfiles.dirs"        value="${export.dirs}"/>
     </antcall>
+
+    <echo>export.processing           END(copyfiles.processing)</echo>
   </target>
 
   <!-- Clean the produced files -->
   <target name="export.clean" description="Delete files copied to dst">
 
-    <echo>export.clean           CALL(copyfiles.clean)</echo>
+    <echo>export.clean                CALL(copyfiles.clean)</echo>
 
     <antcall target="copyfiles.clean" inheritAll="false">
       <param name="copyfiles.src.dir" value="${export.src.dir}" />
@@ -50,6 +52,8 @@
       <param name="copyfiles.files"   value="${export.files}"/>
       <param name="copyfiles.dirs"    value="${export.dirs}"/>
     </antcall>
+
+    <echo>export.clean                END(copyfiles.clean)</echo>
   </target>
 
   <!-- If entering through this target, build.out is deleted -->

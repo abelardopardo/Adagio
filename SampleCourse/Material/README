@@ -10,7 +10,7 @@ The Author* dirs contain the following scenarios
     Problem1: docbook + svgs + code files to access. 
               Ready to generate regular doc, solutions and professor guide
 
-    Problem2: docbook + svgs + code files
+    Problem2: docbook + code files
               Ready to generate regular doc, solution and professor guide
 
 5.- Bilingual Docbook + bilingual *.svg figures.

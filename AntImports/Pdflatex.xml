@@ -46,8 +46,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    pdflatex.check          = "${pdflatex.check}"
-    pdflatex.fileset           = "${pdflatex.files}"</echo>
+    <echo level="info">    pdflatex.check          = "${pdflatex.check}"</echo>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -84,11 +83,19 @@
     </apply>    
   </target>
 
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="pdflatex.clean.NOT" unless="pdflatex.check">
+    <echo>pdflatex.clean              ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
   <!-- Clean files produced by pdflatex -->
-  <target name="pdflatex.clean" depends="pdflatex.check.values"
+  <target name="pdflatex.clean" depends="pdflatex.check.values,
+					 pdflatex.clean.NOT"
 	  if="pdflatex.check" description="Remove files produced by pdflatex">
 
-    <echo>pdflatex.clean         RUN</echo>
+    <echo>pdflatex.clean              RUN</echo>
     <echo>${basedir}</echo>
 
     <!-- Obtain the fileset containing the produced files. This is done to be

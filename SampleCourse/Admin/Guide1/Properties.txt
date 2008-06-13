@@ -8,6 +8,9 @@ copyfiles.src.dir=../../Material/Author2
 copyfiles.dst.dir=../scratch/Guide1
 copyfiles.files=*.gif *.png
 
+mergestyles.src.dir=..
+mergestyles.master.style=Params.xml
+
 docbook.src.dir=../../Material/Author2
 docbook.files=index.xml
 docbook.dst.dir=../scratch/Guide1
@@ -19,5 +22,3 @@ docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
 
 clean.files=../scratch/Guide1
 
-mergestyles.src.dir=..
-mergestyles.master.style=Params.xml

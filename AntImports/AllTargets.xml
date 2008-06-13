@@ -28,12 +28,9 @@
 
   <import file="Cleaning.xml"/>
 
-  <!-- Basic Target -->
-  <target name="basic.execute">
+  <target name="execute">
 
-    <antcall target="subrecursive.processing" inheritAll="false">
-      <param name="subrecursive.dst.dir" value="${basedir}"/>
-    </antcall>
+    <antcall target="subrecursive.processing" inheritAll="false"/>
 
     <antcall target="copyfiles.processing" inheritAll="false"/>
 
@@ -47,13 +44,15 @@
 
     <antcall target="xsltproc.processing" inheritAll="false"/>
 
+    <antcall target="dblatex.processing" inheritAll="false"/>
+
+    <antcall target="pdflatex.processing" inheritAll="false"/>
+
     <antcall target="docbook.processing" inheritAll="false"/>
 
     <antcall target="bilingualdb.processing" inheritAll="false"/>
 
-    <antcall target="dblatex.processing" inheritAll="false"/>
-
-    <antcall target="pdflatex.processing" inheritAll="false"/>
+    <antcall target="laboratory.processing" inheritAll="false"/>
 
     <antcall target="pdfnup.processing" inheritAll="false"/>
 
@@ -61,21 +60,21 @@
 
   </target>
 
-  <!-- Basic Clean Target -->
-  <target name="basic.clean"
-	  depends="initial.delete.build.out">
+  <target name="clean" depends="initial.delete.build.out">
 
     <antcall target="export.clean" inheritAll="false"/>
 
     <antcall target="pdfnup.clean" inheritAll="false"/>
 
-    <antcall target="pdflatex.clean" inheritAll="false"/>
-
-    <antcall target="dblatex.clean" inheritAll="false"/>
+    <antcall target="laboratory.clean" inheritAll="false"/>
 
     <antcall target="bilingualdb.clean" inheritAll="false"/>
 
     <antcall target="docbook.clean" inheritAll="false"/>
+
+    <antcall target="pdflatex.clean" inheritAll="false"/>
+
+    <antcall target="dblatex.clean" inheritAll="false"/>
 
     <antcall target="xsltproc.clean" inheritAll="false"/>
 
@@ -89,59 +88,25 @@
 
     <antcall target="copyfiles.clean" inheritAll="false"/>
 
-    <antcall target="subrecursive.processing" inheritAll="false">
-      <param name="subrecursive.dst.dir" value="${basedir}"/>
-      <param name="subrecursive.target"  value="clean"/>
-    </antcall>
+    <antcall target="subrecursive.clean" inheritAll="false"/>
 
     <antcall target="clean.clean" inheritAll="false"/>
 
   </target>
 
-  <!-- 
-       Laboratory targets to be executed only if the property detected is true
-  -->
-  <!-- Property to detect if the basedir is in a laboratory -->
-  <condition property="laboratory.detected">
-    <or>
-      <not><equals arg1="${laboratory.files}" arg2=""/></not>
-      <not><equals arg1="${laboratory.bilingual.files}" arg2=""/></not>
-      <not><equals arg1="${laboratory.subdirs}" arg2=""/></not>
-    </or>
-  </condition>
+<!--   <target name="execute"> -->
 
-  <target name="laboratory.execute" if="laboratory.detected">
+<!--     <antcall target="basic.execute" inheritAll="false"/> -->
 
-    <antcall target="laboratory.processing" inheritAll="false"/>
+<!--     <antcall target="laboratory.execute" inheritAll="false"/> -->
+<!--   </target> -->
 
-    <!-- Needed to export the files produced by the previous target -->
-    <antcall target="export.processing" inheritAll="false"/>
+<!--   <target name="clean"> -->
 
-  </target>
+<!--     <antcall target="laboratory.execute.clean" inheritAll="false"/> -->
 
-  <target name="laboratory.execute.clean" if="laboratory.detected">
+<!--     <antcall target="basic.clean" inheritAll="false"/> -->
 
-    <antcall target="export.clean" inheritAll="false"/>
-
-    <antcall target="laboratory.clean" inheritAll="false"/>
-
-    <antcall target="clean.clean" inheritAll="false"/>
-  </target>
-
-  <!-- Global Targets -->
-  <target name="execute">
-
-    <antcall target="basic.execute" inheritAll="false"/>
-
-    <antcall target="laboratory.execute" inheritAll="false"/>
-  </target>
-
-  <target name="clean">
-
-    <antcall target="laboratory.execute.clean" inheritAll="false"/>
-
-    <antcall target="basic.clean" inheritAll="false"/>
-
-  </target>
+<!--   </target> -->
 
 </project>

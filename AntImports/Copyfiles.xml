@@ -6,7 +6,6 @@
       Given the following properties:
 
       copyfiles.files:   List of files to copy from src to dst
-      copyfiles.dirs:    List of directories to copy entirely from src to dst
       copyfiles.src.dir: source directory to obtain the files
       copyfiles.dst.dir: directory where the files are to be copied
 
@@ -21,7 +20,6 @@
   <property name="copyfiles.src.dir"      value="${basedir}" />
   <property name="copyfiles.dst.dir"      value="${copyfiles.src.dir}" />
   <property name="copyfiles.files"        value=""/>
-  <property name="copyfiles.dirs"        value=""/>
 
   <!-- Source files to be copied. -->
   <fileset id="copyfiles.fileset" dir="${copyfiles.src.dir}"
@@ -81,11 +79,19 @@
     </copy>
   </target>
 
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="copyfiles.clean.NOT" unless="copyfiles.check">
+    <echo>copyfiles.clean             ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
   <!-- Clean the produced files -->
-  <target name="copyfiles.clean" depends="copyfiles.check.values"
+  <target name="copyfiles.clean" depends="copyfiles.check.values,
+					  copyfiles.clean.NOT" 
     if="copyfiles.check" description="Delete files copied to dst">
 
-    <echo>copyfiles.clean        RUN</echo>
+    <echo>copyfiles.clean             RUN</echo>
     <echo>${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->

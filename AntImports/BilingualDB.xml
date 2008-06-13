@@ -26,8 +26,41 @@
   <property name="bilingualdb.style.file" 
 	    value="${ada.home}/XslStyles/DocbookProfile.xsl"/>
 
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+       executing the regular targets. -->
+  <target name="bilingualdb.check.values" 
+	  depends="initial.check, bilingualdb.dump.properties">
+    
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="bilingualdb.check">
+      <and>
+	<!-- The src.dir needs to be non-empty. -->
+        <not><equals arg1="${bilingualdb.src.dir}" arg2=""/></not>
+	<!-- There must be some files defined -->
+	<not><equals arg1="${bilingualdb.files}" arg2=""/></not>
+	<!-- Require a non-empty dst.dir -->
+        <not><equals arg1="${bilingualdb.dst.dir}" arg2=""/></not>
+	<!-- Require a non-empty and available stylesheet -->
+        <not><equals arg1="${bilingualdb.style.file}" arg2=""/></not>
+	<available file="${bilingualdb.style.file}"/>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">    bilingualdb.check          = "${bilingualdb.check}"</echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="bilingualdb.processing.NOT" unless="bilingualdb.check">
+    <echo>bilingualdb.processing        ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
   <!-- Invoke xsltprocessing -->
   <target name="bilingualdb.processing" 
+	  depends="bilingualdb.check.values, bilingualdb.processing.NOT"
+	  if="bilingualdb.check" 
 	  description="Call the xsltproc with the given style">
 
     <echo>bilingualdb.processing      CALL(xsltproc.processing ES)</echo>
@@ -42,6 +75,7 @@
       <param name="xsltproc.extra.args"    value="--stringparam profile.lang es"/>
     </antcall>
 
+    <echo>bilingualdb.processing      END(xsltproc.processing ES)</echo>
     <echo>bilingualdb.processing      CALL(xsltproc.processing EN)</echo>
 
     <!-- Call xsltproc -->
@@ -53,12 +87,23 @@
       <param name="xsltproc.files"         value="${bilingualdb.files}"/>
       <param name="xsltproc.extra.args"    value="--stringparam profile.lang en"/>
     </antcall>
+    <echo>bilingualdb.processing      END(xsltproc.processing EN)</echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="bilingualdb.clean.NOT" unless="bilingualdb.check">
+    <echo>bilingualdb.clean           ---</echo>
+    <echo>${basedir}</echo>
   </target>
 
   <!-- Clean files produced by bilingualdb -->
-  <target name="bilingualdb.clean" description="Remove files produced by bilingualdb">
+  <target name="bilingualdb.clean" 
+	  depends="bilingualdb.check.values, bilingualdb.clean.NOT"
+	  if="bilingualdb.check"
+	  description="Remove files produced by bilingualdb">
 
-    <echo>bilingualdb.clean      CALL(xsltproc.clean ES)</echo>
+    <echo>bilingualdb.clean           CALL(xsltproc.clean ES)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.clean" inheritAll="false">
@@ -69,7 +114,8 @@
       <param name="xsltproc.files"         value="${bilingualdb.files}"/>
     </antcall>
 
-    <echo>bilingualdb.clean      CALL(xsltproc.clean EN)</echo>
+    <echo>bilingualdb.clean           END(xsltproc.clean ES)</echo>
+    <echo>bilingualdb.clean           CALL(xsltproc.clean EN)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.clean" inheritAll="false">
@@ -79,6 +125,17 @@
       <param name="xsltproc.output.format"         value="en.${bilingualdb.output.format}"/>
       <param name="xsltproc.files"           value="${bilingualdb.files}"/>
     </antcall>
+
+    <echo>bilingualdb.clean           END(xsltproc.clean EN)</echo>
+  </target>
+
+  <target name="bilingualdb.dump.properties" depends="initial.check">
+    <echo level="info"> ------ Bilingualdb properties ----
+    bilingualdb.src.dir       ="${bilingualdb.src.dir}"
+    bilingualdb.dst.dir       ="${bilingualdb.dst.dir}"
+    bilingualdb.style.file    ="${bilingualdb.style.file}"
+    bilingualdb.output.format ="${bilingualdb.out.format}"
+    bilingualdb.files         ="${bilingualdb.files}"</echo>
   </target>
 
   <!-- If entering through this target, build.out is deleted -->

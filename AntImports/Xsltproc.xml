@@ -78,8 +78,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    xsltproc.check          = "${xsltproc.check}"
-    xsltproc.fileset         = "${xsltproc.files}"</echo>
+    <echo level="info">    xsltproc.check          = "${xsltproc.check}"</echo>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -184,11 +183,20 @@
     </apply>    
   </target>
 
-  <!-- Clean files produced by xsltproc -->
-  <target name="xsltproc.clean" depends="xsltproc.check.values"
-	  if="xsltproc.check" description="Remove files produced by xsltproc">
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="xsltproc.clean.NOT" unless="xsltproc.check">
+    <echo>xsltproc.clean              ---</echo>
+    <echo>${basedir}</echo>
+  </target>
 
-    <echo>xsltproc.clean         RUN</echo>
+  <!-- Clean files produced by xsltproc -->
+  <target name="xsltproc.clean" 
+	  depends="xsltproc.check.values, xsltproc.clean.NOT"
+	  if="xsltproc.check" 
+	  description="Remove files produced by xsltproc">
+
+    <echo>xsltproc.clean              RUN</echo>
     <echo>${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->

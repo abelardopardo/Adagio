@@ -48,8 +48,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">inkscape.check          = "${inkscape.check}"
-    inkscape.fileset        = "${inkscape.files}"</echo>
+    <echo level="info">inkscape.check          = "${inkscape.check}"</echo>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -87,11 +86,19 @@
     </apply>    
   </target>
 
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="inkscape.clean.NOT" unless="inkscape.check">
+    <echo>inkscape.clean              ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
   <!-- Clean files produced by inkscape -->
-  <target name="inkscape.clean" depends="inkscape.check.values"
+  <target name="inkscape.clean" 
+	  depends="inkscape.check.values, inkscape.clean.NOT"
 	  if="inkscape.check" description="Remove files produced by inkscape">
     
-    <echo>inkscape.clean         RUN</echo>
+    <echo>inkscape.clean              RUN</echo>
     <echo>${basedir}</echo>
 
     <!-- Obtain the fileset containing the produced files. This is done to be

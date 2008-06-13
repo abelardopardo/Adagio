@@ -6,16 +6,17 @@
 #
 subrecursive.dirs=../../Material/Author3
 
-export.dst.dir=../scratch/Guide2
-export.files=index.html *.png
+mergestyles.src.dir=..
+mergestyles.master.style=Params.xml
 
 docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
 docbook.src.dir=../../Material/Author3
 docbook.dst.dir=.
 docbook.files=index.xml
 
+export.dst.dir=../scratch/Guide2
+export.files=index.html *.png
+
 clean.files=../scratch/Guide2
 
 
-mergestyles.src.dir=..
-mergestyles.master.style=Params.xml

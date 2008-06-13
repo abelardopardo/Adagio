@@ -12,16 +12,15 @@
       Perform target subrecursive.target in these directories. If the property
       subrecursive.dst.dir is given, it overrides the export.dst.dir in the
       subdirectory. If not given, such value is left to be set in the
-      subdirectory. This is to manipulate with the same script those directories
-      that produce material but do not state where to export it, from those that
-      do export material to a single given location.
+      subdirectory. This is to be able to either honor the export location
+      stated in a resource, or be able to overwrite it.
   -->
 
   <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
   
   <!-- Property definition -->
-  <property name="subrecursive.dst.dir" value=""/>
+  <property name="subrecursive.dst.dir" value="${basedir}"/>
   <property name="subrecursive.dirs"    value=""/>
   <property name="subrecursive.target"  value=""/>
   <!-- Dirs with material required by the lab  -->
@@ -96,9 +95,16 @@
     </subant>
   </target>
 
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="subrecursive.clean.NOT" unless="subrecursive.check">
+    <echo>subrecursive.clean          ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
   <!-- Clean the produced files -->
   <target name="subrecursive.clean" 
-	  depends="subrecursive.check.values,
+	  depends="subrecursive.check.values, subrecursive.clean.NOT,
 		   subrecursive.clean.withdstdir,
 		   subrecursive.clean.nodstdir"
     if="subrecursive.check" description="Delete files produced here"/>
@@ -108,7 +114,7 @@
     <echo>subrecursive.clean.dst    RUN</echo>
     <echo>${basedir}</echo>
 
-    <!-- Call the subdirs with the basic.clean target -->
+    <!-- Call the subdirs with the clean target -->
     <subant target="clean" 
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
 	    inheritAll="false" inheritrefs="false">
@@ -122,7 +128,7 @@
     <echo>subrecursive.clean.nodst  RUN</echo>
     <echo>${basedir}</echo>
 
-    <!-- Call the subdirs with the basic.clean target -->
+    <!-- Call the subdirs with the clean target -->
     <subant target="clean" 
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
 	    inheritAll="false" inheritrefs="false">

@@ -46,8 +46,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    @NAME@.check              = "${@NAME@.check}"
-    @NAME@.fileset           = "${@NAME@.files}"</echo>
+    <echo level="info">    @NAME@.check              = "${@NAME@.check}"</echo>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -85,9 +84,18 @@
     </apply>    
   </target>
 
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="@NAME@.clean.NOT" unless="@NAME@.check">
+    <echo>@NAME@.clean               ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
   <!-- Clean files produced by @NAME@ -->
-  <target name="@NAME@.clean" depends="@NAME@.check.values"
-	  if="@NAME@.check" description="Remove files produced by @NAME@">
+  <target name="@NAME@.clean" 
+	  depends="@NAME@.check.values, @NAME@.clean.NOT"
+	  if="@NAME@.check" 
+	  description="Remove files produced by @NAME@">
 
     <echo>@NAME@.clean           RUN</echo>
     <echo>${basedir}</echo>
