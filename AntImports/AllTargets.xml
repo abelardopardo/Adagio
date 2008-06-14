@@ -28,6 +28,8 @@
 
   <import file="Cleaning.xml"/>
 
+  <import file="Rsync.xml"/>
+
   <target name="execute">
 
     <antcall target="subrecursive.processing" inheritAll="false"/>

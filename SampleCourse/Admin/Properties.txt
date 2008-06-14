@@ -26,3 +26,9 @@ export.files=index.html
 
 clean.files=scratch
 
+#
+# Rsync stuff specific to this dir because it is supposed to be the root
+# of the whole site
+#
+rsync.source=scratch/
+rsync.destination=Publish

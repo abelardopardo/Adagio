@@ -91,13 +91,13 @@ build templates
 
   <target name="initial.check.dump" depends="initial.check.recursive">
     <echo level="info">------ Global properties ----
-    basedir=${basedir}
-    user.dir=${user.dir}
-    executable.file.extension=${executable.file.extension}
-    ada.home=${ada.home}
-    root.path.prefix = ${root.path.prefix}
-    xml.catalog.file=${xml.catalog.file}
-    xml.catalog.file.available=${xml.catalog.file.available}    </echo>    
+  basedir=${basedir}
+  user.dir=${user.dir}
+  executable.file.extension=${executable.file.extension}
+  ada.home=${ada.home}
+  root.path.prefix = ${root.path.prefix}
+  xml.catalog.file=${xml.catalog.file}
+  xml.catalog.file.available=${xml.catalog.file.available}    </echo>    
   </target>
 
   <!-- Target to reset the build.out --> 

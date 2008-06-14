@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Synchronize two locations with rsync" default="rsync">
+
+  <!--
+      Given the following properties:
+
+      rsync.source: location from where to take the source files
+      rsync.destination: location where to copy these files
+      rsync.files: comma/space separated list of files to process
+
+      Produce ??
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="InitialCheck.xml"/>
+
+  <!-- Property definition -->
+  <property name="rsync.exec"                value="rsync"/>
+  <property name="rsync.source"              value="${basedir}"/>
+  <property name="rsync.destination"         value="${rsync.source}"/>
+  <property name="rsync.basic.args"          value="-avz"/>
+  <property name="rsync.extra.args"          value=""/>
+  <property name="rsync.remote.shell.option" value="-e ssh"/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="rsync.check.values" 
+	  depends="initial.check, rsync.dump.properties">
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="rsync.check">
+      <and>
+	<!-- The required binaries need to be available. -->
+	<available file="${rsync.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+	<!-- The source needs to be non-empty. It is very dangerous to have an
+	empty definition of this variable. At least a . needs to be present -->
+        <not><equals arg1="${rsync.source}" arg2=""/></not>
+	<!-- There must be some files defined -->
+        <not><equals arg1="${rsync.files}" arg2=""/></not>
+	<!-- Require a non-empty destination as well -->
+        <not><equals arg1="${rsync.destination}" arg2=""/></not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">  rsync.check              = "${rsync.check}"</echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="rsync.processing.NOT" unless="rsync.check">
+    <echo>rsync.processing           ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Regular target. It is executed if the check property is true, and it has
+  as dependency the NOT target. That way, if the property is not set, this
+  target is not executed and instead, the one notifying the user of such event
+  is executed. -->
+  <target name="rsync.processing" 
+	  depends="rsync.check.values, rsync.processing.NOT"
+	  if="rsync.check"
+	  description="Invoke rsync to perform the synchronization">
+
+    <echo>rsync.processing           RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Create the dst directory -->
+    <mkdir dir="${rsync.destination}" />
+
+    <!-- Execute the command. Watch out for source and destination -->
+    <exec executable="${rsync.exec}" failonerror="true">
+      <arg value="${rsync.remote.shell.option}"/>
+      <arg line="${rsync.basic.args}"/>
+      <arg line="${rsync.extra.args}"/>
+      <arg value="${rsync.source}"/>
+      <arg value="${rsync.destination}"/>
+    </exec>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="rsync.clean.NOT" unless="rsync.check">
+    <echo>rsync.clean               ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Clean files produced by rsync -->
+  <target name="rsync.clean" 
+	  depends="rsync.check.values, rsync.clean.NOT"
+	  if="rsync.check" 
+	  description="Remove files produced by rsync">
+
+    <!-- No action here because is a too high level procedure. Removing the
+    destination dir is probably not that frequent, and therefore can be done
+    manually -->
+    <echo>rsync.clean           NOT RUN!</echo>
+    <echo>${basedir}</echo>
+    
+  </target>
+  
+  <!-- Dump the properties defined in this script -->
+  <target name="rsync.dump.properties" depends="initial.check">
+    <echo level="info">------ rsync properties ----
+ rsync.exec                ="${rsync.exec}"
+ rsync.source              ="${rsync.source}"
+ rsync.destination         ="${rsync.destination}"
+ rsync.extra.args          ="${rsync.extra.args}
+ rsync.basic.args          ="${rsync.basic.args}
+ rsync.remote.shell.option ="${rsync.remote.shell.option}"</echo>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="rsync" depends="initial.delete.build.out, rsync.processing"/>
+</project>

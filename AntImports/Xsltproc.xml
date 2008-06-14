@@ -11,6 +11,7 @@
       xsltproc.files: List of files to process
       xsltproc.style.file: Style file to be used
       xsltproc.output.format: Extension of the output file
+      xsltproc.extra.args: Extra arguments to invoke xsltproc
       xsltproc.files: Comma separate list of files to process
 
       Produce the aplication of a stylefile to the files in xsltproc.fileset
