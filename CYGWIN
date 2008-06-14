@@ -1,0 +1,43 @@
+The complexity of porting this tool to windows seems to be growing constantly.
+
+So far, these are the main issues encountered (some of them unsolved).
+
+* Cygwin offers a good subset of tools actually used by ADA. The main
+  difficulty is if such tools are to be installed WITHIN the file structure
+  of cygwin or as generic Windows applications. Inkscape is a good example.
+  It installs flawlessly in windows and may be invoked with no problem from
+  within a cygwin shell.
+
+* The main problem is that cygwin uses "/" as path separator for all paths,
+  whereas Windows uses "\" and the hard drive prefix (C:). The first problem
+  appears with ANT. There are two options that have been explored:
+  
+  - Install ANT within cygwin. Installs fine. But when executing, since the
+    JVM is installed as a windows application, none of the paths received
+    by the JVM is legal, and therefore it simply bombs out trying to interpret
+    the basedir path.
+
+  - Install ANT outside cygwin as a regular windows application. In this
+    case all the paths given to ANT need to contain the "\" separator and
+    since the invocation is done through bash, it needs to be doubled. That
+    is: ant -Dbasedir=C:\\a\\b\\c -f C:\\a\\b\\c\\build.xml
+
+    But once this glitch is solved, the problem comes when an executable is
+    invoked from ant. If such executable is within cygwin and is a symbolic
+    link, the JVM will bomb out saying that the file cannot be found (take
+    pdflatex as an example, it is a link pointing to pdfatex). Even if the
+    executable is invoked fine from the JVM, the params will involve file
+    names. These names are computed within the JVM, and therefore include
+    the C:\\ notation. When received by an executable within cygwin, Boom!.
+
+I've briefly searched for info in the net but it seems there it not much
+interest on doing such thing.
+
+* The alternative I see but haven't explored is to go 100% cygwin. This means
+  install ANT and the JVM within cygwin (there is no support for such installs
+  from the default cygwing config program). The same applies for the rest
+  of potential tools. In some cases, though, the installation needs to be
+  done from source (for example Inkscape) which raises the adoption threshold
+  for Windows users.
+
+
