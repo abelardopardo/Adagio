@@ -22,6 +22,15 @@ table
   margin-left: auto;
   }
 
+/* Center images derived from informalfigures */
+div.informalfigure div.mediaobject img 
+{ 
+  display: block;
+  margin-left: auto;
+  margin-right: auto; 
+  }
+
+/* Border for informaltables frame, head, tr and th elements */
 div.informaltable table thead tr th,
 div.informaltable table tbody tr td 
 {

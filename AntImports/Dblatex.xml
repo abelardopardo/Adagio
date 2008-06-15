@@ -20,7 +20,7 @@
   <property name="dblatex.src.dir"        value="${basedir}"/>
   <property name="dblatex.dst.dir"        value="${dblatex.src.dir}"/>
   <property name="dblatex.files"          value=""/>
-  <property name="dbltex.extra.args"      value=""/>
+  <property name="dblatex.extra.args"      value=""/>
   <!-- Source files to be processed by dblatex -->
   <fileset id="dblatex.fileset" dir="${dblatex.src.dir}"
 	   includes="${dblatex.files}"/>
@@ -77,8 +77,8 @@
 	   append="yes" failonerror="true" executable="${dblatex.exec}" 
 	   output="build.out">
       <arg value="-o"/>
-      <arg line="${dblatex.extra.args}"/>
       <targetfile/>
+      <arg line="${dblatex.extra.args}"/>
       <fileset refid="dblatex.fileset"/>
       <!-- Mapper from source files to produced files -->
       <mapper type="glob" from="*.xml" to="*.pdf"/>
@@ -110,14 +110,14 @@
     </pathconvert>
 
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted   = ${dblatex.target.filelist.property}</echo>
+    <echo> deleted   = ${dblatex.target.fileset.property}</echo>
 
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
     <delete failonerror="false">
       <fileset dir="${dblatex.dst.dir}"
-	       includes="${dblatex.target.filedst.property}">
+	       includes="${dblatex.target.fileset.property}">
 	<include name="__bogus__file__to__avoid__empty__fileset"/>
       </fileset>
     </delete>

@@ -93,9 +93,9 @@ build templates
     <echo level="info">------ Global properties ----
   basedir=${basedir}
   user.dir=${user.dir}
+  user.home=${user.home}
   executable.file.extension=${executable.file.extension}
   ada.home=${ada.home}
-  root.path.prefix = ${root.path.prefix}
   xml.catalog.file=${xml.catalog.file}
   xml.catalog.file.available=${xml.catalog.file.available}    </echo>    
   </target>

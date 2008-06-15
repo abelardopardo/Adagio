@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Copy source to destination using scp" default="scp">
+
+  <!--
+      Given the following properties:
+
+      scp.source: location from where to take the source files
+      scp.destination: location where to copy these files
+      scp.extra.args: Specific options for scp
+
+      Execute scp to copy the content in source with the content in
+      destination. The script is supposed to work TOTALLY in batch mode, that is
+      without any password exchange. Make sure you have the public/private keys
+      properly installed to bypass this step.
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="InitialCheck.xml"/>
+
+  <!-- Property definition -->
+  <property name="scp.exec"                value="scp"/>
+  <property name="scp.source"              value="${basedir}"/>
+  <property name="scp.destination"         value="${scp.source}"/>
+  <property name="scp.extra.args"          value=""/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="scp.check.values" 
+	  depends="initial.check, scp.dump.properties">
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="scp.check">
+      <and>
+	<!-- The required binaries need to be available. -->
+	<available file="${scp.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+	<!-- The source needs to be non-empty. It is very dangerous to have an
+	empty definition of this variable. At least a . needs to be present -->
+        <not><equals arg1="${scp.source}" arg2=""/></not>
+	<!-- There must be some files defined -->
+        <not><equals arg1="${scp.files}" arg2=""/></not>
+	<!-- Require a non-empty destination as well -->
+        <not><equals arg1="${scp.destination}" arg2=""/></not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">  scp.check              = "${scp.check}"</echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="scp.processing.NOT" unless="scp.check">
+    <echo>scp.processing           ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Regular target. It is executed if the check property is true, and it has
+  as dependency the NOT target. That way, if the property is not set, this
+  target is not executed and instead, the one notifying the user of such event
+  is executed. -->
+  <target name="scp.processing" 
+	  depends="scp.check.values, scp.processing.NOT"
+	  if="scp.check"
+	  description="Invoke scp to perform the synchronization">
+
+    <echo>scp.processing           RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Execute the command. Watch out for source and destination -->
+    <exec executable="${scp.exec}" failonerror="true">
+      <arg value="-r"/> <!-- Work recursively by default -->
+      <arg value="-q"/> <!-- Disable progress meter in case is used in batch -->
+      <arg line="${scp.extra.args}"/>
+      <arg value="${scp.source}"/>
+      <arg value="${scp.destination}"/>
+    </exec>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="scp.clean.NOT" unless="scp.check">
+    <echo>scp.clean               ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Clean files produced by scp -->
+  <target name="scp.clean" 
+	  depends="scp.check.values, scp.clean.NOT"
+	  if="scp.check" 
+	  description="Remove files produced by scp">
+
+    <!-- No action here because is a too high level procedure. Removing the
+    destination dir is probably not that frequent, and therefore can be done
+    manually -->
+    <echo>scp.clean           NOT RUN!</echo>
+    <echo>${basedir}</echo>
+    
+  </target>
+  
+  <!-- Dump the properties defined in this script -->
+  <target name="scp.dump.properties" depends="initial.check">
+    <echo level="info">------ scp properties ----
+ scp.exec                =${scp.exec}
+ scp.source              =${scp.source}
+ scp.destination         =${scp.destination}
+ scp.extra.args          =${scp.extra.args}
+ scp.basic.args          =${scp.basic.args}</echo>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="scp" depends="initial.delete.build.out, scp.processing"/>
+</project>

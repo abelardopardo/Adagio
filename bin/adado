@@ -1,0 +1,82 @@
+#!/bin/bash
+#
+# Script to set the proper variables for ADA to be available for execution
+#
+
+# Function use to make sure ADA_HOME is set, if not, suggest the steps to do
+# so. VERY important the message including the $ADA_REAL_USER_HOME variable. For
+# ant this variable points to C:\Documents and Settings\username, whereas for
+# cygwin $HOME points to some location within its internal tree (/home/...)
+function ada_check_home() {
+    if [ "$ADA_HOME" = "" ]; then
+	echo "ERROR: Unable to set variable ADA_HOME"
+	echo "Edit the file .ant.properties in $ADA_REAL_USER_HOME and"
+        echo "add a line such as:"
+	if [ "$cygwin" = "true" ]; then
+	    echo "ada.home="`cygpath --windows /`"\[path to your ADA installation]\ADA"
+	else
+	    echo "ada.home=[path to your ADA dir]"
+	fi
+	exit
+    fi
+}
+
+cygwin=false;
+case "`uname`" in
+    CYGWIN*) cygwin=true ;;
+esac
+
+# Get basic variables
+basedir=$PWD
+
+# If within cygwin, pahts need to be manipulated for a correct ant invocation
+if [ $cygwin = "true" ]; then
+    
+    # For ant {user.home} is not $HOME, but $HOMEDRIVE\$HOMEPATH
+    ADA_REAL_USER_HOME="$HOMEDRIVE$HOMEPATH"
+
+    # Set ADA_HOME with the correct syntax (double fwdslash)
+    if [ -e "$ADA_REAL_USER_HOME\\.ant.properties" ]; then
+	conf_ada_home=`grep "$ADA_REAL_USER_HOME/.ant.properties" -e ada\.home`
+    else
+	conf_ada_home="ada.home="
+    fi
+    ADA_HOME=${conf_ada_home##*=}
+
+    # If ADA_HOME is empty, bomb out with msg
+    ada_check_home
+
+    ADA_HOME=`cygpath --windows $ADA_HOME`
+    ADA_HOME=${ADA_HOME//\\/\\\\}
+    
+    # Set path to Alltargets also in windows syntax with double fwdslash
+    AllTargets=`cygpath --windows $ADA_HOME/AntImports/AllTargets.xml`
+    AllTargets=${AllTargets//\\/\\\\}
+    
+    # Set basedir also in windows syntax with double fwdslash
+    basedir=`cygpath --windows $basedir`
+    basedir=${basedir//\\/\\\\}
+else
+    # Not in cygwin, directly fetch ADA_HOME from the .ant.properties in $HOME
+    ADA_REAL_USER_HOME=$HOME
+    ADA_HOME=${conf_ada_home##*=}
+
+    # Set ADA_HOME with the correct syntax (double fwdslash)
+    if [ -e "$HOME/.ant.properties" ]; then
+	conf_ada_home=`grep "$HOME/.ant.properties" -e ada\.home`
+    else
+	conf_ada_home="ada.home="
+    fi
+    ADA_HOME=${conf_ada_home##*=}
+
+    AllTargets="$ADA_HOME/AntImports/AllTargets.xml"
+fi
+
+# If ADA_HOME is empty, bomb out with msg
+ada_check_home
+
+# Invoke ant
+ant -Dada.home="$ADA_HOME" -Dbasedir="$basedir" -f "$AllTargets" $*
+
+exit
+

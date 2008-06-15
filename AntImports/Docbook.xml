@@ -108,7 +108,7 @@
     docbook.src.dir       ="${docbook.src.dir}"
     docbook.dst.dir       ="${docbook.dst.dir}"
     docbook.style.file    ="${docbook.style.file}"
-    docbook.output.format ="${docbook.out.format}"
+    docbook.output.format ="${docbook.output.format}"
     docbook.files         ="${docbook.files}"</echo>
   </target>
 

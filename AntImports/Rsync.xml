@@ -7,9 +7,14 @@
 
       rsync.source: location from where to take the source files
       rsync.destination: location where to copy these files
-      rsync.files: comma/space separated list of files to process
+      rsync.basic.args: Some basic options for rsync
+      rsync.extra.args: Specific options for rsync
+      rsync.remote.shell.option: Type of shell to use
 
-      Produce ??
+      Execute rsync to synchronize the content in source with the content in
+      destination. The script is supposed to work TOTALLY in batch mode, that is
+      without any password exchange. Make sure you have the public/private keys
+      properly installed to bypass this step.
   -->
 
   <!-- Checks for availability of different binaries -->
@@ -67,9 +72,6 @@
     <echo>rsync.processing           RUN</echo>
     <echo>${basedir}</echo>
 
-    <!-- Create the dst directory -->
-    <mkdir dir="${rsync.destination}" />
-
     <!-- Execute the command. Watch out for source and destination -->
     <exec executable="${rsync.exec}" failonerror="true">
       <arg value="${rsync.remote.shell.option}"/>
@@ -104,12 +106,12 @@
   <!-- Dump the properties defined in this script -->
   <target name="rsync.dump.properties" depends="initial.check">
     <echo level="info">------ rsync properties ----
- rsync.exec                ="${rsync.exec}"
- rsync.source              ="${rsync.source}"
- rsync.destination         ="${rsync.destination}"
- rsync.extra.args          ="${rsync.extra.args}
- rsync.basic.args          ="${rsync.basic.args}
- rsync.remote.shell.option ="${rsync.remote.shell.option}"</echo>
+ rsync.exec                =${rsync.exec}
+ rsync.source              =${rsync.source}
+ rsync.destination         =${rsync.destination}
+ rsync.extra.args          =${rsync.extra.args}
+ rsync.basic.args          =${rsync.basic.args}
+ rsync.remote.shell.option =${rsync.remote.shell.option}</echo>
   </target>
 
   <!-- If entering through this target, build.out is deleted -->

@@ -1,4 +1,0 @@
-conf_ada_home=`grep $HOME/.ant.properties -e ada\.home`
-ADA_HOME=${conf_ada_home##*=}
-
-alias adado="ant -Dbasedir="'$PWD'" -f $ADA_HOME/AntImports/AllTargets.xml "
