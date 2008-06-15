@@ -9,6 +9,7 @@
       docbook.dst.dir: directory where the produced files are stored
       docbook.style.file: Style file to be used
       docbook.output.format: Extension of the output file
+      docbook.extra.args: Extra arguments to invoke xsltproc
       docbook.files: Comma separate list of files to process
 
       Produce the aplication of a stylefile to the files in docbook.files
@@ -21,6 +22,7 @@
   <property name="docbook.src.dir"        value="${basedir}"/>
   <property name="docbook.dst.dir"        value="${docbook.src.dir}"/>
   <property name="docbook.output.format"  value="html"/>
+  <property name="docbook.extra.args"     value=""/>
   <property name="docbook.files"          value=""/>
   <property name="docbook.style.file"     
 	    value="${ada.home}/XslStyles/DocbookProfile.xsl"/>
@@ -71,6 +73,7 @@
       <param name="xsltproc.style.file"    value="${docbook.style.file}"/>
       <param name="xsltproc.output.format" value="${docbook.output.format}"/>
       <param name="xsltproc.files"         value="${docbook.files}"/>
+      <param name="xsltproc.extra.args"    value="${docbook.extra.args}"/>
     </antcall>
 
     <echo>docbook.processing          END(xsltproc.processing)</echo>
@@ -97,6 +100,7 @@
       <param name="xsltproc.dst.dir"       value="${docbook.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${docbook.style.file}"/>
       <param name="xsltproc.output.format" value="${docbook.output.format}"/>
+      <param name="xsltproc.extra.args"    value="${docbook.extra.args}"/>
       <param name="xsltproc.files"         value="${docbook.files}"/>
     </antcall>
 
@@ -109,6 +113,7 @@
     docbook.dst.dir       ="${docbook.dst.dir}"
     docbook.style.file    ="${docbook.style.file}"
     docbook.output.format ="${docbook.output.format}"
+    docbook.extra.args    ="${docbook.extra.args}"
     docbook.files         ="${docbook.files}"</echo>
   </target>
 
