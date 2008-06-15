@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section lang="en">
+  <title>
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata align="center" fileref="images/compass.60x60.png"/>
+      </imageobject>
+    </inlinemediaobject>
+    The OpenACS Platform
+  </title>
+  <abstract>
+    <para>
+      The objective of this module is to understand the structure of the
+      platform OpenACS/.LRN, the program it uses, how do they communicate with
+      each other, where is the data store and how the server processes the
+      requests to produce a web page.
+    </para>
+  </abstract>
+
+  <section>
+    <title>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata align="center" fileref="images/scenario.60x60.png"/>
+        </imageobject>
+      </inlinemediaobject>
+      Scenario
+    </title>
+
+    <para>
+      The group works for the tech department of MediaCom Inc. The company needs
+      a web platform to solve its intranet needs. The main functionality
+      required is:
+    </para>
+
+    <itemizedlist>
+      <listitem>
+        <para>
+	  Typical operations in a highly interactive web platform: user
+	  management, profiles, news, discussion forums, etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+	  Be able to manage a large number of users.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+	  Extensible with ad-hoc modules written by their own programmers.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+	  Containing applications oriented toward virtual communities where
+	  users may belong to multiple of them.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+	  Capable to host all the material related to employee training.
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <para>
+      After studying the solutions available in the market, the company decides
+      to use the platform <ulink url="http://www.openacs.org">OpenACS</ulink>
+      and its extension for e-learning named <ulink
+      url="http://www.dotlrn.org">.LRN</ulink>.
+    </para>
+
+    <para>
+      This evaluation amounts to installing an instance of the platform (we
+      recommend each team member to have one) study the available functionality
+      and install an additional package created from scratch to see how feasible
+      is to integrate a new functionality.
+    </para>
+  </section>
+  
+  <section>
+    <title>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata align="center" fileref="images/strategy2.60x60.png"/>
+        </imageobject>
+      </inlinemediaobject>
+      Strategy
+    </title>
+
+    <para>
+      To achieve this evaluation, the following steps are suggested:
+    </para>
+
+    <orderedlist>
+      <listitem>
+        <para>
+	  Install an instance of OpenACS/.LRN for your personal use such that
+	  you may stop/start the server quickly at will.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+	  Get familiar with its functionality first from the point of view of
+	  the regular user, no additional privileges, and then from the point of
+	  view of the administrator.
+        </para>          
+      </listitem>
+    </orderedlist>
+  </section>
+  
+  <section>
+    <title>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata align="center" fileref="images/resources.60x60.png"/>
+        </imageobject>
+      </inlinemediaobject>
+      Resources
+    </title>
+    <orderedlist>
+      <listitem>
+        <para>
+	  <ulink url="https://gradient.it.uc3m.es/xowiki/dotlrn_vm">VMWare
+	  virtual machine with .LRN already installed</ulink>. It requires
+	  downloading the <ulink url="http://www.vmware.com">VMWare
+	  Player</ulink>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <ulink url="http://openacs.org/doc/current/index.html">OpenACS Core
+            Documentation</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Blog <ulink url="http://www.dotlrn-experiments.blogspot.com/">dotLRN
+            Develop Experiments.</ulink>. More precisely, the article entitle
+          <ulink
+            url="http://dotlrn-experiments.blogspot.com/2005/08/manual-instalacin-openacs-en-espaol.html">Manual 
+            de instalación OpenACS en Español</ulink> and <ulink
+            url="http://dotlrn-experiments.blogspot.com/2005/08/creacion-e-integracion-de-un-paquete_04.html">Creación 
+            e integración de un paquete OpenACS en dotLRN</ulink>, that requires
+	    the following zip file: <ulink
+            url="https://gradient.it.uc3m.es/dotlrn/classes/master/master.platformsfornetworkedcommunities/platformsfornetworkedcommunities/file-storage/view/module/documentacion.zip">Paquete de
+            prueba</ulink>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <ulink url="http://openacs.org/xowiki">OpenACS Wiki</ulink>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+
+  <section>
+    <title>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata align="center" fileref="images/box.60x60.png"/>
+        </imageobject>
+      </inlinemediaobject>
+      Deliverables
+    </title>
+
+    <orderedlist>
+      <listitem>
+        <para>
+	  Show the execution of a new package with at least a modification
+	  requiring the visualization of some data dynamically obtained from the
+	  relational data base.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Upload in the <ulink
+          url="https://gradient.it.uc3m.es/dotlrn/classes/master/master.platformsfornetworkedcommunities/platformsfornetworkedcommunities/file-storage/?folder_id=394176">Assignment
+          area of the course</ulink> two HTML documents. One of them must
+          contain the answer to the personal questions (one per team member) and
+          the second must contain the answer to the group questions (thus one
+          single document per group).
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+
+  <section>
+    <title>
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata align="center" fileref="images/questionmark.60x60.png"/>
+        </imageobject>
+      </inlinemediaobject>
+      Questions
+    </title>
+
+    <para>
+      The following questions are grouped in two categories. Those that need to
+      be answered individually, and those to be answered with a consensus within
+      the team. All answers need to be written in an HTML document and uploaded
+      to the <ulink
+          url="https://gradient.it.uc3m.es/dotlrn/classes/master/master.platformsfornetworkedcommunities/platformsfornetworkedcommunities/file-storage/?folder_id=394176">Assignment
+          area of the course</ulink>.
+    </para>
+
+    <para>
+      The questions requiring an individual answer are:
+    </para>
+
+    <orderedlist>
+      <listitem>
+        <para>
+	  Describe the minimum set of tools and programs that are required to
+	  install and execute correctly an instance of OpenACS/.LRN
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+	  Describe the steps that are required to create a user account in the
+	  platform.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+	  Using a PostGreSQL client program (psql), connect to the database and
+	  obtain the number of tables used by OpenACS/.LRN. Explain the steps
+	  you followed.
+        </para>
+      </listitem>
+    </orderedlist>
+
+    <para>
+      The questions to be answered by the team are:
+    </para>
+
+    <orderedlist>
+      <listitem>
+        <para>
+	  Explain what is the notification service offered by OpenACS/.LRN, how
+	  can it be customized? What is it used for? Advantages and disadvantages.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+	  Is is possible to change the distribution of portlets in the initial
+	  user page? How about the number of portlets? Can the number of tabs be
+	  modified in such page?
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+	  Propose a portlet that you think it is missing and can be useful for a
+	  user in this platform.
+        </para>
+      </listitem>
+      <listitem>
+	Complete the implementation of the demo with a page that uses a form and
+	invokes the function <code>ad_form</code>. The form should receive data
+	from the user and insert/delete/modify it in the data base. This
+	deliverable needs to be shown in the last session of the module.
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

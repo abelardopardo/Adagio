@@ -1,0 +1,22 @@
+#
+# Variables to define the processing step
+#
+# See ada.home/AntImports/Properties.txt for the complete list of these
+# variables as well as an explanation.
+#
+subrecursive.dirs=../../Material/Author7
+
+mergestyles.src.dir=..
+mergestyles.master.style=Params.xml
+
+docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
+docbook.src.dir=../../Material/Author7
+docbook.dst.dir=.
+docbook.files=index.xml
+
+export.dst.dir=../scratch/OACS
+export.files=index.html *.png *.zip images
+
+clean.files=images ../scratch/OACS/images ../scratch/OACS 
+
+

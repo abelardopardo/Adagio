@@ -1,0 +1,32 @@
+#
+# Variables to define the processing step
+#
+# See ada.home/AntImports/Properties.txt for the complete list of these
+# variables as well as an explanation.
+#
+
+gimp.src.dir=../clipart
+gimp.files=compass.xcf \
+	   scenario.xcf \
+	   strategy2.xcf \
+	   resources.xcf \
+	   box.xcf \
+	   questionmark.xcf \
+	   ticketpurchase.xcf \
+
+convert.geometry=60x60
+convert.src.dir=../clipart
+convert.dst.dir=images
+convert.files=compass.png \
+	   scenario.png \
+	   strategy2.png \
+	   resources.png \
+	   box.png \
+	   questionmark.png \
+	   ticketpurchase.png
+
+docbook.files=index.xml
+
+export.files=images/*.png documentacion.zip
+
+clean.files=images

@@ -91,7 +91,7 @@
       <targetfile />
       <fileset refid="convert.fileset"/>
       <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.png" 
+      <mapper type="glob" from="*.${convert.format}" 
         to="*.${convert.geometry}.${convert.format}"/>
     </apply>
   </target>
