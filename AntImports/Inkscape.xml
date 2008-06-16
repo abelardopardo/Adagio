@@ -34,9 +34,6 @@
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="inkscape.check">
       <and>
-	<!-- The required binaries need to be available. -->
-	<available file="${inkscape.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${inkscape.src.dir}" arg2=""/></not>
@@ -47,13 +44,32 @@
       </and>
     </condition>
 
+    <!-- The required binaries need to be available. -->
+    <available property="inkscape.execution.possible"
+	       file="${inkscape.exec}${executable.file.extension}"
+	       filepath="${env.PATH}"/>
+
+    <condition property="inkscape.failure">
+      <and>
+	<isset property="inkscape.check"/>
+	<not><isset property="inkscape.execution.possible"/></not>
+      </and>
+    </condition>
+    
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">inkscape.check          = "${inkscape.check}"</echo>
+    <echo level="info">  inkscape.check          = "${inkscape.check}"
+  inkscape.execution.possible = ${inkscape.execution.possible}
+  inkscape.failure            = ${inkscape.failure}</echo>
+  </target>
+
+  <target name="inkscape.bomb.out" if="inkscape.failure">
+    <fail message="Ups! You requested the execution of inkscape but the executable ${inkscape.exec} was not found installed in your system"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
-  <target name="inkscape.processing.NOT" unless="inkscape.check">
+  <target name="inkscape.processing.NOT" depends="inkscape.bomb.out" 
+	  unless="inkscape.check">
     <echo>inkscape.processing         ---</echo>
     <echo>${basedir}</echo>
   </target>
@@ -135,5 +151,5 @@
   </target>
 
   <!-- If entering through this target, build.out is deleted -->
-  <target name="xfig" depends="initial.delete.build.out, xfig.processing"/>
+  <target name="inkscape" depends="initial.delete.build.out, inkscape.processing"/>
 </project>

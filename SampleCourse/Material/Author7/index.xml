@@ -7,7 +7,7 @@
   <title>
     <inlinemediaobject>
       <imageobject>
-        <imagedata align="center" fileref="images/compass.60x60.png"/>
+        <imagedata align="center" fileref="images/compass_60x60.png"/>
       </imageobject>
     </inlinemediaobject>
     The OpenACS Platform
@@ -25,7 +25,7 @@
     <title>
       <inlinemediaobject>
         <imageobject>
-          <imagedata align="center" fileref="images/scenario.60x60.png"/>
+          <imagedata align="center" fileref="images/scenario_60x60.png"/>
         </imageobject>
       </inlinemediaobject>
       Scenario
@@ -86,7 +86,7 @@
     <title>
       <inlinemediaobject>
         <imageobject>
-          <imagedata align="center" fileref="images/strategy2.60x60.png"/>
+          <imagedata align="center" fileref="images/strategy2_60x60.png"/>
         </imageobject>
       </inlinemediaobject>
       Strategy
@@ -117,7 +117,7 @@
     <title>
       <inlinemediaobject>
         <imageobject>
-          <imagedata align="center" fileref="images/resources.60x60.png"/>
+          <imagedata align="center" fileref="images/resources_60x60.png"/>
         </imageobject>
       </inlinemediaobject>
       Resources
@@ -163,7 +163,7 @@
     <title>
       <inlinemediaobject>
         <imageobject>
-          <imagedata align="center" fileref="images/box.60x60.png"/>
+          <imagedata align="center" fileref="images/box_60x60.png"/>
         </imageobject>
       </inlinemediaobject>
       Deliverables
@@ -194,7 +194,7 @@
     <title>
       <inlinemediaobject>
         <imageobject>
-          <imagedata align="center" fileref="images/questionmark.60x60.png"/>
+          <imagedata align="center" fileref="images/questionmark_60x60.png"/>
         </imageobject>
       </inlinemediaobject>
       Questions

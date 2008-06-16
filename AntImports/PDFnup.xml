@@ -34,9 +34,6 @@
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="pdfnup.check">
       <and>
-	<!-- The required binaries need to be available. -->
-	<available file="${pdfnup.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${pdfnup.src.dir}" arg2=""/></not>
@@ -47,13 +44,32 @@
       </and>
     </condition>
 
+    <!-- The required binaries need to be available. -->
+    <available property="pdfnup.execution.possible"
+	       file="${pdfnup.exec}${executable.file.extension}"
+	       filepath="${env.PATH}"/>
+
+    <condition property="pdfnup.failure">
+      <and>
+	<isset property="pdfnup.check"/>
+	<not><isset property="pdfnup.execution.possible"/></not>
+      </and>
+    </condition>
+
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    pdfnup.check          = "${pdfnup.check}"</echo>
+    <echo level="info">    pdfnup.check          = "${pdfnup.check}"
+  pdfnup.execution.possible = ${pdfnup.execution.possible}
+  pdfnup.failure            = ${pdfnup.failure}</echo>
+  </target>
+
+  <target name="pdfnup.bomb.out" if="pdfnup.failure">
+    <fail message="Ups! You requested the execution of pdfnup but the executable ${pdfnup.exec} was not found installed in your system"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
-  <target name="pdfnup.processing.NOT" unless="pdfnup.check">
+  <target name="pdfnup.processing.NOT" depends="@NAME@.bomb.out"
+	  unless="pdfnup.check">
     <echo>pdfnup.processing           ---</echo>
     <echo>${basedir}</echo>
   </target>

@@ -22,8 +22,7 @@
   <import file="InitialCheck.xml"/>
 
   <!-- Property definition -->
-  <property name="xfig.exec"          value="xfig"/>
-  <property name="xfig.fig2dev.exec"  value="fig2dev"/>
+  <property name="xfig.exec"          value="fig2dev"/>
   <property name="xfig.src.dir"       value="${basedir}"/>
   <property name="xfig.dst.dir"       value="${xfig.src.dir}"/>
   <property name="xfig.output.format" value="png"/>
@@ -31,8 +30,7 @@
   <property name="xfig.smooth"        value="4"/>
   <property name="xfig.extra.args"    value=""/>
   <property name="xfig.files"         value=""/>
-
-  <!-- Source files to be processed by xfig/fig2dev  -->
+  <!-- Source files to be processed by fig2dev  -->
   <fileset id="xfig.fileset" dir="${xfig.src.dir}"
 	   includes="${xfig.files}"/>
 
@@ -44,11 +42,6 @@
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="xfig.check">
       <and>
-	<!-- The required binaries need to be available. -->
-	<available file="${xfig.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
-	<available file="${xfig.fig2dev.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${xfig.src.dir}" arg2=""/></not>
@@ -59,13 +52,33 @@
       </and>
     </condition>
 
+    <condition property="xfig.execution.possible">
+      <!-- The required binaries need to be available. -->
+      <available file="${xfig.exec}${executable.file.extension}"
+		 filepath="${env.PATH}"/>
+    </condition>
+
+    <condition property="xfig.failure">
+      <and>
+	<isset property="xfig.check"/>
+	<not><isset property="xfig.execution.possible"/></not>
+      </and>
+    </condition>
+
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    xfig.check          = "${xfig.check}"</echo>
+    <echo level="info">  xfig.check  = "${xfig.check}"
+  xfig.execution.possible = ${xfig.execution.possible}
+  xfig.failure            = ${xfig.failure}</echo>
+  </target>
+
+  <target name="xfig.bomb.out" if="xfig.failure">
+    <fail message="Ups! You requested the execution of but the executable ${xfig.exec} was not found installed in your system"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
-  <target name="xfig.processing.NOT" unless="xfig.check">
+  <target name="xfig.processing.NOT" depends="xfig.bomb.out"
+	  unless="xfig.check">
     <echo>xfig.processing             ---</echo>
     <echo>${basedir}</echo>
   </target>

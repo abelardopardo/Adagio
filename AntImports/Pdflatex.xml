@@ -32,9 +32,6 @@
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="pdflatex.check">
       <and>
-	<!-- The required binaries need to be available. -->
-	<available file="${pdflatex.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${pdflatex.src.dir}" arg2=""/></not>
@@ -45,13 +42,32 @@
       </and>
     </condition>
 
+    <!-- The required binaries need to be available. -->
+    <available property="pdflatex.execution.possible"
+	       file="${pdflatex.exec}${executable.file.extension}"
+	       filepath="${env.PATH}"/>
+
+    <condition property="pdflatex.failure">
+      <and>
+	<isset property="pdflatex.check"/>
+	<not><isset property="pdflatex.execution.possible"/></not>
+      </and>
+    </condition>
+
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    pdflatex.check          = "${pdflatex.check}"</echo>
+    <echo level="info">    pdflatex.check          = "${pdflatex.check}"
+  pdflatex.execution.possible = ${pdflatex.execution.possible}
+  pdflatex.failure            = ${pdflatex.failure}</echo>
+  </target>
+
+  <target name="pdflatex.bomb.out" if="pdflatex.failure">
+    <fail message="Ups! You requested the execution of pdflatex but the executable ${pdflatex.exec} was not found installed in your system"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
-  <target name="pdflatex.processing.NOT" unless="pdflatex.check">
+  <target name="pdflatex.processing.NOT" depends="@NAME@.bomb.out"
+	  unless="pdflatex.check">
     <echo>pdflatex.processing         ---</echo>
     <echo>${basedir}</echo>
   </target>

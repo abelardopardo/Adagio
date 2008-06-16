@@ -34,15 +34,24 @@
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="gimp.check">
       <and>
-	<!-- The required binaries need to be available. -->
-	<available file="${gimp.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
 	<available file="${gimp.script.file}"/>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${gimp.src.dir}" arg2=""/></not>
 	<!-- There must be some files defined -->
         <not><equals arg1="${gimp.files}" arg2=""/></not>
+      </and>
+    </condition>
+
+    <!-- The required binaries need to be available. -->
+    <available property="gimp.execution.possible"
+	       file="${gimp.exec}${executable.file.extension}"
+	       filepath="${env.PATH}"/>
+
+    <condition property="gimp.failure">
+      <and>
+	<isset property="gimp.check"/>
+	<not><isset property="gimp.execution.possible"/></not>
       </and>
     </condition>
 
@@ -59,13 +68,20 @@
 	     includes="${gimp.target.fileset.property}"/>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">gimp.check          = "${gimp.check}"
-    gimp.target.fileset     = "${gimp.target.fileset.property}"</echo>
+    <echo level="info">  gimp.check          = "${gimp.check}"
+  gimp.target.fileset     = "${gimp.target.fileset.property}"
+  gimp.execution.possible = ${gimp.execution.possible}
+  gimp.failure            = ${gimp.failure}</echo>
+  </target>
+
+  <target name="gimp.bomb.out" if="gimp.failure">
+    <fail message="Ups! You requested the execution of gimp but the executable ${gimp.exec} was not found installed in your system"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
-  <target name="gimp.processing.NOT" unless="gimp.check">
+  <target name="gimp.processing.NOT" depends="gimp.bomb.out" 
+	  unless="gimp.check">
     <echo>gimp.processing             ---</echo>
     <echo>${basedir}</echo>
   </target>
