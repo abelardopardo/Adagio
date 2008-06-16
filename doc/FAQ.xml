@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<chapter id="ADA_FAQ">
+  <title>ADA Frequently Asked Questions</title>
+
+  <section>
+    <title>Installing ADA in Windows</title>
+    <qandaset defaultlabel="qanda">
+      <qandaentry>
+	<question>
+	  <para>What are the basic packages to run ADA in Windows?</para>
+	</question>
+	<answer>
+	  <para>
+	    ADA needs <ulink url="http://www.cygwin.com">Cygwin</ulink>
+	    to execute some of the tools it uses. Cygwin is a unix like
+	    environment that installs as a native windows application.
+	  </para>
+	  
+	  <para>
+	    Installing <code>cygwin</code> is done using an installer which
+	    allows to select and/or remove multiple packages. The bare minimum
+	    packages to use with ADA are:
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<code>docbook-xml44</code>: Docbook XML DTD
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<code>docbook-xsl</code>: XSL stylesheets for the DocBook XML DTD
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<code>git</code>: Fast version control system used to download
+		the latest ADA version.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	</answer>
+      </qandaentry>
+    </qandaset>
+  </section>
+
+<!--   <section>     -->
+<!--     <title>Installing ADA in Linux</title> -->
+
+<!--   </section> -->
+</chapter>
