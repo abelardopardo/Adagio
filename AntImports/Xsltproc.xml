@@ -99,7 +99,8 @@
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
-  <target name="xsltproc.processing.NOT" unless="xsltproc.check">
+  <target name="xsltproc.processing.NOT"  depends="xsltproc.bomb.out" 
+	  unless="xsltproc.check">
     <echo>xsltproc.processing         ---</echo>
     <echo>${basedir}</echo>
   </target>
