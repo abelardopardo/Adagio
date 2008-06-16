@@ -66,7 +66,7 @@
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
-  <target name="pdflatex.processing.NOT" depends="@NAME@.bomb.out"
+  <target name="pdflatex.processing.NOT" depends="pdflatex.bomb.out"
 	  unless="pdflatex.check">
     <echo>pdflatex.processing         ---</echo>
     <echo>${basedir}</echo>

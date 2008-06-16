@@ -67,7 +67,7 @@
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
-  <target name="dblatex.processing.NOT" depends="@NAME@.bomb.out" 
+  <target name="dblatex.processing.NOT" depends="dblatex.bomb.out" 
 	  unless="dblatex.check">
     <echo>dblatex.processing          ---</echo>
     <echo>${basedir}</echo>

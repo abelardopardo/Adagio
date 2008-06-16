@@ -68,7 +68,7 @@
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
-  <target name="pdfnup.processing.NOT" depends="@NAME@.bomb.out"
+  <target name="pdfnup.processing.NOT" depends="pdfnup.bomb.out"
 	  unless="pdfnup.check">
     <echo>pdfnup.processing           ---</echo>
     <echo>${basedir}</echo>
