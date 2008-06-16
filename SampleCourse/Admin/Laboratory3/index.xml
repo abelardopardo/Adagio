@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<chapter lang="en">
+  <chapterinfo condition="rss.info">
+    <!-- Fetch the title from the main part -->
+    <xi:include 
+      xpointer="xpointer(/chapter/title)"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <modespec>
+      <olink condition="link">index.html?fromrss=1</olink>
+    </modespec>
+    <abstract>
+      <formalpara>
+        <xi:include 
+          xpointer="xpointer(/chapter/title)"
+          parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+        <para>
+          OpenACS deploys a fully fledged object hierarchy on top of the
+          relational database. This structure allows for each object to have a
+          unique ID which facilitates permission management, attribute
+          inheritance, etc.
+        </para>
+      </formalpara>
+    </abstract>
+    <pubdate></pubdate>
+    <author>
+      <firstname>Abelardo</firstname><surname>Pardo</surname>
+    </author>
+    <keywordset>
+      <keyword condition="category">Education</keyword>
+    </keywordset>
+  </chapterinfo>
+  
+  <title>
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata align="center" fileref="images/compass.60x60.png"/>
+      </imageobject>
+    </inlinemediaobject>
+    Module 2: Structure of the OpenACS platform and package deployment
+  </title>
+
+  <xi:include xml:base="./"
+    href="../../Material/Author7/index.xml"
+    xpointer="xpointer(/section/*[not(name()='title')])"
+    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+</chapter>

@@ -1,0 +1,9 @@
+This directory has a problem. The file index.xml brings through xinclude a
+file from the author area. As it is implemented right now, the set of
+ant files do not detect a change in the author file to force the re-creation
+of the resource. The problem is identical to the one that appears when compiling
+C code and catching the dependencies introduced by the #include directive.
+
+One possible solution is to extend the scripts to include a set of files to
+look for dependencies.
+

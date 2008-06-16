@@ -8,6 +8,7 @@
 subrecursive.dst.dir=
 subrecursive.dirs=Laboratory1 \
                   Laboratory2 \
+                  Laboratory3 \
   		  Theory1 \
   		  Theory2 \
   		  Guide1 \
@@ -24,7 +25,7 @@ copyfiles.dst.dir=scratch
 export.dst.dir=scratch
 export.files=index.html
 
-clean.files=scratch
+clean.files=scratch/images scratch
 
 #
 # Rsync stuff specific to this dir because it is supposed to be the root

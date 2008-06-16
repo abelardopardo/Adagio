@@ -21,7 +21,7 @@ build templates
   <property name="ada.local.property.file" value="Properties.txt"/>
 
   <!-- Load the properties in the basedir directory -->
-  <property file="${basedir}/${ada.local.property.file}"/>
+  <property file="${basedir}${file.separator}${ada.local.property.file}"/>
 
   <!-- Directory where the toolkit is installed -->
   <property name="ada.home" value="" />
@@ -56,6 +56,9 @@ build templates
     <arg value="/"/>
   </exec>
 
+  <available property="ada.property.file.ready"
+	     file="${basedir}${file.separator}${ada.local.property.file}"/>
+      
   <!-- Default location for the catalog -->
   <property name="xml.catalog.file" 
 	    value="${root.path.prefix}${file.separator}etc${file.separator}xml${file.separator}catalog" />
@@ -64,11 +67,14 @@ build templates
   <condition property="xml.catalog.file.available" value="true">
     <available file="${xml.catalog.file}" />
   </condition>
-  
-  <!-- Empty target suitable to be redefined -->
-  <target name="initial.check.recursive"/>
 
-  <target name="ada.check.basics">
+  <target name="ada.check.property.file"
+	  unless="ada.property.file.ready">
+    <fail message="*** ERROR *** No ${ada.local.property.file} found!"/>
+  </target>
+
+  <!-- Check if the ada.home property is set to a meaningful value -->
+  <target name="ada.check.basics" depends="ada.check.property.file">
     
     <condition property="ada.check.home.property">
       <and>
@@ -78,10 +84,11 @@ build templates
         <available file="${ada.home}" type="dir"/>
       </and>
     </condition>
+
   </target>
 
   <target name="initial.check" 
-	  depends="initial.check.dump, initial.check.recursive, ada.check.basics"
+	  depends="initial.check.dump, ada.check.basics"
 	  unless="ada.check.home.property">
     <echo> *** ERROR *** ada.home variable with incorrect value!
   ada.home = "${ada.home}"
@@ -89,7 +96,7 @@ build templates
     <fail message="Include ada.home=DIR in the file ${user.home}/.ant.properties"/>
   </target>
 
-  <target name="initial.check.dump" depends="initial.check.recursive">
+  <target name="initial.check.dump">
     <echo level="info">------ Global properties ----
   basedir=${basedir}
   user.dir=${user.dir}

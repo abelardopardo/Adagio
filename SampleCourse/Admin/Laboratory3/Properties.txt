@@ -1,0 +1,22 @@
+#
+# Variables to define the processing step
+#
+# See ada.home/AntImports/Properties.txt for the complete list of these
+# variables as well as an explanation.
+#
+
+subrecursive.dirs=../../Material/Author7
+
+laboratory.files=index.xml
+
+mergestyles.src.dir=..
+mergestyles.master.style=Params.xml
+
+export.dst.dir=../scratch/Lab3
+
+export.files=index.html images/*.png documentacion.zip
+
+clean.files=images \
+	    ../scratch/Lab3/images \
+	    ../scratch/Lab3
+
