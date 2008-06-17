@@ -1,0 +1,174 @@
+% $Id: integracion.tex,v 1.1 2008-01-14 18:15:38 jaf Exp $
+
+\part{Integración de Servlets y JSP}
+
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Introducción}
+  \begin{itemize}
+  \item Una aplicación Web realiza tareas de procesado y presentación:
+    \begin{itemize}
+    \item Los Servlets son adecuados para procesado.
+    \item Las páginas JSP son adecuadas presentación.
+    \end{itemize}
+  \item Una aplicación Web puede combinar Servlets y páginas JSP:
+    \begin{itemize}
+    \item Procesado de parámetros de la petición: Servlets.
+    \item Acceso a bases de datos: Servlets.
+    \item Lógica de la aplicación: Servlets.
+    \item Presentación (vistas): JSP.
+    \end{itemize}
+  \end{itemize}
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Modelo de funcionamiento (I)}
+  \begin{enumerate}
+  \item El cliente envía la petición HTTP a un servlet.
+  \item El servlet procesa la petición.
+    \begin{itemize}
+    \item Si es necesario, se conecta a la base de datos.
+    \end{itemize}
+  \item El servlet redirige la petición a un JSP.
+    \begin{itemize}
+    \item Si es necesario, añade \emph{beans} como parámetros.
+    \end{itemize}
+  \item El JSP lee los parámetros y devuelve la respuesta 
+    formateada visualmente al usuario.
+  \end{enumerate}
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Modelo de funcionamiento (II)}
+
+\begin{center}
+  \resizebox{0.9\textwidth}{!}{
+    \includegraphics{mvc.eps}}
+\end{center}
+
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Mecanismos de redirección de peticiones}
+
+  \begin{itemize}
+  \item Hay dos formas de redirigir una petición a otro recurso:
+    \begin{itemize}
+    \item Redirecciones HTTP  (\emph{sendRedirect}):
+      \begin{itemize}
+      \item El servidor envía una respuesta al 
+        cliente con un código 3xx y la URI a la que este debe 
+        enviar la petición.
+      \end{itemize}
+    \item Redirecciones internas en el servidor (\emph{forward}):
+      \begin{itemize}
+      \item Se redirige la petición de un recurso a otro dentro
+        de la misma aplicación Web.
+      \item El recurso de la última redirección devuelve al cliente
+        la respuesta HTTP.
+      \item La redirección es transparente para el cliente.
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Redirecciones \emph{sendRedirect}}
+  \begin{itemize}
+  \item Fuerza el envío de una respuesta HTTP de redirección al cliente.
+  \item El cliente envía la petición a la URI recibida en la respuesta.
+  \end{itemize}
+
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
+// Redirección con URI absoluta
+response.sendRedirect("http://www.ejemplo.es/");
+
+// Redirección con URI relativa a la URI de la petición actual
+response.sendRedirect("otra.html");
+\end{Verbatim}
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Redirecciones \emph{forward}}
+  \begin{itemize}
+  \item Un Servlet o JSP reenvía la petición a otro recurso (Servlet,
+    JSP, HTML) de la
+    misma aplicación Web.
+  \item El cliente no se entera de la redirección (p.e., el navegador
+    muestra la URI original de la petición, no la redirigida).
+  \item El control retorna al finalizar el método \emph{forward},
+    por lo que conviene que sea lo último que se ejecuta.
+  \end{itemize}
+
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Redirecciones \emph{forward}}
+  \begin{itemize}
+  \item \emph{Forward} desde un Servlet:
+
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
+RequestDispatcher rd = request.getRequestDispatcher("/vista.jsp");
+rd.forward(request, response);
+\end{Verbatim}
+
+\item \emph{Forward} desde un JSP:
+
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
+<jsp:forward page="/vista.jsp"/>
+\end{Verbatim}
+
+\end{itemize}
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Redirecciones \emph{forward} con parámetros}
+  \begin{itemize}
+  \item El objeto de la petición (\emph{ServletRequest}) de los recursos
+   origen y destino de la redirección es el mismo:
+   \begin{itemize}
+   \item Se pueden añadir parámetros como atributos a la petición.
+   \end{itemize}
+ \end{itemize}
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
+Noticia nuevaNoticia = (...)
+request.setAttribute("noticia", nuevaNoticia);
+RequestDispatcher rd = request.getRequestDispatcher("/vista.jsp");
+rd.forward(request, response);
+\end{Verbatim}
+
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Redirecciones \emph{forward} con parámetros}
+  \begin{itemize}
+  \item Recogida de parámetros desde un Servlet:
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
+Noticia nuevaNoticia = (Noticia) request.getAttribute("noticia");
+\end{Verbatim}
+\item Recogida de parámetros desde un JSP:
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
+<jsp:useBean id="noticia" class="beans.Noticia" 
+             scope="request" />
+\end{Verbatim}
+
+  \end{itemize}
+\end{slide}
+%------------------------------------------------------------------------------
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
