@@ -1,0 +1,11 @@
+Sample material edited directly using HTML/XHTML
+
+It could be processed with XSLT if it is well-formed XML. In order to
+be well-formed, two requirements should be met:
+
+- It should be XHTML instead of HTML.
+- A root element should enclose all the XHTML content.
+
+Both requirements are easy to meet and we can probably assume that the
+author is responsible of that.
+
