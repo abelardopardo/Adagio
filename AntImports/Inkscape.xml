@@ -18,10 +18,11 @@
   <import file="InitialCheck.xml"/>
 
   <!-- Property definition -->
-  <property name="inkscape.exec"    value="inkscape"/>
-  <property name="inkscape.src.dir" value="${basedir}"/>
-  <property name="inkscape.dst.dir" value="${inkscape.src.dir}"/>
-  <property name="inkscape.files"   value=""/>
+  <property name="inkscape.exec"          value="inkscape"/>
+  <property name="inkscape.src.dir"       value="${basedir}"/>
+  <property name="inkscape.dst.dir"       value="${inkscape.src.dir}"/>
+  <property name="inkscape.output.format" value="png"/>
+  <property name="inkscape.files"         value=""/>
   <!-- Source files to be processed by inkscape. -->
   <fileset id="inkscape.fileset" dir="${inkscape.src.dir}"
 	   includes="${inkscape.files}"/>
@@ -56,6 +57,22 @@
       </and>
     </condition>
     
+    <condition property="inkscape.export.format.png">
+      <equals arg1="${inkscape.output.format}" arg2="png"/>
+    </condition>
+
+    <condition property="inkscape.export.format.eps">
+      <equals arg1="${inkscape.output.format}" arg2="eps"/>
+    </condition>
+
+    <condition property="inkscape.export.format.ps">
+      <equals arg1="${inkscape.output.format}" arg2="ps"/>
+    </condition>
+
+    <condition property="inkscape.export.format.pdf">
+      <equals arg1="${inkscape.output.format}" arg2="pdf"/>
+    </condition>
+
     <!-- Dump the value of the properties just computed. -->
     <echo level="info">  inkscape.check          = "${inkscape.check}"
   inkscape.execution.possible = ${inkscape.execution.possible}
@@ -101,6 +118,11 @@
       <mapper type="glob" from="*.svg" to="*.png"/>
     </apply>    
   </target>
+
+
+<!--   <target name="inkscape.processing.export.png"  -->
+<!-- 	  depends="inkscape.check.values, inkscape.processing.NOT"> -->
+<!--   </target> -->
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->

@@ -4,7 +4,7 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
-inkscape.files=*.svg
+inkscape.files=images/*.svg
 
 docbook.files=FAQ.xml
 docbook.extra.args=--stringparam chapter.autolabel 0 \
