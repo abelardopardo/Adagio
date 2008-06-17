@@ -149,6 +149,19 @@
     @NAME@.files    ="${@NAME@.files}"</echo>
   </target>
 
+  <target name="@NAME@.report.YES" depends="@NAME@.check.values"
+	  if="@NAME@.execution.possible">
+    <echo>@NAME@                     ++++ READY ++++</echo>
+  </target>
+
+  <target name="@NAME@.report.NO" depends="@NAME@.check.values"
+	  unless="@NAME@.execution.possible">
+    <echo>@NAME@                          -----</echo>
+  </target>
+
+  <target name="@NAME@.report" depends="@NAME@.report.YES,
+				      @NAME@.report.NO"/>
+
   <!-- If entering through this target, build.out is deleted -->
   <target name="@NAME@" depends="initial.delete.build.out, @NAME@.processing"/>
 </project>

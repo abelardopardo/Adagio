@@ -250,6 +250,19 @@
     xsltproc.mergestyles     ="${xsltproc.mergestyles}"</echo>
   </target>
 
+  <target name="xsltproc.report.YES" depends="xsltproc.check.values"
+	  if="xsltproc.execution.possible">
+    <echo>Xsltproc           |     *     |</echo>
+  </target>
+
+  <target name="xsltproc.report.NO" depends="xsltproc.check.values"
+	  unless="xsltproc.execution.possible">
+    <echo>Xsltproc           |           |     * (install ${xsltproc.exec})</echo>
+  </target>
+
+  <target name="xsltproc.report" depends="xsltproc.report.YES,
+				      xsltproc.report.NO"/>
+
   <!-- If entering through this target, build.out is deleted -->
   <target name="xsltproc" depends="initial.delete.build.out, xsltproc.processing"/>
 </project>

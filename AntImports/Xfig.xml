@@ -99,7 +99,7 @@
 
     <apply dir="${basedir}" parallel="false"
       dest="${xfig.dst.dir}" append="yes" failonerror="true"
-      executable="${xfig.fig2dev.exec}" forwardslash="true" output="build.out">
+      executable="${xfig.exec}" forwardslash="true" output="build.out">
       <arg value="-L"/>
       <arg value="${xfig.output.format}"/>
       <arg value="-b"/>
@@ -167,7 +167,6 @@
   <target name="xfig.dump.properties" depends="initial.check">
     <echo level="info"> ------ Xfig properties ----
     xfig.exec          ="${xfig.exec}"
-    xfig.fig2dev.exec  ="${xfig.fig2dev.exec}"
     xfig.src.dir       ="${xfig.src.dir}"
     xfig.dst.dir       ="${xfig.dst.dir}"
     xfig.output.format ="${xfig.output.format}"
@@ -176,6 +175,19 @@
     xfig.extra.args    ="${xfig.extra.args}"
     xfig.files         ="${xfig.files}" </echo>
   </target>
+
+  <target name="xfig.report.YES" depends="xfig.check.values"
+	  if="xfig.execution.possible">
+    <echo>Xfig               |     *     |</echo>
+  </target>
+
+  <target name="xfig.report.NO" depends="xfig.check.values"
+	  unless="xfig.execution.possible">
+    <echo>Xfig               |           |     * (install ${xfig.exec})</echo>
+  </target>
+
+  <target name="xfig.report" depends="xfig.report.YES,
+				      xfig.report.NO"/>
 
   <!-- If entering through this target, build.out is deleted -->
   <target name="xfig" depends="initial.delete.build.out, xfig.processing"/>

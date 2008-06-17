@@ -150,6 +150,19 @@
     inkscape.files   ="${inkscape.files}" </echo>
   </target>
 
+  <target name="inkscape.report.YES" depends="inkscape.check.values"
+	  if="inkscape.execution.possible">
+    <echo>Inkscape           |     *     |</echo>
+  </target>
+
+  <target name="inkscape.report.NO" depends="inkscape.check.values"
+	  unless="inkscape.execution.possible">
+    <echo>Inkscape           |           |     * (install ${inkscape.exec})</echo>
+  </target>
+
+  <target name="inkscape.report" depends="inkscape.report.YES,
+				      inkscape.report.NO"/>
+
   <!-- If entering through this target, build.out is deleted -->
   <target name="inkscape" depends="initial.delete.build.out, inkscape.processing"/>
 </project>

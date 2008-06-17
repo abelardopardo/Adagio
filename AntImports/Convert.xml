@@ -165,6 +165,19 @@
     convert.files    ="${convert.files}"</echo>
   </target>
 
+  <target name="convert.report.YES" depends="convert.check.values"
+	  if="convert.execution.possible">
+    <echo>Convert            |     *     |</echo>
+  </target>
+
+  <target name="convert.report.NO" depends="convert.check.values"
+	  unless="convert.execution.possible">
+    <echo>Convert            |           |     * (install ImageMagick)</echo>
+  </target>
+
+  <target name="convert.report" depends="convert.report.YES,
+				      convert.report.NO"/>
+
   <!-- If entering through this target, build.out is deleted -->
   <target name="convert" depends="initial.delete.build.out, convert.processing"/>
 </project>

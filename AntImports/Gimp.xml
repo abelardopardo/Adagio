@@ -166,6 +166,19 @@
     gimp.files       ="${gimp.files}" </echo>
   </target>
 
+  <target name="gimp.report.YES" depends="gimp.check.values"
+	  if="gimp.execution.possible">
+    <echo>Gimp               |     *     |</echo>
+  </target>
+
+  <target name="gimp.report.NO" depends="gimp.check.values"
+	  unless="gimp.execution.possible">
+    <echo>Gimp               |           |     * (install ${gimp.exec})</echo>
+  </target>
+
+  <target name="gimp.report" depends="gimp.report.YES,
+				      gimp.report.NO"/>
+
   <!-- If entering through this target, build.out is deleted -->
   <target name="gimp" depends="initial.delete.build.out, gimp.processing"/>
 </project>

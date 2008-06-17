@@ -96,19 +96,43 @@
 
   </target>
 
-<!--   <target name="execute"> -->
+<target name="report">
 
-<!--     <antcall target="basic.execute" inheritAll="false"/> -->
+    <echo>Tool               | Installed |  Missing</echo>
+    <echo>-------------------+-----------+-----------------------------</echo>
 
-<!--     <antcall target="laboratory.execute" inheritAll="false"/> -->
-<!--   </target> -->
+    <antcall target="xfig.report" inheritAll="false"/>
 
-<!--   <target name="clean"> -->
+    <echo>-------------------+-----------+-----------------------------</echo>
 
-<!--     <antcall target="laboratory.execute.clean" inheritAll="false"/> -->
+    <antcall target="inkscape.report" inheritAll="false"/>
 
-<!--     <antcall target="basic.clean" inheritAll="false"/> -->
+    <echo>-------------------+-----------+-----------------------------</echo>
 
-<!--   </target> -->
+    <antcall target="gimp.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="convert.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="xsltproc.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="pdflatex.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="dblatex.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="pdfnup.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+  </target>
 
 </project>

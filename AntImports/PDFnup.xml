@@ -152,6 +152,19 @@
     pdfnup.files      ="${pdfnup.files}" </echo>
   </target>
 
+  <target name="pdfnup.report.YES" depends="pdfnup.check.values"
+	  if="pdfnup.execution.possible">
+    <echo>Pdfnup             |     *     |</echo>
+  </target>
+
+  <target name="pdfnup.report.NO" depends="pdfnup.check.values"
+	  unless="pdfnup.execution.possible">
+    <echo>Pdfnup             |           |     * (install pdfjam)</echo>
+  </target>
+
+  <target name="pdfnup.report" depends="pdfnup.report.YES,
+				      pdfnup.report.NO"/>
+
   <!-- If entering through this target, build.out is deleted -->
   <target name="pdfnup" depends="initial.delete.build.out, pdfnup.processing"/>
 </project>
