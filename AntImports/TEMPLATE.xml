@@ -151,12 +151,12 @@
 
   <target name="@NAME@.report.YES" depends="@NAME@.check.values"
 	  if="@NAME@.execution.possible">
-    <echo>@NAME@                     ++++ READY ++++</echo>
+    <echo>@NAME              |     *     |</echo>
   </target>
 
   <target name="@NAME@.report.NO" depends="@NAME@.check.values"
 	  unless="@NAME@.execution.possible">
-    <echo>@NAME@                          -----</echo>
+    <echo>@NAME@             |           |     * (install ${dblatex.exec})</echo>
   </target>
 
   <target name="@NAME@.report" depends="@NAME@.report.YES,
