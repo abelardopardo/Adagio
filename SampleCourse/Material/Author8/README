@@ -1,0 +1,22 @@
+Example of Latex + Prosper slides
+
+The slides are composed by three reusable fragments stored in
+subdirectories "Forms", "RelativeURIs" and "ServletJSPIntegration".
+There are also several SVG images that need to be transformed to EPS.
+
+Subdirectory "MasterDocument" includes other files that should not be
+in the author workspace in the future, when the rules for prosper are
+developed, including the master file (which can be automatically
+created from generic properties like title, subject, curse edition,
+author, etc.), the style definition (".sty" file) and the logo.
+
+The toolchain used for producing a PDF version of the slides is as
+follows:
+
+- transform SVGs to EPS (probably with inkscape) 
+- latex $NAME dvips
+- $NAME.dvi -o $NAME.ps
+- ps2pdf $NAME.ps $NAME.pdf
+
+The first step (latex) requires the *.sty file to be in the standard
+locations of Latex or in the current folder where the master file is.

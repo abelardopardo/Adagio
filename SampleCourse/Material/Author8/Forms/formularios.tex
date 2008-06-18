@@ -1,0 +1,143 @@
+% $Id: formularios.tex,v 1.1 2008-01-14 18:15:38 jaf Exp $
+
+\part{Envío de parámetros de formularios}
+
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Envío de parámetros de formularios}
+  \begin{itemize}
+  \item El envío depende del método HTTP y la
+    codificación:
+    \begin{itemize}
+    \item Método HTTP:
+      \begin{itemize}
+      \item Método GET.
+      \item Método POST.
+      \end{itemize}
+    \item Codificación:
+      \begin{itemize}
+      \item \verb+application/x-www-form-urlencoded+
+      \item \verb+multipart/form-data+
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Envío de parámetros de formularios}
+  \begin{itemize}
+  \item Codificación URL--encoded:
+    \begin{itemize}
+    \item Lista de parámetros separados por ``\&''.
+    \item Para cada parámetro se especifica nombre ``='' valor.
+    \item Los caracteres especiales (no letras/dígitos ASCII) 
+      se codifican en hexadecimal por su código UTF-8.
+    \item Con método GET o POST.
+    \item No se usa para campos de tipo \emph{file}.
+    \end{itemize}
+  \end{itemize}
+
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
+usuario=juan&clave=juanpw&ssid=7fgxc&enviar=enviar
+nombre=juan%20l%C3%B3pez%20l%C3%B3pez
+\end{Verbatim}
+
+
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Envío de parámetros de formularios}
+  \begin{itemize}
+  \item Codificación URL--encoded con GET:
+    \begin{itemize}
+    \item Los parámetros se codifican en la ruta (\emph{path})
+      de la petición HTTP.
+    \item Sólo apto para operaciones idempotentes.
+    \end{itemize}
+  \end{itemize}
+
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
+GET /jaf/cgi-bin/html2xhtml.cgi?tipo=auto&html=default.html HTTP/1.1
+Host: www.ejemplo.es
+(...)
+\end{Verbatim}
+
+
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Envío de parámetros de formularios}
+  \begin{itemize}
+  \item Codificación URL--encoded con POST:
+    \begin{itemize}
+    \item Los parámetros se codifican en el cuerpo
+      de la petición HTTP.
+    \end{itemize}
+  \end{itemize}
+
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
+POST /jaf/cgi-bin/html2xhtml.cgi HTTP/1.1
+(...)
+Content-Length: 27
+Content-Type: application/x-www-form-urlencoded
+
+tipo=auto&html=default.html
+\end{Verbatim}
+
+
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Envío de parámetros de formularios}
+  \begin{itemize}
+  \item Codificación Multipart (RFC 2388):
+    \begin{itemize}
+    \item Datos encapsulados con un mensaje multiparte MIME.
+    \item Sólo con método POST.
+    \item Necesario para enviar campos de tipo \emph{file}.
+    \item No compatible con
+      \emph{HttpServletRequest.getParameter(...)}
+      \begin{itemize}
+      \item Es necesario utilizar APIs adicionales desde un Servlet/JSP.
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Ejemplo: multipart/form--data}
+
+
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{7}{7}]
+POST /jaf/cgi-bin/html2xhtml.cgi HTTP/1.1
+(...)
+Content-Type: multipart/form-data; boundary=----------2qYzCGdatrpobJh4m5rz50
+Content-Length: 972
+
+------------2qYzCGdatrpobJh4m5rz50
+Content-Disposition: form-data; name="tipo"
+
+auto
+------------2qYzCGdatrpobJh4m5rz50
+Content-Disposition: form-data; name="html"; filename="readme.html"
+Content-Type: text/html
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+(...)
+</html>
+------------2qYzCGdatrpobJh4m5rz50--
+\end{Verbatim}
+
+\end{slide}
+%------------------------------------------------------------------------------
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

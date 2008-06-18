@@ -1,0 +1,114 @@
+% $Id: uris-relativas.tex,v 1.1 2008-01-14 18:15:39 jaf Exp $
+
+\part{URIs relativas y absolutas}
+
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Introducción}
+  \begin{itemize}
+  \item En (X)HTML, en un hiperenlace, imagen, etc. es necesario
+    especificar una URI.
+  \item El navegador necesita la URI completa para seguir el 
+    hiperenlace, cargar la imagen, etc.
+  \item Una URI se puede especificar como:
+    \begin{itemize}
+    \item URI absoluta.
+    \item URI relativa a un servidor.
+    \item URI relativa.
+    \end{itemize}
+  \end{itemize}
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{URI absoluta}
+  \begin{itemize}
+  \item Se especifica directamente la URI completa del recurso.
+  \item En HTTP, incluye el identificador de protocolo, servidor,
+    ruta en el servidor y parámetros.
+  \item El navegador simplemente toma la URI.
+\end{itemize}
+
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
+<a href="http://www.it.uc3m.es/labttlat/lab8/">...</a>
+\end{Verbatim}
+
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{URI relativa al servidor}
+  \begin{itemize}
+  \item Se especifica de forma absoluta la ruta del recurso
+    (comenzando por ``/''), pero no
+    se indica protocolo ni servidor.
+  \item El navegador toma el protocolo y servidor del recurso
+    en el cual está el enlace, imagen, etc.
+\end{itemize}
+
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
+<a href="/labttlat/lab8/">...</a>
+\end{Verbatim}
+
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{URI relativa}
+  \begin{itemize}
+  \item Se especifica sólo la ruta del recurso relativa (no comienza
+    por ``/''), pero no
+    se indica protocolo ni servidor, ni parte inicial de la ruta.
+  \item El navegador toma el protocolo, servidor y parte inicial de la
+    ruta del recurso
+    en el cual está el enlace, imagen, etc.
+    \begin{itemize}
+    \item Para calcular la ruta, se toma la ruta del recurso actual
+      excepto su último nivel (similar a la forma de nombrar ficheros
+      en un sistema de ficheros).
+    \end{itemize}
+  \end{itemize}
+
+\begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
+<a href="lab8/">...</a>
+\end{Verbatim}
+
+
+
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Ejemplo: URIs relativas}
+
+\begin{center}
+  \resizebox{0.9\textwidth}{!}{
+    \includegraphics{uris-relativas.eps}}
+\end{center}
+
+\end{slide}
+%------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------- SLIDE -
+\begin{slide}{Recomendaciones de diseño}
+
+  \begin{itemize}
+  \item Es recomendable utilizar rutas relativas siempre que sea
+    posible:
+    \begin{itemize}
+    \item Se puede cambiar la aplicación de servidor o ruta sin
+      necesidad de cambiar ninguna URI en los servlets, JSP, (X)HTML,
+      etc.
+    \end{itemize}
+  \end{itemize}
+
+\end{slide}
+%------------------------------------------------------------------------------
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

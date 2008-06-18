@@ -1,0 +1,142 @@
+<!--
+<ul class="objetivos">
+          <li>Programación orientada a objetos: 
+            <ul>
+              <li>Objetos, clases </li>
+              <li>Herencia </li>
+              <li>Interfaces</li> 
+              <li>Clases abstractas</li>
+              <li>Redefinición de métodos</li>
+            </ul>
+          </li>
+	  <li> Entrada/salida </li>
+	  <li> Bucles 
+            <ul>
+              <li>Bucles anidados </li>
+            </ul>
+	  </li>
+</ul>
+-->
+
+<p>
+    En este ejercicio se van a asentar los conceptos de programación orientada a
+    objetos en Java, aplicándolos a una jeraquía de clases para definir figuras
+    geométricas. 
+</p>
+
+<p>
+     <b>Importante:</b> 
+     recuerda que es fundamental que vayas probando el código según vas
+     implementando cada método, aunque no se pida explícitamente.
+</p>
+
+
+<h3>Apartado 1: Rectángulo</h3>
+
+<p>
+    La primera clase a implementar representará un rectángulo y, cómo no, se
+    llamará <i>Rectangulo</i>. 
+    Para caracterizar el rectángulo se utilizarán su base y su altura, que
+    asumiremos que son números enteros. 
+    Por tanto, lo más adecuado es que el constructor tome como parámetros ambas
+    variables.
+</p>
+
+<p>
+    Además del constructor y de los métodos accesores (get y set) básicos, la
+    clase <i>Rectangulo</i> debe proporcionar los siguientes métodos:
+</p>
+
+<pre class="java">
+    /**
+     * Devuelve una cadena indicando tipo de figura: "Rectangulo"
+     */
+    public String getTipoFigura() {
+    }
+
+    /**
+     * Devuelve el área de la figura
+     */
+    public double calcularArea();
+
+    /**
+     * Representa en consola la figura
+     */
+    public void dibujarTxt();
+</pre> 
+
+<p>
+    El método dibujarTxt() debe dibujar la figura en la consola de texto. Por
+    ejemplo, un rectángulo con base 6 y altura 3 se podría mostrar como: 
+</p>
+
+<pre> 
+******
+******
+******
+</pre> 
+
+<p>
+     Para probar la clase <i>Rectangulo</i>, debes programar una clase llamada
+     <a href="#NUMPRACTICA#/skel/PruebaFiguras.java">PruebaFiguras</a>, que en su método main
+     cree una instancia de la clase <i>Rectangulo</i> y la muestre en consola, junto
+     con su área. 
+</p>
+
+<div class="caja-resaltada">
+  <ul>
+    <li>Recuerda la diferencia entre una clase y un objeto</li>
+    <li>¿Qué pasos tiene el proceso de instanciar un objeto?</li>
+    <li>¿Cómo se instancia en java un objeto?</li>
+  </ul>
+</div>
+
+
+<h3>Apartado 2: Cuadrado</h3>
+
+<p>
+    Un cuadrado es un rectángulo con base y altura iguales. En Java, podemos
+    crear una clase <i>Cuadrado</i> muy fácilmente, mediante herencia, a partir de la
+    clase <i>Rectangulo</i>. 
+</p>
+
+<p>
+    Programa la clase <i>Cuadrado</i> de tal forma que herede de la clase <i>Rectangulo</i>
+    del apartado anterior. 
+    La clase <i>Cuadrado</i> sólo necesita un constructor que reciba un parámetro (el
+    valor del lado), y que llame al constructor de <i>Rectangulo</i> con los parámetros
+    base y altura iguales.  
+</p>
+
+<p>
+    Probar esta nueva clase <b>añadiendo</b> el código necesario a la clase
+    PruebaFiguras.
+</p>
+
+<p>
+    Observa que gracias a la herencia, pueden invocarse los métodos programados
+    en la clase <i>Rectangulo</i> sobre un objeto de tipo <i>Cuadrado</i>, sin necesidad de
+    reprogramarlos. 
+</p>
+
+<p>
+    ¿Qué ocurre al invocar al método <i>getTipoFigura</i> sobre un objeto de
+    tipo <i>Cuadrado</i>? Para solucionarlo, reprograma en la clase <i>Cuadrado</i> el método
+    <i>getTipoFigura</i> de modo que devuelva el valor correcto.
+</p>
+
+
+<div class="caja-resaltada">
+  <ul>
+            <li>¿En qué consiste la herencia?</li>
+            <li>¿Cómo se indica en Java que una clase hereda de otra?</li>
+
+            <li>¿Qué métodos de la clase padre son visibles desde la clase hija?</li>
+            <li>¿En qué consiste la sobreescritura (<i>override</i>) de métodos?</li>
+	    <li>Recuerda que a diferencia del resto de métodos, las clases hijas no heredan automáticamente los constructores de la clase padre, pero pueden invocarse con ayuda de <i>super()</i>. </li>
+
+  </ul>
+</div>
+
+
+<h3>Continuará en la próxima práctica...</h3>
