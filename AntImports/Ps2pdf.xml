@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Translate ps files to PDF" default="ps2pdf">
+
+  <!--
+      Given the following properties:
+
+      ps2pdf.src.dir: directory from where to take the source files
+      ps2pdf.dst.dir: directory where the produced files are stored
+      ps2pdf.files: comma/space separated list of files to process
+
+      Produce ??
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="InitialCheck.xml"/>
+
+  <!-- Property definition -->
+  <property name="ps2pdf.exec"           value="ps2pdf"/>
+  <property name="ps2pdf.src.dir"        value="${basedir}"/>
+  <property name="ps2pdf.dst.dir"        value="${ps2pdf.src.dir}"/>
+  <property name="ps2pdf.files"          value=""/>
+  <!-- Source files to be processed by ps2pdf -->
+  <fileset id="ps2pdf.fileset" dir="${ps2pdf.src.dir}"
+	   includes="${ps2pdf.files}"/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="ps2pdf.check.values" 
+	  depends="initial.check, ps2pdf.dump.properties">
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="ps2pdf.check">
+      <and>
+	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
+	empty definition of this variable. At least a . needs to be present -->
+        <not><equals arg1="${ps2pdf.src.dir}" arg2=""/></not>
+	<!-- There must be some files defined -->
+        <not><equals arg1="${ps2pdf.files}" arg2=""/></not>
+	<!-- Require a non-empty dst.dir as well -->
+        <not><equals arg1="${ps2pdf.dst.dir}" arg2=""/></not>
+      </and>
+    </condition>
+
+    <!-- The required binaries need to be available. -->
+    <available property="ps2pdf.execution.possible"
+	       file="${ps2pdf.exec}${executable.file.extension}"
+	       filepath="${env.PATH}"/>
+
+    <condition property="ps2pdf.failure">
+      <and>
+	<isset property="ps2pdf.check"/>
+	<not><isset property="ps2pdf.execution.possible"/></not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">  ps2pdf.check              = "${ps2pdf.check}"
+  ps2pdf.execution.possible = ${ps2pdf.execution.possible}
+  ps2pdf.failure            = ${ps2pdf.failure}</echo>
+  </target>
+
+  <target name="ps2pdf.bomb.out" if="ps2pdf.failure">
+    <fail message="Ups! You requested the execution of ps2pdf but the executable ${ps2pdf.exec} was not found installed in your system"/>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="ps2pdf.processing.NOT" depends="ps2pdf.bomb.out" 
+	  unless="ps2pdf.check">
+    <echo>ps2pdf.processing           ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Regular target. It is executed if the check property is true, and it has
+  as dependency the NOT target. That way, if the property is not set, this
+  target is not executed and instead, the one notifying the user of such event
+  is executed. -->
+  <target name="ps2pdf.processing" 
+	  depends="ps2pdf.check.values, ps2pdf.processing.NOT"
+	  if="ps2pdf.check"
+	  description="Apply the translation">
+
+    <echo>ps2pdf.processing           RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Create the dst directory -->
+    <mkdir dir="${ps2pdf.dst.dir}" />
+
+    <!-- Execute the command. Watch out for src.dir and dst.dir -->
+    <apply dir="${basedir}" parallel="false" dest="${ps2pdf.dst.dir}" 
+	   append="yes" failonerror="true" executable="${ps2pdf.exec}" 
+	   output="build.out">
+      <srcfile/>
+      <targetfile/>
+      <fileset refid="ps2pdf.fileset"/>
+      <!-- Mapper from source files to produced files -->
+      <mapper type="glob" from="*.ps" to="*.pdf"/>
+    </apply>    
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="ps2pdf.clean.NOT" unless="ps2pdf.check">
+    <echo>ps2pdf.clean               ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Clean files produced by ps2pdf -->
+  <target name="ps2pdf.clean" 
+	  depends="ps2pdf.check.values, ps2pdf.clean.NOT"
+	  if="ps2pdf.check" 
+	  description="Remove files produced by ps2pdf">
+
+    <echo>ps2pdf.clean           RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Obtain the fileset containing the produced files. This is done to be
+    able to display the deleted files (debugging) -->
+    <pathconvert property="ps2pdf.target.fileset.property" pathsep=" ">
+      <fileset refid="ps2pdf.fileset"/>
+      <chainedmapper>
+	<mapper type="glob" from="*.ps" to="*.pdf"/>
+	<mapper type="flatten"/>
+      </chainedmapper>
+    </pathconvert>
+
+    <!-- Dump explicitly the files to be deleted -->
+    <echo> deleted = ${ps2pdf.target.fileset.property}</echo>
+
+    <!-- Perform the delete operation. The failonerror attributge is needed
+	 and must be set fo false because the dst directory might have been
+	 removed  -->
+    <delete failonerror="false">
+      <fileset dir="${ps2pdf.dst.dir}"
+	       includes="${ps2pdf.target.fileset.property}">
+	<include name="__bogus__file__to__avoid__empty__fileset"/>
+      </fileset>
+    </delete>
+  </target>
+
+  <!-- Dump the properties defined in this script -->
+  <target name="ps2pdf.dump.properties" depends="initial.check">
+    <echo level="info"> ------ ps2pdf properties ----
+    ps2pdf.exec     ="${ps2pdf.exec}"
+    ps2pdf.src.dir  ="${ps2pdf.src.dir}"
+    ps2pdf.dst.dir  ="${ps2pdf.dst.dir}"
+    ps2pdf.files    ="${ps2pdf.files}"</echo>
+  </target>
+
+  <target name="ps2pdf.report.YES" depends="ps2pdf.check.values"
+	  if="ps2pdf.execution.possible">
+    <echo>ps2pdf             |     *     |</echo>
+  </target>
+
+  <target name="ps2pdf.report.NO" depends="ps2pdf.check.values"
+	  unless="ps2pdf.execution.possible">
+    <echo>ps2pdf             |           |     * (install ${dblatex.exec})</echo>
+  </target>
+
+  <target name="ps2pdf.report" depends="ps2pdf.report.YES,
+				      ps2pdf.report.NO"/>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="ps2pdf" depends="initial.delete.build.out, ps2pdf.processing"/>
+</project>

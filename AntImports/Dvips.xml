@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="@SCRIPT_NAME@" default="dvips">
+
+  <!--
+      Given the following properties:
+
+      dvips.src.dir: directory from where to take the source files
+      dvips.dst.dir: directory where the produced files are stored
+      dvips.files: comma/space separated list of files to process
+
+      Produce ??
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="InitialCheck.xml"/>
+
+  <!-- Property definition -->
+  <property name="dvips.exec"           value="dvips"/>
+  <property name="dvips.src.dir"        value="${basedir}"/>
+  <property name="dvips.dst.dir"        value="${dvips.src.dir}"/>
+  <property name="dvips.files"          value=""/>
+  <!-- Source files to be processed by dvips -->
+  <fileset id="dvips.fileset" dir="${dvips.src.dir}"
+	   includes="${dvips.files}"/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="dvips.check.values" 
+	  depends="initial.check, dvips.dump.properties">
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="dvips.check">
+      <and>
+	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
+	empty definition of this variable. At least a . needs to be present -->
+        <not><equals arg1="${dvips.src.dir}" arg2=""/></not>
+	<!-- There must be some files defined -->
+        <not><equals arg1="${dvips.files}" arg2=""/></not>
+	<!-- Require a non-empty dst.dir as well -->
+        <not><equals arg1="${dvips.dst.dir}" arg2=""/></not>
+      </and>
+    </condition>
+
+    <!-- The required binaries need to be available. -->
+    <available property="dvips.execution.possible"
+	       file="${dvips.exec}${executable.file.extension}"
+	       filepath="${env.PATH}"/>
+
+    <condition property="dvips.failure">
+      <and>
+	<isset property="dvips.check"/>
+	<not><isset property="dvips.execution.possible"/></not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">  dvips.check              = "${dvips.check}"
+  dvips.execution.possible = ${dvips.execution.possible}
+  dvips.failure            = ${dvips.failure}</echo>
+  </target>
+
+  <target name="dvips.bomb.out" if="dvips.failure">
+    <fail message="Ups! You requested the execution of dvips but the executable ${dvips.exec} was not found installed in your system"/>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="dvips.processing.NOT" depends="dvips.bomb.out" 
+	  unless="dvips.check">
+    <echo>dvips.processing           ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Regular target. It is executed if the check property is true, and it has
+  as dependency the NOT target. That way, if the property is not set, this
+  target is not executed and instead, the one notifying the user of such event
+  is executed. -->
+  <target name="dvips.processing" 
+	  depends="dvips.check.values, dvips.processing.NOT"
+	  if="dvips.check"
+	  description="Execute dvips">
+
+    <echo>dvips.processing           RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Create the dst directory -->
+    <mkdir dir="${dvips.dst.dir}" />
+
+    <!-- Execute the command. Watch out for src.dir and dst.dir -->
+    <apply dir="${basedir}" parallel="false" dest="${dvips.dst.dir}" 
+	   append="yes" failonerror="true" executable="${dvips.exec}" 
+	   output="build.out">
+      <srcfile/>
+      <arg value="-o"/>
+      <targetfile/>
+      <fileset refid="dvips.fileset"/>
+      <!-- Mapper from source files to produced files -->
+      <mapper type="glob" from="*.dvi" to="*.ps"/>
+    </apply>    
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="dvips.clean.NOT" unless="dvips.check">
+    <echo>dvips.clean               ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Clean files produced by dvips -->
+  <target name="dvips.clean" 
+	  depends="dvips.check.values, dvips.clean.NOT"
+	  if="dvips.check" 
+	  description="Remove files produced by dvips">
+
+    <echo>dvips.clean           RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Obtain the fileset containing the produced files. This is done to be
+    able to display the deleted files (debugging) -->
+    <pathconvert property="dvips.target.fileset.property" pathsep=" ">
+      <fileset refid="dvips.fileset"/>
+      <chainedmapper>
+	<mapper type="glob" from="*.dvi" to="*.ps"/>
+	<mapper type="flatten"/>
+      </chainedmapper>
+    </pathconvert>
+
+    <!-- Dump explicitly the files to be deleted -->
+    <echo> deleted = ${dvips.target.fileset.property}</echo>
+
+    <!-- Perform the delete operation. The failonerror attributge is needed
+	 and must be set fo false because the dst directory might have been
+	 removed  -->
+    <delete failonerror="false">
+      <fileset dir="${dvips.dst.dir}"
+	       includes="${dvips.target.fileset.property}">
+	<include name="__bogus__file__to__avoid__empty__fileset"/>
+      </fileset>
+    </delete>
+  </target>
+
+  <!-- Dump the properties defined in this script -->
+  <target name="dvips.dump.properties" depends="initial.check">
+    <echo level="info"> ------ dvips properties ----
+    dvips.exec     ="${dvips.exec}"
+    dvips.src.dir  ="${dvips.src.dir}"
+    dvips.dst.dir  ="${dvips.dst.dir}"
+    dvips.files    ="${dvips.files}"</echo>
+  </target>
+
+  <target name="dvips.report.YES" depends="dvips.check.values"
+	  if="dvips.execution.possible">
+    <echo>Dvips              |     *     |</echo>
+  </target>
+
+  <target name="dvips.report.NO" depends="dvips.check.values"
+	  unless="dvips.execution.possible">
+    <echo>Dvips             |           |     * (install ${dblatex.exec})</echo>
+  </target>
+
+  <target name="dvips.report" depends="dvips.report.YES,
+				      dvips.report.NO"/>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="dvips" depends="initial.delete.build.out, dvips.processing"/>
+</project>
