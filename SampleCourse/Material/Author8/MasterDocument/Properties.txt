@@ -1,0 +1,21 @@
+#
+# Variables to define the processing step
+#
+# See ada.home/AntImports/Properties.txt for the complete list of these
+# variables as well as an explanation.
+#
+
+myfilename=servlets_jsp_integration
+
+subrecursive.dirs=../RelativeURIs \
+                  ../ServletJSPIntegration
+
+latex.files=${myfilename}.tex
+
+dvips.files=${myfilename}.dvi
+
+ps2pdf.files=${myfilename}.ps
+
+pdfnup.files=${myfilename}.pdf
+
+export.files=${myfilename}.pdf ${myfilename}-1x2.pdf

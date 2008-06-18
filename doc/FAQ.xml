@@ -14,21 +14,78 @@
 	</question>
 	<answer>
 	  <para>
-	    ADA needs <ulink url="http://www.cygwin.com">Cygwin</ulink>
-	    to execute some of the tools it uses. Cygwin is a unix like
-	    environment that installs as a native windows application.
+	    ADA needs at least three packages to run in windows:
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>A Java Run Time Environment.</para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Ant: A Java based build tool. ADA relies on ANT to decide which
+		documents to build and which tools to use for the task.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<ulink url="http://www.cygwin.com">Cygwin</ulink>: A linux-like
+		environment for Windows.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	  
+	  <para>
+	    The first step then is to make sure you have a <ulink
+	    url="http://java.sun.com/javase/">Java Run-Time Environment
+	    (JRE)</ulink> properly installed.
 	  </para>
 	  
 	  <para>
-	    Installing <code>cygwin</code> is done using an installer which
-	    allows to select and/or remove multiple packages. The bare minimum
-	    packages to use with ADA are:
+	    The second step is to download the <code>cygwin</code> installer a
+	    program to select the packages wto install. Once started, the
+	    initial page is shown in the following figure.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/CygwinSetUp.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Initial Cygwin Setup Program</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>
+	    After starting the set-up program, you need to specify several
+	    parameters to stablish a connection with a server. Keep advancing on
+	    the installation steps until the screen to select the packages like
+	    the one in the following figure is shown.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/CygwinSelectPackages.png"
+			   format="PNG"/>
+	      </imageobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>
+	    Click in the botton with name <code>View</code> that appears above
+	    the package list until the word <quote>Full</quote> appears to its
+	    left. At that point, all packages suitable to be installed are shown
+	    alphabetically ordered. From the list, you need to select
+	    <emphasis>at least</emphasis> the following packages.
 	  </para>
 
 	  <itemizedlist>
 	    <listitem>
 	      <para>
-		<code>docbook-xml44</code>: Docbook XML DTD
+		<code>docbook-xml43 (or more recent)</code>: Docbook XML DTD
 	      </para>
 	    </listitem>
 	    <listitem>
@@ -43,6 +100,66 @@
 	      </para>
 	    </listitem>
 	  </itemizedlist>
+
+	  <para>
+	    ADA is capable of using additional tools, but they are not essential
+	    for the installation. The set-up program takes a few minutes to
+	    download (through a net connection) all the required packages. This
+	    step will take a few minutes and will depend significantly on the
+	    speed of that connection.
+	  </para>
+
+	  <para>
+	    After all the required packages are installed, finish the execution
+	    of the set-up program and start a Cygwin shell. This is usually done
+	    by clicking on the icon that the set-up program has left on your
+	    desktop or browsing through the program menu and selecting the
+	    Cygwin executable. Once starte, a window like the one shown in the
+	    following figure appears on the screen.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/CygwinShell.png" format="PNG"/>
+	      </imageobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>
+	    The windows is a typical linux command interpreter that is ready to
+	    received your orders. The first check that needs to be performed is
+	    to make sure the Java Run-time Environment is properly installed. By
+	    simply typing the command <code>which java</code>, if the answer is
+	    a single path to a file with name <code>java</code>, the JRE is
+	    properly installed. If the message states that no <code>java</code>
+	    could be found, you need to review your Java installation.
+	  </para>
+
+	  <para>
+	    The third step is to install <ulink
+	    url="http://ant.apache.org">Ant</ulink>. Ant is Java based, and
+	    therefore, installing the application simply amounts to deploying a
+	    directory and make sure that a couple of environment variables point
+	    to the right locations.
+	  </para>
+
+	  <para>
+	    Once Cygwin has been installed, you have two choices: install Ant as
+	    a regular windows application, or install Ant within Cygwin. The two
+	    choices are very similar from the point of view of the installation
+	    process, just unpack the zip archive in one location. The important
+	    step is to set the environment variables ANT_HOME to point to the
+	    new directory and PATH to include the <filename>bin</filename>
+	    directory within Ant.
+	  </para>
+
+	  <para>
+	    Once you installed Ant, you may check the installation again with
+	    the command <code>which ant</code>. As in the case of Java, if an
+	    absolute path is shown, Ant is ready to execute. If not, you need to
+	    review your installation procecure.
+	  </para>
 	</answer>
       </qandaentry>
     </qandaset>

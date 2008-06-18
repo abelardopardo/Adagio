@@ -10,21 +10,27 @@
       inkscape.files: comma/space separated list of files to process
 
       Process files in fileset. They are processed by inkscape and translated
-      ALWAYS to PNG format (there is an script involved and it and has hardwired
-      the PNG format FIX)
+      to PNG, PDF, EPS or PS format.
   -->
 
   <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
 
   <!-- Property definition -->
-  <property name="inkscape.exec"    value="inkscape"/>
-  <property name="inkscape.src.dir" value="${basedir}"/>
-  <property name="inkscape.dst.dir" value="${inkscape.src.dir}"/>
-  <property name="inkscape.files"   value=""/>
+  <property name="inkscape.exec"          value="inkscape"/>
+  <property name="inkscape.src.dir"       value="${basedir}"/>
+  <property name="inkscape.dst.dir"       value="${inkscape.src.dir}"/>
+  <property name="inkscape.output.format" value="png"/>
+  <property name="inkscape.files"         value=""/>
   <!-- Source files to be processed by inkscape. -->
   <fileset id="inkscape.fileset" dir="${inkscape.src.dir}"
 	   includes="${inkscape.files}"/>
+
+  <!-- 
+       Internal option to catch the option to pass to inkscape to export in a
+       given format 
+  -->
+  <property name="inkscape.export.option" value=""/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
@@ -56,6 +62,22 @@
       </and>
     </condition>
     
+    <condition property="inkscape.export.format.png">
+      <equals arg1="${inkscape.output.format}" arg2="png"/>
+    </condition>
+
+    <condition property="inkscape.export.format.eps">
+      <equals arg1="${inkscape.output.format}" arg2="eps"/>
+    </condition>
+
+    <condition property="inkscape.export.format.ps">
+      <equals arg1="${inkscape.output.format}" arg2="ps"/>
+    </condition>
+
+    <condition property="inkscape.export.format.pdf">
+      <equals arg1="${inkscape.output.format}" arg2="pdf"/>
+    </condition>
+
     <!-- Dump the value of the properties just computed. -->
     <echo level="info">  inkscape.check          = "${inkscape.check}"
   inkscape.execution.possible = ${inkscape.execution.possible}
@@ -89,17 +111,54 @@
     <!-- Create the dst directory -->
     <mkdir dir="${inkscape.dst.dir}"/>
 
+    <antcall target="inkscape.execute.export.command.png"/>
+    <antcall target="inkscape.execute.export.command.eps"/>
+    <antcall target="inkscape.execute.export.command.ps"/>
+    <antcall target="inkscape.execute.export.command.pdf"/>
+  </target>
+
+  <target name="inkscape.execute.export.command.png"
+	  if="inkscape.export.format.png">
+    <antcall target="inkscape.execute.export.command">
+      <param name="inkscape.export.option" value="--export-png"/>
+    </antcall>
+  </target>
+    
+  <target name="inkscape.execute.export.command.pdf"
+	  if="inkscape.export.format.pdf">
+    <antcall target="inkscape.execute.export.command">
+      <param name="inkscape.export.option" value="--export-pdf"/>
+    </antcall>
+  </target>
+    
+  <target name="inkscape.execute.export.command.eps"
+	  if="inkscape.export.format.eps">
+    <antcall target="inkscape.execute.export.command">
+      <param name="inkscape.export.option" value="--export-eps"/>
+    </antcall>
+  </target>
+    
+  <target name="inkscape.execute.export.command.ps"
+	  if="inkscape.export.format.ps">
+    <antcall target="inkscape.execute.export.command">
+      <param name="inkscape.export.option" value="--export-ps"/>
+    </antcall>
+  </target>
+
+  <target name="inkscape.execute.export.command">
+    
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
     <apply dir="${basedir}" parallel="false" dest="${inkscape.dst.dir}"
 	   append="yes" failonerror="true" executable="${inkscape.exec}" 
 	   output="build.out">
-      <arg value="-e"/>
+      <arg line="${inkscape.export.option}"/>
       <targetfile/>
       <srcfile/>
       <fileset refid="inkscape.fileset"/>
       <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.svg" to="*.png"/>
+      <mapper type="glob" from="*.svg" to="*.${inkscape.output.format}"/>
     </apply>    
+
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -122,7 +181,7 @@
     <pathconvert property="inkscape.target.fileset.property" pathsep=" ">
       <fileset refid="inkscape.fileset"/>
       <chainedmapper>
-	<mapper type="glob" from="*.svg" to="*.png"/>
+	<mapper type="glob" from="*.svg" to="*.${inkscape.output.format}"/>
 	<mapper type="flatten"/>
       </chainedmapper>
     </pathconvert>
@@ -149,6 +208,19 @@
     inkscape.dst.dir ="${inkscape.dst.dir}"
     inkscape.files   ="${inkscape.files}" </echo>
   </target>
+
+  <target name="inkscape.report.YES" depends="inkscape.check.values"
+	  if="inkscape.execution.possible">
+    <echo>Inkscape           |     *     |</echo>
+  </target>
+
+  <target name="inkscape.report.NO" depends="inkscape.check.values"
+	  unless="inkscape.execution.possible">
+    <echo>Inkscape           |           |     * (install ${inkscape.exec})</echo>
+  </target>
+
+  <target name="inkscape.report" depends="inkscape.report.YES,
+				      inkscape.report.NO"/>
 
   <!-- If entering through this target, build.out is deleted -->
   <target name="inkscape" depends="initial.delete.build.out, inkscape.processing"/>

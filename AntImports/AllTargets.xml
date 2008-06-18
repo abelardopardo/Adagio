@@ -18,6 +18,12 @@
 
   <import file="Dblatex.xml"/>
 
+  <import file="Latex.xml"/>
+
+  <import file="Dvips.xml"/>
+
+  <import file="Ps2pdf.xml"/>
+
   <import file="Pdflatex.xml"/>
 
   <import file="PDFnup.xml"/>
@@ -52,6 +58,12 @@
 
     <antcall target="laboratory.processing" inheritAll="false"/>
 
+    <antcall target="latex.processing" inheritAll="false"/>
+
+    <antcall target="dvips.processing" inheritAll="false"/>
+
+    <antcall target="ps2pdf.processing" inheritAll="false"/>
+
     <antcall target="pdflatex.processing" inheritAll="false"/>
 
     <antcall target="dblatex.processing" inheritAll="false"/>
@@ -71,6 +83,12 @@
     <antcall target="dblatex.clean" inheritAll="false"/>
 
     <antcall target="pdflatex.clean" inheritAll="false"/>
+
+    <antcall target="ps2pdf.clean" inheritAll="false"/>
+
+    <antcall target="dvips.clean" inheritAll="false"/>
+
+    <antcall target="latex.clean" inheritAll="false"/>
 
     <antcall target="laboratory.clean" inheritAll="false"/>
 
@@ -96,19 +114,55 @@
 
   </target>
 
-<!--   <target name="execute"> -->
+<target name="report">
 
-<!--     <antcall target="basic.execute" inheritAll="false"/> -->
+    <echo>Tool               | Installed |  Missing</echo>
+    <echo>-------------------+-----------+-----------------------------</echo>
 
-<!--     <antcall target="laboratory.execute" inheritAll="false"/> -->
-<!--   </target> -->
+    <antcall target="xfig.report" inheritAll="false"/>
 
-<!--   <target name="clean"> -->
+    <echo>-------------------+-----------+-----------------------------</echo>
 
-<!--     <antcall target="laboratory.execute.clean" inheritAll="false"/> -->
+    <antcall target="inkscape.report" inheritAll="false"/>
 
-<!--     <antcall target="basic.clean" inheritAll="false"/> -->
+    <echo>-------------------+-----------+-----------------------------</echo>
 
-<!--   </target> -->
+    <antcall target="gimp.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="convert.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="xsltproc.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="latex.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="dvips.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="ps2pdf.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="pdflatex.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="dblatex.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="pdfnup.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+  </target>
 
 </project>

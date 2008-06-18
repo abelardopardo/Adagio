@@ -5,14 +5,18 @@
 
 <chapter lang="es">
   <chapterinfo condition="rss.info">
-    <title>Práctica 1</title>
+    <xi:include
+      xpointer="xpointer(/chapter/title[position()=1])"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
     <modespec>
       <olink condition="link">index.html?fromrss=1</olink>
     </modespec>
     <abstract>
       <formalpara>
-        <title>Práctica 1 de la asignatura</title>
-        <para>
+	<xi:include
+	  xpointer="xpointer(/chapter/title[position()=1])"
+	  parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	<para>
 	  Párrafo para explicar exactamente qué se hace aquí.
         </para>
       </formalpara>

@@ -9,23 +9,26 @@ subrecursive.dst.dir=
 subrecursive.dirs=Laboratory1 \
                   Laboratory2 \
                   Laboratory3 \
+		  OpenACS \
   		  Theory1 \
   		  Theory2 \
+  		  Theory3 \
   		  Guide1 \
-  		  Guide2
+  		  Guide2 \
+		  images
 
 mergestyles.master.style=Params.xml
 
 docbook.files=index.xml
 docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
 
-copyfiles.files=style.css images/**
+copyfiles.files=style.css
 copyfiles.dst.dir=scratch
 
 export.dst.dir=scratch
 export.files=index.html
 
-clean.files=scratch/images scratch
+clean.files=scratch
 
 #
 # Rsync stuff specific to this dir because it is supposed to be the root

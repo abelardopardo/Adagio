@@ -1,0 +1,12 @@
+#
+# Variables to define the processing step
+#
+# See ada.home/AntImports/Properties.txt for the complete list of these
+# variables as well as an explanation.
+#
+
+export.dst.dir=../scratch/images
+export.files=*
+
+clean.files=../scratch/images 
+

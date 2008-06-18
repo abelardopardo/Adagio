@@ -149,6 +149,19 @@
     dblatex.files      ="${dblatex.files}"</echo>
   </target>
 
+  <target name="dblatex.report.YES" depends="dblatex.check.values"
+	  if="dblatex.execution.possible">
+    <echo>Dblatex            |     *     |</echo>
+  </target>
+
+  <target name="dblatex.report.NO" depends="dblatex.check.values"
+	  unless="dblatex.execution.possible">
+    <echo>Dblatex            |           |     * (install ${dblatex.exec})</echo>
+  </target>
+
+  <target name="dblatex.report" depends="dblatex.report.YES,
+				      dblatex.report.NO"/>
+
   <!-- If entering through this target, build.out is deleted -->
   <target name="dblatex" depends="initial.delete.build.out, dblatex.processing"/>
 </project>

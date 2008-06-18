@@ -176,6 +176,19 @@
     pdflatex.files    ="${pdflatex.files}"</echo>
   </target>
 
+  <target name="pdflatex.report.YES" depends="pdflatex.check.values"
+	  if="pdflatex.execution.possible">
+    <echo>Pdflatex           |     *     |</echo>
+  </target>
+
+  <target name="pdflatex.report.NO" depends="pdflatex.check.values"
+	  unless="pdflatex.execution.possible">
+    <echo>Pdflatex           |           |     * (install ${pdflatex.exec})</echo>
+  </target>
+
+  <target name="pdflatex.report" depends="pdflatex.report.YES,
+				      pdflatex.report.NO"/>
+
   <!-- If entering through this target, build.out is deleted -->
   <target name="pdflatex" depends="initial.delete.build.out, pdflatex.processing"/>
 </project>
