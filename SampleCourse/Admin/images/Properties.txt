@@ -5,7 +5,8 @@
 # variables as well as an explanation.
 #
 
-inkscape.files=*.svg
-inkscape.output.format=eps
+export.dst.dir=../scratch/images
+export.files=*
 
-export.files=*.eps
+clean.files=../scratch/images 
+

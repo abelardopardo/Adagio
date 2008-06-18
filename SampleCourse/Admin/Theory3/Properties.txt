@@ -1,0 +1,14 @@
+#
+# Variables to define the processing step
+#
+# See ada.home/AntImports/Properties.txt for the complete list of these
+# variables as well as an explanation.
+#
+subrecursive.dirs=../../Material/Author8/MasterDocument
+
+export.dst.dir=../scratch/Theory3
+export.files=servlets_jsp_integration.pdf \
+             servlets_jsp_integration-1x2.pdf
+
+clean.files=../scratch/Theory3
+

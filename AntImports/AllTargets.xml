@@ -20,6 +20,10 @@
 
   <import file="Latex.xml"/>
 
+  <import file="Dvips.xml"/>
+
+  <import file="Ps2pdf.xml"/>
+
   <import file="Pdflatex.xml"/>
 
   <import file="PDFnup.xml"/>
@@ -56,6 +60,10 @@
 
     <antcall target="latex.processing" inheritAll="false"/>
 
+    <antcall target="dvips.processing" inheritAll="false"/>
+
+    <antcall target="ps2pdf.processing" inheritAll="false"/>
+
     <antcall target="pdflatex.processing" inheritAll="false"/>
 
     <antcall target="dblatex.processing" inheritAll="false"/>
@@ -75,6 +83,10 @@
     <antcall target="dblatex.clean" inheritAll="false"/>
 
     <antcall target="pdflatex.clean" inheritAll="false"/>
+
+    <antcall target="ps2pdf.clean" inheritAll="false"/>
+
+    <antcall target="dvips.clean" inheritAll="false"/>
 
     <antcall target="latex.clean" inheritAll="false"/>
 
@@ -128,6 +140,14 @@
     <echo>-------------------+-----------+-----------------------------</echo>
 
     <antcall target="latex.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="dvips.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="ps2pdf.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 

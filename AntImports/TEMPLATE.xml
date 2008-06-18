@@ -151,7 +151,7 @@
 
   <target name="@NAME@.report.YES" depends="@NAME@.check.values"
 	  if="@NAME@.execution.possible">
-    <echo>@NAME              |     *     |</echo>
+    <echo>@NAME@             |     *     |</echo>
   </target>
 
   <target name="@NAME@.report.NO" depends="@NAME@.check.values"

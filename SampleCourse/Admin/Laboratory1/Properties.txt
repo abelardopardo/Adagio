@@ -21,7 +21,7 @@ export.files=buscarmain.s \
              square.s \
              images/*.png
 
-clean.files=images \
+clean.files= images \
 	    ../scratch/Lab1/images \
 	    ../scratch/Lab1
 

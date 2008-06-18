@@ -123,9 +123,30 @@
 	<mapper type="flatten"/>
       </chainedmapper>
     </pathconvert>
+    <!-- Obtain the fileset containing the temporary files produced by latex -->
+    <pathconvert property="latex.tmptarget.fileset.property" pathsep=" ">
+      <fileset refid="latex.fileset"/>
+      <chainedmapper>
+	<compositemapper>
+	  <mapper type="glob" from="*.tex" to="*.aux"/>
+	  <mapper type="glob" from="*.tex" to="*.log"/>
+	  <mapper type="glob" from="*.tex" to="*.bbl"/>
+	  <mapper type="glob" from="*.tex" to="*.blg"/>
+	  <mapper type="glob" from="*.tex" to="*.idx"/>
+	  <mapper type="glob" from="*.tex" to="*.ilg"/>
+	  <mapper type="glob" from="*.tex" to="*.ind"/>
+	  <mapper type="glob" from="*.tex" to="*.lof"/>
+	  <mapper type="glob" from="*.tex" to="*.lot"/>
+	  <mapper type="glob" from="*.tex" to="*.toc"/>
+	  <mapper type="glob" from="*.tex" to="*.out"/>
+	</compositemapper>
+	<mapper type="flatten"/>
+      </chainedmapper>
+    </pathconvert>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${latex.target.fileset.property}</echo>
+    <echo> deleted = ${latex.tmptarget.fileset.property}</echo>
 
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
@@ -135,6 +156,11 @@
 	       includes="${latex.target.fileset.property}">
 	<include name="__bogus__file__to__avoid__empty__fileset"/>
       </fileset>
+      <fileset dir="${latex.dst.dir}"
+	       includes="${latex.tmptarget.fileset.property}">
+	<include name="__bogus__file__to__avoid__empty__fileset"/>
+      </fileset>
+      <fileset file="${pdflatex.src.dir}/texput.log"/>
     </delete>
   </target>
 
@@ -149,12 +175,12 @@
 
   <target name="latex.report.YES" depends="latex.check.values"
 	  if="latex.execution.possible">
-    <echo>latex              |     *     |</echo>
+    <echo>Latex              |     *     |</echo>
   </target>
 
   <target name="latex.report.NO" depends="latex.check.values"
 	  unless="latex.execution.possible">
-    <echo>latex              |           |     * (install ${dblatex.exec})</echo>
+    <echo>Latex              |           |     * (install ${dblatex.exec})</echo>
   </target>
 
   <target name="latex.report" depends="latex.report.YES,

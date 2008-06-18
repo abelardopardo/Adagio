@@ -18,4 +18,4 @@ ps2pdf.files=${myfilename}.ps
 
 pdfnup.files=${myfilename}.pdf
 
-export.files=${myfilename}-1x2.pdf
+export.files=${myfilename}.pdf ${myfilename}-1x2.pdf

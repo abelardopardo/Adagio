@@ -94,8 +94,22 @@
     <echo>copyfiles.clean             RUN</echo>
     <echo>${basedir}</echo>
 
+    <!-- Obtain the fileset containing the produced files. This is done to be
+    able to display the deleted files (debugging) -->
+    <pathconvert property="copyfiles.target.fileset.property" pathsep=" ">
+      <fileset refid="copyfiles.fileset"/>
+      <mapper type="glob" from="${copyfiles.src.dir}*" to="${copyfiles.dst.dir}*"/>
+    </pathconvert>
+    <filelist id="copyfiles.target.fileset" 
+	      files="${copyfiles.target.fileset.property}"/>
+
+<!--     <fileset id="copyfiles.target.fileset" dir="${copyfiles.dst.dir}" -->
+<!-- 	     includes="${copyfiles.target.fileset.property}"> -->
+<!-- 	<include name="__bogus__file__to__avoid__empty__fileset"/> -->
+<!--     </fileset> -->
+
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted = ${copyfiles.files}</echo>
+    <echo> deleted = ${copyfiles.target.fileset.property}</echo>
 
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
@@ -103,9 +117,7 @@
     <delete failonerror="false" includeemptydirs="true">
       <!-- Obtain the fileset containing the produced files. This is done to be
 	   able to display the deleted files (debugging) -->
-      <fileset dir="${copyfiles.dst.dir}" includes="${copyfiles.files}">
-	<include name="__bogus__file__to__avoid__empty__fileset"/>
-      </fileset>
+      <filelist refid="copyfiles.target.fileset"/>
     </delete>
   </target>
 

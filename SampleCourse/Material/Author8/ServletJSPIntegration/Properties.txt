@@ -8,4 +8,4 @@
 inkscape.files=*.svg
 inkscape.output.format=eps
 
-export.files=mvc.eps
+export.files=*.eps

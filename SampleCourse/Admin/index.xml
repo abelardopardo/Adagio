@@ -62,6 +62,16 @@
 	      <ulink url="Theory2/ASM_notes-1x2.pdf">Documentación</ulink>
 	    </entry>
 	  </row>
+	  <row>
+	    <entry>3</entry>
+	    <entry>10/10/10</entry>
+	    <entry>Traspas generadas con proster</entry>
+	    <entry>JAF/JAF</entry>
+	    <entry>
+	      <ulink url="Theory3/servlets_jsp_integration.pdf">Documentación</ulink>,
+	      <ulink url="Theory3/servlets_jsp_integration-1x2.pdf">A 2 páginas</ulink>
+	    </entry>
+	  </row>
 	</tbody>
       </tgroup>
     </informaltable>
@@ -108,9 +118,17 @@
 	    <entry></entry>
 	  </row>
 	  <row>
-	    <entry>1</entry>
+	    <entry>3</entry>
 	    <entry>
 	      <ulink url="Lab3/index.html">Enunciado</ulink>
+	    </entry>
+	    <entry>10 del 10 del 10</entry>
+	    <entry></entry>
+	  </row>
+	  <row>
+	    <entry>4</entry>
+	    <entry>
+	      <ulink url="OACS/index.html">Enunciado de OpenACS</ulink>
 	    </entry>
 	    <entry>10 del 10 del 10</entry>
 	    <entry></entry>

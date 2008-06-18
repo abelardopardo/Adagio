@@ -10,8 +10,7 @@
       inkscape.files: comma/space separated list of files to process
 
       Process files in fileset. They are processed by inkscape and translated
-      ALWAYS to PNG format (there is an script involved and it and has hardwired
-      the PNG format FIX)
+      to PNG, PDF, EPS or PS format.
   -->
 
   <!-- Checks for availability of different binaries -->
@@ -162,11 +161,6 @@
 
   </target>
 
-
-<!--   <target name="inkscape.processing.export.png"  -->
-<!-- 	  depends="inkscape.check.values, inkscape.processing.NOT"> -->
-<!--   </target> -->
-
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="inkscape.clean.NOT" unless="inkscape.check">
@@ -187,7 +181,7 @@
     <pathconvert property="inkscape.target.fileset.property" pathsep=" ">
       <fileset refid="inkscape.fileset"/>
       <chainedmapper>
-	<mapper type="glob" from="*.svg" to="*.png"/>
+	<mapper type="glob" from="*.svg" to="*.${inkscape.output.format}"/>
 	<mapper type="flatten"/>
       </chainedmapper>
     </pathconvert>
