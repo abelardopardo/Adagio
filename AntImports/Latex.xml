@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Run latex over a file twice" default="latex">
+
+  <!--
+      Given the following properties:
+
+      latex.src.dir: directory from where to take the source files
+      latex.dst.dir: directory where the produced files are stored
+      latex.files: comma/space separated list of files to process
+
+      Produce ??
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="InitialCheck.xml"/>
+
+  <!-- Property definition -->
+  <property name="latex.exec"           value="latex"/>
+  <property name="latex.src.dir"        value="${basedir}"/>
+  <property name="latex.dst.dir"        value="${latex.src.dir}"/>
+  <property name="latex.files"          value=""/>
+  <!-- Source files to be processed by latex -->
+  <fileset id="latex.fileset" dir="${latex.src.dir}"
+	   includes="${latex.files}"/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="latex.check.values" 
+	  depends="initial.check, latex.dump.properties">
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="latex.check">
+      <and>
+	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
+	empty definition of this variable. At least a . needs to be present -->
+        <not><equals arg1="${latex.src.dir}" arg2=""/></not>
+	<!-- There must be some files defined -->
+        <not><equals arg1="${latex.files}" arg2=""/></not>
+	<!-- Require a non-empty dst.dir as well -->
+        <not><equals arg1="${latex.dst.dir}" arg2=""/></not>
+      </and>
+    </condition>
+
+    <!-- The required binaries need to be available. -->
+    <available property="latex.execution.possible"
+	       file="${latex.exec}${executable.file.extension}"
+	       filepath="${env.PATH}"/>
+
+    <condition property="latex.failure">
+      <and>
+	<isset property="latex.check"/>
+	<not><isset property="latex.execution.possible"/></not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">  latex.check              = "${latex.check}"
+  latex.execution.possible = ${latex.execution.possible}
+  latex.failure            = ${latex.failure}</echo>
+  </target>
+
+  <target name="latex.bomb.out" if="latex.failure">
+    <fail message="Ups! You requested the execution of latex but the executable ${latex.exec} was not found installed in your system"/>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="latex.processing.NOT" depends="latex.bomb.out" 
+	  unless="latex.check">
+    <echo>latex.processing           ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Regular target. It is executed if the check property is true, and it has
+  as dependency the NOT target. That way, if the property is not set, this
+  target is not executed and instead, the one notifying the user of such event
+  is executed. -->
+  <target name="latex.processing" 
+	  depends="latex.check.values, latex.processing.NOT"
+	  if="latex.check"
+	  description="Execute latex twice to make sure refs. are solved.">
+
+    <echo>latex.processing           RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Create the dst directory -->
+    <mkdir dir="${latex.dst.dir}" />
+
+    <!-- Execute the command. Watch out for src.dir and dst.dir -->
+    <apply dir="${basedir}" parallel="false" dest="${latex.dst.dir}" 
+	   append="yes" failonerror="true" executable="${latex.exec}" 
+	   output="build.out">
+      <srcfile/>
+      <fileset refid="latex.fileset"/>
+      <!-- Mapper from source files to produced files -->
+      <mapper type="glob" from="*.tex" to="*.dvi"/>
+    </apply>    
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="latex.clean.NOT" unless="latex.check">
+    <echo>latex.clean               ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Clean files produced by latex -->
+  <target name="latex.clean" 
+	  depends="latex.check.values, latex.clean.NOT"
+	  if="latex.check" 
+	  description="Remove files produced by latex">
+
+    <echo>latex.clean           RUN</echo>
+    <echo>${basedir}</echo>
+
+    <!-- Obtain the fileset containing the produced files. This is done to be
+    able to display the deleted files (debugging) -->
+    <pathconvert property="latex.target.fileset.property" pathsep=" ">
+      <fileset refid="latex.fileset"/>
+      <chainedmapper>
+	<mapper type="glob" from="*.tex" to="*.dvi"/>
+	<mapper type="flatten"/>
+      </chainedmapper>
+    </pathconvert>
+
+    <!-- Dump explicitly the files to be deleted -->
+    <echo> deleted = ${latex.target.fileset.property}</echo>
+
+    <!-- Perform the delete operation. The failonerror attributge is needed
+	 and must be set fo false because the dst directory might have been
+	 removed  -->
+    <delete failonerror="false">
+      <fileset dir="${latex.dst.dir}"
+	       includes="${latex.target.fileset.property}">
+	<include name="__bogus__file__to__avoid__empty__fileset"/>
+      </fileset>
+    </delete>
+  </target>
+
+  <!-- Dump the properties defined in this script -->
+  <target name="latex.dump.properties" depends="initial.check">
+    <echo level="info"> ------ latex properties ----
+    latex.exec     ="${latex.exec}"
+    latex.src.dir  ="${latex.src.dir}"
+    latex.dst.dir  ="${latex.dst.dir}"
+    latex.files    ="${latex.files}"</echo>
+  </target>
+
+  <target name="latex.report.YES" depends="latex.check.values"
+	  if="latex.execution.possible">
+    <echo>latex              |     *     |</echo>
+  </target>
+
+  <target name="latex.report.NO" depends="latex.check.values"
+	  unless="latex.execution.possible">
+    <echo>latex              |           |     * (install ${dblatex.exec})</echo>
+  </target>
+
+  <target name="latex.report" depends="latex.report.YES,
+				      latex.report.NO"/>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="latex" depends="initial.delete.build.out, latex.processing"/>
+</project>

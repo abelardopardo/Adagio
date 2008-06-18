@@ -18,6 +18,8 @@
 
   <import file="Dblatex.xml"/>
 
+  <import file="Latex.xml"/>
+
   <import file="Pdflatex.xml"/>
 
   <import file="PDFnup.xml"/>
@@ -52,6 +54,8 @@
 
     <antcall target="laboratory.processing" inheritAll="false"/>
 
+    <antcall target="latex.processing" inheritAll="false"/>
+
     <antcall target="pdflatex.processing" inheritAll="false"/>
 
     <antcall target="dblatex.processing" inheritAll="false"/>
@@ -71,6 +75,8 @@
     <antcall target="dblatex.clean" inheritAll="false"/>
 
     <antcall target="pdflatex.clean" inheritAll="false"/>
+
+    <antcall target="latex.clean" inheritAll="false"/>
 
     <antcall target="laboratory.clean" inheritAll="false"/>
 
@@ -118,6 +124,10 @@
     <echo>-------------------+-----------+-----------------------------</echo>
 
     <antcall target="xsltproc.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <antcall target="latex.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
