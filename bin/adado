@@ -37,7 +37,7 @@ if [ $cygwin = "true" ]; then
 
     # Set ADA_HOME with the correct syntax (double fwdslash)
     if [ -e "$ADA_REAL_USER_HOME\\.ant.properties" ]; then
-	conf_ada_home=`grep "$ADA_REAL_USER_HOME/.ant.properties" -e ada\.home`
+	conf_ada_home=`grep "$ADA_REAL_USER_HOME/.ant.properties" -e "^ada\.home"`
     else
 	conf_ada_home="ada.home="
     fi

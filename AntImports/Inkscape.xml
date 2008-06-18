@@ -27,6 +27,12 @@
   <fileset id="inkscape.fileset" dir="${inkscape.src.dir}"
 	   includes="${inkscape.files}"/>
 
+  <!-- 
+       Internal option to catch the option to pass to inkscape to export in a
+       given format 
+  -->
+  <property name="inkscape.export.option" value=""/>
+
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="inkscape.check.values" 
@@ -106,17 +112,54 @@
     <!-- Create the dst directory -->
     <mkdir dir="${inkscape.dst.dir}"/>
 
+    <antcall target="inkscape.execute.export.command.png"/>
+    <antcall target="inkscape.execute.export.command.eps"/>
+    <antcall target="inkscape.execute.export.command.ps"/>
+    <antcall target="inkscape.execute.export.command.pdf"/>
+  </target>
+
+  <target name="inkscape.execute.export.command.png"
+	  if="inkscape.export.format.png">
+    <antcall target="inkscape.execute.export.command">
+      <param name="inkscape.export.option" value="--export-png"/>
+    </antcall>
+  </target>
+    
+  <target name="inkscape.execute.export.command.pdf"
+	  if="inkscape.export.format.pdf">
+    <antcall target="inkscape.execute.export.command">
+      <param name="inkscape.export.option" value="--export-pdf"/>
+    </antcall>
+  </target>
+    
+  <target name="inkscape.execute.export.command.eps"
+	  if="inkscape.export.format.eps">
+    <antcall target="inkscape.execute.export.command">
+      <param name="inkscape.export.option" value="--export-eps"/>
+    </antcall>
+  </target>
+    
+  <target name="inkscape.execute.export.command.ps"
+	  if="inkscape.export.format.ps">
+    <antcall target="inkscape.execute.export.command">
+      <param name="inkscape.export.option" value="--export-ps"/>
+    </antcall>
+  </target>
+
+  <target name="inkscape.execute.export.command">
+    
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
     <apply dir="${basedir}" parallel="false" dest="${inkscape.dst.dir}"
 	   append="yes" failonerror="true" executable="${inkscape.exec}" 
 	   output="build.out">
-      <arg value="-e"/>
+      <arg line="${inkscape.export.option}"/>
       <targetfile/>
       <srcfile/>
       <fileset refid="inkscape.fileset"/>
       <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.svg" to="*.png"/>
+      <mapper type="glob" from="*.svg" to="*.${inkscape.output.format}"/>
     </apply>    
+
   </target>
 
 
