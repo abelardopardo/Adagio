@@ -15,7 +15,7 @@ docbook.dst.dir=.
 docbook.files=index.xml
 
 export.dst.dir=../scratch/OACS
-export.files=index.html *.png *.zip images
+export.files=index.html *.zip images/*.png
 
 clean.files=images ../scratch/OACS/images ../scratch/OACS 
 
