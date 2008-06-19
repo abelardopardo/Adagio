@@ -29,7 +29,11 @@
       <keyword condition="category">Education</keyword>
     </keywordset>
   </chapterinfo>
-  <title>Práctica 1</title>
+  <title>
+    <xi:include href="../Params.xml"
+      xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(/xsl:stylesheet/xsl:param[@name = 'ada.page.author']/text())"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  </title>
   
   <!-- Special mark in docbook including administrative information -->
   <note condition="AdminInfo">
