@@ -46,7 +46,6 @@
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${ps2pdf.abssrc.dir}" arg2=""/></not>
-	<available file="${ps2pdf.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${ps2pdf.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
@@ -59,6 +58,7 @@
       <and>
 	<available file="${ps2pdf.exec}${executable.file.extension}"
 		   filepath="${env.PATH}"/>
+	<available file="${ps2pdf.abssrc.dir}"/> 
       </and>
     </condition>
 
@@ -76,7 +76,8 @@
   </target>
 
   <target name="ps2pdf.bomb.out" if="ps2pdf.failure">
-    <fail message="Ups! You requested the execution of ps2pdf but the executable ${ps2pdf.exec} was not found installed in your system"/>
+    <fail message="Ps2pdf rule cannot be executed. Review the value of
+		   variables ps2pdf.src.dir and ps2pdf.exec"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is

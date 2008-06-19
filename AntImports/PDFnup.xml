@@ -49,7 +49,6 @@
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${pdfnup.abssrc.dir}" arg2=""/></not>
-	<available file="${pdfnup.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${pdfnup.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
@@ -62,6 +61,7 @@
       <and>
 	<available file="${pdfnup.exec}${executable.file.extension}"
 		   filepath="${env.PATH}"/>
+	<available file="${pdfnup.abssrc.dir}"/> 
       </and>
     </condition>
 
@@ -79,7 +79,8 @@
   </target>
 
   <target name="pdfnup.bomb.out" if="pdfnup.failure">
-    <fail message="Ups! You requested the execution of pdfnup but the executable ${pdfnup.exec} was not found installed in your system"/>
+    <fail message="PDFnup rule cannot be executed. Review the value of
+		   variables pdfnup.src.dir and pdfnup.exec"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is

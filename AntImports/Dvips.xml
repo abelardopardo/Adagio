@@ -46,7 +46,6 @@
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${dvips.abssrc.dir}" arg2=""/></not>
-	<available file="${dvips.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${dvips.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
@@ -59,6 +58,7 @@
       <and>
 	<available file="${dvips.exec}${executable.file.extension}"
 		   filepath="${env.PATH}"/>
+	<available file="${dvips.abssrc.dir}"/> 
       </and>
     </condition>
 
@@ -76,7 +76,8 @@
   </target>
 
   <target name="dvips.bomb.out" if="dvips.failure">
-    <fail message="Ups! You requested the execution of dvips but the executable ${dvips.exec} was not found installed in your system"/>
+    <fail message="Dvips rule cannot be executed. Review the value of
+		   variables dvips.src.dir and dvips.exec"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is

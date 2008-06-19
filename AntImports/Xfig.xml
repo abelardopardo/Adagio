@@ -56,7 +56,6 @@
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${xfig.abssrc.dir}" arg2=""/></not>
-	<available file="${xfig.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${xfig.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
@@ -69,6 +68,7 @@
       <and>
 	<available file="${xfig.exec}${executable.file.extension}"
 		   filepath="${env.PATH}"/>
+	<available file="${xfig.abssrc.dir}"/> 
       </and>
     </condition>
 
@@ -86,7 +86,8 @@
   </target>
 
   <target name="xfig.bomb.out" if="xfig.failure">
-    <fail message="Ups! You requested the execution of but the executable ${xfig.exec} was not found installed in your system"/>
+    <fail message="xfig rule cannot be executed. Review the value of
+		   variables xfig.src.dir and xfig.exec"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is

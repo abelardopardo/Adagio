@@ -55,7 +55,6 @@
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${inkscape.abssrc.dir}" arg2=""/></not>
-	<available file="${inkscape.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${inkscape.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
@@ -68,6 +67,7 @@
       <and>
 	<available file="${inkscape.exec}${executable.file.extension}"
 		   filepath="${env.PATH}"/>
+	<available file="${inkscape.abssrc.dir}"/> 
       </and>
     </condition>
 
@@ -101,7 +101,8 @@
   </target>
 
   <target name="inkscape.bomb.out" if="inkscape.failure">
-    <fail message="Ups! You requested the execution of inkscape but the executable ${inkscape.exec} was not found installed in your system"/>
+    <fail message="inkscape rule cannot be executed. Review the value of
+		   variables inkscape.src.dir and inkscape.exec"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
