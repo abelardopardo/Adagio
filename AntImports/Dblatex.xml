@@ -15,14 +15,25 @@
   <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
 
-  <!-- Property definition -->
+  <!-- Public Property definition -->
   <property name="dblatex.exec"           value="dblatex"/>
   <property name="dblatex.src.dir"        value="${basedir}"/>
   <property name="dblatex.dst.dir"        value="${dblatex.src.dir}"/>
   <property name="dblatex.files"          value=""/>
   <property name="dblatex.extra.args"      value=""/>
-  <!-- Source files to be processed by dblatex -->
-  <fileset id="dblatex.fileset" dir="${dblatex.src.dir}"
+
+  <!-- Private properties -->
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="dblatex.abssrc.dir" pathsep=" ">
+    <path location="${dblatex.src.dir}"/>
+  </pathconvert>
+  <pathconvert property="dblatex.absdst.dir" pathsep=" ">
+    <path  location="${dblatex.dst.dir}"/>
+  </pathconvert>
+
+  <!-- Source files to be processed by dblatex (fileset to allow wildcards) -->
+  <fileset id="dblatex.fileset" dir="${dblatex.abssrc.dir}"
 	   includes="${dblatex.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
@@ -35,18 +46,22 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${dblatex.src.dir}" arg2=""/></not>
+        <not><equals arg1="${dblatex.abssrc.dir}" arg2=""/></not>
+	<available file="${dblatex.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${dblatex.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${dblatex.dst.dir}" arg2=""/></not>
+        <not><equals arg1="${dblatex.absdst.dir}" arg2=""/></not>
       </and>
     </condition>
 
-    <!-- The required binaries need to be available. -->
-    <available property="dblatex.execution.possible"
-	       file="${dblatex.exec}${executable.file.extension}"
-	       filepath="${env.PATH}"/>
+    <!-- The required condition not to bomb out -->
+    <condition property="dblatex.execution.possible">
+      <and>
+	<available file="${dblatex.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+      </and>
+    </condition>
 
     <condition property="dblatex.failure">
       <and>
@@ -86,10 +101,10 @@
     <echo>${basedir}</echo>
 
     <!-- Create the dst directory -->
-    <mkdir dir="${dblatex.dst.dir}" />
+    <mkdir dir="${dblatex.absdst.dir}" />
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${basedir}" parallel="false" dest="${dblatex.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${dblatex.absdst.dir}" 
 	   append="yes" failonerror="true" executable="${dblatex.exec}" 
 	   output="build.out">
       <arg value="-o"/>
@@ -115,27 +130,26 @@
     <echo>dblatex.clean              RUN</echo>
     <echo>${basedir}</echo>
 
-    <!-- Obtain the fileset containing the produced files. This is done to be
-    able to display the deleted files (debugging) -->
-    <pathconvert property="dblatex.target.fileset.property" pathsep=" ">
+    <!-- Obtain the filelist with the produced files. -->
+    <pathconvert property="dblatex.target.filelist.property" pathsep=" ">
       <fileset refid="dblatex.fileset"/>
       <chainedmapper>
+	<mapper type="glob" from="${dblatex.abssrc.dir}/*" 
+		to="${dblatex.absdst.dir}/*"/>
 	<mapper type="glob" from="*.xml" to="*.pdf"/>
-	<mapper type="flatten"/>
       </chainedmapper>
     </pathconvert>
+    <filelist id="dblatex.target.filelist"
+	      files="${dblatex.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted   = ${dblatex.target.fileset.property}</echo>
+    <echo> deleted = ${dblatex.target.filelist.property}</echo>
 
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
-    <delete failonerror="false">
-      <fileset dir="${dblatex.dst.dir}"
-	       includes="${dblatex.target.fileset.property}">
-	<include name="__bogus__file__to__avoid__empty__fileset"/>
-      </fileset>
+    <delete failonerror="false" includeemptydirs="true">
+      <filelist refid="dblatex.target.filelist"/>
     </delete>
   </target>
 
@@ -143,8 +157,8 @@
   <target name="dblatex.dump.properties" depends="initial.check">
     <echo level="info"> ------ dblatex properties ----
     dblatex.exec       ="${dblatex.exec}"
-    dblatex.src.dir    ="${dblatex.src.dir}"
-    dblatex.dst.dir    ="${dblatex.dst.dir}"
+    dblatex.abssrc.dir ="${dblatex.abssrc.dir}"
+    dblatex.absdst.dir ="${dblatex.absdst.dir}"
     dblatex.extra.args ="${dblatex.extra.args}"
     dblatex.files      ="${dblatex.files}"</echo>
   </target>

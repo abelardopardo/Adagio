@@ -23,7 +23,15 @@
   <property name="subrecursive.dst.dir" value="${basedir}"/>
   <property name="subrecursive.dirs"    value=""/>
   <property name="subrecursive.target"  value=""/>
-  <!-- Dirs with material required by the lab  -->
+
+  <!-- Private properties -->
+
+  <!-- Define a property containing the absolute dst path -->
+  <pathconvert property="subrecursive.absdst.dir" pathsep=" ">
+    <path  location="${subrecursive.dst.dir}"/>
+  </pathconvert>
+
+  <!-- Dirs to recur  -->
   <filelist id="subrecursive.dirlist" dir="${basedir}"
 	    files="${subrecursive.dirs}"/>
 
@@ -44,7 +52,7 @@
     <!-- Dump the value of the properties just computed. -->
     <echo level="info">    subrecursive.check          = "${subrecursive.check}"
     subrecursive.dirs         = "${subrecursive.dirs}"
-    subrecursive.dst.dir      = "${subrecursive.dst.dir}"
+    subrecursive.absdst.dir   = "${subrecursive.absdst.dir}"
     subrecursive.dstdir.given = "${subrecursive.dstdir.given}"</echo>
   </target>
 

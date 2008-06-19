@@ -15,13 +15,24 @@
   <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
 
-  <!-- Property definition -->
+  <!-- Public Property definition -->
   <property name="pdflatex.exec"           value="pdflatex"/>
   <property name="pdflatex.src.dir"        value="${basedir}"/>
   <property name="pdflatex.dst.dir"        value="${pdflatex.src.dir}"/>
   <property name="pdflatex.files"          value=""/>
-  <!-- Source files to be processed by pdflatex -->
-  <fileset id="pdflatex.fileset" dir="${pdflatex.src.dir}"
+
+  <!-- Private properties -->
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="pdflatex.abssrc.dir" pathsep=" ">
+    <path location="${pdflatex.src.dir}"/>
+  </pathconvert>
+  <pathconvert property="pdflatex.absdst.dir" pathsep=" ">
+    <path  location="${pdflatex.dst.dir}"/>
+  </pathconvert>
+
+  <!-- Source files to be processed by pdflatex (fileset to allow wildcards) -->
+  <fileset id="pdflatex.fileset" dir="${pdflatex.abssrc.dir}"
 	   includes="${pdflatex.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
@@ -34,18 +45,22 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${pdflatex.src.dir}" arg2=""/></not>
+        <not><equals arg1="${pdflatex.abssrc.dir}" arg2=""/></not>
+	<available file="${pdflatex.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${pdflatex.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${pdflatex.dst.dir}" arg2=""/></not>
+        <not><equals arg1="${pdflatex.absdst.dir}" arg2=""/></not>
       </and>
     </condition>
 
-    <!-- The required binaries need to be available. -->
-    <available property="pdflatex.execution.possible"
-	       file="${pdflatex.exec}${executable.file.extension}"
-	       filepath="${env.PATH}"/>
+    <!-- The required condition not to bomb out -->
+    <condition property="pdflatex.execution.possible">
+      <and>
+	<available file="${pdflatex.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+      </and>
+    </condition>
 
     <condition property="pdflatex.failure">
       <and>
@@ -85,10 +100,10 @@
     <echo>${basedir}</echo>
 
     <!-- Create the dst directory -->
-    <mkdir dir="${pdflatex.dst.dir}" />
+    <mkdir dir="${pdflatex.absdst.dir}" />
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${basedir}" parallel="false" dest="${pdflatex.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${pdflatex.absdst.dir}" 
 	   append="yes" failonerror="true" executable="${pdflatex.exec}" 
 	   output="build.out">
       <arg value="-output-directory"/>
@@ -114,20 +129,24 @@
     <echo>pdflatex.clean              RUN</echo>
     <echo>${basedir}</echo>
 
-    <!-- Obtain the fileset containing the produced files. This is done to be
-    able to display the deleted files (debugging) -->
-    <pathconvert property="pdflatex.target.fileset.property" pathsep=" ">
+    <!-- Obtain the filelist with the produced files. -->
+    <pathconvert property="pdflatex.target.filelist.property" pathsep=" ">
       <fileset refid="pdflatex.fileset"/>
       <chainedmapper>
+	<mapper type="glob" from="${pdflatex.abssrc.dir}/*" 
+		to="${pdflatex.absdst.dir}/*"/>
 	<mapper type="glob" from="*.tex" to="*.pdf"/>
-	<mapper type="flatten"/>
       </chainedmapper>
     </pathconvert>
+    <filelist id="pdflatex.target.filelist"
+	      files="${pdflatex.target.filelist.property}"/>
 
-    <!-- Obtain the fileset containing the temporary files produced by latex -->
-    <pathconvert property="pdflatex.tmptarget.fileset.property" pathsep=" ">
+    <!-- Obtain the filelist containing the temporary files produced by latex -->
+    <pathconvert property="pdflatex.tmptarget.filelist.property" pathsep=" ">
       <fileset refid="pdflatex.fileset"/>
       <chainedmapper>
+	<mapper type="glob" from="${pdflatex.abssrc.dir}/*" 
+		to="${pdflatex.absdst.dir}/*"/>
 	<compositemapper>
 	  <mapper type="glob" from="*.tex" to="*.pdf"/>
 	  <mapper type="glob" from="*.tex" to="*.aux"/>
@@ -142,27 +161,21 @@
 	  <mapper type="glob" from="*.tex" to="*.toc"/>
 	  <mapper type="glob" from="*.tex" to="*.out"/>
 	</compositemapper>
-	<mapper type="flatten"/>
       </chainedmapper>
     </pathconvert>
+    <filelist id="pdflatex.tmptarget.filelist"
+	      files="${pdflatex.tmptarget.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted = ${pdflatex.target.fileset.property}</echo>
-    <echo> deleted = ${pdflatex.tmptarget.fileset.property}</echo>
+    <echo> deleted = ${pdflatex.target.filelist.property}</echo>
+    <echo> deleted = ${pdflatex.tmptarget.filelist.property}</echo>
 
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
-    <delete failonerror="false">
-      <fileset dir="${pdflatex.dst.dir}" 
-	       includes="${pdflatex.target.fileset.property}">
-	<include name="__bogus__file__to__avoid__empty__fileset"/>
-      </fileset>
-      <fileset dir="${pdflatex.dst.dir}"
-	       includes="${pdflatex.tmptarget.fileset.property}">
-	<include name="__bogus__file__to__avoid__empty__fileset"/>
-      </fileset>
-      <fileset file="${pdflatex.src.dir}/texput.log"/>
+    <delete failonerror="false" includeemptydirs="true">
+      <filelist refid="pdflatex.target.filelist"/>
+      <filelist refid="pdflatex.tmptarget.filelist"/>
     </delete>
 
   </target>
@@ -170,10 +183,10 @@
   <!-- Dump the properties defined in this script -->
   <target name="pdflatex.dump.properties" depends="initial.check">
     <echo level="info"> ------ pdflatex properties ----
-    pdflatex.exec     ="${pdflatex.exec}"
-    pdflatex.src.dir  ="${pdflatex.src.dir}"
-    pdflatex.dst.dir  ="${pdflatex.dst.dir}"
-    pdflatex.files    ="${pdflatex.files}"</echo>
+    pdflatex.exec       ="${pdflatex.exec}"
+    pdflatex.abssrc.dir ="${pdflatex.abssrc.dir}"
+    pdflatex.absdst.dir ="${pdflatex.absdst.dir}"
+    pdflatex.files      ="${pdflatex.files}"</echo>
   </target>
 
   <target name="pdflatex.report.YES" depends="pdflatex.check.values"

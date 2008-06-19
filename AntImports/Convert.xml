@@ -4,7 +4,7 @@
 
   <!--
       Given the following properties:
-      
+
       convert.src.dir: Source directory from where to process files
       convert.dst.dir: Directory where the files are stored
       convert.geometry: Geometry for the images
@@ -27,9 +27,20 @@
   <property name="convert.crop"     value=""/>
   <property name="convert.format"   value="png"/>
   <property name="convert.files"    value=""/>
-  <!-- Source files to be processed by convert  -->
-  <fileset id="convert.fileset" dir="${convert.src.dir}"
+  <!-- Private properties -->
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="convert.abssrc.dir" pathsep=" ">
+    <path location="${convert.src.dir}"/>
+  </pathconvert>
+  <pathconvert property="convert.absdst.dir" pathsep=" ">
+    <path  location="${convert.dst.dir}"/>
+  </pathconvert>
+
+  <!-- Source files to be processed by convert (fileset to allow wildcards) -->
+  <fileset id="convert.fileset" dir="${convert.abssrc.dir}"
 	   includes="${convert.files}"/>
+
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
@@ -41,20 +52,24 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${convert.src.dir}" arg2=""/></not>
+        <not><equals arg1="${convert.abssrc.dir}" arg2=""/></not>
+	<available file="${convert.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${convert.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${convert.dst.dir}" arg2=""/></not>
+        <not><equals arg1="${convert.absdst.dir}" arg2=""/></not>
 	<!-- Require a non-empty geometry -->
         <not><equals arg1="${convert.geometry}" arg2=""/></not>
       </and>
     </condition>
 
-    <!-- The required binaries need to be available. -->
-    <available property="convert.execution.possible"
-	       file="${convert.exec}${executable.file.extension}"
-	       filepath="${env.PATH}"/>
+    <!-- The required condition not to bomb out -->
+    <condition property="convert.execution.possible">
+      <and>
+	<available file="${convert.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+      </and>
+    </condition>
 
     <condition property="convert.failure">
       <and>
@@ -94,10 +109,10 @@
     <echo>${basedir}</echo>
 
     <!-- Create the dst directory -->
-    <mkdir dir="${convert.dst.dir}" />
+    <mkdir dir="${convert.absdst.dir}" />
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${basedir}" parallel="false" dest="${convert.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${convert.absdst.dir}" 
 	   append="yes" failonerror="true" executable="${convert.exec}" 
 	   output="build.out">
       <srcfile />
@@ -128,28 +143,27 @@
     <echo>convert.clean              RUN</echo>
     <echo>${basedir}</echo>
     
-    <!-- Obtain the fileset containing the produced files. This is done to be
-	 able to display the deleted files (debugging) -->
-    <pathconvert property="convert.target.fileset.property" pathsep=" ">
+    <!-- Obtain the filelist with the produced files. -->
+    <pathconvert property="convert.target.filelist.property" pathsep=" ">
       <fileset refid="convert.fileset"/>
       <chainedmapper>
+	<mapper type="glob" from="${convert.abssrc.dir}/*" 
+		to="${convert.absdst.dir}/*"/>
         <mapper type="glob" from="*.${convert.format}"
                 to="*_${convert.geometry}.${convert.format}"/>
-        <mapper type="flatten"/>
       </chainedmapper>
     </pathconvert>
+    <filelist id="convert.target.filelist"
+	      files="${convert.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted = ${convert.target.fileset.property}</echo>
+    <echo> deleted = ${convert.target.filelist.property}</echo>
 
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
-    <delete failonerror="false">
-      <fileset dir="${convert.dst.dir}"
-	       includes="${convert.target.fileset.property}">
-	<include name="__bogus__file__to__avoid__empty__fileset"/>
-      </fileset>
+    <delete failonerror="false" includeemptydirs="true">
+      <filelist refid="convert.target.filelist"/>
     </delete>
   </target>
 
@@ -157,8 +171,8 @@
   <target name="convert.dump.properties" depends="initial.check">
     <echo level="info"> ------ Convert properties ----
     convert.exec     ="${convert.exec}"
-    convert.src.dir  ="${convert.src.dir}"
-    convert.dst.dir  ="${convert.dst.dir}"
+    convert.abssrc.dir  ="${convert.abssrc.dir}"
+    convert.absdst.dir  ="${convert.absdst.dir}"
     convert.geometry ="${convert.geometry}"
     convert.crop     ="${convert.crop}"
     convert.format   ="${convert.format}"

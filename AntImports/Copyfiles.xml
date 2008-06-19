@@ -21,8 +21,18 @@
   <property name="copyfiles.dst.dir"      value="${copyfiles.src.dir}" />
   <property name="copyfiles.files"        value=""/>
 
-  <!-- Source files to be copied. -->
-  <fileset id="copyfiles.fileset" dir="${copyfiles.src.dir}"
+  <!-- Private properties -->
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="copyfiles.abssrc.dir" pathsep=" ">
+    <path location="${copyfiles.src.dir}"/>
+  </pathconvert>
+  <pathconvert property="copyfiles.absdst.dir" pathsep=" ">
+    <path  location="${copyfiles.dst.dir}"/>
+  </pathconvert>
+
+  <!-- Source files to be copied (fileset to allow wildcards) -->
+  <fileset id="copyfiles.fileset" dir="${copyfiles.abssrc.dir}"
 	   includes="${copyfiles.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
@@ -35,21 +45,21 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	     empty definition of this variable. At least a . needs to be present -->
-	<not><equals arg1="${copyfiles.src.dir}" arg2=""/></not>
+	<not><equals arg1="${copyfiles.abssrc.dir}" arg2=""/></not>
+	<available file="${copyfiles.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
 	<not><equals arg1="${copyfiles.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
-	<not><equals arg1="${copyfiles.dst.dir}" arg2=""/></not>
+	<not><equals arg1="${copyfiles.absdst.dir}" arg2=""/></not>
 	<!-- SRC and DST directories must be different -->
 	<not>
-	  <equals arg1="${copyfiles.dst.dir}" arg2="${copyfiles.src.dir}"/>
+	  <equals arg1="${copyfiles.absdst.dir}" arg2="${copyfiles.abssrc.dir}"/>
 	</not>
       </and>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    copyfiles.check          = "${copyfiles.check}"
-    copyfiles.fileset         = "${copyfiles.files}"</echo>
+    <echo level="info">copyfiles.check          = "${copyfiles.check}"</echo>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -71,10 +81,10 @@
     <echo>${basedir}</echo>
 
     <!-- Create the dst directory -->
-    <mkdir dir="${copyfiles.dst.dir}" />
+    <mkdir dir="${copyfiles.absdst.dir}" />
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <copy todir="${copyfiles.dst.dir}">
+    <copy todir="${copyfiles.absdst.dir}">
       <fileset refid="copyfiles.fileset"/>
     </copy>
   </target>
@@ -94,39 +104,32 @@
     <echo>copyfiles.clean             RUN</echo>
     <echo>${basedir}</echo>
 
-    <!-- Obtain the fileset containing the produced files. This is done to be
-    able to display the deleted files (debugging) -->
-    <pathconvert property="copyfiles.target.fileset.property" pathsep=" ">
+    <!-- Obtain the filelist with the produced files. -->
+    <pathconvert property="copyfiles.target.filelist.property" pathsep=" ">
       <fileset refid="copyfiles.fileset"/>
-      <mapper type="glob" from="${copyfiles.src.dir}*" to="${copyfiles.dst.dir}*"/>
+      <mapper type="glob" from="${copyfiles.abssrc.dir}/*" 
+	      to="${copyfiles.absdst.dir}/*"/>
     </pathconvert>
-    <filelist id="copyfiles.target.fileset" 
-	      files="${copyfiles.target.fileset.property}"/>
-
-<!--     <fileset id="copyfiles.target.fileset" dir="${copyfiles.dst.dir}" -->
-<!-- 	     includes="${copyfiles.target.fileset.property}"> -->
-<!-- 	<include name="__bogus__file__to__avoid__empty__fileset"/> -->
-<!--     </fileset> -->
+    <filelist id="copyfiles.target.filelist"
+	      files="${copyfiles.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted = ${copyfiles.target.fileset.property}</echo>
+    <echo> deleted = ${copyfiles.target.filelist.property}</echo>
 
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
     <delete failonerror="false" includeemptydirs="true">
-      <!-- Obtain the fileset containing the produced files. This is done to be
-	   able to display the deleted files (debugging) -->
-      <filelist refid="copyfiles.target.fileset"/>
+      <filelist refid="copyfiles.target.filelist"/>
     </delete>
   </target>
 
   <!-- Dump the properties defined in this script -->
   <target name="copyfiles.dump.properties" depends="initial.check">
     <echo level="info"> ------ Copyfiles properties ----
-    copyfiles.src.dir ="${copyfiles.src.dir}"
-    copyfiles.dst.dir ="${copyfiles.dst.dir}"
-    copyfiles.files   ="${copyfiles.files}" </echo>
+    copyfiles.abssrc.dir ="${copyfiles.abssrc.dir}"
+    copyfiles.absdst.dir ="${copyfiles.absdst.dir}"
+    copyfiles.files      ="${copyfiles.files}" </echo>
   </target>
 
   <!-- If entering through this target, build.out is deleted -->

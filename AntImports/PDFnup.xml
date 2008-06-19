@@ -16,14 +16,26 @@
   <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
 
-  <!-- Property definition -->
-  <property name="pdfnup.exec"       value="pdfnup"/>
-  <property name="pdfnup.src.dir"    value="${basedir}"/>
-  <property name="pdfnup.dst.dir"    value="${pdfnup.src.dir}"/>
-  <property name="pdfnup.nup.option" value="1x2"/>
-  <property name="pdfnup.files"      value=""/>
-  <!-- Source files to be processed by pdfnup -->
-  <fileset id="pdfnup.fileset" dir="${pdfnup.src.dir}"
+  <!-- Public Property definition -->
+  <property name="pdfnup.exec"           value="pdfnup"/>
+  <property name="pdfnup.src.dir"        value="${basedir}"/>
+  <property name="pdfnup.dst.dir"        value="${pdfnup.src.dir}"/>
+  <property name="pdfnup.nup.option"     value="1x2"/>
+  <property name="pdfnup.files"          value=""/>
+
+
+  <!-- Private properties -->
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="pdfnup.abssrc.dir" pathsep=" ">
+    <path location="${pdfnup.src.dir}"/>
+  </pathconvert>
+  <pathconvert property="pdfnup.absdst.dir" pathsep=" ">
+    <path  location="${pdfnup.dst.dir}"/>
+  </pathconvert>
+
+  <!-- Source files to be processed by pdfnup (fileset to allow wildcards) -->
+  <fileset id="pdfnup.fileset" dir="${pdfnup.abssrc.dir}"
 	   includes="${pdfnup.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
@@ -36,18 +48,22 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${pdfnup.src.dir}" arg2=""/></not>
+        <not><equals arg1="${pdfnup.abssrc.dir}" arg2=""/></not>
+	<available file="${pdfnup.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${pdfnup.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${pdfnup.dst.dir}" arg2=""/></not>
+        <not><equals arg1="${pdfnup.absdst.dir}" arg2=""/></not>
       </and>
     </condition>
 
-    <!-- The required binaries need to be available. -->
-    <available property="pdfnup.execution.possible"
-	       file="${pdfnup.exec}${executable.file.extension}"
-	       filepath="${env.PATH}"/>
+    <!-- The required condition not to bomb out -->
+    <condition property="pdfnup.execution.possible">
+      <and>
+	<available file="${pdfnup.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+      </and>
+    </condition>
 
     <condition property="pdfnup.failure">
       <and>
@@ -87,11 +103,11 @@
     <echo>${basedir}</echo>
 
     <!-- Create the dst directory -->
-    <mkdir dir="${pdfnup.dst.dir}" />
+    <mkdir dir="${pdfnup.absdst.dir}" />
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${basedir}" parallel="false" dest="${pdfnup.dst.dir}" 
-	   append="yes" failonerror="true" executable="${pdfnup.exec}"
+    <apply dir="${basedir}" parallel="false" dest="${pdfnup.absdst.dir}" 
+	   append="yes" failonerror="true" executable="${pdfnup.exec}" 
 	   output="build.out">
       <arg value="--nup"/>
       <arg value="${pdfnup.nup.option}"/>
@@ -118,36 +134,35 @@
     <echo>pdfnup.clean                RUN</echo>
     <echo>${basedir}</echo>
 
-    <!-- Obtain the fileset containing the produced files. This is done to be
-    able to display the deleted files (debugging) -->
-    <pathconvert property="pdfnup.target.fileset.property" pathsep=" ">
+    <!-- Obtain the filelist with the produced files. -->
+    <pathconvert property="pdfnup.target.filelist.property" pathsep=" ">
       <fileset refid="pdfnup.fileset"/>
       <chainedmapper>
+	<mapper type="glob" from="${pdfnup.abssrc.dir}/*" 
+		to="${pdfnup.absdst.dir}/*"/>
 	<mapper type="glob" from="*.pdf" to="*-${pdfnup.nup.option}.pdf"/>
-	<mapper type="flatten"/>
       </chainedmapper>
     </pathconvert>
+    <filelist id="pdfnup.target.filelist"
+	      files="${pdfnup.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted = ${pdfnup.target.fileset.property}</echo>
+    <echo> deleted = ${pdfnup.target.filelist.property}</echo>
 
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
-    <delete failonerror="false">
-      <fileset dir="${pdfnup.dst.dir}"
-	       includes="${pdfnup.target.fileset.property}">
-	<include name="__bogus__file__to__avoid__empty__fileset"/>
-      </fileset>
+    <delete failonerror="false" includeemptydirs="true">
+      <filelist refid="pdfnup.target.filelist"/>
     </delete>
   </target>
 
   <!-- Dump the properties defined in this script -->
   <target name="pdfnup.dump.properties" depends="initial.check">
-    <echo level="info"> ------ Pdfnup properties ----
+    <echo level="info"> ------ pdfnup properties ----
     pdfnup.exec       ="${pdfnup.exec}"
-    pdfnup.src.dir    ="${pdfnup.src.dir}"
-    pdfnup.dst.dir    ="${pdfnup.dst.dir}"
+    pdfnup.abssrc.dir ="${pdfnup.abssrc.dir}"
+    pdfnup.absdst.dir ="${pdfnup.absdst.dir}"
     pdfnup.nup.option ="${pdfnup.nup.option}"
     pdfnup.files      ="${pdfnup.files}" </echo>
   </target>

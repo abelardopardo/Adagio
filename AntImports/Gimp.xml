@@ -21,9 +21,17 @@
   <property name="gimp.src.dir" value="${basedir}"/>
   <property name="gimp.script.file" 
             value="${ada.home}${file.separator}AntImports${file.separator}xcftopng.scm"/>
-  <property name="gimp.files"   value=""/>
-  <!--  Source files to be processed by Gimp -->
-  <fileset id="gimp.fileset" dir="${gimp.src.dir}"
+  <property name="gimp.files"   value="*.xcf"/>
+
+  <!-- Private properties -->
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="gimp.abssrc.dir" pathsep=" ">
+    <path location="${gimp.src.dir}"/>
+  </pathconvert>
+
+  <!--  Source files to be processed by Gimp (fileset to allow wildcards) -->
+  <fileset id="gimp.fileset" dir="${gimp.abssrc.dir}"
 	   includes="${gimp.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
@@ -37,16 +45,20 @@
 	<available file="${gimp.script.file}"/>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${gimp.src.dir}" arg2=""/></not>
+        <not><equals arg1="${gimp.abssrc.dir}" arg2=""/></not>
+	<available file="${gimp.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${gimp.files}" arg2=""/></not>
       </and>
     </condition>
 
-    <!-- The required binaries need to be available. -->
-    <available property="gimp.execution.possible"
-	       file="${gimp.exec}${executable.file.extension}"
-	       filepath="${env.PATH}"/>
+    <!-- The required condition not to bomb out -->
+    <condition property="gimp.execution.possible">
+      <and>
+	<available file="${gimp.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+      </and>
+    </condition>
 
     <condition property="gimp.failure">
       <and>
@@ -57,19 +69,16 @@
 
     <!-- Obtain the fileset containing the produced files. This is done to be
     able to display the deleted files (debugging) -->
-    <pathconvert property="gimp.target.fileset.property" pathsep=" ">
+    <pathconvert property="gimp.target.filelist.property" pathsep=" ">
       <fileset refid="gimp.fileset"/>
-      <chainedmapper>
-	<mapper type="glob" from="*.xcf" to="*.png"/>
-	<mapper type="flatten"/>
-      </chainedmapper>
+      <mapper type="glob" from="*.xcf" to="*.png"/>
     </pathconvert>
-    <fileset id="gimp.target.fileset" dir="${gimp.src.dir}"
-	     includes="${gimp.target.fileset.property}"/>
+    <filelist id="gimp.target.filelist"
+	      files="${gimp.target.filelist.property}"/>
 
     <!-- Dump the value of the properties just computed. -->
     <echo level="info">  gimp.check          = "${gimp.check}"
-  gimp.target.fileset     = "${gimp.target.fileset.property}"
+  gimp.target.filelist     = "${gimp.target.filelist.property}"
   gimp.execution.possible = ${gimp.execution.possible}
   gimp.failure            = ${gimp.failure}</echo>
   </target>
@@ -101,12 +110,12 @@
     <!-- Force the dependency checking on changes on the script file -->
     <dependset>
       <srcfileset file="${gimp.script.file}" />
-      <targetfileset refid="gimp.target.fileset" />
+      <targetfilelist refid="gimp.target.filelist" />
     </dependset>
 
     <!-- Transform XCF files to PNG IN THE SAME DIRECTORY -->
     <!-- TARGET BROKEN IN WINDOWS. HAVE TO FIGURE OUT HOW TO INVOKE GIMP -->
-    <apply dir="${gimp.src.dir}" parallel="false" dest="${gimp.src.dir}" 
+    <apply dir="${gimp.abssrc.dir}" parallel="false" dest="${gimp.abssrc.dir}" 
 	   append="yes"  failonerror="true" executable="${gimp.exec}" 
 	   output="build.out" osfamily="unix"
 	   input="${gimp.script.file}">
@@ -143,16 +152,13 @@
     <echo>${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted = ${gimp.target.fileset.property}</echo>
+    <echo> deleted = ${gimp.target.filelist.property}</echo>
     
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
-    <delete failonerror="false">
-      <fileset dir="${gimp.src.dir}"
-	       includes="${gimp.target.fileset.property}">
-	<include name="__bogus__file__to__avoid__empty__fileset"/>
-      </fileset>
+    <delete failonerror="false" includeemptydirs="true">
+      <filelist refid="gimp.target.filelist"/>
     </delete>
     
   </target>
@@ -161,7 +167,7 @@
   <target name="gimp.dump.properties" depends="initial.check">
     <echo level="info"> ------ Gimp properties ----
     gimp.exec        ="${gimp.exec}"
-    gimp.src.dir     = "${gimp.src.dir}"
+    gimp.abssrc.dir     = "${gimp.abssrc.dir}"
     gimp.script.file = "${gimp.script.file}"
     gimp.files       ="${gimp.files}" </echo>
   </target>

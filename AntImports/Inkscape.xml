@@ -26,11 +26,23 @@
   <fileset id="inkscape.fileset" dir="${inkscape.src.dir}"
 	   includes="${inkscape.files}"/>
 
-  <!-- 
-       Internal option to catch the option to pass to inkscape to export in a
-       given format 
-  -->
+  <!-- Private properties -->
+
+  <!-- Property to store the option for inkscape to export in a given format -->
   <property name="inkscape.export.option" value=""/>
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="inkscape.abssrc.dir" pathsep=" ">
+    <path location="${inkscape.src.dir}"/>
+  </pathconvert>
+  <pathconvert property="inkscape.absdst.dir" pathsep=" ">
+    <path  location="${inkscape.dst.dir}"/>
+  </pathconvert>
+
+  <!-- Source files to be processed by inkscape (fileset to allow wildcards) -->
+  <fileset id="inkscape.fileset" dir="${inkscape.abssrc.dir}"
+	   includes="${inkscape.files}"/>
+
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
@@ -42,18 +54,22 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${inkscape.src.dir}" arg2=""/></not>
+        <not><equals arg1="${inkscape.abssrc.dir}" arg2=""/></not>
+	<available file="${inkscape.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${inkscape.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
-	<not><equals arg1="${inkscape.dst.dir}" arg2=""/></not>
+	<not><equals arg1="${inkscape.absdst.dir}" arg2=""/></not>
       </and>
     </condition>
 
-    <!-- The required binaries need to be available. -->
-    <available property="inkscape.execution.possible"
-	       file="${inkscape.exec}${executable.file.extension}"
-	       filepath="${env.PATH}"/>
+    <!-- The required condition not to bomb out -->
+    <condition property="inkscape.execution.possible">
+      <and>
+	<available file="${inkscape.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+      </and>
+    </condition>
 
     <condition property="inkscape.failure">
       <and>
@@ -176,27 +192,26 @@
     <echo>inkscape.clean              RUN</echo>
     <echo>${basedir}</echo>
 
-    <!-- Obtain the fileset containing the produced files. This is done to be
-    able to display the deleted files (debugging) -->
-    <pathconvert property="inkscape.target.fileset.property" pathsep=" ">
+    <!-- Obtain the filelist with the produced files. -->
+    <pathconvert property="inkscape.target.filelist.property" pathsep=" ">
       <fileset refid="inkscape.fileset"/>
       <chainedmapper>
+	<mapper type="glob" from="${inkscape.abssrc.dir}/*" 
+		to="${inkscape.absdst.dir}/*"/>
 	<mapper type="glob" from="*.svg" to="*.${inkscape.output.format}"/>
-	<mapper type="flatten"/>
       </chainedmapper>
     </pathconvert>
+    <filelist id="inkscape.target.filelist"
+	      files="${inkscape.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted = ${inkscape.target.fileset.property}</echo>
+    <echo> deleted = ${inkscape.target.filelist.property}</echo>
 
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
-    <delete failonerror="false">
-      <fileset dir="${inkscape.dst.dir}"
-	       includes="${inkscape.target.fileset.property}">
-	<include name="__bogus__file__to__avoid__empty__fileset"/>
-      </fileset>
+    <delete failonerror="false" includeemptydirs="true">
+      <filelist refid="inkscape.target.filelist"/>
     </delete>
   </target>
 
@@ -204,8 +219,8 @@
   <target name="inkscape.dump.properties" depends="initial.check">
     <echo level="info"> ------ Inkscape properties ----
     inkscape.exec    ="${inkscape.exec}"
-    inkscape.src.dir ="${inkscape.src.dir}"
-    inkscape.dst.dir ="${inkscape.dst.dir}"
+    inkscape.abssrc.dir ="${inkscape.abssrc.dir}"
+    inkscape.absdst.dir ="${inkscape.absdst.dir}"
     inkscape.files   ="${inkscape.files}" </echo>
   </target>
 

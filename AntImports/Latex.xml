@@ -15,13 +15,24 @@
   <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
 
-  <!-- Property definition -->
+  <!-- Public Property definition -->
   <property name="latex.exec"           value="latex"/>
   <property name="latex.src.dir"        value="${basedir}"/>
   <property name="latex.dst.dir"        value="${latex.src.dir}"/>
   <property name="latex.files"          value=""/>
-  <!-- Source files to be processed by latex -->
-  <fileset id="latex.fileset" dir="${latex.src.dir}"
+
+  <!-- Private properties -->
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="latex.abssrc.dir" pathsep=" ">
+    <path location="${latex.src.dir}"/>
+  </pathconvert>
+  <pathconvert property="latex.absdst.dir" pathsep=" ">
+    <path  location="${latex.dst.dir}"/>
+  </pathconvert>
+
+  <!-- Source files to be processed by latex (fileset to allow wildcards) -->
+  <fileset id="latex.fileset" dir="${latex.abssrc.dir}"
 	   includes="${latex.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
@@ -34,18 +45,22 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${latex.src.dir}" arg2=""/></not>
+        <not><equals arg1="${latex.abssrc.dir}" arg2=""/></not>
+	<available file="${latex.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${latex.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${latex.dst.dir}" arg2=""/></not>
+        <not><equals arg1="${latex.absdst.dir}" arg2=""/></not>
       </and>
     </condition>
 
-    <!-- The required binaries need to be available. -->
-    <available property="latex.execution.possible"
-	       file="${latex.exec}${executable.file.extension}"
-	       filepath="${env.PATH}"/>
+    <!-- The required condition not to bomb out -->
+    <condition property="latex.execution.possible">
+      <and>
+	<available file="${latex.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+      </and>
+    </condition>
 
     <condition property="latex.failure">
       <and>
@@ -85,10 +100,10 @@
     <echo>${basedir}</echo>
 
     <!-- Create the dst directory -->
-    <mkdir dir="${latex.dst.dir}" />
+    <mkdir dir="${latex.absdst.dir}" />
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${basedir}" parallel="false" dest="${latex.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${latex.absdst.dir}" 
 	   append="yes" failonerror="true" executable="${latex.exec}" 
 	   output="build.out">
       <srcfile/>
@@ -114,17 +129,20 @@
     <echo>latex.clean           RUN</echo>
     <echo>${basedir}</echo>
 
-    <!-- Obtain the fileset containing the produced files. This is done to be
-    able to display the deleted files (debugging) -->
-    <pathconvert property="latex.target.fileset.property" pathsep=" ">
+    <!-- Obtain the filelist with the produced files. -->
+    <pathconvert property="latex.target.filelist.property" pathsep=" ">
       <fileset refid="latex.fileset"/>
       <chainedmapper>
+	<mapper type="glob" from="${latex.abssrc.dir}/*" 
+		to="${latex.absdst.dir}/*"/>
 	<mapper type="glob" from="*.tex" to="*.dvi"/>
-	<mapper type="flatten"/>
       </chainedmapper>
     </pathconvert>
+    <filelist id="latex.target.filelist"
+	      files="${latex.target.filelist.property}"/>
+
     <!-- Obtain the fileset containing the temporary files produced by latex -->
-    <pathconvert property="latex.tmptarget.fileset.property" pathsep=" ">
+    <pathconvert property="latex.tmptarget.filelist.property" pathsep=" ">
       <fileset refid="latex.fileset"/>
       <chainedmapper>
 	<compositemapper>
@@ -140,37 +158,34 @@
 	  <mapper type="glob" from="*.tex" to="*.toc"/>
 	  <mapper type="glob" from="*.tex" to="*.out"/>
 	</compositemapper>
-	<mapper type="flatten"/>
+	<mapper type="glob" from="${latex.abssrc.dir}/*" 
+		to="${latex.absdst.dir}/*"/>
       </chainedmapper>
     </pathconvert>
+    <filelist id="latex.tmptarget.filelist"
+	      files="${latex.tmptarget.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted = ${latex.target.fileset.property}</echo>
-    <echo> deleted = ${latex.tmptarget.fileset.property}</echo>
+    <echo> deleted = ${latex.target.filelist.property}</echo>
+    <echo> deleted = ${latex.tmptarget.filelist.property}</echo>
 
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
-    <delete failonerror="false">
-      <fileset dir="${latex.dst.dir}"
-	       includes="${latex.target.fileset.property}">
-	<include name="__bogus__file__to__avoid__empty__fileset"/>
-      </fileset>
-      <fileset dir="${latex.dst.dir}"
-	       includes="${latex.tmptarget.fileset.property}">
-	<include name="__bogus__file__to__avoid__empty__fileset"/>
-      </fileset>
-      <fileset file="${pdflatex.src.dir}/texput.log"/>
+    <delete failonerror="false" includeemptydirs="true">
+      <filelist refid="latex.target.filelist"/>
+      <filelist refid="latex.tmptarget.filelist"/>
+      <fileset file="${basedir}/texput.log"/>
     </delete>
   </target>
 
   <!-- Dump the properties defined in this script -->
   <target name="latex.dump.properties" depends="initial.check">
     <echo level="info"> ------ latex properties ----
-    latex.exec     ="${latex.exec}"
-    latex.src.dir  ="${latex.src.dir}"
-    latex.dst.dir  ="${latex.dst.dir}"
-    latex.files    ="${latex.files}"</echo>
+    latex.exec       ="${latex.exec}"
+    latex.abssrc.dir ="${latex.abssrc.dir}"
+    latex.absdst.dir ="${latex.absdst.dir}"
+    latex.files      ="${latex.files}"</echo>
   </target>
 
   <target name="latex.report.YES" depends="latex.check.values"
@@ -180,7 +195,7 @@
 
   <target name="latex.report.NO" depends="latex.check.values"
 	  unless="latex.execution.possible">
-    <echo>Latex              |           |     * (install ${dblatex.exec})</echo>
+    <echo>Latex              |           |     * (install ${latex.exec})</echo>
   </target>
 
   <target name="latex.report" depends="latex.report.YES,
