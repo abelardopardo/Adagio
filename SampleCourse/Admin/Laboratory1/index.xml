@@ -5,20 +5,24 @@
 
 <chapter lang="es">
   <chapterinfo condition="rss.info">
-    <xi:include
-      xpointer="xpointer(/chapter/title[position()=1])"
-      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <title>
+      <xi:include href="../Params.xml"
+		  xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(/xsl:stylesheet/xsl:param[@name = 'ada.page.author']/text())"
+		  parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    </title>
     <modespec>
       <olink condition="link">index.html?fromrss=1</olink>
     </modespec>
     <abstract>
       <formalpara>
-	<xi:include
-	  xpointer="xpointer(/chapter/title[position()=1])"
-	  parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	<title>
+	  <xi:include href="../Params.xml"
+		      xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(/xsl:stylesheet/xsl:param[@name = 'ada.page.author']/text())"
+		      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	</title>
 	<para>
 	  Párrafo para explicar exactamente qué se hace aquí.
-        </para>
+	</para>
       </formalpara>
     </abstract>
     <pubdate></pubdate>
