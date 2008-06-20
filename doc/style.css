@@ -44,6 +44,24 @@ div#titlebox, div#tailbox, div#narrowcontent
   margin-left: auto;
   }
 
+pre.programlisting {
+  background-color: #d5dee3;
+  color: Black;
+  font-family: Courier New, Courier, monospace;
+  font-size: 10pt;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  margin-bottom: 0em;
+  margin-left: 0em;
+  margin-right: 0em;
+  margin-top: 0em;
+  text-align: left;
+  text-decoration: none;
+  text-indent: 0em;
+  text-transform: none
+}
+
 th 
 { 
   border-collapse: collapse; 

@@ -13,3 +13,4 @@ docbook.extra.args=--stringparam chapter.autolabel 0 \
                    --stringparam section.autolabel 1 \
 		   --stringparam section.toc.depth 0 \
 		   --stringparam html.stylesheet style.css
+
