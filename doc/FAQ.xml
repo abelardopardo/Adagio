@@ -367,17 +367,23 @@
       </qandaentry>
     </qandaset>
   </section>
-<!--
-It comes as a zip without an installer. ANT does not use the registry. You must
-put its bin directory on the path for it to find its executables and set up
-ANT_HOME in the set environment using settings Control Panel
- system advanced environment.  
--->
 
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                    INSTALLATION IN LINUX                     -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!--   <section>     -->
 <!--     <title>Installing ADA in Linux</title> -->
 
 <!--   </section> -->
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                    INSTALLATION IN WINDOWS                   -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
 </chapter>
 
 <!--
