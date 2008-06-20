@@ -9,14 +9,15 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="297mm"
-   height="210mm"
+   width="631.6214"
+   height="402.08679"
    id="svg14622"
    sodipodi:version="0.32"
    inkscape:version="0.45.1"
    sodipodi:docbase="/home/abel/Courses/ADA/doc/images"
    sodipodi:docname="ProductionCycle.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.0">
   <defs
      id="defs14624">
     <linearGradient
@@ -3761,7 +3762,8 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-230.41841,-75.891354)">
     <g
        id="g13644"
        transform="matrix(0.7578941,0,0,0.7578941,185.1255,-51.632867)">
@@ -8645,12 +8647,12 @@
          y="281.37296"
          id="tspan14620">Publishing</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1"
        d="M 505.99667,136.69773 C 506.48002,117.16394 491.72729,101.32637 473.45181,90.62199 C 449.258,76.451101 411.9643,77.164516 361.64499,76.883798 C 308.57597,76.58774 293.93026,75.941962 267.56518,76.883798 C 247.69557,77.593596 232.46475,77.713391 231.69658,103.65706 C 231.02554,125.96597 257.02518,126.18252 257.02518,126.18252"
        id="path16219"
        sodipodi:nodetypes="cssssc" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Mend)"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1"
        d="M 231.66919,102.64278 C 231.47801,102.83397 229.35033,172.46001 233.24647,185.25888 C 237.16925,198.14527 242.28785,201.40785 257.07298,206.00251"
        id="path16221"
        sodipodi:nodetypes="czc" />
@@ -8665,7 +8667,7 @@
        d="M 231.66919,451.22673 C 231.47801,451.03554 229.35033,381.4095 233.24647,368.61063 C 237.16925,355.72424 242.33565,338.83968 257.12078,334.24502"
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:none"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:none;stroke-opacity:1"
        d="M 841.59916,255.42401 C 834.71647,210.3042 780.80212,177.42026 671.82631,127.712 C 562.8505,78.003743 417.54942,78.003738 417.54942,78.003738"
        id="path16227"
        sodipodi:nodetypes="csc" />
