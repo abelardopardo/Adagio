@@ -5,12 +5,135 @@
 <chapter id="ADA_FAQ">
   <title>ADA Frequently Asked Questions</title>
 
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                         WHAT IS ADA                          -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <section>
+    <title>About ADA</title>
+    <qandaset defaultlabel="qanda">
+      <qandaentry>
+	<question>
+	  <para>What is ADA?</para>
+	</question>
+	<answer>
+	  <para>
+	    ADA is a tool that provides support for <quote>Agile and Distributed
+	    Authoring</quote>. Authors (in general) use a combination of tools
+	    to produce documents. The actual variety of documents makes more
+	    appropriate to refer to this items as resources. A resource may
+	    perfectly be a regular text document, but today it may also be a
+	    screen capture, video clip, audio clip, picture, etc. ADA is
+	    conceived to manipulate resources in this context.
+	  </para>
+	  <para>
+	    The challenge appears when a large set of resources with a complex
+	    structure is created by a large number of authors working in a
+	    distributed environment.
+	  </para>
+
+	  <para>
+	    The first problem is the variety of tools used by the authors. ADA
+	    facilitates the post-processing by automatically producing
+	    preliminary versions of the created resources. Once produced, they
+	    can be sent to a central location where they are automatically
+	    combined to produce the final resource.
+	  </para>
+	  
+	  <para>
+	    ADA offers support in two steps of this procedure.
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		To the author: ADA provides a simple automatic procedure to see
+		the approximate appearance of the created resources. The author
+		may focus on the content and verify that the appearance complies
+		with certain minimum requirements.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		In the production phase: ADA allows specifying a simple set of
+		rules to automatically combine all the contributions from
+		different authors to obtain a complex resource.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <para>
+	    The main element for ADA are the rule files. These files have the
+	    name <code>Properties.txt</code> (although it can be changed) and
+	    specify which are the resource files and how they need to be
+	    processed to obtain the final resources.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry>
+	<question>
+	  <para>What ADA is not?</para>
+	</question>
+	<answer>
+	  <para>
+	    ADA is not a text editor, nor a graphic editor, nor an integrated
+	    creative environment. The author may use tools to create the
+	    resources, and ADA is used to automatically contribute to the
+	    overall creation process.
+	  </para>
+
+	  <para>
+	    To use an analogy, ADA offers a very efficient courier service that,
+	    if you comply with certain requirements when creating resources, it
+	    takes them very quickly to the assembling plant, combines them with
+	    other resources contributed by other authors and automatically
+	    creates a final resource.
+	  </para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Why is ADA needed?</para>
+	</question>
+	<answer>
+	  <para>
+	    ADA is oriented toward reducing the creation/modification cycle of a
+	    set of resources with a non-trivial organization. In the information
+	    era, the creation process is changing radically. Authors are no
+	    longer required to use a concrete tool, but instead, certain formats
+	    are used to easily publish content. But what really takes a
+	    multi-user distributed authoring scenario to a new dimension is an
+	    easy modification cycle. Think Wikipedia. The distributed authoring
+	    paradigm is beyond any doubt, but in order for those authors to
+	    truly contribute, resources are extremely easy to modify.
+	  </para>
+	  <para>
+	    ADA is the support tool aiming at achieving an equally simple
+	    modification cycle but with authors that create resources locally
+	    and are then shared in a central location to obtain the final
+	    resource with a non-trivial structure. The main consequence of using
+	    ADA is that there is no need to have a single location containing
+	    the sources of a document, but a set of rules on how to obtain them
+	    from a set of authors and the steps to combine them.
+	  </para>
+	</answer>
+      </qandaentry>
+    </qandaset>
+  </section>
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                    INSTALLATION IN WINDOWS                   -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <section>
     <title>Installing ADA in Windows</title>
     <qandaset defaultlabel="qanda">
       <qandaentry>
 	<question>
-	  <para>What are the basic packages to run ADA in Windows?</para>
+	  <para>What are the required applications to run ADA in Windows?</para>
 	</question>
 	<answer>
 	  <para>
@@ -34,17 +157,44 @@
 	      </para>
 	    </listitem>
 	  </itemizedlist>
-	  
+
 	  <para>
-	    The first step then is to make sure you have a <ulink
-	    url="http://java.sun.com/javase/">Java Run-Time Environment
-	    (JRE)</ulink> properly installed.
+	    Aside from these three tools, ADA allows to process certain file
+	    types if some additional programs are installed. For example,
+	    translating figures from SVG to PNG can be done using Inkscape but
+	    it needs to be previously installed.
 	  </para>
-	  
+	</answer>
+      </qandaentry>
+      
+      <qandaentry id="how_to_install_jre" 
+		  xreflabel="Java has been installed">
+	<question>
+	  <para>How to install a Java Run-time Environment in Windows?</para>
+	</question>
+	<answer>
 	  <para>
-	    The second step is to download the <code>cygwin</code> installer a
-	    program to select the packages wto install. Once started, the
-	    initial page is shown in the following figure.
+	    Java is a free tool developed by Sun Microsystems and the
+	    instructions on how to install it in windows provided with the
+	    package. You may download the software from <ulink
+	    url="http://www.java.com/en/download/download_the_latest.jsp">the
+	    official Free Java Download page</ulink>. Once the download
+	    finishes, execute the installer that asks a few simple questions and
+	    installs Java in your system.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry>
+	<question>
+	  <para>I got Java already installed, What else is required?</para>
+	</question>
+	<answer>
+	  <para>
+	    Once <xref linkend="how_to_install_jre"/>, the next step is to
+	    download the <code>cygwin</code> tool, a linux-like environment for
+	    Windows. Once downloaded, the initial page of the installer is shown
+	    in the following figure.
 	  </para>
 
 	  <informalfigure>
@@ -60,7 +210,7 @@
 
 	  <para>
 	    After starting the set-up program, you need to specify several
-	    parameters to stablish a connection with a server. Keep advancing on
+	    parameters to establish a connection with a server. Keep advancing on
 	    the installation steps until the screen to select the packages like
 	    the one in the following figure is shown.
 	  </para>
@@ -75,7 +225,7 @@
 	  </informalfigure>
 
 	  <para>
-	    Click in the botton with name <code>View</code> that appears above
+	    Click in the button with name <code>View</code> that appears above
 	    the package list until the word <quote>Full</quote> appears to its
 	    left. At that point, all packages suitable to be installed are shown
 	    alphabetically ordered. From the list, you need to select
@@ -106,7 +256,8 @@
 	    for the installation. The set-up program takes a few minutes to
 	    download (through a net connection) all the required packages. This
 	    step will take a few minutes and will depend significantly on the
-	    speed of that connection.
+	    speed of that connection. The installer application can be executed
+	    at any time to add/remove applications to the environment.
 	  </para>
 
 	  <para>
@@ -114,7 +265,7 @@
 	    of the set-up program and start a Cygwin shell. This is usually done
 	    by clicking on the icon that the set-up program has left on your
 	    desktop or browsing through the program menu and selecting the
-	    Cygwin executable. Once starte, a window like the one shown in the
+	    Cygwin executable. Once started, a window like the one shown in the
 	    following figure appears on the screen.
 	  </para>
 
@@ -127,46 +278,110 @@
 	  </informalfigure>
 
 	  <para>
-	    The windows is a typical linux command interpreter that is ready to
-	    received your orders. The first check that needs to be performed is
-	    to make sure the Java Run-time Environment is properly installed. By
-	    simply typing the command <code>which java</code>, if the answer is
-	    a single path to a file with name <code>java</code>, the JRE is
-	    properly installed. If the message states that no <code>java</code>
-	    could be found, you need to review your Java installation.
+	    This window is a typical linux command interpreter ready to process
+	    your commands. The first check is to make sure the Java Run-time
+	    Environment is properly installed. Type the command:
+	  </para>
+
+	  <programlisting>which java</programlisting>
+
+	  <para>
+	    If the answer is a single path to a file with name
+	    <code>java</code> such as
+	  </para>
+
+	  <programlisting>/cygdrive/c/WINDOWS/system32/java</programlisting>
+	  
+	  <para>
+	    the JRE is properly installed. If the message says that <quote>no
+	    java in (/usr/local/bin:/usr/bin:/....)</quote> you need to review
+	    your Java installation.
+	  </para>
+
+	</answer>
+      </qandaentry>
+
+      <qandaentry>
+	<question>
+	  <para>Got Java and Cygwin installed, now what?</para>
+	</question>
+	<answer>
+	  <para>
+	    The next tool required by ADA is <ulink
+	    url="http://ant.apache.org">Ant</ulink>, a Java based build
+	    tool. Ant is supposed to be a multi-platform tool, and the
+	    installation simply amounts to downloading a zip file, deploying its
+	    files in a directory, and declaring a couple of environment
+	    variables.
 	  </para>
 
 	  <para>
-	    The third step is to install <ulink
-	    url="http://ant.apache.org">Ant</ulink>. Ant is Java based, and
-	    therefore, installing the application simply amounts to deploying a
-	    directory and make sure that a couple of environment variables point
-	    to the right locations.
+	    When deploying Ant in a directory have two choices: install Ant as a
+	    regular windows application, or install Ant inside Cygwin. Since Ant
+	    is simply a Java program, the two choices are very similar because
+	    it only requires Java to be available. The important step is to set
+	    the environment variables ANT_HOME to point to the new directory and
+	    PATH to include the <filename>bin</filename> directory within
+	    Ant.
 	  </para>
 
 	  <para>
-	    Once Cygwin has been installed, you have two choices: install Ant as
-	    a regular windows application, or install Ant within Cygwin. The two
-	    choices are very similar from the point of view of the installation
-	    process, just unpack the zip archive in one location. The important
-	    step is to set the environment variables ANT_HOME to point to the
-	    new directory and PATH to include the <filename>bin</filename>
-	    directory within Ant.
+	    To add a new variable or modify a current variable in the execution
+	    environment in Windows you need to first select the <quote>Control
+	    Panel</quote>, then select the <quote>System</quote> link. A new
+	    window opens with several panes. Select the pane with name
+	    <quote>Advanced</quote> and then click on the button with
+	    name <quote>Environment Variables</quote>. It is recommended you
+	    insert these definitions as part of the System Variables.
 	  </para>
 
 	  <para>
-	    Once you installed Ant, you may check the installation again with
-	    the command <code>which ant</code>. As in the case of Java, if an
-	    absolute path is shown, Ant is ready to execute. If not, you need to
-	    review your installation procecure.
+	    A new variable with name <code>ANT_HOME</code> (all uppercase) has
+	    to be declared and its value is the directory where the Ant files
+	    where deployed from the zip archive. Additionally, the
+	    <quote>PATH</quote> variable (which is already defined) needs to be
+	    modified by adding the path to the <code>bin</code> directory within
+	    the Ant installation directory.
+	  </para>
+
+	  <para>
+	    Once the installation is finished, you may check the availability of
+	    the tool by opening a new Cygwin window. Type the command
+	  </para>
+
+	  <programlisting>which ant</programlisting>
+
+	  <para>
+	    If the answer is a single path to a file with name
+	    <code>ant</code> such as
+	  </para>
+
+	  <programlisting>/cygdrive/c/Program Files/apache-ant-1.7.0/bin/ant</programlisting>
+	  
+	  <para>
+	    Ant is properly installed. If the message says <quote>no
+	    ant in (/usr/local/bin:/usr/bin:/....)</quote> you need to review
+	    your installation.
 	  </para>
 	</answer>
       </qandaentry>
     </qandaset>
   </section>
+<!--
+It comes as a zip without an installer. ANT does not use the registry. You must
+put its bin directory on the path for it to find its executables and set up
+ANT_HOME in the set environment using settings Control Panel
+ system advanced environment.  
+-->
 
 <!--   <section>     -->
 <!--     <title>Installing ADA in Linux</title> -->
 
 <!--   </section> -->
 </chapter>
+
+<!--
+Local Variables:
+compile-command: "adado"
+End:
+-->
