@@ -58,7 +58,7 @@
 	  <para>
 	    Once created, these files (not the sources) can be sent to a
 	    location where they are automatically combined to produce the final
-	    resource. The following figure ilustrates a potential scenario
+	    resource. The following figure illustrates a potential scenario
 	    combining these two aspects.
 	  </para>
 	  
@@ -495,7 +495,7 @@
 	    ADA needs a file with name <filename><xi:include
 	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
 	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
-	    whith the definitions of the files to process and the rules to
+	    with the definitions of the files to process and the rules to
 	    apply. Once such file has been created, to build the resources
 	    simply open a shell (regular shell in Unix or a Cygwin shell in
 	    Windows) and type the command
@@ -511,7 +511,7 @@
 	<answer>
 	  <para>
 	    Open Xfig and create a figure. Save it in Xfig format. Suppose that
-	    the figure needs tobe translated to PNG format. Open the file
+	    the figure needs to be translated to PNG format. Open the file
 	    <filename><xi:include
 	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
 	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
@@ -740,8 +740,8 @@
 
 	  <para>
 	    For example, if you have several figures and each of them have a
-	    version in english (with extension <code>.en.svg</code>) and a
-	    version in spanish (with extension <code>.es.svg</code>), you may
+	    version in English (with extension <code>.en.svg</code>) and a
+	    version in Spanish (with extension <code>.es.svg</code>), you may
 	    select all of them wit the expression <code>*.e?.xml</code>.
 	    dot. These patterns may be used anywhere file lists are required
 	    unless otherwise noticed.
@@ -757,7 +757,7 @@
 	  <para>
 	    Open your favorite XML editor and create a Docbook XML file. Save it
 	    in XML format. Depending on the rendering procedure of your editor,
-	    you may need to have your figures availble to be shown. If you want
+	    you may need to have your figures available to be shown. If you want
 	    to simply apply the regular Docbook XSL Stylesheets, then you need
 	    to set the appropriate values to some of these variables in <filename><xi:include
 	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
@@ -827,7 +827,7 @@
 	  </informaltable>
 	  
 	  <para>
-	    For example, if the docbook document with name
+	    For example, if the DocBook document with name
 	    <filename>manual.xml</filename> is stored in the current directory
 	    and needs to be translated to HTML, the following definition is
 	    needed in the file <filename><xi:include
@@ -876,7 +876,7 @@
 	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
 	    the necessary definitions to apply the style sheet
 	    <filename>/path/to/another/location/MainStyle.xsl</filename> to your
-	    XML source file. Additionaly, you inform ADA that the final style
+	    XML source file. Additionally, you inform ADA that the final style
 	    needs to be modified with your personal definitions:
 	  </para>
 
