@@ -77,7 +77,6 @@
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${xsltproc.abssrc.dir}" arg2=""/></not>
-	<available file="${xsltproc.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${xsltproc.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
@@ -92,6 +91,7 @@
       <and>
 	<available file="${xsltproc.exec}${executable.file.extension}"
 		   filepath="${env.PATH}"/>
+	<available file="${xsltproc.abssrc.dir}"/> 
       </and>
     </condition>
 
@@ -109,7 +109,8 @@
   </target>
 
   <target name="xsltproc.bomb.out" if="xsltproc.failure">
-    <fail message="Ups! You requested the execution of xsltproc but the executable ${xsltproc.exec} was not found installed in your system"/>
+    <fail message="Xsltproc rule cannot be executed. Review the value of
+		   variables xsltproc.src.dir and xsltproc.exec"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is

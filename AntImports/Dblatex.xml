@@ -47,7 +47,6 @@
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${dblatex.abssrc.dir}" arg2=""/></not>
-	<available file="${dblatex.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${dblatex.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
@@ -60,6 +59,7 @@
       <and>
 	<available file="${dblatex.exec}${executable.file.extension}"
 		   filepath="${env.PATH}"/>
+	<available file="${dblatex.abssrc.dir}"/> 
       </and>
     </condition>
 
@@ -77,7 +77,8 @@
   </target>
 
   <target name="dblatex.bomb.out" if="dblatex.failure">
-    <fail message="Ups! You requested the execution of dblatex but the executable ${dblatex.exec} was not found installed in your system"/>
+    <fail message="Dblatex rule cannot be executed. Review the value of
+		   variables dblatex.src.dir and dblatex.exec"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is

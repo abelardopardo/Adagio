@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+# Script to simply invoke adado to check which tools are installed.
+#
+
+adado -Dada.property.file.ready=true report

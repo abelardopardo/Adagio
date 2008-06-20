@@ -46,7 +46,6 @@
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	     empty definition of this variable. At least a . needs to be present -->
 	<not><equals arg1="${copyfiles.abssrc.dir}" arg2=""/></not>
-	<available file="${copyfiles.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
 	<not><equals arg1="${copyfiles.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
@@ -58,13 +57,35 @@
       </and>
     </condition>
 
+    <!-- The required condition not to bomb out -->
+    <condition property="copyfiles.execution.possible">
+      <and>
+	<available file="${copyfiles.abssrc.dir}"/> 
+      </and>
+    </condition>
+
+    <condition property="copyfiles.failure">
+      <and>
+	<isset property="copyfiles.check"/>
+	<not><isset property="copyfiles.execution.possible"/></not>
+      </and>
+    </condition>
+
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">copyfiles.check          = "${copyfiles.check}"</echo>
+    <echo level="info">copyfiles.check          = "${copyfiles.check}"
+  copyfiles.execution.possible = ${copyfiles.execution.possible}
+  copyfiles.failure            = ${copyfiles.failure}</echo>
+  </target>
+
+  <target name="copyfiles.bomb.out" if="copyfiles.failure">
+    <fail message="Copyfiles rule cannot be executed. Review the value of
+		   variable copyfiles.src.dir"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
-  <target name="copyfiles.processing.NOT" unless="copyfiles.check">
+  <target name="copyfiles.processing.NOT" depends="copyfiles.bomb.out" 
+	  unless="copyfiles.check">
     <echo>copyfiles.processing        ---</echo>
     <echo>${basedir}</echo>
   </target>

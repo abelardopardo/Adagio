@@ -46,7 +46,6 @@
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${gimp.abssrc.dir}" arg2=""/></not>
-	<available file="${gimp.abssrc.dir}"/> 
 	<!-- There must be some files defined -->
         <not><equals arg1="${gimp.files}" arg2=""/></not>
       </and>
@@ -57,6 +56,7 @@
       <and>
 	<available file="${gimp.exec}${executable.file.extension}"
 		   filepath="${env.PATH}"/>
+	<available file="${gimp.abssrc.dir}"/> 
       </and>
     </condition>
 
@@ -84,7 +84,8 @@
   </target>
 
   <target name="gimp.bomb.out" if="gimp.failure">
-    <fail message="Ups! You requested the execution of gimp but the executable ${gimp.exec} was not found installed in your system"/>
+    <fail message="Gimp rule cannot be executed. Review the value of
+		   variables gimp.src.dir and gimp.exec"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
