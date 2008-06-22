@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
 
-<chapter id="ADA_FAQ">
-  <chapterinfo>
-    <contrib id="PROPERTIES_FILENAME">Properties.txt</contrib>
-  </chapterinfo>
-
+<article id="ADA_FAQ">
   <title>ADA Frequently Asked Questions</title>
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -14,7 +10,7 @@
   <!--                         WHAT IS ADA                          -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <section id="About ADA">
+  <section id="About_ADA">
     <title>About ADA</title>
     <qandaset defaultlabel="qanda">
       <qandaentry>
@@ -98,7 +94,8 @@
 	  <para>
 	    The main element for ADA are the rule files. These files have the
 	    name <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
 	    parse="xml"
 	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename> (although
 	    it can be changed) and specify which are the resource files and how
@@ -182,7 +179,7 @@
   <!--                    INSTALLATION IN WINDOWS                   -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <section id="Installing ADA in Windows">
+  <section id="Installing_ADA_in_Windows">
     <title>Installing ADA in Windows</title>
     <qandaset defaultlabel="qanda">
       <qandaentry>
@@ -200,14 +197,14 @@
 	    </listitem>
 	    <listitem>
 	      <para>
-		Ant: A Java based build tool. ADA relies on ANT to decide which
-		documents to build and which tools to use for the task.
+		<ulink url="http://www.cygwin.com">Cygwin</ulink>: A linux-like
+		environment for Windows.
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
-		<ulink url="http://www.cygwin.com">Cygwin</ulink>: A linux-like
-		environment for Windows.
+		Ant: A Java based build tool. ADA relies on ANT to decide which
+		documents to build and which tools to use for the task.
 	      </para>
 	    </listitem>
 	  </itemizedlist>
@@ -341,7 +338,7 @@
 
 	  <para>
 	    If the answer is a single path to a file with name
-	    <code>java</code> such as
+	    <code>java</code> similar to
 	  </para>
 
 	  <programlisting>/cygdrive/c/WINDOWS/system32/java</programlisting>
@@ -355,7 +352,7 @@
 	</answer>
       </qandaentry>
 
-      <qandaentry>
+      <qandaentry id="install_ant" xreflabel="Ant installation">
 	<question>
 	  <para>Got Java and Cygwin installed, now what?</para>
 	</question>
@@ -370,13 +367,13 @@
 	  </para>
 
 	  <para>
-	    When deploying Ant in a directory have two choices: install Ant as a
-	    regular windows application, or install Ant inside Cygwin. Since Ant
-	    is simply a Java program, the two choices are very similar because
-	    it only requires Java to be available. The important step is to set
-	    the environment variables ANT_HOME to point to the new directory and
-	    PATH to include the <filename>bin</filename> directory within
-	    Ant.
+	    When deploying Ant in a directory there are two choices: install Ant
+	    as a regular windows application, or install Ant inside
+	    Cygwin. Since Ant is simply a Java program, the two choices are very
+	    similar because it only requires Java to be available. The important
+	    step is to set the environment variables ANT_HOME to point to the
+	    new directory and <code>PATH</code> to include the
+	    <filename>bin</filename> directory within Ant.
 	  </para>
 
 	  <para>
@@ -391,11 +388,11 @@
 
 	  <para>
 	    A new variable with name <code>ANT_HOME</code> (all uppercase) has
-	    to be declared and its value is the directory where the Ant files
-	    where deployed from the zip archive. Additionally, the
-	    <quote>PATH</quote> variable (which is already defined) needs to be
-	    modified by adding the path to the <code>bin</code> directory within
-	    the Ant installation directory.
+	    to be declared and its value must be the directory where the Ant
+	    files where deployed from the zip archive. Additionally, the
+	    <code>PATH</code> variable (which is already defined) needs to be
+	    modified by adding the path to the <filename>bin</filename>
+	    directory within the Ant installation directory.
 	  </para>
 
 	  <para>
@@ -419,6 +416,62 @@
 	  </para>
 	</answer>
       </qandaentry>
+
+      <qandaentry id="Fetch_ada_in_windows">
+	<question>
+	  <para>
+	    Once I have the JRE, Cygwin and Ant, what is next?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    Open a Cygwin shell and go to the directory where you want ADA
+	    installed. Execute the command:
+	  </para>
+	  <programlisting>git clone <xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='ADA_DOWNLOAD_URL']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	  <para>
+	    After a few seconds, a new directory with name ADA is created
+	    containing all the required files.
+	  </para>
+	  <para>
+	    In order to make ADA available, the PATH environment variable needs
+	    to be modified by adding the path to the <filename>bin</filename>
+	    directory. You may follow the procedure described in the <xref
+	    linkend="install_ant"/>.
+	  </para>
+
+	  <para>
+	    Once the environment variable <code>PATH</code> has been modified to
+	    include the <filename>bin</filename> directory within ADA, open a
+	    brand new Cygwin shell and type the following command
+	  </para>
+	  
+	  <programlisting>which adado</programlisting>
+	  
+	  <para>
+	    As in the case of the <xref linkend="install_ant"/>, if the
+	    answer is a single path to the <filename>adado</filename> file
+	    similar to
+	  </para>
+
+	  <programlisting>/home/.../.../ADA/bin/adado</programlisting>
+	  
+	  <para>
+	    ADA is properly installed. If the message says <quote>no
+	    adado in (/usr/local/bin:/usr/bin:/....)</quote> you need to review
+	    your installation.
+	  </para>
+
+	  <para>
+	    The final step to make sure that the commands provided by ADA are
+	    available is to try <xref linkend="run_adacheck"/>.
+	  </para>
+	</answer>
+      </qandaentry>
     </qandaset>
   </section>
 
@@ -434,13 +487,13 @@
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                    INSTALLATION IN WINDOWS                   -->
+  <!--                    PROCESSING RESOURCES                      -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <section id="Processing resources with ADA">
+  <section id="Processing_resources_with_ADA">
     <title>Processing resources with ADA</title>
     <qandaset>
-      <qandaentry>
+      <qandaentry id="run_adacheck" xreflabel="Running adacheck">
 	<question>
 	  <para>What kind of resources can be processed by ADA?</para>
 	</question>
@@ -474,7 +527,8 @@
 	  <para>
 	    This information is all contained in a regular text file typically
 	    with name <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
 	    parse="xml"
 	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>. The
 	    structure of this file is very simple, any line starting with the
@@ -493,8 +547,10 @@
 	<answer>
 	  <para>
 	    ADA needs a file with name <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
 	    with the definitions of the files to process and the rules to
 	    apply. Once such file has been created, to build the resources
 	    simply open a shell (regular shell in Unix or a Cygwin shell in
@@ -513,8 +569,10 @@
 	    Open Xfig and create a figure. Save it in Xfig format. Suppose that
 	    the figure needs to be translated to PNG format. Open the file
 	    <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
 	    (if not created, see <xref linkend="how_to_run_ada"/>) and set the
 	    following variables:
 	  </para>
@@ -597,8 +655,10 @@
 	    are stored in the current directory and versions in png format need
 	    to be created in the same directory, the following assignment is
 	    required in the file <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
 	  </para>
 
 	  <programlisting>xfig.files=sign.fig office.fig</programlisting>
@@ -612,7 +672,8 @@
 	    If you may use files in a different directory, or the produced files
 	    need to be stored in a different directory, include the additional
 	    variable assignments in the file <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
 	    parse="xml"
 	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
 	  </para>
@@ -629,8 +690,10 @@
 	    Open Inkscape and create a figure. Save it in SVG format. Suppose
 	    that this figure needs to be translated to PNG format. Open the file
 	    <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
 	    (if not created, see <xref linkend="how_to_run_ada"/>) and set the
 	    following variables:
 	  </para>
@@ -693,7 +756,8 @@
 	    are stored in the current directory and versions in png format need
 	    to be created in the same directory, the following assignment is
 	    required in the file <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
 	    parse="xml"
 	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
 	  </para>
@@ -709,7 +773,8 @@
 	    If you may use files in a different directory, or the produced files
 	    need to be stored in a different directory, include the additional
 	    variable assignments in the file <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
 	    parse="xml"
 	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
 	  </para>
@@ -720,7 +785,8 @@
 	<question>
 	  <para>What if I have lots of figures. Do I need to write all their
 	  file names in <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
 	    parse="xml"
 	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>?
 	  </para>
@@ -760,8 +826,10 @@
 	    you may need to have your figures available to be shown. If you want
 	    to simply apply the regular Docbook XSL Stylesheets, then you need
 	    to set the appropriate values to some of these variables in <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
 	  </para>
 
 	  <informaltable frame="all" id="docbook_vars">
@@ -831,8 +899,10 @@
 	    <filename>manual.xml</filename> is stored in the current directory
 	    and needs to be translated to HTML, the following definition is
 	    needed in the file <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
 	  </para>
 	  
 	  <programlisting>docbook.files=manual.xml</programlisting>
@@ -872,8 +942,10 @@
 	    example, a file with name
 	    <filename>MyPersonalValues.xml</filename>). You then include in the
 	    file <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
 	    the necessary definitions to apply the style sheet
 	    <filename>/path/to/another/location/MainStyle.xsl</filename> to your
 	    XML source file. Additionally, you inform ADA that the final style
@@ -882,8 +954,9 @@
 
 	  <programlisting>mergestyles.master.style=MyPersonalValues.xml</programlisting>
 	  <para>
-	    In general, you may use the following two variables in the file <filename><xi:include
-	    xpointer="xpointer(//*/contrib[@id='PROPERTIES_FILENAME']/text())"
+	    In general, you may use the following two variables in the file
+	    <filename><xi:include href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
 	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>:
 	  </para>
 
@@ -923,9 +996,24 @@
 	  </para>
 	</answer>
       </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>
+	    How do I upgrade to the latest version of ADA?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    If a new version of ADA is published, the upgrade can be obtained
+	    by opening a a Cygwin shell and typing the following within the ADA
+	    directory:
+	  </para>
+	  <programlisting>git fetch</programlisting>
+	</answer>
+      </qandaentry>
     </qandaset>
   </section>
-</chapter>
+</article>
 
 <!--
 Local Variables: compile-command: "adado" End:

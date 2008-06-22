@@ -14,3 +14,4 @@ docbook.extra.args=--stringparam chapter.autolabel 0 \
 		   --stringparam section.toc.depth 0 \
 		   --stringparam html.stylesheet style.css
 
+dblatex.files=FAQ.xml
