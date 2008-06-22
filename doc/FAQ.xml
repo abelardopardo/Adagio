@@ -988,7 +988,7 @@
 	<answer>
 	  <para>
 	    If a new version of ADA is published, the upgrade can be obtained
-	    by openinga a Cygwin shell and typing the following within the ADA
+	    by opening a a Cygwin shell and typing the following within the ADA
 	    directory:
 	  </para>
 	  <programlisting>git fetch</programlisting>
