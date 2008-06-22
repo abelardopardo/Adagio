@@ -5,6 +5,7 @@
 <chapter id="ADA_FAQ">
   <chapterinfo>
     <contrib id="PROPERTIES_FILENAME">Properties.txt</contrib>
+    <contrib id="ADA_DOWNLOAD_URL">https://flautin.it.uc3m.es/abel/ADA</contrib>
   </chapterinfo>
 
   <title>ADA Frequently Asked Questions</title>
@@ -14,7 +15,7 @@
   <!--                         WHAT IS ADA                          -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <section id="About ADA">
+  <section id="About_ADA">
     <title>About ADA</title>
     <qandaset defaultlabel="qanda">
       <qandaentry>
@@ -182,7 +183,7 @@
   <!--                    INSTALLATION IN WINDOWS                   -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <section id="Installing ADA in Windows">
+  <section id="Installing_ADA_in_Windows">
     <title>Installing ADA in Windows</title>
     <qandaset defaultlabel="qanda">
       <qandaentry>
@@ -355,7 +356,7 @@
 	</answer>
       </qandaentry>
 
-      <qandaentry>
+      <qandaentry id="install_ant" xreflabel="Ant installation">
 	<question>
 	  <para>Got Java and Cygwin installed, now what?</para>
 	</question>
@@ -375,8 +376,8 @@
 	    is simply a Java program, the two choices are very similar because
 	    it only requires Java to be available. The important step is to set
 	    the environment variables ANT_HOME to point to the new directory and
-	    PATH to include the <filename>bin</filename> directory within
-	    Ant.
+	    <code>PATH</code> to include the <filename>bin</filename> directory
+	    within Ant.
 	  </para>
 
 	  <para>
@@ -393,9 +394,9 @@
 	    A new variable with name <code>ANT_HOME</code> (all uppercase) has
 	    to be declared and its value is the directory where the Ant files
 	    where deployed from the zip archive. Additionally, the
-	    <quote>PATH</quote> variable (which is already defined) needs to be
-	    modified by adding the path to the <code>bin</code> directory within
-	    the Ant installation directory.
+	    <code>PATH</code> variable (which is already defined) needs to be
+	    modified by adding the path to the <filename>bin</filename>
+	    directory within the Ant installation directory.
 	  </para>
 
 	  <para>
@@ -419,6 +420,61 @@
 	  </para>
 	</answer>
       </qandaentry>
+
+      <qandaentry id="Fetch_ada_in_windows">
+	<question>
+	  <para>
+	    Once I have the JRE, Cygwin and Ant, what is next?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    Open a Cygwin shell and go to the directory where you want ADA
+	    installed. Execute the command:
+	  </para>
+	  <programlisting>git clone <xi:include
+	    xpointer="xpointer(//*/contrib[@id='ADA_DOWNLOAD_URL']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	  <para>
+	    After a few seconds, a new directory with name ADA is created
+	    containing all the required files. 
+	  </para>
+	  <para>
+	    In order to make ADA available, the PATH environment variable needs
+	    to be modified by adding the path to the <filename>bin</filename>
+	    directory. You may follow the procedure described in the <xref
+	    linkend="install_ant"/>.
+	  </para>
+
+	  <para>
+	    Once the environment variable <code>PATH</code> has been modified to
+	    include the <filename>bin</filename> directory within ADA, open a
+	    brand new Cygwin shell and type the following command
+	  </para>
+	  
+	  <programlisting>which adado</programlisting>
+	  
+	  <para>
+	    As in the case of the <xref linkend="install_ant"/>, if the
+	    answer is a single path to the <filename>adado</filename> file
+	    similar to
+	  </para>
+
+	  <programlisting>/home/.../.../ADA/bin/adado</programlisting>
+	  
+	  <para>
+	    ADA is properly installed. If the message says <quote>no
+	    adado in (/usr/local/bin:/usr/bin:/....)</quote> you need to review
+	    your installation.
+	  </para>
+
+	  <para>
+	    The final step to make sure that the commands provided by ADA are
+	    available is to try <xref linkend="run_adacheck"/>.
+	  </para>
+	</answer>
+      </qandaentry>
     </qandaset>
   </section>
 
@@ -434,13 +490,13 @@
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                    INSTALLATION IN WINDOWS                   -->
+  <!--                    PROCESSING RESOURCES                      -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <section id="Processing resources with ADA">
+  <section id="Processing_resources_with_ADA">
     <title>Processing resources with ADA</title>
     <qandaset>
-      <qandaentry>
+      <qandaentry id="run_adacheck" xreflabel="Running adacheck">
 	<question>
 	  <para>What kind of resources can be processed by ADA?</para>
 	</question>
@@ -921,6 +977,21 @@
 	    The style sheet resulting of the merge between the two given files
 	    is left in the current directory.
 	  </para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>
+	    How do I upgrade to the latest version of ADA?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    If a new version of ADA is published, the upgrade can be obtained
+	    by openinga a Cygwin shell and typing the following within the ADA
+	    directory:
+	  </para>
+	  <programlisting>git fetch</programlisting>
 	</answer>
       </qandaentry>
     </qandaset>
