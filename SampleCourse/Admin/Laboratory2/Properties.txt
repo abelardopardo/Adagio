@@ -4,6 +4,10 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
+
+timewindow.enabled=true
+timewindow.start=2008/06/25 19:00
+
 subrecursive.dirs=../../Material/Author5
 
 laboratory.bilingual.files=index.xml
