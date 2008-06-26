@@ -143,10 +143,59 @@
 	  </para>
 
 	  <para>
-	    The following picture offers a more realistic view of the production
-	    cycle including the modifications at any stage of the production
-	    process. ADA allows the production path from the author material
-	    back to the final web publishing step to be traversed quickly.
+	    A typical situation when a number of authors contribute toward a
+	    common resource is illustrated in the fillowing figure. There is
+	    usually an entity that absorbs the complexity of providing a
+	    homogeneus view of the material usually through an expensive and
+	    time consuming production stage. This production requires then an
+	    additional step to bring all the material to the final web
+	    publishing platform.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/AuthorCycle.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Conventional authoring cycle</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>
+	    The following picture illustrates the change in methodology that can
+	    be achieved with the help of ADA. By providing a fast two-way
+	    information channel between creation and production, the management
+	    of a set of resources can be truly improved. ADA provides the rules
+	    that automatically connect the source documents with the final
+	    published resources such that changes can be performed at a very
+	    low turnaround cost.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/AuthorNewCycle.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Conventional authoring cycle</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+	  
+	  <para>
+	    But aside from the turnaround time for changes, resources tend to be
+	    built recursively from the author contributions. The internal
+	    organization of a resource can be often replicated in the process in
+	    which it is built. To create the final electronic version of a book,
+	    there is certain amount of work that can be done for each chapter
+	    individually accompanied by certain inter-chapter processing. The
+	    rules defined in ADA are prepared to be applied hierarchically at
+	    different points of the overall production procedure. The following
+	    picture illustrates a hypothetical scenario in which a resource is
+	    built by combining resources from four authors in three gradual
+	    stages.
 	  </para>
 
 	  <informalfigure>
@@ -160,15 +209,6 @@
 	    </mediaobject>
 	  </informalfigure>
 
-	  <para>
-	    ADA is the support tool aiming at achieving a simple modification
-	    cycle but with authors that create resources locally and are then
-	    shared in a central location to obtain the final resource with a
-	    non-trivial structure. The main consequence of using ADA is that
-	    there is no need to have a single location containing the sources of
-	    a document, but a set of rules on how to obtain them from a set of
-	    authors and the steps to combine them.
-	  </para>
 	</answer>
       </qandaentry>
     </qandaset>
@@ -272,6 +312,9 @@
 		<imagedata fileref="images/CygwinSelectPackages.png"
 			   format="PNG"/>
 	      </imageobject>
+	      <textobject>
+		<phrase>Screen to select packages in Cygwin</phrase>
+	      </textobject>
 	    </mediaobject>
 	  </informalfigure>
 
@@ -325,6 +368,9 @@
 	      <imageobject>
 		<imagedata fileref="images/CygwinShell.png" format="PNG"/>
 	      </imageobject>
+	      <textobject>
+		<phrase>Cygwin shell screen</phrase>
+	      </textobject>
 	    </mediaobject>
 	  </informalfigure>
 
@@ -549,6 +595,9 @@
 	      <imageobject>
 		<imagedata fileref="images/Rules.png" format="PNG"/>
 	      </imageobject>
+	      <textobject>
+		<phrase>Rules used by ADA</phrase>
+	      </textobject>
 	    </mediaobject>
 	  </informalfigure>
 	</answer>
