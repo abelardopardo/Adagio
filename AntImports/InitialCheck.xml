@@ -58,8 +58,9 @@ build templates
     <arg value="/"/>
   </exec>
 
-  <available property="ada.property.file.ready"
-	     file="${basedir}${file.separator}${ada.local.property.file}"/>
+
+<!--   <available property="ada.property.file.ready" -->
+<!-- 	     file="${basedir}${file.separator}${ada.local.property.file}"/> -->
       
   <!-- Default location for the catalog -->
   <property name="xml.catalog.file" 
@@ -70,13 +71,15 @@ build templates
     <available file="${xml.catalog.file}" />
   </condition>
 
-  <target name="ada.check.property.file"
-	  unless="ada.property.file.ready">
-    <fail message="*** ERROR *** No ${ada.local.property.file} found!"/>
-  </target>
+
+<!--   <target name="ada.check.property.file" -->
+<!-- 	  unless="ada.property.file.ready"> -->
+<!--     <fail message="*** ERROR *** No ${ada.local.property.file} found!"/> -->
+<!--   </target> -->
 
   <!-- Check if the ada.home property is set to a meaningful value -->
-  <target name="ada.check.basics" depends="ada.check.property.file">
+<!--   <target name="ada.check.basics" depends="ada.check.property.file"> -->
+  <target name="ada.check.basics">
     
     <condition property="ada.check.home.property">
       <and>
