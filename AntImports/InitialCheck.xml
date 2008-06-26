@@ -26,6 +26,8 @@ build templates
   <!-- Directory where the toolkit is installed -->
   <property name="ada.home" value="" />
 
+  <property name="ada.initial.check.dump.level" value="info"/>
+
   <!-- Include the environment as a set of properties -->
   <property environment="env"/>
 
@@ -97,14 +99,15 @@ build templates
   </target>
 
   <target name="initial.check.dump">
-    <echo level="info">------ Global properties ----
-  basedir=${basedir}
-  user.dir=${user.dir}
-  user.home=${user.home}
-  executable.file.extension=${executable.file.extension}
-  ada.home=${ada.home}
-  xml.catalog.file=${xml.catalog.file}
-  xml.catalog.file.available=${xml.catalog.file.available}    </echo>    
+    <echo level="${ada.initial.check.dump.level}">------ Global properties ----
+  basedir = ${basedir}
+  user.dir = ${user.dir}
+  user.home = ${user.home}
+  ada.home = ${ada.home}
+
+  executable.file.extension = ${executable.file.extension}
+  xml.catalog.file = ${xml.catalog.file}
+  xml.catalog.file.available = ${xml.catalog.file.available}</echo>    
   </target>
 
   <!-- Target to reset the build.out --> 

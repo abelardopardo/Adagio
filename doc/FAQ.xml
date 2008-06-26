@@ -499,7 +499,7 @@
 	</question>
 	<answer>
 	  <para>
-	    ADA is a preparation tool, and to <quote>prepare</quote> a resource
+	    ADA is a building tool, and to <quote>build</quote> a resource
 	    it needs some applications to be available in your computer. In
 	    order to see what tools is able to manage ADA and which one of them
 	    are available, open a shell (a regular shell in Linux or a Cygwin
@@ -509,9 +509,9 @@
 	  <programlisting>adacheck</programlisting>
 
 	  <para>
-	    ADA prints on the screen a listing of the tools that is capable of
-	    managing and if they are ready to be used by the current
-	    installation. For example:
+	    ADA prints the value of several important internal variables
+	    followed by a list of the tools that is capable of using and if
+	    they are ready to be used by the current installation. For example:
 	  </para>
 
 	  <programlisting><xi:include href="AdaCheck.txt"
@@ -525,8 +525,9 @@
 	</question>
 	<answer>
 	  <para>
-	    This information is all contained in a regular text file typically
-	    with name <filename><xi:include
+	    ADA is a tool that needs from the user a set of files to apply
+	    certain pre-conceinved production rules.  This information is all
+	    contained in a regular text file with name <filename><xi:include
 	    href="Params.xml"
 	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
 	    parse="xml"
@@ -537,6 +538,19 @@
 	    set of names is defined by ADA. Refer to the following questions to
 	    know which names and values are possible.
 	  </para>
+
+	  <para>
+	    The following figure illustrates how these rules are applied to a
+	    set of files in the author space to produce resources.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/Rules.png" format="PNG"/>
+	      </imageobject>
+	    </mediaobject>
+	  </informalfigure>
 	</answer>
       </qandaentry>
 
@@ -916,6 +930,47 @@
 
       <qandaentry>
 	<question>
+	  <para>Can I specify a generic rule to be applied everywhere?</para>
+	  <para>
+	    The file <filename><xi:include href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    contains rules only valid for the current directory. Is it possible
+	    to define how to process a set of files in a way such that it is
+	    applied in all the directories? For example, I would like all my
+	    *.svg files to be always processed by the Inkscape rule.
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    Yes. You may define rules that are already defined when you process
+	    the files in a directory. ADA automatically reads first the file
+	    with name <filename>.ant.properties</filename> in your home
+	    directory. You may insert any rule there that will be defined for
+	    all the directories in which you process files. What is even more
+	    important, you may override these rules at any time simply by
+	    including a new rule in the local <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    file.
+	  </para>
+	  
+	  <para>
+	    In order to make sure the file <filename>.ant.properties</filename>
+	    is placed in the correct location, open a shell window and run the
+	    command <code>adacheck</code>. The line containing the variable name
+	    <code>user.home</code> displays the home directory where ADA expects
+	    the <filename>.ant.properties</filename> file to be processed.
+	  </para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>
+	    How can I use a slightly modified generic stylesheet without
+	    modifying it?
+	  </para>
 	  <para>
 	    I want to use a stylesheet that has lots of parameters to customize
 	    its behavior. However, I cannot touch it since it's being shared by
