@@ -25,8 +25,10 @@
   <property name="xsltproc.src.dir"        value="${basedir}"/>
   <property name="xsltproc.dst.dir"        value="${xsltproc.src.dir}"/>
   <property name="xsltproc.style.file"     value=""/>
+  <property name="xsltproc.style.fileB"    value=""/>
   <property name="xsltproc.output.format"  value="html"/>
   <property name="xsltproc.extra.args"     value=""/>
+  <property name="xsltproc.extra.argsB"     value=""/>
   <property name="xsltproc.files"          value=""/>
 
   <!-- Private properties -->
@@ -65,7 +67,28 @@
     </and>
   </condition>
 
-
+  <macrodef name="run.xsltproc.single">
+    <attribute name="DIR"/>
+    <attribute name="XSLTPROC.ABSDST.DIR"/>
+    <attribute name="XSLTPROC.EXTRA.ARGS"/>
+    <attribute name="XSLTPROC.STYLE.FILE"/>
+    <element name="fileset.and.mapper" implicit="yes"/>
+    <sequential>
+      <!-- Execute the command. Watch out for src.dir and dst.dir -->
+      <apply dir="@{DIR}" parallel="false" dest="@{XSLTPROC.ABSDST.DIR}" 
+	     append="yes" failonerror="true" executable="${xsltproc.exec}" 
+	     output="build.out">
+	<arg value="--xinclude"/>
+	<arg value="--xincludestyle"/>
+	<arg line="@{XSLTPROC.EXTRA.ARGS}"/>
+	<arg value="-o"/>
+	<targetfile/>
+	<arg value="@{XSLTPROC.STYLE.FILE}"/>
+	<fileset.and.mapper />
+      </apply>
+    </sequential>
+  </macrodef>
+  
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="xsltproc.check.values" 
@@ -155,19 +178,15 @@
     </dependset>
 
     <!-- Execute the command. Watch out for abssrc.dir and absdst.dir -->
-    <apply dir="${basedir}" parallel="false" dest="${xsltproc.absdst.dir}" 
-	   append="yes" failonerror="true" executable="${xsltproc.exec}" 
-	   output="build.out">
-      <arg value="--xinclude"/>
-      <arg value="--xincludestyle"/>
-      <arg line="${xsltproc.extra.args}"/>
-      <arg value="-o"/>
-      <targetfile/>
-      <arg value="${xsltproc.style.file}"/>
+    <run.xsltproc.single DIR="${basedir}"
+			 XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
+			 XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
+			 XSLTPROC.STYLE.FILE="${xsltproc.style.file}">
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
       <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
-    </apply>    
+    </run.xsltproc.single>
+			 
   </target>
 
   <target name="xsltproc.processing.preprocessing"
