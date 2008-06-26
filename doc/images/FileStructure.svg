@@ -2,7 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
@@ -12,13 +12,20 @@
    height="274.33575"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.45.1"
+   inkscape:version="0.46"
    version="1.0"
    sodipodi:docbase="/home/abel/Courses/ADA/doc/images"
    sodipodi:docname="FileStructure.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 137.16788 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="595.01849 : 137.16788 : 1"
+       inkscape:persp3d-origin="297.50925 : 91.445251 : 1"
+       id="perspective114" />
     <marker
        inkscape:stockid="Arrow2Lend"
        orient="auto"
@@ -69,20 +76,21 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.6007185"
-     inkscape:cx="262.83732"
-     inkscape:cy="137.16788"
+     inkscape:zoom="3.0553672"
+     inkscape:cx="297.50925"
+     inkscape:cy="46.27746"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      width="1052.3622px"
      height="744.09448px"
-     inkscape:window-width="1280"
-     inkscape:window-height="1000"
+     inkscape:window-width="1914"
+     inkscape:window-height="1172"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:showpageshadow="false"
      showguides="true"
-     inkscape:guide-bbox="true" />
+     inkscape:guide-bbox="true"
+     showgrid="false" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -668,5 +676,20 @@
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1"
        d="M 420.1369,393.30594 L 456.59523,313.12001"
        id="path2356" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.79643196000000005px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1;font-size:12"
+       d="M 557.48308,466.5021 L 557.48308,440.67798"
+       id="path2487" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
+       x="494.86447"
+       y="477.7453"
+       id="text2489"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2491"
+         x="494.86447"
+         y="477.7453">Timewindow.enabled</tspan></text>
   </g>
 </svg>
