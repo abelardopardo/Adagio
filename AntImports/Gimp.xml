@@ -21,11 +21,7 @@
   <property name="gimp.src.dir" value="${basedir}"/>
   <property name="gimp.script.file" 
             value="${ada.home}${file.separator}AntImports${file.separator}xcftopng.scm"/>
-<<<<<<< HEAD:AntImports/Gimp.xml
-  <property name="gimp.files"  value="*.xcf"/>
-=======
   <property name="gimp.files" value=""/>
->>>>>>> master:AntImports/Gimp.xml
 
   <!-- Private properties -->
 
