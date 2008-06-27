@@ -153,12 +153,35 @@
 	  if="xsltproc.check"
 	  description="Apply a style to an XML file">
 
+    <echo>xsltproc.processing         RUN</echo>
+    <echo>${basedir}</echo>
+
     <!-- Create the dst directory -->
     <mkdir dir="${xsltproc.dst.dir}" />
 
     <!-- Only one of these two will truly execute -->
-    <antcall target="xsltproc.processing.nopreprocessing"/>
+    <echo level="info">BEF xsltproc.stylefile.file: ${xsltproc.style.file}</echo>
     <antcall target="xsltproc.processing.preprocessing"/>
+    <echo level="info">AFT xsltproc.stylefile.file: ${xsltproc.style.file}</echo>
+
+    <!-- Force the dependency checking on changes on the style sheet -->
+    <dependset>
+      <srcfileset file="${xsltproc.style.file}" />
+      <srcfileset dir="${ada.home}/XslStyles">
+	<include name="*.xsl" />
+      </srcfileset>
+      <targetfilelist refid="xsltproc.target.filelist" />
+    </dependset>
+
+    <!-- Execute the command. Watch out for abssrc.dir and absdst.dir -->
+    <run.xsltproc.single DIR="${basedir}"
+			 XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
+			 XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
+			 XSLTPROC.STYLE.FILE="${xsltproc.style.file}">
+      <fileset refid="xsltproc.fileset"/>
+      <!-- Mapper from source files to produced files -->
+      <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
+    </run.xsltproc.single>
   </target>
 
   <target name="xsltproc.processing.nopreprocessing"
@@ -208,26 +231,9 @@
       <mapper type="flatten"/>
     </pathconvert>
 
-    <echo level="info">xsltproc processed stylefile: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}</echo>
-
-    <!-- Force the dependency checking on changes on the style sheet -->
-    <dependset>
-      <srcfileset file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}"/>
-      <srcfileset dir="${ada.home}/XslStyles">
-	<include name="*.xsl" />
-      </srcfileset>
-      <targetfilelist refid="xsltproc.target.filelist" />
-    </dependset>
-
-    <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <run.xsltproc.single DIR="${basedir}"
-			 XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
-			 XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
-			 XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}">
-      <fileset refid="xsltproc.fileset"/>
-      <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
-    </run.xsltproc.single>
+    <property name="xsltproc.style.file"     
+	      value="${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}"/>
+    <echo level="info">NEW xsltproc.stylefile.file: ${xsltproc.style.file}</echo>
 
   </target>
 
