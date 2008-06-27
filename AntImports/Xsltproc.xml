@@ -220,19 +220,15 @@
     </dependset>
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${basedir}" parallel="false" dest="${xsltproc.absdst.dir}" 
-	   append="yes" failonerror="true" executable="${xsltproc.exec}" 
-	   output="build.out">
-      <arg value="--xinclude"/>
-      <arg value="--xincludestyle"/>
-      <arg line="${xsltproc.extra.args}"/>
-      <arg value="-o"/>
-      <targetfile/>
-      <arg value="${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}"/>
+    <run.xsltproc.single DIR="${basedir}"
+			 XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
+			 XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
+			 XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}">
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
       <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
-    </apply>    
+    </run.xsltproc.single>
+
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
