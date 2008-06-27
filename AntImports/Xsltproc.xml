@@ -160,9 +160,15 @@
     <mkdir dir="${xsltproc.dst.dir}" />
 
     <!-- Only one of these two will truly execute -->
-    <echo level="info">BEF xsltproc.stylefile.file: ${xsltproc.style.file}</echo>
+    <echo level="info">BEF xsltproc.stylefile.file: ${xsltproc.style.real.file}</echo>
     <antcall target="xsltproc.processing.preprocessing"/>
-    <echo level="info">AFT xsltproc.stylefile.file: ${xsltproc.style.file}</echo>
+
+    <echo level="info">AFT xsltproc.stylefile.file: ${xsltproc.style.real.file}</echo>
+
+    <property name="xsltproc.style.real.file"     
+	      value="${xsltproc.style.file}"/>
+
+    <echo level="info">AFT2 xsltproc.stylefile.file: ${xsltproc.style.real.file}</echo>
 
     <!-- Force the dependency checking on changes on the style sheet -->
     <dependset>
@@ -231,9 +237,9 @@
       <mapper type="flatten"/>
     </pathconvert>
 
-    <property name="xsltproc.style.file"     
+    <property name="xsltproc.style.real.file"     
 	      value="${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}"/>
-    <echo level="info">NEW xsltproc.stylefile.file: ${xsltproc.style.file}</echo>
+    <echo level="info">NEW xsltproc.stylefile.file: ${xsltproc.style.real.file}</echo>
 
   </target>
 
