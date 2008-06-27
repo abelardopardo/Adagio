@@ -36,7 +36,7 @@
 
   <import file="Rsync.xml"/>
 
-  <target name="execute">
+  <target name="execute" depends="initial.delete.build.out">
 
     <antcall target="subrecursive.processing" inheritAll="false"/>
 
@@ -111,10 +111,15 @@
     <antcall target="subrecursive.clean" inheritAll="false"/>
 
     <antcall target="clean.clean" inheritAll="false"/>
-
+    
   </target>
 
-<target name="report">
+  <target name="report">
+
+    <antcall target="initial.check.dump">
+      <param name="ada.initial.check.dump.level" value="warning"/>
+    </antcall>
+    <echo/>
 
     <echo>Tool               | Installed |  Missing</echo>
     <echo>-------------------+-----------+-----------------------------</echo>

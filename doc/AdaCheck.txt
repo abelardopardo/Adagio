@@ -1,0 +1,37 @@
+     [echo] ------ Global properties ----
+     [echo]   basedir = /home/user/Courses/ADA/doc
+     [echo]   user.dir = /home/user/Courses/ADA/doc
+     [echo]   user.home = /home/user
+     [echo]   ada.home = /home/user/Courses/ADA
+     [echo] 
+     [echo]   executable.file.extension = 
+     [echo]   xml.catalog.file = /etc/xml/catalog
+     [echo]   xml.catalog.file.available = true
+     [echo] 
+     [echo] Tool               | Installed |  Missing
+     [echo] -------------------+-----------+-----------------------------
+     [echo] Xfig               |     *     |
+     [echo] -------------------+-----------+-----------------------------
+     [echo] Inkscape           |     *     |
+     [echo] -------------------+-----------+-----------------------------
+     [echo] Gimp               |     *     |
+     [echo] -------------------+-----------+-----------------------------
+     [echo] Convert            |     *     |
+     [echo] -------------------+-----------+-----------------------------
+     [echo] Xsltproc           |     *     |
+     [echo] -------------------+-----------+-----------------------------
+     [echo] Latex              |     *     |
+     [echo] -------------------+-----------+-----------------------------
+     [echo] Dvips              |     *     |
+     [echo] -------------------+-----------+-----------------------------
+     [echo] Ps2pdf             |     *     |
+     [echo] -------------------+-----------+-----------------------------
+     [echo] Pdflatex           |     *     |
+     [echo] -------------------+-----------+-----------------------------
+     [echo] Dblatex            |     *     |
+     [echo] -------------------+-----------+-----------------------------
+     [echo] Pdfnup             |     *     |
+     [echo] -------------------+-----------+-----------------------------
+
+BUILD SUCCESSFUL
+Total time: 5 seconds

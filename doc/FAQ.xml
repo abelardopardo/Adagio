@@ -1,16 +1,230 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
 
-<chapter id="ADA_FAQ">
+<article id="ADA_FAQ">
   <title>ADA Frequently Asked Questions</title>
 
-  <section>
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                         WHAT IS ADA                          -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <section id="About_ADA">
+    <title>About ADA</title>
+    <qandaset defaultlabel="qanda">
+      <qandaentry>
+	<question>
+	  <para>What is ADA?</para>
+	</question>
+	<answer>
+	  <para>
+	    ADA is a tool that provides support for <quote>Agile and Distributed
+	    Authoring</quote>. Authors (in general) use a combination of tools
+	    to produce documents. The actual variety of documents makes more
+	    appropriate to refer to this items as resources. A resource may
+	    perfectly be a regular text document, but today it may also be a
+	    screen capture, video clip, audio clip, picture, etc. ADA is
+	    conceived to manipulate resources in this context.
+	  </para>
+	  <para>
+	    The challenge appears when a large set of resources with a complex
+	    structure is created by a large number of authors working in a
+	    distributed environment.
+	  </para>
+
+	  <para>
+	    The first problem is the variety of tools used by the authors. ADA
+	    facilitates the post-processing by automatically producing
+	    preliminary versions of the created resources. The following figure
+	    illustrates a potential environment and the support provided by ADA.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/AuthorEnv.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Author environment and ADA role</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>
+	    Once created, these files (not the sources) can be sent to a
+	    location where they are automatically combined to produce the final
+	    resource. The following figure illustrates a potential scenario
+	    combining these two aspects.
+	  </para>
+	  
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/Kitchen.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Combining resources with ADA</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>
+	    ADA offers support in two steps of this procedure.
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		To the author: ADA provides a simple automatic procedure to see
+		the approximate appearance of the created resources. The author
+		may focus on the content and verify that the appearance complies
+		with certain minimum requirements.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		In the production phase: ADA allows specifying a simple set of
+		rules to automatically combine all the contributions from
+		different authors to obtain a complex resource.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <para>
+	    The main element for ADA are the rule files. These files have the
+	    name <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename> (although
+	    it can be changed) and specify which are the resource files and how
+	    they need to be processed to obtain the final resources.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry>
+	<question>
+	  <para>What ADA is not?</para>
+	</question>
+	<answer>
+	  <para>
+	    ADA is not a text editor, nor a graphic editor, nor an integrated
+	    creative environment. The author may use tools to create the
+	    resources, and ADA is used to automatically contribute to the
+	    overall creation process.
+	  </para>
+
+	  <para>
+	    To use an analogy, ADA offers a very efficient courier service that,
+	    if you comply with certain requirements when creating resources, it
+	    takes them very quickly to the assembling plant, combines them with
+	    other resources contributed by other authors and automatically
+	    creates a final resource.
+	  </para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>Why is ADA needed?</para>
+	</question>
+	<answer>
+	  <para>
+	    ADA is oriented toward reducing the creation/modification cycle of a
+	    set of resources with a non-trivial organization. In the information
+	    era, the creation process is changing radically. Authors are no
+	    longer required to use a concrete tool, but instead, certain formats
+	    are used to easily publish content. But what really takes a
+	    multi-user distributed authoring scenario to a new dimension is an
+	    easy modification cycle. Think Wikipedia. The distributed authoring
+	    paradigm is beyond any doubt, but in order for those authors to
+	    truly contribute, resources are extremely easy to modify.
+	  </para>
+
+	  <para>
+	    A typical situation when a number of authors contribute toward a
+	    common resource is illustrated in the fillowing figure. There is
+	    usually an entity that absorbs the complexity of providing a
+	    homogeneus view of the material usually through an expensive and
+	    time consuming production stage. This production requires then an
+	    additional step to bring all the material to the final web
+	    publishing platform.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/AuthorCycle.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Conventional authoring cycle</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>
+	    The following picture illustrates the change in methodology that can
+	    be achieved with the help of ADA. By providing a fast two-way
+	    information channel between creation and production, the management
+	    of a set of resources can be truly improved. ADA provides the rules
+	    that automatically connect the source documents with the final
+	    published resources such that changes can be performed at a very
+	    low turnaround cost.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/AuthorNewCycle.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Conventional authoring cycle</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+	  
+	  <para>
+	    But aside from the turnaround time for changes, resources tend to be
+	    built recursively from the author contributions. The internal
+	    organization of a resource can be often replicated in the process in
+	    which it is built. To create the final electronic version of a book,
+	    there is certain amount of work that can be done for each chapter
+	    individually accompanied by certain inter-chapter processing. The
+	    rules defined in ADA are prepared to be applied hierarchically at
+	    different points of the overall production procedure. The following
+	    picture illustrates a hypothetical scenario in which a resource is
+	    built by combining resources from four authors in three gradual
+	    stages.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/ProductionCycle.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Full production cycle with ADA</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	</answer>
+      </qandaentry>
+    </qandaset>
+  </section>
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                    INSTALLATION IN WINDOWS                   -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <section id="Installing_ADA_in_Windows">
     <title>Installing ADA in Windows</title>
     <qandaset defaultlabel="qanda">
       <qandaentry>
 	<question>
-	  <para>What are the basic packages to run ADA in Windows?</para>
+	  <para>What are the required applications to run ADA in Windows?</para>
 	</question>
 	<answer>
 	  <para>
@@ -23,28 +237,55 @@
 	    </listitem>
 	    <listitem>
 	      <para>
-		Ant: A Java based build tool. ADA relies on ANT to decide which
-		documents to build and which tools to use for the task.
-	      </para>
-	    </listitem>
-	    <listitem>
-	      <para>
 		<ulink url="http://www.cygwin.com">Cygwin</ulink>: A linux-like
 		environment for Windows.
 	      </para>
 	    </listitem>
+	    <listitem>
+	      <para>
+		Ant: A Java based build tool. ADA relies on ANT to decide which
+		documents to build and which tools to use for the task.
+	      </para>
+	    </listitem>
 	  </itemizedlist>
-	  
+
 	  <para>
-	    The first step then is to make sure you have a <ulink
-	    url="http://java.sun.com/javase/">Java Run-Time Environment
-	    (JRE)</ulink> properly installed.
+	    Aside from these three tools, ADA allows to process certain file
+	    types if some additional programs are installed. For example,
+	    translating figures from SVG to PNG can be done using Inkscape but
+	    it needs to be previously installed.
 	  </para>
-	  
+	</answer>
+      </qandaentry>
+      
+      <qandaentry id="how_to_install_jre" 
+		  xreflabel="Java has been installed">
+	<question>
+	  <para>How to install a Java Run-time Environment in Windows?</para>
+	</question>
+	<answer>
 	  <para>
-	    The second step is to download the <code>cygwin</code> installer a
-	    program to select the packages wto install. Once started, the
-	    initial page is shown in the following figure.
+	    Java is a free tool developed by Sun Microsystems and the
+	    instructions on how to install it in windows provided with the
+	    package. You may download the software from <ulink
+	    url="http://www.java.com/en/download/download_the_latest.jsp">the
+	    official Free Java Download page</ulink>. Once the download
+	    finishes, execute the installer that asks a few simple questions and
+	    installs Java in your system.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry>
+	<question>
+	  <para>I got Java already installed, What else is required?</para>
+	</question>
+	<answer>
+	  <para>
+	    Once <xref linkend="how_to_install_jre"/>, the next step is to
+	    download the <code>cygwin</code> tool, a linux-like environment for
+	    Windows. Once downloaded, the initial page of the installer is shown
+	    in the following figure.
 	  </para>
 
 	  <informalfigure>
@@ -60,7 +301,7 @@
 
 	  <para>
 	    After starting the set-up program, you need to specify several
-	    parameters to stablish a connection with a server. Keep advancing on
+	    parameters to establish a connection with a server. Keep advancing on
 	    the installation steps until the screen to select the packages like
 	    the one in the following figure is shown.
 	  </para>
@@ -71,11 +312,14 @@
 		<imagedata fileref="images/CygwinSelectPackages.png"
 			   format="PNG"/>
 	      </imageobject>
+	      <textobject>
+		<phrase>Screen to select packages in Cygwin</phrase>
+	      </textobject>
 	    </mediaobject>
 	  </informalfigure>
 
 	  <para>
-	    Click in the botton with name <code>View</code> that appears above
+	    Click in the button with name <code>View</code> that appears above
 	    the package list until the word <quote>Full</quote> appears to its
 	    left. At that point, all packages suitable to be installed are shown
 	    alphabetically ordered. From the list, you need to select
@@ -106,7 +350,8 @@
 	    for the installation. The set-up program takes a few minutes to
 	    download (through a net connection) all the required packages. This
 	    step will take a few minutes and will depend significantly on the
-	    speed of that connection.
+	    speed of that connection. The installer application can be executed
+	    at any time to add/remove applications to the environment.
 	  </para>
 
 	  <para>
@@ -114,7 +359,7 @@
 	    of the set-up program and start a Cygwin shell. This is usually done
 	    by clicking on the icon that the set-up program has left on your
 	    desktop or browsing through the program menu and selecting the
-	    Cygwin executable. Once starte, a window like the one shown in the
+	    Cygwin executable. Once started, a window like the one shown in the
 	    following figure appears on the screen.
 	  </para>
 
@@ -123,50 +368,760 @@
 	      <imageobject>
 		<imagedata fileref="images/CygwinShell.png" format="PNG"/>
 	      </imageobject>
+	      <textobject>
+		<phrase>Cygwin shell screen</phrase>
+	      </textobject>
 	    </mediaobject>
 	  </informalfigure>
 
 	  <para>
-	    The windows is a typical linux command interpreter that is ready to
-	    received your orders. The first check that needs to be performed is
-	    to make sure the Java Run-time Environment is properly installed. By
-	    simply typing the command <code>which java</code>, if the answer is
-	    a single path to a file with name <code>java</code>, the JRE is
-	    properly installed. If the message states that no <code>java</code>
-	    could be found, you need to review your Java installation.
+	    This window is a typical linux command interpreter ready to process
+	    your commands. The first check is to make sure the Java Run-time
+	    Environment is properly installed. Type the command:
+	  </para>
+
+	  <programlisting>which java</programlisting>
+
+	  <para>
+	    If the answer is a single path to a file with name
+	    <code>java</code> similar to
+	  </para>
+
+	  <programlisting>/cygdrive/c/WINDOWS/system32/java</programlisting>
+	  
+	  <para>
+	    the JRE is properly installed. If the message says that <quote>no
+	    java in (/usr/local/bin:/usr/bin:/....)</quote> you need to review
+	    your Java installation.
+	  </para>
+
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="install_ant" xreflabel="Ant installation">
+	<question>
+	  <para>Got Java and Cygwin installed, now what?</para>
+	</question>
+	<answer>
+	  <para>
+	    The next tool required by ADA is <ulink
+	    url="http://ant.apache.org">Ant</ulink>, a Java based build
+	    tool. Ant is supposed to be a multi-platform tool, and the
+	    installation simply amounts to downloading a zip file, deploying its
+	    files in a directory, and declaring a couple of environment
+	    variables.
 	  </para>
 
 	  <para>
-	    The third step is to install <ulink
-	    url="http://ant.apache.org">Ant</ulink>. Ant is Java based, and
-	    therefore, installing the application simply amounts to deploying a
-	    directory and make sure that a couple of environment variables point
-	    to the right locations.
-	  </para>
-
-	  <para>
-	    Once Cygwin has been installed, you have two choices: install Ant as
-	    a regular windows application, or install Ant within Cygwin. The two
-	    choices are very similar from the point of view of the installation
-	    process, just unpack the zip archive in one location. The important
+	    When deploying Ant in a directory there are two choices: install Ant
+	    as a regular windows application, or install Ant inside
+	    Cygwin. Since Ant is simply a Java program, the two choices are very
+	    similar because it only requires Java to be available. The important
 	    step is to set the environment variables ANT_HOME to point to the
-	    new directory and PATH to include the <filename>bin</filename>
-	    directory within Ant.
+	    new directory and <code>PATH</code> to include the
+	    <filename>bin</filename> directory within Ant.
 	  </para>
 
 	  <para>
-	    Once you installed Ant, you may check the installation again with
-	    the command <code>which ant</code>. As in the case of Java, if an
-	    absolute path is shown, Ant is ready to execute. If not, you need to
-	    review your installation procecure.
+	    To add a new variable or modify a current variable in the execution
+	    environment in Windows you need to first select the <quote>Control
+	    Panel</quote>, then select the <quote>System</quote> link. A new
+	    window opens with several panes. Select the pane with name
+	    <quote>Advanced</quote> and then click on the button with
+	    name <quote>Environment Variables</quote>. It is recommended you
+	    insert these definitions as part of the System Variables.
+	  </para>
+
+	  <para>
+	    A new variable with name <code>ANT_HOME</code> (all uppercase) has
+	    to be declared and its value must be the directory where the Ant
+	    files where deployed from the zip archive. Additionally, the
+	    <code>PATH</code> variable (which is already defined) needs to be
+	    modified by adding the path to the <filename>bin</filename>
+	    directory within the Ant installation directory.
+	  </para>
+
+	  <para>
+	    Once the installation is finished, you may check the availability of
+	    the tool by opening a new Cygwin window. Type the command
+	  </para>
+
+	  <programlisting>which ant</programlisting>
+
+	  <para>
+	    If the answer is a single path to a file with name
+	    <code>ant</code> such as
+	  </para>
+
+	  <programlisting>/cygdrive/c/Program Files/apache-ant-1.7.0/bin/ant</programlisting>
+	  
+	  <para>
+	    Ant is properly installed. If the message says <quote>no
+	    ant in (/usr/local/bin:/usr/bin:/....)</quote> you need to review
+	    your installation.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="Fetch_ada_in_windows">
+	<question>
+	  <para>
+	    Once I have the JRE, Cygwin and Ant, what is next?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    Open a Cygwin shell and go to the directory where you want ADA
+	    installed. Execute the command:
+	  </para>
+	  <programlisting>git clone <xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='ADA_DOWNLOAD_URL']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	  <para>
+	    After a few seconds, a new directory with name ADA is created
+	    containing all the required files.
+	  </para>
+	  <para>
+	    In order to make ADA available, the PATH environment variable needs
+	    to be modified by adding the path to the <filename>bin</filename>
+	    directory. You may follow the procedure described in the <xref
+	    linkend="install_ant"/>.
+	  </para>
+
+	  <para>
+	    Once the environment variable <code>PATH</code> has been modified to
+	    include the <filename>bin</filename> directory within ADA, open a
+	    brand new Cygwin shell and type the following command
+	  </para>
+	  
+	  <programlisting>which adado</programlisting>
+	  
+	  <para>
+	    As in the case of the <xref linkend="install_ant"/>, if the
+	    answer is a single path to the <filename>adado</filename> file
+	    similar to
+	  </para>
+
+	  <programlisting>/home/.../.../ADA/bin/adado</programlisting>
+	  
+	  <para>
+	    ADA is properly installed. If the message says <quote>no
+	    adado in (/usr/local/bin:/usr/bin:/....)</quote> you need to review
+	    your installation.
+	  </para>
+
+	  <para>
+	    The final step to make sure that the commands provided by ADA are
+	    available is to try <xref linkend="run_adacheck"/>.
 	  </para>
 	</answer>
       </qandaentry>
     </qandaset>
   </section>
 
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                    INSTALLATION IN LINUX                     -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!--   <section>     -->
 <!--     <title>Installing ADA in Linux</title> -->
 
 <!--   </section> -->
-</chapter>
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                    PROCESSING RESOURCES                      -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <section id="Processing_resources_with_ADA">
+    <title>Processing resources with ADA</title>
+    <qandaset>
+      <qandaentry id="run_adacheck" xreflabel="Running adacheck">
+	<question>
+	  <para>What kind of resources can be processed by ADA?</para>
+	</question>
+	<answer>
+	  <para>
+	    ADA is a building tool, and to <quote>build</quote> a resource
+	    it needs some applications to be available in your computer. In
+	    order to see what tools is able to manage ADA and which one of them
+	    are available, open a shell (a regular shell in Linux or a Cygwin
+	    shell in Windows) and type the command
+	  </para>
+
+	  <programlisting>adacheck</programlisting>
+
+	  <para>
+	    ADA prints the value of several important internal variables
+	    followed by a list of the tools that is capable of using and if
+	    they are ready to be used by the current installation. For example:
+	  </para>
+
+	  <programlisting><xi:include href="AdaCheck.txt"
+	  parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="how_to_run_ada" xreflabel="How to run ADA">
+	<question>
+	  <para>How to tell ADA which files should process and how?</para>
+	</question>
+	<answer>
+	  <para>
+	    ADA is a tool that needs from the user a set of files to apply
+	    certain pre-conceinved production rules.  This information is all
+	    contained in a regular text file with name <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>. The
+	    structure of this file is very simple, any line starting with the
+	    symbol <quote>#</quote> is ignored. Every empty line is ignored. The
+	    rest of lines must have the structure <code>name=value</code>. The
+	    set of names is defined by ADA. Refer to the following questions to
+	    know which names and values are possible.
+	  </para>
+
+	  <para>
+	    The following figure illustrates how these rules are applied to a
+	    set of files in the author space to produce resources.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/Rules.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Rules used by ADA</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="adado" xreflabel="How to execute ADA">
+	<question>
+	  <para>How to tell ADA to build all the resources?</para>
+	</question>
+	<answer>
+	  <para>
+	    ADA needs a file with name <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    with the definitions of the files to process and the rules to
+	    apply. Once such file has been created, to build the resources
+	    simply open a shell (regular shell in Unix or a Cygwin shell in
+	    Windows) and type the command
+	  </para>
+	  <programlisting>adado</programlisting>
+	</answer>
+      </qandaentry>
+	  
+      <qandaentry>
+	<question>
+	  <para>How to process a figure with Xfig?</para>
+	</question>
+	<answer>
+	  <para>
+	    Open Xfig and create a figure. Save it in Xfig format. Suppose that
+	    the figure needs to be translated to PNG format. Open the file
+	    <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    (if not created, see <xref linkend="how_to_run_ada"/>) and set the
+	    following variables:
+	  </para>
+
+	  <informaltable frame="all" id="xfig_vars">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="center"/>
+	      <thead>
+		<row>
+		  <entry align="center">Variable name</entry>
+		  <entry align="center">Description</entry>
+		  <entry align="center">Default</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry><varname>xfig.exec</varname></entry>
+		  <entry>
+		    Name of the xfig executable installed in the system
+		  </entry>
+		  <entry><filename>fig2dev</filename></entry>
+		</row>
+		<row>
+		  <entry><varname>xfig.src.dir</varname></entry>
+		  <entry>Directory from where to take the figures</entry>
+		  <entry>Current directory</entry>
+		</row>
+		<row>
+		  <entry><varname>xfig.dst.dir</varname></entry>
+		  <entry>Directory where to leave the processed figures</entry>
+		  <entry>Value of <varname>xfig.src.dir</varname></entry>
+		</row>
+		<row>
+		  <entry><varname>xfig.output.format</varname></entry>
+		  <entry>
+		    Figures are translated to this format. The formats supported
+		    by xfig are png, eps, gif, jpg, latex, map, etc. For a
+		    detailed list check the manual page of <code>fig2dev</code>..
+		  </entry>
+		  <entry><filename>png</filename></entry>
+		</row>
+		<row>
+		  <entry><varname>xfig.files</varname></entry>
+		  <entry>
+		    Space or comma separated list of file names (with no path)
+		    of the figures to process
+		  </entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry><varname>xfig.border</varname></entry>
+		  <entry>
+		    Border in pixels to add around the figure
+		  </entry>
+		  <entry>2</entry>
+		</row>
+		<row>
+		  <entry><varname>xfig.smooth</varname></entry>
+		  <entry>
+		    Smooth factor to pass to Ghostscript to improve rendering.
+		  </entry>
+		  <entry>4</entry>
+		</row>
+		<row>
+		  <entry><varname>xfig.extra.args</varname></entry>
+		  <entry>
+		    Additional options to pass directly to <code>fig2dev</code>.
+		  </entry>
+		  <entry></entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+
+	  <para>
+	    For example. If the figures with names
+	    <filename>sign.fig</filename> and <filename>office.fig</filename>
+	    are stored in the current directory and versions in png format need
+	    to be created in the same directory, the following assignment is
+	    required in the file <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
+	  </para>
+
+	  <programlisting>xfig.files=sign.fig office.fig</programlisting>
+
+	  <para>
+	    With such values defined, execute ADA to obtain the processed
+	    figures (see <xref linkend="adado"/>).
+	  </para>
+
+	  <para>
+	    If you may use files in a different directory, or the produced files
+	    need to be stored in a different directory, include the additional
+	    variable assignments in the file <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
+	  </para>
+
+	</answer>
+      </qandaentry>
+
+      <qandaentry>
+	<question>
+	  <para>How to process a figure with Inkscape?</para>
+	</question>
+	<answer>
+	  <para>
+	    Open Inkscape and create a figure. Save it in SVG format. Suppose
+	    that this figure needs to be translated to PNG format. Open the file
+	    <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    (if not created, see <xref linkend="how_to_run_ada"/>) and set the
+	    following variables:
+	  </para>
+
+	  <informaltable frame="all" id="inkscape_vars">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="center"/>
+	      <thead>
+		<row>
+		  <entry align="center">Variable name</entry>
+		  <entry align="center">Description</entry>
+		  <entry align="center">Default</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry><varname>inkscape.exec</varname></entry>
+		  <entry>
+		    Name of the inkscape executable installed in the system
+		  </entry>
+		  <entry><filename>inkscape</filename></entry>
+		</row>
+		<row>
+		  <entry><varname>inkscape.src.dir</varname></entry>
+		  <entry>Directory from where to take the figures</entry>
+		  <entry>Current directory</entry>
+		</row>
+		<row>
+		  <entry><varname>inkscape.dst.dir</varname></entry>
+		  <entry>Directory where to leave the processed figures</entry>
+		  <entry>Value of <varname>inkscape.src.dir</varname></entry>
+		</row>
+		<row>
+		  <entry><varname>inkscape.output.format</varname></entry>
+		  <entry>
+		    Figures are translated to this format. Allowed values:
+		    <filename>png</filename>, <filename>eps</filename>
+		    (Encapsulated Postscript), <filename>ps</filename>
+		    (Postscript) or <filename>pdf</filename>.
+		  </entry>
+		  <entry><filename>png</filename></entry>
+		</row>
+		<row>
+		  <entry><varname>inkscape.files</varname></entry>
+		  <entry>
+		    Space or comma separated list of file names (with no path)
+		    of the figures to process
+		  </entry>
+		  <entry></entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+
+	  <para>
+	    For example. If the figures with names
+	    <filename>chart.svg</filename> and <filename>graph.svg</filename>
+	    are stored in the current directory and versions in png format need
+	    to be created in the same directory, the following assignment is
+	    required in the file <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
+	  </para>
+
+	  <programlisting>inkscape.files=chart.svg graph.svg</programlisting>
+
+	  <para>
+	    With such values defined, execute ADA to obtain the processed
+	    figures (see <xref linkend="adado"/>).
+	  </para>
+
+	  <para>
+	    If you may use files in a different directory, or the produced files
+	    need to be stored in a different directory, include the additional
+	    variable assignments in the file <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry>
+	<question>
+	  <para>What if I have lots of figures. Do I need to write all their
+	  file names in <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    No. Two regular expression patterns are allowed.
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><quote>*</quote> matches zero or more characters</para>
+	    </listitem>
+	    <listitem>
+	      <para><quote>?</quote> matches one character</para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <para>
+	    For example, if you have several figures and each of them have a
+	    version in English (with extension <code>.en.svg</code>) and a
+	    version in Spanish (with extension <code>.es.svg</code>), you may
+	    select all of them wit the expression <code>*.e?.xml</code>.
+	    dot. These patterns may be used anywhere file lists are required
+	    unless otherwise noticed.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry>
+	<question>
+	  <para>How to process Docbook files in ADA?</para>
+	</question>
+	<answer>
+	  <para>
+	    Open your favorite XML editor and create a Docbook XML file. Save it
+	    in XML format. Depending on the rendering procedure of your editor,
+	    you may need to have your figures available to be shown. If you want
+	    to simply apply the regular Docbook XSL Stylesheets, then you need
+	    to set the appropriate values to some of these variables in <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	  </para>
+
+	  <informaltable frame="all" id="docbook_vars">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="center"/>
+	      <thead>
+		<row>
+		  <entry align="center">Variable name</entry>
+		  <entry align="center">Description</entry>
+		  <entry align="center">Default</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry><varname>docbook.exec</varname></entry>
+		  <entry>
+		    Name of the Xslt processor installed in the system
+		  </entry>
+		  <entry><filename>xsltproc</filename></entry>
+		</row>
+		<row>
+		  <entry><varname>docbook.src.dir</varname></entry>
+		  <entry>Directory from where to take the Docbook files</entry>
+		  <entry>Current directory</entry>
+		</row>
+		<row>
+		  <entry><varname>docbook.dst.dir</varname></entry>
+		  <entry>Directory where to leave the resulting files</entry>
+		  <entry>Value of <varname>docbook.src.dir</varname></entry>
+		</row>
+		<row>
+		  <entry><varname>docbook.output.format</varname></entry>
+		  <entry>
+		    Extension to replace the extension <code>.xml</code> in the
+		    file name.
+		  </entry>
+		  <entry><filename>html</filename></entry>
+		</row>
+		<row>
+		  <entry><varname>docbook.files</varname></entry>
+		  <entry>
+		    Space or comma separated list of Docbook file names (with no
+		    path) to process
+		  </entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry><varname>docbook.extra.args</varname></entry>
+		  <entry>
+		    Additional options to pass directly to <code>xsltproc</code>.
+		  </entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry><varname>docbook.style.file</varname></entry>
+		  <entry>XSL file to use to translate the Docbook file</entry>
+		  <entry>Installed Profile Style</entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+	  
+	  <para>
+	    For example, if the DocBook document with name
+	    <filename>manual.xml</filename> is stored in the current directory
+	    and needs to be translated to HTML, the following definition is
+	    needed in the file <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
+	  </para>
+	  
+	  <programlisting>docbook.files=manual.xml</programlisting>
+
+	  <para>
+	    With such values defined, execute ADA to obtain the HTML rendering
+	    of the file (see <xref linkend="adado"/>).
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry>
+	<question>
+	  <para>Can I specify a generic rule to be applied everywhere?</para>
+	  <para>
+	    The file <filename><xi:include href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    contains rules only valid for the current directory. Is it possible
+	    to define how to process a set of files in a way such that it is
+	    applied in all the directories? For example, I would like all my
+	    *.svg files to be always processed by the Inkscape rule.
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    Yes. You may define rules that are already defined when you process
+	    the files in a directory. ADA automatically reads first the file
+	    with name <filename>.ant.properties</filename> in your home
+	    directory. You may insert any rule there that will be defined for
+	    all the directories in which you process files. What is even more
+	    important, you may override these rules at any time simply by
+	    including a new rule in the local <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    file.
+	  </para>
+	  
+	  <para>
+	    In order to make sure the file <filename>.ant.properties</filename>
+	    is placed in the correct location, open a shell window and run the
+	    command <code>adacheck</code>. The line containing the variable name
+	    <code>user.home</code> displays the home directory where ADA expects
+	    the <filename>.ant.properties</filename> file to be processed.
+	  </para>
+	</answer>
+      </qandaentry>
+      <qandaentry>
+	<question>
+	  <para>
+	    How can I use a slightly modified generic stylesheet without
+	    modifying it?
+	  </para>
+	  <para>
+	    I want to use a stylesheet that has lots of parameters to customize
+	    its behavior. However, I cannot touch it since it's being shared by
+	    a pool of authors.
+	  </para>
+	  <para>
+	    How can I still use such style sheet but set any parameter to my own
+	    values?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    ADA offers support for this task automatically by taking all your
+	    personal definitions in an extra XML file and merging that file with
+	    the regular style file you use.
+	  </para>
+
+	  <para>
+	    Suppose your style file is in
+	    <filename>/path/to/another/location/MainStyle.xsl</filename>. The
+	    stylesheet has multiple parameters suitable to be defined. You then
+	    create a local stylesheet containing <emphasis>only</emphasis> the
+	    definitions of the parameters with the personalized values (for
+	    example, a file with name
+	    <filename>MyPersonalValues.xml</filename>). You then include in the
+	    file <filename><xi:include
+	    href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    the necessary definitions to apply the style sheet
+	    <filename>/path/to/another/location/MainStyle.xsl</filename> to your
+	    XML source file. Additionally, you inform ADA that the final style
+	    needs to be modified with your personal definitions:
+	  </para>
+
+	  <programlisting>mergestyles.master.style=MyPersonalValues.xml</programlisting>
+	  <para>
+	    In general, you may use the following two variables in the file
+	    <filename><xi:include href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>:
+	  </para>
+
+	  <informaltable frame="all" id="mergestyles_vars">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="center"/>
+	      <thead>
+		<row>
+		  <entry align="center">Variable name</entry>
+		  <entry align="center">Description</entry>
+		  <entry align="center">Default</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry>mergestyles.src.dir</entry>
+		  <entry>
+		    Directory from where to obtain the style sheet with local
+		    values.
+		  </entry>
+		  <entry>Current directory</entry>
+		</row>
+		<row>
+		  <entry>mergestyles.master.style</entry>
+		  <entry>Name of the style sheet with the local variables</entry>
+		  <entry></entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+	  
+	  <para>
+	    The style sheet resulting of the merge between the two given files
+	    is left in the current directory.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <!--
+      <qandaentry>
+	<question>
+	  <para>
+	    How do I upgrade to the latest version of ADA?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    If a new version of ADA is published, the upgrade can be obtained
+	    by opening a a Cygwin shell and typing the following within the ADA
+	    directory:
+	  </para>
+	  <programlisting>git fetch</programlisting>
+	</answer>
+      </qandaentry>
+      -->
+    </qandaset>
+  </section>
+</article>
+
+<!--
+Local Variables: compile-command: "adado" End:
+-->

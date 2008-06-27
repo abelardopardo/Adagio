@@ -20,7 +20,7 @@
   <!-- Checks for availability of different binaries -->
   <import file="Mergestyles.xml"/>
 
-  <!-- Property definition -->
+  <!-- Public Property definition -->
   <property name="xsltproc.exec"           value="xsltproc"/>
   <property name="xsltproc.src.dir"        value="${basedir}"/>
   <property name="xsltproc.dst.dir"        value="${xsltproc.src.dir}"/>
@@ -28,22 +28,33 @@
   <property name="xsltproc.output.format"  value="html"/>
   <property name="xsltproc.extra.args"     value=""/>
   <property name="xsltproc.files"          value=""/>
-  <!-- Source files to be processed by xsltproc -->
-  <fileset id="xsltproc.fileset" dir="${xsltproc.src.dir}"
+
+  <!-- Private properties -->
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="xsltproc.abssrc.dir" pathsep=" ">
+    <path location="${xsltproc.src.dir}"/>
+  </pathconvert>
+  <pathconvert property="xsltproc.absdst.dir" pathsep=" ">
+    <path  location="${xsltproc.dst.dir}"/>
+  </pathconvert>
+  
+  <!-- Source files to be processed by xsltproc (fileset to allow wildcards) -->
+  <fileset id="xsltproc.fileset" dir="${xsltproc.abssrc.dir}"
 	   includes="${xsltproc.files}"/>
 
-  <!-- Obtain the fileset containing the produced files. This is done to be
-       able to display the deleted files (debugging) -->
-  <pathconvert property="xsltproc.target.fileset.property" pathsep=" ">
+  <!-- Obtain the filelist with the produced files. -->
+  <pathconvert property="xsltproc.target.filelist.property" pathsep=" ">
     <fileset refid="xsltproc.fileset"/>
     <chainedmapper>
+      <mapper type="glob" from="${xsltproc.abssrc.dir}/*" 
+	      to="${xsltproc.absdst.dir}/*"/>
       <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
-      <mapper type="flatten"/>
     </chainedmapper>
   </pathconvert>
-  <fileset id="xsltproc.target.fileset" dir="${xsltproc.dst.dir}"
-	   includes="${xsltproc.target.fileset.property}"/>
-  
+  <filelist id="xsltproc.target.filelist"
+	    files="${xsltproc.target.filelist.property}"/>
+
   <!-- Condition to detect if the stylefile needs to be pre-processed with
   Mergestyles -->
   <condition property="xsltproc.mergestyles">
@@ -65,21 +76,25 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${xsltproc.src.dir}" arg2=""/></not>
+        <not><equals arg1="${xsltproc.abssrc.dir}" arg2=""/></not>
 	<!-- There must be some files defined -->
         <not><equals arg1="${xsltproc.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${xsltproc.dst.dir}" arg2=""/></not>
+        <not><equals arg1="${xsltproc.absdst.dir}" arg2=""/></not>
 	<!-- Require a non-empty style file -->
         <not><equals arg1="${xsltproc.style.file}" arg2=""/></not>
       </and>
     </condition>
 
-    <!-- The required binaries need to be available. -->
-    <available property="xsltproc.execution.possible"
-	       file="${xsltproc.exec}${executable.file.extension}"
-	       filepath="${env.PATH}"/>
-    
+    <!-- The required condition not to bomb out -->
+    <condition property="xsltproc.execution.possible">
+      <and>
+	<available file="${xsltproc.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+	<available file="${xsltproc.abssrc.dir}"/> 
+      </and>
+    </condition>
+
     <condition property="xsltproc.failure">
       <and>
 	<isset property="xsltproc.check"/>
@@ -94,7 +109,8 @@
   </target>
 
   <target name="xsltproc.bomb.out" if="xsltproc.failure">
-    <fail message="Ups! You requested the execution of xsltproc but the executable ${xsltproc.exec} was not found installed in your system"/>
+    <fail message="Xsltproc rule cannot be executed. Review the value of
+		   variables xsltproc.src.dir and xsltproc.exec"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -135,11 +151,11 @@
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
       </srcfileset>
-      <targetfileset refid="xsltproc.target.fileset" />
+      <targetfilelist refid="xsltproc.target.filelist" />
     </dependset>
 
-    <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${basedir}" parallel="false" dest="${xsltproc.dst.dir}" 
+    <!-- Execute the command. Watch out for abssrc.dir and absdst.dir -->
+    <apply dir="${basedir}" parallel="false" dest="${xsltproc.absdst.dir}" 
 	   append="yes" failonerror="true" executable="${xsltproc.exec}" 
 	   output="build.out">
       <arg value="--xinclude"/>
@@ -173,19 +189,19 @@
       <mapper type="flatten"/>
     </pathconvert>
 
-    <echo level="info">xsltproc processed stylefile: ${xsltproc.dst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}</echo>
+    <echo level="info">xsltproc processed stylefile: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}</echo>
 
     <!-- Force the dependency checking on changes on the style sheet -->
     <dependset>
-      <srcfileset file="${xsltproc.dst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}"/>
+      <srcfileset file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}"/>
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
       </srcfileset>
-      <targetfileset refid="xsltproc.target.fileset" />
+      <targetfilelist refid="xsltproc.target.filelist" />
     </dependset>
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${basedir}" parallel="false" dest="${xsltproc.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${xsltproc.absdst.dir}" 
 	   append="yes" failonerror="true" executable="${xsltproc.exec}" 
 	   output="build.out">
       <arg value="--xinclude"/>
@@ -193,7 +209,7 @@
       <arg line="${xsltproc.extra.args}"/>
       <arg value="-o"/>
       <targetfile/>
-      <arg value="${xsltproc.dst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}"/>
+      <arg value="${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}"/>
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
       <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
@@ -217,7 +233,7 @@
     <echo>${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted = ${xsltproc.target.fileset.property}</echo>
+    <echo> deleted = ${xsltproc.target.filelist.property}</echo>
 
     <!-- This call has no effect if no mergestyles.master.style is given -->
     <antcall target="mergestyles.clean" inheritAll="false">
@@ -228,11 +244,8 @@
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
-    <delete failonerror="false">
-      <fileset  dir="${xsltproc.dst.dir}"
-		includes="${xsltproc.target.fileset.property}">
-	<include name="__bogus__file__to__avoid__empty__fileset"/>
-      </fileset>
+    <delete failonerror="false" includeemptydirs="true">
+      <filelist refid="xsltproc.target.filelist"/>
     </delete>
   </target>
 
@@ -240,13 +253,13 @@
   <target name="xsltproc.dump.properties" depends="initial.check">
     <echo level="info"> ------ xsltproc properties ----
     xsltproc.exec            ="${xsltproc.exec}"
-    xsltproc.src.dir         ="${xsltproc.src.dir}"
-    xsltproc.dst.dir         ="${xsltproc.dst.dir}"
+    xsltproc.abssrc.dir ="${xsltproc.abssrc.dir}"
+    xsltproc.absdst.dir ="${xsltproc.absdst.dir}"
     xsltproc.style.file      ="${xsltproc.style.file}"
     xsltproc.output.format   ="${xsltproc.output.format}"
     xsltproc.extra.args      ="${xsltproc.extra.args}"
     xsltproc.files           ="${xsltproc.files}"
-    xsltproc.target.fileset  ="${xsltproc.target.fileset.property}
+    xsltproc.target.filelist ="${xsltproc.target.filelist.property}
     xsltproc.mergestyles     ="${xsltproc.mergestyles}"</echo>
   </target>
 

@@ -46,6 +46,7 @@
       <and>
 	<!-- The src.dir needs to be non-empty. -->
         <not><equals arg1="${laboratory.src.dir}" arg2=""/></not>
+	<available file="${laboratory.src.dir}"/> 
 	<!-- There must be some files defined -->
 	<or>
 	  <not><equals arg1="${laboratory.files}" arg2=""/></not>

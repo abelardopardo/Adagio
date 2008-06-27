@@ -15,13 +15,24 @@
   <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
 
-  <!-- Property definition -->
+  <!-- Public Property definition -->
   <property name="@NAME@.exec"           value="@NAME@"/>
   <property name="@NAME@.src.dir"        value="${basedir}"/>
   <property name="@NAME@.dst.dir"        value="${@NAME@.src.dir}"/>
   <property name="@NAME@.files"          value=""/>
-  <!-- Source files to be processed by @NAME@ -->
-  <fileset id="@NAME@.fileset" dir="${@NAME@.src.dir}"
+
+  <!-- Private properties -->
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="@NAME@.abssrc.dir" pathsep=" ">
+    <path location="${@NAME@.src.dir}"/>
+  </pathconvert>
+  <pathconvert property="@NAME@.absdst.dir" pathsep=" ">
+    <path  location="${@NAME@.dst.dir}"/>
+  </pathconvert>
+
+  <!-- Source files to be processed by @NAME@ (fileset to allow wildcards) -->
+  <fileset id="@NAME@.fileset" dir="${@NAME@.abssrc.dir}"
 	   includes="${@NAME@.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
@@ -34,18 +45,22 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${@NAME@.src.dir}" arg2=""/></not>
+        <not><equals arg1="${@NAME@.abssrc.dir}" arg2=""/></not>
 	<!-- There must be some files defined -->
         <not><equals arg1="${@NAME@.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${@NAME@.dst.dir}" arg2=""/></not>
+        <not><equals arg1="${@NAME@.absdst.dir}" arg2=""/></not>
       </and>
     </condition>
 
-    <!-- The required binaries need to be available. -->
-    <available property="@NAME@.execution.possible"
-	       file="${@NAME@.exec}${executable.file.extension}"
-	       filepath="${env.PATH}"/>
+    <!-- The required condition not to bomb out -->
+    <condition property="@NAME@.execution.possible">
+      <and>
+	<available file="${@NAME@.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+	<available file="${@NAME@.abssrc.dir}"/> 
+      </and>
+    </condition>
 
     <condition property="@NAME@.failure">
       <and>
@@ -61,7 +76,8 @@
   </target>
 
   <target name="@NAME@.bomb.out" if="@NAME@.failure">
-    <fail message="Ups! You requested the execution of @NAME@ but the executable ${@NAME@.exec} was not found installed in your system"/>
+    <fail message="@NAME@ rule cannot be executed. Review the value of
+		   variables @NAME@.src.dir and @NAME@.exec"/>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -85,10 +101,10 @@
     <echo>${basedir}</echo>
 
     <!-- Create the dst directory -->
-    <mkdir dir="${@NAME@.dst.dir}" />
+    <mkdir dir="${@NAME@.absdst.dir}" />
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${basedir}" parallel="false" dest="${@NAME@.dst.dir}" 
+    <apply dir="${basedir}" parallel="false" dest="${@NAME@.absdst.dir}" 
 	   append="yes" failonerror="true" executable="${@NAME@.exec}" 
 	   output="build.out">
       <arg value="???"/>
@@ -116,37 +132,36 @@
     <echo>@NAME@.clean           RUN</echo>
     <echo>${basedir}</echo>
 
-    <!-- Obtain the fileset containing the produced files. This is done to be
-    able to display the deleted files (debugging) -->
-    <pathconvert property="@NAME@.target.fileset.property" pathsep=" ">
+    <!-- Obtain the filelist with the produced files. -->
+    <pathconvert property="@NAME@.target.filelist.property" pathsep=" ">
       <fileset refid="@NAME@.fileset"/>
       <chainedmapper>
+	<mapper type="glob" from="${@NAME@.abssrc.dir}/*" 
+		to="${@NAME@.absdst.dir}/*"/>
 	<mapper type="glob" from="*.@FROM@" to="*.@TO@"/>
-	<mapper type="flatten"/>
       </chainedmapper>
     </pathconvert>
+    <filelist id="@NAME@.target.filelist"
+	      files="${@NAME@.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted = ${@NAME@.target.fileset.property}</echo>
+    <echo> deleted = ${@NAME@.target.filelist.property}</echo>
 
     <!-- Perform the delete operation. The failonerror attributge is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
-    <delete failonerror="false">
-      <fileset dir="${@NAME@.dst.dir}"
-	       includes="${@NAME@.target.fileset.property}">
-	<include name="__bogus__file__to__avoid__empty__fileset"/>
-      </fileset>
+    <delete failonerror="false" includeemptydirs="true">
+      <filelist refid="@NAME@.target.filelist"/>
     </delete>
   </target>
 
   <!-- Dump the properties defined in this script -->
   <target name="@NAME@.dump.properties" depends="initial.check">
     <echo level="info"> ------ @NAME@ properties ----
-    @NAME@.exec     ="${@NAME@.exec}"
-    @NAME@.src.dir  ="${@NAME@.src.dir}"
-    @NAME@.dst.dir  ="${@NAME@.dst.dir}"
-    @NAME@.files    ="${@NAME@.files}"</echo>
+    @NAME@.exec       ="${@NAME@.exec}"
+    @NAME@.abssrc.dir ="${@NAME@.abssrc.dir}"
+    @NAME@.absdst.dir ="${@NAME@.absdst.dir}"
+    @NAME@.files      ="${@NAME@.files}"</echo>
   </target>
 
   <target name="@NAME@.report.YES" depends="@NAME@.check.values"
@@ -156,7 +171,7 @@
 
   <target name="@NAME@.report.NO" depends="@NAME@.check.values"
 	  unless="@NAME@.execution.possible">
-    <echo>@NAME@             |           |     * (install ${dblatex.exec})</echo>
+    <echo>@NAME@             |           |     * (install ${@NAME@.exec})</echo>
   </target>
 
   <target name="@NAME@.report" depends="@NAME@.report.YES,

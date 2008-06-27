@@ -37,6 +37,7 @@
       <and>
 	<!-- The src.dir needs to be non-empty. -->
         <not><equals arg1="${docbook.src.dir}" arg2=""/></not>
+	<available file="${docbook.src.dir}"/> 
 	<!-- There must be some files defined -->
 	<not><equals arg1="${docbook.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir -->

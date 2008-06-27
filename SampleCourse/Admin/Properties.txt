@@ -6,16 +6,16 @@
 #
 
 subrecursive.dst.dir=
+# subrecursive.dirs=Theory1
 subrecursive.dirs=Laboratory1 \
                   Laboratory2 \
                   Laboratory3 \
-		  OpenACS \
-  		  Theory1 \
-  		  Theory2 \
-  		  Theory3 \
-  		  Guide1 \
-  		  Guide2 \
-		  images
+   		  Theory1 \
+   		  Theory2 \
+   		  Theory3 \
+   		  Guide1 \
+   		  Guide2 \
+ 		  images
 
 mergestyles.master.style=Params.xml
 

@@ -26,6 +26,8 @@ build templates
   <!-- Directory where the toolkit is installed -->
   <property name="ada.home" value="" />
 
+  <property name="ada.initial.check.dump.level" value="info"/>
+
   <!-- Include the environment as a set of properties -->
   <property environment="env"/>
 
@@ -56,8 +58,9 @@ build templates
     <arg value="/"/>
   </exec>
 
-  <available property="ada.property.file.ready"
-	     file="${basedir}${file.separator}${ada.local.property.file}"/>
+
+<!--   <available property="ada.property.file.ready" -->
+<!-- 	     file="${basedir}${file.separator}${ada.local.property.file}"/> -->
       
   <!-- Default location for the catalog -->
   <property name="xml.catalog.file" 
@@ -68,13 +71,15 @@ build templates
     <available file="${xml.catalog.file}" />
   </condition>
 
-  <target name="ada.check.property.file"
-	  unless="ada.property.file.ready">
-    <fail message="*** ERROR *** No ${ada.local.property.file} found!"/>
-  </target>
+
+<!--   <target name="ada.check.property.file" -->
+<!-- 	  unless="ada.property.file.ready"> -->
+<!--     <fail message="*** ERROR *** No ${ada.local.property.file} found!"/> -->
+<!--   </target> -->
 
   <!-- Check if the ada.home property is set to a meaningful value -->
-  <target name="ada.check.basics" depends="ada.check.property.file">
+<!--   <target name="ada.check.basics" depends="ada.check.property.file"> -->
+  <target name="ada.check.basics">
     
     <condition property="ada.check.home.property">
       <and>
@@ -97,14 +102,15 @@ build templates
   </target>
 
   <target name="initial.check.dump">
-    <echo level="info">------ Global properties ----
-  basedir=${basedir}
-  user.dir=${user.dir}
-  user.home=${user.home}
-  executable.file.extension=${executable.file.extension}
-  ada.home=${ada.home}
-  xml.catalog.file=${xml.catalog.file}
-  xml.catalog.file.available=${xml.catalog.file.available}    </echo>    
+    <echo level="${ada.initial.check.dump.level}">------ Global properties ----
+  basedir = ${basedir}
+  user.dir = ${user.dir}
+  user.home = ${user.home}
+  ada.home = ${ada.home}
+
+  executable.file.extension = ${executable.file.extension}
+  xml.catalog.file = ${xml.catalog.file}
+  xml.catalog.file.available = ${xml.catalog.file.available}</echo>    
   </target>
 
   <!-- Target to reset the build.out --> 

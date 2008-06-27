@@ -36,6 +36,7 @@
       <and>
 	<!-- The src.dir needs to be non-empty. -->
         <not><equals arg1="${bilingualdb.src.dir}" arg2=""/></not>
+	<available file="${bilingualdb.src.dir}"/> 
 	<!-- There must be some files defined -->
 	<not><equals arg1="${bilingualdb.files}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir -->
