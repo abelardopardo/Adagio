@@ -25,10 +25,8 @@
   <property name="xsltproc.src.dir"        value="${basedir}"/>
   <property name="xsltproc.dst.dir"        value="${xsltproc.src.dir}"/>
   <property name="xsltproc.style.file"     value=""/>
-  <property name="xsltproc.style.fileB"    value=""/>
   <property name="xsltproc.output.format"  value="html"/>
   <property name="xsltproc.extra.args"     value=""/>
-  <property name="xsltproc.extra.argsB"     value=""/>
   <property name="xsltproc.files"          value=""/>
 
   <!-- Private properties -->
