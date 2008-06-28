@@ -21,6 +21,8 @@ mergestyles.master.style=Params.xml
 
 docbook.files=index.xml
 docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
+# docbook.extra.args=--stringparam profile.audience true \
+#              --stringparam ada.audience.current.date 2108-01-01T00:00:00
 
 copyfiles.files=style.css
 copyfiles.dst.dir=scratch
