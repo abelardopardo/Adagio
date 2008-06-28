@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <document>
-  <title>Integración de Servlets y JSP</title>
-  <author email="jaf@it.uc3m.es">Jesús Arias Fisteus</author>
-  <institution>Universidad Carlos III de Madrid</institution>
+  <title>IntegraciÃ³n de Servlets y JSP</title>
+  <author email="jaf@it.uc3m.es">JesÃºs Arias Fisteus</author>
+<!--   <institution>Universidad Carlos III de Madrid</institution> -->
   <material>
     <include>../../Material/Author8/RelativeURIs/uris-relativas</include>
     <include>../../Material/Author8/ServletJSPIntegration/integracion</include>

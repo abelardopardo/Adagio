@@ -6,6 +6,9 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi str">
   
+  <!-- Brings in all the default values -->
+  <xsl:import href="Params.xsl"/>
+
   <xsl:output method="text" indent="no" encoding="ISO-8859-1" />
 
   <xsl:template match="document">
@@ -50,7 +53,7 @@
   </xsl:template>
 
   <xsl:template match="institution">
-\institution{<xsl:value-of select="text()" />}
+\institution{<xsl:value-of select="$ada.institution.name" />}
   </xsl:template>
 
   <xsl:template match="material">

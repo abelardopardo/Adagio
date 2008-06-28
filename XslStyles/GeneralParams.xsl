@@ -10,6 +10,8 @@
   <xsl:param name="ada.publish.dir" />
   <xsl:param name="ada.publish.host" />
 
+  <xsl:param name="ada.institution.name">Universidad Carlos III de Madrid</xsl:param>
+  <xsl:param name="ada.institution.name.en">Carlos III University of Madrid</xsl:param>
 
   <xsl:param name="ada.course.icon" />
   <xsl:param name="ada.course.icon.type" select="'image/x-icon'" />
