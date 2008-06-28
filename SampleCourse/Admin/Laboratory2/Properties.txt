@@ -8,13 +8,13 @@
 # Make ADA pay attention to the validity window (if defined)
 timewindow.enabled=true
 # Start of the validity window
-timewindow.start=2008/06/25 19:00
+timewindow.start=2008-06-25T19:00:00
 # Set the end of the window
-timewindow.end=2018/06/25 19:00
+timewindow.end=2018-06-25T19:00:00
 #
 # Use this variable to force a certain time as actual.
 #
-# timewindow.now=2018/06/25 19:59
+# timewindow.now=2018-06-25T19:59:00
 
 subrecursive.dirs=../../Material/Author5
 
