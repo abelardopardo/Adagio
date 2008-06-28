@@ -19,7 +19,7 @@
   <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
   
-  <!-- Property definition -->
+  <!-- Public Property definition -->
   <property name="subrecursive.dst.dir" value="${basedir}"/>
   <property name="subrecursive.dirs"    value=""/>
   <property name="subrecursive.target"  value=""/>
