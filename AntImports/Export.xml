@@ -56,7 +56,7 @@
   </target>
 
   <!-- Clean the produced files -->
-  <target name="export.clean" 
+  <target name="export.clean" depends="timewindow"
 	  if="timewindow.open"
 	  description="Delete files copied to dst">
 

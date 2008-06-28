@@ -10,7 +10,11 @@ timewindow.enabled=true
 # Start of the validity window
 timewindow.start=2008/06/25 19:00
 # Set the end of the window
-# timewindow.start=2008/07/25 19:00
+timewindow.end=2018/06/25 19:00
+#
+# Use this variable to force a certain time as actual.
+#
+# timewindow.now=2018/06/25 19:59
 
 subrecursive.dirs=../../Material/Author5
 
