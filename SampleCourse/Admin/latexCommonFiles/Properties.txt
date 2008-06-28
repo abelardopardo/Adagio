@@ -5,9 +5,7 @@
 # variables as well as an explanation.
 #
 
-inkscape.files=*.svg
-inkscape.output.format=eps
+export.files=PPRuc3m.sty \
+             prosper.cls
 
-export.files=*.eps
 
-clean.files=uris-relativas.aux
