@@ -1,20 +1,20 @@
 % $Id: formularios.tex,v 1.1 2008-01-14 18:15:38 jaf Exp $
 
-\part{EnvÌo de par·metros de formularios}
+\part{Env√≠o de par√°metros de formularios}
 
 
 %---------------------------------------------------------------------- SLIDE -
-\begin{slide}{EnvÌo de par·metros de formularios}
+\begin{slide}{Env√≠o de par√°metros de formularios}
   \begin{itemize}
-  \item El envÌo depende del mÈtodo HTTP y la
-    codificaciÛn:
+  \item El env√≠o depende del m√©todo HTTP y la
+    codificaci√≥n:
     \begin{itemize}
-    \item MÈtodo HTTP:
+    \item M√©todo HTTP:
       \begin{itemize}
-      \item MÈtodo GET.
-      \item MÈtodo POST.
+      \item M√©todo GET.
+      \item M√©todo POST.
       \end{itemize}
-    \item CodificaciÛn:
+    \item Codificaci√≥n:
       \begin{itemize}
       \item \verb+application/x-www-form-urlencoded+
       \item \verb+multipart/form-data+
@@ -25,15 +25,15 @@
 %------------------------------------------------------------------------------
 
 %---------------------------------------------------------------------- SLIDE -
-\begin{slide}{EnvÌo de par·metros de formularios}
+\begin{slide}{Env√≠o de par√°metros de formularios}
   \begin{itemize}
-  \item CodificaciÛn URL--encoded:
+  \item Codificaci√≥n URL--encoded:
     \begin{itemize}
-    \item Lista de par·metros separados por ``\&''.
-    \item Para cada par·metro se especifica nombre ``='' valor.
-    \item Los caracteres especiales (no letras/dÌgitos ASCII) 
-      se codifican en hexadecimal por su cÛdigo UTF-8.
-    \item Con mÈtodo GET o POST.
+    \item Lista de par√°metros separados por ``\&''.
+    \item Para cada par√°metro se especifica nombre ``='' valor.
+    \item Los caracteres especiales (no letras/d√≠gitos ASCII) 
+      se codifican en hexadecimal por su c√≥digo UTF-8.
+    \item Con m√©todo GET o POST.
     \item No se usa para campos de tipo \emph{file}.
     \end{itemize}
   \end{itemize}
@@ -48,13 +48,13 @@ nombre=juan%20l%C3%B3pez%20l%C3%B3pez
 %------------------------------------------------------------------------------
 
 %---------------------------------------------------------------------- SLIDE -
-\begin{slide}{EnvÌo de par·metros de formularios}
+\begin{slide}{Env√≠o de par√°metros de formularios}
   \begin{itemize}
-  \item CodificaciÛn URL--encoded con GET:
+  \item Codificaci√≥n URL--encoded con GET:
     \begin{itemize}
-    \item Los par·metros se codifican en la ruta (\emph{path})
-      de la peticiÛn HTTP.
-    \item SÛlo apto para operaciones idempotentes.
+    \item Los par√°metros se codifican en la ruta (\emph{path})
+      de la petici√≥n HTTP.
+    \item S√≥lo apto para operaciones idempotentes.
     \end{itemize}
   \end{itemize}
 
@@ -69,12 +69,12 @@ Host: www.ejemplo.es
 %------------------------------------------------------------------------------
 
 %---------------------------------------------------------------------- SLIDE -
-\begin{slide}{EnvÌo de par·metros de formularios}
+\begin{slide}{Env√≠o de par√°metros de formularios}
   \begin{itemize}
-  \item CodificaciÛn URL--encoded con POST:
+  \item Codificaci√≥n URL--encoded con POST:
     \begin{itemize}
-    \item Los par·metros se codifican en el cuerpo
-      de la peticiÛn HTTP.
+    \item Los par√°metros se codifican en el cuerpo
+      de la petici√≥n HTTP.
     \end{itemize}
   \end{itemize}
 
@@ -92,12 +92,12 @@ tipo=auto&html=default.html
 %------------------------------------------------------------------------------
 
 %---------------------------------------------------------------------- SLIDE -
-\begin{slide}{EnvÌo de par·metros de formularios}
+\begin{slide}{Env√≠o de par√°metros de formularios}
   \begin{itemize}
-  \item CodificaciÛn Multipart (RFC 2388):
+  \item Codificaci√≥n Multipart (RFC 2388):
     \begin{itemize}
     \item Datos encapsulados con un mensaje multiparte MIME.
-    \item SÛlo con mÈtodo POST.
+    \item S√≥lo con m√©todo POST.
     \item Necesario para enviar campos de tipo \emph{file}.
     \item No compatible con
       \emph{HttpServletRequest.getParameter(...)}

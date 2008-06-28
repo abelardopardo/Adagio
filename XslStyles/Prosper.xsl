@@ -9,12 +9,12 @@
   <!-- Brings in all the default values -->
   <xsl:import href="Params.xsl"/>
 
-  <xsl:output method="text" indent="no" encoding="ISO-8859-1" />
+  <xsl:output method="text" indent="no" encoding="UTF-8" />
 
   <xsl:template match="document">
 \documentclass[pdf,uc3m,slideColor,colorBG]{prosper}
 
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[spanish,activeacute]{babel}
 
 \usepackage{pstricks,pst-node,pst-text,pst-3d}

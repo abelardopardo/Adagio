@@ -1,22 +1,22 @@
 % $Id: integracion.tex,v 1.1 2008-01-14 18:15:38 jaf Exp $
 
-\part{Integraci髇 de Servlets y JSP}
+\part{Integraci贸n de Servlets y JSP}
 
 
 %---------------------------------------------------------------------- SLIDE -
-\begin{slide}{Introducci髇}
+\begin{slide}{Introducci贸n}
   \begin{itemize}
-  \item Una aplicaci髇 Web realiza tareas de procesado y presentaci髇:
+  \item Una aplicaci贸n Web realiza tareas de procesado y presentaci贸n:
     \begin{itemize}
     \item Los Servlets son adecuados para procesado.
-    \item Las p醙inas JSP son adecuadas presentaci髇.
+    \item Las p谩ginas JSP son adecuadas presentaci贸n.
     \end{itemize}
-  \item Una aplicaci髇 Web puede combinar Servlets y p醙inas JSP:
+  \item Una aplicaci贸n Web puede combinar Servlets y p谩ginas JSP:
     \begin{itemize}
-    \item Procesado de par醡etros de la petici髇: Servlets.
+    \item Procesado de par谩metros de la petici贸n: Servlets.
     \item Acceso a bases de datos: Servlets.
-    \item L骻ica de la aplicaci髇: Servlets.
-    \item Presentaci髇 (vistas): JSP.
+    \item L贸gica de la aplicaci贸n: Servlets.
+    \item Presentaci贸n (vistas): JSP.
     \end{itemize}
   \end{itemize}
 \end{slide}
@@ -25,16 +25,16 @@
 %---------------------------------------------------------------------- SLIDE -
 \begin{slide}{Modelo de funcionamiento (I)}
   \begin{enumerate}
-  \item El cliente env韆 la petici髇 HTTP a un servlet.
-  \item El servlet procesa la petici髇.
+  \item El cliente env铆a la petici贸n HTTP a un servlet.
+  \item El servlet procesa la petici贸n.
     \begin{itemize}
     \item Si es necesario, se conecta a la base de datos.
     \end{itemize}
-  \item El servlet redirige la petici髇 a un JSP.
+  \item El servlet redirige la petici贸n a un JSP.
     \begin{itemize}
-    \item Si es necesario, a馻de \emph{beans} como par醡etros.
+    \item Si es necesario, a帽ade \emph{beans} como par谩metros.
     \end{itemize}
-  \item El JSP lee los par醡etros y devuelve la respuesta 
+  \item El JSP lee los par谩metros y devuelve la respuesta 
     formateada visualmente al usuario.
   \end{enumerate}
 \end{slide}
@@ -52,24 +52,24 @@
 %------------------------------------------------------------------------------
 
 %---------------------------------------------------------------------- SLIDE -
-\begin{slide}{Mecanismos de redirecci髇 de peticiones}
+\begin{slide}{Mecanismos de redirecci贸n de peticiones}
 
   \begin{itemize}
-  \item Hay dos formas de redirigir una petici髇 a otro recurso:
+  \item Hay dos formas de redirigir una petici贸n a otro recurso:
     \begin{itemize}
     \item Redirecciones HTTP  (\emph{sendRedirect}):
       \begin{itemize}
-      \item El servidor env韆 una respuesta al 
-        cliente con un c骴igo 3xx y la URI a la que este debe 
-        enviar la petici髇.
+      \item El servidor env铆a una respuesta al 
+        cliente con un c贸digo 3xx y la URI a la que este debe 
+        enviar la petici贸n.
       \end{itemize}
     \item Redirecciones internas en el servidor (\emph{forward}):
       \begin{itemize}
-      \item Se redirige la petici髇 de un recurso a otro dentro
-        de la misma aplicaci髇 Web.
-      \item El recurso de la 鷏tima redirecci髇 devuelve al cliente
+      \item Se redirige la petici贸n de un recurso a otro dentro
+        de la misma aplicaci贸n Web.
+      \item El recurso de la 煤ltima redirecci贸n devuelve al cliente
         la respuesta HTTP.
-      \item La redirecci髇 es transparente para el cliente.
+      \item La redirecci贸n es transparente para el cliente.
       \end{itemize}
     \end{itemize}
   \end{itemize}
@@ -79,15 +79,15 @@
 %---------------------------------------------------------------------- SLIDE -
 \begin{slide}{Redirecciones \emph{sendRedirect}}
   \begin{itemize}
-  \item Fuerza el env韔 de una respuesta HTTP de redirecci髇 al cliente.
-  \item El cliente env韆 la petici髇 a la URI recibida en la respuesta.
+  \item Fuerza el env铆o de una respuesta HTTP de redirecci贸n al cliente.
+  \item El cliente env铆a la petici贸n a la URI recibida en la respuesta.
   \end{itemize}
 
 \begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
-// Redirecci髇 con URI absoluta
+// Redirecci贸n con URI absoluta
 response.sendRedirect("http://www.ejemplo.es/");
 
-// Redirecci髇 con URI relativa a la URI de la petici髇 actual
+// Redirecci贸n con URI relativa a la URI de la petici贸n actual
 response.sendRedirect("otra.html");
 \end{Verbatim}
 \end{slide}
@@ -96,13 +96,13 @@ response.sendRedirect("otra.html");
 %---------------------------------------------------------------------- SLIDE -
 \begin{slide}{Redirecciones \emph{forward}}
   \begin{itemize}
-  \item Un Servlet o JSP reenv韆 la petici髇 a otro recurso (Servlet,
+  \item Un Servlet o JSP reenv铆a la petici贸n a otro recurso (Servlet,
     JSP, HTML) de la
-    misma aplicaci髇 Web.
-  \item El cliente no se entera de la redirecci髇 (p.e., el navegador
-    muestra la URI original de la petici髇, no la redirigida).
-  \item El control retorna al finalizar el m閠odo \emph{forward},
-    por lo que conviene que sea lo 鷏timo que se ejecuta.
+    misma aplicaci贸n Web.
+  \item El cliente no se entera de la redirecci贸n (p.e., el navegador
+    muestra la URI original de la petici贸n, no la redirigida).
+  \item El control retorna al finalizar el m茅todo \emph{forward},
+    por lo que conviene que sea lo 煤ltimo que se ejecuta.
   \end{itemize}
 
 \end{slide}
@@ -129,12 +129,12 @@ rd.forward(request, response);
 %------------------------------------------------------------------------------
 
 %---------------------------------------------------------------------- SLIDE -
-\begin{slide}{Redirecciones \emph{forward} con par醡etros}
+\begin{slide}{Redirecciones \emph{forward} con par谩metros}
   \begin{itemize}
-  \item El objeto de la petici髇 (\emph{ServletRequest}) de los recursos
-   origen y destino de la redirecci髇 es el mismo:
+  \item El objeto de la petici贸n (\emph{ServletRequest}) de los recursos
+   origen y destino de la redirecci贸n es el mismo:
    \begin{itemize}
-   \item Se pueden a馻dir par醡etros como atributos a la petici髇.
+   \item Se pueden a帽adir par谩metros como atributos a la petici贸n.
    \end{itemize}
  \end{itemize}
 \begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
@@ -148,13 +148,13 @@ rd.forward(request, response);
 %------------------------------------------------------------------------------
 
 %---------------------------------------------------------------------- SLIDE -
-\begin{slide}{Redirecciones \emph{forward} con par醡etros}
+\begin{slide}{Redirecciones \emph{forward} con par谩metros}
   \begin{itemize}
-  \item Recogida de par醡etros desde un Servlet:
+  \item Recogida de par谩metros desde un Servlet:
 \begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
 Noticia nuevaNoticia = (Noticia) request.getAttribute("noticia");
 \end{Verbatim}
-\item Recogida de par醡etros desde un JSP:
+\item Recogida de par谩metros desde un JSP:
 \begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
 <jsp:useBean id="noticia" class="beans.Noticia" 
              scope="request" />

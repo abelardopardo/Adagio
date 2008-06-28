@@ -4,7 +4,7 @@
 
 
 %---------------------------------------------------------------------- SLIDE -
-\begin{slide}{IntroducciÛn}
+\begin{slide}{Introducci√≥n}
   \begin{itemize}
   \item En (X)HTML, en un hiperenlace, imagen, etc. es necesario
     especificar una URI.
@@ -25,7 +25,7 @@
   \begin{itemize}
   \item Se especifica directamente la URI completa del recurso.
   \item En HTTP, incluye el identificador de protocolo, servidor,
-    ruta en el servidor y par·metros.
+    ruta en el servidor y par√°metros.
   \item El navegador simplemente toma la URI.
 \end{itemize}
 
@@ -43,7 +43,7 @@
     (comenzando por ``/''), pero no
     se indica protocolo ni servidor.
   \item El navegador toma el protocolo y servidor del recurso
-    en el cual est· el enlace, imagen, etc.
+    en el cual est√° el enlace, imagen, etc.
 \end{itemize}
 
 \begin{Verbatim}[fontfamily=tt,fontsize=\fontsize{8}{8}]
@@ -56,15 +56,15 @@
 %---------------------------------------------------------------------- SLIDE -
 \begin{slide}{URI relativa}
   \begin{itemize}
-  \item Se especifica sÛlo la ruta del recurso relativa (no comienza
+  \item Se especifica s√≥lo la ruta del recurso relativa (no comienza
     por ``/''), pero no
     se indica protocolo ni servidor, ni parte inicial de la ruta.
   \item El navegador toma el protocolo, servidor y parte inicial de la
     ruta del recurso
-    en el cual est· el enlace, imagen, etc.
+    en el cual est√° el enlace, imagen, etc.
     \begin{itemize}
     \item Para calcular la ruta, se toma la ruta del recurso actual
-      excepto su ˙ltimo nivel (similar a la forma de nombrar ficheros
+      excepto su √∫ltimo nivel (similar a la forma de nombrar ficheros
       en un sistema de ficheros).
     \end{itemize}
   \end{itemize}
@@ -90,13 +90,13 @@
 %------------------------------------------------------------------------------
 
 %---------------------------------------------------------------------- SLIDE -
-\begin{slide}{Recomendaciones de diseÒo}
+\begin{slide}{Recomendaciones de dise√±o}
 
   \begin{itemize}
   \item Es recomendable utilizar rutas relativas siempre que sea
     posible:
     \begin{itemize}
-    \item Se puede cambiar la aplicaciÛn de servidor o ruta sin
+    \item Se puede cambiar la aplicaci√≥n de servidor o ruta sin
       necesidad de cambiar ninguna URI en los servlets, JSP, (X)HTML,
       etc.
     \end{itemize}
