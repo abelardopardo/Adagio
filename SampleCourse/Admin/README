@@ -9,6 +9,12 @@ Laboratory2:
    1 problem taken from ../Material/Author5. It is bilingual, therefore
    2 versions of text, solution and professor guide need to be produced.
 
+Laboratory3:
+   Material taken from Author7 and combined with a wrapper index.xml file.
+   This wrapper changes the title and metions a specific lab number. This is
+   to illustrate how material can be written with no course in mind and then
+   personalize it for course with a little wrapper and xincludes.
+
 Theory1:
    Theory session where the slides are made available as PDF as well as
    de 2up format. This last one is produced automatically in this directory
@@ -23,6 +29,13 @@ Theory2
    LaTeX processing. The 2up version in this case is locally produced 
    in the author's directory. This is simply to show the two options when
    compared to the previous one. The author is Author1
+
+Theory3
+   PDF document with slides produced using the Prosper LaTeX package. The
+   generation is done by defining a simple *.xml wrapper that states the title
+   of the document, a few more constants and the files in *.tex that need
+   to be included. It is another example of sharing course-neutral material
+   and personalizing it for a course with a simple wrapper.
 
 Guide1
    This is an interesting directory. The only relevant file is Properties in
@@ -46,3 +59,32 @@ Guide2
 A directory name scratch appears once the whole course is created. It is the
 dummy copy of the site. After reviewing that everything seems correct, then
 it is suitable to be published to a remote site.
+
+PLAYING WITH DATE-TIME CONTROLLED PROCESSING
+
+ADA allows specifying at any element in a docbook document a date/time window
+in which such element should be visible. At any other time, that element
+is suppressed from the output. In order to see the effect of such functionality
+the index.xml file has a few elements with such date/time windows (search
+for the "audience" attribute).
+
+If you execute adado such that:
+
+adado -Ddocbook.extra.args='"--stringparam profile.audience true"'
+
+you are enabling the processing of the date-time windows present in the 
+document. After ada finishes, check the scratch/index.html and you'll see most
+of the data has vanished. This is because none of their date-time windows are
+active. If you want to activate them, run again the command although this time
+with the options (you might need to remove index.html, since an invokation
+with a different set of options is not detected as a change and no file
+is re-built):
+
+adado -Ddocbook.extra.args='"--stringparam profile.audience true \
+         --stringparam ada.audience.current.date 2108-01-01T00:00:00"'  
+
+The new given date/time is taken ad the current one. One extra line appears in index.html.
+
+Keep increasing the YEAR one by one and you'll see the rest of the site
+appearing sequentially.
+

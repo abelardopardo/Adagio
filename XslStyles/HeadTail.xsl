@@ -6,11 +6,7 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi">
   
-  <xsl:import 
-     href="http://docbook.sourceforge.net/release/xsl/current/xhtml/profile-docbook.xsl"/>
-  <xsl:import 
-     href="http://docbook.sourceforge.net/release/xsl/current/xhtml/manifest.xsl"/>
-  <xsl:import href="es-modify.xsl"/>
+  <xsl:import href="DocbookProfile.xsl"/>
 
   <!-- Brings in all the default values -->
   <xsl:import href="Params.xsl"/>
