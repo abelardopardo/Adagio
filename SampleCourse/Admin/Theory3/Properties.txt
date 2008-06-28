@@ -4,11 +4,33 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
-subrecursive.dirs=../../Material/Author8/MasterDocument
+subrecursive.dirs=../latexCommonFiles \
+                  ../../Material/Author8/RelativeURIs \
+                  ../../Material/Author8/ServletJSPIntegration
+
+myfilename=servlets_jsp_integration
+
+mergestyles.src.dir=..
+mergestyles.master.style=Params.xml
+
+xsltproc.files=${myfilename}.xml
+xsltproc.style.file=${ada.home}/XslStyles/Prosper.xsl
+xsltproc.output.format=tex
+
+latex.files=${myfilename}.tex
+
+dvips.files=${myfilename}.dvi
+
+ps2pdf.files=${myfilename}.ps
+
+pdfnup.files=${myfilename}.pdf
+
+clean.files=../scratch/Theory3 \
+            q.tex x.tex uris-relativas.tex uris-relativas.eps \
+	    formularios.tex mvc.eps integracion.tex \
+            PPRuc3m.sty prosper.cls \
+	    ../../Material/Author8/Forms/formularios.aux
 
 export.dst.dir=../scratch/Theory3
 export.files=servlets_jsp_integration.pdf \
              servlets_jsp_integration-1x2.pdf
-
-clean.files=../scratch/Theory3
-

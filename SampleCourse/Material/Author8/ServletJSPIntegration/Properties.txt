@@ -9,3 +9,5 @@ inkscape.files=*.svg
 inkscape.output.format=eps
 
 export.files=*.eps
+
+clean.files=integracion.aux

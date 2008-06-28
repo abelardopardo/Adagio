@@ -110,7 +110,7 @@
 # pdflatex.exec=pdflatex		# Name (no path) of the executable
 # pdflatex.src.dir=.			# Dir where the source files are
 # pdflatex.dst.dir=${pdflatex.src.dir}	# Dir to create the result
-# pdflatex.files=			# List of *.xml files to process
+# pdflatex.files=			# List of *.tex files to process
 
 #
 # For PDFnup processing (process PDF files and create n-up PDF files)
