@@ -78,6 +78,9 @@
 	     output="build.out">
 	<arg value="--xinclude"/>
 	<arg value="--xincludestyle"/>
+	<arg value="--stringparam"/>
+	<arg value="ada.home"/>
+	<arg value="${ada.home}"/>
 	<arg line="@{XSLTPROC.EXTRA.ARGS}"/>
 	<arg value="-o"/>
 	<targetfile/>
