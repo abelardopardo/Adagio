@@ -29,9 +29,13 @@
 
   <!-- Stick the onload attribute in case the flash.player.javascript is given -->
   <xsl:template name="body.attributes">
+    <!-- No longer needed. A new version of mediaplayer uses js to take care of
+  these issues -->
+    <!--
     <xsl:if test="$ada.page.flash.player.javascript">
       <xsl:attribute name="onload">setupSeekBar();</xsl:attribute>
     </xsl:if>
+    -->
   </xsl:template>
 
   <!-- User HEAD content -->
