@@ -31,8 +31,8 @@
   <xsl:apply-templates select="author" />
   <xsl:apply-templates select="institution" />
 
-\Logo(-1.12,-1.25){\includegraphics[width=1cm]{<xsl:value-of 
-                                               select="$ada.prosper.logo"/>}}
+% \Logo(-1.12,-1.25){\includegraphics[width=1cm]{<xsl:value-of select="$ada.home"/>/<xsl:value-of select="$ada.prosper.logo"/>}}
+\Logo(-1.12,-1.25){\includegraphics[width=1cm]{<xsl:value-of select="$ada.prosper.logo"/>}}
 
 \begin{document}
 \maketitle
