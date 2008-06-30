@@ -5,8 +5,4 @@
   <!-- Brings in all the default values -->
   <xsl:import href="GeneralParams.xsl"/>
   <xsl:import href="HeadTailParams.xsl"/>
-  <xsl:import href="ShockwaveFlashObjParams.xsl"/>
-  <xsl:import href="LaboratoryParams.xsl"/>
-  <xsl:import href="RssParams.xsl"/>
-  
 </xsl:stylesheet>

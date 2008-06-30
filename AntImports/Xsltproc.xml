@@ -81,6 +81,9 @@
 	<arg value="--stringparam"/>
 	<arg value="ada.home"/>
 	<arg value="${ada.home}"/>
+	<arg value="--stringparam"/>
+	<arg value="basedir"/>
+	<arg value="${basedir}"/>
 	<arg line="@{XSLTPROC.EXTRA.ARGS}"/>
 	<arg value="-o"/>
 	<targetfile/>

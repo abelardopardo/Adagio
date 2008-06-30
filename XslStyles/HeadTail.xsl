@@ -6,10 +6,10 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi">
   
-  <xsl:import href="DocbookProfile.xsl"/>
-
   <!-- Brings in all the default values -->
   <xsl:import href="Params.xsl"/>
+
+  <xsl:import href="DocbookProfile.xsl"/>
 
   <!-- Template to ignore the chapter/section info with rss.info condition -->
   <xsl:import href="RssIgnore.xsl"/>
@@ -27,12 +27,12 @@
   <!-- This one for sure is needed in all documents -->
   <xsl:param name="xref.with.number.and.title" select="'0'"/>
 
-  <!-- Stick the onload attribute in case the flash.player.javascript is given -->
   <xsl:template name="body.attributes">
+    <!-- Stick the onload attribute in case the flash.player.javascript is given -->
     <!-- No longer needed. A new version of mediaplayer uses js to take care of
   these issues -->
     <!--
-    <xsl:if test="$ada.page.flash.player.javascript">
+    <xsl:if test="$ada.flv.player.js.file">
       <xsl:attribute name="onload">setupSeekBar();</xsl:attribute>
     </xsl:if>
     -->
@@ -59,10 +59,10 @@
     </xsl:if>
 
     <!-- Stick the javascript for the flash player -->
-    <xsl:if test="$ada.page.flash.player.javascript">
+    <xsl:if test="$ada.flv.player.js.file">
       <script type="text/javascript" language="JavaScrpt">
         <xsl:attribute name="src"><xsl:value-of
-        select="$ada.page.flash.player.javascript"/></xsl:attribute>
+        select="$ada.flv.player.js.file"/></xsl:attribute>
       </script>
     </xsl:if>
 

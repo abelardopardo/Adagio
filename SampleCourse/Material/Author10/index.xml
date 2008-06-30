@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section lang="es">
+  <title>
+    Cómo empotrar un vídeo en formato FLV en un documento HTML creado desde
+    Docbook
+  </title>
+
+  <para>
+    Para empotrar un vídeo en formato FLV en un documento HTML es recomendable
+    tener una aplicación que permita hacer las operaciones básicas de arranque y
+    parada del vídeo, control de volumen, etc. Para ello se utilizan programas
+    que residen en una URL concreta y que el navegador carga con el resto de
+    recursos de la página.
+  </para>
+
+  <para>
+    Para incluir en el documento HTML el vídeo se suelen utilizar dos
+    técnicas. O se ponen dos elementos de tipo <code>&lt;object&gt;</code> para
+    así aumentar la compatibilidad con IE, o simplemente se incluye un elemento
+    <code>&lt;div&gt;</code> que mediante javascript se reemplaza por el
+    elemento correcto tras realizar una serie de comprobaciones.
+  </para>
+
+  <para>
+    La librería utilizada para empotrar este vídeo es <code>mediaplayer</code>
+    que se puede descargar dede <ulink
+    url="http://www.jeroenwijering.com/">www.jeroenwijering.com</ulink>. Se
+    distribuye con licencia <ulink url="http://creativecommons.org">Creative
+    Commons</ulink> en version no comercial. Este programa, a su vez utiliza el
+    objeto <code>SWFObject</code> para reemplazar el elemento en HTML cuando se
+    visualiza la página. 
+  </para>
+
+  <para>
+    El siguiente vídeo es un ejemplo de contenido empotrado mediante el marcado
+    en el Docbook fuente.
+  </para>
+  <para id="video_1" condition="ada.flv.player">
+    <phrase condition="width">320</phrase>
+    <phrase condition="height">200</phrase>
+    <phrase condition="file">player.flv</phrase>
+    <phrase condition="image">playerthumb.jpg</phrase>
+    <phrase condition="backcolor">0xFFFFFF</phrase>
+    <phrase condition="frontcolor">0x000000</phrase>
+    <phrase condition="lightcolor">0x000000</phrase>
+    <phrase condition="screencolor">0x000000</phrase>
+    <phrase condition="showstop">true</phrase>
+  </para>
+    
+  <para>
+    El código Docbook utilizado para ello es:
+  </para>
+
+  <programlisting>
+  </programlisting>
+</section>

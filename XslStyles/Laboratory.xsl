@@ -7,8 +7,9 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi str">
   
+  <xsl:import href="LaboratoryParams.xsl"/>
+
   <xsl:import href="HeadTail.xsl"/>
-  <xsl:import href="ShockwaveFlashObj.xsl"/>
   <xsl:import href="CountDown.xsl"/>
   <xsl:import href="ChatRoomLink.xsl"/>
 
