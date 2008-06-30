@@ -6,7 +6,6 @@
 #
 
 subrecursive.dst.dir=
-# subrecursive.dirs=Theory1
 subrecursive.dirs=Laboratory1 \
                   Laboratory2 \
                   Laboratory3 \
@@ -15,7 +14,8 @@ subrecursive.dirs=Laboratory1 \
    		  Theory3 \
    		  Guide1 \
    		  Guide2 \
- 		  images
+ 		  images \
+		  lib
 
 mergestyles.master.style=Params.xml
 
