@@ -7,3 +7,4 @@
 subrecursive.dst.dir=${export.dst.dir}
 subrecursive.dirs=mediaplayer
 
+export.files=countdown.js
