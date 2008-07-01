@@ -92,7 +92,7 @@
             </tokens>
           </xsl:variable>
           <p>
-            <xsl:call-template name="countdown.insert">
+            <xsl:call-template name="ada.page.countdown.insert">
               <xsl:with-param name="countdown.year">
                 <xsl:value-of
                   select="exsl:node-set($deadlineparts)/tokens/token[position()
