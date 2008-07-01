@@ -1101,6 +1101,122 @@
 	</answer>
       </qandaentry>
 
+      <qandaentry>
+	<question>
+	  <para>
+	    How to include a flash video in a Docbook document?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    Embedding a flash video in an HTML page can be done with flash
+	    players that are downloaded by the browser and offer functionality
+	    such as a start, stop and pause buttons, volume control, etc. ADA
+	    uses the player available in <ulink
+	    url="http://www.jeroenwijering.com/">www.jeroenwijering.com</ulink>.
+	  </para>
+
+	  <para>
+	    From the point of view of the author, these details should be
+	    hidden, and worry only about the basic data such as the video file,
+	    height and width of the screen and that's it.
+	  </para>
+
+	  <para>
+	    The stylesheets included in ADA to process Docbook allow you to
+	    include a video player embedded in your page simply by providing a
+	    special markup using the <code>&lt;para&gt;</code> element. The
+	    following example shows the structure of this element:
+	  </para>
+
+	  <programlisting><![CDATA[<para id="video_1" condition="ada.flv.player">
+  <phrase condition="width">320</phrase>
+  <phrase condition="height">200</phrase>
+  <phrase condition="file">player.flv</phrase>
+  <phrase condition="image">playerthumb.jpg</phrase>
+  <phrase condition="showstop">true</phrase>
+</para>]]>
+	  </programlisting>
+	   
+	  <para>
+	    In order to maintain the Docbook file valid, the parameters are
+	    passed as nested <code>&lt;code&gt;</code> elements with the
+	    attribute <code>condition</code> equal to the name of the
+	    parameter. The available names are:
+	  </para>
+
+	  <informaltable frame="all" id="embed_flv_vars">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="center"/>
+	      <thead>
+		<row>
+		  <entry align="center">Variable name</entry>
+		  <entry align="center">Description</entry>
+		  <entry align="center">Default</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry>backcolor</entry>
+		  <entry>Background color for the controls.</entry>
+		  <entry>0xFFFFFF</entry>
+		</row>
+		<row>
+		  <entry>file</entry>
+		  <entry>URL pointing at the video file to playw</entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry>frontcolor</entry>
+		  <entry>Text and buttons color</entry>
+		  <entry>0x000000</entry>
+		</row>
+		<row>
+		  <entry>height</entry>
+		  <entry>Height of the viewing area</entry>
+		  <entry>320</entry>
+		</row>
+		<row>
+		  <entry>id</entry>
+		  <entry>Id of the viewing area</entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry>image</entry>
+		  <entry>
+		    Thumbnail image to place on the screen when the video is not
+		    being played.
+		  </entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry>lightcolor</entry>
+		  <entry>Rollover colors for the controls.</entry>
+		  <entry>0x000000</entry>
+		</row>
+		<row>
+		  <entry>screencolor</entry>
+		  <entry>Control of the viewing area</entry>
+		  <entry>0x000000</entry>
+		</row>
+		<row>
+		  <entry>showstop</entry>
+		  <entry>Boolean controlling if the stop button is shown</entry>
+		  <entry>false</entry>
+		</row>
+		<row>
+		  <entry>width</entry>
+		  <entry>Width of the viewing area</entry>
+		  <entry>260</entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+	</answer>
+      </qandaentry>
+
       <!--
       <qandaentry>
 	<question>
