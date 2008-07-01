@@ -7,28 +7,28 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl">
 
-  <xsl:param name="chatroom.link"/>
+  <xsl:param name="ada.page.chatroom.link"/>
 
   <!-- Variable that takes either a para with
-       condition="chatroom.link" or the value of the parameter (in
+       condition="ada.page.chatroom.link" or the value of the parameter (in
        this order) -->
-  <xsl:variable name="chatroom.link.var">
+  <xsl:variable name="ada.page.chatroom.link.var">
     <xsl:choose>
-      <xsl:when test="//*/note[@condition='AdminInfo']/para[@condition='chatroom.link']">
-        <xsl:value-of select="//*/note[@condition='AdminInfo']/para[@condition='chatroom.link']/text()"/>
+      <xsl:when test="//*/note[@condition='AdminInfo']/para[@condition='ada.page.chatroom.link']">
+        <xsl:value-of select="//*/note[@condition='AdminInfo']/para[@condition='ada.page.chatroom.link']/text()"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="$chatroom.link"/>
+        <xsl:value-of select="$ada.page.chatroom.link"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
 
   <xsl:template name="InsertChatRoomLink">
-    <xsl:if test="$chatroom.link.var != ''">
+    <xsl:if test="$ada.page.chatroom.link.var != ''">
       <div class="noprint head-center">
         <a>
           <xsl:attribute name="href">
-            <xsl:value-of select="$chatroom.link.var"/>
+            <xsl:value-of select="$ada.page.chatroom.link.var"/>
           </xsl:attribute>
           <xsl:attribute name="target">_blank</xsl:attribute>
           <xsl:choose>
