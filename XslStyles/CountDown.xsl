@@ -7,15 +7,15 @@
   xmlns:exsl="http://exslt.org/common"
   version="1.0" exclude-result-prefixes="exsl">
   
-  <xsl:param name="countDownJS"/>
+  <xsl:param name="ada.page.countdown.js"/>
 
-  <xsl:template name="countdown.insert">
+  <xsl:template name="ada.page.countdown.insert">
     <xsl:param name="countdown.year"/>
     <xsl:param name="countdown.month"/>
     <xsl:param name="countdown.day"/>
     <xsl:param name="countdown.hour"/>
     <xsl:param name="countdown.minute"/>
-    <xsl:if test="$countDownJS">
+    <xsl:if test="$ada.page.countdown.js">
       <xsl:variable name="countDownDate">
         <xsl:value-of
           select="concat('20',$countdown.year,',',$countdown.month -1, 
@@ -29,7 +29,7 @@
       </xsl:variable>
       <script type="text/javascript">
         <xsl:attribute name="src"><xsl:value-of
-        select="$countDownJS"/></xsl:attribute>
+        select="$ada.page.countdown.js"/></xsl:attribute>
       </script>
       <script type="text/javascript">
         <xsl:comment>
