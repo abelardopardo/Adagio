@@ -7,12 +7,8 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi str">
   
-  <xsl:variable name="ada.flv.player.swf.file">
-    <xsl:value-of select="$ada.home"/>/lib/mediaplayer/mediaplayer.swf
-  </xsl:variable>
-  <xsl:variable name="ada.flv.player.js.file">
-    <xsl:value-of select="$ada.home"/>/lib/mediaplayer/swfobject.js
-  </xsl:variable>
+  <xsl:variable name="ada.flv.player.swf.file">mediaplayer.swf</xsl:variable>
+  <xsl:variable name="ada.flv.player.js.file">swfobject.js</xsl:variable>
   <xsl:variable name="ada.flv.player.pluginspace">
     http://www.macromedia.com/go/getflashplayer
   </xsl:variable>

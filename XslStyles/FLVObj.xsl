@@ -48,7 +48,7 @@
         </xsl:choose>
       </xsl:variable>
       
-      <div class="ada.flv.video">
+      <div class="ada_flv_video">
         <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
         <a>
           <xsl:attribute name="href"><xsl:value-of

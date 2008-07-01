@@ -21,6 +21,7 @@
        -->
   <xsl:import href="AudienceDateProfile.xsl"/>
 
+  <!-- Allows the inclusion of Flash videos and MP3 -->
   <xsl:import href="FLVObj.xsl"/>
 
 </xsl:stylesheet>

@@ -9,6 +9,8 @@
   <!-- Brings in all the default values -->
   <xsl:import href="Params.xsl"/>
 
+  <xsl:import href="RssParams.xsl"/>
+
   <xsl:import href="DocbookProfile.xsl"/>
 
   <!-- Template to ignore the chapter/section info with rss.info condition -->
