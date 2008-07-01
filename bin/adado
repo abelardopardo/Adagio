@@ -32,17 +32,6 @@ basedir=$PWD
 # If within cygwin, pahts need to be manipulated for a correct ant invocation
 if [ $cygwin = "true" ]; then
     
-    # For ant {user.home} is not $HOME, but $HOMEDRIVE\$HOMEPATH
-    ADA_REAL_USER_HOME="$HOMEDRIVE$HOMEPATH"
-
-    # Set ADA_HOME with the correct syntax (double fwdslash)
-    if [ -e "$ADA_REAL_USER_HOME\\.ant.properties" ]; then
-	conf_ada_home=`grep "$ADA_REAL_USER_HOME/.ant.properties" -e "^ada\.home"`
-    else
-	conf_ada_home="ada.home="
-    fi
-    ADA_HOME=${conf_ada_home##*=}
-# FIX BY ABEL
     ADA_HOME=`dirname $0`/..
 
     # If ADA_HOME is empty, bomb out with msg
@@ -59,19 +48,8 @@ if [ $cygwin = "true" ]; then
     basedir=`cygpath --windows $basedir`
     basedir=${basedir//\\/\\\\}
 else
-    # Not in cygwin, directly fetch ADA_HOME from the .ant.properties in $HOME
-    ADA_REAL_USER_HOME=$HOME
-    ADA_HOME=${conf_ada_home##*=}
-# FIX BY ABEL
+    # Not in cygwin, directly fetch ADA_HOME from the path used to invoke the script
     ADA_HOME=`dirname $0`/..
-
-    # Set ADA_HOME with the correct syntax (double fwdslash)
-    if [ -e "$HOME/.ant.properties" ]; then
-	conf_ada_home=`grep "$HOME/.ant.properties" -e ada\.home`
-    else
-	conf_ada_home="ada.home="
-    fi
-    ADA_HOME=${conf_ada_home##*=}
 
     AllTargets="$ADA_HOME/AntImports/AllTargets.xml"
 fi
