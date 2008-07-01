@@ -14,6 +14,7 @@ subrecursive.dirs=Laboratory1 \
    		  Theory3 \
    		  Guide1 \
    		  Guide2 \
+   		  Guide3 \
  		  images \
 		  lib
 

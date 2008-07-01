@@ -23,7 +23,7 @@ table
   }
 
 /* Center images derived from informalfigures */
-div.informalfigure div.mediaobject img 
+div.informalfigure div.mediaobject img
 { 
   display: block;
   margin-left: auto;
@@ -38,21 +38,17 @@ div.informaltable table tbody tr td
   border: 1px solid black;
   }
 
-div#titlebox, div#tailbox, div#narrowcontent
+div#titlebox, div#tailbox, div#narrowcontent, div.ada.flv.video
 { 
   margin-right: auto; 
   margin-left: auto;
   }
 
-th 
-{ 
-  border-collapse: collapse; 
-  }
+div.ada_flv_video { text-align: center; }
 
-td 
-{ 
-  border-collapse: collapse; 
-  }
+th { border-collapse: collapse; }
+
+td { border-collapse: collapse; }
 
 tr.theorylecture,td.theorylecture,td.exam
 { 

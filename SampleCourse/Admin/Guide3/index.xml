@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+
+<chapter lang="es">
+  <title>Empotrar vídeos en una página web</title>
+  
+  <!-- Include the first exercise -->
+  <xi:include xml:base="./"
+    href="../../Material/Author10/index.xml" 
+    xpointer="xpointer(/section/*[not(name() = 'title')])"
+    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+</chapter>

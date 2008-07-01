@@ -56,8 +56,12 @@ Guide2
    version of the previous scenario (Guide 1). The author used for this
    resource is Author3.
 
-A directory name scratch appears once the whole course is created. It is the
-dummy copy of the site. After reviewing that everything seems correct, then
+Guide3
+   A simple document produced with docbook from a single source but including
+   an embedded flash video.
+
+A directory with name scratch appears once the whole course is created. It is 
+the dummy copy of the site. After reviewing that everything seems correct, then
 it is suitable to be published to a remote site.
 
 PLAYING WITH DATE-TIME CONTROLLED PROCESSING

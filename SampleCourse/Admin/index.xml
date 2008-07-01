@@ -143,6 +143,11 @@
       <listitem>
 	<para><ulink url="Guide2/index.html">Guía número dos</ulink></para>
       </listitem>
+      <listitem>
+	<para>
+	  <ulink url="Guide3/index.html">Documento con vídeo empotrado</ulink>
+	</para>
+      </listitem>
     </orderedlist>
   </section>
 </chapter>
