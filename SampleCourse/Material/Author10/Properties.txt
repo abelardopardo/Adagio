@@ -4,4 +4,8 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
+subrecursive.dirs=${ada.home}/lib/mediaplayer
+
 docbook.files=index.xml
+
+export.files=player.flv playerthumb.jpg

@@ -44,10 +44,6 @@
     <phrase condition="height">200</phrase>
     <phrase condition="file">player.flv</phrase>
     <phrase condition="image">playerthumb.jpg</phrase>
-    <phrase condition="backcolor">0xFFFFFF</phrase>
-    <phrase condition="frontcolor">0x000000</phrase>
-    <phrase condition="lightcolor">0x000000</phrase>
-    <phrase condition="screencolor">0x000000</phrase>
     <phrase condition="showstop">true</phrase>
   </para>
     
@@ -56,5 +52,19 @@
   </para>
 
   <programlisting>
+    <![CDATA[
+  <para id="video_1" condition="ada.flv.player">
+    <phrase condition="width">320</phrase>
+    <phrase condition="height">200</phrase>
+    <phrase condition="file">player.flv</phrase>
+    <phrase condition="image">playerthumb.jpg</phrase>
+    <phrase condition="showstop">true</phrase>
+  </para>]]>
   </programlisting>
 </section>
+
+<!--
+Local Variables: 
+compile-command: "adado" 
+End:
+-->
