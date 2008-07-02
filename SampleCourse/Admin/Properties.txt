@@ -6,6 +6,7 @@
 #
 
 subrecursive.dst.dir=
+# subrecursive.dirs=Guide3
 subrecursive.dirs=Laboratory1 \
                   Laboratory2 \
                   Laboratory3 \
@@ -18,7 +19,7 @@ subrecursive.dirs=Laboratory1 \
  		  images \
 		  lib
 
-mergestyles.master.style=Params.xml
+mergestyles.master.style=AdaCourseParams.xml
 
 docbook.files=index.xml
 docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl

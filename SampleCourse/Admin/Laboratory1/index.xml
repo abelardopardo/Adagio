@@ -6,7 +6,7 @@
 <chapter lang="es">
   <chapterinfo condition="rss.info">
     <title>
-      <xi:include href="../Params.xml"
+      <xi:include href="../AdaCourseParams.xml"
 		  xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(/xsl:stylesheet/xsl:param[@name = 'ada.page.author']/text())"
 		  parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
     </title>
@@ -16,7 +16,7 @@
     <abstract>
       <formalpara>
 	<title>
-	  <xi:include href="../Params.xml"
+	  <xi:include href="../AdaCourseParams.xml"
 		      xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(/xsl:stylesheet/xsl:param[@name = 'ada.page.author']/text())"
 		      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 	</title>
@@ -34,7 +34,7 @@
     </keywordset>
   </chapterinfo>
   <title>
-    <xi:include href="../Params.xml"
+    <xi:include href="../AdaCourseParams.xml"
       xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(/xsl:stylesheet/xsl:param[@name = 'ada.page.author']/text())"
       parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
   </title>

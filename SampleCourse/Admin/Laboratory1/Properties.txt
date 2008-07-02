@@ -12,7 +12,7 @@ laboratory.style.file=${ada.home}/XslStyles/Laboratory.xsl
 laboratory.files=index.xml
 
 mergestyles.src.dir=..
-mergestyles.master.style=Params.xml
+mergestyles.master.style=AdaCourseParams.xml
 
 export.dst.dir=../scratch/Lab1
 export.files=buscarmain.s \

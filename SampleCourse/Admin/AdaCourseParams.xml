@@ -9,25 +9,25 @@
   <xsl:param name="ada.course.name">MI CURSO</xsl:param>
   <xsl:param name="ada.course.edition">MI EDICION</xsl:param>
   <xsl:param name="ada.page.author">Hannibal the Cannibal</xsl:param>
-  <xsl:param name="ada.course.icon">../images/ao.16x16.ico</xsl:param>
-  <xsl:param name="ada.course.image">../images/ao.120x120.png</xsl:param>
-  <xsl:param name="ada.page.cssstyle.url">../style.css</xsl:param>
+  <xsl:param name="ada.course.icon">images/ao.16x16.ico</xsl:param>
+  <xsl:param name="ada.course.image">images/ao.120x120.png</xsl:param>
+  <xsl:param name="ada.page.cssstyle.url">style.css</xsl:param>
 
   <xsl:param name="ada.page.head.center.bottom">Mensaje en el center bottom</xsl:param>
-  <xsl:param name="ada.page.head.left.logo">../images/LogoUC3M_55x55.png</xsl:param>
+  <xsl:param name="ada.page.head.left.logo">images/LogoUC3M_55x55.png</xsl:param>
   <xsl:param name="ada.page.head.left.logo.alt">UC3M</xsl:param>
   <xsl:param name="ada.page.head.left.logo.url">http://www.uc3m.es</xsl:param>
 
-  <xsl:param name="ada.page.head.right.logo">../images/logoit3.gif</xsl:param>
+  <xsl:param name="ada.page.head.right.logo">images/logoit3.gif</xsl:param>
   <xsl:param name="ada.page.head.right.logo.alt">Dept. Ingeniería Telemática</xsl:param>
   <xsl:param name="ada.page.head.right.logo.url">http://www.it.uc3m.es</xsl:param>
 
-  <xsl:param name="ada.page.head.center.top.logo">../images/titular3.gif</xsl:param>
+  <xsl:param name="ada.page.head.center.top.logo">images/titular3.gif</xsl:param>
   <xsl:param name="ada.page.head.center.top.logo.alt">Universidad Carlos III de Madrid. Dept. de Ingeniería Telemática</xsl:param>
   <xsl:param name="ada.page.head.center.top.logo.url">http://www.it.uc3m.es</xsl:param>
   <xsl:param name="ada.prosper.logo">SampleCourse/Admin/latexCommonFiles/uc3m-logo-old.eps</xsl:param>
   <xsl:param name="ada.prosper.style">uc3m</xsl:param>
   
-  <xsl:param name="ada.page.countdown.js">../lib/countdown.js</xsl:param>
+  <xsl:param name="ada.page.countdown.js">lib/countdown.js</xsl:param>
 
 </xsl:stylesheet>

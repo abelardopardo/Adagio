@@ -7,7 +7,7 @@
 subrecursive.dirs=../../Material/Author3
 
 mergestyles.src.dir=..
-mergestyles.master.style=Params.xml
+mergestyles.master.style=AdaCourseParams.xml
 
 docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
 docbook.src.dir=../../Material/Author3

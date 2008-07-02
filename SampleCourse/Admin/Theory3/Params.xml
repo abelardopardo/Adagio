@@ -2,7 +2,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-  <xsl:import href="../Params.xml"/>
+  <xsl:import href="../AdaCourseParams.xml"/>
 
   <xsl:param name="ada.prosper.logo">../latexCommonFiles/uc3m-logo-old.eps</xsl:param>
   <xsl:param name="ada.prosper.style">uc3m</xsl:param>
