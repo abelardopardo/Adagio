@@ -7,23 +7,15 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl str xi">
 
-  <xsl:param name="asap.num.authors"       select="'2'"/>
-  <!-- nia, email, none -->
-  <xsl:param name="asap.include.id"        select="'email'"/> 
-  <xsl:param name="asap.id.text"           select="'ID'"/>
-  <xsl:param name="asap.include.fullname"  select="'no'"/>
-  <!-- all, none, one -->
-  <xsl:param name="asap.include.password"  select="'one'"/> 
-  <xsl:param name="asap.include.groupname" select="'no'"/>
-  <!-- yes, no -->
-  <xsl:param name="asap.confirmation.email" select="'yes'"/>
-    
-    <!-- ******************************************************************* -->
+  <!-- Bring in all the parameters -->
+  <xsl:import href="AsapAuthorBoxParams.xsl"/>
+  
+  <!-- ******************************************************************* -->
   <!--                                                                     -->
   <!-- Template to produce author box                                      -->
   <!--                                                                     -->
   <!-- ******************************************************************* -->
-  <xsl:template name="asap.author.box">
+  <xsl:template name="ada.asap.author.box">
     <table>
       <tr>
         <td>
@@ -36,16 +28,16 @@
               <xsl:with-param name="i"         select="'1'"/>
               <xsl:with-param name="increment" select="'1'"/>
               <xsl:with-param name="operator"  select="'&lt;='"/>
-              <xsl:with-param name="testValue" select="$asap.num.authors"/>
+              <xsl:with-param name="testValue" select="$ada.asap.num.authors"/>
             </xsl:call-template>
             <tr>
               <td colspan="2" style="background-color: rgb(255, 255, 255); 
                                      border: 1px solid black"/></tr>
-            <xsl:if test="$asap.include.password = 'one'">
+            <xsl:if test="$ada.asap.include.password = 'one'">
               <tr style="border: 1px solid black;">
                 <td style="text-align: right">
                   <xsl:choose>
-                    <xsl:when test="$asap.num.authors &gt; 1">
+                    <xsl:when test="$ada.asap.num.authors &gt; 1">
                       <xsl:choose>
                         <xsl:when test="$profile.lang='en'">
                           Any author password
@@ -67,7 +59,7 @@
                   <xsl:text> </xsl:text>
                   <img alt="Info" style="border: 0; vertical-align: middle">
                     <xsl:attribute name="src"><xsl:value-of
-                    select="$rootPrefix"/>images/info.png</xsl:attribute>
+                    select="$ada.course.home"/>images/info.png</xsl:attribute>
                     <xsl:attribute name="title">
                       <xsl:choose>
                         <xsl:when
@@ -79,7 +71,7 @@
                 </td>
               </tr>
             </xsl:if>
-            <xsl:if test="$asap.include.groupname = 'yes'">
+            <xsl:if test="$ada.asap.include.groupname = 'yes'">
               <tr style="border: 1px solid black;">
                 <td style="text-align: right">
                   <xsl:choose>
@@ -92,7 +84,7 @@
                   <xsl:text> </xsl:text>
                   <img alt="Info" style="border: 0; vertical-align: middle">
                     <xsl:attribute name="src"><xsl:value-of
-                    select="$rootPrefix"/>images/info.png</xsl:attribute>
+                    select="$ada.course.home"/>images/info.png</xsl:attribute>
                     <xsl:attribute name="title">
                       <xsl:choose>
                         <xsl:when
@@ -104,7 +96,7 @@
                 </td>
               </tr>
             </xsl:if>
-            <xsl:if test="$asap.confirmation.email = 'yes'">
+            <xsl:if test="$ada.asap.confirmation.email = 'yes'">
               <tr style="border: 1px solid black;">
                 <td style="text-align: right">
                   <xsl:choose>
@@ -208,7 +200,7 @@
     <xsl:if test="$testPassed='true'">
       <!-- Put your logic here, whatever it might be. For the purpose      -->
       <!-- of our example, we'll just write some text to the output stream. -->
-      <xsl:if test="$asap.num.authors &gt; 1">
+      <xsl:if test="$ada.asap.num.authors &gt; 1">
         <tr>
           <td colspan="2" 
             style="background-color: rgb(255, 255, 255); 
@@ -228,7 +220,7 @@
            there should be no box with full name info 
            -->
       <xsl:choose>
-        <xsl:when test="$asap.include.id = 'nia'">
+        <xsl:when test="$ada.asap.include.id = 'nia'">
           <tr style="border: 1px solid black">
             <td style="text-align: right">
               <xsl:choose>
@@ -248,7 +240,7 @@
             </td>
           </tr>
         </xsl:when>
-        <xsl:when test="$asap.include.id = 'email'">
+        <xsl:when test="$ada.asap.include.id = 'email'">
           <tr>
             <td style="text-align: right">
               <xsl:choose>
@@ -267,10 +259,10 @@
             </td>
           </tr>
         </xsl:when>
-        <xsl:when test="$asap.include.id = 'custom'">
+        <xsl:when test="$ada.asap.include.id = 'custom'">
           <tr>
             <td style="text-align: right">
-              <xsl:value-of select="$asap.id.text"/>
+              <xsl:value-of select="$ada.asap.id.text"/>
             </td>
             <td>
               <xsl:element name="input">
@@ -284,7 +276,7 @@
         </xsl:when>
       </xsl:choose>
 
-      <xsl:if test="$asap.include.password = 'all'">
+      <xsl:if test="$ada.asap.include.password = 'all'">
         <tr>
           <td style="text-align: right">
             <xsl:choose>
@@ -302,7 +294,7 @@
           </td>
         </tr>
       </xsl:if>
-      <xsl:if test="$asap.include.fullname = 'yes'">
+      <xsl:if test="$ada.asap.include.fullname = 'yes'">
         <tr>
           <xsl:choose>
             <xsl:when test="$profile.lang='en'">

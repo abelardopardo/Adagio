@@ -9,57 +9,69 @@
   
   <xsl:import href="HeadTail.xsl"/>
   <xsl:import href="CountDown.xsl"/>
-  <xsl:import href="AsapAuthorBox.xsl"/>
   <xsl:import href="ChatRoomLink.xsl"/>
+  <xsl:import href="AsapAuthorBox.xsl"/>
 
-  <xsl:param name="include.solutions" select="'no'"/>
-  <xsl:param name="add.comments" select="'no'"/>
-  <xsl:param name="verifyemail"/>
+  <xsl:import href="SubmitParams.xsl"/>
 
+  <!-- The creation of the submission page is done from the source of the lab -->
   <xsl:template match="chapter">
+    <!-- Title if present -->
     <xsl:if test="title/text() != ''">
       <h3 style="text-align: center"><xsl:value-of select="title"/></h3>
     </xsl:if>
-    <xsl:if test="note[@condition='AdminInfo']/para[@condition='handindate']/text() != ''">
-      <h3 style="text-align: center">
+
+      <!-- Insert a header with the deadline if present in the document -->
+    <xsl:if 
+      test="note[@condition='AdminInfo']/para[@condition='handindate']/text() != ''">
+      <h2 class="head-center">
         <xsl:choose>
           <xsl:when test="$profile.lang='en'">Deadline: </xsl:when>
-          <xsl:otherwise>Plazo de entrega: </xsl:otherwise>
+          <xsl:otherwise>Fecha de entrega: </xsl:otherwise>
         </xsl:choose>
-        <xsl:apply-templates select="note[@condition='AdminInfo']/para[@condition='handindate']/node()"/>
-      </h3>
+        <xsl:apply-templates 
+          select="note[@condition='AdminInfo']/para[@condition='handindate']/node()"/>
+      </h2>
     </xsl:if>
 
     <!-- Insert countdown here -->
-    <xsl:if test="note[@condition='AdminInfo']/para[@condition='deadline.format']/text()">
+    <xsl:if 
+      test="note[@condition='AdminInfo']/para[@condition='deadline.format']/text()">
       <xsl:variable name="deadlineparts">
         <tokens xmlns="">
           <xsl:copy-of
-            select="str:tokenize(normalize-space(note[@condition='AdminInfo']/para[@condition='deadline.format']/text()), ' /')"/>
+            select="str:tokenize(normalize-space(note[@condition =
+                    'AdminInfo']/para[@condition = 'deadline.format']/text()), 
+                    ' /')"/>
         </tokens>
       </xsl:variable>
       <p style="text-align: center">
         <b>
-          <xsl:call-template name="countdown.insert">
+          <xsl:call-template name="ada.page.countdown.insert">
             <xsl:with-param name="countdown.year">
               <xsl:value-of
-                select="exsl:node-set($deadlineparts)/tokens/token[position()=4]/text()"/>
+                select="exsl:node-set($deadlineparts)/tokens/token[position() =
+                        4]/text()"/> 
             </xsl:with-param>
             <xsl:with-param name="countdown.month">
               <xsl:value-of
-                select="exsl:node-set($deadlineparts)/tokens/token[position()=3]/text()"/>
+                select="exsl:node-set($deadlineparts)/tokens/token[position() =
+                        3]/text()"/> 
             </xsl:with-param>
             <xsl:with-param name="countdown.day">
               <xsl:value-of
-                select="exsl:node-set($deadlineparts)/tokens/token[position()=2]/text()"/>
+                select="exsl:node-set($deadlineparts)/tokens/token[position() =
+                        2]/text()"/> 
             </xsl:with-param>
             <xsl:with-param name="countdown.hour">
               <xsl:value-of
-                select="exsl:node-set($deadlineparts)/tokens/token[position()=5]/text()"/>
+                select="exsl:node-set($deadlineparts)/tokens/token[position() =
+                        5]/text()"/>
             </xsl:with-param>
             <xsl:with-param name="countdown.minute">
               <xsl:value-of
-                select="exsl:node-set($deadlineparts)/tokens/token[position()=6]/text()"/>
+                select="exsl:node-set($deadlineparts)/tokens/token[position() =
+                        6]/text()"/>
             </xsl:with-param>
           </xsl:call-template>
         </b>
@@ -69,10 +81,11 @@
 
     <xsl:call-template name="InsertChatRoomLink"/>
 
-    <xsl:if test="$verifyemail != ''">
+    <xsl:if test="$ada.submit.asap.verifyemail.js != ''">
       <xsl:element name="script">
         <xsl:attribute name="type">text/javascript</xsl:attribute>
-        <xsl:attribute name="src"><xsl:value-of select="$verifyemail"/></xsl:attribute>
+        <xsl:attribute name="src"><xsl:value-of 
+        select="$ada.submit.asap.verifyemail.js"/></xsl:attribute>
         <xsl:text> </xsl:text>
       </xsl:element>
     </xsl:if>
@@ -81,9 +94,10 @@
       <xsl:attribute name="id">submit.form</xsl:attribute>
       <xsl:attribute name="method">post</xsl:attribute>
       <xsl:attribute name="action">
-        <xsl:value-of select="note[@condition='AdminInfo']/para[@condition='processor']/text()"/>
+        <xsl:value-of 
+          select="note[@condition='AdminInfo']/para[@condition='processor']/text()"/>
       </xsl:attribute>
-      <xsl:if test="$verifyemail != ''">
+      <xsl:if test="$ada.submit.asap.verifyemail.js != ''">
         <xsl:attribute name="onsubmit">return check_form(this)</xsl:attribute>
       </xsl:if>
       <xsl:attribute name="enctype">multipart/form-data</xsl:attribute>
@@ -95,9 +109,9 @@
       <xsl:apply-templates 
         select="descendant::note[@condition='text.before.author.box']/node()"/>
 
-      <xsl:call-template name="asap.author.box"/>
+      <xsl:call-template name="ada.asap.author.box"/>
 
-      <xsl:if test="$add.comments = 'yes'">
+      <xsl:if test="$ada.submit.add.comment.textarea = 'yes'">
         <hr/>
         
         <table width="95%">
@@ -132,7 +146,7 @@
       </p>
     </xsl:element>
 
-    <xsl:if test="$asap.confirmation.email = 'yes'">
+    <xsl:if test="$ada.asap.confirmation.email = 'yes'">
       <p>
         <sup>*</sup>
         <xsl:choose>
@@ -152,7 +166,9 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="note[@condition='input']|para[@condition='input']|phrase[@condition='input']">
+  <xsl:template match="note[@condition='input']|
+                       para[@condition='input']|
+                       phrase[@condition='input']">
     <xsl:if test="ancestor-or-self::*/@condition = 'submit'">
       <xsl:element name="input">
         <xsl:if test="*[@condition='type']">
@@ -184,7 +200,9 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="note[@condition='textarea']|para[@condition='textarea']|phrase[@condition='textarea']">
+  <xsl:template match="note[@condition='textarea']|
+                       para[@condition='textarea']|
+                       phrase[@condition='textarea']">
     <xsl:if test="ancestor-or-self::*/@condition = 'submit'">
       <xsl:element name="textarea">
         <xsl:if test="*[@condition='rows']">
@@ -207,13 +225,7 @@
     </xsl:if>
   </xsl:template>
 
+  <!-- The title of the section is to be ignored -->
   <xsl:template match="section[@condition='submit']/title"/>
 
-  <!--
-  <xsl:template match="@*|*">
-    <xsl:if test="ancestor-or-self::*/@condition = 'submit'">
-      <xsl:apply-templates />
-    </xsl:if>
-  </xsl:template>
-  -->
 </xsl:stylesheet>

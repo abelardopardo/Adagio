@@ -23,4 +23,6 @@
   <xsl:param name="ada.course.short.edition" />
   <xsl:param name="ada.course.short.name" />
   <xsl:param name="ada.course.year" />
+
+  <xsl:param name="ada.course.home" />
 </xsl:stylesheet>

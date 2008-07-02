@@ -13,10 +13,6 @@
   <xsl:import href="CountDown.xsl"/>
   <xsl:import href="ChatRoomLink.xsl"/>
 
-  <xsl:output method="xml" indent="yes" encoding="UTF-8"
-    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
-    doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"/>
-
   <!-- Lab is supposed to be a chapter -->
   <xsl:template match="chapter">
     <div class="narrowcontent">
@@ -164,7 +160,9 @@
   <xsl:template match="section[@condition='professorguide']" mode="toc" />
 
   <xsl:template
-    match="section[@condition='solution']|phrase[@condition='solution']|note[@condition='solution']">
+    match="section[@condition='solution']|
+           phrase[@condition='solution']|
+           note[@condition='solution']">
     <xsl:if test="$laboratory.include.solutions = 'yes'">
       <table style="border:1" align="center" cellpadding="10">
         <tr>
