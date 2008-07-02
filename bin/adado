@@ -58,7 +58,9 @@ fi
 ada_check_home
 
 # Invoke ant
-ant -q -Dada.home="$ADA_HOME" -Dbasedir="$basedir" -f "$AllTargets" $*
+ant -q -Dada.home="$ADA_HOME" \
+       -Dbasedir="$basedir" \
+       -f "$AllTargets" $*
 
 exit
 

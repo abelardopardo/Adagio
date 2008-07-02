@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# Command used by Ant to search through the parent directories the file
+# AdaCourseParams.xml that denotes the Course Home directory. The script is
+# invoked when initializing a build command.
+ada_course_file_name="AdaCourseParams.xml"  # File to look for
+ada_course_home_prefix="./"                 # Initial prefix to apply
+index=0                                     # Initial step number
+max=10                                      # Maximum levels to explore
+while [ ! -f $ada_course_home_prefix/$ada_course_file_name -a \
+          "$index" -le "$max" ]; do
+  ada_course_home_prefix="$ada_course_home_prefix../"
+  index=`expr $index + 1`
+done
+
+# If the file has not been found, reset the prefix
+if [ $index -gt $max ]; then
+    ada_course_home_prefix="./"
+fi
+
+# Dump the value in the output to be caught by Ant.
+echo "$ada_course_home_prefix"
