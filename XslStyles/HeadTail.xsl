@@ -45,6 +45,7 @@
     <xsl:if test="$ada.course.icon">
       <link rel="shortcut icon">
         <xsl:attribute name="href"><xsl:value-of
+        select="$ada.course.home"/><xsl:value-of
         select="$ada.course.icon"/></xsl:attribute>
         <xsl:attribute name="type"><xsl:value-of 
         select="$ada.course.icon.type"/></xsl:attribute>
@@ -79,6 +80,7 @@
     <xsl:if test="$ada.page.cssstyle.url">
       <link rel="stylesheet" type="text/css">
         <xsl:attribute name="href"><xsl:value-of
+        select="$ada.course.home"/><xsl:value-of
         select="$ada.page.cssstyle.url"/></xsl:attribute>
       </link>
     </xsl:if>
@@ -128,10 +130,11 @@
                           <img
                             style="vertical-align: bottom; border: 0;">
                             <xsl:if test="$ada.page.head.left.logo.alt">
-                              <xsl:attribute name="src"><xsl:value-of 
+                              <xsl:attribute name="alt"><xsl:value-of 
                               select="$ada.page.head.left.logo.alt"/></xsl:attribute>
                             </xsl:if>
-                            <xsl:attribute name="src"><xsl:value-of 
+                            <xsl:attribute name="src"><xsl:value-of
+                              select="$ada.course.home"/><xsl:value-of 
                             select="$ada.page.head.left.logo"/></xsl:attribute>
                           </img>
                         </a>
@@ -152,6 +155,7 @@
                                 select="$ada.page.head.center.top.logo.alt"/></xsl:attribute>
                               </xsl:if>
                               <xsl:attribute name="src"><xsl:value-of
+                              select="$ada.course.home"/><xsl:value-of
                               select="$ada.page.head.center.top.logo"/></xsl:attribute>
                             </img>
                           </a>
@@ -171,7 +175,8 @@
                               <xsl:attribute name="src"><xsl:value-of 
                               select="$ada.page.head.right.logo.alt"/></xsl:attribute>
                             </xsl:if>
-                            <xsl:attribute name="src"><xsl:value-of 
+                            <xsl:attribute name="src"><xsl:value-of
+                              select="$ada.course.home"/><xsl:value-of 
                             select="$ada.page.head.right.logo"/></xsl:attribute>
                           </img>
                         </a>
@@ -221,6 +226,7 @@
                     </xsl:if>
                     <xsl:attribute name="style">border: 0;</xsl:attribute>
                     <xsl:attribute name="src"><xsl:value-of
+                    select="$ada.course.home"/><xsl:value-of
                     select="$ada.course.image"/></xsl:attribute>
                   </xsl:element>
                 </td>
@@ -230,8 +236,8 @@
         </table>
         <hr style="text-align:center;"/>
       </xsl:if>
-      <xsl:comment> ######## End of title ######## </xsl:comment>
     </div>
+    <xsl:comment> ######## End of title ######## </xsl:comment>
   </xsl:template>
   
   <!-- Footer-->
@@ -268,7 +274,8 @@
                   <xsl:attribute name="alt"><xsl:value-of 
                   select="$ada.page.license.alt"/></xsl:attribute>
                   <xsl:attribute name="style">border:0;</xsl:attribute>
-                  <xsl:attribute name="src"><xsl:value-of 
+                  <xsl:attribute name="src"><xsl:value-of
+                  select="$ada.course.home"/><xsl:value-of 
                   select="$ada.page.license.logo"/></xsl:attribute>
                 </xsl:element>
               </a>
