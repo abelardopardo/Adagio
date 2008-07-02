@@ -51,6 +51,7 @@ build templates
   <condition property="root.path.prefix" value="">
     <os family="unix"/>
   </condition>
+
   <exec executable="cygpath" 
 	os="windows"
 	outputproperty="root.path.prefix">
@@ -58,6 +59,12 @@ build templates
     <arg value="/"/>
   </exec>
 
+  <!-- Script to detect where is the course home by checking for the presence of
+  AdaCourseParams.xml up to 10 levels up the current basedir. -->
+  <exec executable="adafindcoursehome"
+	dir="${basedir}"
+	outputproperty="ada.course.home"/>
+  
 
 <!--   <available property="ada.property.file.ready" -->
 <!-- 	     file="${basedir}${file.separator}${ada.local.property.file}"/> -->
@@ -103,10 +110,11 @@ build templates
 
   <target name="initial.check.dump">
     <echo level="${ada.initial.check.dump.level}">------ Global properties ----
-  basedir = ${basedir}
-  user.dir = ${user.dir}
-  user.home = ${user.home}
-  ada.home = ${ada.home}
+  basedir         = ${basedir}
+  user.dir        = ${user.dir}
+  user.home       = ${user.home}
+  ada.home        = ${ada.home}
+  ada.course.home = ${ada.course.home}
 
   executable.file.extension = ${executable.file.extension}
   xml.catalog.file = ${xml.catalog.file}
