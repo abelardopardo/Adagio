@@ -25,6 +25,7 @@ laboratory.bilingual.files=index.xml
 
 export.dst.dir=../scratch/Lab2
 export.files=index.e?.html \
+	     index.submit.e?.html \  
              *.e?.png
 
 clean.files=../scratch/Lab2

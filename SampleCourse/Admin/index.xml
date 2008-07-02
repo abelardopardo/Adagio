@@ -106,7 +106,9 @@
 	      <ulink url="Lab1/index.html">Enunciado</ulink>
 	    </entry>
 	    <entry>10 del 10 del 10</entry>
-	    <entry></entry>
+	    <entry>
+	      <ulink url="Lab1/index.submit.html">Página de entrega</ulink>
+	    </entry>
 	  </row>
 	  <row audience="2116-01-01T00:00:00--2208-01-01T00:00:00">
 	    <entry>2</entry>
@@ -115,7 +117,10 @@
 	      <ulink url="Lab2/index.en.html">Handout in English</ulink>
 	    </entry>
 	    <entry>20 del 20 del 20</entry>
-	    <entry></entry>
+	    <entry>
+	      <ulink url="Lab2/index.submit.es.html">Página de entrega</ulink>,
+	      <ulink url="Lab2/index.submit.en.html">Submission page</ulink>
+	    </entry>
 	  </row>
 	  <row audience="2117-01-01T00:00:00--2208-01-01T00:00:00">
 	    <entry>3</entry>
