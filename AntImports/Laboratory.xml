@@ -26,6 +26,8 @@
   <property name="laboratory.dst.dir"       value="${laboratory.src.dir}"/>
   <property name="laboratory.style.file" 
 	    value="${ada.home}/XslStyles/Laboratory.xsl"/>
+  <property name="laboratory.submit.style.file" 
+	    value="${ada.home}/XslStyles/Submit.xsl"/>
   <property name="laboratory.output.format"   value="html"/>
   <property name="laboratory.files"           value=""/>
   <property name="laboratory.bilingual.files" value=""/>
@@ -153,11 +155,12 @@
 
   <target name="laboratory.dump.properties" depends="initial.check">
     <echo level="info"> ------ Laboratory properties ----
-    laboratory.src.dir       ="${laboratory.src.dir}"
-    laboratory.dst.dir       ="${laboratory.dst.dir}"
-    laboratory.style.file    ="${laboratory.style.file}"
-    laboratory.output.format ="${laboratory.out.format}"
-    laboratory.files         ="${laboratory.files}"</echo>
+    laboratory.src.dir           ="${laboratory.src.dir}"
+    laboratory.dst.dir           ="${laboratory.dst.dir}"
+    laboratory.style.file        ="${laboratory.style.file}"
+    laboratory.submit.style.file ="${laboratory.style.file}"
+    laboratory.output.format     ="${laboratory.out.format}"
+    laboratory.files             ="${laboratory.files}"</echo>
   </target>
 
   <!-- If entering through this target, build.out is deleted -->
@@ -201,6 +204,18 @@
 	     value="--stringparam laboratory.include.guide yes
                     --stringparam laboratory.include.solutions yes
                     ${laboratory.profile.lang}"/>
+    </antcall>
+
+    <!-- Call xsltproc to generate the submission page -->
+    <antcall target="${laboratory.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${laboratory.submit.style.file}"/>
+      <param name="xsltproc.output.format"
+	     value="submit.${laboratory.output.format}"/>
+      <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
+      <param name="xsltproc.extra.args" 
+	     value="${laboratory.profile.lang}"/>
     </antcall>
   </target>
 
