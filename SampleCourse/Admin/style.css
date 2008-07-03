@@ -22,10 +22,11 @@ table
   margin-left: auto;
   }
 
-table.ada_solution_table
+table.ada_solution_table, table.ada_pguide_table
 { 
-  border:1; 
   cellpadding=10;
+  border-collapse: collapse;
+  border: 1px solid black;
  }
 
 /* Center images derived from informalfigures */
