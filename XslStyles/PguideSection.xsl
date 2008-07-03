@@ -8,34 +8,35 @@
   exclude-result-prefixes="exsl" version="1.0">
   
   <!-- Include professor guide text --> 
-  <xsl:param name="include.guide" select="'no'"/>
+  <xsl:param name="laboratory.include.guide" select="'no'"/>
   <!-- Background color for the professor guide box  --> 
   <xsl:param name="pguidebgn" select="'#CCD0D6'"/>
 
+  <!-- Prevent this section from appearing in TOC -->
+  <xsl:template match="section[@condition='professorguide']" mode="toc" />
+
   <!-- Conditionally process the notes labeled with condition
        professorguide -->
-  <xsl:template match="note[@condition='professorguide']">
-    <xsl:if test="$include.guide = 'yes'">
-      <xsl:choose>
-        <xsl:when test="title">
-          <table cellpadding="10"
-            style="border-collapse: collapse;border: 1px solid black;">
-            <xsl:attribute name="bgcolor">
-              <xsl:value-of select="$pguidebgn"/>
-            </xsl:attribute>
-            <tr>
-              <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; ">
-                <!-- Taken from docbook/html/admin.xsl -->
-                <p><b><xsl:value-of select="title/text()"/></b></p>
-                <xsl:apply-templates select="node()"/>
-              </td>
-            </tr>
-          </table>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates select="node()"/>
-        </xsl:otherwise>
-      </xsl:choose>
+  <xsl:template match="section[@condition = 'professorguide']|note[@condition =
+                       'professorguide']">
+    <xsl:if test="$laboratory.include.guide = 'yes'">
+      <p>
+        <table class="ada_pguide_table" cellpadding="10">
+          <tr>
+            <td>
+              <xsl:choose>
+                <xsl:when test="$profile.lang='en'">
+                  <p><b>Professor Guide:</b></p>
+                </xsl:when>
+                <xsl:otherwise>
+                  <p><b>Guía del profesor</b></p>
+                </xsl:otherwise>
+              </xsl:choose>
+              <xsl:apply-templates select="node()"/>
+            </td>
+          </tr>
+        </table>
+      </p>
     </xsl:if>
   </xsl:template>
   

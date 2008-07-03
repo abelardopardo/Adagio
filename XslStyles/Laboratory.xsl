@@ -13,6 +13,10 @@
   <xsl:import href="CountDown.xsl"/>
   <xsl:import href="ChatRoomLink.xsl"/>
 
+  <!-- Invoke the templates to process professor guide and solution -->
+  <xsl:import href="PguideSection.xsl"/>
+  <xsl:import href="SolutionSection.xsl"/>
+
   <!-- Lab is supposed to be a chapter -->
   <xsl:template match="chapter">
     <div class="narrowcontent">
@@ -156,52 +160,5 @@
 
   <!-- Prevent these sections from appearing in TOC -->
   <xsl:template match="section[@condition='submit']"         mode="toc" />
-  <xsl:template match="section[@condition='solution']"       mode="toc" />
-  <xsl:template match="section[@condition='professorguide']" mode="toc" />
 
-  <xsl:template
-    match="section[@condition='solution']|
-           phrase[@condition='solution']|
-           note[@condition='solution']">
-    <xsl:if test="$laboratory.include.solutions = 'yes'">
-      <table style="border:1" align="center" cellpadding="10">
-        <tr>
-          <td>
-            <xsl:choose>
-              <xsl:when test="$profile.lang='en'">
-                <p><b>Solution:</b></p>
-              </xsl:when>
-              <xsl:otherwise>
-                <p><b>Solución:</b></p>
-              </xsl:otherwise>
-            </xsl:choose>
-            <xsl:apply-templates select="node()"/>
-          </td>
-        </tr>
-      </table>
-    </xsl:if>
-  </xsl:template>
-
-  <xsl:template match="section[@condition = 'professorguide']|note[@condition =
-                       'professorguide']">
-    <xsl:if test="$laboratory.include.guide = 'yes'">
-      <p>
-        <table class="pguide" cellpadding="10">
-          <tr>
-            <td>
-              <xsl:choose>
-                <xsl:when test="$profile.lang='en'">
-                  <p><b>Professor Guide:</b></p>
-                </xsl:when>
-                <xsl:otherwise>
-                  <p><b>Guía del profesor</b></p>
-                </xsl:otherwise>
-              </xsl:choose>
-              <xsl:apply-templates select="node()"/>
-            </td>
-          </tr>
-        </table>
-      </p>
-    </xsl:if>
-  </xsl:template>
 </xsl:stylesheet>
