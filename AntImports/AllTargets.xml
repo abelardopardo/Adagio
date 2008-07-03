@@ -2,6 +2,8 @@
 
 <project name="Gather all target definitions" default="execute">
 
+  <import file="InitialCheck.xml"/>
+<!--
   <import file="SubRecursive.xml"/>
 
   <import file="Xfig.xml"/>
@@ -35,136 +37,136 @@
   <import file="Cleaning.xml"/>
 
   <import file="Rsync.xml"/>
-
+-->
   <target name="execute" depends="initial.delete.build.out">
 
-    <antcall target="subrecursive.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/SubRecursive.xml" target="subrecursive.processing" inheritAll="false"/>
 
-    <antcall target="copyfiles.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Copyfiles.xml" target="copyfiles.processing" inheritAll="false"/>
 
-    <antcall target="xfig.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Xfig.xml" target="xfig.processing" inheritAll="false"/>
 
-    <antcall target="inkscape.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Inkscape.xml" target="inkscape.processing" inheritAll="false"/>
 
-    <antcall target="gimp.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Gimp.xml" target="gimp.processing" inheritAll="false"/>
 
-    <antcall target="convert.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Convert.xml" target="convert.processing" inheritAll="false"/>
 
-    <antcall target="xsltproc.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Xsltproc.xml" target="xsltproc.processing" inheritAll="false"/>
 
-    <antcall target="docbook.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Docbook.xml" target="docbook.processing" inheritAll="false"/>
 
-    <antcall target="bilingualdb.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/BilingualDB.xml" target="bilingualdb.processing" inheritAll="false"/>
 
-    <antcall target="laboratory.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Laboratory.xml" target="laboratory.processing" inheritAll="false"/>
 
-    <antcall target="latex.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Latex.xml" target="latex.processing" inheritAll="false"/>
 
-    <antcall target="dvips.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Dvips.xml" target="dvips.processing" inheritAll="false"/>
 
-    <antcall target="ps2pdf.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Ps2pdf.xml" target="ps2pdf.processing" inheritAll="false"/>
 
-    <antcall target="pdflatex.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Pdflatex.xml" target="pdflatex.processing" inheritAll="false"/>
 
-    <antcall target="dblatex.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Dblatex.xml" target="dblatex.processing" inheritAll="false"/>
 
-    <antcall target="pdfnup.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/PDFnup.xml" target="pdfnup.processing" inheritAll="false"/>
 
-    <antcall target="export.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Export.xml" target="export.processing" inheritAll="false"/>
 
   </target>
 
   <target name="clean" depends="initial.delete.build.out">
 
-    <antcall target="export.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Export.xml" target="export.clean" inheritAll="false"/>
 
-    <antcall target="pdfnup.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/PDFnup.xml" target="pdfnup.clean" inheritAll="false"/>
 
-    <antcall target="dblatex.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Dblatex.xml" target="dblatex.clean" inheritAll="false"/>
 
-    <antcall target="pdflatex.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Pdflatex.xml" target="pdflatex.clean" inheritAll="false"/>
 
-    <antcall target="ps2pdf.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Ps2pdf.xml" target="ps2pdf.clean" inheritAll="false"/>
 
-    <antcall target="dvips.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Dvips.xml" target="dvips.clean" inheritAll="false"/>
 
-    <antcall target="latex.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Latex.xml" target="latex.clean" inheritAll="false"/>
 
-    <antcall target="laboratory.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Laboratory.xml" target="laboratory.clean" inheritAll="false"/>
 
-    <antcall target="bilingualdb.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/BilingualDB.xml" target="bilingualdb.clean" inheritAll="false"/>
 
-    <antcall target="docbook.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Docbook.xml" target="docbook.clean" inheritAll="false"/>
 
-    <antcall target="xsltproc.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Xsltproc.xml" target="xsltproc.clean" inheritAll="false"/>
 
-    <antcall target="convert.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Convert.xml" target="convert.clean" inheritAll="false"/>
 
-    <antcall target="gimp.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Gimp.xml" target="gimp.clean" inheritAll="false"/>
 
-    <antcall target="inkscape.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Inkscape.xml" target="inkscape.clean" inheritAll="false"/>
 
-    <antcall target="xfig.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Xfig.xml" target="xfig.clean" inheritAll="false"/>
 
-    <antcall target="copyfiles.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Copyfiles.xml" target="copyfiles.clean" inheritAll="false"/>
 
-    <antcall target="subrecursive.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/SubRecursive.xml" target="subrecursive.clean" inheritAll="false"/>
 
-    <antcall target="clean.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Cleaning.xml" target="clean.clean" inheritAll="false"/>
     
   </target>
 
   <target name="report">
 
-    <antcall target="initial.check.dump">
+    <ant antfile="${ada.home}/AntImports/InitialCheck.xml" target="initial.check.dump">
       <param name="ada.initial.check.dump.level" value="warning"/>
-    </antcall>
+    </ant>
     <echo/>
 
     <echo>Tool               | Installed |  Missing</echo>
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <antcall target="xfig.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Xfig.xml" target="xfig.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <antcall target="inkscape.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Inkscape.xml" target="inkscape.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <antcall target="gimp.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Gimp.xml" target="gimp.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <antcall target="convert.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Convert.xml" target="convert.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <antcall target="xsltproc.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Xsltproc.xml" target="xsltproc.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <antcall target="latex.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Latex.xml" target="latex.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <antcall target="dvips.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Dvips.xml" target="dvips.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <antcall target="ps2pdf.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Ps2pdf.xml" target="ps2pdf.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <antcall target="pdflatex.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Pdflatex.xml" target="pdflatex.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <antcall target="dblatex.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Dblatex.xml" target="dblatex.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <antcall target="pdfnup.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/PDFnup.xml" target="pdfnup.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
