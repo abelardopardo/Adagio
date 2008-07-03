@@ -22,6 +22,12 @@ table
   margin-left: auto;
   }
 
+table.ada_solution_table
+{ 
+  border:1; 
+  cellpadding=10;
+ }
+
 /* Center images derived from informalfigures */
 div.informalfigure div.mediaobject img
 { 
