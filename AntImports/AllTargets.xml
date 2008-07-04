@@ -118,9 +118,9 @@
 
   <target name="report">
 
-    <ant antfile="${ada.home}/AntImports/InitialCheck.xml" target="initial.check.dump">
+    <antcall target="initial.check.dump">
       <param name="ada.initial.check.dump.level" value="warning"/>
-    </ant>
+    </antcall>
     <echo/>
 
     <echo>Tool               | Installed |  Missing</echo>
