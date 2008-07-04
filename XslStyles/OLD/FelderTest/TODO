@@ -1,4 +1,0 @@
-FelderGrade is broken. It assumes that the answers are inside the XML file
-whereas now ASAP by default stores each answer in a different file. Need to
-find out if document() allows for non-XML parsing.
-
