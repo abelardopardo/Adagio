@@ -117,7 +117,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="latex.clean.NOT" unless="latex.check">
-    <echo>latex.clean               ---</echo>
+    <echo>latex.clean                 ---</echo>
     <echo>${basedir}</echo>
   </target>
 

@@ -45,7 +45,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="clean.clean.NOT" unless="clean.check">
-    <echo>clean.clean            ---</echo>
+    <echo>clean.clean                 ---</echo>
     <echo>${basedir}</echo>
   </target>
 

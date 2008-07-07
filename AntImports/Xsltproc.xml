@@ -65,7 +65,7 @@
     </and>
   </condition>
 
-  <macrodef name="run.xsltproc.single">
+  <macrodef name="run.xsltproc">
     <attribute name="DIR"/>
     <attribute name="XSLTPROC.ABSDST.DIR"/>
     <attribute name="XSLTPROC.EXTRA.ARGS"/>
@@ -185,14 +185,14 @@
     </dependset>
 
     <!-- Execute the command. Watch out for abssrc.dir and absdst.dir -->
-    <run.xsltproc.single DIR="${basedir}"
-			 XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
-			 XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
-			 XSLTPROC.STYLE.FILE="${xsltproc.style.file}">
+    <run.xsltproc DIR="${basedir}"
+		  XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
+		  XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
+		  XSLTPROC.STYLE.FILE="${xsltproc.style.file}">
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
       <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
-    </run.xsltproc.single>
+    </run.xsltproc>
 			 
   </target>
 
@@ -227,14 +227,14 @@
     </dependset>
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <run.xsltproc.single DIR="${basedir}"
-			 XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
-			 XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
-			 XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}">
+    <run.xsltproc DIR="${basedir}"
+		  XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
+		  XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
+		  XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}">
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
       <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
-    </run.xsltproc.single>
+    </run.xsltproc>
 
   </target>
 

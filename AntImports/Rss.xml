@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Apply stylesheet to bilingual docbook files" default="rss">
+
+  <!--
+      Given the following properties:
+
+      rss.src.dir: directory from where to take the source files
+      rss.dst.dir: directory where the produced files are stored
+      rss.files: Comma separate list of files to process
+
+      Apply the Rss stylefile to the files in rss.files
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="Xsltproc.xml"/>
+
+  <!-- Property definition -->
+  <property name="rss.src.dir"       value="."/>
+  <property name="rss.dst.dir"       value="${rss.src.dir}"/>
+  <property name="rss.output.format" value="rss.xml"/>
+  <property name="rss.extra.args"    value=""/>
+  <property name="rss.files"         value=""/>
+  <property name="rss.style.file" 
+	    value="${ada.home}/XslStyles/Rss.xsl"/>
+  <property name="rss.style.file.tohtml" 
+	    value="${ada.home}/XslStyles/RssToHtml.xsl"/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+       executing the regular targets. -->
+  <target name="rss.check.values" 
+	  depends="initial.check, rss.dump.properties">
+    
+    <!-- 
+    Fetch the date/time in RFC 822 format. I need this hack because the
+    EXSLT implementation of the date:time functions does not take into account
+    Daylight Savings Time!
+    -->
+    <exec executable="date" os="Linux" failonerror="true"
+      outputproperty="rss.date.rfc822">
+      <arg value="-R"/>
+    </exec>
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="rss.check">
+      <and>
+	<!-- The src.dir needs to be non-empty. -->
+        <not><equals arg1="${rss.src.dir}" arg2=""/></not>
+	<available file="${rss.src.dir}"/> 
+	<!-- There must be some files defined -->
+	<not><equals arg1="${rss.files}" arg2=""/></not>
+	<!-- Require a non-empty dst.dir -->
+        <not><equals arg1="${rss.dst.dir}" arg2=""/></not>
+	<!-- Require a non-empty and available stylesheet -->
+        <not><equals arg1="${rss.style.file}" arg2=""/></not>
+	<available file="${rss.style.file}"/>
+	<!-- Require a non-empty RFC 822 date -->
+        <not><equals arg1="${rss.date.rfc822}" arg2=""/></not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="info">rss.check          = "${rss.check}"</echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="rss.processing.NOT" unless="rss.check">
+    <echo>rss.processing        ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Invoke xsltprocessing -->
+  <target name="rss.processing" 
+	  depends="rss.check.values, rss.processing.NOT"
+	  if="rss.check" 
+	  description="Call the xsltproc with the given style">
+
+    <echo>rss.processing              CALL(xsltproc.processing)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.processing" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${rss.style.file}"/>
+      <param name="xsltproc.output.format" value="${rss.output.format}"/>
+      <param name="xsltproc.files"         value="${rss.files}"/>
+      <param name="xsltproc.extra.args"    
+	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
+		    ${rss.extra.args}"/>
+    </antcall>
+
+    <echo>rss.processing              END(xsltproc.processing)</echo>
+    <echo>rss.processing              CALL(xsltproc.processing HTML)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.processing" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
+      <param name="xsltproc.style.file" value="${rss.style.file.tohtml}"/>
+      <param name="xsltproc.output.format" value="html"/>
+      <param name="xsltproc.files"         value="${rss.files}"/>
+      <param name="xsltproc.extra.args"    
+	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
+		    ${rss.extra.args}"/>
+    </antcall>
+    <echo>rss.processing              END(xsltproc.processing HTML)</echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="rss.clean.NOT" unless="rss.check">
+    <echo>rss.clean           ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Clean files produced by rss -->
+  <target name="rss.clean" 
+	  depends="rss.check.values, rss.clean.NOT"
+	  if="rss.check"
+	  description="Remove files produced by rss">
+
+    <echo>rss.clean                   CALL(xsltproc.clean ES)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.clean" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${rss.style.file}"/>
+      <param name="xsltproc.output.format" value="${rss.output.format}"/>
+      <param name="xsltproc.files"         value="${rss.files}"/>
+      <param name="xsltproc.extra.args"    
+	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
+		    ${rss.extra.args}"/>
+    </antcall>
+
+    <echo>rss.clean                   END(xsltproc.clean ES)</echo>
+    <echo>rss.clean                   CALL(xsltproc.clean EN)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.clean" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${rss.style.file.tohtml}"/>
+      <param name="xsltproc.output.format" value="html"/>
+      <param name="xsltproc.files"         value="${rss.files}"/>
+      <param name="xsltproc.extra.args"    
+	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
+		    ${rss.extra.args}"/>
+    </antcall>
+
+    <echo>rss.clean                   END(xsltproc.clean EN)</echo>
+  </target>
+
+  <target name="rss.dump.properties" depends="initial.check">
+    <echo level="info"> ------ Rss properties ----
+    rss.src.dir       ="${rss.src.dir}"
+    rss.dst.dir       ="${rss.dst.dir}"
+    rss.output.format ="${rss.output.format}"
+    rss.style.file    ="${rss.style.file}"
+    rss.extra.args    ="${rss.extra.args}"
+    rss.files         ="${rss.files}"</echo>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="rss" depends="initial.delete.build.out, rss.processing"/>
+</project>

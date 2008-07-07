@@ -59,7 +59,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="subrecursive.processing.NOT" unless="subrecursive.check">
-    <echo>subrecursive.processing      ---</echo>
+    <echo>subrecursive.processing     ---</echo>
     <echo>${basedir}</echo>
   </target>
 

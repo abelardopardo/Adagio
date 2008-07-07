@@ -54,7 +54,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="bilingualdb.processing.NOT" unless="bilingualdb.check">
-    <echo>bilingualdb.processing        ---</echo>
+    <echo>bilingualdb.processing      ---</echo>
     <echo>${basedir}</echo>
   </target>
 

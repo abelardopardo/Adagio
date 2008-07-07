@@ -119,7 +119,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="dvips.clean.NOT" unless="dvips.check">
-    <echo>dvips.clean               ---</echo>
+    <echo>dvips.clean                 ---</echo>
     <echo>${basedir}</echo>
   </target>
 

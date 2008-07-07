@@ -69,7 +69,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="laboratory.processing.NOT" unless="laboratory.check">
-    <echo>laboratory.processing        ---</echo>
+    <echo>laboratory.processing       ---</echo>
     <echo>${basedir}</echo>
   </target>
 
