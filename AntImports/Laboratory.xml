@@ -28,7 +28,7 @@
 	    value="${ada.home}/XslStyles/Laboratory.xsl"/>
   <property name="laboratory.submit.style.file" 
 	    value="${ada.home}/XslStyles/Submit.xsl"/>
-  <property name="laboratory.output.format"   value="html"/>
+  <property name="laboratory.output.format"   value=".html"/>
   <property name="laboratory.files"           value=""/>
   <property name="laboratory.bilingual.files" value=""/>
 
@@ -94,7 +94,7 @@
 	     value="${laboratory.bilingual.files}"/>
       <param name="laboratory.profile.lang"
 	     value="--stringparam profile.lang es"/>
-      <param name="laboratory.output.format"   value="es.html"/>
+      <param name="laboratory.output.format"   value="_es.html"/>
     </antcall>
 
     <!-- Create all the files in english -->
@@ -103,7 +103,7 @@
 	     value="${laboratory.bilingual.files}"/>
       <param name="laboratory.profile.lang"
 	     value="--stringparam profile.lang en"/>
-      <param name="laboratory.output.format"   value="en.html"/>
+      <param name="laboratory.output.format"   value="_en.html"/>
     </antcall>
 
     <echo>laboratory.processing       END(xsltproc.processing 3 versions)</echo>
@@ -136,7 +136,7 @@
 	     value="${laboratory.bilingual.files}"/>
       <param name="laboratory.profile.lang"
 	     value="--stringparam profile.lang es"/>
-      <param name="laboratory.output.format"   value="es.html"/>
+      <param name="laboratory.output.format"   value="_es.html"/>
       <param name="laboratory.manipulate.target" value="xsltproc.clean"/>
     </antcall>
 
@@ -146,7 +146,7 @@
 	     value="${laboratory.bilingual.files}"/>
       <param name="laboratory.profile.lang"
 	     value="--stringparam profile.lang en"/>
-      <param name="laboratory.output.format"   value="en.html"/>
+      <param name="laboratory.output.format"   value="_en.html"/>
       <param name="laboratory.manipulate.target" value="xsltproc.clean"/>
     </antcall>
 
@@ -185,7 +185,7 @@
       <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
       <param name="xsltproc.output.format"
-	     value="solution.${laboratory.output.format}"/>
+	     value="_solution${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
       <param name="xsltproc.extra.args" 
 	     value="--stringparam laboratory.include.solutions yes
@@ -198,7 +198,7 @@
       <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
       <param name="xsltproc.output.format"
-	     value="pguide.${laboratory.output.format}"/>
+	     value="_pguide${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
       <param name="xsltproc.extra.args" 
 	     value="--stringparam laboratory.include.guide yes
@@ -212,7 +212,7 @@
       <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${laboratory.submit.style.file}"/>
       <param name="xsltproc.output.format"
-	     value="submit.${laboratory.output.format}"/>
+	     value="_submit${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
       <param name="xsltproc.extra.args" 
 	     value="${laboratory.profile.lang}"/>

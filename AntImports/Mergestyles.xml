@@ -107,7 +107,7 @@
       </srcfileset>
       <targetfilelist 
 	dir="${mergestyles.dst.dir}"
-	files="${mergestyles.output.prefix}.${mergestyles.output.suffix}"/>
+	files="${mergestyles.output.prefix}_${mergestyles.output.suffix}"/>
     </dependset>
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
@@ -124,7 +124,7 @@
       <arg value="${mergestyles.style.file}"/>
       <filelist refid="mergestyles.master.filelist"/>
       <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.xml" to="*.${mergestyles.output.suffix}"/>
+      <mapper type="glob" from="*.xml" to="*_${mergestyles.output.suffix}"/>
     </apply>
   </target>
 
@@ -138,10 +138,10 @@
     <echo>${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted = ${mergestyles.output.prefix}.${mergestyles.output.suffix}</echo>
+    <echo> deleted = ${mergestyles.output.prefix}_${mergestyles.output.suffix}</echo>
 
     <delete 
-      file="${mergestyles.dst.dir}/${mergestyles.output.prefix}.${mergestyles.output.suffix}"/>
+      file="${mergestyles.dst.dir}/${mergestyles.output.prefix}_${mergestyles.output.suffix}"/>
   </target>
 
   <!-- Dump the properties and filelists defined in this script -->

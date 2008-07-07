@@ -25,9 +25,10 @@
   <property name="xsltproc.src.dir"        value="${basedir}"/>
   <property name="xsltproc.dst.dir"        value="${xsltproc.src.dir}"/>
   <property name="xsltproc.style.file"     value=""/>
-  <property name="xsltproc.output.format"  value="html"/>
+  <property name="xsltproc.output.format"  value=".html"/>
   <property name="xsltproc.extra.args"     value=""/>
   <property name="xsltproc.files"          value=""/>
+  <property name="xsltproc.debug.level"    value="info"/>
 
   <!-- Private properties -->
 
@@ -49,7 +50,7 @@
     <chainedmapper>
       <mapper type="glob" from="${xsltproc.abssrc.dir}/*" 
 	      to="${xsltproc.absdst.dir}/*"/>
-      <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
+      <mapper type="glob" from="*.xml" to="*${xsltproc.output.format}"/>
     </chainedmapper>
   </pathconvert>
   <filelist id="xsltproc.target.filelist"
@@ -133,7 +134,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    xsltproc.check          = "${xsltproc.check}"
+    <echo level="${xsltproc.debug.level}">    xsltproc.check          = "${xsltproc.check}"
   xsltproc.execution.possible = ${xsltproc.execution.possible}
   xsltproc.failure            = ${xsltproc.failure}</echo>
   </target>
@@ -191,7 +192,7 @@
 		  XSLTPROC.STYLE.FILE="${xsltproc.style.file}">
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
+      <mapper type="glob" from="*.xml" to="*${xsltproc.output.format}"/>
     </run.xsltproc>
 			 
   </target>
@@ -215,11 +216,13 @@
       <mapper type="flatten"/>
     </pathconvert>
 
-    <echo level="info">xsltproc processed stylefile: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}</echo>
+    <echo level="${xsltproc.debug.level}">xsltproc processed stylefile: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}_${xsltproc.output.suffix}</echo>
+
+    <echo level="${xsltproc.debug.level}">Srcfileset: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}_${xsltproc.output.suffix}</echo>
 
     <!-- Force the dependency checking on changes on the style sheet -->
     <dependset>
-      <srcfileset file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}"/>
+      <srcfileset file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}_${xsltproc.output.suffix}"/>
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
       </srcfileset>
@@ -230,10 +233,10 @@
     <run.xsltproc DIR="${basedir}"
 		  XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
 		  XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
-		  XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}/${mergestyles.output.prefix}.${xsltproc.output.suffix}">
+		  XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}/${mergestyles.output.prefix}_${xsltproc.output.suffix}">
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.xml" to="*.${xsltproc.output.format}"/>
+      <mapper type="glob" from="*.xml" to="*${xsltproc.output.format}"/>
     </run.xsltproc>
 
   </target>
@@ -273,7 +276,7 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="xsltproc.dump.properties" depends="initial.check">
-    <echo level="info"> ------ xsltproc properties ----
+    <echo level="${xsltproc.debug.level}"> ------ xsltproc properties ----
     xsltproc.exec            ="${xsltproc.exec}"
     xsltproc.abssrc.dir ="${xsltproc.abssrc.dir}"
     xsltproc.absdst.dir ="${xsltproc.absdst.dir}"
@@ -281,7 +284,7 @@
     xsltproc.output.format   ="${xsltproc.output.format}"
     xsltproc.extra.args      ="${xsltproc.extra.args}"
     xsltproc.files           ="${xsltproc.files}"
-    xsltproc.target.filelist ="${xsltproc.target.filelist.property}
+    xsltproc.target.filelist ="${xsltproc.target.filelist.property}"
     xsltproc.mergestyles     ="${xsltproc.mergestyles}"</echo>
   </target>
 

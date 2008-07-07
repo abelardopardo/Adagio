@@ -18,7 +18,7 @@
   <!-- Property definition -->
   <property name="rss.src.dir"       value="."/>
   <property name="rss.dst.dir"       value="${rss.src.dir}"/>
-  <property name="rss.output.format" value="rss.xml"/>
+  <property name="rss.output.format" value="_rss.xml"/>
   <property name="rss.extra.args"    value=""/>
   <property name="rss.files"         value=""/>
   <property name="rss.style.file" 
@@ -26,6 +26,30 @@
   <property name="rss.style.file.tohtml" 
 	    value="${ada.home}/XslStyles/RssToHtml.xsl"/>
 
+  <!-- Private properties -->
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="rss.abssrc.dir" pathsep=" ">
+    <path location="${rss.src.dir}"/>
+  </pathconvert>
+  <pathconvert property="rss.absdst.dir" pathsep=" ">
+    <path  location="${rss.dst.dir}"/>
+  </pathconvert>
+  
+  <!-- Source files to be processed by rss (fileset to allow wildcards) -->
+  <fileset id="rss.fileset" dir="${rss.abssrc.dir}"
+	   includes="${rss.files}"/>
+
+  <!-- Obtain the filelist with the produced files. -->
+  <pathconvert property="rss.target.filelist.property" pathsep=" ">
+    <fileset refid="rss.fileset"/>
+    <chainedmapper>
+      <mapper type="glob" from="*.xml" to="*${rss.output.format}"/>
+      <mapper type="flatten"/>
+    </chainedmapper>
+  </pathconvert>
+  <filelist id="rss.target.filelist"
+	    files="${rss.target.filelist.property}"/>
   <!-- Preliminary target to verify that certain minimum conditions hold before
        executing the regular targets. -->
   <target name="rss.check.values" 
@@ -95,11 +119,11 @@
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
+      <param name="xsltproc.src.dir"       value="${rss.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
-      <param name="xsltproc.style.file" value="${rss.style.file.tohtml}"/>
-      <param name="xsltproc.output.format" value="html"/>
-      <param name="xsltproc.files"         value="${rss.files}"/>
+      <param name="xsltproc.style.file"    value="${rss.style.file.tohtml}"/>
+      <param name="xsltproc.output.format" value=".html"/>
+      <param name="xsltproc.files"         value="${rss.target.filelist.property}"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
 		    ${rss.extra.args}"/>
@@ -126,9 +150,9 @@
     <antcall target="xsltproc.clean" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${rss.style.file}"/>
-      <param name="xsltproc.output.format" value="${rss.output.format}"/>
-      <param name="xsltproc.files"         value="${rss.files}"/>
+      <param name="xsltproc.style.file"    value="${rss.style.file.tohtml}"/>
+      <param name="xsltproc.output.format" value=".html"/>
+      <param name="xsltproc.files"         value="${rss.target.filelist.property}"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
 		    ${rss.extra.args}"/>
@@ -141,8 +165,8 @@
     <antcall target="xsltproc.clean" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${rss.style.file.tohtml}"/>
-      <param name="xsltproc.output.format" value="html"/>
+      <param name="xsltproc.style.file"    value="${rss.style.file}"/>
+      <param name="xsltproc.output.format" value="${rss.output.format}"/>
       <param name="xsltproc.files"         value="${rss.files}"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'

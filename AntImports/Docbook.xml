@@ -21,7 +21,7 @@
   <!-- Property definition -->
   <property name="docbook.src.dir"        value="${basedir}"/>
   <property name="docbook.dst.dir"        value="${docbook.src.dir}"/>
-  <property name="docbook.output.format"  value="html"/>
+  <property name="docbook.output.format"  value=".html"/>
   <property name="docbook.extra.args"     value=""/>
   <property name="docbook.files"          value=""/>
   <property name="docbook.style.file"     

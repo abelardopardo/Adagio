@@ -21,7 +21,7 @@
   <!-- Property definition -->
   <property name="bilingualdb.src.dir"       value="."/>
   <property name="bilingualdb.dst.dir"       value="${bilingualdb.src.dir}"/>
-  <property name="bilingualdb.output.format" value="html"/>
+  <property name="bilingualdb.output.format" value=".html"/>
   <property name="bilingualdb.files"         value=""/>
   <property name="bilingualdb.style.file" 
 	    value="${ada.home}/XslStyles/DocbookProfile.xsl"/>
@@ -71,7 +71,7 @@
       <param name="xsltproc.src.dir"       value="${bilingualdb.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${bilingualdb.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${bilingualdb.style.file}"/>
-      <param name="xsltproc.output.format" value="es.${bilingualdb.output.format}"/>
+      <param name="xsltproc.output.format" value="_es${bilingualdb.output.format}"/>
       <param name="xsltproc.files"         value="${bilingualdb.files}"/>
       <param name="xsltproc.extra.args"    value="--stringparam profile.lang es"/>
     </antcall>
@@ -84,7 +84,7 @@
       <param name="xsltproc.src.dir"       value="${bilingualdb.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${bilingualdb.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${bilingualdb.style.file}"/>
-      <param name="xsltproc.output.format" value="en.${bilingualdb.output.format}"/>
+      <param name="xsltproc.output.format" value="_en${bilingualdb.output.format}"/>
       <param name="xsltproc.files"         value="${bilingualdb.files}"/>
       <param name="xsltproc.extra.args"    value="--stringparam profile.lang en"/>
     </antcall>
@@ -111,7 +111,7 @@
       <param name="xsltproc.src.dir"       value="${bilingualdb.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${bilingualdb.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${bilingualdb.style.file}"/>
-      <param name="xsltproc.output.format" value="es.${bilingualdb.output.format}"/>
+      <param name="xsltproc.output.format" value="_es${bilingualdb.output.format}"/>
       <param name="xsltproc.files"         value="${bilingualdb.files}"/>
     </antcall>
 
@@ -123,7 +123,7 @@
       <param name="xsltproc.src.dir"         value="${bilingualdb.src.dir}"/>
       <param name="xsltproc.dst.dir"         value="${bilingualdb.dst.dir}"/>
       <param name="xsltproc.style.file"      value="${bilingualdb.style.file}"/>
-      <param name="xsltproc.output.format"         value="en.${bilingualdb.output.format}"/>
+      <param name="xsltproc.output.format"   value="_en${bilingualdb.output.format}"/>
       <param name="xsltproc.files"           value="${bilingualdb.files}"/>
     </antcall>
 
