@@ -73,7 +73,7 @@
 # xsltproc.src.dir=.			# Dir from where xml files are taken
 # xsltproc.dst.dir=${xsltproc.src.dir}	# Dir where result is produced
 # xsltproc.style.file=			# Style to apply to all the files
-# xsltproc.output.format=html		# Output format
+# xsltproc.output.format=.html		# Output format
 # xsltproc.extra.args=			# Addtnl. args to pass to xsltproc
 # xsltproc.files=			# List of *.xml files to process
 
