@@ -49,7 +49,7 @@
      inkscape:zoom="2.3878076"
      inkscape:cx="236.44449"
      inkscape:cy="206.04675"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g4322"
      id="namedview2491"
      showgrid="false"
      showguides="true"
@@ -445,6 +445,26 @@
            x="482.45148"
            id="tspan4086"
            sodipodi:role="line">How</tspan></text>
+      <path
+         transform="translate(215.75876,378.74878)"
+         d="M 246.38723,58.233814 A 19.746883,12.341802 0 1 1 206.89347,58.233814 A 19.746883,12.341802 0 1 1 246.38723,58.233814 z"
+         sodipodi:ry="12.341802"
+         sodipodi:rx="19.746883"
+         sodipodi:cy="58.233814"
+         sodipodi:cx="226.64035"
+         id="path2456"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         sodipodi:type="arc" />
+      <text
+         id="text2458"
+         y="440.33121"
+         x="431.15204"
+         style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+         xml:space="preserve"><tspan
+           y="440.33121"
+           x="431.15204"
+           id="tspan2460"
+           sodipodi:role="line">Rss</tspan></text>
     </g>
     <g
        id="g4095"
