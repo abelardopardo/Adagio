@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:exsl="http://exslt.org/common"
@@ -7,8 +7,9 @@
   extension-element-prefixes="date"
   version="1.0" exclude-result-prefixes="exsl">
   
-  <!-- Templates to process docbook -->
-  <xsl:import href="DocbookProfile.xsl"/>
+  <!-- Templates to process docbook. The HTML are included to avoid the doctype -->
+  <xsl:import 
+     href="http://docbook.sourceforge.net/release/xsl/current/html/profile-docbook.xsl"/>
 
   <!-- Template with all the customization parameters -->
   <xsl:import href="RssParams.xsl"/>
@@ -16,26 +17,7 @@
   <!-- The presence of CDATA in descriptions is to preserve any embedded
        HTML. Ugly but seen in other RSS feeds
   -->
-  <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
-
-  <!-- The date, when in pubDate, must follow the RFC 822 structure -->
-  <!--
-  <xsl:variable name="date">
-    <xsl:value-of select="date:day-abbreviation()"/>,<xsl:text> </xsl:text>
-    <xsl:value-of select="date:day-in-month()"/><xsl:text> </xsl:text>
-    <xsl:value-of select="date:month-abbreviation()"/><xsl:text> </xsl:text>
-    <xsl:value-of select="date:year()"/><xsl:text> </xsl:text>
-    <xsl:if test="date:hour-in-day() &lt; 10">0</xsl:if><xsl:value-of
-    select="date:hour-in-day()"/><xsl:text>:</xsl:text> 
-    <xsl:if test="date:minute-in-hour() &lt; 10">0</xsl:if><xsl:value-of 
-    select="date:minute-in-hour()"/><xsl:text>:</xsl:text>
-    <xsl:if test="date:second-in-minute() &lt; 10">0</xsl:if><xsl:value-of 
-    select="date:second-in-minute()"/><xsl:text> </xsl:text>
-    <xsl:value-of 
-      select="substring(date:time(), 9, 3)"/><xsl:value-of
-    select="substring(date:time(), 13, 2)"/>
-  </xsl:variable>
-  -->
+  <xsl:output method="xml" omit-xml-declaration="no" encoding="UTF-8" indent="yes"/>
 
   <xsl:template match="/">
     <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">

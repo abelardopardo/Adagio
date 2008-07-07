@@ -7,7 +7,6 @@
   version="1.0" exclude-result-prefixes="exsl xi">
 
   <!-- This stylesheet is to include some default extensions when using docbook -->
-
   <xsl:import 
      href="http://docbook.sourceforge.net/release/xsl/current/xhtml/profile-docbook.xsl"/>
   <xsl:import 

@@ -26,9 +26,14 @@
         <meta name="generator" content="Home Brewed XSLT"></meta>
         <meta name="Author" content="Carlos III University of Madrid"></meta>
         <meta http-equiv="Content-Style-Type" content="text/css"/>
-        <style type="text/css">
-          <xsl:value-of select="document('style.xml')/text/text()"/>
-        </style>
+
+        <xsl:if test="$ada.page.cssstyle.url">
+          <link rel="stylesheet" type="text/css">
+            <xsl:attribute name="href"><xsl:value-of
+            select="$ada.course.home"/><xsl:value-of
+            select="$ada.page.cssstyle.url"/></xsl:attribute>
+          </link>
+        </xsl:if>
       </head>
       <body>
         <xsl:apply-templates/>
@@ -39,7 +44,8 @@
   <xsl:template match="channel">
     <h2 style="text-align: center">Channel Info</h2>
     <div class="informaltable">
-      <table style="border:1px solid black" cellspacing="5" cellpadding="5">
+      <table style="border:1px solid black; margin-left: auto; margin-right: auto;" 
+        cellspacing="5" cellpadding="5">
         <tr>
           <td colspan="2">Title</td>
           <td><xsl:value-of select="title"/></td>
