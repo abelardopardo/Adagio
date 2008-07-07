@@ -7,6 +7,12 @@
   extension-element-prefixes="date"
   version="1.0" exclude-result-prefixes="exsl itunes">
 
+  <!--
+       Style file to render an XML file containing an RSS channel to HTML in
+       order to view all the element values. The main purpose of this rendering
+       is to debug possible errors in the information contained in the channel,
+       and should not be published to the open public
+       -->
   <xsl:output method="html" indent="yes" encoding="UTF-8"
     doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
     doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"/>

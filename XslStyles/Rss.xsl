@@ -7,42 +7,18 @@
   extension-element-prefixes="date"
   version="1.0" exclude-result-prefixes="exsl">
   
-  <xsl:import 
-     href="file:///usr/share/sgml/docbook/stylesheet/xsl/nwalsh/html/profile-docbook.xsl"/>
-  <xsl:import 
-     href="file:///usr/share/sgml/docbook/stylesheet/xsl/nwalsh/html/manifest.xsl"/>
-  <xsl:import href="es-modify.xsl"/>
+  <!-- Templates to process docbook -->
+  <xsl:import href="DocbookProfile.xsl"/>
 
-  <xsl:param name="rss.time.to.live"   select="'30'"/>
-  <xsl:param name="rss.title"          select="'Rss title goes here'"/>
-  <xsl:param name="rss.description"    select="'Rss description goes here'"/>
-  <xsl:param name="rss.main.site.url"  select="'http://bogus.net'"/>
-  <xsl:param name="rss.language"       select="'en'"/>
-  <xsl:param name="rss.copyright"      select="'Copyright goes here'"/>
-  <xsl:param name="rss.author.email"   select="'author@bogus.net'"/>    
-  <xsl:param name="rss.author.name"    select="'Author name goes here'"/>
-  <xsl:param name="rss.subtitle"       select="'Rss subtitle goes here'"/>
-  <xsl:param name="rss.summary"        select="'Rss summary goes here'"/>
-  <xsl:param name="rss.explicit"       select="'No'"/>
-  <xsl:param name="rss.image.url"      select="'http://image.net/bogusimage.png'"/>
-  <xsl:param name="rss.image.desc"     select="''"/>
-  <xsl:param name="rss.image.width"    select="'88'"/>
-  <xsl:param name="rss.image.height"   select="'88'"/>
-  <xsl:param name="rss.category"       select="'Education'"/>
-  <xsl:param name="rss.subcategory"    select="'Higher Education'"/>
-  <xsl:param name="rss.max.items"      select="10"/>
-  <xsl:param name="rss.check.pubdate"  select="0"/>
-  <xsl:param name="rss.force.date"     select="''"/> 
-  <xsl:param name="rss.date.rfc822"    select="''"/>
-  <xsl:param name="rss.self.atom.link" select="''"/>
-  
+  <!-- Template with all the customization parameters -->
+  <xsl:import href="RssParams.xsl"/>
+
   <!-- The presence of CDATA in descriptions is to preserve any embedded
-       HTML they might include. Ugly but seen in other RSS feeds
+       HTML. Ugly but seen in other RSS feeds
   -->
   <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 
-  <!-- The date, when in pubDate, must follow the RFC 822 structure
-       -->
+  <!-- The date, when in pubDate, must follow the RFC 822 structure -->
   <!--
   <xsl:variable name="date">
     <xsl:value-of select="date:day-abbreviation()"/>,<xsl:text> </xsl:text>
@@ -64,112 +40,112 @@
   <xsl:template match="/">
     <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
       <channel>
-        <xsl:if test="$rss.self.atom.link != ''">
+        <xsl:if test="$ada.rss.self.atom.link != ''">
           <atom:link rel="self" type="application/rss+xml">
             <xsl:attribute name="href"><xsl:value-of
-                select="$rss.self.atom.link" />
+                select="$ada.rss.self.atom.link" />
             </xsl:attribute>
           </atom:link>
         </xsl:if>
-        <xsl:if test="$rss.time.to.live != ''">
-          <ttl><xsl:value-of select="$rss.time.to.live"/></ttl>
+        <xsl:if test="$ada.rss.time.to.live != ''">
+          <ttl><xsl:value-of select="$ada.rss.time.to.live"/></ttl>
         </xsl:if>
 
-        <xsl:if test="$rss.title != ''">
-          <title><xsl:value-of select="$rss.title"/></title>
+        <xsl:if test="$ada.rss.title != ''">
+          <title><xsl:value-of select="$ada.rss.title"/></title>
         </xsl:if>
 
-        <xsl:if test="($rss.title != '') and ($rss.image.url != '')
-                      and ($rss.main.site.url != '')"> 
+        <xsl:if test="($ada.rss.title != '') and ($ada.rss.image.url != '')
+                      and ($ada.rss.main.site.url != '')"> 
           <image>
-            <title><xsl:value-of select="$rss.title"/></title>
-            <url><xsl:value-of select="$rss.image.url"/></url>
-            <link><xsl:value-of select="$rss.main.site.url"/></link>
-            <xsl:if test="$rss.image.desc != ''">
+            <title><xsl:value-of select="$ada.rss.title"/></title>
+            <url><xsl:value-of select="$ada.rss.image.url"/></url>
+            <link><xsl:value-of select="$ada.rss.main.site.url"/></link>
+            <xsl:if test="$ada.rss.image.desc != ''">
               <description><xsl:text
               disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of 
-              select="$rss.image.desc"/><xsl:text 
+              select="$ada.rss.image.desc"/><xsl:text 
               disable-output-escaping="yes">]]&gt;</xsl:text></description>
             </xsl:if>
-            <width><xsl:value-of select="$rss.image.width"/></width>
-            <height><xsl:value-of select="$rss.image.height"/></height>
+            <width><xsl:value-of select="$ada.rss.image.width"/></width>
+            <height><xsl:value-of select="$ada.rss.image.height"/></height>
           </image>
         </xsl:if>
 
-        <xsl:if test="$rss.description != ''">
+        <xsl:if test="$ada.rss.description != ''">
           <description><xsl:text
           disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of
-          select="$rss.description"/><xsl:text 
+          select="$ada.rss.description"/><xsl:text 
           disable-output-escaping="yes">]]&gt;</xsl:text></description>
         </xsl:if>
-        <xsl:if test="$rss.main.site.url != ''">
-          <link><xsl:value-of select="$rss.main.site.url"/></link>
+        <xsl:if test="$ada.rss.main.site.url != ''">
+          <link><xsl:value-of select="$ada.rss.main.site.url"/></link>
         </xsl:if>
-        <xsl:if test="$rss.language != ''">
-          <language><xsl:value-of select="$rss.language"/></language>
+        <xsl:if test="$ada.rss.language != ''">
+          <language><xsl:value-of select="$ada.rss.language"/></language>
         </xsl:if>
-        <xsl:if test="$rss.copyright != ''">
-          <copyright><xsl:value-of select="$rss.copyright"/></copyright>
+        <xsl:if test="$ada.rss.copyright != ''">
+          <copyright><xsl:value-of select="$ada.rss.copyright"/></copyright>
         </xsl:if>
       
         <!-- Crucial elements that need to be produced every time with
              the correct format -->
-        <lastBuildDate><xsl:value-of select="$rss.date.rfc822"/></lastBuildDate>
-        <pubDate><xsl:value-of select="$rss.date.rfc822"/></pubDate>
+        <lastBuildDate><xsl:value-of select="$ada.rss.date.rfc822"/></lastBuildDate>
+        <pubDate><xsl:value-of select="$ada.rss.date.rfc822"/></pubDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
-        <xsl:if test="$rss.author.email != ''">
+        <xsl:if test="$ada.rss.author.email != ''">
           <webMaster><xsl:value-of
-          select="$rss.author.email"/></webMaster>
+          select="$ada.rss.author.email"/></webMaster>
         </xsl:if>
         <!-- ITunes Stuff -->
 
         <!-- Author name in text -->
-        <xsl:if test="$rss.author.name != ''">
+        <xsl:if test="$ada.rss.author.name != ''">
           <itunes:author><xsl:value-of
-          select="$rss.author.name"/></itunes:author>
+          select="$ada.rss.author.name"/></itunes:author>
         </xsl:if>
         <!-- One line for channel subtitle, similar to description above -->
-        <xsl:if test="$rss.subtitle != ''">
+        <xsl:if test="$ada.rss.subtitle != ''">
           <itunes:subtitle><xsl:value-of
-          select="$rss.subtitle"/></itunes:subtitle>
+          select="$ada.rss.subtitle"/></itunes:subtitle>
         </xsl:if>
         
         <!-- One paragraph explaining in more detaile what the channel offers -->
-        <xsl:if test="$rss.summary">
-          <itunes:summary><xsl:value-of select="normalize-space($rss.summary)"/></itunes:summary> 
+        <xsl:if test="$ada.rss.summary">
+          <itunes:summary><xsl:value-of select="normalize-space($ada.rss.summary)"/></itunes:summary> 
         </xsl:if>
         
         <!-- Redundant information about the author -->
-        <xsl:if test="($rss.author.name != '') and ($rss.author.email != '')">
+        <xsl:if test="($ada.rss.author.name != '') and ($ada.rss.author.email != '')">
           <itunes:owner>
-            <itunes:name><xsl:value-of select="$rss.author.name"/></itunes:name>
+            <itunes:name><xsl:value-of select="$ada.rss.author.name"/></itunes:name>
             <!-- Author Email -->
-            <itunes:email><xsl:value-of select="$rss.author.email"/></itunes:email>
+            <itunes:email><xsl:value-of select="$ada.rss.author.email"/></itunes:email>
           </itunes:owner>
         </xsl:if>
     
         <!-- If the content in the item is explicit -->
-        <xsl:if test="$rss.explicit != ''">
+        <xsl:if test="$ada.rss.explicit != ''">
           <itunes:explicit><xsl:value-of
-          select="$rss.explicit"/></itunes:explicit>
+          select="$ada.rss.explicit"/></itunes:explicit>
         </xsl:if>
 
         <!-- An image that is displayed somewhere -->
-        <xsl:if test="$rss.image.url != ''">
+        <xsl:if test="$ada.rss.image.url != ''">
           <itunes:image>
             <xsl:attribute name="href"><xsl:value-of
-            select="$rss.image.url"/></xsl:attribute>
+            select="$ada.rss.image.url"/></xsl:attribute>
           </itunes:image>
         </xsl:if>
 
         <!-- Category and subcategory information -->
-        <xsl:if test="$rss.category != ''">
+        <xsl:if test="$ada.rss.category != ''">
           <itunes:category>
-            <xsl:attribute name="text"><xsl:value-of select="$rss.category"/></xsl:attribute>
-            <xsl:if test="$rss.subcategory != ''">
+            <xsl:attribute name="text"><xsl:value-of select="$ada.rss.category"/></xsl:attribute>
+            <xsl:if test="$ada.rss.subcategory != ''">
               <itunes:category>
                 <xsl:attribute name="text"><xsl:value-of
-                select="$rss.subcategory"/></xsl:attribute>
+                select="$ada.rss.subcategory"/></xsl:attribute>
               </itunes:category>
             </xsl:if>
           </itunes:category>
@@ -184,14 +160,16 @@
           select="exsl:node-set($episode.content)/descendant::section|exsl:node-set($episode.content)/descendant::chapter">
           <xsl:sort select="position()" order="descending"
             data-type="number"/>
-          <!-- 
-          <debug><xsl:value-of select="$profile.lang"/></debug>
-          <debug><xsl:value-of select="title/text()"/></debug>
-          <debug><xsl:value-of select="count(sectioninfo)"/></debug>
-          <debug><xsl:value-of select="count(chapterinfo)"/></debug>
-           -->         
+          <xsl:if test="$ada.rss.debug != ''">
+            <debug><xsl:value-of select="$profile.lang"/></debug>
+            <debug><xsl:value-of select="title/text()"/></debug>
+            <debug><xsl:value-of select="count(sectioninfo)"/></debug>
+            <debug><xsl:value-of select="count(chapterinfo)"/></debug>
+          </xsl:if>
+
           <xsl:apply-templates
             select="sectioninfo|chapterinfo"/>
+
         </xsl:for-each>
       </channel>
     </rss>
@@ -206,12 +184,10 @@
                        chapterinfo[@condition = 'rss.info']">
     <xsl:variable name="date.now">
       <xsl:choose>
-        <xsl:when test="($rss.force.date) and ($rss.force.date != '')">
-          <xsl:value-of select="$rss.force.date" />
+        <xsl:when test="($ada.rss.force.date) and ($ada.rss.force.date != '')">
+          <xsl:value-of select="$ada.rss.force.date" />
         </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="date:date()" />
-        </xsl:otherwise>
+        <xsl:otherwise><xsl:value-of select="date:date()" /></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="date.now.tocompare">
@@ -236,19 +212,23 @@
       </xsl:choose>
     </xsl:variable>
     
-    <!--
-    <debug><xsl:value-of select="normalize-space(title)"/></debug>
-    <date.now.tocompare><xsl:value-of select="$date.now.tocompare"/></date.now.tocompare>
-    <date.given.tocompare><xsl:value-of select="$date.given.tocompare"/></date.given.tocompare>
-    -->
+    <xsl:if test="$ada.rss.debug != ''">
+      <debug><xsl:value-of select="normalize-space(title)"/></debug>
+      <date.now.tocompare><xsl:value-of
+      select="$date.now.tocompare"/></date.now.tocompare>
+      <date.given.tocompare><xsl:value-of
+      select="$date.given.tocompare"/></date.given.tocompare>
+    </xsl:if>
     
     <!-- If date check is off or itemdate is later than right now,
          then dump the item -->
-    <xsl:if test="($rss.check.pubdate = '0') or 
+    <xsl:if test="($ada.rss.check.pubdate = '0') or 
                   ($date.given.tocompare &lt;= $date.now.tocompare)">
-      <!--
-      <debug3>Item IS PUBLISHED!!!</debug3>
-      -->
+
+      <xsl:if test="$ada.rss.debug != ''">
+        <debug3>Item IS PUBLISHED!!!</debug3>
+      </xsl:if>
+
       <item>
         <title>
           <xsl:value-of
@@ -258,8 +238,8 @@
         <!-- Produce the link element from the modespec/olink -->
         <xsl:if test="modespec/olink[@condition = 'link']">
           <!-- Stick prefix for URL taken from the ancestor -->
-          <link><xsl:value-of 
-          select="ancestor::*/ulink[@condition = 'itemlinkbase']/@url"/><xsl:value-of 
+          <link><xsl:value-of select="$ada.rss.item.url.prefix"/><xsl:value-of
+          select="ancestor::*/ulink[@condition = 'itemlinkbase']/@url"/>/<xsl:value-of 
           select="normalize-space(modespec/olink/text())"/></link>
         </xsl:if>
         
@@ -267,25 +247,20 @@
           <xsl:choose>
             <xsl:when test="modespec/olink[@condition = 'guid']">
               <!-- Stick prefix for URL taken from the ancestor -->
-              <xsl:value-of 
-                select="ancestor::*/ulink[@condition = 'itemlinkbase']/@url"/><xsl:value-of 
+              <xsl:value-of select="$ada.rss.item.url.prefix"/><xsl:value-of 
+              select="ancestor::*/ulink[@condition =
+              'itemlinkbase']/@url"/>/<xsl:value-of
               select="normalize-space(modespec/olink/text())"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of 
-                select="ancestor::*/ulink[@condition = 'itemlinkbase']/@url"/><xsl:value-of 
+              <xsl:value-of select="$ada.rss.item.url.prefix"/><xsl:value-of 
+              select="ancestor::*/ulink[@condition =
+              'itemlinkbase']/@url"/>/<xsl:value-of  
               select="normalize-space(modespec/olink/text())"/>
             </xsl:otherwise>
           </xsl:choose>
         </guid>
         
-        <xsl:if test="modespec/olink[@condition = 'guid']">
-          <!-- Stick prefix for URL taken from the ancestor -->
-          <guid><xsl:value-of 
-          select="ancestor::*/ulink[@condition = 'itemlinkbase']/@url"/><xsl:value-of 
-          select="normalize-space(modespec/olink/text())"/></guid>
-        </xsl:if>
-
         <xsl:variable name="description.body">
           <xsl:choose>
             <xsl:when test="abstract/formalpara/para">
@@ -329,13 +304,13 @@
             <xsl:when test="../@status != ''">
               <xsl:value-of select="../@status"/>
             </xsl:when>
-            <xsl:otherwise><xsl:value-of select="$rss.date.rfc822"/></xsl:otherwise>
+            <xsl:otherwise><xsl:value-of select="$ada.rss.date.rfc822"/></xsl:otherwise>
           </xsl:choose>
         </pubDate>
         
-        <xsl:if test="$rss.explicit != ''">
+        <xsl:if test="$ada.rss.explicit != ''">
           <itunes:explicit><xsl:value-of
-          select="$rss.explicit"/></itunes:explicit>
+          select="$ada.rss.explicit"/></itunes:explicit>
         </xsl:if>
         
         <xsl:if test="(author/firstname) and (author/surname)">
@@ -371,16 +346,10 @@
   </xsl:template>
 
   <xsl:template match="@fileref">
-    <xsl:value-of 
-      select="ancestor::*/ulink[@condition = 'itemlinkbase']/@url"/><xsl:value-of 
+    <xsl:value-of select="$ada.rss.item.url.prefix"/><xsl:value-of 
+    select="ancestor::*/ulink[@condition = 'itemlinkbase']/@url"/>/<xsl:value-of 
     select="."/>
   </xsl:template>
-
-  <!-- Normalize Text -->
-  <!-- This template is removing space within a paragraph, it goes. -->
-  <!-- <xsl:template match="text()">
-    <xsl:value-of select="normalize-space(.)"/>
-  </xsl:template> -->
 
   <xsl:template name="monthAbbrevToNumber">
     <xsl:param name="monthAbb"/>

@@ -7,12 +7,11 @@
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="exsl" version="1.0">
   
-  <!-- Include the submission code for exercises  --> 
-  <xsl:param name="include.submission" select="'no'"/>
-
-  <!-- Conditionally process the sections/paragraphs labeled with condition
-       submit -->
-  <xsl:template match="section[@condition = 'submit']|note[@condition='submit']|phrase[@condition='submit']"/>
+  <!-- Ignore the sections/paragraphs labeled with condition submit -->
   <xsl:template match="section[@condition = 'submit']" mode="toc" />
+
+  <xsl:template match="section[@condition = 'submit']|
+                       note[@condition='submit']|
+                       phrase[@condition='submit']"/>
 
 </xsl:stylesheet>

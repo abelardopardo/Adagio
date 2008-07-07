@@ -17,6 +17,9 @@
   <xsl:import href="PguideSection.xsl"/>
   <xsl:import href="SolutionSection.xsl"/>
 
+  <!-- Ignore the submit elements -->
+  <xsl:import href="SubmitIgnore.xsl"/>
+
   <!-- Lab is supposed to be a chapter -->
   <xsl:template match="chapter">
     <div class="narrowcontent">
