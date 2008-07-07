@@ -4,6 +4,36 @@
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 
 <chapter lang="es">
+  <chapterinfo condition="rss.info">
+    <title>
+      Document containing some Guide3 stuff
+    </title>
+    <modespec>
+      <olink condition="link">index.html?fromrss=1</olink>
+    </modespec>
+    <abstract>
+      <formalpara>
+	<title>
+	  Document containing some Guide3 stuff
+	</title>
+	<para>
+	  <inlinemediaobject floatstyle="left" float="true">
+	    <imageobject>
+	      <imagedata align="left" fileref="images/agenda.40x40.png"/>
+	    </imageobject> 
+	  </inlinemediaobject> 
+	  Paragraph describing what is included in Guide3
+	</para>
+      </formalpara>
+    </abstract>
+    <pubdate></pubdate>
+    <author>
+      <firstname>Abelardo</firstname><surname>Pardo</surname>
+    </author>
+    <keywordset>
+      <keyword condition="category">Education</keyword>
+    </keywordset>
+  </chapterinfo>
   <title>Empotrar vídeos en una página web</title>
   
   <!-- Include the first exercise -->

@@ -1,0 +1,9 @@
+#
+# Variables to define the processing step
+#
+# See ada.home/AntImports/Properties.txt for the complete list of these
+# variables as well as an explanation.
+#
+rss.files=index.xml
+mergestyles.src.dir=..
+mergestyles.master.style=AdaCourseParams.xml

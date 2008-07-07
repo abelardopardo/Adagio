@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE part PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<part>
+  <title>RSS Channel for this Course</title>
+
+  <!-- ########## Information about Guide1  ########## -->
+  <section status="Tue, 19 Feb 2008 00:00:00 +0100">
+    <ulink condition="itemlinkbase" url="/Guide1"/>
+    <sectioninfo condition="rss.info">
+      <title>
+	Document containing some Guide1 stuff
+      </title>
+      <modespec>
+        <olink condition="link">index.html?fromrss=1</olink>
+      </modespec>
+      <abstract>
+        <formalpara>
+	  <title>
+	    Document containing some Guide1 stuff
+	  </title>
+	  <para>
+	    <inlinemediaobject floatstyle="left" float="true">
+	      <imageobject>
+		<imagedata align="left" fileref="images/agenda.40x40.png"/>
+	      </imageobject> 
+	    </inlinemediaobject> 
+	    Paragraph describing what is included in Guide1
+          </para>
+        </formalpara>
+      </abstract>
+      <pubdate></pubdate>
+      <author>
+        <firstname>Abelardo</firstname><surname>Pardo</surname>
+      </author>
+      <keywordset>
+        <keyword condition="category">Education</keyword>
+      </keywordset>
+    </sectioninfo>
+  </section>
+
+  <!-- ########## Information about Guide2  ########## -->
+  <section status="Tue, 19 Feb 2008 00:00:00 +0100">
+    <ulink condition="itemlinkbase" url="/Guide2"/>
+    <sectioninfo condition="rss.info">
+      <title>
+	Document containing some Guide2 stuff
+      </title>
+      <modespec>
+        <olink condition="link">index.html?fromrss=1</olink>
+      </modespec>
+      <abstract>
+        <formalpara>
+	  <title>
+	    Document containing some Guide2 stuff
+	  </title>
+	  <para>
+	    <inlinemediaobject floatstyle="left" float="true">
+	      <imageobject>
+		<imagedata align="left" fileref="images/agenda.40x40.png"/>
+	      </imageobject> 
+	    </inlinemediaobject> 
+	    Paragraph describing what is included in Guide2
+          </para>
+        </formalpara>
+      </abstract>
+      <pubdate></pubdate>
+      <author>
+        <firstname>Abelardo</firstname><surname>Pardo</surname>
+      </author>
+      <keywordset>
+        <keyword condition="category">Education</keyword>
+      </keywordset>
+    </sectioninfo>
+  </section>
+
+  <!-- ########## Information about Guide3  ########## -->
+  <section status="Mon, 18 Feb 2008 00:00:00 +0100">
+    <ulink condition="itemlinkbase" url="/Guide3"/>
+    <xi:include xml:base="./"
+      href="../Guide3/index.xml"
+      xpointer="xpointer(/chapter/chapterinfo[@condition = 'rss.info'])"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  </section>
+
+  <!-- ########## Information about Laboratory1  ########## -->
+  <section status="Mon, 18 Feb 2008 00:00:00 +0100">
+    <ulink condition="itemlinkbase" url="/Lab1"/>
+    <xi:include xml:base="./"
+      href="../Laboratory1/index.xml"
+      xpointer="xpointer(/chapter/chapterinfo[@condition = 'rss.info'])"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  </section>
+
+  <!-- ########## Information about Laboratory2  ########## -->
+  <section status="Mon, 18 Feb 2008 00:00:00 +0100">
+    <ulink condition="itemlinkbase" url="/Lab2"/>
+    <xi:include xml:base="./"
+      href="../Laboratory2/index.xml"
+      xpointer="xpointer(/chapter/chapterinfo[@condition = 'rss.info'])"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  </section>
+
+  <!-- ########## Information about Laboratory3  ########## -->
+  <section status="Mon, 18 Feb 2008 00:00:00 +0100">
+    <ulink condition="itemlinkbase" url="/Lab3"/>
+    <xi:include xml:base="./"
+      href="../Laboratory3/index.xml"
+      xpointer="xpointer(/chapter/chapterinfo[@condition = 'rss.info'])"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  </section>
+
+  <!-- ########## Information about Theory1  ########## -->
+  <section status="Tue, 19 Feb 2008 00:00:00 +0100">
+    <ulink condition="itemlinkbase" url="/Theory1"/>
+    <sectioninfo condition="rss.info">
+      <title>
+	Document containing some Theory1 stuff
+      </title>
+      <modespec>
+        <olink condition="link">index.html?fromrss=1</olink>
+      </modespec>
+      <abstract>
+        <formalpara>
+	  <title>
+	    Document containing some Theory1 stuff
+	  </title>
+	  <para>
+	    <inlinemediaobject floatstyle="left" float="true">
+	      <imageobject>
+		<imagedata align="left" fileref="images/agenda.40x40.png"/>
+	      </imageobject> 
+	    </inlinemediaobject> 
+	    Paragraph describing what is included in Theory1
+          </para>
+        </formalpara>
+      </abstract>
+      <pubdate></pubdate>
+      <author>
+        <firstname>Abelardo</firstname><surname>Pardo</surname>
+      </author>
+      <keywordset>
+        <keyword condition="category">Education</keyword>
+      </keywordset>
+    </sectioninfo>
+  </section>
+
+  <!-- ########## Information about Theory2  ########## -->
+  <section status="Tue, 19 Feb 2008 00:00:00 +0100">
+    <ulink condition="itemlinkbase" url="/Theory2"/>
+    <sectioninfo condition="rss.info">
+      <title>
+	Document containing some Theory2 stuff
+      </title>
+      <modespec>
+        <olink condition="link">index.html?fromrss=1</olink>
+      </modespec>
+      <abstract>
+        <formalpara>
+	  <title>
+	    Document containing some Theory2 stuff
+	  </title>
+	  <para>
+	    <inlinemediaobject floatstyle="left" float="true">
+	      <imageobject>
+		<imagedata align="left" fileref="images/agenda.40x40.png"/>
+	      </imageobject> 
+	    </inlinemediaobject> 
+	    Paragraph describing what is included in Theory2
+          </para>
+        </formalpara>
+      </abstract>
+      <pubdate></pubdate>
+      <author>
+        <firstname>Abelardo</firstname><surname>Pardo</surname>
+      </author>
+      <keywordset>
+        <keyword condition="category">Education</keyword>
+      </keywordset>
+    </sectioninfo>
+  </section>
+
+  <!-- ########## Information about Theory3  ########## -->
+  <section status="Tue, 19 Feb 2008 00:00:00 +0100">
+    <ulink condition="itemlinkbase" url="/Theory3"/>
+    <sectioninfo condition="rss.info">
+      <title>
+	Document containing some Theory3 stuff
+      </title>
+      <modespec>
+        <olink condition="link">index.html?fromrss=1</olink>
+      </modespec>
+      <abstract>
+        <formalpara>
+	  <title>
+	    Document containing some Theory3 stuff
+	  </title>
+	  <para>
+	    <inlinemediaobject floatstyle="left" float="true">
+	      <imageobject>
+		<imagedata align="left" fileref="images/agenda.40x40.png"/>
+	      </imageobject> 
+	    </inlinemediaobject> 
+	    Paragraph describing what is included in Theory3
+          </para>
+        </formalpara>
+      </abstract>
+      <pubdate></pubdate>
+      <author>
+        <firstname>Abelardo</firstname><surname>Pardo</surname>
+      </author>
+      <keywordset>
+        <keyword condition="category">Education</keyword>
+      </keywordset>
+    </sectioninfo>
+  </section>
+
+</part>

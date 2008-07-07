@@ -5,6 +5,16 @@
   <!-- This param is directly for docbook stylesheets -->
   <xsl:param name="chapter.autolabel" select="0"/>
 
+  <xsl:param name="ada.publish.dir">/sample</xsl:param>
+  <xsl:param name="ada.publish.host">http://www.it.uc3m.es</xsl:param>
+
+  <xsl:param name="ada.rss.channel.url"><xsl:value-of
+  select="$ada.publish.host"/><xsl:value-of select="$ada.publish.dir" />/rss.xml</xsl:param>
+
+  <!-- Prefix of the type http://......./a/b/c to use for material links -->
+  <xsl:param name="ada.rss.item.url.prefix"><xsl:value-of
+  select="$ada.publish.host"/><xsl:value-of select="$ada.publish.dir" /></xsl:param>
+
   <xsl:param name="ada.page.head.bigtitle">1</xsl:param>
   <xsl:param name="ada.course.name">MI CURSO</xsl:param>
   <xsl:param name="ada.course.edition">MI EDICION</xsl:param>
