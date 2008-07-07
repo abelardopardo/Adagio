@@ -18,7 +18,7 @@
   <xsl:param name="ada.page.head.bigtitle">1</xsl:param>
   <xsl:param name="ada.course.name">MI CURSO</xsl:param>
   <xsl:param name="ada.course.edition">MI EDICION</xsl:param>
-  <xsl:param name="ada.page.author">Hannibal the Cannibal</xsl:param>
+  <xsl:param name="ada.page.author">The author of this page</xsl:param>
   <xsl:param name="ada.course.icon">images/ao.16x16.ico</xsl:param>
   <xsl:param name="ada.course.image">images/ao.120x120.png</xsl:param>
   <xsl:param name="ada.page.cssstyle.url">style.css</xsl:param>

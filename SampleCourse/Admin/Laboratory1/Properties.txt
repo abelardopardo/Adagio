@@ -18,7 +18,7 @@ export.dst.dir=../scratch/Lab1
 export.files=buscarmain.s \
              buscar.s \
              index.html \
-	     index.submit.html \
+	     index_submit.html \
              square.s \
              images/*.png
 
