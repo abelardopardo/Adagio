@@ -56,7 +56,7 @@
     <!-- The required condition not to bomb out -->
     <condition property="pdflatex.execution.possible">
       <and>
-	<available file="${pdflatex.exec}${executable.file.extension}"
+	<available file="${pdflatex.exec}"
 		   filepath="${env.PATH}"/>
 	<available file="${pdflatex.abssrc.dir}"/> 
       </and>
@@ -105,8 +105,9 @@
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
     <apply dir="${basedir}" parallel="false" dest="${pdflatex.absdst.dir}" 
-	   append="yes" failonerror="true" executable="${pdflatex.exec}" 
+	   append="yes" failonerror="true" executable="bash" 
 	   output="build.out">
+      <arg value="${pdflatex.exec}"/>
       <arg value="-output-directory"/>
       <arg value="${pdflatex.dst.dir}"/>
       <fileset refid="pdflatex.fileset"/>
