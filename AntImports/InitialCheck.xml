@@ -61,9 +61,11 @@ build templates
 
   <!-- Script to detect where is the course home by checking for the presence of
   AdaCourseParams.xml up to 10 levels up the current basedir. -->
-  <exec executable="adafindcoursehome"
+  <exec executable="bash"
 	dir="${basedir}"
-	outputproperty="ada.course.home"/>
+	outputproperty="ada.course.home">
+    <arg value="${ada.home}${file.separator}bin${file.separator}adafindcoursehome"/>
+  </exec>
   
 
 <!--   <available property="ada.property.file.ready" -->
