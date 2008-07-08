@@ -56,7 +56,7 @@
     <!-- The required condition not to bomb out -->
     <condition property="ps2pdf.execution.possible">
       <and>
-	<available file="${ps2pdf.exec}${executable.file.extension}"
+	<available file="${ps2pdf.exec}"
 		   filepath="${env.PATH}"/>
 	<available file="${ps2pdf.abssrc.dir}"/> 
       </and>
