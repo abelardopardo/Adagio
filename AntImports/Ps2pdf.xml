@@ -105,8 +105,9 @@
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
     <apply dir="${basedir}" parallel="false" dest="${ps2pdf.absdst.dir}" 
-	   append="yes" failonerror="true" executable="${ps2pdf.exec}" 
+	   append="yes" failonerror="true" executable="bash" 
 	   output="build.out">
+      <arg value="${ps2pdf.exec}"/>
       <srcfile/>
       <targetfile/>
       <fileset refid="ps2pdf.fileset"/>
