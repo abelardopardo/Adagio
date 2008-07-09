@@ -20,6 +20,7 @@
   <property name="@NAME@.src.dir"        value="${basedir}"/>
   <property name="@NAME@.dst.dir"        value="${@NAME@.src.dir}"/>
   <property name="@NAME@.files"          value=""/>
+  <property name="@NAME@.debug.level"    value="info"/>
 
   <!-- Private properties -->
 
@@ -70,7 +71,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">  @NAME@.check              = "${@NAME@.check}"
+    <echo level="${@NAME@.debug.level}">  @NAME@.check              = "${@NAME@.check}"
   @NAME@.execution.possible = ${@NAME@.execution.possible}
   @NAME@.failure            = ${@NAME@.failure}</echo>
   </target>
@@ -157,7 +158,7 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="@NAME@.dump.properties" depends="initial.check">
-    <echo level="info"> ------ @NAME@ properties ----
+    <echo level="${@NAME@.debug.level}"> ------ @NAME@ properties ----
     @NAME@.exec       ="${@NAME@.exec}"
     @NAME@.abssrc.dir ="${@NAME@.abssrc.dir}"
     @NAME@.absdst.dir ="${@NAME@.absdst.dir}"
