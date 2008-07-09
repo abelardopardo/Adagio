@@ -198,6 +198,7 @@
   <target name="pdflatex.report.NO" depends="pdflatex.check.values"
 	  unless="pdflatex.execution.possible">
     <echo>Pdflatex           |           |     * (install ${pdflatex.exec})</echo>
+    <echo>                   |           |     * (Does not work in Windows)</echo>
   </target>
 
   <target name="pdflatex.report" depends="pdflatex.report.YES,
