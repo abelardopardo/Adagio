@@ -123,6 +123,12 @@
     
   </target>
 
+  <target name="local.clean">
+    <ant antfile="${ada.home}/AntImports/Cleaning.xml" 
+	 target="clean.clean" inheritAll="false"/>
+    
+  </target>
+
   <target name="report">
 
     <antcall target="initial.check.dump">
