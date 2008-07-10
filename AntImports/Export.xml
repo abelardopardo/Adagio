@@ -25,7 +25,6 @@
   <property name="export.src.dir" value="${basedir}" />
   <property name="export.dst.dir" value="${export.src.dir}" />
   <property name="export.files"   value=""/>
-  <property name="export.dirs"    value=""/>
 
   <target name="export.processing.NOT"
 	  unless="timewindow.open">
@@ -49,7 +48,6 @@
       <param name="copyfiles.src.dir"      value="${export.src.dir}" />
       <param name="copyfiles.dst.dir"      value="${export.dst.dir}" />
       <param name="copyfiles.files"        value="${export.files}"/>
-      <param name="copyfiles.dirs"        value="${export.dirs}"/>
     </antcall>
 
     <echo>export.processing           END(copyfiles.processing)</echo>
@@ -66,7 +64,6 @@
       <param name="copyfiles.src.dir" value="${export.src.dir}" />
       <param name="copyfiles.dst.dir" value="${export.dst.dir}" />
       <param name="copyfiles.files"   value="${export.files}"/>
-      <param name="copyfiles.dirs"    value="${export.dirs}"/>
     </antcall>
 
     <echo>export.clean                END(copyfiles.clean)</echo>

@@ -26,7 +26,7 @@ build templates
   <!-- Directory where the toolkit is installed -->
   <property name="ada.home" value="" />
 
-  <property name="ada.initial.check.dump.level" value="info"/>
+  <property name="ada.debug.level" value="info"/>
 
   <!-- Include the environment as a set of properties -->
   <property environment="env"/>
@@ -111,7 +111,7 @@ build templates
   </target>
 
   <target name="initial.check.dump">
-    <echo level="${ada.initial.check.dump.level}">------ Global properties ----
+    <echo level="${ada.debug.level}">------ Global properties ----
   basedir         = ${basedir}
   user.dir        = ${user.dir}
   user.home       = ${user.home}

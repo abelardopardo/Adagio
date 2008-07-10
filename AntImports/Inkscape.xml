@@ -22,9 +22,6 @@
   <property name="inkscape.dst.dir"       value="${inkscape.src.dir}"/>
   <property name="inkscape.output.format" value="png"/>
   <property name="inkscape.files"         value=""/>
-  <!-- Source files to be processed by inkscape. -->
-  <fileset id="inkscape.fileset" dir="${inkscape.src.dir}"
-	   includes="${inkscape.files}"/>
 
   <!-- Private properties -->
 

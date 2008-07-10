@@ -28,9 +28,9 @@
   <property name="xsltproc.output.format"  value=".html"/>
   <property name="xsltproc.extra.args"     value=""/>
   <property name="xsltproc.files"          value=""/>
-  <property name="xsltproc.debug.level"    value="info"/>
 
   <!-- Private properties -->
+  <property name="xsltproc.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define two properties containing the absolute src and dst paths -->
   <pathconvert property="xsltproc.abssrc.dir" pathsep=" ">
