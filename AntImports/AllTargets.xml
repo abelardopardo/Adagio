@@ -62,7 +62,7 @@
 
   </target>
 
-  <target name="clean" depends="initial.delete.build.out">
+  <target name="local.clean" depends="initial.delete.build.out">
 
     <ant antfile="${ada.home}/AntImports/Export.xml" 
 	 target="export.clean" inheritAll="false"/>
@@ -115,15 +115,13 @@
     <ant antfile="${ada.home}/AntImports/Copyfiles.xml" 
 	 target="copyfiles.clean" inheritAll="false"/>
 
+  </target>
+
+  <target name="clean" depends="local.clean">
+
     <ant antfile="${ada.home}/AntImports/SubRecursive.xml" 
 	 target="subrecursive.clean" inheritAll="false"/>
 
-    <ant antfile="${ada.home}/AntImports/Cleaning.xml" 
-	 target="clean.clean" inheritAll="false"/>
-    
-  </target>
-
-  <target name="local.clean">
     <ant antfile="${ada.home}/AntImports/Cleaning.xml" 
 	 target="clean.clean" inheritAll="false"/>
     
