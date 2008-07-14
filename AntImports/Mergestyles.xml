@@ -115,7 +115,6 @@
 	   dest="${mergestyles.dst.dir}" append="yes" failonerror="true"
 	   executable="${mergestyles.exec}"  output="build.out">
       <arg value="--xinclude"/>
-      <arg value="--xincludestyle"/>
       <arg value="--stringparam"/>
       <arg value="mergesheets.file.to.fold"/>
       <arg value="${mergestyles.file.to.import}"/>

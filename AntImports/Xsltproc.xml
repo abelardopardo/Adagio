@@ -78,7 +78,6 @@
 	     append="yes" failonerror="true" executable="${xsltproc.exec}" 
 	     output="build.out">
 	<arg value="--xinclude"/>
-	<arg value="--xincludestyle"/>
 	<arg value="--stringparam"/>
 	<arg value="ada.home"/>
 	<arg value="${ada.home}"/>
