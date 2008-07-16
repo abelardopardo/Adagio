@@ -160,6 +160,7 @@
     laboratory.style.file        ="${laboratory.style.file}"
     laboratory.submit.style.file ="${laboratory.style.file}"
     laboratory.output.format     ="${laboratory.out.format}"
+    laboratory.extra.args        ="${laboratory.extra.args}"
     laboratory.files             ="${laboratory.files}"</echo>
   </target>
 
@@ -176,7 +177,8 @@
       <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
       <param name="xsltproc.output.format" value="${laboratory.output.format}"/>
       <param name="xsltproc.files"         value="${laboratory.creating.files}"/>
-      <param name="xsltproc.extra.args"    value="${laboratory.profile.lang}"/>
+      <param name="xsltproc.extra.args"    
+	     value="${laboratory.extra.args} ${laboratory.profile.lang}"/>
     </antcall>
 
     <!-- Call xsltproc to generate the solution -->
@@ -188,7 +190,8 @@
 	     value="_solution${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
       <param name="xsltproc.extra.args" 
-	     value="--stringparam laboratory.include.solutions yes
+	     value="${laboratory.extra.args} 
+                    --stringparam laboratory.include.solutions yes
                     ${laboratory.profile.lang}"/>
     </antcall>
 
@@ -201,7 +204,8 @@
 	     value="_pguide${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
       <param name="xsltproc.extra.args" 
-	     value="--stringparam laboratory.include.guide yes
+	     value="${laboratory.extra.args} 
+                    --stringparam laboratory.include.guide yes
                     --stringparam laboratory.include.solutions yes
                     ${laboratory.profile.lang}"/>
     </antcall>
@@ -215,7 +219,7 @@
 	     value="_submit${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
       <param name="xsltproc.extra.args" 
-	     value="${laboratory.profile.lang}"/>
+	     value="${laboratory.extra.args} ${laboratory.profile.lang}"/>
     </antcall>
   </target>
 
