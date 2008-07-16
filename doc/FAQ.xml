@@ -19,7 +19,7 @@
     </para>
 
     <qandaset defaultlabel="qanda">
-      <qandaentry>
+      <qandaentry id="whatisada">
 	<question>
 	  <para>What is ADA?</para>
 	</question>
@@ -110,7 +110,7 @@
 	</answer>
       </qandaentry>
 
-      <qandaentry>
+      <qandaentry id="whatisnotada">
 	<question>
 	  <para>What ADA is not?</para>
 	</question>
@@ -131,7 +131,7 @@
 	  </para>
 	</answer>
       </qandaentry>
-      <qandaentry>
+      <qandaentry id="whyisadaneeded">
 	<question>
 	  <para>Why is ADA needed?</para>
 	</question>
@@ -228,7 +228,7 @@
   <section id="Installing_ADA_in_Windows">
     <title>Installing ADA in Windows</title>
     <qandaset defaultlabel="qanda">
-      <qandaentry>
+      <qandaentry id="requiredapplicationsinwindows">
 	<question>
 	  <para>What are the required applications to run ADA in Windows?</para>
 	</question>
@@ -282,7 +282,7 @@
 	</answer>
       </qandaentry>
 
-      <qandaentry>
+      <qandaentry id="howtoinstallcygwin">
 	<question>
 	  <para>I got Java already installed, What else is required?</para>
 	</question>
@@ -472,7 +472,7 @@
       <qandaentry id="Fetch_ada_in_windows">
 	<question>
 	  <para>
-	    Once I have the JRE, Cygwin and Ant, what is next?
+	    Once I have the JRE, Cygwin and Ant, How do I get ADA?
 	  </para>
 	</question>
 	<answer>
@@ -521,6 +521,37 @@
 	  <para>
 	    The final step to make sure that the commands provided by ADA are
 	    available is to try <xref linkend="run_adacheck"/>.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="new_version_upgrade">
+	<question>
+	  <para>
+	    A new version of ADA has been published, how do I upgrade?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    ADA is distributed using the tool <command>git</command> which keeps
+	    track of the files you already have and the changes that need to be
+	    applied to upgrade to the latest version. The upgrade process
+	    requires simply to open a cygwin shell window, go to the directory
+	    where ADA is installed and execute the command:
+	  </para>
+
+	  <programlisting>git pull</programlisting>
+
+	  <para>
+	    The command will inform in some fairly cryptic way of the changes
+	    that are taking place. In principle, if the source files have not
+	    been modified, the change will go smoothly. If you have some
+	    personal modifications in the source files, there could be some
+	    conflicts when <command>git</command> tries to merge these changes
+	    with the ones related to the upgrade. If such situation happens, it
+	    is called a conflict and it needs to be solved manually by the
+	    user. If you touched the source code of ADA, it is assumed you know
+	    how to solve merge conflicts.
 	  </para>
 	</answer>
       </qandaentry>
@@ -690,7 +721,7 @@ clean.files=../scratch/Theory2</programlisting>
 	</answer>
       </qandaentry>
 	  
-      <qandaentry>
+      <qandaentry id="variable_catalog">
 	<question>
 	  <para>How to know the variables that can be included in the <filename><xi:include
 	    href="Params.xml"
@@ -711,7 +742,7 @@ clean.files=../scratch/Theory2</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry>
+      <qandaentry id="process_xfig">
 	<question>
 	  <para>How to process a figure with Xfig?</para>
 	</question>
@@ -832,7 +863,7 @@ clean.files=../scratch/Theory2</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry>
+      <qandaentry id="inkscape_processing">
 	<question>
 	  <para>How to process a figure with Inkscape?</para>
 	</question>
@@ -932,7 +963,7 @@ clean.files=../scratch/Theory2</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry>
+      <qandaentry id="generic_rule">
 	<question>
 	  <para>What if I have lots of figures. Do I need to write all their
 	  file names in <filename><xi:include
@@ -993,7 +1024,7 @@ clean.files=../scratch/Theory2</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry>
+      <qandaentry id="docbook_processing">
 	<question>
 	  <para>How to process Docbook files in ADA?</para>
 	</question>
@@ -1044,9 +1075,9 @@ clean.files=../scratch/Theory2</programlisting>
 		  <entry><varname>docbook.output.format</varname></entry>
 		  <entry>
 		    Extension to replace the extension <code>.xml</code> in the
-		    file name.
+		    file name. It must include the dot!
 		  </entry>
-		  <entry><filename>html</filename></entry>
+		  <entry><filename>.html</filename></entry>
 		</row>
 		<row>
 		  <entry><varname>docbook.files</varname></entry>
@@ -1092,7 +1123,169 @@ clean.files=../scratch/Theory2</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry>
+      <qandaentry id="profiling">
+	<question>
+	  <para>
+	    How to obtain two files from a unique docbook mixing elements in
+	    different languages?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    The docbook toolchain offers a powerful functionality called
+	    <emphasis>profiling</emphasis> or <emphasis>conditional
+	    text</emphasis>. (search for <quote>docbook
+	    profiling</quote> for more detailed information). Each docbook
+	    element may include a fixed set of attributes that are used to
+	    select or ignore portions of a document. The exact definition for a
+	    generic attribute <code>attr</code> is:
+	  </para>
+
+	  
+	  <informaltable frame="all" id="mergestyles_vars">
+	    <tgroup rowsep="1" colsep="1" cols="1">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <tbody>
+		<row>
+		  <entry>
+		    <para>
+		      If a document contains elements with an attribute with
+		      name <code>attr</code> with value <code>val</code>, and
+		      the XSLT processor is given the option
+		      <code>profile.attr</code> with value <code>val</code>,
+		      then all elements that have the attribute
+		      <code>attr</code> with a value not containing
+		      <code>val</code> are suppressed as if they were not part
+		      of the document. To apply a concrete profiling attribute
+		      you need to replace <code>attr</code> by the name of your
+		      attribute and <code>val</code> by the proper value.
+		    </para>
+		  </entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+		    
+	  <para>
+	    The list of attributes which can be used for profiling is fixed by
+	    the stylesheets processing Docbook (there are actually more than
+	    10). A profiling example is a document that is written in say two
+	    languages. Let us just say for the sake of the example these
+	    languages are English and Spanish. The docbook XML file needs to
+	    have one version for each language, but there might be parts that
+	    need to be present in both versions. The attribute to use for such
+	    profiling is <code>lang</code>. A possible strategy is to label each
+	    paragraph with the attribute <code>lang</code> to the value
+	    <code>en</code> if it is in English or <code>es</code> if it is in
+	    Spanish.
+	  </para>
+
+	  <para>
+	    The placement of the <code>lang</code> attribute can be chosen as to
+	    minimize the number of duplicated elements and maintain the document
+	    as a valid Docbook document. The following example shows a snippet
+	    of Docbook in which two versions in English and Spanish are included
+	    in the same document with a figure that needs to be also
+	    distinguished.
+	  </para>
+
+	  <programlisting><![CDATA[    <para lang="es">
+      La estructura de esta tabla se puede ver en la siguiente figura:
+    </para>
+
+    <para lang="en">
+      The structure of this table can be seen in the following figure:
+    </para>
+
+    <informalfigure id="reversetable:fig:pagetable">
+      <mediaobject>
+        <imageobject lang="es">
+          <imagedata align="center" fileref="tablestruct.es.png" format="PNG" />
+        </imageobject>
+        <imageobject lang="en">
+          <imagedata align="center" fileref="tablestruct.en.png" format="PNG" />
+        </imageobject>
+      </mediaobject>
+    </informalfigure>]]></programlisting>
+	  <para>
+	    Note that the placement of the <code>lang</code> attribute is as
+	    deep in the hierarchy as possible to increase the number of common
+	    elements maintaining the document as correct Docbook. A
+	    <code>mediaobject</code> element accepts multiple
+	    <code>imageobject</code> elements which itself does not accept
+	    multiple <code>imagedata</code> elements.
+	  </para>
+
+	  <para>
+	    ADA offers rules to do precisely this task, given a docbook
+	    containing elements in two languages, English and Spanish, generate
+	    two separate files, one containing each version. Once you produced
+	    the XML file, set the appropriate values to some of following variables
+	    in <filename><xi:include href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	  </para>
+
+	  <informaltable frame="all" id="bilingualdb_vars">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="center"/>
+	      <thead>
+		<row>
+		  <entry align="center">Variable name</entry>
+		  <entry align="center">Description</entry>
+		  <entry align="center">Default</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry><varname>bilingualdb.src.dir</varname></entry>
+		  <entry>Directory from where to take the Docbook files</entry>
+		  <entry>Current directory</entry>
+		</row>
+		<row>
+		  <entry><varname>bilingualdb.dst.dir</varname></entry>
+		  <entry>Directory where to leave the resulting files</entry>
+		  <entry>Value of <varname>bilingualdb.src.dir</varname></entry>
+		</row>
+		<row>
+		  <entry><varname>bilingualdb.output.format</varname></entry>
+		  <entry>
+		    Extension to replace the extension <code>.xml</code> in the
+		    file name. It needs to include the dot!
+		  </entry>
+		  <entry><filename>.html</filename></entry>
+		</row>
+		<row>
+		  <entry><varname>bilingualdb.files</varname></entry>
+		  <entry>
+		    Space or comma separated list of Docbook file names (with no
+		    path) to process
+		  </entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry><varname>bilingualdb.extra.args</varname></entry>
+		  <entry>
+		    Additional options to pass directly to <code>xsltproc</code>.
+		  </entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry><varname>bilingualdb.style.file</varname></entry>
+		  <entry>XSL file to use to translate the Docbook file</entry>
+		  <entry>Docbook Profile Style</entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+	  
+	</answer>
+
+      </qandaentry>
+
+      <qandaentry id="generic_rule">
 	<question>
 	  <para>Can I specify a generic rule to be applied everywhere?</para>
 	  <para>
@@ -1129,7 +1322,8 @@ clean.files=../scratch/Theory2</programlisting>
 	  </para>
 	</answer>
       </qandaentry>
-      <qandaentry>
+
+      <qandaentry id="modified_stylesheet">
 	<question>
 	  <para>
 	    How can I use a slightly modified generic stylesheet without
@@ -1227,7 +1421,7 @@ docbook.files=index.xml</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry>
+      <qandaentry id="include_flash_video_in_docbook">
 	<question>
 	  <para>
 	    How to include a flash video in a Docbook document?
@@ -1343,7 +1537,7 @@ docbook.files=index.xml</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry>
+      <qandaentry id="timewindow">
 	<question>
 	  <para>
 	    Is it possible to have a directory in which the defined rules for
@@ -1432,23 +1626,6 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
 
 	</answer>
       </qandaentry>
-      <!--
-      <qandaentry>
-	<question>
-	  <para>
-	    How do I upgrade to the latest version of ADA?
-	  </para>
-	</question>
-	<answer>
-	  <para>
-	    If a new version of ADA is published, the upgrade can be obtained
-	    by opening a a Cygwin shell and typing the following within the ADA
-	    directory:
-	  </para>
-	  <programlisting>git fetch</programlisting>
-	</answer>
-      </qandaentry>
-      -->
     </qandaset>
   </section>
 </article>
