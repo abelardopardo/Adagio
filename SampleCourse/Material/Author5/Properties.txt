@@ -8,5 +8,5 @@ inkscape.files=*.e?.svg
 
 bilingualdb.files=problem.xml
 
-export.files=*.png
+export.files=*.png reverseTable.c
 
