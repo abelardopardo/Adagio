@@ -28,6 +28,7 @@
 	    value="${ada.home}/XslStyles/Laboratory.xsl"/>
   <property name="laboratory.submit.style.file" 
 	    value="${ada.home}/XslStyles/Submit.xsl"/>
+  <property name="laboratory.extra.args" value=""/>
   <property name="laboratory.output.format"   value=".html"/>
   <property name="laboratory.files"           value=""/>
   <property name="laboratory.bilingual.files" value=""/>
@@ -191,7 +192,7 @@
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
       <param name="xsltproc.extra.args" 
 	     value="${laboratory.extra.args} 
-                    --stringparam laboratory.include.solutions yes
+                    --stringparam solutions.include.guide yes
                     ${laboratory.profile.lang}"/>
     </antcall>
 
@@ -205,8 +206,8 @@
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
       <param name="xsltproc.extra.args" 
 	     value="${laboratory.extra.args} 
-                    --stringparam laboratory.include.guide yes
-                    --stringparam laboratory.include.solutions yes
+                    --stringparam professorguide.include.guide yes
+                    --stringparam solutions.include.guide yes
                     ${laboratory.profile.lang}"/>
     </antcall>
 
