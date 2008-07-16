@@ -15,7 +15,9 @@
 
   <!-- Conditionally process the sections/paragraphs labeled with condition
        solution -->
-  <xsl:template match="section[@condition='solution']|phrase[@condition='solution']|note[@condition='solution']">
+  <xsl:template match="section[@condition='solution'] | 
+                       phrase[@condition='solution'] | 
+                       note[@condition='solution']">
     <xsl:if test="$laboratory.include.solutions = 'yes'">
       <table class="ada_solution_table">
         <tr>

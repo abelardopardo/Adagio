@@ -17,8 +17,8 @@
 
   <!-- Conditionally process the notes labeled with condition
        professorguide -->
-  <xsl:template match="section[@condition = 'professorguide']|note[@condition =
-                       'professorguide']">
+  <xsl:template match="section[@condition = 'professorguide'] |
+                       note[@condition = 'professorguide']">
     <xsl:if test="$laboratory.include.guide = 'yes'">
       <p>
         <table class="ada_pguide_table" cellpadding="10">
