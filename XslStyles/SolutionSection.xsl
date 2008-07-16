@@ -8,7 +8,7 @@
   exclude-result-prefixes="exsl" version="1.0">
   
   <!-- Include the solutions for the exercises --> 
-  <xsl:param name="laboratory.include.solutions" select="'no'"/>
+  <xsl:param name="solutions.include.guide" select="'no'"/>
 
   <!-- Prevent this section from appearing in TOC -->
   <xsl:template match="section[@condition='solution']"       mode="toc" />
@@ -18,7 +18,7 @@
   <xsl:template match="section[@condition='solution'] | 
                        phrase[@condition='solution'] | 
                        note[@condition='solution']">
-    <xsl:if test="$laboratory.include.solutions = 'yes'">
+    <xsl:if test="$solutions.include.guide = 'yes'">
       <table class="ada_solution_table">
         <tr>
           <td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ;">

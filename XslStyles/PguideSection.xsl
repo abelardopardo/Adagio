@@ -8,7 +8,7 @@
   exclude-result-prefixes="exsl" version="1.0">
   
   <!-- Include professor guide text --> 
-  <xsl:param name="laboratory.include.guide" select="'no'"/>
+  <xsl:param name="professorguide.include.guide" select="'no'"/>
   <!-- Background color for the professor guide box  --> 
   <xsl:param name="pguidebgn" select="'#CCD0D6'"/>
 
@@ -19,7 +19,7 @@
        professorguide -->
   <xsl:template match="section[@condition = 'professorguide'] |
                        note[@condition = 'professorguide']">
-    <xsl:if test="$laboratory.include.guide = 'yes'">
+    <xsl:if test="$professorguide.include.guide = 'yes'">
       <p>
         <table class="ada_pguide_table" cellpadding="10">
           <tr>

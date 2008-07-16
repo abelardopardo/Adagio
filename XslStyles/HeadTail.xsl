@@ -16,6 +16,10 @@
   <!-- Template to ignore the chapter/section info with rss.info condition -->
   <xsl:import href="RssIgnore.xsl"/>
 
+  <!-- Invoke the templates to process professor guide and solution -->
+  <xsl:import href="PguideSection.xsl"/>
+  <xsl:import href="SolutionSection.xsl"/>
+
   <xsl:output method="xml" indent="yes" encoding="UTF-8"
     doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
     doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"/>

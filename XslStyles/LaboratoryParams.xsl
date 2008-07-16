@@ -8,8 +8,8 @@
   version="1.0" exclude-result-prefixes="exsl xi str">
   
   <xsl:param name="laboratory.include.toc"             select="'yes'"/>
-  <xsl:param name="laboratory.include.solutions"       select="'no'"/>
-  <xsl:param name="laboratory.include.guide"           select="'no'"/>
+  <xsl:param name="solutions.include.guide"            select="'no'"/>
+  <xsl:param name="professorguide.include.guide"       select="'no'"/>
   <xsl:param name="laboratory.toc.section.depth"       select="'3'"/>
   <xsl:param name="laboratory.pguide.background.color" select="'#CCD0D6'"/>
   <xsl:param name="laboratory.submission.page"/>

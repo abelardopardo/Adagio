@@ -13,10 +13,6 @@
   <xsl:import href="CountDown.xsl"/>
   <xsl:import href="ChatRoomLink.xsl"/>
 
-  <!-- Invoke the templates to process professor guide and solution -->
-  <xsl:import href="PguideSection.xsl"/>
-  <xsl:import href="SolutionSection.xsl"/>
-
   <!-- Ignore the submit elements -->
   <xsl:import href="SubmitIgnore.xsl"/>
 
@@ -31,7 +27,7 @@
       <!-- Insert a header with the deadline if present in the document -->
       <xsl:if test="(note[@condition = 'AdminInfo']/para[@condition =
                     'handindate']/text() != '') and
-                    ($laboratory.include.solutions != 'yes')">
+                    ($solutions.include.guide != 'yes')">
         <h2 class="head-center">
           <xsl:choose>
             <xsl:when test="$profile.lang='en'">
@@ -52,7 +48,7 @@
         <xsl:if
           test="(note[@condition = 'AdminInfo']/para[@condition =
                 'handinlink']/text() != '') and 
-                ($laboratory.include.solutions != 'yes')">
+                ($solutions.include.guide != 'yes')">
           <p>
             <xsl:choose>
               <xsl:when test="$laboratory.submission.page != ''">
@@ -126,7 +122,7 @@
         </xsl:if>
         <xsl:if
           test="((note[@condition='AdminInfo']/para[@condition='handinlink']/text()
-                != '') and ($laboratory.include.solutions != 'yes')) or
+                != '') and ($solutions.include.guide != 'yes')) or
                 (note[@condition='AdminInfo']/para[@condition =
                 'deadline.format']/text())">
           <hr class="head-center"/>
