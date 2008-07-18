@@ -1628,6 +1628,254 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
       </qandaentry>
     </qandaset>
   </section>
+
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                             GIT                              -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <section id="Git">
+    <title>Using Git with ADA</title>
+
+    <qandaset defaultlabel="qanda">
+      <qandaentry id="gitwhatis">
+	<question>
+	  <para>What is Git?</para>
+	</question>
+	<answer>
+	  <para>
+	    To be answered.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="gitinstall">
+	<question>
+	  <para>How do I install Git?</para>
+	</question>
+	<answer>
+	  <para>
+	    To be answered.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="gitrepositories">
+	<question>
+	  <para>My Git repository is local to my machine,
+	    how is content shared with other authors and
+	    course coordinators?</para>
+	</question>
+	<answer>
+	  <para>
+	    To be answered.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="gitclone">
+	<question>
+	  <para>How do I create my local repository from the 
+	    remote repository?</para>
+	  <para>
+	    I was told that there is a remote repository I
+	    should obtain the initial files from before starting
+	    to work. How do I setup my local Git repository from it?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    To be answered.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="gitcommitlocal">
+	<question>
+	  <para>I have just commited some changes, why are they not
+	    visible in the remote repository?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    When you commit changes, they are only stored in your
+	    local repository. If you want your latest local commits to
+	    be stored in the remote repository also, you have to
+	    explicitly send your changes to that repository after
+	    committing them. See <xref linkend="gitpush"/> for
+	    further explanation.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="gitpush" xreflabel="How to send changes to the remote repository">
+	<question>
+	  <para>How do I send my local changes to the remote repository?
+	  </para>
+	  <para>
+	    I have done several commits into my local repository,
+	    and now I want to share them with other people.
+	    How do I upload those commits to the remote repository?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    To be answered.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="gitcommit">
+	<question>
+	  <para>How do I commit contents with Git?</para>
+	</question>
+	<answer>
+	  <para>
+	    Commits are the basic unit used by Git to keep track of
+	    the history of the contents it manages. Only the versions
+	    committed into the repository are available later for
+	    reverting changes, examining history, computing differences
+	    between versions, etc.
+	  </para>
+
+	  <para>
+	    Authors make continuous changes to their contents.
+	    Sometimes, typically when they finish a logical unit of work
+	    (e.g. finish writing or reviewing a section of a document,
+	    including a figure in a document for better understanding
+	    of its contents, finish a draft they want to share
+	    with others, etc.), authors check-in their content in their
+	    local repository. The action of checking-in changes into the
+	    local repository is called a <emphasis>commit</emphasis>.
+	    For each commit, Git stores the differences of the current
+	    version of the files with respect to the version
+	    in the preceding commit. 
+	  </para>
+
+	  <para>
+	    When you have a version of the contents they want to commit,
+	    you should first examine the status of the content to see
+	    what they have changed with respect to the previous commit,
+	    with the command <code>git status</code>:
+	  </para>
+
+	  <programlisting>$ git status
+# On branch git-faq
+# Changed but not updated:
+#   (use "git add &lt;file>..." to update what will be committed)
+#
+#       modified:   FAQ.xml
+#
+# Untracked files:
+#   (use "git add &lt;file>..." to include in what will be committed)
+#
+#       FAQ.html
+#       FAQ.pdf
+#       build.out</programlisting>
+
+	  <para>
+	    It shows what files have been changed and
+	    what files are <emphasis>untracked</emphasis>
+	    (not managed by Git). If you need further
+	    information about the changes made, you can use
+	    the command <code>git diff</code>, which shows the
+	    lines that changed (were added, removed or modified)
+	    in all the modified files.
+	  </para>
+
+	  <para>
+	    The usual way of doing a commit is just typing
+	    <code>git commit -a</code>. It commits all the files
+	    that have been modified since the last commit.
+	    The command asks for a message describing the commit,
+	    that will be shown in the history of changes.
+	    For short messages, it is recommendable to write just
+	    one line describing briefly the changes done.
+	    If you need to explain further your changes,
+	    Git conventions say that you should write that line,
+	    followed by an empty line, and finally the long description of
+	    the changes.
+          </para>
+
+	  <para>
+	    When a new file has been created, it is not automatically
+	    managed by Git, but listed as <emphasis>untracked</emphasis>
+	    instead. If you want that file to be committed, you have to
+	    first type <code>git add &lt;filename</code>, that
+	    includes the new file into the index (a temporary storage for the
+	    files to be committed). Then, just type
+	    <code>git commit -a</code> to commit this file and
+	    the rest of the modified files. Once a file is added,
+	    it will no longer be listed as <emphasis>untracked</emphasis>,
+	    and Git will manage it.
+	  </para>
+
+	  <para>
+	    Sometimes, you may need a finer control on what is being
+	    committed.
+	    For example, you may want to split the changes in several
+	    commits. In this case, you can use <code>git add 
+	      &lt;filenames></code>to only insert some of the changed
+	    files into the index, and then <code>git commit</code>
+	    (without the <code>-a</code> option) to commit the
+	    changes that are in the index, but not the other changes
+	    that were not explicitly included into it.
+	    The files not added to
+	    the index are still listed by Git as modified, and therefore
+	    they can be committed later.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="gittrackedfiles">
+	<question>
+	  <para>What files should be added into the Git repository?</para>
+	</question>
+	<answer>
+	  <para>
+	    Source code management tools, like Git, are designed to
+	    track <emphasis>source files</emphasis>.
+	    Files produced automatically by compilers, stylesheets,
+	    image transformation programs, etc. should not be tracked.
+	  </para>
+	  <para>
+	    This does not mean that untracked files cannot be inside
+	    your working directory, they can, but just that they
+	    should not be added
+	    into the Git repository. Do not worry about having them in
+	    your  working directory, because only files that are
+	    added explicitly with the <code>git add &lt;filename></code>
+	    command are tracked by Git. Be careful when you add
+	    a directory with <code>git add</code>, because it
+	    adds all the files inside it into the repository.
+	    If there are files in that directory that should not be
+	    added, it is better to list the files to be added explicitly. 
+	  </para>
+	  <para>
+	    In the case of ADA, add into the Git repository your Docbook
+	    source files, your figures in the vectorial format
+	    produced by your favorite drawing program
+	    (normally SVG files), configuration files like
+	    <filename><xi:include href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    and <filename>Params.xml</filename> and,
+	    in general, any other resources that are not generated
+	    automatically by ADA.
+	  </para>
+	  <para>
+	    In general, do not include into the Git repository 
+	    files like PDFs and HTMLs
+	    produced from Docbook or LaTex sources,
+	    PNG images produced from SVG figures, the backup files
+	    that are saved by some editors, etc.
+	  </para>
+	</answer>
+      </qandaentry>
+    </qandaset>
+  </section>
+
 </article>
 
 <!--
