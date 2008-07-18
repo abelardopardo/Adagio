@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="ClipArt Images" default="local.build" basedir=".">
+
+  <!-- ================================================================ -->
+  <!--                           PROPERTIES                             -->
+  <!-- ================================================================ -->
+  <property file=".ant.properties"/>
+  <property file="${user.home}/.ant.properties"/>
+
+  <property file="../../build.properties"/>
+
+  <import file="../../../Templates/AntImports/Programs.xml"/>
+  <import file="../../../Templates/AntImports/InitialCheck.xml"/>
+  <import file="../../../Templates/AntImports/XCFImage.xml"/>
+
+  <!-- XCF files to be processed by GIMP -->
+  <fileset id="xcfimage.files" dir="${xcfimage.src.dir}">
+    <include name="agenda.xcf"/>
+    <include name="attention.xcf"/>
+    <include name="books.xcf"/>
+    <include name="box.xcf"/>
+    <include name="compass.xcf"/>
+    <include name="computer1.xcf"/>
+    <include name="cronometro.xcf"/>
+    <include name="doc.xcf"/>
+    <include name="information_sign_01.xcf"/>
+    <include name="led_circle_green.xcf"/>
+    <include name="led_circle_red.xcf"/>
+    <include name="left_arrow_blue.xcf"/>
+    <include name="meeting.xcf"/>
+    <include name="notepad.xcf"/>
+    <include name="p2p.xcf"/>
+    <include name="people.xcf"/>
+    <include name="personscratchhead.xcf"/>
+    <include name="personscratchhead.xcf"/>
+    <include name="qanda.xcf"/>
+    <include name="questionmark.xcf"/>
+    <include name="resources.xcf"/>
+    <include name="right_arrow_blue.xcf"/>
+    <include name="scenario.xcf"/>
+    <include name="star.xcf"/>
+    <include name="stop_player.xcf"/>
+    <include name="strategy2.xcf"/>
+    <include name="strategy.xcf"/>
+    <include name="ticketpurchase.xcf"/>
+    <include name="up_arrow_blue.xcf"/>
+    <include name="video.xcf"/>
+  </fileset>
+
+  <!-- ================================================================ -->
+  <!--                        LOCAL BUILDING                            -->
+  <!-- ================================================================ -->
+  <target name="local.build" depends="initial.check"
+    description="Creates the local files">
+
+    <echo>local.build: ${basedir}</echo>
+    <delete file="build.out"/>  
+
+    <antcall target="xcfimage.processing"/>
+  </target>
+
+  <target name="clean" depends="initial.check"
+    description="Clean temporary files derived from figures">
+    
+    <echo>clean: ${basedir}</echo>
+
+    <antcall target="xcfimage.clean"/>
+  </target>
+</project>

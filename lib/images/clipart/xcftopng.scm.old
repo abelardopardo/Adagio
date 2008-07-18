@@ -1,0 +1,22 @@
+(define (batch-xcf2png pattern )
+  (let* ((filelist (cadr (file-glob pattern 1)))
+         (pngname (cons-array 200 'string))
+	 )
+    (while filelist
+	   (let* ((filename (car filelist))
+		  (image (car (gimp-file-load RUN-NONINTERACTIVE filename filename)))
+		  (drawable (car (gimp-image-get-active-layer image)))
+		  )
+	     (strcpy pngname (car (strbreakup filename ".")) )
+	     (strcat pngname ".png")
+	     (set! drawable (car (gimp-image-flatten image)))
+	     (gimp-file-save RUN-NONINTERACTIVE image drawable pngname pngname)
+	     (gimp-image-delete image)
+	     )
+	   (set! filelist (cdr filelist))
+	   )
+    )
+  )
+(batch-xcf2png "*.xcf")
+(gimp-quit 0)'
+
