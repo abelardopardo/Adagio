@@ -4,6 +4,7 @@
   
   <!-- This param is directly for docbook stylesheets -->
   <xsl:param name="chapter.autolabel" select="0"/>
+  <xsl:param name="section.autolabel" select="1"/>
 
   <xsl:param name="ada.publish.dir">/sample</xsl:param>
   <xsl:param name="ada.publish.host">http://www.it.uc3m.es</xsl:param>
