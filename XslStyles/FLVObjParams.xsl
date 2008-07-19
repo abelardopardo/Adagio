@@ -9,8 +9,6 @@
   
   <xsl:variable name="ada.flv.player.swf.file">mediaplayer.swf</xsl:variable>
   <xsl:variable name="ada.flv.player.js.file">swfobject.js</xsl:variable>
-  <xsl:variable name="ada.flv.player.pluginspace">
-    http://www.macromedia.com/go/getflashplayer
-  </xsl:variable>
+  <xsl:variable name="ada.flv.player.pluginspace">http://www.macromedia.com/go/getflashplayer</xsl:variable>
   <xsl:variable name="ada.flv.player.minimum.version">8</xsl:variable>
 </xsl:stylesheet>
