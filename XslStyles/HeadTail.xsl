@@ -66,22 +66,23 @@
     </xsl:if>
 
     <!-- Stick the javascript for the flash player -->
-    <xsl:if test="$ada.flv.player.js.file">
-      <script type="text/javascript" language="JavaScrpt">
+    <xsl:if test="$ada.flv.player.js.file and ($ada.flv.player.js.file != '')
+                  and /*/para[@condition = 'ada.flv.player']">
+      <script type="text/javascript" language="JavaScript">
         <xsl:attribute name="src"><xsl:value-of
         select="$ada.flv.player.js.file"/></xsl:attribute>
       </script>
     </xsl:if>
 
     <!-- If refresh rate has been given, include it -->
-    <xsl:if test="$ada.page.refresh.rate">
+    <xsl:if test="$ada.page.refresh.rate and ($ada.page.refresh.rate != '')">
       <meta http-equiv="refresh">
         <xsl:attribute name="content"><xsl:value-of 
         select="$ada.page.refresh.rate"/></xsl:attribute>
       </meta>
     </xsl:if>
-    <meta http-equiv="Content-Style-Type" content="text/css"/>
     <xsl:if test="$ada.page.cssstyle.url">
+      <meta http-equiv="Content-Style-Type" content="text/css"/>
       <link rel="stylesheet" type="text/css">
         <xsl:attribute name="href"><xsl:value-of
         select="$ada.course.home"/><xsl:value-of
@@ -90,7 +91,7 @@
     </xsl:if>
 
     <!-- Insert the reference to the RSS channel if given -->
-    <xsl:if test="$ada.rss.channel.url">
+    <xsl:if test="$ada.rss.channel.url and ($ada.rss.channel.url != '')">
       <link rel="alternate" type="application/rss+xml" title="rss">
         <xsl:attribute name="href"><xsl:value-of
         select="$ada.rss.channel.url"/></xsl:attribute>
