@@ -23,56 +23,46 @@
 # than ideal processing algorithm follows.
 #
 
-# The script must have a single argument and must be an XML file. If empty, return
-if [ "$1" = "" ]; then
-  exit
-fi
-
-# If the argument is not a file, terminate
-if [ ! -f "$1" ]; then
-  exit
-fi
-
-# If the file is not an XML file terminate
-if [ `file $1 | awk '{ print $2 }'` != "XML" ]; then
-  exit
-fi
-
 # See where is ADA_HOME
 ADA_HOME=`dirname $0`/..
 
-# Get the directory prefix of the XML file being processed. This is to prepend
-# to the included files, since their paths are considered from the location of
-# the file containing the includes
-xmldir=`dirname $1`
-
-# Execute the stylesheet to fetch the xi:include[@href] elements. Filter out a
-# potential #xpointer suffix in the href attribute and prepend the directory
-# where the source file is located. Also, since the relation between included
-# files is not a tree but a DAG, repeated files need to be filtered (thus the
-# invocation to sort -u)
-files=`xsltproc $ADA_HOME/XslStyles/GetIncludes.xsl $1 | sed -e 's/#xpointer.*$//g' | sort -u | sed -e "s+^+$xmldir/+g"` 
-
-# If the file has no relevant includes, we are done
-if [ "$files" = "" ]; then
-  exit
-fi
-
-# Accumulate the result in the variable finalfiles
-finalfiles="$files"
-
-# Loop over each obtained file to invoke the script recursively
-for fname in $files; do
-
-    # Although the script checks for the file being of type XML, the check at
-    # this point saves the recursive invokation.
-    if [ `file $1 | awk '{ print $2 }'` = "XML" ]; then
-	# Recursive invocation of the script
-	recursivefiles=`getdependencies.sh $fname`
-	
-	# Accumulate the obtained files.
-	finalfiles="$finalfiles $recursivefiles"
+finalfiles=""
+for fname in $*; do
+    # If the argument is not a file, terminate the iteration
+    if [ ! -f "$fname" ]; then
+	continue
     fi
+
+    # If the file is not an XML file terminate
+    if [ `file $fname | awk '{ print $2 }'` != "XML" ]; then
+	continue
+    fi
+
+    # Get the directory prefix of the XML file being processed. This is to
+    # prepend to the included files, since their paths are considered from the
+    # location of the file containing the includes
+    xmldir=`dirname $fname`
+
+    # Execute the stylesheet to fetch the xi:include[@href] elements. Filter out
+    # a potential #xpointer suffix in the href attribute and prepend the
+    # directory where the source file is located. Also, since the relation
+    # between included files is not a tree but a DAG, repeated files need to be
+    # filtered (thus the invocation to sort -u)
+    files=`xsltproc $ADA_HOME/XslStyles/GetIncludes.xsl $fname | sed -e 's/#xpointer.*$//g' | sort -u | sed -e "s+^+$xmldir/+g"` 
+
+    # If the file has no relevant includes, terminate the iteration
+    if [ "$files" = "" ]; then
+	continue
+    fi
+
+    # Accumulate the result in the variable finalfiles
+    finalfiles="$finalfiles $files"
+    
+    # Recursive invocation of the script
+    recursivefiles=`getdependencies.sh $files`
+	
+    # Accumulate the obtained files.
+    finalfiles="$finalfiles $recursivefiles"
 done
 
 # The check for redundant filenames is done only at the level of the includes of

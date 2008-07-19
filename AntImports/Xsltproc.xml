@@ -175,12 +175,28 @@
     <echo>xsltproc.processing.nopre   RUN</echo>
     <echo>${basedir}</echo>
 
+    <pathconvert property="xsltproc.source.dependency.property" pathsep=" ">
+      <fileset refid="xsltproc.fileset"/>
+    </pathconvert>
+
+    <exec executable="bash"
+	  dir="${basedir}"
+	  outputproperty="xsltproc.dependency.files">
+      <arg value="${ada.home}${file.separator}bin${file.separator}getdependencies.sh"/>
+      <arg value="${xsltproc.source.dependency.property}"/>
+    </exec>
+
+    <echo
+      level="${xsltproc.debug.level}">xsltproc.dependency.files=${xsltproc.dependency.files}
+xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo>
+
     <!-- Force the dependency checking on changes on the style sheet -->
     <dependset>
       <srcfileset file="${xsltproc.style.file}" />
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
       </srcfileset>
+      <srcfilelist files="${xsltproc.dependency.files}"/>
       <targetfilelist refid="xsltproc.target.filelist" />
     </dependset>
 
@@ -219,12 +235,28 @@
 
     <echo level="${xsltproc.debug.level}">Srcfileset: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}_${xsltproc.output.suffix}</echo>
 
+    <pathconvert property="xsltproc.source.dependency.property" pathsep=" ">
+      <fileset refid="xsltproc.fileset"/>
+    </pathconvert>
+
+    <exec executable="bash"
+	  dir="${basedir}"
+	  outputproperty="xsltproc.dependency.files">
+      <arg value="${ada.home}${file.separator}bin${file.separator}getdependencies.sh"/>
+      <arg value="${xsltproc.source.dependency.property}"/>
+    </exec>
+
+    <echo
+      level="${xsltproc.debug.level}">xsltproc.dependency.files=${xsltproc.dependency.files}
+xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo>
+
     <!-- Force the dependency checking on changes on the style sheet -->
     <dependset>
       <srcfileset file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}_${xsltproc.output.suffix}"/>
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
       </srcfileset>
+      <srcfilelist files="${xsltproc.dependency.files}"/>
       <targetfilelist refid="xsltproc.target.filelist" />
     </dependset>
 
