@@ -20,9 +20,9 @@
   <property name="@NAME@.src.dir"        value="${basedir}"/>
   <property name="@NAME@.dst.dir"        value="${@NAME@.src.dir}"/>
   <property name="@NAME@.files"          value=""/>
-  <property name="@NAME@.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Private properties -->
+  <property name="@NAME@.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define two properties containing the absolute src and dst paths -->
   <pathconvert property="@NAME@.abssrc.dir" pathsep=" ">

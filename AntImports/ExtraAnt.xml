@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Invoke an additional ant build file" default="extraant">
+
+  <!--
+      Given the following properties:
+
+      extraant.src.dir: directory from where to take the source files
+      extraant.dst.dir: directory where the produced files are stored
+      extraant.files: comma/space separated list of files to process
+
+      Produce ??
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="InitialCheck.xml"/>
+
+  <!-- Public Property definition -->
+  <property name="extraant.src.dir"          value="${basedir}"/>
+  <property name="extraant.file"             value="build.xml"/>
+  <property name="extraant.pretarget"        value=""/>
+  <property name="extraant.posttarget"       value=""/>
+  <property name="extraant.pretarget.clean"  value=""/>
+  <property name="extraant.posttarget.clean" value=""/>
+
+  <!-- Private properties -->
+  <property name="extraant.target"         value=""/>
+  <property name="extraant.debug.level"    value="${ada.debug.level}"/>
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="extraant.abssrc.dir" pathsep=" ">
+    <path location="${extraant.src.dir}"/>
+  </pathconvert>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="extraant.check.values" 
+	  depends="initial.check, extraant.dump.properties">
+
+    <!-- Condition to enable/disable the execution of the target -->
+    <condition property="extraant.check">
+      <and>
+	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
+	     empty definition of this variable. At least a . needs to be present -->
+	<not><equals arg1="${extraant.abssrc.dir}" arg2=""/></not>
+	<!-- Target cannot be empty -->
+	<not><equals arg1="${extraant.target}" arg2=""/></not>
+	<available file="${extraant.abssrc.dir}${file.separator}${extraant.file}"/>
+      </and>
+    </condition>
+    <echo>abel ${extraant.target}</echo>
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="${extraant.debug.level}">  extraant.check              = "${extraant.check}"</echo>
+  </target>
+
+  <!-- 
+       Target to notify that the regular target has not been executed. This is
+       to notify the user -->
+  <target name="extraant.processing.NOT"
+	  unless="extraant.check">
+    <echo>extraant.processing        ---</echo>
+    <echo>${basedir}</echo>
+  </target>
+
+  <!-- Regular target. It is executed if the check property is true, and it has
+  as dependency the NOT target. That way, if the property is not set, this
+  target is not executed and instead, the one notifying the user of such event
+  is executed. -->
+  <target name="extraant.processing" 
+	  depends="extraant.check.values, extraant.processing.NOT"
+	  if="extraant.check"
+	  description="Simply invoke the extra ant with target target">
+
+    <echo>extraant.processing         RUN</echo>
+    <echo>${basedir}</echo>
+
+    <ant antfile="${extraant.file}" dir="${extraant.src.dir}" 
+	 target="${extraant.target}" inheritall="false">
+      <property name="ada.home"        value="${ada.home}"/>
+      <property name="ada.course.home" value="${ada.course.home}"/>
+    </ant>
+  </target>
+
+  <!-- Dump the properties defined in this script -->
+  <target name="extraant.dump.properties" depends="initial.check">
+    <echo level="${extraant.debug.level}"> ------ extraant properties ----
+    extraant.abssrc.dir       ="${extraant.abssrc.dir}"
+    extraant.file             ="${extraant.files}"
+    extraant.pretarget        ="${extraant.pretarget}"
+    extraant.posttarget       ="${extraant.posttarget}"
+    extraant.pretarget.clean  ="${extraant.pretarget.clean}"
+    extraant.posttarget.clean ="${extraant.posttarget.clean}"</echo>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="extraant" 
+	  depends="initial.delete.build.out, extraant.processing"/>
+</project>

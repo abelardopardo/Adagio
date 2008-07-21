@@ -3,14 +3,17 @@
 <project name="Gather all target definitions" default="execute">
 
   <import file="InitialCheck.xml"/>
+  <import file="ExtraAnt.xml"/>
 
-  <target name="execute" depends="initial.delete.build.out">
-
-    <ant antfile="${ada.home}/AntImports/SubRecursive.xml" 
-	 target="subrecursive.processing" inheritAll="false"/>
+  <target name="local.execute" depends="initial.delete.build.out">
 
     <ant antfile="${ada.home}/AntImports/Copyfiles.xml" 
 	 target="copyfiles.processing" inheritAll="false"/>
+
+    <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
+	 target="extraant.processing" inheritAll="false">
+      <property name="extraant.target" value="${extraant.pretarget}"/>
+    </ant>
 
     <ant antfile="${ada.home}/AntImports/Xfig.xml" 
 	 target="xfig.processing" inheritAll="false"/>
@@ -57,15 +60,33 @@
     <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
 	 target="pdfnup.processing" inheritAll="false"/>
 
+    <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
+	 target="extraant.processing" inheritAll="false">
+      <property name="extraant.target" value="${extraant.posttarget}"/>
+    </ant>
+
     <ant antfile="${ada.home}/AntImports/Export.xml" 
 	 target="export.processing" inheritAll="false"/>
 
+  </target>
+
+  <target name="execute" depends="initial.delete.build.out">
+
+    <ant antfile="${ada.home}/AntImports/SubRecursive.xml" 
+	 target="subrecursive.processing" inheritAll="false"/>
+
+    <antcall target="local.execute"/>
   </target>
 
   <target name="local.clean" depends="initial.delete.build.out">
 
     <ant antfile="${ada.home}/AntImports/Export.xml" 
 	 target="export.clean" inheritAll="false"/>
+
+    <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
+	 target="extraant.processing" inheritAll="false">
+      <property name="extraant.target" value="${extraant.posttarget.clean}"/>
+    </ant>
 
     <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
 	 target="pdfnup.clean" inheritAll="false"/>
@@ -112,6 +133,11 @@
     <ant antfile="${ada.home}/AntImports/Xfig.xml" 
 	 target="xfig.clean" inheritAll="false"/>
 
+    <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
+	 target="extraant.processing" inheritAll="false">
+      <property name="extraant.target" value="${extraant.pretarget.clean}"/>
+    </ant>
+ 
     <ant antfile="${ada.home}/AntImports/Copyfiles.xml" 
 	 target="copyfiles.clean" inheritAll="false"/>
 
