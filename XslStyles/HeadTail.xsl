@@ -190,10 +190,12 @@
                   </tr>
                 </xsl:if>
                 <tr>
-                  <td style="border:1px solid black; background-color: #CCD0D6;" 
+                  <td style="border:1px solid black; background-color: #CCD0D6;
+                             height: 20px" 
                     valign="middle">
                     <div class="noprint" style="text-align: center">
-                      <xsl:if test="$ada.page.head.center.bottom">
+                      <xsl:if test="$ada.page.head.center.bottom and
+                                    $ada.page.head.center.bottom != ''">
                         <xsl:copy-of
                           select="exsl:node-set($ada.page.head.center.bottom)"/>
                       </xsl:if>
