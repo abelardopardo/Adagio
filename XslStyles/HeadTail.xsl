@@ -189,17 +189,17 @@
                     </xsl:if>
                   </tr>
                 </xsl:if>
-                <xsl:if test="$ada.page.head.center.bottom">
-                  <tr>
-                    <td style="border:1px solid black; background-color: #CCD0D6;" 
-                      valign="middle">
-                      <div class="noprint" style="text-align: center">
+                <tr>
+                  <td style="border:1px solid black; background-color: #CCD0D6;" 
+                    valign="middle">
+                    <div class="noprint" style="text-align: center">
+                      <xsl:if test="$ada.page.head.center.bottom">
                         <xsl:copy-of
                           select="exsl:node-set($ada.page.head.center.bottom)"/>
-                      </div>
-                    </td>
-                  </tr>
-                </xsl:if>
+                      </xsl:if>
+                    </div>
+                  </td>
+                </tr>
               </table>
             </td>
           </tr>
@@ -303,7 +303,7 @@
                 <a rel="license">
                   <xsl:if test="$ada.page.license.url">
                     <xsl:attribute name="href"><xsl:value-of 
-                    select="$ada.page.license"/></xsl:attribute>
+                    select="$ada.page.license.url"/></xsl:attribute>
                   </xsl:if>
                   Creative Commons
                 </a>
@@ -323,7 +323,9 @@
           <xsl:element name="script">
             <xsl:attribute name="type">text/javascript</xsl:attribute>
             <xsl:text>
-              document.write(document.lastModified)
+              testdate = new Date(document.lastModified);
+              testdate = testdate.toLocaleString();
+              document.write(testdate)
             </xsl:text>
           </xsl:element>
         </p>
