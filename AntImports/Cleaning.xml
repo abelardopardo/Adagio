@@ -5,20 +5,20 @@
   <!--
       Given the following properties:
 
-      clean.src.dir: directory where the files are
-      clean.files: Set of files to delete
+      clean.files: Set of files to delete (File name and path. No wildcards)
 
       Delete the given files from the directory.
   -->
 
   <import file="InitialCheck.xml"/>
 
-  <property name="clean.src.dir" value="${basedir}"/>
   <property name="clean.files"   value=""/>
   
+  <!-- Private properties -->
+  <property name="clean.debug.level"    value="${ada.debug.level}"/>
+
   <!-- Set of files to delete -->
-  <filelist id="clean.filelist" dir="${clean.src.dir}"
-	    files="${clean.files}"/>
+  <filelist id="clean.filelist" files="${clean.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
@@ -27,14 +27,11 @@
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="clean.check">
-      <and>
-	<not><equals arg1="${clean.src.dir}" arg2=""/></not>
-	<not><equals arg1="${clean.files}" arg2=""/></not>
-      </and>
+      <not><equals arg1="${clean.files}" arg2=""/></not>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    clean.check          = "${clean.check}"</echo>
+    <echo level="${clean.debug.level}">    clean.check          = "${clean.check}"</echo>
 
     <delete>
       <fileset followsymlinks="false" dir="${basedir}" includes="*~"
@@ -68,8 +65,7 @@
   </target>
 
   <target name="clean.dump.properties" depends="initial.check">
-    <echo level="info"> ------ Clean properties ----
-    clean.src.dir      = "${clean.src.dir}"
+    <echo level="${clean.debug.level}"> ------ Clean properties ----
     clean.files        = "${clean.files}"</echo>
   </target>
 </project>
