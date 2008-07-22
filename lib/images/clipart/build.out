@@ -1,6 +1,0 @@
-No batch interpreter specified, using the default 'plug_in_script_fu_eval'.
-Welcome to SIOD, Scheme In One Defun, Version 3.2x 12-MAR-96
-(C) Copyright 1988-1994 Paradigm Associates Inc. Help: (help)
-
-#<CLOSURE (pattern) (let* ((filelist (cadr (file-glob pattern 1))) (pngname (cons-array 200 (quote string)))) (while filelist (let* ((filename (car filelist)) (image (car (gimp-file-load RUN-NONINTERACTIVE filename filename))) (drawable (car (gimp-image-get-active-layer image)))) (strcpy pngname (car (strbreakup filename "."))) (strcat pngname ".png") (set! drawable (car (gimp-image-flatten image))) (gimp-file-save RUN-NONINTERACTIVE image drawable pngname pngname) (gimp-image-delete image)) (set! filelist (cdr filelist))))>
-()

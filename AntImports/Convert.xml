@@ -24,10 +24,13 @@
   <property name="convert.src.dir"  value="${basedir}"/>
   <property name="convert.dst.dir"  value="${convert.src.dir}"/>
   <property name="convert.geometry" value=""/>
+  <property name="convert.suffix"   value="${convert.geometry}"/>
   <property name="convert.crop"     value=""/>
   <property name="convert.format"   value="png"/>
   <property name="convert.files"    value=""/>
+
   <!-- Private properties -->
+  <property name="convert.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define two properties containing the absolute src and dst paths -->
   <pathconvert property="convert.abssrc.dir" pathsep=" ">
@@ -79,7 +82,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">convert.check          = "${convert.check}"
+    <echo level="${convert.debug.level}">convert.check          = "${convert.check}"
   convert.execution.possible = ${convert.execution.possible}
   convert.failure            = ${convert.failure}</echo>
   </target>
@@ -123,8 +126,8 @@
       <targetfile />
       <fileset refid="convert.fileset"/>
       <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.${convert.format}" 
-        to="*_${convert.geometry}.${convert.format}"/>
+      <mapper type="glob" from="*.png" 
+        to="*_${convert.suffix}.${convert.format}"/>
     </apply>
   </target>
 
@@ -143,15 +146,15 @@
     
     <echo>convert.clean              RUN</echo>
     <echo>${basedir}</echo>
-    
+
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="convert.target.filelist.property" pathsep=" ">
       <fileset refid="convert.fileset"/>
       <chainedmapper>
-	<mapper type="glob" from="${convert.abssrc.dir}/*" 
+	<mapper type="glob" from="${convert.abssrc.dir}/*"
 		to="${convert.absdst.dir}/*"/>
-        <mapper type="glob" from="*.${convert.format}"
-                to="*_${convert.geometry}.${convert.format}"/>
+        <mapper type="glob" from="*.png"
+                to="*_${convert.suffix}.${convert.format}"/>
       </chainedmapper>
     </pathconvert>
     <filelist id="convert.target.filelist"
@@ -170,14 +173,15 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="convert.dump.properties" depends="initial.check">
-    <echo level="info"> ------ Convert properties ----
-    convert.exec     ="${convert.exec}"
-    convert.abssrc.dir  ="${convert.abssrc.dir}"
-    convert.absdst.dir  ="${convert.absdst.dir}"
-    convert.geometry ="${convert.geometry}"
-    convert.crop     ="${convert.crop}"
-    convert.format   ="${convert.format}"
-    convert.files    ="${convert.files}"</echo>
+    <echo level="${convert.debug.level}"> ------ Convert properties ----
+    convert.exec       ="${convert.exec}"
+    convert.abssrc.dir ="${convert.abssrc.dir}"
+    convert.absdst.dir ="${convert.absdst.dir}"
+    convert.geometry   ="${convert.geometry}"
+    convert.suffix     ="${convert.suffix}"
+    convert.crop       ="${convert.crop}"
+    convert.format     ="${convert.format}"
+    convert.files      ="${convert.files}"</echo>
   </target>
 
   <target name="convert.report.YES" depends="convert.check.values"

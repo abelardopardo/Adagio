@@ -66,22 +66,23 @@
     </xsl:if>
 
     <!-- Stick the javascript for the flash player -->
-    <xsl:if test="$ada.flv.player.js.file">
-      <script type="text/javascript" language="JavaScrpt">
+    <xsl:if test="$ada.flv.player.js.file and ($ada.flv.player.js.file != '')
+                  and /*/para[@condition = 'ada.flv.player']">
+      <script type="text/javascript" language="JavaScript">
         <xsl:attribute name="src"><xsl:value-of
         select="$ada.flv.player.js.file"/></xsl:attribute>
       </script>
     </xsl:if>
 
     <!-- If refresh rate has been given, include it -->
-    <xsl:if test="$ada.page.refresh.rate">
+    <xsl:if test="$ada.page.refresh.rate and ($ada.page.refresh.rate != '')">
       <meta http-equiv="refresh">
         <xsl:attribute name="content"><xsl:value-of 
         select="$ada.page.refresh.rate"/></xsl:attribute>
       </meta>
     </xsl:if>
-    <meta http-equiv="Content-Style-Type" content="text/css"/>
     <xsl:if test="$ada.page.cssstyle.url">
+      <meta http-equiv="Content-Style-Type" content="text/css"/>
       <link rel="stylesheet" type="text/css">
         <xsl:attribute name="href"><xsl:value-of
         select="$ada.course.home"/><xsl:value-of
@@ -90,7 +91,7 @@
     </xsl:if>
 
     <!-- Insert the reference to the RSS channel if given -->
-    <xsl:if test="$ada.rss.channel.url">
+    <xsl:if test="$ada.rss.channel.url and ($ada.rss.channel.url != '')">
       <link rel="alternate" type="application/rss+xml" title="rss">
         <xsl:attribute name="href"><xsl:value-of
         select="$ada.rss.channel.url"/></xsl:attribute>
@@ -188,17 +189,19 @@
                     </xsl:if>
                   </tr>
                 </xsl:if>
-                <xsl:if test="$ada.page.head.center.bottom">
-                  <tr>
-                    <td style="border:1px solid black; background-color: #CCD0D6;" 
-                      valign="middle">
-                      <div class="noprint" style="text-align: center">
+                <tr>
+                  <td style="border:1px solid black; background-color: #CCD0D6;
+                             height: 20px" 
+                    valign="middle">
+                    <div class="noprint" style="text-align: center">
+                      <xsl:if test="$ada.page.head.center.bottom and
+                                    $ada.page.head.center.bottom != ''">
                         <xsl:copy-of
                           select="exsl:node-set($ada.page.head.center.bottom)"/>
-                      </div>
-                    </td>
-                  </tr>
-                </xsl:if>
+                      </xsl:if>
+                    </div>
+                  </td>
+                </tr>
               </table>
             </td>
           </tr>
@@ -302,7 +305,7 @@
                 <a rel="license">
                   <xsl:if test="$ada.page.license.url">
                     <xsl:attribute name="href"><xsl:value-of 
-                    select="$ada.page.license"/></xsl:attribute>
+                    select="$ada.page.license.url"/></xsl:attribute>
                   </xsl:if>
                   Creative Commons
                 </a>
@@ -322,7 +325,9 @@
           <xsl:element name="script">
             <xsl:attribute name="type">text/javascript</xsl:attribute>
             <xsl:text>
-              document.write(document.lastModified)
+              testdate = new Date(document.lastModified);
+              testdate = testdate.toLocaleString();
+              document.write(testdate)
             </xsl:text>
           </xsl:element>
         </p>

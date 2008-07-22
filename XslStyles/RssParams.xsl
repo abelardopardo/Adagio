@@ -17,8 +17,7 @@
   <xsl:param name="ada.rss.main.site.url">http://bogus.net</xsl:param>
 
   <!-- URL pointing to the XML file containing the feed -->
-  <xsl:param name="ada.rss.channel.url"><xsl:value-of
-  select="$ada.publish.host"/><xsl:value-of select="$ada.publish.dir" /></xsl:param>
+  <xsl:param name="ada.rss.channel.url"/>
 
   <!-- Prefix of the type http://......./a/b/c to use for material links -->
   <xsl:param name="ada.rss.item.url.prefix"></xsl:param>
