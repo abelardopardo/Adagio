@@ -1645,7 +1645,33 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
 	</question>
 	<answer>
 	  <para>
-	    To be answered.
+	    Git is a modern, fast, open-source distributed version
+	    control system, originally developed by Linus Torvalds.
+	    It is being used in large-scale open-source projects
+	    like, for example, the Linux Kernel and the X Window System
+	    <emphasis>X.org</emphasis>, although it is suitable
+	    also for small projects.
+	  </para>
+	  <para>
+	    Unlike other well-known
+	    version control systems like CVS and Subversion,
+	    Git is distributed:
+	    a central repository is not necessary because each developer
+	    can have her own repository with the full
+	    history of the project. Changes done by a developer
+	    in her repository can be easily copied later into 
+	    other's repositories.
+	  </para>
+	  <para>
+	    This distributed way of development is mainly supported
+	    by a powerful and convenient branching/merging system.
+	    Creating branches and merging them is normally
+	    straightforward, even when the same file is modified
+	    concurrently in several parallel branches.
+	  </para>
+	  <para>
+	    For further information about Git, go to the
+	    <ulink url="http://git.or.cz/">official Git Web site</ulink>.
 	  </para>
 	</answer>
       </qandaentry>
@@ -1656,7 +1682,26 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
 	</question>
 	<answer>
 	  <para>
-	    To be answered.
+	    Git is multi-platform. It can be installed on
+	    Windows, Linux and Mac systems.
+	  </para>
+	  <para>
+	    On Windows, Git can be installed in Cygwin
+	    (<ulink url="http://www.cygwin.com/setup.exe">download
+	      the Cygwin installer</ulink>). Other alternative
+            is the <ulink url="http://code.google.com/p/msysgit/">msys-git 
+            installer</ulink>.
+	  </para>
+	  <para>
+	    On Linux, it should be available as a package in your
+	    distribution. For example, the main Git package in Debian
+	    is called <code>git-core</code>. It can be installed
+	    using <emphasis>Aptitude</emphasis> or any other
+	    available package manager.
+	  </para>
+	  <para>
+	    On Mac, the <ulink url="http://code.google.com/p/git-osx-installer/">Git 
+	      OS X installer</ulink> is available.
 	  </para>
 	</answer>
       </qandaentry>
@@ -1669,24 +1714,65 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
 	</question>
 	<answer>
 	  <para>
-	    To be answered.
+	    The distributed model of Git allows several ways
+            of collaboration. One way is presented
+            here, although other alternatives are possible. 
+	  </para>
+	  <para>
+	    A repository for course material (and optionally course
+	    administration files) should be installed in an account associated
+	    to the course. All the authors should be able to
+	    log-in that account. This repository will be referred to as
+	    the shared repository in some parts of this FAQ.
+	  </para>
+	  <para>
+	    A course coordinator has to set-up
+	    the shared repository initially. She should create a branch
+	    (or use the default <emphasis>master</emphasis> branch)
+	    for the <emphasis>official</emphasis> content
+	    of the course (if you are a course coordinator, 
+	    see <xref linkend="git-admin-shared-repo"/>).
+	    Published material is intended to be built
+	    from the contents of this branch.
+	    A course coordinator may be
+	    the person in charge of integrating changes from authors
+	    into this branch.
+	    An additional branch in this repository should be created for each 
+	    author. Authors should upload their changes into their
+	    branch. The coordinator takes authors' contributions from
+	    their branches and merges them into this repository
+	    (if you are a course coordinator, 
+	    see <xref linkend="git-admin-merge"/>).
+	  </para>
+	  <para>
+	    In addition to the course shared repository, authors should have
+	    their own local repository in their workspace (their laptop,
+	    corporative user account, etc.) It can be easily set-up
+	    by cloning the course repository
+	    (see <xref linkend="gitclone" />). Authors should edit
+	    and commit their contents in their local repository,
+	    and push changes
+	    to their branch in the shared repository when they want
+	    these changes to be visible to others
+	    (see <xref linkend="gitpush"/>).
 	  </para>
 	</answer>
       </qandaentry>
 
-      <qandaentry id="gitclone">
+      <qandaentry id="gitclone" xreflabel="How to clone a repository">
 	<question>
 	  <para>How do I create my local repository from the 
-	    remote repository?</para>
+	    shared repository?</para>
 	  <para>
-	    I was told that there is a remote repository I
+	    I was told that there is a shared repository I
 	    should obtain the initial files from before starting
-	    to work. How do I setup my local Git repository from it?
+	    to work. How do I set-up my local Git repository from it?
 	  </para>
 	</question>
 	<answer>
 	  <para>
-	    To be answered.
+	    To be answered. Write also how to update
+	    the local repository from time to time (git pull).
 	  </para>
 	</answer>
       </qandaentry>
@@ -1694,14 +1780,14 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
       <qandaentry id="gitcommitlocal">
 	<question>
 	  <para>I have just commited some changes, why are they not
-	    visible in the remote repository?
+	    visible in the shared repository?
 	  </para>
 	</question>
 	<answer>
 	  <para>
 	    When you commit changes, they are only stored in your
 	    local repository. If you want your latest local commits to
-	    be stored in the remote repository also, you have to
+	    be stored in the shared repository also, you have to
 	    explicitly send your changes to that repository after
 	    committing them. See <xref linkend="gitpush"/> for
 	    further explanation.
@@ -1709,14 +1795,14 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry id="gitpush" xreflabel="How to send changes to the remote repository">
+      <qandaentry id="gitpush" xreflabel="How to send changes to the shared repository">
 	<question>
-	  <para>How do I send my local changes to the remote repository?
+	  <para>How do I send my local changes to the shared repository?
 	  </para>
 	  <para>
 	    I have done several commits into my local repository,
 	    and now I want to share them with other people.
-	    How do I upload those commits to the remote repository?
+	    How do I upload those commits to the shared repository?
 	  </para>
 	</question>
 	<answer>
@@ -1873,6 +1959,29 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
 	  </para>
 	</answer>
       </qandaentry>
+
+      <qandaentry id="git-admin-shared-repo"
+	xreflabel="How to set-up the shared repository">
+	<question>
+	  <para>I am a course coordinator. How do I set-up the
+	    shared repository?</para>
+	</question>
+	<answer>
+	  To be answered.
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="git-admin-merge"
+	xreflabel="How to merge contributions from authors">
+	<question>
+	  <para>I am a course coordinator. How do I merge contents
+	    from authors into the official course branch?</para>
+	</question>
+	<answer>
+	  To be answered.
+	</answer>
+      </qandaentry>
+
     </qandaset>
   </section>
 
