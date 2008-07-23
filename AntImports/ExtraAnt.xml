@@ -48,7 +48,6 @@
 	<available file="${extraant.abssrc.dir}${file.separator}${extraant.file}"/>
       </and>
     </condition>
-    <echo>abel ${extraant.target}</echo>
     <!-- Dump the value of the properties just computed. -->
     <echo level="${extraant.debug.level}">  extraant.check              = "${extraant.check}"</echo>
   </target>
