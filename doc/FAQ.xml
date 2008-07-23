@@ -1727,8 +1727,8 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
 	  </para>
 	  <para>
 	    A course coordinator has to set-up
-	    the shared repository initially. She should create a branch
-	    (or use the default <emphasis>master</emphasis> branch)
+	    the shared repository initially. She should use the
+	    branch <code>master</code>
 	    for the <emphasis>official</emphasis> content
 	    of the course (if you are a course coordinator, 
 	    see <xref linkend="git-admin-shared-repo"/>).
