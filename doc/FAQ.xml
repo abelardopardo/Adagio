@@ -2103,7 +2103,61 @@ nothing to commit (working directory clean)</programlisting>
 	    shared repository?</para>
 	</question>
 	<answer>
-	  To be answered.
+	  <para>
+	    Enter the course account and decide where you want to
+	    put the shared repository. It can be anywhere in your account,
+	    but remember not to put it in a place served by a Web server,
+	    to avoid the repository from being public. Once you have created
+	    a directory for the repository (named, for example,
+	    <filename>material</filename>), enter into this directory
+	    and type:
+	  </para>
+
+	  <programlisting>$ git init</programlisting>
+
+	  <para>
+	    The <filename>material</filename> directory is now a
+	    Git repository placed on branch <code>master</code>,
+	    that will be the official branch of the course.
+	  </para>
+	  <para>
+	    Create the initial layout for your course
+	    (directories, common files, etc.) and commit your changes.
+	    The command <code>git add</code> will be useful for that
+	    (see <xref linkend="gitcommit" />). Remember
+	    that Git do not handle directories which do not contain
+	    files. Therefore, if you create directories with no material yet,
+	    you may want to create an initial version of
+	    <filename><xi:include href="Params.xml"
+	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
+	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    inside that directory.
+	  </para>
+	  <para>
+	    After you have finished your initial layout and committed it,
+	    create a new branch for each contributing author:
+	  </para>
+
+	  <programlisting>$ git branch john
+$ git branch mary
+$ git branch laura
+$ git branch peter</programlisting>
+
+	  <para>
+	    The shared repository is now ready. Tell the authors the basic
+	    parameters to access it (remote machine they should connect to,
+	    name of the course account, location of the repository
+	    in the course account, and their branch name).
+	  </para>
+
+	  <para>
+	    You may want to keep a clone of the repository in your
+	    local workspace. Follow the instructions in
+	    <xref linkend="gitclone" />. Probably, it will be convenient
+	    to work on the official branch in your local repository
+	    and pushing it into the branch <code>master</code> when
+	    it is ready to be made public.
+	  </para>
 	</answer>
       </qandaentry>
 
