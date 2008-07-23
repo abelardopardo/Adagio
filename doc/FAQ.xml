@@ -1798,8 +1798,12 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
 	  </itemizedlist>
 
 	  <para>
-	    Create a directory in your local workspace for the repository.
-	    In a command-line window, go to that directory and type:
+	    In a command-line window, go to the directory where you want
+	    to store your repository (take into account that
+	    the repository will not be in
+	    that directory, but inside its <filename>material</filename>
+	    subdirectory that <code>git clone</code> will create automatically
+	    by default). Execute:
 	  </para>
 
 	  <programlisting>$ git clone ssh://mycourse@accounts.example.com/~/repository/material</programlisting>
@@ -1808,7 +1812,7 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
 	    You will be asked for <code>mycourse</code>'s password,
 	    unless you have set-up public key access to that account.
 	    A clone of the shared repository should appear now in a
-	    new directory called <code>material</code> inside your
+	    new subdirectory called <code>material</code> inside your
 	    current directory. Enter into that directory and type
 	    <code>git status</code>:
 	  </para>
@@ -2155,7 +2159,7 @@ $ git branch peter</programlisting>
 	    local workspace. Follow the instructions in
 	    <xref linkend="gitclone" />. Probably, it will be convenient
 	    to work on the official branch in your local repository
-	    and pushing it into the branch <code>master</code> when
+	    and push it into the branch <code>master</code> when
 	    it is ready to be made public.
 	  </para>
 	</answer>
