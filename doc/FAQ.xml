@@ -1928,8 +1928,23 @@ nothing to commit (working directory clean)</programlisting>
 	</question>
 	<answer>
 	  <para>
-	    To be answered.
+	    I your changes have been committed into your local branch
+	    <code>master</code> and you have set-up your local repository
+	    following the instructions in <xref linkend="gitclone" />,
+	    you just have to execute:
 	  </para>
+
+	  <programlisting>$ git push</programlisting>
+
+	  <para>
+	    Your changes should be now on your branch in the
+	    shared repository. If your modifications are ready to
+	    be reviewed by the course coordinator,
+	    you may tell her that there are new contents there.
+	    The course coordinator will review them and,
+	    if they are all right, put them into the official branch. 
+	  </para>
+
 	</answer>
       </qandaentry>
 
