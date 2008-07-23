@@ -1765,14 +1765,112 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
 	    shared repository?</para>
 	  <para>
 	    I was told that there is a shared repository I
-	    should obtain the initial files from before starting
+	    should obtain the initial files from, before starting
 	    to work. How do I set-up my local Git repository from it?
 	  </para>
 	</question>
 	<answer>
 	  <para>
-	    To be answered. Write also how to update
-	    the local repository from time to time (git pull).
+	    A new repository can be easily created by cloning an existing
+	    one. Suppose that the shared repository is available
+	    via SSH with the following example parameters:
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>Remote host where the course account is available:
+		<code>accounts.example.com</code>.</para>
+	    </listitem>
+	    <listitem>
+	      <para>User name of the course account: <code>mycourse</code>.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>Path in the course account where the shared
+		repository resides: <code>~mycourse/repository/material</code>.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>Name of your branch in the shared repository:
+		<code>john</code>.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <para>
+	    Create a directory in your local workspace for the repository.
+	    In a command-line window, go to that directory and type:
+	  </para>
+
+	  <programlisting>$ git clone ssh://mycourse@accounts.example.com/~/repository/material</programlisting>
+
+	  <para>
+	    You will be asked for <code>mycourse</code>'s password,
+	    unless you have set-up public key access to that account.
+	    A clone of the shared repository should appear now in a
+	    new directory called <code>material</code> inside your
+	    current directory. Enter into that directory and type
+	    <code>git status</code>:
+	  </para>
+
+	  <programlisting>$ git status
+# On branch master
+nothing to commit (working directory clean)</programlisting>
+
+	  <para>
+	    If the command says that you are not placed on branch
+	    <code>master</code>, just change to that branch:
+	  </para>
+
+	  <programlisting>$ git checkout master</programlisting>
+
+	  <para>
+	    If you are not placed on branch <code>master</code>
+	    and the previous command failed, you need to create
+	    the <code>master</code> branch. Just type:
+	  </para>
+
+	  <programlisting>$ git checkout -b master origin/master</programlisting>
+
+	  <para>
+	    You should be now placed on branch <code>master</code>.
+	    Before beginning to work, it would be useful to
+	    edit the configuration file of your repository
+	    to make easier to send your changes to your branch
+	    in the shared repository. Open the file
+	    <filename>.git/config</filename> in your repository
+	    with an editor and add the line
+	    <code>push = master:john</code> at the end of the
+	    <code>remote "origin"</code> section. Remember that
+	    <code>john</code> is the name of your branch in
+	    the shared repository in this example. The file should
+	    now look something like this:
+	  </para>
+
+<programlisting>$ cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = ssh://jaf@ariadna.it.uc3m.es/~/tmp/tmp-ada/ADA
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        push = master:john
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master</programlisting>
+
+	  <para>
+	    Now your local repository is ready to work. You should
+	    edit and commit your material in this repository
+	    (see <xref linkend="gitcommit" />),
+	    push your changes from here into your branch in the shared
+	    repository (see <xref linkend="gitpush" />),
+	    and update from time to time your local repository
+	    to get the latest changes published on branch master
+	    in the shared repository (see <xref linkend="gitpull" />).
+	    
 	  </para>
 	</answer>
       </qandaentry>
@@ -1795,6 +1893,29 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
 	</answer>
       </qandaentry>
 
+      <qandaentry id="gitpull" xreflabel="How to update your local repository with others' changes">
+	<question>
+	  <para>How do I update my local repository to see the latest changes
+	    published by the course coordinator on the official branch?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    From your branch <code>master</code>, type:
+	  </para>
+	  <programlisting>$ git pull</programlisting>
+	  <para>
+	    The latest changes introduced on the official branch
+	    (branch <code>master</code> in the shared repository)
+	    should now be visible in your repository. 
+	  </para>
+	  <para>
+	    Do not execute <code>git pull</code> if you have local
+	    uncommitted changes. Commit them first.
+	  </para>
+	</answer>
+      </qandaentry>
+
       <qandaentry id="gitpush" xreflabel="How to send changes to the shared repository">
 	<question>
 	  <para>How do I send my local changes to the shared repository?
@@ -1812,7 +1933,7 @@ timewindow.end=2018-06-25T19:00:00</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry id="gitcommit">
+      <qandaentry id="gitcommit" xreflabel="How to commit changes">
 	<question>
 	  <para>How do I commit contents with Git?</para>
 	</question>
