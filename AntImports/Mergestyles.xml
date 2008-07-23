@@ -102,6 +102,7 @@
     <!-- Force the dependency checking on changes on the style sheet -->
     <dependset>
       <srcfilelist files="${mergestyles.style.file}" />
+      <srcfilelist files="${mergestyles.file.to.import}" />
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
       </srcfileset>
