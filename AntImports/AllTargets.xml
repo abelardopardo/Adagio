@@ -57,6 +57,9 @@
     <ant antfile="${ada.home}/AntImports/Dblatex.xml" 
 	 target="dblatex.processing" inheritAll="false"/>
 
+    <ant antfile="${ada.home}/AntImports/Ppt2PDF.xml" 
+	 target="ppt2pdf.processing" inheritAll="false"/>
+
     <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
 	 target="pdfnup.processing" inheritAll="false"/>
 
@@ -90,6 +93,9 @@
 
     <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
 	 target="pdfnup.clean" inheritAll="false"/>
+
+    <ant antfile="${ada.home}/AntImports/Ppt2PDF.xml" 
+	 target="ppt2pdf.clean" inheritAll="false"/>
 
     <ant antfile="${ada.home}/AntImports/Dblatex.xml" 
 	 target="dblatex.clean" inheritAll="false"/>
@@ -215,6 +221,11 @@
 
     <ant antfile="${ada.home}/AntImports/Dblatex.xml" 
 	 target="dblatex.report" inheritAll="false"/>
+
+    <echo>-------------------+-----------+-----------------------------</echo>
+
+    <ant antfile="${ada.home}/AntImports/Ppt2PDF.xml" 
+	 target="ppt2pdf.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
