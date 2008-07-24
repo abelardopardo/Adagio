@@ -19,7 +19,8 @@
   <xsl:param name="ada.course.edition" />
   <xsl:param name="ada.course.home.url" />
   <xsl:param name="ada.course.image" />
-  <xsl:param name="ada.course.name" select="'Your ada.course.name var goes here'" />
+  <xsl:param name="ada.course.name"    select="'Pon aquí el nombre de tu curso'" /> 
+  <xsl:param name="ada.course.name.en" select="'Your ada.course.name var goes here'" />
   <xsl:param name="ada.course.short.edition" />
   <xsl:param name="ada.course.short.name" />
   <xsl:param name="ada.course.year" />
