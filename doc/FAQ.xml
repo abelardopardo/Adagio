@@ -2162,7 +2162,96 @@ $ git branch peter</programlisting>
 	    and push it into the branch <code>master</code> when
 	    it is ready to be made public.
 	  </para>
+	  
+	  <para>
+	    Now, you probably may want to clone the shared repository into
+	    your workspace. Follow the instructions in
+	    <xref linkend="git-admin-clone" />.
+	  </para>
 	</answer>
+      </qandaentry>
+
+      <qandaentry id="git-admin-clone"
+	xreflabel="How the coordinator clones the shared repository">
+	<question>
+	  <para>I am a course coordinator. How do I set-up my local
+	    repository?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    We recommend you to create a clone of the shared repository
+	    in your own workspace (probably your laptop or desktop computer).
+	    Follow instructions in <xref linkend="gitclone" />
+	    to create your repository and set-up your
+	    branch <code>master</code>, with the exception that
+	    the line you should add to your <filename>.git/config</filename>
+	    directory is <code>push = master:master</code>:	    
+	  </para>
+
+<programlisting>$ cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = ssh://jaf@ariadna.it.uc3m.es/~/tmp/tmp-ada/ADA
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        push = master:master
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master</programlisting>
+
+	  <para>
+	    This is because your local branch <code>master</code>
+	    is the branch where
+	    you prepare the official material that other authors
+	    see after you push it into the branch <code>master</code>
+	    of the shared repository.
+	  </para>
+
+	  <para>
+	    Now, create a new branch in your local repository
+	    for each author branch in the shared repository.
+	    For example:
+	  </para>
+
+	  <programlisting>$ git branch --track john origin/john
+$ git branch --track mary origin/mary
+$ git branch --track laura origin/laura
+$ git branch --track peter origin/peter</programlisting>
+
+	  <para>
+	    Your local repository is now prepared for merging contributions
+	    from other authors. Probably, you are also a contributor.
+	    In that case, it is recommended to do your changes in temporary
+	    short-lived branches (a few days, probably, while you do a
+	    thematic change) and then merge them into the branch
+	    <code>master</code>:
+	  </para>
+
+	  <programlisting>$ git checkout master
+$ git checkout -b new-calendar
+$ ... edit ... commit ... edit ... commit ...
+$ git checkout master
+$ git merge new-calendar
+$ git branch -d new-calendar</programlisting>
+
+	  <para>
+	    The command <code>git checkout -b</code> creates a new branch
+	    starting from the current branch (<code>master</code> in this
+	    case). After you have edited and committed (probably several
+	    commits), you can merge those changes into the official branch
+	    with <code>git merge</code>. Finally, you can safely remove
+	    the temporary branch with <code>git branch -d</code>.
+	    If you plan to do further changes in the short-term about the
+	    same topic, you can skip the last step, in order to reuse the
+	    branch.
+	  </para>
+	</answer>
+	
+
       </qandaentry>
 
       <qandaentry id="git-admin-merge"
@@ -2172,10 +2261,65 @@ $ git branch peter</programlisting>
 	    from authors into the official course branch?</para>
 	</question>
 	<answer>
-	  To be answered.
+	  <para>
+	    Git gives you a lot of flexibility for doing this.
+	    One possible way of merging contributions from authors
+	    is explained here. 
+	  </para>
+	  <para>
+	    You should have created a local repository as explained
+	    in <xref linkend="git-admin-clone" />. Do it now if you
+	    have not. 
+	  </para>
+	  <para>
+	    Suppose you want to merge some changes introduced by
+	    Mary. She should have pushed her changes
+	    into branch <code>mary</code> in the shared repository.
+	    Go to your local branch <code>mary</code> and update it:
+	  </para>
+	  <programlisting>$ git checkout mary
+$ git pull</programlisting>
+
+	  <para>
+	    Her changes should be now in branch <code>mary</code>.
+	    You may want to review them and take a look at the history
+	    with <code>git log</code>.
+	    If there are no problems,
+	    or you want to fix the problems yourself, it is time
+	    to merge her changes into branch <code>master</code>
+	    (otherwise, ask Mary to fix the problems):
+	  </para>
+
+	  <programlisting>$ git checkout master
+$ git merge mary</programlisting>
+
+	  <para>
+	    The changes of Mary are now available in your
+	    branch <code>master</code>.
+	    Check that the material is built correctly with
+	    <code>adado</code>. If you need to fix details,
+	    do it and commit. Once you are finished with the
+	    modifications and want them to be in the official
+	    branch of the shared repository, available for all
+	    the authors, push them:
+	  </para>
+
+	  <programlisting>$ git push</programlisting>
+
+	  <para>
+	    Authors will see these changes the next time they
+	    execute <code>git pull</code> from their local
+	    repository.
+	  </para>
+
+	  <!-- as explained in the Git user guide, a merge can
+	  be uncommitted with git reset - -hard ORIG_HEAD
+	  or, if there are unresolved conflicts, with
+	  git reset - -hard HEAD. Explain this in a new question?
+	  -->
+
 	</answer>
       </qandaentry>
-
     </qandaset>
   </section>
 
