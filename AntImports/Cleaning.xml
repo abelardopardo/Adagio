@@ -18,7 +18,7 @@
   <property name="clean.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Set of files to delete -->
-  <filelist id="clean.filelist" files="${clean.files}"/>
+  <filelist id="clean.filelist" dir="${basedir}" files="${clean.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
@@ -50,7 +50,7 @@
 	  if="clean.check"
 	  description="Cleans local and recursive dirs">
     
-    <echo>clean.clean            RUN</echo>
+    <echo>clean.clean                 RUN</echo>
     <echo>${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->

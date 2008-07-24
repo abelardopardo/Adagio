@@ -143,11 +143,16 @@
 
   </target>
 
+  <target name="redo" depends="clean, execute"/>
+
   <target name="clean" depends="local.clean">
 
     <ant antfile="${ada.home}/AntImports/SubRecursive.xml" 
 	 target="subrecursive.clean" inheritAll="false"/>
 
+    <ant antfile="${ada.home}/AntImports/Export.xml" 
+	 target="export.garbage.clean" inheritAll="false"/>
+    
     <ant antfile="${ada.home}/AntImports/Cleaning.xml" 
 	 target="clean.clean" inheritAll="false"/>
     

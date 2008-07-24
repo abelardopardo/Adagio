@@ -27,6 +27,9 @@
   <property name="bilingualdb.style.file" 
 	    value="${ada.home}/XslStyles/DocbookProfile.xsl"/>
 
+  <!-- Private properties -->
+  <property name="bilingualdb.debug.level"    value="${ada.debug.level}"/>
+
   <!-- Preliminary target to verify that certain minimum conditions hold before
        executing the regular targets. -->
   <target name="bilingualdb.check.values" 
@@ -49,7 +52,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    bilingualdb.check          = "${bilingualdb.check}"</echo>
+    <echo level="${bilingualdb.debug.level}">    bilingualdb.check          = "${bilingualdb.check}"</echo>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -132,7 +135,7 @@
   </target>
 
   <target name="bilingualdb.dump.properties" depends="initial.check">
-    <echo level="info"> ------ Bilingualdb properties ----
+    <echo level="${bilingualdb.debug.level}"> ------ Bilingualdb properties ----
     bilingualdb.src.dir       ="${bilingualdb.src.dir}"
     bilingualdb.dst.dir       ="${bilingualdb.dst.dir}"
     bilingualdb.style.file    ="${bilingualdb.style.file}"
