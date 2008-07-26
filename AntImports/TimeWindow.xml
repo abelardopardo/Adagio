@@ -9,18 +9,21 @@
     timewindow.start: Date/time when the window of validity starts
     timewindow.end: Date/time when the window of validity ends
     timewindow.now: Date/time to be considered as the actual one
+    timewindow.open: Second gate that is taken into account
     timewindow.format: Any SimpleDateFormat pattern
-    timewindow.open: Set if the current time is within the window
+    timewindow.check: Set if the current time is within the window
 
-    The timewindow target computes the value of the timewindow.open variable. If
-    the current time is within the limits (variables start and end), the
-    property is set to true.
+    The timewindow target computes the value of the timewindow.check
+    variable which is set to true if the current time is within the limits
+    (variables start and end) and timewindow.open is "true".
+
 -->
 
   <!-- Public Property definition -->
   <property name="timewindow.start"   value=""/>
   <property name="timewindow.end"     value=""/>
   <property name="timewindow.now"     value=""/>
+  <property name="timewindow.open"    value="true"/>
   <property name="timewindow.format"  value="yyyy-MM-dd'T'HH:mm:ss"/>
 
   <!-- Private properties -->
@@ -54,13 +57,15 @@ timewindow.end=${timewindow.end}
 timewindow.end.uptodate=${timewindow.end.uptodate}</echo>
 
     <!-- Condition
-         ( (start = NULL or Uptodate(start, NOW))
-           and
-           (end = NULL or Uptodate(NOW, end))
-         )
+	 (timewindow.open == "true") 
+         and
+         (start = NULL or Uptodate(start, NOW))
+         and
+         (end = NULL or Uptodate(NOW, end))
     -->
-    <condition property="timewindow.open">
+    <condition property="timewindow.check">
       <and>
+	<equals arg1="${timewindow.open}" arg2="true"/>
 	<or>
 	  <equals arg1="${timewindow.start}" arg2=""/>
 	  <isset property="timewindow.start.uptodate"/>
@@ -73,7 +78,7 @@ timewindow.end.uptodate=${timewindow.end.uptodate}</echo>
     </condition>
 
     <delete file="${timewindow.now.filename}"/>
-    <echo level="${timewindow.debug.level}">timewindow.open = ${timewindow.open}</echo>
+    <echo level="${timewindow.debug.level}">timewindow.check = ${timewindow.check}</echo>
   </target>
 
   <!-- 

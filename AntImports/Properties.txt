@@ -214,10 +214,11 @@
 #
 # Time window during which the directory is really built. This functionality
 # offers the possibility of having a set of directories the content of which is
-# only taken into account during certain period of time.
+# only taken into account during certain period of time. The variable
+# timewindow.open if different from "true" the timewindow is considered closed.
 # 
 # timewindow.format=yyyy-MM-dd'T'HH:mm:ss # Date/time format
 # timewindow.start=			# Date/time validity starts
 # timewindow.end=			# Date/time validity ends
+# timewindow.open=true			# General gate permission
 # timewindow.now=current time		# Date/time NOW
-# timewindow.enabled=false		# Enable this feature

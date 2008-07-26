@@ -13,7 +13,7 @@
       copy is performed only if the two dirs are non empty and different
 
       This functionality is all dependent on the Timewindow mechanism. The
-      variable timewindow.open, if set, enables the export procedure. If not
+      variable timewindow.check, if set, enables the export procedure. If not
       set, the target is not executed.
   -->
 
@@ -30,7 +30,7 @@
   <property name="export.debug.level"    value="${ada.debug.level}"/>
 
   <target name="export.processing.NOT"
-	  unless="timewindow.open">
+	  unless="timewindow.check">
     <echo>export.processing           NOT CALLED (Timewindow closed)</echo>
     <echo>${basedir}</echo>
   </target>
@@ -41,7 +41,7 @@
   is executed. -->
   <target name="export.processing" 
 	  depends="timewindow, export.processing.NOT"
-	  if="timewindow.open"
+	  if="timewindow.check"
 	  description="It only invokes copyfiles">
     
     <echo>export.processing           CALL(copyfiles.processing)</echo>
@@ -58,7 +58,7 @@
 
   <!-- Clean the produced files -->
   <target name="export.clean" depends="timewindow"
-	  if="timewindow.open"
+	  if="timewindow.check"
 	  description="Delete files copied to dst">
 
     <echo>export.clean                CALL(copyfiles.clean)</echo>
@@ -76,8 +76,8 @@
 	  description="Check if the garbage clean is needed">
     <condition property="export.check.garbage">
       <and>
-	<isset property="timewindow.open"/>
-	<equals arg1="${timewindow.open}" arg2="true"/>
+	<isset property="timewindow.check"/>
+	<equals arg1="${timewindow.check}" arg2="true"/>
 	<not><equals arg1="${export.src.dir}" arg2="${export.dst.dir}"/></not>
       </and>
     </condition>
