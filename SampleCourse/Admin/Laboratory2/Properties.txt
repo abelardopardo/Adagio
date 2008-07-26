@@ -5,8 +5,7 @@
 # variables as well as an explanation.
 #
 
-# Make ADA pay attention to the validity window (if defined)
-timewindow.enabled=true
+# Make ADA pay attention to the validity window 
 # Start of the validity window
 timewindow.start=2008-06-25T19:00:00
 # Set the end of the window
