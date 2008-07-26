@@ -87,6 +87,12 @@
 	<arg value="--stringparam"/>
 	<arg value="ada.course.home"/>
 	<arg value="${ada.course.home}"/>
+	<arg value="--stringparam"/>
+	<arg value="ada.current.datetime"/>
+	<arg value="${ada.current.datetime}"/>
+	<arg value="--stringparam"/>
+	<arg value="profile.revision"/>
+	<arg value="${ada.profile.revision}"/>
 	<arg line="@{XSLTPROC.EXTRA.ARGS}"/>
 	<arg value="-o"/>
 	<targetfile/>

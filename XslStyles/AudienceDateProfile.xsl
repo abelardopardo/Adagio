@@ -5,7 +5,7 @@
   version="1.0">
 
   <!-- This variable is supposed to have the format YYYY-MM-DDTHH:MM:SS -->
-  <xsl:param name="ada.audience.current.date" select="''"/> 
+  <xsl:param name="ada.current.datetime" select="''"/> 
   <xsl:param name="ada.audience.date.separator" select="'--'"/>
   <xsl:param name="ada.audience.debug"/>
 
@@ -18,9 +18,9 @@
     <xsl:call-template name="date.translate.to.simple.string">
       <xsl:with-param name="string.to.process">
         <xsl:choose>
-          <xsl:when test="($ada.audience.current.date) and 
-                          ($ada.audience.current.date != '')">
-            <xsl:value-of select="$ada.audience.current.date" />
+          <xsl:when test="($ada.current.datetime) and 
+                          ($ada.current.datetime != '')">
+            <xsl:value-of select="$ada.current.datetime" />
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="date:date-time()" />
@@ -257,10 +257,10 @@
        attribute. Such value is supposed to contain two date/times in the
        following format YYYY/mm/dd HH:MM[sep]YYYY/mm/dd HH:MM (where [sep] is
        the value of the variable ada.audience.date.separator) and checks that the
-       value of the global variable ada.audience.current.date is a date/time
+       value of the global variable ada.current.datetime is a date/time
        contained in between the two given dates.
 
-       If ada.audience.current.date is empty, then the current date/time is
+       If ada.current.datetime is empty, then the current date/time is
        taken.
   -->
   <xsl:template name="audience.date.compare">

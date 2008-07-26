@@ -212,13 +212,36 @@
 # clean.files=				# List of files to delete
 
 #
-# Time window during which the directory is really built. This functionality
-# offers the possibility of having a set of directories the content of which is
-# only taken into account during certain period of time. The variable
-# timewindow.open if different from "true" the timewindow is considered closed.
+# Variables to control when the export rule of a directory is really
+# executed. With this mechanism, the export rule is executed if the conjuntion
+# of the following conditions is satisfied:
+#
+#    * Current time is after exportcontrol.start (if not empty)
+#    * Current time is before exportcontrol.end (if not empty)
+#    * exportcontrol.open is equal to "true" (its default value)
+#    * exportcontrol.profile.revision is not empty and contains the 
+#      exportcontrol.profile.revision.value
+#
+#    If all these conditions are true, then the variable exportcontrol.check is
+#    true.
+#
+#    This functionality is conceived to offer a rich and flexible way to control
+#    if the export rule needs to be executed. Several scenarios are possible.
+#
+#    - By using simply the start and end vars, the export is executed within a
+#    certain time window
+#
+#    - By using the "open" var, a binary control is allowed (true/false)
+#
+#    - By using profile.revision and profile.revision.value, the export is done
+#    when the value is contained in the revision. This allows for a revision
+#    string to contain multiple values that enable different export rules at
+#    different locations.
 # 
-# timewindow.format=yyyy-MM-dd'T'HH:mm:ss # Date/time format
-# timewindow.start=			# Date/time validity starts
-# timewindow.end=			# Date/time validity ends
-# timewindow.open=true			# General gate permission
-# timewindow.now=current time		# Date/time NOW
+# exportcontrol.format=yyyy-MM-dd'T'HH:mm:ss # Date/time format
+# exportcontrol.start=			# Date/time validity starts
+# exportcontrol.end=			# Date/time validity ends
+# exportcontrol.now=current time	# Date/time NOW
+# exportcontrol.open=true		# General gate permission
+# exportcontrol.profile.revision=       # Semicolon separated list of names
+# exportcontrol.profile.revision.value= # Value to check in previous list
