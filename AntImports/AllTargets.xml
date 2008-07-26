@@ -73,6 +73,7 @@
 
   </target>
 
+  <!-- Apply timeline -->
   <target name="execute" depends="initial.delete.build.out">
 
     <ant antfile="${ada.home}/AntImports/SubRecursive.xml" 

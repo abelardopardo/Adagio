@@ -18,7 +18,7 @@
 
   <!-- Property definition -->
   <property name="copyfiles.src.dir"      value="${basedir}" />
-  <property name="copyfiles.dst.dir"      value="${copyfiles.src.dir}" />
+  <property name="copyfiles.dst.dir"      value="${basedir}" />
   <property name="copyfiles.files"        value=""/>
 
   <!-- Private properties -->

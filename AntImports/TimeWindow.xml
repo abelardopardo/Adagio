@@ -20,16 +20,17 @@
 -->
 
   <!-- Public Property definition -->
-  <property name="timewindow.start" value=""/>
-  <property name="timewindow.end" value=""/>
-  <property name="timewindow.now" value=""/>
-  <property name="timewindow.format" value="yyyy-MM-dd'T'HH:mm:ss"/>
+  <property name="timewindow.start"   value=""/>
+  <property name="timewindow.end"     value=""/>
+  <property name="timewindow.now"     value=""/>
+  <property name="timewindow.format"  value="yyyy-MM-dd'T'HH:mm:ss"/>
   <property name="timewindow.enabled" value="false"/>
 
   <!-- Private properties -->
   <property name="timewindow.now.filename" value=".ada.timewindow.now"/>
   <property name="timewindow.start.filename" value=".ada.timewindow.start"/>
   <property name="timewindow.end.filename" value=".ada.timewindow.end"/>
+  <property name="timewindow.debug.level"    value="${ada.debug.level}"/>
 
   <condition property="timewindow.start.defined">
     <and>
@@ -59,7 +60,7 @@
 		   timewindow.check.end"
 	  if="timewindow.enabled">
 
-    <echo level="info">timewindow.enabled=${timewindow.enabled}
+    <echo level="${timewindow.debug.level}">timewindow.enabled=${timewindow.enabled}
 timewindow.now=${timewindow.now}
 timewindow.start=${timewindow.start}
 timewindow.start.uptodate=${timewindow.start.uptodate}
@@ -90,7 +91,7 @@ timewindow.end.uptodate=${timewindow.end.uptodate}</echo>
     </condition>
 
     <delete file="${timewindow.now.filename}"/>
-    <echo level="info">timewindow.open = ${timewindow.open}</echo>
+    <echo level="${timewindow.debug.level}">timewindow.open = ${timewindow.open}</echo>
   </target>
 
   <!-- 

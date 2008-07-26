@@ -13,7 +13,7 @@
       copy is performed only if the two dirs are non empty and different
 
       This functionality is all dependent on the Timewindow mechanism. The
-      variable timewindow.open, if sets, enables the export procedure. If not
+      variable timewindow.open, if set, enables the export procedure. If not
       set, the target is not executed.
   -->
 
