@@ -16,3 +16,4 @@ export.files=Introduction_ES.pdf \
 
 clean.files=../scratch/Theory1
 
+export.control.profile.revision.value=Theory1

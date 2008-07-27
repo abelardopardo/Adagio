@@ -19,7 +19,7 @@
 
   <!-- Checks for availability of different binaries -->
   <import file="Copyfiles.xml"/>
-  <import file="Exportcontrol.xml"/>
+  <import file="ExportControl.xml"/>
 
   <!-- Public Property definition -->
   <property name="export.src.dir" value="${basedir}" />

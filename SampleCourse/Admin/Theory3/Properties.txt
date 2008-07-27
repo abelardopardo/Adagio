@@ -34,3 +34,5 @@ clean.files=../scratch/Theory3 \
 export.dst.dir=../scratch/Theory3
 export.files=servlets_jsp_integration.pdf \
              servlets_jsp_integration-1x2.pdf
+
+exportcontrol.profile.revision.value=Theory3

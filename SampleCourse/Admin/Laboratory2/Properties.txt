@@ -29,3 +29,4 @@ export.files=index_e?.html \
 
 clean.files=../scratch/Lab2
 
+exportcontrol.profile.revision.value=Lab2

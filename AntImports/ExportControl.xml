@@ -23,7 +23,7 @@
     * Current time is before exportcontrol.end (if not empty)
     * exportcontrol.open is equal to "true" (its default value)
     * exportcontrol.profile.revision is not empty and contains the 
-      exportcontrol.profile.revision.value
+      exportcontrol.profile.revision.value (which must be non empty as well)
 
     If all these conditions are true, then the variable exportcontrol.check is
     true.
@@ -99,6 +99,8 @@ exportcontrol.profile.revision.value=${exportcontrol.profile.revision.value}</ec
          and
          ((exportcontrol.profile.revision is empty)
           or
+          (exportcontrol.profile.revision.value is empty)
+          or
           (exportcontrol.profile.revision matches ";value;")
           or
           (exportcontrol.profile.revision matches "^value;")
@@ -122,6 +124,8 @@ exportcontrol.profile.revision.value=${exportcontrol.profile.revision.value}</ec
 	<or>
           <!-- (exportcontrol.profile.revision is empty) -->
 	  <equals arg1="${exportcontrol.profile.revision}" arg2=""/>
+          <!-- (exportcontrol.profile.revision.value is empty) -->
+	  <equals arg1="${exportcontrol.profile.revision.value}" arg2=""/>
           <!-- (exportcontrol.profile.revision matches ";value;") -->
 	  <matches pattern=";${exportcontrol.profile.revision.value};" 
 		   string="${exportcontrol.profile.revision}"/>	  

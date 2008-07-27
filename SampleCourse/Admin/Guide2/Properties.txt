@@ -19,4 +19,4 @@ export.files=index.html *.png
 
 clean.files=../scratch/Guide2
 
-
+exportcontrol.profile.revision.value=Guide2

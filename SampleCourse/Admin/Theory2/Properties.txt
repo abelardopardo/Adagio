@@ -11,3 +11,4 @@ export.files=ASM_notes-1x2.pdf
 
 clean.files=../scratch/Theory2
 
+exportcontrol.profile.revision.value=Theory2
