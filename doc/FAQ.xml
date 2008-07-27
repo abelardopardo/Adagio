@@ -99,13 +99,9 @@
 
 	  <para>
 	    The main element for ADA are the rule files. These files have the
-	    name <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename> (although
-	    it can be changed) and specify which are the resource files and how
-	    they need to be processed to obtain the final resources.
+	    name <filename>Properties.txt</filename> (although it can be
+	    changed) and specify which are the resource files and how they need
+	    to be processed to obtain the final resources.
 	  </para>
 	</answer>
       </qandaentry>
@@ -610,16 +606,13 @@
 	  <para>
 	    ADA is a tool that needs from the user a set of files to apply
 	    certain pre-conceinved production rules.  This information is all
-	    contained in a regular text file with name <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>. The
-	    structure of this file is very simple, any line starting with the
-	    symbol <quote>#</quote> is ignored. Every empty line is ignored. The
-	    rest of lines must have the structure <code>name=value</code>. The
-	    set of names is defined by ADA. Refer to the following questions to
-	    know which names and values are possible.
+	    contained in a regular text file with name
+	    <filename>Properties.txt</filename>. The structure of this file is
+	    very simple, any line starting with the symbol <quote>#</quote> is
+	    ignored. Every empty line is ignored. The rest of lines must have
+	    the structure <code>name=value</code>. The set of names is defined
+	    by ADA. Refer to the following questions to know which names and
+	    values are possible.
 	  </para>
 
 	  <para>
@@ -642,12 +635,9 @@
 
       <qandaentry id="properties_txt" xreflabel="Examples of property files">
 	<question>
-	  <para>What is the typical structure of the 
-	  <filename><xi:include
-	  href="Params.xml"
-	  xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename> file?
+	  <para>
+	    What is the typical structure of the
+	    <filename>Properties.txt</filename> file?
 	  </para>
 	</question>
 	<answer>
@@ -707,15 +697,11 @@ clean.files=../scratch/Theory2</programlisting>
 	</question>
 	<answer>
 	  <para>
-	    ADA needs a file with name <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
-	    with the definitions of the files to process and the rules to
-	    apply. Once such file has been created, to build the resources
-	    simply open a shell (regular shell in Unix or a Cygwin shell in
-	    Windows) and type the command
+	    ADA needs a file with name <filename>Properties.txt</filename> with
+	    the definitions of the files to process and the rules to apply. Once
+	    such file has been created, to build the resources simply open a
+	    shell (regular shell in Unix or a Cygwin shell in Windows) and type
+	    the command
 	  </para>
 	  <programlisting>adado</programlisting>
 	</answer>
@@ -723,11 +709,9 @@ clean.files=../scratch/Theory2</programlisting>
 	  
       <qandaentry id="variable_catalog">
 	<question>
-	  <para>How to know the variables that can be included in the <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename> file?
+	  <para>
+	    How to know the variables that can be included in the
+	    <filename>Properties.txt</filename> file?
 	  </para>
 	</question>
 
@@ -750,13 +734,8 @@ clean.files=../scratch/Theory2</programlisting>
 	  <para>
 	    Open Xfig and create a figure. Save it in Xfig format. Suppose that
 	    the figure needs to be translated to PNG format. Open the file
-	    <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
-	    (if not created, see <xref linkend="how_to_run_ada"/>) and set the
-	    following variables:
+	    <filename>Properties.txt</filename> (if not created, see <xref
+	    linkend="how_to_run_ada"/>) and set the following variables:
 	  </para>
 
 	  <informaltable frame="all" id="xfig_vars">
@@ -832,15 +811,11 @@ clean.files=../scratch/Theory2</programlisting>
 	  </informaltable>
 
 	  <para>
-	    For example. If the figures with names
-	    <filename>sign.fig</filename> and <filename>office.fig</filename>
-	    are stored in the current directory and versions in png format need
-	    to be created in the same directory, the following assignment is
-	    required in the file <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
+	    For example. If the figures with names <filename>sign.fig</filename>
+	    and <filename>office.fig</filename> are stored in the current
+	    directory and versions in png format need to be created in the same
+	    directory, the following assignment is required in the file
+	    <filename>Properties.txt</filename>.
 	  </para>
 
 	  <programlisting>xfig.files=sign.fig office.fig</programlisting>
@@ -853,11 +828,8 @@ clean.files=../scratch/Theory2</programlisting>
 	  <para>
 	    If you may use files in a different directory, or the produced files
 	    need to be stored in a different directory, include the additional
-	    variable assignments in the file <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
+	    variable assignments in the file
+	    <filename>Properties.txt</filename>.
 	  </para>
 
 	</answer>
@@ -871,13 +843,8 @@ clean.files=../scratch/Theory2</programlisting>
 	  <para>
 	    Open Inkscape and create a figure. Save it in SVG format. Suppose
 	    that this figure needs to be translated to PNG format. Open the file
-	    <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
-	    (if not created, see <xref linkend="how_to_run_ada"/>) and set the
-	    following variables:
+	    <filename>Properties.txt</filename> (if not created, see <xref
+	    linkend="how_to_run_ada"/>) and set the following variables:
 	  </para>
 
 	  <informaltable frame="all" id="inkscape_vars">
@@ -937,11 +904,7 @@ clean.files=../scratch/Theory2</programlisting>
 	    <filename>chart.svg</filename> and <filename>graph.svg</filename>
 	    are stored in the current directory and versions in png format need
 	    to be created in the same directory, the following assignment is
-	    required in the file <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
+	    required in the file <filename>Properties.txt</filename>.
 	  </para>
 
 	  <programlisting>inkscape.files=chart.svg graph.svg</programlisting>
@@ -954,11 +917,8 @@ clean.files=../scratch/Theory2</programlisting>
 	  <para>
 	    If you may use files in a different directory, or the produced files
 	    need to be stored in a different directory, include the additional
-	    variable assignments in the file <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
+	    variable assignments in the file
+	    <filename>Properties.txt</filename>.
 	  </para>
 	</answer>
       </qandaentry>
@@ -966,11 +926,7 @@ clean.files=../scratch/Theory2</programlisting>
       <qandaentry id="generic_rule">
 	<question>
 	  <para>What if I have lots of figures. Do I need to write all their
-	  file names in <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>?
+	  file names in <filename>Properties.txt</filename>?
 	  </para>
 	</question>
 	<answer>
@@ -1003,9 +959,7 @@ clean.files=../scratch/Theory2</programlisting>
 	  <para>
 	    Can I execute the <code>adado</code> command one time but with one
 	    single variable modified from the definition in
-	    <filename><xi:include href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>?
+	    <filename>Properties.txt</filename>?
 	  </para>
 	</question>
 	<answer>
@@ -1034,11 +988,8 @@ clean.files=../scratch/Theory2</programlisting>
 	    in XML format. Depending on the rendering procedure of your editor,
 	    you may need to have your figures available to be shown. If you want
 	    to simply apply the regular Docbook XSL Stylesheets, then you need
-	    to set the appropriate values to some of these variables in <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    to set the appropriate values to some of these variables in
+	    <filename>Properties.txt</filename>
 	  </para>
 
 	  <informaltable frame="all" id="docbook_vars">
@@ -1107,11 +1058,7 @@ clean.files=../scratch/Theory2</programlisting>
 	    For example, if the DocBook document with name
 	    <filename>manual.xml</filename> is stored in the current directory
 	    and needs to be translated to HTML, the following definition is
-	    needed in the file <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>.
+	    needed in the file <filename>Properties.txt</filename>.
 	  </para>
 	  
 	  <programlisting>docbook.files=manual.xml</programlisting>
@@ -1221,9 +1168,7 @@ clean.files=../scratch/Theory2</programlisting>
 	    containing elements in two languages, English and Spanish, generate
 	    two separate files, one containing each version. Once you produced
 	    the XML file, set the appropriate values to some of following variables
-	    in <filename><xi:include href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    in <filename>Properties.txt</filename>
 	  </para>
 
 	  <informaltable frame="all" id="bilingualdb_vars">
@@ -1289,9 +1234,7 @@ clean.files=../scratch/Theory2</programlisting>
 	<question>
 	  <para>Can I specify a generic rule to be applied everywhere?</para>
 	  <para>
-	    The file <filename><xi:include href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    The file <filename>Properties.txt</filename>
 	    contains rules only valid for the current directory. Is it possible
 	    to define how to process a set of files in a way such that it is
 	    applied in all the directories? For example, I would like all my
@@ -1306,10 +1249,7 @@ clean.files=../scratch/Theory2</programlisting>
 	    directory. You may insert any rule there that will be defined for
 	    all the directories in which you process files. What is even more
 	    important, you may override these rules at any time simply by
-	    including a new rule in the local <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
+	    including a new rule in the local <filename>Properties.txt</filename>
 	    file.
 	  </para>
 	  
@@ -1354,12 +1294,8 @@ clean.files=../scratch/Theory2</programlisting>
 	    definitions of the parameters with the personalized values (for
 	    example, a file with name
 	    <filename>MyPersonalValues.xml</filename>). You then include in the
-	    file <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
-	    the necessary definitions to apply the style sheet
+	    file <filename>Properties.txt</filename> the necessary definitions
+	    to apply the style sheet
 	    <filename>/path/to/another/location/HeadTail.xsl</filename> to your
 	    XML source file. Additionally, you inform ADA that the final style
 	    needs to be modified with your personal definitions. For example:
@@ -1379,9 +1315,7 @@ docbook.files=index.xml</programlisting>
 
 	  <para>
 	    In general, you may use the following two variables in the file
-	    <filename><xi:include href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>:
+	    <filename>Properties.txt</filename>:
 	  </para>
 
 	  <informaltable frame="all" id="mergestyles_vars">
@@ -1547,11 +1481,7 @@ docbook.files=index.xml</programlisting>
 	<answer>
 	  <para>
 	    Yes. That is the functionality provided by the following variables
-	    that can be defined in the file <filename><xi:include
-	    href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>:
+	    that can be defined in the file <filename>Properties.txt</filename>:
 	  </para>
 
 	  <informaltable frame="all" id="timewindow_vars">
@@ -2079,16 +2009,12 @@ nothing to commit (working directory clean)</programlisting>
 	    added, it is better to list the files to be added explicitly. 
 	  </para>
 	  <para>
-	    In the case of ADA, add into the Git repository your Docbook
-	    source files, your figures in the vectorial format
-	    produced by your favorite drawing program
-	    (normally SVG files), configuration files like
-	    <filename><xi:include href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
-	    and <filename>Params.xml</filename> and,
-	    in general, any other resources that are not generated
-	    automatically by ADA.
+	    In the case of ADA, add into the Git repository your Docbook source
+	    files, your figures in the vectorial format produced by your
+	    favorite drawing program (normally SVG files), configuration files
+	    like <filename>Properties.txt</filename> and
+	    <filename>Params.xml</filename> and, in general, any other resources
+	    that are not generated automatically by ADA.
 	  </para>
 	  <para>
 	    In general, do not include into the Git repository 
@@ -2125,17 +2051,13 @@ nothing to commit (working directory clean)</programlisting>
 	    that will be the official branch of the course.
 	  </para>
 	  <para>
-	    Create the initial layout for your course
-	    (directories, common files, etc.) and commit your changes.
-	    The command <code>git add</code> will be useful for that
-	    (see <xref linkend="gitcommit" />). Remember
-	    that Git do not handle directories which do not contain
-	    files. Therefore, if you create directories with no material yet,
-	    you may want to create an initial version of
-	    <filename><xi:include href="Params.xml"
-	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='PROPERTIES_FILENAME']/text())"
-	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></filename>
-	    inside that directory.
+	    Create the initial layout for your course (directories, common
+	    files, etc.) and commit your changes.  The command <code>git
+	    add</code> will be useful for that (see <xref linkend="gitcommit"
+	    />). Remember that Git do not handle directories which do not
+	    contain files. Therefore, if you create directories with no material
+	    yet, you may want to create an initial version of
+	    <filename>Properties.txt</filename> inside that directory.
 	  </para>
 	  <para>
 	    After you have finished your initial layout and committed it,
