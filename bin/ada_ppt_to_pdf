@@ -1,0 +1,13 @@
+#/bin/bash
+
+if [ "$1" = "" ]; then
+  exit
+fi
+
+soffice \
+  -invisible \
+  -headless \
+  "macro:///Tools.MSToPDF.ConvertMSToPDF($1)"
+
+# Need to delay the execution because soffice terminates immediately
+sleep 5

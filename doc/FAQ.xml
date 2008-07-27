@@ -1471,8 +1471,9 @@ docbook.files=index.xml</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry id="timewindow">
+      <qandaentry id="exportcontrol">
 	<question>
+	  <para>REWRITE ENTIRELY!!</para>
 	  <para>
 	    Is it possible to have a directory in which the defined rules for
 	    ADA are only applied during a given window of time?
@@ -1484,7 +1485,7 @@ docbook.files=index.xml</programlisting>
 	    that can be defined in the file <filename>Properties.txt</filename>:
 	  </para>
 
-	  <informaltable frame="all" id="timewindow_vars">
+	  <informaltable frame="all" id="exportcontrol_vars">
 	    <tgroup rowsep="1" colsep="1" cols="3">
 	      <colspec colnum="1" colname="col1" align="left"/>
 	      <colspec colnum="2" colname="col2" align="left"/>
@@ -1498,28 +1499,28 @@ docbook.files=index.xml</programlisting>
 	      </thead>
 	      <tbody>
 		<row>
-		  <entry><varname>timewindow.format</varname></entry>
+		  <entry><varname>exportcontrol.format</varname></entry>
 		  <entry>
 		    Format in which date/time need to be given
 		  </entry>
 		  <entry>yyyy-MM-dd'T'HH:mm:ss</entry>
 		</row>
 		<row>
-		  <entry><varname>timewindow.start</varname></entry>
+		  <entry><varname>exportcontrol.start</varname></entry>
 		  <entry>
 		    Date/time when the valid window starts
 		  </entry>
 		  <entry></entry>
 		</row>
 		<row>
-		  <entry><varname>timewindow.end</varname></entry>
+		  <entry><varname>exportcontrol.end</varname></entry>
 		  <entry>
 		    Date/time when the valid window ends
 		  </entry>
 		  <entry></entry>
 		</row>
 		<row>
-		  <entry><varname>timewindow.now</varname></entry>
+		  <entry><varname>exportcontrol.now</varname></entry>
 		  <entry>
 		    Current date/time. Used to fake a future time and check that
 		    the validity is considered properly.
@@ -1527,7 +1528,7 @@ docbook.files=index.xml</programlisting>
 		  <entry>date/time at execution</entry>
 		</row>
 		<row>
-		  <entry><varname>timewindow.enabled</varname></entry>
+		  <entry><varname>exportcontrol.enabled</varname></entry>
 		  <entry>
 		    Check for the compliance of date/time with the defined
 		    validity window.
@@ -1542,15 +1543,15 @@ docbook.files=index.xml</programlisting>
 	    For example, the following definitions:
 	  </para>
 
-	  <programlisting>timewindow.enabled=true
-timewindow.start=2008-06-25T19:00:00
-timewindow.end=2018-06-25T19:00:00</programlisting>
+	  <programlisting>exportcontrol.enabled=true
+exportcontrol.start=2008-06-25T19:00:00
+exportcontrol.end=2018-06-25T19:00:00</programlisting>
 
            <para>
 	     Instructs ADA to process the content in such directory between the
 	     two date/times given. You may still build the content of the
 	     directory at any time if you re-define the variable
-	     <code>timewindow.enabled</code> to <code>false</code> (see <xref
+	     <code>exportcontrol.enabled</code> to <code>false</code> (see <xref
 	     linkend="property_in_command_line"/> for details).
 	   </para>
 

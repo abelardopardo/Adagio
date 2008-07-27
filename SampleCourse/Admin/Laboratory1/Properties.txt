@@ -26,3 +26,4 @@ clean.files= images \
 	    ../scratch/Lab1/images \
 	    ../scratch/Lab1
 
+exportcontrol.profile.revision.value=Lab1

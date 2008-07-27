@@ -18,10 +18,11 @@
 
   <!-- Property definition -->
   <property name="copyfiles.src.dir"      value="${basedir}" />
-  <property name="copyfiles.dst.dir"      value="${copyfiles.src.dir}" />
+  <property name="copyfiles.dst.dir"      value="${basedir}" />
   <property name="copyfiles.files"        value=""/>
 
   <!-- Private properties -->
+  <property name="copyfiles.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define two properties containing the absolute src and dst paths -->
   <pathconvert property="copyfiles.abssrc.dir" pathsep=" ">
@@ -72,7 +73,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">copyfiles.check          = "${copyfiles.check}"
+    <echo level="${copyfiles.debug.level}">copyfiles.check          = "${copyfiles.check}"
   copyfiles.execution.possible = ${copyfiles.execution.possible}
   copyfiles.failure            = ${copyfiles.failure}</echo>
   </target>
@@ -147,7 +148,7 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="copyfiles.dump.properties" depends="initial.check">
-    <echo level="info"> ------ Copyfiles properties ----
+    <echo level="${copyfiles.debug.level}"> ------ Copyfiles properties ----
     copyfiles.abssrc.dir ="${copyfiles.abssrc.dir}"
     copyfiles.absdst.dir ="${copyfiles.absdst.dir}"
     copyfiles.files      ="${copyfiles.files}" </echo>

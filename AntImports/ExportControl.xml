@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Calculate if a Time Window is active or not"
+	 default="exportcontrol">
+<!--
+    Given the following properties:
+    
+    exportcontrol.start: Date/time when the window of validity starts
+    exportcontrol.end: Date/time when the window of validity ends
+    exportcontrol.now: Date/time to be considered as the actual one
+    exportcontrol.date.format: A SimpleDateFormat pattern to manipulate previous vars
+    exportcontrol.open: Second gate that is taken into account
+    exportcontrol.profile.revision: Revision string to enable the processing of
+                                    this dir.
+    exportcontrol.profile.revision.value: Value to check if present in previous var.
+    exportcontrol.check: True if the Export is allowed to go.
+
+    The exportcontrol target computes the value of the exportcontrol.check
+    variable. This variable is set to true if the conjuntion of the following
+    conditions is satisfied:
+
+    * Current time is after exportcontrol.start (if not empty)
+    * Current time is before exportcontrol.end (if not empty)
+    * exportcontrol.open is equal to "true" (its default value)
+    * exportcontrol.profile.revision is not empty and contains the 
+      exportcontrol.profile.revision.value (which must be non empty as well)
+
+    If all these conditions are true, then the variable exportcontrol.check is
+    true.
+
+    This functionality is conceived to offer a rich and flexible way to control
+    if the export rule needs to be executed. Several scenarios are possible.
+
+    - By using simply the start and end vars, the export is executed within a
+    certain time window
+
+    - By using the "open" var, a binary control is allowed (true/false)
+
+    - By using profile.revision and profile.revision.value, the export is done
+    when the value is contained in the revision. This allows for a revision
+    string to contain multiple values that enable different export rules at
+    different locations.
+
+-->
+
+  <!-- Slurp a bunch of properties and definitions -->
+  <import file="InitialCheck.xml"/>
+
+  <!-- Public Property definition -->
+  <property name="exportcontrol.start"   value=""/>
+  <property name="exportcontrol.end"     value=""/>
+  <property name="exportcontrol.now"     value="${ada.current.datetime}"/>
+  <property name="exportcontrol.date.format" value="yyyy-MM-dd'T'HH:mm:ss"/>
+
+  <property name="exportcontrol.open" value="true"/>
+
+  <property name="exportcontrol.profile.revision" value="${ada.profile.revision}"/>
+  <property name="exportcontrol.profile.revision.value" value=""/>
+
+  <!-- Private properties -->
+  <property name="exportcontrol.now.filename"   value=".ada.exportcontrol.now"/>
+  <property name="exportcontrol.start.filename" value=".ada.exportcontrol.start"/>
+  <property name="exportcontrol.end.filename"   value=".ada.exportcontrol.end"/>
+  <property name="exportcontrol.debug.level"    value="${ada.debug.level}"/>
+
+  <condition property="exportcontrol.start.defined">
+    <not><equals arg1="${exportcontrol.start}" arg2=""/></not>
+  </condition>
+
+  <condition property="exportcontrol.end.defined">
+    <not><equals arg1="${exportcontrol.end}" arg2=""/></not>
+  </condition>
+
+  <condition property="exportcontrol.now.defined">
+    <not><equals arg1="${exportcontrol.now}" arg2=""/></not>
+  </condition>
+
+  <target name="exportcontrol" 
+	  depends="exportcontrol.create.now.file,
+		   exportcontrol.touch.now.file,
+		   exportcontrol.check.start, 
+		   exportcontrol.check.end">
+
+    <echo level="${exportcontrol.debug.level}">exportcontrol.now=${exportcontrol.now}
+exportcontrol.start=${exportcontrol.start}
+exportcontrol.start.uptodate=${exportcontrol.start.uptodate}
+exportcontrol.end=${exportcontrol.end}
+exportcontrol.end.uptodate=${exportcontrol.end.uptodate}
+exportcontrol.open=${exportcontrol.open}
+exportcontrol.profile.revision=${exportcontrol.profile.revision}
+exportcontrol.profile.revision.value=${exportcontrol.profile.revision.value}</echo>
+
+    <!-- Condition
+	 (exportcontrol.open == "true") 
+         and
+         (start = NULL or Uptodate(start, NOW))
+         and
+         (end = NULL or Uptodate(NOW, end))
+         and
+         ((exportcontrol.profile.revision is empty)
+          or
+          (exportcontrol.profile.revision.value is empty)
+          or
+          (exportcontrol.profile.revision matches ";value;")
+          or
+          (exportcontrol.profile.revision matches "^value;")
+          or
+          (exportcontrol.profile.revision matches ";value$")
+          or
+          (exportcontrol.profile.revision matches "^value$")
+         )
+    -->
+    <condition property="exportcontrol.check">
+      <and>
+	<equals arg1="${exportcontrol.open}" arg2="true"/>
+	<or>
+	  <equals arg1="${exportcontrol.start}" arg2=""/>
+	  <isset property="exportcontrol.start.uptodate"/>
+	</or>
+	<or>
+	  <equals arg1="${exportcontrol.end}" arg2=""/>
+	  <isset property="exportcontrol.end.uptodate"/>
+	</or>
+	<or>
+          <!-- (exportcontrol.profile.revision is empty) -->
+	  <equals arg1="${exportcontrol.profile.revision}" arg2=""/>
+          <!-- (exportcontrol.profile.revision.value is empty) -->
+	  <equals arg1="${exportcontrol.profile.revision.value}" arg2=""/>
+          <!-- (exportcontrol.profile.revision matches ";value;") -->
+	  <matches pattern=";${exportcontrol.profile.revision.value};" 
+		   string="${exportcontrol.profile.revision}"/>	  
+          <!-- (exportcontrol.profile.revision matches "^value;") -->
+	  <matches pattern="^${exportcontrol.profile.revision.value};" 
+		   string="${exportcontrol.profile.revision}"/>	  
+          <!-- (exportcontrol.profile.revision matches ";value$") -->
+	  <matches pattern=";${exportcontrol.profile.revision.value}$" 
+		   string="${exportcontrol.profile.revision}"/>	  
+          <!-- (exportcontrol.profile.revision matches "^value$") -->
+	  <matches pattern="^${exportcontrol.profile.revision.value}$" 
+		   string="${exportcontrol.profile.revision}"/>	  
+	</or>
+      </and>
+    </condition>
+
+    <delete file="${exportcontrol.now.filename}"/>
+    <echo level="${exportcontrol.debug.level}">exportcontrol.check = ${exportcontrol.check}</echo>
+  </target>
+
+  <!-- 
+       Create the now filename with no date specified if no value has been given
+       in the variable exportcontrol.now
+  -->
+  <target name="exportcontrol.create.now.file"
+	  unless="exportcontrol.now.defined">
+    <!-- Create the file with the NOW timestamp -->
+    <touch file="${exportcontrol.now.filename}"/>
+  </target>
+
+  <!-- 
+       Create the now filename with the date specified in the variable
+       exportcontrol.now
+  -->
+  <target name="exportcontrol.touch.now.file"
+	  if="exportcontrol.now.defined">
+    <!-- Create the file with the NOW timestamp -->
+    <touch datetime="${exportcontrol.now}"
+	   file="${exportcontrol.now.filename}"
+	   pattern="${exportcontrol.date.format}"/>
+  </target>
+
+  <!-- Set the property exportcontrol.start.uptodate if start < NOW -->
+  <target name="exportcontrol.check.start"
+	  if="exportcontrol.start.defined">
+
+
+    <touch datetime="${exportcontrol.start}"
+	   file="${exportcontrol.start.filename}"
+	   pattern="${exportcontrol.date.format}"/>
+
+    <uptodate property="exportcontrol.start.uptodate"
+	      srcfile="${exportcontrol.start.filename}"
+	      targetfile="${exportcontrol.now.filename}"/>
+
+    <delete file="${exportcontrol.start.filename}"/>
+  </target>
+
+  <!-- Set the property exportcontrol.start.uptodate if NOW < end -->
+  <target name="exportcontrol.check.end"
+	  if="exportcontrol.end.defined">
+
+    <touch datetime="${exportcontrol.end}"
+	   file="${exportcontrol.end.filename}"
+	   pattern="${exportcontrol.date.format}"/>
+
+    <uptodate property="exportcontrol.end.uptodate"
+	      srcfile="${exportcontrol.now.filename}"
+	      targetfile="${exportcontrol.end.filename}"/>
+
+    <delete file="${exportcontrol.end.filename}"/>
+  </target>
+
+</project>

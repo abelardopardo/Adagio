@@ -25,6 +25,7 @@
   <property name="subrecursive.target"  value=""/>
 
   <!-- Private properties -->
+  <property name="subrecursive.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define a property containing the absolute dst path -->
   <pathconvert property="subrecursive.absdst.dir" pathsep=" ">
@@ -50,7 +51,7 @@
       <not><equals arg1="${subrecursive.dst.dir}" arg2=""/></not>
     </condition>
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    subrecursive.check          = "${subrecursive.check}"
+    <echo level="${subrecursive.debug.level}">    subrecursive.check          = "${subrecursive.check}"
     subrecursive.dirs         = "${subrecursive.dirs}"
     subrecursive.absdst.dir   = "${subrecursive.absdst.dir}"
     subrecursive.dstdir.given = "${subrecursive.dstdir.given}"</echo>
@@ -76,7 +77,7 @@
     <echo>subrecursive.processing.dst RUN</echo>
     <echo>${basedir}</echo>
 
-    <echo level="info">    subrecursive.dirs="${subrecursive.dirs}"</echo>
+    <echo level="${subrecursive.debug.level}">    subrecursive.dirs="${subrecursive.dirs}"</echo>
 
     <subant target="${subrecursive.target}" 
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
@@ -91,7 +92,7 @@
     <echo>subrecursive.proc..ng.nodst RUN</echo>
     <echo>${basedir}</echo>
 
-    <echo level="info">    subrecursive.dirs="${subrecursive.dirs}"</echo>
+    <echo level="${subrecursive.debug.level}">    subrecursive.dirs="${subrecursive.dirs}"</echo>
     <!-- Dirs with material required by the lab  -->
     <filelist id="subrecursive.dirlist" dir="${basedir}"
 	      files="${subrecursive.dirs}"/> 
@@ -119,13 +120,13 @@
 
   <target name="subrecursive.clean.withdstdir"
 	  if="subrecursive.dstdir.given">
-    <echo>subrecursive.clean.dst    RUN</echo>
+    <echo>subrecursive.clean.dst      RUN</echo>
     <echo>${basedir}</echo>
 
     <!-- Call the subdirs with the clean target -->
     <subant target="clean" 
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
-	    inheritAll="false" inheritrefs="false">
+	    inheritAll="false">
       <property name="export.dst.dir" value="${subrecursive.dst.dir}" />
       <filelist refid="subrecursive.dirlist"/>
     </subant>
@@ -139,14 +140,14 @@
     <!-- Call the subdirs with the clean target -->
     <subant target="clean" 
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
-	    inheritAll="false" inheritrefs="false">
+	    inheritAll="false">
       <filelist refid="subrecursive.dirlist"/>
     </subant>
   </target>
 
   <!-- Dump the properties defined in this script -->
   <target name="subrecursive.dump.properties" depends="initial.check">
-    <echo level="info"> ------ Subrecursive properties ----
+    <echo level="${subrecursive.debug.level}"> ------ Subrecursive properties ----
     subrecursive.target="${subrecursive.target}"</echo>
   </target>
 

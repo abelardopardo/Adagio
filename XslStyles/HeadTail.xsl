@@ -214,11 +214,20 @@
             <td class="noprint" style="text-align: left; vertical-align: top;">
               <xsl:call-template name="ggadgetlink"/>
             </td>
-            <xsl:if test="$ada.course.name or ada.course.edition or 
-                          ada.course.image">
+            <xsl:if test="$ada.course.name or $ada.course.name.en or
+                          ada.course.edition or ada.course.image">
               <td align="center">
-                <xsl:if test="$ada.course.name">
-                  <h1><xsl:value-of select="$ada.course.name"/></h1>
+                <xsl:if test="$ada.course.name or $ada.course.name.en">
+                  <h1>
+                    <xsl:choose>
+                      <xsl:when test="$profile.lang = 'en'">
+                        <xsl:value-of select="$ada.course.name.en"/>
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <xsl:value-of select="$ada.course.name"/>
+                      </xsl:otherwise>
+                    </xsl:choose>
+                  </h1>
                 </xsl:if>
                 <xsl:if test="$ada.course.edition">
                   <h4><xsl:value-of select="$ada.course.edition"/></h4>
@@ -265,7 +274,7 @@
               </xsl:when>
               <xsl:otherwise>
                 <small>
-                  <xsl:value-of select="$ada.page.license.institution.es"/>
+                  <xsl:value-of select="$ada.page.license.institution"/>
                 </small>
               </xsl:otherwise>
             </xsl:choose>

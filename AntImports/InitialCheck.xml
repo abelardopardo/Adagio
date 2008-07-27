@@ -23,10 +23,10 @@ build templates
   <property file=".ant.properties"/>
 
   <!-- Load the properties from the user.home directory -->
-  <property file="${user.home}/.ant.properties"/>
+  <property file="${user.home}${file.separator}.ant.properties"/>
 
   <!-- Load the properties from the cygwin.user.home directory -->
-  <property file="${cygwin.user.home}/.ant.properties"/>
+  <property file="${cygwin.user.home}${file.separator}.ant.properties"/>
 
   <!-- Default file name to load the propertyes -->
   <property name="ada.local.property.file" value="Properties.txt"/>
@@ -34,10 +34,21 @@ build templates
   <!-- Load the properties in the basedir directory -->
   <property file="${basedir}${file.separator}${ada.local.property.file}"/>
 
+  <!-- Load the properties from the ada.course.home directory -->
+  <property file="${ada.course.home}${file.separator}Ada.properties"/>
+
   <!-- Directory where the toolkit is installed -->
   <property name="ada.home" value="" />
 
+  <!-- Overall debug level for the rule scripts -->
   <property name="ada.debug.level" value="info"/>
+
+  <!-- Overall date/time to be considered when processing the audience and
+       exportcontrol aspects -->
+  <property name="ada.current.datetime" value=""/>
+
+  <!-- Overall profile string for the revision attribute in docbook -->
+  <property name="ada.profile.revision" value=""/>
 
   <!-- Include the environment as a set of properties -->
   <property environment="env"/>
@@ -114,11 +125,13 @@ build templates
 
   <target name="initial.check.dump">
     <echo level="${ada.debug.level}">------ Global properties ----
-  basedir         = ${basedir}
-  user.dir        = ${user.dir}
-  user.home       = ${user.home}
-  ada.home        = ${ada.home}
-  ada.course.home = ${ada.course.home}
+  basedir              = ${basedir}
+  user.dir             = ${user.dir}
+  user.home            = ${user.home}
+  ada.home             = ${ada.home}
+  ada.course.home      = ${ada.course.home}
+  ada.current.datetime = ${ada.current.datetime}
+  ada.profile.revision = ${ada.profile.revision}
 
   executable.file.extension = ${executable.file.extension}
   xml.catalog.file = ${xml.catalog.file}

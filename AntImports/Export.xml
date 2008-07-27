@@ -12,23 +12,26 @@
       copies export.files from export.src.dir to export.dst.dir. The
       copy is performed only if the two dirs are non empty and different
 
-      This functionality is all dependent on the Timewindow mechanism. The
-      variable timewindow.open, if sets, enables the export procedure. If not
+      This functionality is all dependent on the Exportcontrol mechanism. The
+      variable exportcontrol.check, if set, enables the export procedure. If not
       set, the target is not executed.
   -->
 
   <!-- Checks for availability of different binaries -->
   <import file="Copyfiles.xml"/>
-  <import file="TimeWindow.xml"/>
+  <import file="ExportControl.xml"/>
 
   <!-- Public Property definition -->
   <property name="export.src.dir" value="${basedir}" />
   <property name="export.dst.dir" value="${export.src.dir}" />
   <property name="export.files"   value=""/>
 
+  <!-- Private properties -->
+  <property name="export.debug.level"    value="${ada.debug.level}"/>
+
   <target name="export.processing.NOT"
-	  unless="timewindow.open">
-    <echo>export.processing           NOT CALLED (Timewindow closed)</echo>
+	  unless="exportcontrol.check">
+    <echo>export.processing           NOT CALLED (Exportcontrol closed)</echo>
     <echo>${basedir}</echo>
   </target>
 
@@ -37,8 +40,8 @@
   target is not executed and instead, the one notifying the user of such event
   is executed. -->
   <target name="export.processing" 
-	  depends="timewindow, export.processing.NOT"
-	  if="timewindow.open"
+	  depends="exportcontrol, export.processing.NOT"
+	  if="exportcontrol.check"
 	  description="It only invokes copyfiles">
     
     <echo>export.processing           CALL(copyfiles.processing)</echo>
@@ -54,8 +57,8 @@
   </target>
 
   <!-- Clean the produced files -->
-  <target name="export.clean" depends="timewindow"
-	  if="timewindow.open"
+  <target name="export.clean" depends="exportcontrol"
+	  if="exportcontrol.check"
 	  description="Delete files copied to dst">
 
     <echo>export.clean                CALL(copyfiles.clean)</echo>
@@ -67,6 +70,54 @@
     </antcall>
 
     <echo>export.clean                END(copyfiles.clean)</echo>
+  </target>
+
+  <target name="export.check.garbage.clean" depends="exportcontrol"
+	  description="Check if the garbage clean is needed">
+    <condition property="export.check.garbage">
+      <and>
+	<isset property="exportcontrol.check"/>
+	<equals arg1="${exportcontrol.check}" arg2="true"/>
+	<not><equals arg1="${export.src.dir}" arg2="${export.dst.dir}"/></not>
+      </and>
+    </condition>
+
+    <echo level="${export.debug.level}">export.check.garbage = "${export.check.garbage}"</echo>
+  </target>
+
+  <target name="export.garbage.clean" depends="export.check.garbage.clean"
+	  if="export.check.garbage"
+	  description="Second pass at removing export garbage">
+
+    <!-- Define a property containing the absolute dst path -->
+    <pathconvert property="export.absdst.dir" pathsep=" ">
+      <path location="${export.dst.dir}"/>
+    </pathconvert>
+
+    <echo>export.garbage.clean        RUN</echo>
+    <echo> delete (if not empty) = ${export.absdst.dir}</echo>
+
+    <delete failonerror="false" includeemptydirs="true">
+      <!-- 
+	   Watch out for this line, it is there for very special reasons. It
+	   tries to delete the directory used to place the files to copy. The
+	   trick is that ANT will not delete the directory if it is not
+	   empty. By including this line, a nice effect is achieved. If a bunch
+	   of files are copied to a directory somewhere else, and such directory
+	   is used ONLY for that purpose, the cleaning operation will remove
+	   such directory. 
+
+           Also, if several source directories transfer files to the same
+           destination directory, all of them, when cleaning, will try to delete
+           it, but only the last one will be succeed because it will find it
+	   empty.
+
+           This will hopefully increase the effectiveness of the clean target at
+           avoiding leaving temporary directories behind that need to be erased
+           by the users by hand.
+      -->
+      <filelist files="${export.absdst.dir}"/>
+    </delete>
   </target>
 
   <!-- If entering through this target, build.out is deleted -->

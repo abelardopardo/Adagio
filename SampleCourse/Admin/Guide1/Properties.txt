@@ -22,3 +22,4 @@ docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
 
 clean.files=../scratch/Guide1
 
+exportcontrol.profile.revision.value=Guide1

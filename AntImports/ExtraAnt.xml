@@ -27,7 +27,7 @@
   <property name="extraant.target"         value=""/>
   <property name="extraant.debug.level"    value="${ada.debug.level}"/>
 
-  <!-- Define two properties containing the absolute src and dst paths -->
+  <!-- Define a property containing the absolute src paths -->
   <pathconvert property="extraant.abssrc.dir" pathsep=" ">
     <path location="${extraant.src.dir}"/>
   </pathconvert>
@@ -48,7 +48,6 @@
 	<available file="${extraant.abssrc.dir}${file.separator}${extraant.file}"/>
       </and>
     </condition>
-    <echo>abel ${extraant.target}</echo>
     <!-- Dump the value of the properties just computed. -->
     <echo level="${extraant.debug.level}">  extraant.check              = "${extraant.check}"</echo>
   </target>
@@ -58,7 +57,7 @@
        to notify the user -->
   <target name="extraant.processing.NOT"
 	  unless="extraant.check">
-    <echo>extraant.processing        ---</echo>
+    <echo>extraant.processing         ---</echo>
     <echo>${basedir}</echo>
   </target>
 

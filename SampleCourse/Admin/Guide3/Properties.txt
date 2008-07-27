@@ -17,4 +17,4 @@ export.files=index.html *.flv *.jpg *.swf *.js
 
 clean.files=../scratch/Guide3
 
-
+exportcontrol.profile.revision.value=Guide3

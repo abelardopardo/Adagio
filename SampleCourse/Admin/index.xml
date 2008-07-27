@@ -43,7 +43,8 @@
           </row>
         </thead>
         <tbody>
-	  <row audience="2112-01-01T00:00:00--2208-01-01T00:00:00">
+	  <row audience="2112-01-01T00:00:00--2208-01-01T00:00:00"
+	       revision="Theory1">
 	    <entry>1</entry>
 	    <entry>10/10/10</entry>
 	    <entry>El tema de la primera sesión</entry>
@@ -53,7 +54,8 @@
 	      <ulink url="Theory1/Introduction_ES-1x2.pdf">A 2 páginas</ulink>
 	    </entry>
 	  </row>
-	  <row audience="2113-01-01T00:00:00--2208-01-01T00:00:00">
+	  <row audience="2113-01-01T00:00:00--2208-01-01T00:00:00"
+	       revision="Theory2">
 	    <entry>2</entry>
 	    <entry>10/10/10</entry>
 	    <entry>El tema de la segunda sesión</entry>
@@ -62,7 +64,8 @@
 	      <ulink url="Theory2/ASM_notes-1x2.pdf">Documentación</ulink>
 	    </entry>
 	  </row>
-	  <row audience="2114-01-01T00:00:00--2208-01-01T00:00:00">
+	  <row audience="2114-01-01T00:00:00--2208-01-01T00:00:00"
+	       revision="Theory3">
 	    <entry>3</entry>
 	    <entry>10/10/10</entry>
 	    <entry>Traspas generadas con proster</entry>
@@ -100,7 +103,8 @@
           </row>
         </thead>
         <tbody>
-	  <row audience="2115-01-01T00:00:00--2208-01-01T00:00:00">
+	  <row audience="2115-01-01T00:00:00--2208-01-01T00:00:00"
+	       revision="Lab1">
 	    <entry>1</entry>
 	    <entry>
 	      <ulink url="Lab1/index.html">Enunciado</ulink>
@@ -110,7 +114,8 @@
 	      <ulink url="Lab1/index_submit.html">Página de entrega</ulink>
 	    </entry>
 	  </row>
-	  <row audience="2116-01-01T00:00:00--2208-01-01T00:00:00">
+	  <row audience="2116-01-01T00:00:00--2208-01-01T00:00:00"
+	       revision="Lab2">
 	    <entry>2</entry>
 	    <entry>
 	      <ulink url="Lab2/index_es.html">Enunciado en castellano</ulink>,
@@ -122,7 +127,8 @@
 	      <ulink url="Lab2/index_submit_en.html">Submission page</ulink>
 	    </entry>
 	  </row>
-	  <row audience="2117-01-01T00:00:00--2208-01-01T00:00:00">
+	  <row audience="2117-01-01T00:00:00--2208-01-01T00:00:00"
+	       revision="Lab3">
 	    <entry>3</entry>
 	    <entry>
 	      <ulink url="Lab3/index.html">Enunciado</ulink>
@@ -135,20 +141,21 @@
     </informaltable>
   </section>
 
-  <section audience="2118-01-01T00:00:00--2208-01-01T00:00:00">
+  <section audience="2118-01-01T00:00:00--2208-01-01T00:00:00"
+	   revision="Guide1;Guide2;Guide3">
     <title>Documentos auxiliares</title>
     <para>
       Los siguientes documentos son de lectura recomendada para la asignatura.
     </para>
 
     <orderedlist>
-      <listitem>
+      <listitem revision="Guide1">
 	<para><ulink url="Guide1/index.html">Guía número uno</ulink></para>
       </listitem>
-      <listitem>
+      <listitem revision="Guide2">
 	<para><ulink url="Guide2/index.html">Guía número dos</ulink></para>
       </listitem>
-      <listitem>
+      <listitem revision="Guide3">
 	<para>
 	  <ulink url="Guide3/index.html">Documento con vídeo empotrado</ulink>
 	</para>
