@@ -1539,7 +1539,6 @@ docbook.files=index.xml</programlisting>
 
       <qandaentry id="exportcontrol">
 	<question>
-	  <para>REWRITE ENTIRELY!!</para>
 	  <para>
 	    Is it possible to have a directory in which the defined rules for
 	    ADA are only applied during a given window of time?
