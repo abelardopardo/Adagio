@@ -5,7 +5,7 @@
 <!--
     Given the following properties:
     
-    exportcontrol.start: Date/time when the window of validity starts
+    exportcontrol.begin: Date/time when the window of validity begins
     exportcontrol.end: Date/time when the window of validity ends
     exportcontrol.now: Date/time to be considered as the actual one
     exportcontrol.date.format: A SimpleDateFormat pattern to manipulate previous vars
@@ -19,7 +19,7 @@
     variable. This variable is set to true if the conjuntion of the following
     conditions is satisfied:
 
-    * Current time is after exportcontrol.start (if not empty)
+    * Current time is after exportcontrol.begin (if not empty)
     * Current time is before exportcontrol.end (if not empty)
     * exportcontrol.open is equal to "true" (its default value)
     * exportcontrol.profile.revision is not empty and contains the 
@@ -31,7 +31,7 @@
     This functionality is conceived to offer a rich and flexible way to control
     if the export rule needs to be executed. Several scenarios are possible.
 
-    - By using simply the start and end vars, the export is executed within a
+    - By using simply the begin and end vars, the export is executed within a
     certain time window
 
     - By using the "open" var, a binary control is allowed (true/false)
@@ -47,7 +47,7 @@
   <import file="InitialCheck.xml"/>
 
   <!-- Public Property definition -->
-  <property name="exportcontrol.start"   value=""/>
+  <property name="exportcontrol.begin"   value=""/>
   <property name="exportcontrol.end"     value=""/>
   <property name="exportcontrol.now"     value="${ada.current.datetime}"/>
   <property name="exportcontrol.date.format" value="yyyy-MM-dd'T'HH:mm:ss"/>
@@ -59,12 +59,12 @@
 
   <!-- Private properties -->
   <property name="exportcontrol.now.filename"   value=".ada.exportcontrol.now"/>
-  <property name="exportcontrol.start.filename" value=".ada.exportcontrol.start"/>
+  <property name="exportcontrol.begin.filename" value=".ada.exportcontrol.begin"/>
   <property name="exportcontrol.end.filename"   value=".ada.exportcontrol.end"/>
   <property name="exportcontrol.debug.level"    value="${ada.debug.level}"/>
 
-  <condition property="exportcontrol.start.defined">
-    <not><equals arg1="${exportcontrol.start}" arg2=""/></not>
+  <condition property="exportcontrol.begin.defined">
+    <not><equals arg1="${exportcontrol.begin}" arg2=""/></not>
   </condition>
 
   <condition property="exportcontrol.end.defined">
@@ -78,12 +78,12 @@
   <target name="exportcontrol" 
 	  depends="exportcontrol.create.now.file,
 		   exportcontrol.touch.now.file,
-		   exportcontrol.check.start, 
+		   exportcontrol.check.begin, 
 		   exportcontrol.check.end">
 
     <echo level="${exportcontrol.debug.level}">exportcontrol.now=${exportcontrol.now}
-exportcontrol.start=${exportcontrol.start}
-exportcontrol.start.uptodate=${exportcontrol.start.uptodate}
+exportcontrol.begin=${exportcontrol.begin}
+exportcontrol.begin.uptodate=${exportcontrol.begin.uptodate}
 exportcontrol.end=${exportcontrol.end}
 exportcontrol.end.uptodate=${exportcontrol.end.uptodate}
 exportcontrol.open=${exportcontrol.open}
@@ -93,7 +93,7 @@ exportcontrol.profile.revision.value=${exportcontrol.profile.revision.value}</ec
     <!-- Condition
 	 (exportcontrol.open == "true") 
          and
-         (start = NULL or Uptodate(start, NOW))
+         (begin = NULL or Uptodate(begin, NOW))
          and
          (end = NULL or Uptodate(NOW, end))
          and
@@ -114,8 +114,8 @@ exportcontrol.profile.revision.value=${exportcontrol.profile.revision.value}</ec
       <and>
 	<equals arg1="${exportcontrol.open}" arg2="true"/>
 	<or>
-	  <equals arg1="${exportcontrol.start}" arg2=""/>
-	  <isset property="exportcontrol.start.uptodate"/>
+	  <equals arg1="${exportcontrol.begin}" arg2=""/>
+	  <isset property="exportcontrol.begin.uptodate"/>
 	</or>
 	<or>
 	  <equals arg1="${exportcontrol.end}" arg2=""/>
@@ -168,23 +168,23 @@ exportcontrol.profile.revision.value=${exportcontrol.profile.revision.value}</ec
 	   pattern="${exportcontrol.date.format}"/>
   </target>
 
-  <!-- Set the property exportcontrol.start.uptodate if start < NOW -->
-  <target name="exportcontrol.check.start"
-	  if="exportcontrol.start.defined">
+  <!-- Set the property exportcontrol.begin.uptodate if begin < NOW -->
+  <target name="exportcontrol.check.begin"
+	  if="exportcontrol.begin.defined">
 
 
-    <touch datetime="${exportcontrol.start}"
-	   file="${exportcontrol.start.filename}"
+    <touch datetime="${exportcontrol.begin}"
+	   file="${exportcontrol.begin.filename}"
 	   pattern="${exportcontrol.date.format}"/>
 
-    <uptodate property="exportcontrol.start.uptodate"
-	      srcfile="${exportcontrol.start.filename}"
+    <uptodate property="exportcontrol.begin.uptodate"
+	      srcfile="${exportcontrol.begin.filename}"
 	      targetfile="${exportcontrol.now.filename}"/>
 
-    <delete file="${exportcontrol.start.filename}"/>
+    <delete file="${exportcontrol.begin.filename}"/>
   </target>
 
-  <!-- Set the property exportcontrol.start.uptodate if NOW < end -->
+  <!-- Set the property exportcontrol.begin.uptodate if NOW < end -->
   <target name="exportcontrol.check.end"
 	  if="exportcontrol.end.defined">
 
