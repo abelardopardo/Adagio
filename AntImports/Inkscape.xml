@@ -24,6 +24,7 @@
   <property name="inkscape.files"         value=""/>
 
   <!-- Private properties -->
+  <property name="inkscape.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Property to store the option for inkscape to export in a given format -->
   <property name="inkscape.export.option" value=""/>
@@ -92,7 +93,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">  inkscape.check          = "${inkscape.check}"
+    <echo level="${inkscape.debug.level}">  inkscape.check          = "${inkscape.check}"
   inkscape.execution.possible = ${inkscape.execution.possible}
   inkscape.failure            = ${inkscape.failure}</echo>
   </target>
@@ -215,7 +216,7 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="inkscape.dump.properties" depends="initial.check">
-    <echo level="info"> ------ Inkscape properties ----
+    <echo level="${inkscape.debug.level}"> ------ Inkscape properties ----
     inkscape.exec    ="${inkscape.exec}"
     inkscape.abssrc.dir ="${inkscape.abssrc.dir}"
     inkscape.absdst.dir ="${inkscape.absdst.dir}"
