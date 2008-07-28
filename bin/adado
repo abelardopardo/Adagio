@@ -62,5 +62,6 @@ ant -q -Dada.home="$ADA_HOME" \
        -Dbasedir="$basedir" \
        -f "$AllTargets" $*
 
+# Check for status: 0 = OK, 1 = Something went wrong!
 exit
 
