@@ -5,18 +5,18 @@
 <article id="ADA_FAQ">
   <title>ADA Frequently Asked Questions</title>
 
+  <para>
+    You may also access to the <ulink url="FAQ.pdf">PDF version of this
+    document</ulink>.
+  </para>
+  
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                         WHAT IS ADA                          -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <section id="About_ADA">
+  <section id="About_ADA" xreflabel="Top of the Section">
     <title>About ADA</title>
-
-    <para>
-      You may also access to the <ulink url="FAQ.pdf">PDF version of this
-      document</ulink>.
-    </para>
 
     <qandaset defaultlabel="qanda">
       <qandaentry id="whatisada">
@@ -26,12 +26,12 @@
 	<answer>
 	  <para>
 	    ADA is a tool that provides support for <quote>Agile and Distributed
-	    Authoring</quote>. Authors (in general) use a combination of tools
-	    to produce documents. The actual variety of documents makes more
-	    appropriate to refer to this items as resources. A resource may
-	    perfectly be a regular text document, but today it may also be a
-	    screen capture, video clip, audio clip, picture, etc. ADA is
-	    conceived to manipulate resources in this context.
+	    Authoring</quote>. Authors usually use a combination of tools to
+	    produce documents. The actual variety of documents makes more
+	    appropriate to refer to this items as resources. A resource may be a
+	    regular text document, but it may also be a screen capture, video
+	    clip, audio clip, picture, etc. ADA is conceived to manipulate
+	    resources in this context.
 	  </para>
 	  <para>
 	    The challenge appears when a large set of resources with a complex
@@ -43,7 +43,8 @@
 	    The first problem is the variety of tools used by the authors. ADA
 	    facilitates the post-processing by automatically producing
 	    preliminary versions of the created resources. The following figure
-	    illustrates a potential environment and the support provided by ADA.
+	    illustrates a generic authoring environment and the support provided
+	    by ADA.
 	  </para>
 
 	  <informalfigure>
@@ -58,10 +59,9 @@
 	  </informalfigure>
 
 	  <para>
-	    Once created, these files (not the sources) can be sent to a
-	    location where they are automatically combined to produce the final
-	    resource. The following figure illustrates a potential scenario
-	    combining these two aspects.
+	    Once created, the exported resources can be sent to a location where
+	    they are automatically combined to produce the final resource. The
+	    following figure illustrates a scenario combining these two aspects.
 	  </para>
 	  
 	  <informalfigure>
@@ -82,27 +82,32 @@
 	  <itemizedlist>
 	    <listitem>
 	      <para>
-		To the author: ADA provides a simple automatic procedure to see
-		the approximate appearance of the created resources. The author
-		may focus on the content and verify that the appearance complies
-		with certain minimum requirements.
+		To the author: ADA provides rules to automate typical processing
+		steps to achieve an approximate appearance of the created
+		resources. Authors may then focus on the content and verify,
+		using these rules, that the final resource complies with certain
+		minimum requirements (guidelines, size, quality, etc.)
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
-		In the production phase: ADA allows specifying a simple set of
-		rules to automatically combine all the contributions from
-		different authors to obtain a complex resource.
+		In the production phase: ADA allows specifying a set of rules to
+		automatically combine all the contributions from different
+		authors and produce a complex resource.
 	      </para>
 	    </listitem>
 	  </itemizedlist>
 
 	  <para>
-	    The main element for ADA are the rule files. These files have the
-	    name <filename>Properties.txt</filename> (although it can be
-	    changed) and specify which are the resource files and how they need
-	    to be processed to obtain the final resources.
+	    The main element for ADA in the author working directory is the rule
+	    file. This file has the name <filename>Properties.txt</filename>
+	    (although it can be changed) and specifies which are the resource
+	    files and how they need to be processed to obtain the final
+	    resources. Each working directory needs a file with the rules
+	    applying to the files contained in it.
 	  </para>
+
+	  <para>Back to <xref linkend="About_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -114,8 +119,8 @@
 	  <para>
 	    ADA is not a text editor, nor a graphic editor, nor an integrated
 	    creative environment. The author may use tools to create the
-	    resources, and ADA is used to automatically contribute to the
-	    overall creation process.
+	    resources, and ADA is used to automatically combine them into a
+	    global creation process.
 	  </para>
 
 	  <para>
@@ -125,6 +130,8 @@
 	    other resources contributed by other authors and automatically
 	    creates a final resource.
 	  </para>
+
+	  <para>Back to <xref linkend="About_ADA"/>.</para>
 	</answer>
       </qandaentry>
       <qandaentry id="whyisadaneeded">
@@ -138,10 +145,11 @@
 	    era, the creation process is changing radically. Authors are no
 	    longer required to use a concrete tool, but instead, certain formats
 	    are used to easily publish content. But what really takes a
-	    multi-user distributed authoring scenario to a new dimension is an
-	    easy modification cycle. Think Wikipedia. The distributed authoring
-	    paradigm is beyond any doubt, but in order for those authors to
-	    truly contribute, resources are extremely easy to modify.
+	    multi-user distributed authoring scenario to a new dimension is a
+	    <emphasis>simple modification cycle</emphasis>. Think Wikipedia, its
+	    distributed authoring paradigm has consolidated beyond any doubt,
+	    but in order for those authors to contribute effectively, resources
+	    are extremely easy to modify.
 	  </para>
 
 	  <para>
@@ -188,16 +196,16 @@
 	  
 	  <para>
 	    But aside from the turnaround time for changes, resources tend to be
-	    built recursively from the author contributions. The internal
+	    built hierarchically from the multiple sources. The internal
 	    organization of a resource can be often replicated in the process in
-	    which it is built. To create the final electronic version of a book,
-	    there is certain amount of work that can be done for each chapter
-	    individually accompanied by certain inter-chapter processing. The
-	    rules defined in ADA are prepared to be applied hierarchically at
-	    different points of the overall production procedure. The following
-	    picture illustrates a hypothetical scenario in which a resource is
-	    built by combining resources from four authors in three gradual
-	    stages.
+	    which it is built. For example, to create the electronic version of
+	    a book, there is certain amount of work that can be done for each
+	    chapter individually accompanied by certain inter-chapter
+	    processing. The rules defined in ADA are prepared to be applied
+	    hierarchically at different points of the overall production
+	    procedure. The following picture illustrates a hypothetical scenario
+	    in which a resource is built by combining resources from four
+	    authors in three gradual stages.
 	  </para>
 
 	  <informalfigure>
@@ -211,6 +219,7 @@
 	    </mediaobject>
 	  </informalfigure>
 
+	  <para>Back to <xref linkend="About_ADA"/>.</para>
 	</answer>
       </qandaentry>
     </qandaset>
@@ -221,7 +230,8 @@
   <!--                    INSTALLATION IN WINDOWS                   -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <section id="Installing_ADA_in_Windows">
+  <section id="Installing_ADA_in_Windows"
+	   xreflabel="Top of the Section">
     <title>Installing ADA in Windows</title>
     <qandaset defaultlabel="qanda">
       <qandaentry id="requiredapplicationsinwindows">
@@ -230,23 +240,33 @@
 	</question>
 	<answer>
 	  <para>
-	    ADA needs at least three packages to run in windows:
+	    ADA is prepared to supply rules to be used with several tools, but
+	    these tools need to be installed in the system. If they are not, the
+	    rules are never applied. However, to obtain the minimum
+	    functionality, ADA needs <emphasis>at least</emphasis> three
+	    applications to be installed (all of them Open Source, by the way.)
 	  </para>
 
 	  <itemizedlist>
 	    <listitem>
-	      <para>A Java Run Time Environment.</para>
-	    </listitem>
-	    <listitem>
 	      <para>
-		<ulink url="http://www.cygwin.com">Cygwin</ulink>: A linux-like
-		environment for Windows.
+		A <ulink url="http://java.sun.com">Java Run Time
+		Environment (or simply a JRE)</ulink>.
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
-		Ant: A Java based build tool. ADA relies on ANT to decide which
-		documents to build and which tools to use for the task.
+		<ulink url="http://www.cygwin.com">Cygwin</ulink>: A linux-like
+		environment for Windows. This application itself contains
+		several additional packages used by ADA.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<ulink url="http://ant.apache.org">Ant</ulink>: A Java based
+		build tool. ADA relies on Ant to decide which documents to build
+		and which tools to use for the task. The rules are all written
+		as Ant building files.
 	      </para>
 	    </listitem>
 	  </itemizedlist>
@@ -254,16 +274,23 @@
 	  <para>
 	    Aside from these three tools, ADA allows to process certain file
 	    types if some additional programs are installed. For example,
-	    translating figures from SVG to PNG can be done using Inkscape but
-	    it needs to be previously installed.
+	    translating figures from <ulink
+	    url="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</ulink>
+	    to <ulink url="en.wikipedia.org/wiki/PNG">PNG</ulink> can be done
+	    using <command>Inkscape</command> but it needs to be properly
+	    installed and available for execution.
 	  </para>
+
+	  <para>Back to <xref linkend="Installing_ADA_in_Windows"/>.</para>
 	</answer>
       </qandaentry>
       
       <qandaentry id="how_to_install_jre" 
 		  xreflabel="Java has been installed">
 	<question>
-	  <para>How to install a Java Run-time Environment in Windows?</para>
+	  <para>
+	    How to install a Java Run-time Environment (or JRE) in Windows?
+	  </para>
 	</question>
 	<answer>
 	  <para>
@@ -275,19 +302,21 @@
 	    finishes, execute the installer that asks a few simple questions and
 	    installs Java in your system.
 	  </para>
+
+	  <para>Back to <xref linkend="Installing_ADA_in_Windows"/>.</para>
 	</answer>
       </qandaentry>
 
       <qandaentry id="howtoinstallcygwin">
 	<question>
-	  <para>I got Java already installed, What else is required?</para>
+	  <para>I got Java already installed, What else is required to run ADA?</para>
 	</question>
 	<answer>
 	  <para>
 	    Once <xref linkend="how_to_install_jre"/>, the next step is to
-	    download the <code>cygwin</code> tool, a linux-like environment for
-	    Windows. Once downloaded, the initial page of the installer is shown
-	    in the following figure.
+	    download the <command>cygwin</command> tool, a linux-like
+	    environment for Windows. Once downloaded, the initial page of the
+	    installer is shown in the following figure.
 	  </para>
 
 	  <informalfigure>
@@ -321,7 +350,7 @@
 	  </informalfigure>
 
 	  <para>
-	    Click in the button with name <code>View</code> that appears above
+	    Click in the button with name <command>View</command> that appears above
 	    the package list until the word <quote>Full</quote> appears to its
 	    left. At that point, all packages suitable to be installed are shown
 	    alphabetically ordered. From the list, you need to select
@@ -331,18 +360,20 @@
 	  <itemizedlist>
 	    <listitem>
 	      <para>
-		<code>docbook-xml43 (or more recent)</code>: Docbook XML DTD
+		<command>docbook-xml43</command> (or more recent): Docbook XML
+		DTD
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
-		<code>docbook-xsl</code>: XSL stylesheets for the DocBook XML DTD
+		<command>docbook-xsl</command>: XSL stylesheets for the DocBook
+		XML DTD
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
-		<code>git</code>: Fast version control system used to download
-		the latest ADA version.
+		<command>git</command>: Fast version control system used to
+		download the latest ADA version.
 	      </para>
 	    </listitem>
 	  </itemizedlist>
@@ -350,19 +381,21 @@
 	  <para>
 	    ADA is capable of using additional tools, but they are not essential
 	    for the installation. The set-up program takes a few minutes to
-	    download (through a net connection) all the required packages. This
-	    step will take a few minutes and will depend significantly on the
-	    speed of that connection. The installer application can be executed
-	    at any time to add/remove applications to the environment.
+	    download all the required packages through a reasonably fast net
+	    connection. Keep in mind that this installer application remains
+	    installed in your computer and therefore can be executed at any
+	    other time to add/remove applications to the
+	    <command>cygwin</command> environment.
 	  </para>
 
 	  <para>
 	    After all the required packages are installed, finish the execution
-	    of the set-up program and start a Cygwin shell. This is usually done
-	    by clicking on the icon that the set-up program has left on your
-	    desktop or browsing through the program menu and selecting the
-	    Cygwin executable. Once started, a window like the one shown in the
-	    following figure appears on the screen.
+	    of the set-up program and start a <emphasis>Cygwin
+	    shell</emphasis>. This is done by clicking on the icon that the
+	    set-up program has left on your desktop or browsing through the
+	    program menu and selecting the Cygwin executable. Once started, a
+	    window like the one shown in the following figure appears on the
+	    screen.
 	  </para>
 
 	  <informalfigure>
@@ -378,50 +411,60 @@
 
 	  <para>
 	    This window is a typical linux command interpreter ready to process
-	    your commands. The first check is to make sure the Java Run-time
-	    Environment is properly installed. Type the command:
+	    your commands. It is just a different way to give orders to your
+	    computer. Instead of clicking in different icons and menus,
+	    <command>cygwin</command> allows you to type the orders at the
+	    propmpt of this interpreter. The first check is to make sure the
+	    Java Run-time Environment (or JRE) is properly installed. Go ahead
+	    and type the command:
 	  </para>
 
 	  <programlisting>which java</programlisting>
 
 	  <para>
 	    If the answer is a single path to a file with name
-	    <code>java</code> similar to
+	    <command>java</command> similar to
 	  </para>
 
 	  <programlisting>/cygdrive/c/WINDOWS/system32/java</programlisting>
 	  
 	  <para>
-	    the JRE is properly installed. If the message says that <quote>no
-	    java in (/usr/local/bin:/usr/bin:/....)</quote> you need to review
-	    your Java installation.
+	    then the JRE is properly installed. If the message says something
+	    similar to <quote>which: no java in
+	    (/usr/local/bin:/usr/bin:/....)</quote> then you need to review your
+	    Java installation, because no JRE was found.
 	  </para>
 
+
+	  <para>Back to <xref linkend="Installing_ADA_in_Windows"/>.</para>
 	</answer>
       </qandaentry>
 
       <qandaentry id="install_ant" xreflabel="Ant installation">
 	<question>
-	  <para>Got Java and Cygwin installed, now what?</para>
+	  <para>
+	    Got Java and Cygwin already installed, what is missing to run ADA?
+	  </para>
 	</question>
 	<answer>
 	  <para>
 	    The next tool required by ADA is <ulink
 	    url="http://ant.apache.org">Ant</ulink>, a Java based build
-	    tool. Ant is supposed to be a multi-platform tool, and the
-	    installation simply amounts to downloading a zip file, deploying its
-	    files in a directory, and declaring a couple of environment
-	    variables.
+	    tool. Ant is a multi-platform tool, and the installation simply
+	    amounts to downloading a zip file, deploying its files in a
+	    directory, and declaring a couple of environment variables.
 	  </para>
 
 	  <para>
 	    When deploying Ant in a directory there are two choices: install Ant
-	    as a regular windows application, or install Ant inside
-	    Cygwin. Since Ant is simply a Java program, the two choices are very
-	    similar because it only requires Java to be available. The important
-	    step is to set the environment variables ANT_HOME to point to the
-	    new directory and <code>PATH</code> to include the
-	    <filename>bin</filename> directory within Ant.
+	    as a regular windows application, or install Ant inside Cygwin
+	    (remember that <command>cygwin</command> is a simple Linux-like
+	    environment within your Windows system). The two choices are very
+	    similar because it only requires a JRE to be available. The
+	    important step is to set the environment variables ANT_HOME to point
+	    to the directory where Ant is installed and <varname>PATH</varname>
+	    to include the <filename>bin</filename> directory inside that
+	    directory.
 	  </para>
 
 	  <para>
@@ -429,71 +472,81 @@
 	    environment in Windows you need to first select the <quote>Control
 	    Panel</quote>, then select the <quote>System</quote> link. A new
 	    window opens with several panes. Select the pane with name
-	    <quote>Advanced</quote> and then click on the button with
-	    name <quote>Environment Variables</quote>. It is recommended you
-	    insert these definitions as part of the System Variables.
+	    <quote>Advanced</quote> and then click on the button with name
+	    <quote>Environment Variables</quote>. It is recommended to insert
+	    these definitions as part of the System Variables.
 	  </para>
 
 	  <para>
-	    A new variable with name <code>ANT_HOME</code> (all uppercase) has
-	    to be declared and its value must be the directory where the Ant
+	    A new variable with name <command>ANT_HOME</command> (all uppercase)
+	    has to be declared and its value must be the directory where the Ant
 	    files where deployed from the zip archive. Additionally, the
-	    <code>PATH</code> variable (which is already defined) needs to be
-	    modified by adding the path to the <filename>bin</filename>
-	    directory within the Ant installation directory.
+	    <varname>PATH</varname> variable (which is already defined) needs to
+	    be modified by adding the path to the <filename>bin</filename>
+	    directory within the Ant installation directory. That is, append to
+	    the string already in the variable a semicolon and then the path to
+	    the bin directory within Ant (something similar to
+	    <filename>C:\Applications\Ant\bin</filename>.)
 	  </para>
 
 	  <para>
 	    Once the installation is finished, you may check the availability of
-	    the tool by opening a new Cygwin window. Type the command
+	    the tool by opening a new Cygwin shell. Type the command
 	  </para>
 
 	  <programlisting>which ant</programlisting>
 
 	  <para>
 	    If the answer is a single path to a file with name
-	    <code>ant</code> such as
+	    <command>ant</command> such as
 	  </para>
 
 	  <programlisting>/cygdrive/c/Program Files/apache-ant-1.7.0/bin/ant</programlisting>
 	  
 	  <para>
-	    Ant is properly installed. If the message says <quote>no
-	    ant in (/usr/local/bin:/usr/bin:/....)</quote> you need to review
-	    your installation.
+	    Ant is properly installed. If the message says <quote>which: no ant
+	    in (/usr/local/bin:/usr/bin:/....)</quote>, Ant is not being found
+	    and you need to review your installation steps.
 	  </para>
+
+	  <para>Back to <xref linkend="Installing_ADA_in_Windows"/>.</para>
 	</answer>
       </qandaentry>
 
       <qandaentry id="Fetch_ada_in_windows">
 	<question>
 	  <para>
-	    Once I have the JRE, Cygwin and Ant, How do I get ADA?
+	    Once I have the JRE, Cygwin and Ant installed, How do I install ADA?
 	  </para>
 	</question>
 	<answer>
 	  <para>
 	    Open a Cygwin shell and go to the directory where you want ADA
-	    installed. Execute the command:
+	    installed (a directory with name <filename>ADA</filename> will be
+	    created. The computer needs to be connected to the net. Execute the
+	    command:
 	  </para>
-	  <programlisting>git clone <xi:include
+
+	  <programlisting id="git_install_command">git clone <xi:include
 	    href="Params.xml"
 	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='ADA_DOWNLOAD_URL']/text())"
 	    parse="xml"
 	    xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
 	  <para>
-	    After a few seconds, a new directory with name ADA is created
+	    A list of messages appear on the screen. After a while (depending on
+	    the speed of your net connection), the command terminates and a new
+	    directory with name <filename>ADA</filename> has been created
 	    containing all the required files.
 	  </para>
 	  <para>
 	    In order to make ADA available, the PATH environment variable needs
 	    to be modified by adding the path to the <filename>bin</filename>
-	    directory. You may follow the procedure described in the <xref
+	    directory. You may follow the same procedure described in the <xref
 	    linkend="install_ant"/>.
 	  </para>
 
 	  <para>
-	    Once the environment variable <code>PATH</code> has been modified to
+	    Once the environment variable <command>PATH</command> has been modified to
 	    include the <filename>bin</filename> directory within ADA, open a
 	    brand new Cygwin shell and type the following command
 	  </para>
@@ -509,15 +562,17 @@
 	  <programlisting>/home/.../.../ADA/bin/adado</programlisting>
 	  
 	  <para>
-	    ADA is properly installed. If the message says <quote>no
-	    adado in (/usr/local/bin:/usr/bin:/....)</quote> you need to review
-	    your installation.
+	    ADA is properly installed. If the message says <quote>which: no
+	    adado in (/usr/local/bin:/usr/bin:/....)</quote>, ADA is not
+	    available for execution and you need to review your installation.
 	  </para>
 
 	  <para>
 	    The final step to make sure that the commands provided by ADA are
-	    available is to try <xref linkend="run_adacheck"/>.
+	    available is to <xref linkend="run_adacheck"/>.
 	  </para>
+
+	  <para>Back to <xref linkend="Installing_ADA_in_Windows"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -532,8 +587,8 @@
 	    ADA is distributed using the tool <command>git</command> which keeps
 	    track of the files you already have and the changes that need to be
 	    applied to upgrade to the latest version. The upgrade process
-	    requires simply to open a cygwin shell window, go to the directory
-	    where ADA is installed and execute the command:
+	    requires simply to open a shell window, go to the directory where
+	    ADA is installed and execute the command:
 	  </para>
 
 	  <programlisting>git pull</programlisting>
@@ -542,13 +597,24 @@
 	    The command will inform in some fairly cryptic way of the changes
 	    that are taking place. In principle, if the source files have not
 	    been modified, the change will go smoothly. If you have some
-	    personal modifications in the source files, there could be some
-	    conflicts when <command>git</command> tries to merge these changes
-	    with the ones related to the upgrade. If such situation happens, it
-	    is called a conflict and it needs to be solved manually by the
-	    user. If you touched the source code of ADA, it is assumed you know
-	    how to solve merge conflicts.
+	    personal modifications in the source files, you need first to tell
+	    <command>git</command> to store those changes. You need to execute
+	    the command:
 	  </para>
+
+	  <programlisting>git commit -a -m "Your message here"</programlisting>
+
+	  <para>
+	    Try again to execute <command>git pull</command>. This time, the
+	    update process should go smoothless. There could be some conflicts
+	    when <command>git</command> tries to merge these changes with the
+	    ones you introduced. If such situation happens, it is called a
+	    <quote>merge conflict</quote> and it needs to be solved manually by
+	    the user. If you touched the source code of ADA, then we assume that
+	    you know how to solve merge conflicts.
+	  </para>
+
+	  <para>Back to <xref linkend="Installing_ADA_in_Windows"/>.</para>
 	</answer>
       </qandaentry>
     </qandaset>
@@ -559,20 +625,76 @@
   <!--                    INSTALLATION IN LINUX                     -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!--   <section>     -->
-<!--     <title>Installing ADA in Linux</title> -->
+  <section id="Installing_ADA_in_Linux"
+	   xreflabel="Top of the Section">
+    <title>Installing ADA in Linux</title>
 
-<!--   </section> -->
+    <qandaset>
+      <qandaentry>
+	<question>
+	  <para>Which packages are required to use ADA in Linux?</para>
+	</question>
+	<answer>
+	  <para>
+	    ADA uses primarily <ulink url="http://ant.apache.org">Ant</ulink>,
+	    and it is distributed using <command>git</command>. The bare minimum
+	    required packages are: <command>Ant</command>, a Java run-time
+	    environment (JRE) and <command>git</command>.
+	  </para>
+
+	  <para>
+	    But to fully exploit ADA functionality, there are additional tools
+	    that need to be installed. See <xref linkend="run_adacheck"/> for
+	    more details.
+	  </para>
+
+	  <para>Back to <xref linkend="Installing_ADA_in_Linux"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry>
+	<question>
+	  <para>
+	    Once I installed all the required packages, how How do I install
+	    ADA?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    ADA is distributed using the <command>git</command> version control
+	    tool. Open a terminal and type the command:
+	  </para>
+
+	  <xi:include xpointer="xpointer(//*[@id='git_install_command'])"
+		      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	  
+	  <para>
+	    A new directory with name <filename>ADA</filename> will be
+	    created. In order to make ADA available, you need to include the
+	    path to its <filename>bin</filename> directory as part of your
+	    <varname>PATH</varname> environment variable.
+	  </para>
+
+	  <para>Back to <xref linkend="Installing_ADA_in_Linux"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <xi:include xpointer="xpointer(//*[@id='new_version_upgrade'])"
+		  parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+      
+    </qandaset>
+  </section>
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                    PROCESSING RESOURCES                      -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <section id="Processing_resources_with_ADA">
+  <section id="Processing_resources_with_ADA"
+	   xreflabel="Top of the Section">
     <title>Processing resources with ADA</title>
     <qandaset>
-      <qandaentry id="run_adacheck" xreflabel="Running adacheck">
+      <qandaentry id="run_adacheck" xreflabel="Run adacheck">
 	<question>
 	  <para>What kind of resources can be processed by ADA?</para>
 	</question>
@@ -595,6 +717,8 @@
 
 	  <programlisting><xi:include href="AdaCheck.txt"
 	  parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -610,7 +734,7 @@
 	    <filename>Properties.txt</filename>. The structure of this file is
 	    very simple, any line starting with the symbol <quote>#</quote> is
 	    ignored. Every empty line is ignored. The rest of lines must have
-	    the structure <code>name=value</code>. The set of names is defined
+	    the structure <command>name=value</command>. The set of names is defined
 	    by ADA. Refer to the following questions to know which names and
 	    values are possible.
 	  </para>
@@ -630,6 +754,8 @@
 	      </textobject>
 	    </mediaobject>
 	  </informalfigure>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -653,7 +779,7 @@
 
 	   <para>
 	     A list of file may be broken accross multiple lines using the
-	     symbol <code>\</code>. 
+	     symbol <command>\</command>. 
 	   </para>
 	   
 	   <para>
@@ -661,7 +787,8 @@
 	     previous creation of auxiliary material in another directory. ADA
 	     allows the definition of a list of directories that are recursively
 	     processed before processing the material in the local directory
-	     (see <xref linkend=""/> for a detailed description). For example:
+	     (see <xref linkend="subrecursive_processing"/> for a detailed
+	     description). For example:
 	   </para>
 
 	   <programlisting>subrecursive.dirs=../../Material/Author1
@@ -688,6 +815,8 @@ clean.files=../scratch/Theory2</programlisting>
 	      be given to use when the directory needs to be re-generated from
 	      the beginning.
 	    </para>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -704,6 +833,8 @@ clean.files=../scratch/Theory2</programlisting>
 	    the command
 	  </para>
 	  <programlisting>adado</programlisting>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 	  
@@ -717,12 +848,14 @@ clean.files=../scratch/Theory2</programlisting>
 
 	<answer>
 	  <para>
-	    A sample with all the variables that can be defined in the
-	    definition file can be found in where ADA is installed in the file
-	    in <filename>AntImports/Properties.txt</filename>. All definitions
-	    are commented out, therefore, the file can be used as the initial
-	    template to craft a specific definition file.
+	    A file containing all possible varables can be found in the file in
+	    <filename>AntImports/Properties.txt</filename> where ADA is
+	    installed. All definitions are commented out, therefore, the file
+	    can be used as the initial template to craft a specific definition
+	    file.
 	  </para>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -773,7 +906,7 @@ clean.files=../scratch/Theory2</programlisting>
 		  <entry>
 		    Figures are translated to this format. The formats supported
 		    by xfig are png, eps, gif, jpg, latex, map, etc. For a
-		    detailed list check the manual page of <code>fig2dev</code>..
+		    detailed list check the manual page of <command>fig2dev</command>..
 		  </entry>
 		  <entry><filename>png</filename></entry>
 		</row>
@@ -802,7 +935,7 @@ clean.files=../scratch/Theory2</programlisting>
 		<row>
 		  <entry><varname>xfig.extra.args</varname></entry>
 		  <entry>
-		    Additional options to pass directly to <code>fig2dev</code>.
+		    Additional options to pass directly to <command>fig2dev</command>.
 		  </entry>
 		  <entry></entry>
 		</row>
@@ -832,6 +965,8 @@ clean.files=../scratch/Theory2</programlisting>
 	    <filename>Properties.txt</filename>.
 	  </para>
 
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -920,13 +1055,16 @@ clean.files=../scratch/Theory2</programlisting>
 	    variable assignments in the file
 	    <filename>Properties.txt</filename>.
 	  </para>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
-      <qandaentry id="generic_rule">
+      <qandaentry id="using_regexp_for_files">
 	<question>
-	  <para>What if I have lots of figures. Do I need to write all their
-	  file names in <filename>Properties.txt</filename>?
+	  <para>
+	    What if I have lots of figures. Do I need to write all their file
+	    names in <filename>Properties.txt</filename>?
 	  </para>
 	</question>
 	<answer>
@@ -944,12 +1082,20 @@ clean.files=../scratch/Theory2</programlisting>
 
 	  <para>
 	    For example, if you have several figures and each of them have a
-	    version in English (with extension <code>.en.svg</code>) and a
-	    version in Spanish (with extension <code>.es.svg</code>), you may
-	    select all of them wit the expression <code>*.e?.xml</code>.
+	    version in English (with extension <command>_en.svg</command>) and a
+	    version in Spanish (with extension <command>_es.svg</command>), you may
+	    select all of them wit the expression <command>*_e?.xml</command>.
 	    dot. These patterns may be used anywhere file lists are required
 	    unless otherwise noticed.
 	  </para>
+
+	  <para>
+	    If you want this type of rule to be applied, not only to all the
+	    files matching this pattern in this directory, but to all
+	    directories, see <xref linkend="global_rule"/>.
+	  </para>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -957,7 +1103,7 @@ clean.files=../scratch/Theory2</programlisting>
 							   one variable modified">
 	<question>
 	  <para>
-	    Can I execute the <code>adado</code> command one time but with one
+	    Can I execute the <command>adado</command> command one time but with one
 	    single variable modified from the definition in
 	    <filename>Properties.txt</filename>?
 	  </para>
@@ -971,10 +1117,12 @@ clean.files=../scratch/Theory2</programlisting>
 	  <programlisting>-Dpropertyname=propertyvalue</programlisting>
 
 	  <para>
-	    Any argument written beyond <code>adado</code> is directly passed to
+	    Any argument written beyond <command>adado</command> is directly passed to
 	    an invocation of Ant. See the Ant manual for a more detailed
 	    discussion of the available options.
 	  </para>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -1025,7 +1173,7 @@ clean.files=../scratch/Theory2</programlisting>
 		<row>
 		  <entry><varname>docbook.output.format</varname></entry>
 		  <entry>
-		    Extension to replace the extension <code>.xml</code> in the
+		    Extension to replace the extension <command>.xml</command> in the
 		    file name. It must include the dot!
 		  </entry>
 		  <entry><filename>.html</filename></entry>
@@ -1041,7 +1189,7 @@ clean.files=../scratch/Theory2</programlisting>
 		<row>
 		  <entry><varname>docbook.extra.args</varname></entry>
 		  <entry>
-		    Additional options to pass directly to <code>xsltproc</code>.
+		    Additional options to pass directly to <command>xsltproc</command>.
 		  </entry>
 		  <entry></entry>
 		</row>
@@ -1067,6 +1215,8 @@ clean.files=../scratch/Theory2</programlisting>
 	    With such values defined, execute ADA to obtain the HTML rendering
 	    of the file (see <xref linkend="adado"/>).
 	  </para>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -1085,11 +1235,11 @@ clean.files=../scratch/Theory2</programlisting>
 	    profiling</quote> for more detailed information). Each docbook
 	    element may include a fixed set of attributes that are used to
 	    select or ignore portions of a document. The exact definition for a
-	    generic attribute <code>attr</code> is:
+	    generic attribute <command>attr</command> is:
 	  </para>
 
 	  
-	  <informaltable frame="all" id="mergestyles_vars">
+	  <informaltable frame="all" id="profile_definition">
 	    <tgroup rowsep="1" colsep="1" cols="1">
 	      <colspec colnum="1" colname="col1" align="left"/>
 	      <tbody>
@@ -1097,15 +1247,15 @@ clean.files=../scratch/Theory2</programlisting>
 		  <entry>
 		    <para>
 		      If a document contains elements with an attribute with
-		      name <code>attr</code> with value <code>val</code>, and
+		      name <command>attr</command> with value <command>val</command>, and
 		      the XSLT processor is given the option
-		      <code>profile.attr</code> with value <code>val</code>,
+		      <command>profile.attr</command> with value <command>val</command>,
 		      then all elements that have the attribute
-		      <code>attr</code> with a value not containing
-		      <code>val</code> are suppressed as if they were not part
+		      <command>attr</command> with a value not containing
+		      <command>val</command> are suppressed as if they were not part
 		      of the document. To apply a concrete profiling attribute
-		      you need to replace <code>attr</code> by the name of your
-		      attribute and <code>val</code> by the proper value.
+		      you need to replace <command>attr</command> by the name of your
+		      attribute and <command>val</command> by the proper value.
 		    </para>
 		  </entry>
 		</row>
@@ -1121,14 +1271,14 @@ clean.files=../scratch/Theory2</programlisting>
 	    languages are English and Spanish. The docbook XML file needs to
 	    have one version for each language, but there might be parts that
 	    need to be present in both versions. The attribute to use for such
-	    profiling is <code>lang</code>. A possible strategy is to label each
-	    paragraph with the attribute <code>lang</code> to the value
-	    <code>en</code> if it is in English or <code>es</code> if it is in
+	    profiling is <command>lang</command>. A possible strategy is to label each
+	    paragraph with the attribute <command>lang</command> to the value
+	    <command>en</command> if it is in English or <command>es</command> if it is in
 	    Spanish.
 	  </para>
 
 	  <para>
-	    The placement of the <code>lang</code> attribute can be chosen as to
+	    The placement of the <command>lang</command> attribute can be chosen as to
 	    minimize the number of duplicated elements and maintain the document
 	    as a valid Docbook document. The following example shows a snippet
 	    of Docbook in which two versions in English and Spanish are included
@@ -1147,20 +1297,20 @@ clean.files=../scratch/Theory2</programlisting>
     <informalfigure id="reversetable:fig:pagetable">
       <mediaobject>
         <imageobject lang="es">
-          <imagedata align="center" fileref="tablestruct.es.png" format="PNG" />
+          <imagedata align="center" fileref="tablestruct_es.png" format="PNG" />
         </imageobject>
         <imageobject lang="en">
-          <imagedata align="center" fileref="tablestruct.en.png" format="PNG" />
+          <imagedata align="center" fileref="tablestruct_en.png" format="PNG" />
         </imageobject>
       </mediaobject>
     </informalfigure>]]></programlisting>
 	  <para>
-	    Note that the placement of the <code>lang</code> attribute is as
+	    Note that the placement of the <command>lang</command> attribute is as
 	    deep in the hierarchy as possible to increase the number of common
 	    elements maintaining the document as correct Docbook. A
-	    <code>mediaobject</code> element accepts multiple
-	    <code>imageobject</code> elements which itself does not accept
-	    multiple <code>imagedata</code> elements.
+	    <command>mediaobject</command> element accepts multiple
+	    <command>imageobject</command> elements which itself does not accept
+	    multiple <command>imagedata</command> elements.
 	  </para>
 
 	  <para>
@@ -1197,7 +1347,7 @@ clean.files=../scratch/Theory2</programlisting>
 		<row>
 		  <entry><varname>bilingualdb.output.format</varname></entry>
 		  <entry>
-		    Extension to replace the extension <code>.xml</code> in the
+		    Extension to replace the extension <command>.xml</command> in the
 		    file name. It needs to include the dot!
 		  </entry>
 		  <entry><filename>.html</filename></entry>
@@ -1213,7 +1363,7 @@ clean.files=../scratch/Theory2</programlisting>
 		<row>
 		  <entry><varname>bilingualdb.extra.args</varname></entry>
 		  <entry>
-		    Additional options to pass directly to <code>xsltproc</code>.
+		    Additional options to pass directly to <command>xsltproc</command>.
 		  </entry>
 		  <entry></entry>
 		</row>
@@ -1226,40 +1376,330 @@ clean.files=../scratch/Theory2</programlisting>
 	    </tgroup>
 	  </informaltable>
 	  
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
 
       </qandaentry>
 
-      <qandaentry id="generic_rule">
+      <qandaentry id="export_processing"
+		  xreflabel="How to declare which resources are exported">
 	<question>
-	  <para>Can I specify a generic rule to be applied everywhere?</para>
+	  <para>How to specify which resources should be exported?</para>
+	</question>
+	<answer>
 	  <para>
-	    The file <filename>Properties.txt</filename>
-	    contains rules only valid for the current directory. Is it possible
-	    to define how to process a set of files in a way such that it is
-	    applied in all the directories? For example, I would like all my
-	    *.svg files to be always processed by the Inkscape rule.
+	    When creating resources in a directory, typically, only a subset of
+	    files are supposed to be used in the outside. These files are what
+	    we call the <emphasis>exported</emphasis> resources. The variables
+	    inside the <filename>Properties.txt</filename> used to capture this
+	    functionality are:
+	  </para>
+
+	  <informaltable frame="all" id="export_vars">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="center"/>
+	      <thead>
+		<row>
+		  <entry align="center">Variable name</entry>
+		  <entry align="center">Description</entry>
+		  <entry align="center">Default</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry><varname>export.src.dir</varname></entry>
+		  <entry>Directory from where to take the files to export</entry>
+		  <entry>Current directory</entry>
+		</row>
+		<row>
+		  <entry><varname>export.dst.dir</varname></entry>
+		  <entry>Directory where to copy the exported resources</entry>
+		  <entry>Value of <varname>export.src.dir</varname></entry>
+		</row>
+		<row>
+		  <entry><varname>export.files</varname></entry>
+		  <entry>
+		    Space or comma separated list of file names (with no path)
+		    of the resources to export
+		  </entry>
+		  <entry></entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+
+	  <para>
+	    There are two typical scenarios when it comes to using these
+	    variables.
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		A directory in which resources are simply created and prepared
+		to export, but without a destination in mind. This is the case
+		of material that is suitable to be re-used in multiple
+		locations. In this case, only the variable
+		<varname>export.files</varname> is defined to contain those
+		resources to export. The other two variables are left with their
+		default values.
+	      </para>
+
+	      <para>
+		With this definition, any other directory that needs these
+		resources could export them to a given location (see <xref
+		linkend="subrecursive_processing"/> for more details).
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		A directory in which resources are always exported to the same
+		location. This is usually the case of a directory that is
+		already close to the final destination of the material and is in
+		charge of combining resources and place them in their final
+		location. In such scenario, the variables
+		<varname>export.files</varname> and
+		<varname>export.dst.dir</varname> contain respectively the set
+		of resources to place and the directory where they have to be
+		copied.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="subrecursive_processing"
+		  xreflabel="How to process other directories before this one">
+	<question>
+	  <para>
+	    Can I specify some directories to be processed before doing anything
+	    else?
+	  </para>
+	  <para>
+	    I have a directory that processes a bunch of files, but before that,
+	    it needs some other resources in other locations to be produced by
+	    ADA and placed in this directory. Is it possible to simply specify
+	    those directories?
 	  </para>
 	</question>
 	<answer>
 	  <para>
-	    Yes. You may define rules that are already defined when you process
-	    the files in a directory. ADA automatically reads first the file
-	    with name <filename>.ant.properties</filename> in your home
-	    directory. You may insert any rule there that will be defined for
-	    all the directories in which you process files. What is even more
-	    important, you may override these rules at any time simply by
-	    including a new rule in the local <filename>Properties.txt</filename>
-	    file.
+	    Yes. And this is one of the key features that ADA uses to allow
+	    hierarchical resource building. The generic scenario considered is
+	    such that to obtain the final version of a set of resources, some
+	    other resources need to be created in different locations and
+	    <emphasis>exported</emphasis> to the current location to obtain the
+	    final product.
+	  </para>
+
+	  <para>
+	    Let us assume that all the remote directories contain the
+	    <filename>Properties.txt</filename> file in which the export
+	    variables containing the list of files to export have been defined
+	    (see <xref linkend="export_processing"/> for the details).
+	  </para>
+
+	  <para>
+	    The following variables control the execution of the production
+	    process in a set of directories:
+	  </para>
+
+	  <informaltable frame="all" id="subrecursive_vars">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="center"/>
+	      <thead>
+		<row>
+		  <entry align="center">Variable name</entry>
+		  <entry align="center">Description</entry>
+		  <entry align="center">Default</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry><varname>subrecursive.dirs</varname></entry>
+		  <entry>
+		    Directories (with respect to the the current location) to be
+		    processed prior to any other rule.
+		  </entry>
+		  <entry>Current directory</entry>
+		</row>
+		<row>
+		  <entry><varname>subrecursive.target</varname></entry>
+		  <entry>Rule to execute in those remote directories</entry>
+		  <entry>A regular <command>adado</command></entry>
+		</row>
+		<row>
+		  <entry><varname>subrecursive.dst.dir</varname></entry>
+		  <entry>
+		    Directory where files are to be exported. It overrides the
+		    variable <varname>export.dst.dir</varname> given in the
+		    remote directory.
+		  </entry>
+		  <entry><emphasis>The current directory</emphasis></entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+
+	  <para>
+	    The values stored in these variables have a special effect when
+	    combined with the variables used for exporting resources in the
+	    remote repository (see <xref linkend="export_processing"/>.) The
+	    following figure shows the possible scenarios:
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/SubrecursiveExport.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Exporting recursively</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="ada_course_home"
+		  xreflabel="How to re-use definitions across an entire project">
+	<question>
+	  <para>Can I have definitions or files that are shared accross a
+	  <quote>project</quote>?</para>
+	</question>
+	<answer>
+	  <para>
+	    Yes. Although there is no forma definition of a
+	    <quote>project</quote> within ADA, it is very common to have files
+	    or definitions that apply to all files included in a directory and
+	    its set of subdirectories. This directory is called the
+	    <emphasis>course home</emphasis> directory within ADA. A user may
+	    have multiple of these directories one for each large project of
+	    shared resources.
+	  </para>
+
+	  <para>
+	    ADA tries to follow the least invasive path and rather than
+	    requiring an extra definition with the location of this directory,
+	    it detects it automatically by searching for the file
+	    <filename>AdaCourseParams.xml</filename> in up to ten levels of
+	    directories above the current one. If a file with this name is
+	    found, the variable with name <varname>ada.course.home</varname>
+	    name is then defined with the directory where the file is located.
 	  </para>
 	  
 	  <para>
-	    In order to make sure the file <filename>.ant.properties</filename>
-	    is placed in the correct location, open a shell window and run the
-	    command <code>adacheck</code>. The line containing the variable name
-	    <code>user.home</code> displays the home directory where ADA expects
-	    the <filename>.ant.properties</filename> file to be processed.
+	    For example, let us assume that your project uses some stylesheet
+	    containing the re-definition of some ADA stylesheet parameters. You
+	    may give this file the name <filename>AdaCourseParams.xml</filename>
+	    and place it at the highest level in your hierarchy of
+	    directories. From any directory you may refer to such file in the
+	    <filename>Properties.txt</filename> file as shown in the following
+	    example.
 	  </para>
+
+	  <example>
+	    <title>Example of use of <varname>ada.course.home</varname></title>
+	    <programlisting>mergestyles.master.style=${ada.course.home}AdaCourseParams.xml
+export.dst.dir=${ada.course.home}scratch</programlisting>
+	  </example>
+
+	  <para>
+	    The variable <varname>ada.course.home</varname> is used to access
+	    the common stylesheet as well as to refer to a common directory
+	    where to export resources.
+	  </para>
+
+	  <para>
+	    If what you want is not only to use the variable
+	    <varname>ada.course.home</varname> within any directory in a project
+	    but to use any variable definition, then check <xref
+	    linkend="global_rule"/>.
+	  </para>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="global_rule" xreflabel="How to define global rules">
+	<question>
+	  <para>Can I make a variable declaration to be used everywhere?</para>
+	  
+	  <para>
+	    The file <filename>Properties.txt</filename> contains variable
+	    assignments only valid for the current directory. Is it possible to
+	    define for example the set of figures to be process by Inkscape in a
+	    way such that it is applied in all the directories?  For example, I
+	    would like all my <filename>*.svg</filename> files in any directory
+	    to be processed by the Inkscape rule.
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    Yes. You may have this type of assignments in two additional files
+	    that are read by ADA. These files are:
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		The file with name <filename>Ada.properties</filename> if
+		present in the ADA Course Home directory (see <xref
+		linkend="ada_course_home"/> to know where is this directory.)
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		The <filename>.ant.properties</filename> file if present in your
+		home directory (see <xref linkend="run_adacheck"/> to find out
+		where Ant assumes where is this directory.)
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <para>
+	    Before these definitions are read, the file
+	    <filename>Properties.txt</filename> in your current directory is
+	    processed. If a variable is defined several times, only the
+	    <emphasis>first</emphasis> definition is taken into account. As a
+	    consequence, you may have general definitions the
+	    <filename>.ant.properties</filename> of your home directory that may
+	    be overwritten by definitions in the
+	    <filename>Ada.properties</filename> file in the project home
+	    directory, and again overwritten by the
+	    <filename>Properties.txt</filename> file in the local directory. The
+	    following figure shows the effect of reading these files.
+	  </para>
+	  
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/GlobalRule.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Definition file processing</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>
+	    The value of <varname>Var1</varname> is taken from the
+	    <filename>Properties.txt</filename> file, <varname>Var2</varname> is
+	    taken from the ADA Course Home, and <varname>Var3</varname> is taken
+	    from the <filename>.ant.properties</filename> file in the user home
+	    directory.
+	  </para>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -1301,16 +1741,23 @@ clean.files=../scratch/Theory2</programlisting>
 	    needs to be modified with your personal definitions. For example:
 	  </para>
 
-	  <programlisting>mergestyles.master.style=MyPersonalValues.xml
+	  <example>
+	    <title>
+	      Definitions to include modifications on a shared stylesheet
+	    </title>
+	    <programlisting>mergestyles.master.style=MyPersonalValues.xml
+
 docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
 docbook.files=index.xml</programlisting>
+	  </example>
 
           <para>
 	    The previous definitions instruct ADA to process the file
-	    <filename>index.xml</filename> with docbook applying a style which
-	    is the combination of the style with name
+	    <filename>index.xml</filename> with docbook applying the stylesheet
+	    which is the combination of the ADA stylesheet with name
 	    <filename>HeadTail.xsl</filename> with the file
-	    <filename>MyPersonalValues.xml</filename>.
+	    <filename>MyPersonalValues.xml</filename> containing my personal
+	    modifications.
 	  </para>
 
 	  <para>
@@ -1352,6 +1799,8 @@ docbook.files=index.xml</programlisting>
 	    The style sheet resulting of the merge between the two given files
 	    is left in the current directory.
 	  </para>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -1379,7 +1828,7 @@ docbook.files=index.xml</programlisting>
 	  <para>
 	    The stylesheets included in ADA to process Docbook allow you to
 	    include a video player embedded in your page simply by providing a
-	    special markup using the <code>&lt;para&gt;</code> element. The
+	    special markup using the <command>&lt;para&gt;</command> element. The
 	    following example shows the structure of this element:
 	  </para>
 
@@ -1394,8 +1843,8 @@ docbook.files=index.xml</programlisting>
 	   
 	  <para>
 	    In order to maintain the Docbook file valid, the parameters are
-	    passed as nested <code>&lt;code&gt;</code> elements with the
-	    attribute <code>condition</code> equal to the name of the
+	    passed as nested <command>&lt;code&gt;</command> elements with the
+	    attribute <command>condition</command> equal to the name of the
 	    parameter. The available names are:
 	  </para>
 
@@ -1468,21 +1917,37 @@ docbook.files=index.xml</programlisting>
 	      </tbody>
 	    </tgroup>
 	  </informaltable>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
 
       <qandaentry id="exportcontrol">
 	<question>
-	  <para>REWRITE ENTIRELY!!</para>
 	  <para>
-	    Is it possible to have a directory in which the defined rules for
-	    ADA are only applied during a given window of time?
+	    Is it possible to consider a directory for building only under some
+	    special conditions?
+	  </para>
+
+	  <para>
+	    I have some diretories that, although present in my project, I would
+	    like to control its presence in the final version easily. For
+	    example, suppose I would like to control the presence of a special
+	    page in my final site, that is, go from a version in which that page
+	    nor any link to it are present in the site, to a version in which
+	    both the link and the page are present.
 	  </para>
 	</question>
 	<answer>
 	  <para>
-	    Yes. That is the functionality provided by the following variables
-	    that can be defined in the file <filename>Properties.txt</filename>:
+	    This functionality is considered in ADA and provided through a
+	    combination of multiple mechanisms. The presence or not of a set of
+	    resources in the final version of a site is achieved by either
+	    executing or not the exporting rules (see <xref
+	    linkend="export_processing"/> for the details). The following
+	    variables are provided to create a <emphasis>condition</emphasis>
+	    such that if satisfied, resource export is executed, but if not
+	    satisfied, no resource is exported:
 	  </para>
 
 	  <informaltable frame="all" id="exportcontrol_vars">
@@ -1499,62 +1964,178 @@ docbook.files=index.xml</programlisting>
 	      </thead>
 	      <tbody>
 		<row>
-		  <entry><varname>exportcontrol.format</varname></entry>
-		  <entry>
-		    Format in which date/time need to be given
-		  </entry>
-		  <entry>yyyy-MM-dd'T'HH:mm:ss</entry>
-		</row>
-		<row>
-		  <entry><varname>exportcontrol.start</varname></entry>
-		  <entry>
-		    Date/time when the valid window starts
-		  </entry>
+		  <entry><varname>exportcontrol.begin</varname></entry>
+		  <entry>Date/time after which export is allowed</entry>
 		  <entry></entry>
 		</row>
 		<row>
 		  <entry><varname>exportcontrol.end</varname></entry>
-		  <entry>
-		    Date/time when the valid window ends
-		  </entry>
+		  <entry>Date/time after which export is not allowed</entry>
 		  <entry></entry>
 		</row>
 		<row>
 		  <entry><varname>exportcontrol.now</varname></entry>
 		  <entry>
-		    Current date/time. Used to fake a future time and check that
-		    the validity is considered properly.
+		    Current date/time to consider. Used to reset a time and
+		    check if export is allowed.
 		  </entry>
 		  <entry>date/time at execution</entry>
 		</row>
 		<row>
-		  <entry><varname>exportcontrol.enabled</varname></entry>
+		  <entry><varname>exportcontrol.date.format</varname></entry>
+		  <entry>Format in which date/time need to be given</entry>
+		  <entry>yyyy-MM-dd'T'HH:mm:ss</entry>
+		</row>
+		<row>
+		  <entry><varname>exportcontrol.open</varname></entry>
 		  <entry>
-		    Check for the compliance of date/time with the defined
-		    validity window.
+		    Condition to allow export. If different from
+		    <quote>true</quote>, export is never allowed.
 		  </entry>
-		  <entry>false</entry>
+		  <entry>true</entry>
+		</row>
+		<row>
+		  <entry><varname>exportcontrol.profile.revision</varname></entry>
+		  <entry>
+		    A semicolon-separated list of strings to search for a given
+		    revision value.
+		  </entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>exportcontrol.profile.revision.value</varname>
+		  </entry>
+		  <entry>
+		    Value that if not empty and contained in the previous
+		    variable (not empty either) allows the export.
+		  </entry>
+		  <entry></entry>
 		</row>
 	      </tbody>
 	    </tgroup>
 	  </informaltable>
 
 	  <para>
-	    For example, the following definitions:
+	    Given these variables, when invoked, the export rule is truly
+	    executed if all the following conditions are satisfied:
 	  </para>
 
-	  <programlisting>exportcontrol.enabled=true
-exportcontrol.start=2008-06-25T19:00:00
+	  <informaltable frame="all" id="exportcontrol_condition">
+	    <tgroup rowsep="1" colsep="1" cols="1">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <tbody>
+		<row>
+		  <entry>
+		    <itemizedlist>
+		      <listitem>
+			<para>
+			  <varname>exportcontrol.open</varname> is true
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <varname>exportcontrol.begin</varname> is empty or its
+			  value is before <varname>exportcontrol.now</varname>
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <varname>exportcontrol.end</varname> is empty or its
+			  value is after <varname>exportcontrol.now</varname>
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <varname>exportcontrol.profile.revision</varname>
+			  is empty or 
+			  <varname>exportcontrol.profile.revision.value</varname>
+			  is empty or the former is contained in the latter.
+			</para>
+		      </listitem>
+		    </itemizedlist>
+		  </entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+		     
+	  <para>
+	    Clear uh? The condition is so complicated because it combines
+	    several control mechanisms into a single condition. A regular user
+	    will likely use only one of these mechanisms. The condition is
+	    easily understood if broken into the following possible scenarios of
+	    use (in increasing level of complexity):
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		Allow/skip the export rule in a directory by changing only one
+		definition in <filename>Properties.txt</filename>. This is
+		achieved by simply using the definition:
+	      </para>
+
+	      <programlisting>exportcontrol.open=true</programlisting>
+
+	      <para>
+		If the value of this variable is different from
+		<quote>true</quote> the export rule is not executed.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		A directory should only be exported during a certain time
+		window. Define the time interval with the variables
+		<varname>exportcontrol.begin</varname> and
+		<varname>exportcontrol.end</varname>.
+	      </para>
+	      
+	      <example>
+		<title>
+		  Limiting the export of a directory to a time
+		  window
+		</title>
+		<programlisting>exportcontrol.begin=2008-06-25T19:00:00
 exportcontrol.end=2018-06-25T19:00:00</programlisting>
+	      </example>
+	    </listitem>
 
-           <para>
-	     Instructs ADA to process the content in such directory between the
-	     two date/times given. You may still build the content of the
-	     directory at any time if you re-define the variable
-	     <code>exportcontrol.enabled</code> to <code>false</code> (see <xref
-	     linkend="property_in_command_line"/> for details).
-	   </para>
+	    <listitem>
+	      <para>
+		Keep a list of directories allowed to export. This is achieved
+		using the two variables
+		<varname>exportcontrol.profile.revision</varname> and
+		<varname>exportcontrol.profile.revision.value</varname>. You
+		should first choose a keyword assigned to each directory you
+		want to control. Assign that keyword to the
+		<varname>exportcontrol.profile.revision.value</varname>variable
+		as shown in the example:
+	      </para>
 
+	      <example>
+		<title>Controlling export with a keyword</title>
+		<programlisting>exportcontrol.profile.revision.value=keyword</programlisting>
+	      </example>
+
+	      <para>
+		Set the value of
+		<varname>exportcontrol.profile.revision</varname> with the
+		semi-colon separated list of keywords of those modules you want
+		to activate. This definition should be included in a file common
+		for the entire project (see <xref linkend="global_rule"/>.)
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <para>
+	    ADA allows you use more than one of these conditions together. The
+	    export is actually execute if <emphasis>all of them</emphasis> are
+	    satisfied.
+	  </para>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
       </qandaentry>
     </qandaset>
@@ -1566,44 +2147,149 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
   <!--                             GIT                              -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <section id="Git">
+  <section id="Git" xreflabel="Top of the Section">
     <title>Using Git with ADA</title>
 
     <qandaset defaultlabel="qanda">
-      <qandaentry id="gitwhatis">
+
+      <qandaentry id="what_is_VCS">
+	<question>
+	  <para>
+	    What is a <ulink
+	    url="en.wikipedia.org/wiki/Revision_control">version control
+	    system</ulink>?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    A Version Control System (VCS) is a tool that allows the manipulation of
+	    different versions of information units (typically files) by
+	    multiple users.
+	  </para>
+
+	  <para>
+	    Files change over time, and current file systems store only the last
+	    version. Version control systems, on the other hand store (almost)
+	    all the different versions that files have over time. The location
+	    where these versions are stored is commonly known as a
+	    <emphasis>repository</emphasis>. But on top of storing versions,
+	    these tools also offer multiple operations to manipulate them. The
+	    two most common operations amount to send a new version of the files
+	    to the repository and get the latest version of the repository.
+	  </para>
+
+	  <para>
+	    But when a set of users is sharing files, version management may
+	    become specially complicated. What happens if two users have the
+	    same file and both modifyit? Who has the latest version? How is this
+	    situation managed? Actual VCS tools have very sophisticated
+	    techniques to solve these situations and offer users a comfortable
+	    environment to manipulate complicated multiple versions of large
+	    sets of files.
+	  </para>
+
+	  <para>
+	    As with almost any application, there are multiple VCS, both open
+	    source and commercial. ADA is itself managed using
+	    <command>GIT</command>, an open source VCS, and the authoring
+	    environment proposed relies also in the use of the same tool. The
+	    problem of version control is orthogonal to authoring. In other
+	    words, any distributed authoring environment probably has some
+	    degree of file sharing and version management. If you solve this
+	    problem with <command>git</command> or any other tool is independent
+	    of the problem of creating and assembling resources as supported by
+	    ADA.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="gitwhatis" xreflabel="What is git">
 	<question>
 	  <para>What is Git?</para>
 	</question>
 	<answer>
 	  <para>
-	    Git is a modern, fast, open-source distributed version
-	    control system, originally developed by Linus Torvalds.
-	    It is being used in large-scale open-source projects
-	    like, for example, the Linux Kernel and the X Window System
-	    <emphasis>X.org</emphasis>, although it is suitable
-	    also for small projects.
+	    Git is a modern, fast, open-source distributed version control
+	    system, originally developed by Linus Torvalds.  It is being used in
+	    large-scale open-source projects like, for example, the Linux Kernel
+	    and the X Window System <emphasis>X.org</emphasis>, although it is
+	    suitable also for small projects.
 	  </para>
+
 	  <para>
-	    Unlike other well-known
-	    version control systems like CVS and Subversion,
-	    Git is distributed:
-	    a central repository is not necessary because each developer
-	    can have her own repository with the full
-	    history of the project. Changes done by a developer
-	    in her repository can be easily copied later into 
-	    other's repositories.
+	    Unlike other well-known version control systems like CVS and
+	    Subversion (which rely on a central repository), Git uses a
+	    distributed repository. A central repository is not necessary because
+	    each developer can have her own repository with the full history of
+	    the project. Changes done by a developer in her repository can be
+	    easily copied to other repositories.
 	  </para>
+
 	  <para>
-	    This distributed way of development is mainly supported
-	    by a powerful and convenient branching/merging system.
-	    Creating branches and merging them is normally
-	    straightforward, even when the same file is modified
-	    concurrently in several parallel branches.
+	    GIT approaches the problem of managing versions of a set of files
+	    from the point of view of four locations as shown in the following
+	    figure (derived from an excellent post by <ulink
+	    url="http://osteele.com">Oliver Steel's Blog</ulink>).
 	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/GitScenario.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Git scenario</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+	  
 	  <para>
-	    For further information about Git, go to the
-	    <ulink url="http://git.or.cz/">official Git Web site</ulink>.
+	    The user works with her files normally. The <quote>index</quote> is
+	    similar to a container in which the changes to the files can be
+	    deposited gradually to later be packed and sent to the local
+	    repository. As it can be seen in the figure, there are commands to
+	    send changes from the files to the index, from the index to the
+	    local repository or even directly from the files to the repository.
 	  </para>
+
+	  <para>
+	    This workflow can be done entirely in a local machine with no
+	    information exchange with any other repository. However, if the
+	    different versions need to be shared through an external repository,
+	    <command>git</command> offers commands to send these changes or
+	    update the local files with the latest revision respecto to the
+	    remote repository. These commands are deailted explained in the
+	    following questions.
+	  </para>
+
+	  <para>
+	    But aside from this four-location scenario, Git, as all VCS tools,
+	    offers a very powerful functionality to group and manage versions
+	    into what are called <emphasis>branches</emphasis>. Branches are
+	    different views of the local repository that contain different
+	    versions of the files in the repository. At any point in time, the
+	    work directory and the index are pointing to one and only one branch
+	    of the repository. It then appears the notion of <quote>being placed
+	    in a branch</quote> (or should we say <quote>perched</quote>) while
+	    working with our local files managed by git.
+	  </para>
+
+	  <para>
+	    The most commonly used operations with branches are: create a branch
+	    with a name (simply duplicate the content of the current branch),
+	    change the current branch, and merge the content of one branch with
+	    the current branch. Branches might be a bit counterintiutive at
+	    first, but together with an extremelly powerful merge capability,
+	    offer an effective way to organize multiple versions in a complex
+	    set of files.
+	  </para>
+
+	  <para>
+	    For further information about Git, go to the <ulink
+	    url="http://git.or.cz/">official Git Web site</ulink>.
+	  </para>
+
+	  <para>Back to <xref linkend="Git"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -1613,375 +2299,490 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	</question>
 	<answer>
 	  <para>
-	    Git is multi-platform. It can be installed on
-	    Windows, Linux and Mac systems.
+	    Git is multi-platform. It can be installed on Windows, Linux and Mac
+	    systems.
 	  </para>
-	  <para>
-	    On Windows, Git can be installed in Cygwin
-	    (<ulink url="http://www.cygwin.com/setup.exe">download
-	      the Cygwin installer</ulink>). Other alternative
-            is the <ulink url="http://code.google.com/p/msysgit/">msys-git 
-            installer</ulink>.
-	  </para>
-	  <para>
-	    On Linux, it should be available as a package in your
-	    distribution. For example, the main Git package in Debian
-	    is called <code>git-core</code>. It can be installed
-	    using <emphasis>Aptitude</emphasis> or any other
-	    available package manager.
-	  </para>
-	  <para>
-	    On Mac, the <ulink url="http://code.google.com/p/git-osx-installer/">Git 
-	      OS X installer</ulink> is available.
-	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		On Windows, you have two options: the software is alreay
+		installed as part of Cygwin (see <xref
+		linkend="howtoinstallcygwin"/>) or as an standalone windows
+		program called <ulink
+		url="http://code.google.com/p/msysgit/">msys-git
+		installer</ulink>. The first step is to download the installer
+		from the project page. 
+	      </para>
+
+	      <para>
+		Start the installer and advance on the required steps until the
+		system tries to adjust the <varname>PATH</varname> environment
+		as shown in the following figure:
+	      </para>
+
+	      <informalfigure>
+		<mediaobject>
+		  <imageobject>
+		    <imagedata fileref="images/GitWindowsInstall.png" format="PNG"/>
+		  </imageobject>
+		  <textobject>
+		    <phrase>Git Setup Path Environment</phrase>
+		  </textobject>
+		</mediaobject>
+	      </informalfigure>
+
+	      <para>
+		The option of installing Git Bash Only needs to be select to
+		avoid conflicts with the Git version already installed as part
+		of the Cygwin environment.
+	      </para>
+
+	      <para>
+		Git needs an additional program to transfer data to and from a
+		remote repository. When selecting the SSH executable, select
+		OpenSSH as shown in the following figure.
+	      </para>
+
+	      <informalfigure>
+		<mediaobject>
+		  <imageobject>
+		    <imagedata fileref="images/GitWindowsInstall2.png" format="PNG"/>
+		  </imageobject>
+		  <textobject>
+		    <phrase>Git Setup SSH Tool</phrase>
+		  </textobject>
+		</mediaobject>
+	      </informalfigure>
+
+	      <para>
+		Once the installation has finished, you have two options to work
+		with Git, either a shell terminal which opens if you execute the
+		installed program named <command>Git Bash</command>, or a
+		graphical user interface named <command>Git GUI</command>. This
+		last interface offers the initial commands to clone, create or
+		open a repository.
+	      </para>
+
+	      <para>
+		After selecting a repository, Git GUI allows you to create a
+		link to start the GUI directly manipulating that repository as
+		shown in the following figure.
+	      </para>
+
+	      <informalfigure>
+		<mediaobject>
+		  <imageobject>
+		    <imagedata fileref="images/GitWindowsInstall4.png" format="PNG"/>
+		  </imageobject>
+		  <textobject>
+		    <phrase>Git GUI Create Shortcut</phrase>
+		  </textobject>
+		</mediaobject>
+	      </informalfigure>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		On Linux, it should be available as a regular package in your
+		distribution. For example, the main Git package in Debian is
+		called <command>git-core</command>. It can be installed using
+		<emphasis>Aptitude</emphasis> or any other available package
+		manager.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		On Mac, the <ulink
+		url="http://code.google.com/p/git-osx-installer/">Git OS X
+		installer</ulink> is available.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <para>Back to <xref linkend="Git"/>.</para>
 	</answer>
       </qandaentry>
 
       <qandaentry id="gitrepositories">
 	<question>
-	  <para>My Git repository is local to my machine,
-	    how is content shared with other authors and
-	    course coordinators?</para>
+	  <para>
+	    My Git repository is local to my machine, but how is the content
+	    shared with other authors and course coordinators?
+	  </para>
 	</question>
 	<answer>
 	  <para>
-	    The distributed model of Git allows several ways
-            of collaboration. One way is presented
-            here, although other alternatives are possible. 
+	    The distributed model offered by Git allows several workflows. One
+	    possible workflow is presented here, but different alternatives are
+	    also possible. It is assumed that a set of authors create content
+	    for a course that is ultimately combined in a common location by a
+	    person called the <emphasis>coordinator</emphasis> to produce the
+	    final version to be published in the Web.
 	  </para>
+
 	  <para>
-	    A repository for course material (and optionally course
-	    administration files) should be installed in an account associated
-	    to the course. All the authors should be able to
-	    log-in that account. This repository will be referred to as
-	    the shared repository in some parts of this FAQ.
+	    Also, a repository for the course material (and optionally course
+	    administration files) must be installed in an location associated to
+	    the course and such that all the authors must be able to exchange
+	    files (for example through SSH). This repository will be referred to
+	    as the <emphasis>shared repository</emphasis> in some parts of this
+	    FAQ.
 	  </para>
+
 	  <para>
-	    A course coordinator has to set-up
-	    the shared repository initially. She should use the
-	    branch <code>master</code>
-	    for the <emphasis>official</emphasis> content
-	    of the course (if you are a course coordinator, 
-	    see <xref linkend="git-admin-shared-repo"/>).
-	    Published material is intended to be built
-	    from the contents of this branch.
-	    A course coordinator may be
-	    the person in charge of integrating changes from authors
-	    into this branch.
-	    An additional branch in this repository should be created for each 
-	    author. Authors should upload their changes into their
-	    branch. The coordinator takes authors' contributions from
-	    their branches and merges them into this repository
-	    (if you are a course coordinator, 
-	    see <xref linkend="git-admin-merge"/>).
+	    The course coordinator sets up an initial version of the shared
+	    repository. Git repositories allow for versions to be grouped in
+	    what is called a <emphasis>branch</emphasis>. Branches are copies of
+	    the repository such that versions can be selected from any of them
+	    to manipulate. There is always a branch called
+	    <filename>master</filename> and the coordinator should use it as the
+	    <emphasis>official</emphasis> one containing the course material (if
+	    you are a course coordinator, see <xref
+	    linkend="git-admin-shared-repo"/>).  Published material is intended
+	    to be built from the contents of this branch.  The course
+	    coordinator is the person in charge of combining the changes from
+	    all the authors into this branch. In order to maintain the new
+	    versions produced by the authors properly contained, a branch should
+	    be created for each author that is going to use the
+	    repository. Authors will modify files in their respective local
+	    repositories and eventually upload a new versoin of their files to
+	    the proper branch of the shared repository. The coordinator takes
+	    authors' contributions from their branches and merges them into this
+	    repository (if you are a course coordinator, see <xref
+	    linkend="git-admin-merge"/>). The following figure illustrates the
+	    interaction between authors and course coordinator through the
+	    shared repository.
 	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/GitAuthorBranches.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Git GUI Create Shortcut</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
 	  <para>
-	    In addition to the course shared repository, authors should have
-	    their own local repository in their workspace (their laptop,
-	    corporative user account, etc.) It can be easily set-up
-	    by cloning the course repository
-	    (see <xref linkend="gitclone" />). Authors should edit
-	    and commit their contents in their local repository,
-	    and push changes
-	    to their branch in the shared repository when they want
-	    these changes to be visible to others
-	    (see <xref linkend="gitpush"/>).
+	    As it can be seen, in addition to the course shared repository,
+	    authors have their own local repository in their workspace (their
+	    laptop, corporative user account, etc.) These repositories can be
+	    easily set up by cloning the course repository (see <xref
+	    linkend="gitclone" />). Authors then edit and store their versions
+	    in their local repositories, and when the new version is ready to be
+	    shared with the rest of authors, they push the changes to the proper
+	    author branch in the shared repository (see <xref
+	    linkend="gitpush"/>).
 	  </para>
+
+	  <para>Back to <xref linkend="Git"/>.</para>
 	</answer>
       </qandaentry>
 
       <qandaentry id="gitclone" xreflabel="How to clone a repository">
 	<question>
-	  <para>How do I create my local repository from the 
-	    shared repository?</para>
 	  <para>
-	    I was told that there is a shared repository I
-	    should obtain the initial files from, before starting
-	    to work. How do I set-up my local Git repository from it?
+	    How do I create my local repository from the 
+	    shared repository?
+	  </para>
+
+	  <para>
+	    The course coordinator gave me the URL to access the shared
+	    repository. How do I obtain the initial files from that repository
+	    before starting to work?. How do I set-up my local Git repository
+	    from it?
 	  </para>
 	</question>
+
 	<answer>
 	  <para>
-	    A new repository can be easily created by cloning an existing
-	    one. Suppose that the shared repository is available
-	    via SSH with the following example parameters:
+	    A repository containing a copy of another repository is obtained
+	    using the <command>clone</command> command. Let us suppose that the
+	    shared repository is available through SSH with the following
+	    parameters:
 	  </para>
 
 	  <itemizedlist>
 	    <listitem>
-	      <para>Remote host where the course account is available:
-		<code>accounts.example.com</code>.</para>
-	    </listitem>
-	    <listitem>
-	      <para>User name of the course account: <code>mycourse</code>.
+	      <para>
+		Remote host where the course account is available:
+		<command>accounts.example.com</command>.
 	      </para>
 	    </listitem>
 	    <listitem>
-	      <para>Path in the course account where the shared
-		repository resides: <code>~mycourse/repository/material</code>.
+	      <para>
+		User name of the course account: <command>mycourse</command>.
 	      </para>
 	    </listitem>
 	    <listitem>
-	      <para>Name of your branch in the shared repository:
-		<code>john</code>.
+	      <para>
+		Path within the course account where the shared repository
+		resides: <command>/home/mycourse/repository/material</command>.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		Name of your branch in the shared repository:
+		<command>john</command>.
 	      </para>
 	    </listitem>
 	  </itemizedlist>
 
 	  <para>
-	    In a command-line window, go to the directory where you want
-	    to store your repository (take into account that
-	    the repository will not be in
-	    that directory, but inside its <filename>material</filename>
-	    subdirectory that <code>git clone</code> will create automatically
-	    by default). Execute:
+	    Open a Git Shell window (see <xref linkend="gitinstall"/>.) Go to
+	    the directory where you want to store your repository (take into
+	    account that git will create a new folder with the name
+	    <filename>material</filename>). Execute the following command:
 	  </para>
 
-	  <programlisting>$ git clone ssh://mycourse@accounts.example.com/~/repository/material</programlisting>
+	  <programlisting>git clone ssh://mycourse@accounts.example.com/home/mycourse/repository/material</programlisting>
 
 	  <para>
-	    You will be asked for <code>mycourse</code>'s password,
-	    unless you have set-up public key access to that account.
-	    A clone of the shared repository should appear now in a
-	    new subdirectory called <code>material</code> inside your
-	    current directory. Enter into that directory and type
-	    <code>git status</code>:
+	    You will be asked to authenticate with <command>mycourse</command>'s
+	    password. The program will then print several messages and after a
+	    while a clone of the shared repository should appear now in a new
+	    subdirectory called <command>material</command> inside your current
+	    directory. Enter into that directory and type <command>git
+	    status</command>:
 	  </para>
 
-	  <programlisting>$ git status
+	  <programlisting>git status
 # On branch master
 nothing to commit (working directory clean)</programlisting>
 
 	  <para>
-	    If the command says that you are not placed on branch
-	    <code>master</code>, just change to that branch:
+	    As you can see, the repository has been successfully downloaded, you
+	    are in the <filename>master</filename> branch and the working
+	    directory is clean of any changes. If the command says that you are
+	    placed on a branch different from <command>master</command>, then
+	    you just must change to that branch with the command:
 	  </para>
 
-	  <programlisting>$ git checkout master</programlisting>
+	  <programlisting>git checkout master</programlisting>
 
 	  <para>
-	    If you are not placed on branch <code>master</code>
-	    and the previous command failed, you need to create
-	    the <code>master</code> branch. Just type:
+	    If you are not placed on branch <command>master</command> and the
+	    previous command failed, it means that the repository you cloned
+	    does not have a <command>master</command> branch. To create it you
+	    must type:
 	  </para>
 
-	  <programlisting>$ git checkout -b master origin/master</programlisting>
+	  <programlisting>git checkout -b master origin/master</programlisting>
 
 	  <para>
-	    You should be now placed on branch <code>master</code>.
-	    Before beginning to work, it would be useful to
-	    edit the configuration file of your repository
-	    to make easier to send your changes to your branch
-	    in the shared repository. Open the file
-	    <filename>.git/config</filename> in your repository
-	    with an editor and add the line
-	    <code>push = master:john</code> at the end of the
-	    <code>remote "origin"</code> section. Remember that
-	    <code>john</code> is the name of your branch in
-	    the shared repository in this example. The file should
-	    now look something like this:
+	    Your repository should now be placed on branch
+	    <command>master</command> as ilustrated in the following figure.
 	  </para>
 
-<programlisting>$ cat .git/config
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/GitAuthorCloned.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Cloned respository in author area</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>
+	    Before beginning to work, you need to edit the configuration file of
+	    your repository to simplify the exchange of information with your
+	    author branch in the shared repository. Open the file
+	    <filename>.git/config</filename> in your repository directory with a
+	    plain text editor and add the line <command>push =
+	    master:john</command> at the end of the <command>remote
+	    "origin"</command> section. Remember that <command>john</command> is
+	    the name of your branch in the shared repository in this
+	    example. The file should now look something like this:
+	  </para>
+
+	  <programlisting>cat .git/config
 [core]
         repositoryformatversion = 0
         filemode = true
         bare = false
         logallrefupdates = true
 [remote "origin"]
-        url = ssh://jaf@ariadna.it.uc3m.es/~/tmp/tmp-ada/ADA
+        url = ssh://john@accounts.example.com/home/mycourse/repository/material
         fetch = +refs/heads/*:refs/remotes/origin/*
-        push = master:john
+        <command>push = master:john</command>
 [branch "master"]
         remote = origin
         merge = refs/heads/master</programlisting>
-
+	
 	  <para>
-	    Now your local repository is ready to work. You should
-	    edit and commit your material in this repository
-	    (see <xref linkend="gitcommit" />),
-	    push your changes from here into your branch in the shared
-	    repository (see <xref linkend="gitpush" />),
-	    and update from time to time your local repository
-	    to get the latest changes published on branch master
-	    in the shared repository (see <xref linkend="gitpull" />).
+	    Now your local repository is ready to work. Go ahead and modify your
+	    files in this repository, and eventually send the changes first to
+	    the index (if you need to do so) and then to your local repository
+	    (see <xref linkend="gitcommit" />). Whenever you think appropriate
+	    push your changes to your branch in the shared repository (see <xref
+	    linkend="gitpush" />), and to obtain the latest version from the
+	    repository, update from time to time your local repository(see <xref
+	    linkend="gitpull" />).
 	    
 	  </para>
-	</answer>
-      </qandaentry>
 
-      <qandaentry id="gitcommitlocal">
-	<question>
-	  <para>I have just commited some changes, why are they not
-	    visible in the shared repository?
-	  </para>
-	</question>
-	<answer>
-	  <para>
-	    When you commit changes, they are only stored in your
-	    local repository. If you want your latest local commits to
-	    be stored in the shared repository also, you have to
-	    explicitly send your changes to that repository after
-	    committing them. See <xref linkend="gitpush"/> for
-	    further explanation.
-	  </para>
-	</answer>
-      </qandaentry>
-
-      <qandaentry id="gitpull" xreflabel="How to update your local repository with others' changes">
-	<question>
-	  <para>How do I update my local repository to see the latest changes
-	    published by the course coordinator on the official branch?
-	  </para>
-	</question>
-	<answer>
-	  <para>
-	    From your branch <code>master</code>, type:
-	  </para>
-	  <programlisting>$ git pull</programlisting>
-	  <para>
-	    The latest changes introduced on the official branch
-	    (branch <code>master</code> in the shared repository)
-	    should now be visible in your repository. 
-	  </para>
-	  <para>
-	    Do not execute <code>git pull</code> if you have local
-	    uncommitted changes. Commit them first.
-	  </para>
-	</answer>
-      </qandaentry>
-
-      <qandaentry id="gitpush" xreflabel="How to send changes to the shared repository">
-	<question>
-	  <para>How do I send my local changes to the shared repository?
-	  </para>
-	  <para>
-	    I have done several commits into my local repository,
-	    and now I want to share them with other people.
-	    How do I upload those commits to the shared repository?
-	  </para>
-	</question>
-	<answer>
-	  <para>
-	    I your changes have been committed into your local branch
-	    <code>master</code> and you have set-up your local repository
-	    following the instructions in <xref linkend="gitclone" />,
-	    you just have to execute:
-	  </para>
-
-	  <programlisting>$ git push</programlisting>
-
-	  <para>
-	    Your changes should be now on your branch in the
-	    shared repository. If your modifications are ready to
-	    be reviewed by the course coordinator,
-	    you may tell her that there are new contents there.
-	    The course coordinator will review them and,
-	    if they are all right, put them into the official branch. 
-	  </para>
-
+	  <para>Back to <xref linkend="Git"/>.</para>
 	</answer>
       </qandaentry>
 
       <qandaentry id="gitcommit" xreflabel="How to commit changes">
 	<question>
-	  <para>How do I commit contents with Git?</para>
+	  <para>How do I commit changes to my local git repository?</para>
 	</question>
 	<answer>
 	  <para>
-	    Commits are the basic unit used by Git to keep track of
-	    the history of the contents it manages. Only the versions
-	    committed into the repository are available later for
-	    reverting changes, examining history, computing differences
-	    between versions, etc.
+	    <quote>Commits</quote> are the basic unit used by Git to keep track
+	    of the different versions of the contents it manages. Only the
+	    versions committed into the repository are available later for
+	    reverting changes, examining history, computing differences between
+	    versions, etc. In other words, if you never commit files, it is like
+	    working with no VCS at all. So, commit often, in an orderly fashion
+	    (this takes some experience) and trying to separate changes in
+	    logical units (this takes even more experience).
 	  </para>
 
 	  <para>
-	    Authors make continuous changes to their contents.
-	    Sometimes, typically when they finish a logical unit of work
-	    (e.g. finish writing or reviewing a section of a document,
-	    including a figure in a document for better understanding
-	    of its contents, finish a draft they want to share
-	    with others, etc.), authors check-in their content in their
-	    local repository. The action of checking-in changes into the
-	    local repository is called a <emphasis>commit</emphasis>.
-	    For each commit, Git stores the differences of the current
-	    version of the files with respect to the version
-	    in the preceding commit. 
+	    Authors make continuous changes to their content. After changing
+	    some files, typically when they finish a logical unit of work
+	    (e.g. finish writing or reviewing a document section, including a
+	    figure in a document, finish a draft they want to share with others,
+	    etc.), authors send the new version to the local repository. The
+	    action of sending a new version into the local repository is called
+	    a <emphasis>commit</emphasis>.  For each commit, Git stores the
+	    differences between the files now and the files with respect to the
+	    the previous commit.
 	  </para>
 
 	  <para>
-	    When you have a version of the contents they want to commit,
-	    you should first examine the status of the content to see
-	    what they have changed with respect to the previous commit,
-	    with the command <code>git status</code>:
+	    When you have a new version of the files you want to commit, it
+	    helps sometimes to take a look at those changes before sending them
+	    to the repository. This is achieved with the <command>git
+	    status</command> command:
 	  </para>
 
-	  <programlisting>$ git status
-# On branch git-faq
+	  <programlisting>git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD &lt;file>..." to unstage)
+#
+#       <command>new file:   images/ReallyCoolImage.svg</command>
+#
 # Changed but not updated:
 #   (use "git add &lt;file>..." to update what will be committed)
 #
-#       modified:   FAQ.xml
+#       <command>modified:   MyCoolResource.xml</command>
 #
 # Untracked files:
 #   (use "git add &lt;file>..." to include in what will be committed)
 #
-#       FAQ.html
-#       FAQ.pdf
-#       build.out</programlisting>
+#       <command>MyCoolResource.html</command>
+#       <command>MyCoolReource.pdf</command>
+#       <command>build.out</command></programlisting>
 
 	  <para>
-	    It shows what files have been changed and
-	    what files are <emphasis>untracked</emphasis>
-	    (not managed by Git). If you need further
-	    information about the changes made, you can use
-	    the command <code>git diff</code>, which shows the
-	    lines that changed (were added, removed or modified)
-	    in all the modified files.
+	    The text dumped on the screen is the way Git has to tell us what is
+	    the situation between your files, the index and the local repository
+	    (refresh your memory with <xref linkend="gitwhatis"/>). It first
+	    shows those files that are already inside the index and ready to be
+	    committed (in the example
+	    <filename>images/ReallyCoolImage.svg</filename>. It then shows the
+	    files that have changed but are not inside the index (in this case
+	    <filename>MyCoolResource.xml</filename>). And it finally shows those
+	    files that knows nothing about them, or in other words, are ignored
+	    by git or <emphasis>untracked</emphasis>. If you need a much more
+	    detailed resport on the changes made, use the command <command>git
+	    diff</command>, which shows the lines that changed (were added,
+	    removed or modified) in all the modified files.
 	  </para>
 
 	  <para>
-	    The usual way of doing a commit is just typing
-	    <code>git commit -a</code>. It commits all the files
-	    that have been modified since the last commit.
-	    The command asks for a message describing the commit,
-	    that will be shown in the history of changes.
-	    For short messages, it is recommendable to write just
-	    one line describing briefly the changes done.
-	    If you need to explain further your changes,
-	    Git conventions say that you should write that line,
-	    followed by an empty line, and finally the long description of
-	    the changes.
+	    There are two typical ways to send changes to the local
+	    repository. If you want to send only the files in the index, then
+	    the command is <command>git commit</command>. In order to be
+	    considered as changes, files need to be explicitly placed in the
+	    index with the command <command>git add file</command>. If this
+	    concept of the index is too confussing, forget about it for the time
+	    being and use it only once you feed the need for it.
+	  </para>
+
+	  <para>
+	    The alternative way of doing a commit is to ignore the index and
+	    simply send the changes in all the files (the second section on the
+	    report shown by <command>git status</command>). To achieve this,
+	    just type <command>git commit -a</command>. This command commits all
+	    the files that have been modified since the last commit
+	    (independently of being in the index or not).
+	  </para>
+
+	  <para>
+	    The <command>commit</command> command always asks for a message
+	    describing the changes that are being sent to the repository. There
+	    is this unwritten convention that says that comments should include
+	    a summary (similar to an email subject) in the first line, then an
+	    empty line and then a longer description of the changes if needed.
           </para>
 
+	  <example>
+	    <title>Example of a comment attached to a git commit</title>
+	    <programlisting>Redesigned completely the figure on this section
+
+The figure was actually very confussing, so I modified the arrows (which were
+backwards and added some colors so make it more intuitive.
+       <command>modified:   MyCoolResource.xml</command></programlisting>
+	  </example>
+
 	  <para>
-	    When a new file has been created, it is not automatically
-	    managed by Git, but listed as <emphasis>untracked</emphasis>
-	    instead. If you want that file to be committed, you have to
-	    first type <code>git add &lt;filename</code>, that
-	    includes the new file into the index (a temporary storage for the
-	    files to be committed). Then, just type
-	    <code>git commit -a</code> to commit this file and
-	    the rest of the modified files. Once a file is added,
-	    it will no longer be listed as <emphasis>untracked</emphasis>,
-	    and Git will manage it.
+	    Git places several lines in the editor as part of the message. But
+	    all of them start with the <quote>#</quote> symbol that says that it
+	    will be ignored. Git places them there just in case you want to
+	    include any of them, and saves you the time to type it (as the last
+	    line in the example)
 	  </para>
 
 	  <para>
-	    Sometimes, you may need a finer control on what is being
-	    committed.
-	    For example, you may want to split the changes in several
-	    commits. In this case, you can use <code>git add 
-	      &lt;filenames></code>to only insert some of the changed
-	    files into the index, and then <code>git commit</code>
-	    (without the <code>-a</code> option) to commit the
-	    changes that are in the index, but not the other changes
-	    that were not explicitly included into it.
-	    The files not added to
-	    the index are still listed by Git as modified, and therefore
-	    they can be committed later.
+	    If you create a new file, Git ignores its presence and is listed as
+	    <emphasis>untracked</emphasis>. If you want that file to be part of
+	    the versions managed by Git you must include it explicitly with the
+	    command <command>git add &lt;filename</command>. This command also
+	    includes the new file in the index. The next time you commit your
+	    changes, the file will be considered by Git. After adding a file you
+	    may check the status of your working files with the command
+	    <command>git status</command>.
 	  </para>
+
+	  <para>
+	    Sometimes, but only sometimes, you've modified lots of files, and
+	    instead of creating a new version with all the changes, you would
+	    like to document the changes separatedly by grouping some files. For
+	    example, you made two clearly identified changes. One in files
+	    <filename>f1</filename> and <filename>f2</filename>, and the second
+	    in files <filename>f3</filename> and <filename>f4</filename>. The
+	    command <command>git commit -a</command> will send the new versions
+	    of all four files to the repository, but you would like to send the
+	    first two with a message and the second two with another message in
+	    separated commits.
+	  </para>
+
+	  <para>
+	    This is precisely the purpose of the index! The index is this
+	    ficticious box in which files are prepared and packed to be sent to
+	    the loca lrepository. By using the command <command>git add
+	    &lt;filenames></command> you can place the files you want in the
+	    index. Once you have the right files, run the command <command>git
+	    commit</command> (without the <command>-a</command> option!) and the
+	    files in the index, and only them are sent to the repository. No
+	    other changes in your local files are considered and the index
+	    appears now as empty. You can then proceed to place in the index the
+	    second set of files and execute the second commit.
+	  </para>
+
+	  <para>Back to <xref linkend="Git"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -2002,9 +2803,9 @@ nothing to commit (working directory clean)</programlisting>
 	    should not be added
 	    into the Git repository. Do not worry about having them in
 	    your  working directory, because only files that are
-	    added explicitly with the <code>git add &lt;filename></code>
+	    added explicitly with the <command>git add &lt;filename></command>
 	    command are tracked by Git. Be careful when you add
-	    a directory with <code>git add</code>, because it
+	    a directory with <command>git add</command>, because it
 	    adds all the files inside it into the repository.
 	    If there are files in that directory that should not be
 	    added, it is better to list the files to be added explicitly. 
@@ -2024,6 +2825,100 @@ nothing to commit (working directory clean)</programlisting>
 	    PNG images produced from SVG figures, the backup files
 	    that are saved by some editors, etc.
 	  </para>
+
+	  <para>Back to <xref linkend="Git"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="gitcommitlocal">
+	<question>
+	  <para>
+	    I have just commited some changes, why are they not visible in the
+	    shared repository?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    When you commit changes, they are only stored in your local
+	    repository. Remember, you own your repository. If you want those
+	    changes to be stored also in the shared repository, you have to
+	    explicitly send them (or push them!) to that repository after
+	    committing. See <xref linkend="gitpush"/> for further explanation.
+	  </para>
+
+	  <para>Back to <xref linkend="Git"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="gitpull" 
+		  xreflabel="How to update your local repository with others' changes">
+	<question>
+	  <para>
+	    How do I update my local repository to see the latest changes
+	    published on the course shared repository?
+	  </para>
+	</question>
+
+	<answer>
+	  <para>
+	    Make sure your are placed in your <command>master</command> branch
+	    and type the command:
+	  </para>
+
+	  <programlisting>git pull</programlisting>
+
+	  <para>
+	    If there have been any changes in the course repository (ore more
+	    precisely in its <command>master</command> branch) they are now
+	    included in your repository.
+	  </para>
+
+	  <para>
+	    The <command>pull</command> can only be executed if your index is
+	    empty. Remember that empty box in <xref linkend="gitwhatis"/>? To
+	    make sure you have no pending changes, commit them before executing
+	    <command>git pull</command>.
+	  </para>
+
+	  <para>Back to <xref linkend="Git"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="gitpush" 
+		  xreflabel="How to send changes to the shared repository">
+	<question>
+	  <para>
+	    How do I send the changes in my local changes to the shared
+	    repository?
+	  </para>
+	  <para>
+	    I have created some cool resources and they are committed into my
+	    local repository, and now I want to share them with the rest of
+	    authors.  How do I upload the new files to the shared repository?
+	  </para>
+	</question>
+
+	<answer>
+	  <para>
+	    If your changes have been committed into your the
+	    <command>master</command> branch and you have set-up your local
+	    repository following the instructions in <xref linkend="gitclone"/>,
+	    you just have to execute:
+	  </para>
+
+	  <programlisting>git push</programlisting>
+
+	  <para>
+	    Your changes should be now on your branch in the
+	    shared repository. If your modifications are ready to
+	    be reviewed by the course coordinator,
+	    you may tell her that there are new contents there.
+	    The course coordinator will review them and,
+	    if they are all right, put them into the official branch. 
+	  </para>
+
+
+	  <para>Back to <xref linkend="Git"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -2044,17 +2939,17 @@ nothing to commit (working directory clean)</programlisting>
 	    and type:
 	  </para>
 
-	  <programlisting>$ git init</programlisting>
+	  <programlisting>git init</programlisting>
 
 	  <para>
 	    The <filename>material</filename> directory is now a
-	    Git repository placed on branch <code>master</code>,
+	    Git repository placed on branch <command>master</command>,
 	    that will be the official branch of the course.
 	  </para>
 	  <para>
 	    Create the initial layout for your course (directories, common
-	    files, etc.) and commit your changes.  The command <code>git
-	    add</code> will be useful for that (see <xref linkend="gitcommit"
+	    files, etc.) and commit your changes.  The command <command>git
+	    add</command> will be useful for that (see <xref linkend="gitcommit"
 	    />). Remember that Git do not handle directories which do not
 	    contain files. Therefore, if you create directories with no material
 	    yet, you may want to create an initial version of
@@ -2065,10 +2960,10 @@ nothing to commit (working directory clean)</programlisting>
 	    create a new branch for each contributing author:
 	  </para>
 
-	  <programlisting>$ git branch john
-$ git branch mary
-$ git branch laura
-$ git branch peter</programlisting>
+	  <programlisting>git branch john
+git branch mary
+git branch laura
+git branch peter</programlisting>
 
 	  <para>
 	    The shared repository is now ready. Tell the authors the basic
@@ -2082,7 +2977,7 @@ $ git branch peter</programlisting>
 	    local workspace. Follow the instructions in
 	    <xref linkend="gitclone" />. Probably, it will be convenient
 	    to work on the official branch in your local repository
-	    and push it into the branch <code>master</code> when
+	    and push it into the branch <command>master</command> when
 	    it is ready to be made public.
 	  </para>
 	  
@@ -2091,6 +2986,8 @@ $ git branch peter</programlisting>
 	    your workspace. Follow the instructions in
 	    <xref linkend="git-admin-clone" />.
 	  </para>
+
+	  <para>Back to <xref linkend="Git"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -2107,12 +3004,12 @@ $ git branch peter</programlisting>
 	    in your own workspace (probably your laptop or desktop computer).
 	    Follow instructions in <xref linkend="gitclone" />
 	    to create your repository and set-up your
-	    branch <code>master</code>, with the exception that
+	    branch <command>master</command>, with the exception that
 	    the line you should add to your <filename>.git/config</filename>
-	    directory is <code>push = master:master</code>:	    
+	    directory is <command>push = master:master</command>:	    
 	  </para>
 
-<programlisting>$ cat .git/config
+<programlisting>cat .git/config
 [core]
         repositoryformatversion = 0
         filemode = true
@@ -2127,10 +3024,10 @@ $ git branch peter</programlisting>
         merge = refs/heads/master</programlisting>
 
 	  <para>
-	    This is because your local branch <code>master</code>
+	    This is because your local branch <command>master</command>
 	    is the branch where
 	    you prepare the official material that other authors
-	    see after you push it into the branch <code>master</code>
+	    see after you push it into the branch <command>master</command>
 	    of the shared repository.
 	  </para>
 
@@ -2140,10 +3037,10 @@ $ git branch peter</programlisting>
 	    For example:
 	  </para>
 
-	  <programlisting>$ git branch --track john origin/john
-$ git branch --track mary origin/mary
-$ git branch --track laura origin/laura
-$ git branch --track peter origin/peter</programlisting>
+	  <programlisting>git branch --track john origin/john
+git branch --track mary origin/mary
+git branch --track laura origin/laura
+git branch --track peter origin/peter</programlisting>
 
 	  <para>
 	    Your local repository is now prepared for merging contributions
@@ -2151,27 +3048,29 @@ $ git branch --track peter origin/peter</programlisting>
 	    In that case, it is recommended to do your changes in temporary
 	    short-lived branches (a few days, probably, while you do a
 	    thematic change) and then merge them into the branch
-	    <code>master</code>:
+	    <command>master</command>:
 	  </para>
 
-	  <programlisting>$ git checkout master
-$ git checkout -b new-calendar
-$ ... edit ... commit ... edit ... commit ...
-$ git checkout master
-$ git merge new-calendar
-$ git branch -d new-calendar</programlisting>
+	  <programlisting>git checkout master
+git checkout -b new-calendar
+... edit ... commit ... edit ... commit ...
+git checkout master
+git merge new-calendar
+git branch -d new-calendar</programlisting>
 
 	  <para>
-	    The command <code>git checkout -b</code> creates a new branch
-	    starting from the current branch (<code>master</code> in this
+	    The command <command>git checkout -b</command> creates a new branch
+	    starting from the current branch (<command>master</command> in this
 	    case). After you have edited and committed (probably several
 	    commits), you can merge those changes into the official branch
-	    with <code>git merge</code>. Finally, you can safely remove
-	    the temporary branch with <code>git branch -d</code>.
+	    with <command>git merge</command>. Finally, you can safely remove
+	    the temporary branch with <command>git branch -d</command>.
 	    If you plan to do further changes in the short-term about the
 	    same topic, you can skip the last step, in order to reuse the
 	    branch.
 	  </para>
+
+	  <para>Back to <xref linkend="Git"/>.</para>
 	</answer>
 	
 
@@ -2197,41 +3096,41 @@ $ git branch -d new-calendar</programlisting>
 	  <para>
 	    Suppose you want to merge some changes introduced by
 	    Mary. She should have pushed her changes
-	    into branch <code>mary</code> in the shared repository.
-	    Go to your local branch <code>mary</code> and update it:
+	    into branch <command>mary</command> in the shared repository.
+	    Go to your local branch <command>mary</command> and update it:
 	  </para>
-	  <programlisting>$ git checkout mary
-$ git pull</programlisting>
+	  <programlisting>git checkout mary
+git pull</programlisting>
 
 	  <para>
-	    Her changes should be now in branch <code>mary</code>.
+	    Her changes should be now in branch <command>mary</command>.
 	    You may want to review them and take a look at the history
-	    with <code>git log</code>.
+	    with <command>git log</command>.
 	    If there are no problems,
 	    or you want to fix the problems yourself, it is time
-	    to merge her changes into branch <code>master</code>
+	    to merge her changes into branch <command>master</command>
 	    (otherwise, ask Mary to fix the problems):
 	  </para>
 
-	  <programlisting>$ git checkout master
-$ git merge mary</programlisting>
+	  <programlisting>git checkout master
+git merge mary</programlisting>
 
 	  <para>
 	    The changes of Mary are now available in your
-	    branch <code>master</code>.
+	    branch <command>master</command>.
 	    Check that the material is built correctly with
-	    <code>adado</code>. If you need to fix details,
+	    <command>adado</command>. If you need to fix details,
 	    do it and commit. Once you are finished with the
 	    modifications and want them to be in the official
 	    branch of the shared repository, available for all
 	    the authors, push them:
 	  </para>
 
-	  <programlisting>$ git push</programlisting>
+	  <programlisting>git push</programlisting>
 
 	  <para>
 	    Authors will see these changes the next time they
-	    execute <code>git pull</code> from their local
+	    execute <command>git pull</command> from their local
 	    repository.
 	  </para>
 
@@ -2241,6 +3140,7 @@ $ git merge mary</programlisting>
 	  git reset - -hard HEAD. Explain this in a new question?
 	  -->
 
+	  <para>Back to <xref linkend="Git"/>.</para>
 	</answer>
       </qandaentry>
     </qandaset>
