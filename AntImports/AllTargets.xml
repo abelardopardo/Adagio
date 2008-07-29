@@ -168,7 +168,7 @@
   <target name="report">
 
     <antcall target="initial.check.dump">
-      <param name="ada.initial.check.dump.level" value="warning"/>
+      <param name="ada.debug.level" value="warning"/>
     </antcall>
     <echo/>
 
