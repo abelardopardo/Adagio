@@ -1421,7 +1421,8 @@ docbook.files=index.xml</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry id="include_flash_video_in_docbook">
+      <qandaentry id="include_flash_video_in_docbook"
+		  xreflabel="How to include Flash Video in Docbook">
 	<question>
 	  <para>
 	    How to include a flash video in a Docbook document?
@@ -1460,7 +1461,7 @@ docbook.files=index.xml</programlisting>
 	   
 	  <para>
 	    In order to maintain the Docbook file valid, the parameters are
-	    passed as nested <code>&lt;code&gt;</code> elements with the
+	    passed as nested <code>&lt;phrase&gt;</code> elements with the
 	    attribute <code>condition</code> equal to the name of the
 	    parameter. The available names are:
 	  </para>
@@ -1485,7 +1486,7 @@ docbook.files=index.xml</programlisting>
 		</row>
 		<row>
 		  <entry>file</entry>
-		  <entry>URL pointing at the video file to playw</entry>
+		  <entry>URL pointing at the video file to play</entry>
 		  <entry></entry>
 		</row>
 		<row>
@@ -1525,6 +1526,83 @@ docbook.files=index.xml</programlisting>
 		  <entry>showstop</entry>
 		  <entry>Boolean controlling if the stop button is shown</entry>
 		  <entry>false</entry>
+		</row>
+		<row>
+		  <entry>width</entry>
+		  <entry>Width of the viewing area</entry>
+		  <entry>260</entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="include_shockwave_video_in_docbook">
+	<question>
+	  <para>
+	    How to include a Shockwave Flash (swf) document in a Docbook document?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    Embedding a Shockwave file in an HTML page can be done by including
+	    a special paragraph in Docbook with the values for certain
+	    parameters. A special stylesheet in ADA will then produce the proper
+	    element in HTML to view the Shockwave file. The idea is similar to
+	    <xref linkend="include_flash_video_in_docbook"/> but requires less
+	    information.
+	  </para>
+
+	  <para>
+	    The special markup in docbook to include a a showkwave is shown in
+	    the following example:
+	  </para>
+
+	  <example>
+	    <title>Markup to include a Shockwave file in Docbook</title>
+	    <programlisting><![CDATA[<para condition="ada.swf.player">
+  <phrase condition="width">425</phrase>
+  <phrase condition="height">355</phrase>
+  <phrase condition="file">File.swf</phrase>
+  Additonal text and <ulink url="link.html">links</ulink> you might include.
+</para>]]></programlisting>
+	  </example>
+	   
+	  <para>
+	    In order to maintain the Docbook file valid, the parameters are
+	    passed as nested <code>&lt;phrase&gt;</code> elements with the
+	    attribute <code>condition</code> equal to the name of the
+	    parameter. The available names are:
+	  </para>
+
+	  <informaltable frame="all" id="embed_swf_vars">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="center"/>
+	      <thead>
+		<row>
+		  <entry align="center">Variable name</entry>
+		  <entry align="center">Description</entry>
+		  <entry align="center">Default</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry>file</entry>
+		  <entry>URL pointing at the shockwave file to use</entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry>height</entry>
+		  <entry>Height of the viewing area</entry>
+		  <entry>320</entry>
+		</row>
+		<row>
+		  <entry>id</entry>
+		  <entry>Id of the viewing area (optional)</entry>
+		  <entry></entry>
 		</row>
 		<row>
 		  <entry>width</entry>
