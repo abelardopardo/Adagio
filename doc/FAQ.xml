@@ -419,7 +419,7 @@
 	    and type the command:
 	  </para>
 
-	  <programlisting>which java</programlisting>
+	  <programlisting>$ <command>which java</command></programlisting>
 
 	  <para>
 	    If the answer is a single path to a file with name
@@ -494,7 +494,7 @@
 	    the tool by opening a new Cygwin shell. Type the command
 	  </para>
 
-	  <programlisting>which ant</programlisting>
+	  <programlisting>$ <command>which ant</command></programlisting>
 
 	  <para>
 	    If the answer is a single path to a file with name
@@ -527,11 +527,11 @@
 	    command:
 	  </para>
 
-	  <programlisting id="git_install_command">git clone <xi:include
+	  <programlisting id="git_install_command">$ <command>git clone <xi:include
 	    href="Params.xml"
 	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='ADA_DOWNLOAD_URL']/text())"
 	    parse="xml"
-	    xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/></command></programlisting>
 	  <para>
 	    A list of messages appear on the screen. After a while (depending on
 	    the speed of your net connection), the command terminates and a new
@@ -551,7 +551,7 @@
 	    brand new Cygwin shell and type the following command
 	  </para>
 	  
-	  <programlisting>which adado</programlisting>
+	  <programlisting>$ <command>which adado</command></programlisting>
 	  
 	  <para>
 	    As in the case of the <xref linkend="install_ant"/>, if the
@@ -591,7 +591,7 @@
 	    ADA is installed and execute the command:
 	  </para>
 
-	  <programlisting>git pull</programlisting>
+	  <programlisting>$ <command>git pull</command></programlisting>
 
 	  <para>
 	    The command will inform in some fairly cryptic way of the changes
@@ -602,7 +602,7 @@
 	    the command:
 	  </para>
 
-	  <programlisting>git commit -a -m "Your message here"</programlisting>
+	  <programlisting>$ <command>git commit -a -m "Your message here"</command></programlisting>
 
 	  <para>
 	    Try again to execute <command>git pull</command>. This time, the
@@ -707,7 +707,7 @@
 	    shell in Windows) and type the command
 	  </para>
 
-	  <programlisting>adacheck</programlisting>
+	  <programlisting>$ <command>adacheck</command></programlisting>
 
 	  <para>
 	    ADA prints the value of several important internal variables
@@ -832,7 +832,7 @@ clean.files=../scratch/Theory2</programlisting>
 	    shell (regular shell in Unix or a Cygwin shell in Windows) and type
 	    the command
 	  </para>
-	  <programlisting>adado</programlisting>
+	  <programlisting>$ <command>adado</command></programlisting>
 
 	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
@@ -2540,7 +2540,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    <filename>material</filename>). Execute the following command:
 	  </para>
 
-	  <programlisting>git clone ssh://mycourse@accounts.example.com/home/mycourse/repository/material</programlisting>
+	  <programlisting>$ <command>git clone ssh://mycourse@accounts.example.com/home/mycourse/repository/material</command></programlisting>
 
 	  <para>
 	    You will be asked to authenticate with <command>mycourse</command>'s
@@ -2551,7 +2551,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    status</command>:
 	  </para>
 
-	  <programlisting>git status
+	  <programlisting>$ <command>git status</command>
 # On branch master
 nothing to commit (working directory clean)</programlisting>
 
@@ -2563,16 +2563,16 @@ nothing to commit (working directory clean)</programlisting>
 	    you just must change to that branch with the command:
 	  </para>
 
-	  <programlisting>git checkout master</programlisting>
+	  <programlisting>$ <command>git checkout master</command></programlisting>
 
 	  <para>
-	    If you are not placed on branch <command>master</command> and the
-	    previous command failed, it means that the repository you cloned
-	    does not have a <command>master</command> branch. To create it you
+	    If you are not placed on the <command>master</command> branch and
+	    the previous command failed, it means that the
+	    <command>master</command> branch was not cloned. To create it you
 	    must type:
 	  </para>
 
-	  <programlisting>git checkout -b master origin/master</programlisting>
+	  <programlisting>$ <command>git checkout -b master origin/master</command></programlisting>
 
 	  <para>
 	    Your repository should now be placed on branch
@@ -2602,7 +2602,7 @@ nothing to commit (working directory clean)</programlisting>
 	    example. The file should now look something like this:
 	  </para>
 
-	  <programlisting>cat .git/config
+	  <programlisting>$ <command>cat .git/config</command>
 [core]
         repositoryformatversion = 0
         filemode = true
@@ -2667,7 +2667,7 @@ nothing to commit (working directory clean)</programlisting>
 	    status</command> command:
 	  </para>
 
-	  <programlisting>git status
+	  <programlisting>$ <command>git status</command>
 # On branch master
 # Changes to be committed:
 #   (use "git reset HEAD &lt;file>..." to unstage)
@@ -2867,7 +2867,7 @@ backwards and added some colors so make it more intuitive.
 	    and type the command:
 	  </para>
 
-	  <programlisting>git pull</programlisting>
+	  <programlisting>$ <command>git pull</command></programlisting>
 
 	  <para>
 	    If there have been any changes in the course repository (ore more
@@ -2908,7 +2908,7 @@ backwards and added some colors so make it more intuitive.
 	    you just have to execute:
 	  </para>
 
-	  <programlisting>git push</programlisting>
+	  <programlisting>$ <command>git push</command></programlisting>
 
 	  <para>
 	    Your changes should be now on your branch in the
@@ -2941,7 +2941,7 @@ backwards and added some colors so make it more intuitive.
 	    and type:
 	  </para>
 
-	  <programlisting>git init</programlisting>
+	  <programlisting>$ <command>git init</command></programlisting>
 
 	  <para>
 	    The <filename>material</filename> directory is now a
@@ -2962,10 +2962,10 @@ backwards and added some colors so make it more intuitive.
 	    create a new branch for each contributing author:
 	  </para>
 
-	  <programlisting>git branch john
-git branch mary
-git branch laura
-git branch peter</programlisting>
+	  <programlisting>$ <command>git branch john</command>
+$ <command>git branch mary</command>
+$ <command>git branch laura</command>
+$ <command>git branch peter</command></programlisting>
 
 	  <para>
 	    The shared repository is now ready. Tell the authors the basic
@@ -3011,7 +3011,7 @@ git branch peter</programlisting>
 	    directory is <command>push = master:master</command>:	    
 	  </para>
 
-<programlisting>cat .git/config
+<programlisting>$ <command>cat .git/config</command>
 [core]
         repositoryformatversion = 0
         filemode = true
@@ -3039,10 +3039,10 @@ git branch peter</programlisting>
 	    For example:
 	  </para>
 
-	  <programlisting>git branch --track john origin/john
-git branch --track mary origin/mary
-git branch --track laura origin/laura
-git branch --track peter origin/peter</programlisting>
+	  <programlisting>$ <command>git branch --track john origin/john</command>
+$ <command>git branch --track mary origin/mary</command>
+$ <command>git branch --track laura origin/laura</command>
+$ <command>git branch --track peter origin/peter</command></programlisting>
 
 	  <para>
 	    Your local repository is now prepared for merging contributions
@@ -3053,12 +3053,12 @@ git branch --track peter origin/peter</programlisting>
 	    <command>master</command>:
 	  </para>
 
-	  <programlisting>git checkout master
-git checkout -b new-calendar
+	  <programlisting>$ <command>git checkout master</command>
+$ <command>git checkout -b new-calendar</command>
 ... edit ... commit ... edit ... commit ...
-git checkout master
-git merge new-calendar
-git branch -d new-calendar</programlisting>
+$ <command>git checkout master</command>
+$ <command>git merge new-calendar</command>
+$ <command>git branch -d new-calendar</command></programlisting>
 
 	  <para>
 	    The command <command>git checkout -b</command> creates a new branch
@@ -3101,8 +3101,8 @@ git branch -d new-calendar</programlisting>
 	    into branch <command>mary</command> in the shared repository.
 	    Go to your local branch <command>mary</command> and update it:
 	  </para>
-	  <programlisting>git checkout mary
-git pull</programlisting>
+	  <programlisting>$ <command>git checkout mary</command>
+$ <command>git pull</command></programlisting>
 
 	  <para>
 	    Her changes should be now in branch <command>mary</command>.
@@ -3114,8 +3114,8 @@ git pull</programlisting>
 	    (otherwise, ask Mary to fix the problems):
 	  </para>
 
-	  <programlisting>git checkout master
-git merge mary</programlisting>
+	  <programlisting>$ <command>git checkout master</command>
+$ <command>git merge mary</command></programlisting>
 
 	  <para>
 	    The changes of Mary are now available in your
@@ -3128,7 +3128,7 @@ git merge mary</programlisting>
 	    the authors, push them:
 	  </para>
 
-	  <programlisting>git push</programlisting>
+	  <programlisting>$ <command>git push</command></programlisting>
 
 	  <para>
 	    Authors will see these changes the next time they
