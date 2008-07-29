@@ -23,4 +23,7 @@
   <!-- Allows the inclusion of Flash videos and MP3 -->
   <xsl:import href="FLVObj.xsl"/>
 
+  <!-- Allows the inclusion of Flash videos and MP3 -->
+  <xsl:import href="SWFObj.xsl"/>
+
 </xsl:stylesheet>
