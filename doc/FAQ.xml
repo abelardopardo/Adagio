@@ -307,7 +307,7 @@
 	</answer>
       </qandaentry>
 
-      <qandaentry id="howtoinstallcygwin">
+      <qandaentry id="howtoinstallcygwin" xreflabel="How to install Cygwin">
 	<question>
 	  <para>I got Java already installed, What else is required to run ADA?</para>
 	</question>
@@ -2181,7 +2181,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	  <para>
 	    But when a set of users is sharing files, version management may
 	    become specially complicated. What happens if two users have the
-	    same file and both modifyit? Who has the latest version? How is this
+	    same file and both modify it? Who has the latest version? How is this
 	    situation managed? Actual VCS tools have very sophisticated
 	    techniques to solve these situations and offer users a comfortable
 	    environment to manipulate complicated multiple versions of large
@@ -2258,7 +2258,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    different versions need to be shared through an external repository,
 	    <command>git</command> offers commands to send these changes or
 	    update the local files with the latest revision respecto to the
-	    remote repository. These commands are deailted explained in the
+	    remote repository. These commands are explained in the
 	    following questions.
 	  </para>
 
@@ -2293,7 +2293,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry id="gitinstall">
+      <qandaentry id="gitinstall" xreflabel="How to install Git">
 	<question>
 	  <para>How do I install Git?</para>
 	</question>
@@ -2311,7 +2311,8 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 		linkend="howtoinstallcygwin"/>) or as an standalone windows
 		program called <ulink
 		url="http://code.google.com/p/msysgit/">msys-git
-		installer</ulink>. The first step is to download the installer
+		installer</ulink>. If you choose the later option,
+                the first step is to download the installer
 		from the project page. 
 	      </para>
 
@@ -2447,7 +2448,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    versions produced by the authors properly contained, a branch should
 	    be created for each author that is going to use the
 	    repository. Authors will modify files in their respective local
-	    repositories and eventually upload a new versoin of their files to
+	    repositories and eventually upload a new version of their files to
 	    the proper branch of the shared repository. The coordinator takes
 	    authors' contributions from their branches and merges them into this
 	    repository (if you are a course coordinator, see <xref
@@ -2533,7 +2534,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	  </itemizedlist>
 
 	  <para>
-	    Open a Git Shell window (see <xref linkend="gitinstall"/>.) Go to
+	    Open a Git Shell window (see <xref linkend="gitinstall"/>). Go to
 	    the directory where you want to store your repository (take into
 	    account that git will create a new folder with the name
 	    <filename>material</filename>). Execute the following command:
@@ -2655,7 +2656,7 @@ nothing to commit (working directory clean)</programlisting>
 	    etc.), authors send the new version to the local repository. The
 	    action of sending a new version into the local repository is called
 	    a <emphasis>commit</emphasis>.  For each commit, Git stores the
-	    differences between the files now and the files with respect to the
+	    differences between the files now and the files in
 	    the previous commit.
 	  </para>
 
@@ -2691,12 +2692,13 @@ nothing to commit (working directory clean)</programlisting>
 	    (refresh your memory with <xref linkend="gitwhatis"/>). It first
 	    shows those files that are already inside the index and ready to be
 	    committed (in the example
-	    <filename>images/ReallyCoolImage.svg</filename>. It then shows the
+	    <filename>images/ReallyCoolImage.svg</filename>). It then shows the
 	    files that have changed but are not inside the index (in this case
 	    <filename>MyCoolResource.xml</filename>). And it finally shows those
-	    files that knows nothing about them, or in other words, are ignored
+	    files that Git knows nothing about them, or in other words, are
+            ignored
 	    by git or <emphasis>untracked</emphasis>. If you need a much more
-	    detailed resport on the changes made, use the command <command>git
+	    detailed report on the changes made, use the command <command>git
 	    diff</command>, which shows the lines that changed (were added,
 	    removed or modified) in all the modified files.
 	  </para>
@@ -2749,7 +2751,7 @@ backwards and added some colors so make it more intuitive.
 	    If you create a new file, Git ignores its presence and is listed as
 	    <emphasis>untracked</emphasis>. If you want that file to be part of
 	    the versions managed by Git you must include it explicitly with the
-	    command <command>git add &lt;filename</command>. This command also
+	    command <command>git add &lt;filename&gt;</command>. This command also
 	    includes the new file in the index. The next time you commit your
 	    changes, the file will be considered by Git. After adding a file you
 	    may check the status of your working files with the command
@@ -2772,11 +2774,11 @@ backwards and added some colors so make it more intuitive.
 	  <para>
 	    This is precisely the purpose of the index! The index is this
 	    ficticious box in which files are prepared and packed to be sent to
-	    the loca lrepository. By using the command <command>git add
-	    &lt;filenames></command> you can place the files you want in the
+	    the local repository. By using the command <command>git add
+	    &lt;filenames></command>, you can place the files you want in the
 	    index. Once you have the right files, run the command <command>git
 	    commit</command> (without the <command>-a</command> option!) and the
-	    files in the index, and only them are sent to the repository. No
+	    files in the index, and only them, are sent to the repository. No
 	    other changes in your local files are considered and the index
 	    appears now as empty. You can then proceed to place in the index the
 	    second set of files and execute the second commit.
@@ -2888,7 +2890,7 @@ backwards and added some colors so make it more intuitive.
 		  xreflabel="How to send changes to the shared repository">
 	<question>
 	  <para>
-	    How do I send the changes in my local changes to the shared
+	    How do I send the changes in my local repository to the shared
 	    repository?
 	  </para>
 	  <para>
