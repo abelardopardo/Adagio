@@ -19,15 +19,6 @@ build templates
     <arg value="${ada.home}${file.separator}bin${file.separator}adafindcoursehome"/>
   </exec>
   
-  <!-- Load the local properties from .ant.properties -->
-  <property file=".ant.properties"/>
-
-  <!-- Load the properties from the user.home directory -->
-  <property file="${user.home}${file.separator}.ant.properties"/>
-
-  <!-- Load the properties from the cygwin.user.home directory -->
-  <property file="${cygwin.user.home}${file.separator}.ant.properties"/>
-
   <!-- Default file name to load the propertyes -->
   <property name="ada.local.property.file" value="Properties.txt"/>
 
@@ -36,6 +27,15 @@ build templates
 
   <!-- Load the properties from the ada.course.home directory -->
   <property file="${ada.course.home}${file.separator}Ada.properties"/>
+
+  <!-- Load the local properties from .ant.properties -->
+  <property file=".ant.properties"/>
+
+  <!-- Load the properties from the user.home directory -->
+  <property file="${user.home}${file.separator}.ant.properties"/>
+
+  <!-- Load the properties from the cygwin.user.home directory -->
+  <property file="${cygwin.user.home}${file.separator}.ant.properties"/>
 
   <!-- Directory where the toolkit is installed -->
   <property name="ada.home" value="" />

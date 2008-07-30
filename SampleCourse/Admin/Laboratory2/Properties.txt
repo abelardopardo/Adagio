@@ -7,7 +7,7 @@
 
 # Make ADA pay attention to the validity window 
 # Start of the validity window
-exportcontrol.start=2008-06-25T19:00:00
+exportcontrol.begin=2008-06-25T19:00:00
 # Set the end of the window
 exportcontrol.end=2018-06-25T19:00:00
 #
