@@ -43,7 +43,7 @@
   to notify the user -->
   <target name="clean.clean.NOT" unless="clean.check">
     <echo>clean.clean                 ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${clean.debug.level}">${basedir}</echo>
   </target>
 
   <target name="clean.clean" depends="clean.check.values, clean.clean.NOT"
@@ -51,7 +51,7 @@
 	  description="Cleans local and recursive dirs">
     
     <echo>clean.clean                 RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${clean.debug.level}">${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${clean.files}</echo>

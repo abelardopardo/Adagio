@@ -86,7 +86,7 @@
   <target name="@NAME@.processing.NOT" depends="@NAME@.bomb.out" 
 	  unless="@NAME@.check">
     <echo>@NAME@.processing           ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${@NAME@.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -99,7 +99,7 @@
 	  description="@DESCRIPTION@">
 
     <echo>@NAME@.processing           RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${@NAME@.debug.level}">${basedir}</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${@NAME@.absdst.dir}" />
@@ -121,7 +121,7 @@
   to notify the user -->
   <target name="@NAME@.clean.NOT" unless="@NAME@.check">
     <echo>@NAME@.clean               ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${@NAME@.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean files produced by @NAME@ -->
@@ -131,7 +131,7 @@
 	  description="Remove files produced by @NAME@">
 
     <echo>@NAME@.clean           RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${@NAME@.debug.level}">${basedir}</echo>
 
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="@NAME@.target.filelist.property" pathsep=" ">

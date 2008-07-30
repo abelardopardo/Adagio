@@ -27,6 +27,7 @@
 	    value="${ada.home}/XslStyles/RssToHtml.xsl"/>
 
   <!-- Private properties -->
+  <property name="rss.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define two properties containing the absolute src and dst paths -->
   <pathconvert property="rss.abssrc.dir" pathsep=" ">
@@ -84,14 +85,14 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">rss.check          = "${rss.check}"</echo>
+    <echo level="${rss.debug.level}">rss.check          = "${rss.check}"</echo>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="rss.processing.NOT" unless="rss.check">
-    <echo>rss.processing        ---</echo>
-    <echo>${basedir}</echo>
+    <echo>rss.processing              ---</echo>
+    <echo level="${rss.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Invoke xsltprocessing -->
@@ -135,7 +136,7 @@
   to notify the user -->
   <target name="rss.clean.NOT" unless="rss.check">
     <echo>rss.clean           ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${rss.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean files produced by rss -->
@@ -177,7 +178,7 @@
   </target>
 
   <target name="rss.dump.properties" depends="initial.check">
-    <echo level="info"> ------ Rss properties ----
+    <echo level="${rss.debug.level}"> ------ Rss properties ----
     rss.src.dir       ="${rss.src.dir}"
     rss.dst.dir       ="${rss.dst.dir}"
     rss.output.format ="${rss.output.format}"

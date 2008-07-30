@@ -22,6 +22,7 @@
   <property name="dvips.files"          value=""/>
 
   <!-- Private properties -->
+  <property name="dvips.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define two properties containing the absolute src and dst paths -->
   <pathconvert property="dvips.abssrc.dir" pathsep=" ">
@@ -70,7 +71,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">  dvips.check              = "${dvips.check}"
+    <echo level="${dvips.debug.level}">  dvips.check              = "${dvips.check}"
   dvips.execution.possible = ${dvips.execution.possible}
   dvips.failure            = ${dvips.failure}</echo>
   </target>
@@ -84,8 +85,8 @@
   to notify the user -->
   <target name="dvips.processing.NOT" depends="dvips.bomb.out" 
 	  unless="dvips.check">
-    <echo>dvips.processing           ---</echo>
-    <echo>${basedir}</echo>
+    <echo>dvips.processing            ---</echo>
+    <echo level="${dvips.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -97,8 +98,8 @@
 	  if="dvips.check"
 	  description="Execute dvips">
 
-    <echo>dvips.processing           RUN</echo>
-    <echo>${basedir}</echo>
+    <echo>dvips.processing            RUN</echo>
+    <echo level="${dvips.debug.level}">${basedir}</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${dvips.absdst.dir}" />
@@ -120,7 +121,7 @@
   to notify the user -->
   <target name="dvips.clean.NOT" unless="dvips.check">
     <echo>dvips.clean                 ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${dvips.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean files produced by dvips -->
@@ -129,8 +130,8 @@
 	  if="dvips.check" 
 	  description="Remove files produced by dvips">
 
-    <echo>dvips.clean           RUN</echo>
-    <echo>${basedir}</echo>
+    <echo>dvips.clean                 RUN</echo>
+    <echo level="${dvips.debug.level}">${basedir}</echo>
 
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="dvips.target.filelist.property" pathsep=" ">
@@ -157,7 +158,7 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="dvips.dump.properties" depends="initial.check">
-    <echo level="info"> ------ dvips properties ----
+    <echo level="${dvips.debug.level}"> ------ dvips properties ----
     dvips.exec       ="${dvips.exec}"
     dvips.abssrc.dir ="${dvips.abssrc.dir}"
     dvips.absdst.dir ="${dvips.absdst.dir}"

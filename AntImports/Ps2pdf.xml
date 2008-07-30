@@ -22,6 +22,7 @@
   <property name="ps2pdf.files"          value=""/>
 
   <!-- Private properties -->
+  <property name="ps2pdf.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define two properties containing the absolute src and dst paths -->
   <pathconvert property="ps2pdf.abssrc.dir" pathsep=" ">
@@ -70,7 +71,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">  ps2pdf.check              = "${ps2pdf.check}"
+    <echo level="${ps2pdf.debug.level}">  ps2pdf.check              = "${ps2pdf.check}"
   ps2pdf.execution.possible = ${ps2pdf.execution.possible}
   ps2pdf.failure            = ${ps2pdf.failure}</echo>
   </target>
@@ -85,7 +86,7 @@
   <target name="ps2pdf.processing.NOT" depends="ps2pdf.bomb.out" 
 	  unless="ps2pdf.check">
     <echo>ps2pdf.processing           ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${ps2pdf.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -98,7 +99,7 @@
 	  description="Apply the translation">
 
     <echo>ps2pdf.processing           RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${ps2pdf.debug.level}">${basedir}</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${ps2pdf.absdst.dir}" />
@@ -120,7 +121,7 @@
   to notify the user -->
   <target name="ps2pdf.clean.NOT" unless="ps2pdf.check">
     <echo>ps2pdf.clean                ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${ps2pdf.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean files produced by ps2pdf -->
@@ -130,7 +131,7 @@
 	  description="Remove files produced by ps2pdf">
 
     <echo>ps2pdf.clean           RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${ps2pdf.debug.level}">${basedir}</echo>
 
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="ps2pdf.target.filelist.property" pathsep=" ">
@@ -157,7 +158,7 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="ps2pdf.dump.properties" depends="initial.check">
-    <echo level="info"> ------ ps2pdf properties ----
+    <echo level="${ps2pdf.debug.level}"> ------ ps2pdf properties ----
     ps2pdf.exec       ="${ps2pdf.exec}"
     ps2pdf.abssrc.dir ="${ps2pdf.abssrc.dir}"
     ps2pdf.absdst.dir ="${ps2pdf.absdst.dir}"

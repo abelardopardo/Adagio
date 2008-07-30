@@ -34,6 +34,9 @@
   <property name="mergestyles.style.file"     
 	    value="${ada.home}/XslStyles/Mergesheets.xsl"/>
 
+  <!-- Private properties -->
+  <property name="mergestyles.debug.level"    value="${ada.debug.level}"/>
+
   <!-- Source files to be processed by mergestyles -->
   <filelist id="mergestyles.master.filelist" dir="${mergestyles.src.dir}"
 	    files="${mergestyles.master.style}"/>
@@ -77,14 +80,14 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    mergestyles.check          = "${mergestyles.check}"</echo>
+    <echo level="${mergestyles.debug.level}">    mergestyles.check          = "${mergestyles.check}"</echo>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="mergestyles.processing.NOT" unless="mergestyles.check">
     <echo>mergestyles.processing       ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${mergestyles.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Invoke xsltproc -->
@@ -94,7 +97,7 @@
 	  description="Apply the mergestyle to the master style">
 
     <echo>mergestyles.processing      RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${mergestyles.debug.level}">${basedir}</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${mergestyles.dst.dir}" />
@@ -135,7 +138,7 @@
 	  description="Remove files produced by mergestyles">
 
     <echo>mergestyles.clean          CALL(mergestyles.clean)</echo>
-    <echo>${basedir}</echo>
+    <echo level="${mergestyles.debug.level}">${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${mergestyles.output.prefix}_${mergestyles.output.suffix}</echo>
@@ -146,7 +149,7 @@
 
   <!-- Dump the properties and filelists defined in this script -->
   <target name="mergestyles.dump.properties" depends="initial.check">
-    <echo level="info"> ------ mergestyles properties ----
+    <echo level="${mergestyles.debug.level}"> ------ mergestyles properties ----
     mergestyles.src.dir        ="${mergestyles.src.dir}"
     mergestyles.dst.dir        ="${mergestyles.dst.dir}"
     mergestyles.master.style   ="${mergestyles.master.style}"

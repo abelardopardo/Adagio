@@ -61,7 +61,7 @@
   to notify the user -->
   <target name="subrecursive.processing.NOT" unless="subrecursive.check">
     <echo>subrecursive.processing     ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${subrecursive.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It simply loops over all the subdirs and calls the given
@@ -75,7 +75,7 @@
   <target name="subrecursive.processing.withdstdir"
 	  if="subrecursive.dstdir.given">
     <echo>subrecursive.processing.dst RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${subrecursive.debug.level}">${basedir}</echo>
 
     <echo level="${subrecursive.debug.level}">    subrecursive.dirs="${subrecursive.dirs}"</echo>
 
@@ -90,12 +90,9 @@
   <target name="subrecursive.processing.nodstdir"
 	  unless="subrecursive.dstdir.given">
     <echo>subrecursive.proc..ng.nodst RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${subrecursive.debug.level}">${basedir}</echo>
 
     <echo level="${subrecursive.debug.level}">    subrecursive.dirs="${subrecursive.dirs}"</echo>
-    <!-- Dirs with material required by the lab  -->
-    <filelist id="subrecursive.dirlist" dir="${basedir}"
-	      files="${subrecursive.dirs}"/> 
 
     <subant target="${subrecursive.target}" 
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
@@ -108,7 +105,7 @@
   to notify the user -->
   <target name="subrecursive.clean.NOT" unless="subrecursive.check">
     <echo>subrecursive.clean          ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${subrecursive.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean the produced files -->
@@ -121,7 +118,7 @@
   <target name="subrecursive.clean.withdstdir"
 	  if="subrecursive.dstdir.given">
     <echo>subrecursive.clean.dst      RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${subrecursive.debug.level}">${basedir}</echo>
 
     <!-- Call the subdirs with the clean target -->
     <subant target="clean" 
@@ -135,7 +132,7 @@
   <target name="subrecursive.clean.nodstdir"
 	  unless="subrecursive.dstdir.given">
     <echo>subrecursive.clean.nodst  RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${subrecursive.debug.level}">${basedir}</echo>
 
     <!-- Call the subdirs with the clean target -->
     <subant target="clean" 

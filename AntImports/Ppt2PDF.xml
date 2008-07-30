@@ -81,7 +81,7 @@
   <target name="ppt2pdf.processing.NOT" depends="ppt2pdf.bomb.out" 
 	  unless="ppt2pdf.check">
     <echo>ppt2pdf.processing          ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${ppt2pdf.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -94,7 +94,7 @@
 	  description="Translate the ppt files to pdf using openoffice">
 
     <echo>ppt2pdf.processing          RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${ppt2pdf.debug.level}">${basedir}</echo>
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
     <apply dir="${basedir}" parallel="false" dest="${ppt2pdf.abssrc.dir}" 
@@ -110,7 +110,7 @@
   to notify the user -->
   <target name="ppt2pdf.clean.NOT" unless="ppt2pdf.check">
     <echo>ppt2pdf.clean               ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${ppt2pdf.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean files produced by ppt2pdf -->
@@ -120,7 +120,7 @@
 	  description="Remove files produced by ppt2pdf">
 
     <echo>ppt2pdf.clean               RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${ppt2pdf.debug.level}">${basedir}</echo>
 
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="ppt2pdf.target.filelist.property" pathsep=" ">

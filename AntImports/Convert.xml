@@ -97,7 +97,7 @@
   <target name="convert.processing.NOT"  depends="convert.bomb.out" 
 	  unless="convert.check">
     <echo>convert.processing          ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${convert.debug.level}">${basedir}</echo>
   </target>
     
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -110,7 +110,7 @@
 	  description="converts the given images">
     
     <echo>convert.processing          RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${convert.debug.level}">${basedir}</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${convert.absdst.dir}" />
@@ -135,7 +135,7 @@
   to notify the user -->
   <target name="convert.clean.NOT" unless="convert.check">
     <echo>convert.clean               ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${convert.debug.level}">${basedir}</echo>
   </target>
     
   <!-- Clean files produced by convert -->
@@ -145,7 +145,7 @@
 	  description="Remove files produced by convert">
     
     <echo>convert.clean              RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${convert.debug.level}">${basedir}</echo>
 
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="convert.target.filelist.property" pathsep=" ">

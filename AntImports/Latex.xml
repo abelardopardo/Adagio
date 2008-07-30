@@ -22,6 +22,7 @@
   <property name="latex.files"          value=""/>
 
   <!-- Private properties -->
+  <property name="latex.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define two properties containing the absolute src and dst paths -->
   <pathconvert property="latex.abssrc.dir" pathsep=" ">
@@ -70,7 +71,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">  latex.check              = "${latex.check}"
+    <echo level="${latex.debug.level}">  latex.check              = "${latex.check}"
   latex.execution.possible = ${latex.execution.possible}
   latex.failure            = ${latex.failure}</echo>
   </target>
@@ -84,8 +85,8 @@
   to notify the user -->
   <target name="latex.processing.NOT" depends="latex.bomb.out" 
 	  unless="latex.check">
-    <echo>latex.processing           ---</echo>
-    <echo>${basedir}</echo>
+    <echo>latex.processing            ---</echo>
+    <echo level="${latex.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -97,8 +98,8 @@
 	  if="latex.check"
 	  description="Execute latex twice to make sure refs. are solved.">
 
-    <echo>latex.processing           RUN</echo>
-    <echo>${basedir}</echo>
+    <echo>latex.processing            RUN</echo>
+    <echo level="${latex.debug.level}">${basedir}</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${latex.absdst.dir}" />
@@ -118,7 +119,7 @@
   to notify the user -->
   <target name="latex.clean.NOT" unless="latex.check">
     <echo>latex.clean                 ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${latex.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean files produced by latex -->
@@ -127,8 +128,8 @@
 	  if="latex.check" 
 	  description="Remove files produced by latex">
 
-    <echo>latex.clean           RUN</echo>
-    <echo>${basedir}</echo>
+    <echo>latex.clean                 RUN</echo>
+    <echo level="${latex.debug.level}">${basedir}</echo>
 
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="latex.target.filelist.property" pathsep=" ">
@@ -182,7 +183,7 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="latex.dump.properties" depends="initial.check">
-    <echo level="info"> ------ latex properties ----
+    <echo level="${latex.debug.level}"> ------ latex properties ----
     latex.exec       ="${latex.exec}"
     latex.abssrc.dir ="${latex.abssrc.dir}"
     latex.absdst.dir ="${latex.absdst.dir}"

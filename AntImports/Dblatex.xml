@@ -23,6 +23,7 @@
   <property name="dblatex.extra.args"      value=""/>
 
   <!-- Private properties -->
+  <property name="dblatex.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define two properties containing the absolute src and dst paths -->
   <pathconvert property="dblatex.abssrc.dir" pathsep=" ">
@@ -71,7 +72,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    dblatex.check          = "${dblatex.check}"
+    <echo level="${dblatex.debug.level}">    dblatex.check          = "${dblatex.check}"
   dblatex.execution.possible = ${dblatex.execution.possible}
   dblatex.failure            = ${dblatex.failure}</echo>
   </target>
@@ -86,7 +87,7 @@
   <target name="dblatex.processing.NOT" depends="dblatex.bomb.out" 
 	  unless="dblatex.check">
     <echo>dblatex.processing          ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${dblatex.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -99,7 +100,7 @@
 	  description="Process the given files with dblatex">
 
     <echo>dblatex.processing          RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${dblatex.debug.level}">${basedir}</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${dblatex.absdst.dir}" />
@@ -121,7 +122,7 @@
   to notify the user -->
   <target name="dblatex.clean.NOT" unless="dblatex.check">
     <echo>dblatex.clean               ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${dblatex.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean files produced by dblatex -->
@@ -129,7 +130,7 @@
 	  if="dblatex.check" description="Remove files produced by dblatex">
 
     <echo>dblatex.clean              RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${dblatex.debug.level}">${basedir}</echo>
 
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="dblatex.target.filelist.property" pathsep=" ">
@@ -156,7 +157,7 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="dblatex.dump.properties" depends="initial.check">
-    <echo level="info"> ------ dblatex properties ----
+    <echo level="${dblatex.debug.level}"> ------ dblatex properties ----
     dblatex.exec       ="${dblatex.exec}"
     dblatex.abssrc.dir ="${dblatex.abssrc.dir}"
     dblatex.absdst.dir ="${dblatex.absdst.dir}"

@@ -58,7 +58,7 @@
   <target name="extraant.processing.NOT"
 	  unless="extraant.check">
     <echo>extraant.processing         ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${extraant.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -71,7 +71,7 @@
 	  description="Simply invoke the extra ant with target target">
 
     <echo>extraant.processing         RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${extraant.debug.level}">${basedir}</echo>
 
     <ant antfile="${extraant.file}" dir="${extraant.src.dir}" 
 	 target="${extraant.target}" inheritall="false">

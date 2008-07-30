@@ -32,6 +32,7 @@
   <property name="xfig.files"         value=""/>
 
   <!-- Private properties -->
+  <property name="xfig.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define two properties containing the absolute src and dst paths -->
   <pathconvert property="xfig.abssrc.dir" pathsep=" ">
@@ -80,7 +81,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">  xfig.check  = "${xfig.check}"
+    <echo level="${xfig.debug.level}">  xfig.check  = "${xfig.check}"
   xfig.execution.possible = ${xfig.execution.possible}
   xfig.failure            = ${xfig.failure}</echo>
   </target>
@@ -95,7 +96,7 @@
   <target name="xfig.processing.NOT" depends="xfig.bomb.out"
 	  unless="xfig.check">
     <echo>xfig.processing             ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${xfig.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -107,7 +108,7 @@
 	  if="xfig.check" description="creates the figures from the fig files">
 
     <echo>xfig.processing             RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${xfig.debug.level}">${basedir}</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${xfig.absdst.dir}" />
@@ -134,7 +135,7 @@
   to notify the user -->
   <target name="xfig.clean.NOT" unless="xfig.check">
     <echo>xfig.clean                  ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${xfig.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean the produced files -->
@@ -143,7 +144,7 @@
 	  description="Clean files derived from the fig files"> 
 
     <echo>xfig.clean                  RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${xfig.debug.level}">${basedir}</echo>
 
     <!-- Obtain the fileset with the produced files. -->
     <pathconvert property="xfig.target.filelist.property" pathsep=" ">
@@ -180,7 +181,7 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="xfig.dump.properties" depends="initial.check">
-    <echo level="info"> ------ Xfig properties ----
+    <echo level="${xfig.debug.level}"> ------ Xfig properties ----
     xfig.exec          ="${xfig.exec}"
     xfig.abssrc.dir    ="${xfig.abssrc.dir}"
     xfig.absdst.dir    ="${xfig.absdst.dir}"

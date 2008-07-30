@@ -32,7 +32,7 @@
   <target name="export.processing.NOT"
 	  unless="exportcontrol.check">
     <echo>export.processing           NOT CALLED (Exportcontrol closed)</echo>
-    <echo>${basedir}</echo>
+    <echo level="${export.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has

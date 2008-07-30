@@ -24,6 +24,7 @@
   <property name="inkscape.files"         value=""/>
 
   <!-- Private properties -->
+  <property name="inkscape.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Property to store the option for inkscape to export in a given format -->
   <property name="inkscape.export.option" value=""/>
@@ -92,7 +93,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">  inkscape.check          = "${inkscape.check}"
+    <echo level="${inkscape.debug.level}">  inkscape.check          = "${inkscape.check}"
   inkscape.execution.possible = ${inkscape.execution.possible}
   inkscape.failure            = ${inkscape.failure}</echo>
   </target>
@@ -107,7 +108,7 @@
   <target name="inkscape.processing.NOT" depends="inkscape.bomb.out" 
 	  unless="inkscape.check">
     <echo>inkscape.processing         ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${inkscape.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -120,7 +121,7 @@
 	  description="Creates the files from the SVG files">
 
     <echo>inkscape.processing         RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${inkscape.debug.level}">${basedir}</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${inkscape.dst.dir}"/>
@@ -179,7 +180,7 @@
   to notify the user -->
   <target name="inkscape.clean.NOT" unless="inkscape.check">
     <echo>inkscape.clean              ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${inkscape.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean files produced by inkscape -->
@@ -188,7 +189,7 @@
 	  if="inkscape.check" description="Remove files produced by inkscape">
     
     <echo>inkscape.clean              RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${inkscape.debug.level}">${basedir}</echo>
 
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="inkscape.target.filelist.property" pathsep=" ">
@@ -215,7 +216,7 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="inkscape.dump.properties" depends="initial.check">
-    <echo level="info"> ------ Inkscape properties ----
+    <echo level="${inkscape.debug.level}"> ------ Inkscape properties ----
     inkscape.exec    ="${inkscape.exec}"
     inkscape.abssrc.dir ="${inkscape.abssrc.dir}"
     inkscape.absdst.dir ="${inkscape.absdst.dir}"
