@@ -4,5 +4,5 @@
   
   <!-- This param is directly for docbook stylesheets -->
   <xsl:param name="PROPERTIES_FILENAME">Properties.txt</xsl:param>
-  <xsl:param name="ADA_DOWNLOAD_URL">https://flautin.it.uc3m.es/abel/ADA</xsl:param>
+  <xsl:param name="ADA_DOWNLOAD_URL">http://flautin.it.uc3m.es/abel/ADA</xsl:param>
 </xsl:stylesheet>

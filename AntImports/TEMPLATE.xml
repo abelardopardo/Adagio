@@ -41,6 +41,11 @@
   <target name="@NAME@.check.values" 
 	  depends="initial.check, @NAME@.dump.properties">
 
+    <!-- Obtain the filelist with the source files to see if it is empty -->
+    <pathconvert property="@NAME@.source.filelist.property" pathsep=" ">
+      <fileset refid="@NAME@.fileset"/>
+    </pathconvert>
+
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="@NAME@.check">
       <and>
@@ -48,7 +53,7 @@
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${@NAME@.abssrc.dir}" arg2=""/></not>
 	<!-- There must be some files defined -->
-        <not><equals arg1="${@NAME@.files}" arg2=""/></not>
+        <not><equals arg1="${@NAME@.source.filelist.property}" arg2=""/></not>
 	<!-- Require a non-empty dst.dir as well -->
         <not><equals arg1="${@NAME@.absdst.dir}" arg2=""/></not>
       </and>
