@@ -154,9 +154,9 @@
 
 	  <para>
 	    A typical situation when a number of authors contribute toward a
-	    common resource is illustrated in the fillowing figure. There is
+	    common resource is illustrated in the following figure. There is
 	    usually an entity that absorbs the complexity of providing a
-	    homogeneus view of the material usually through an expensive and
+	    homogeneous view of the material usually through an expensive and
 	    time consuming production stage. This production requires then an
 	    additional step to bring all the material to the final web
 	    publishing platform.
@@ -256,7 +256,7 @@
 	    </listitem>
 	    <listitem>
 	      <para>
-		<ulink url="http://www.cygwin.com">Cygwin</ulink>: A linux-like
+		<ulink url="http://www.cygwin.com">Cygwin</ulink>: A Linux-like
 		environment for Windows. This application itself contains
 		several additional packages used by ADA.
 	      </para>
@@ -314,7 +314,7 @@
 	<answer>
 	  <para>
 	    Once <xref linkend="how_to_install_jre"/>, the next step is to
-	    download the <command>cygwin</command> tool, a linux-like
+	    download the <command>Cygwin</command> tool, a Linux-like
 	    environment for Windows. Once downloaded, the initial page of the
 	    installer is shown in the following figure.
 	  </para>
@@ -385,7 +385,7 @@
 	    connection. Keep in mind that this installer application remains
 	    installed in your computer and therefore can be executed at any
 	    other time to add/remove applications to the
-	    <command>cygwin</command> environment.
+	    <command>Cygwin</command> environment.
 	  </para>
 
 	  <para>
@@ -410,11 +410,11 @@
 	  </informalfigure>
 
 	  <para>
-	    This window is a typical linux command interpreter ready to process
+	    This window is a typical Linux command interpreter ready to process
 	    your commands. It is just a different way to give orders to your
 	    computer. Instead of clicking in different icons and menus,
-	    <command>cygwin</command> allows you to type the orders at the
-	    propmpt of this interpreter. The first check is to make sure the
+	    <command>Cygwin</command> allows you to type the orders at the
+	    prompt of this interpreter. The first check is to make sure the
 	    Java Run-time Environment (or JRE) is properly installed. Go ahead
 	    and type the command:
 	  </para>
@@ -458,7 +458,7 @@
 	  <para>
 	    When deploying Ant in a directory there are two choices: install Ant
 	    as a regular windows application, or install Ant inside Cygwin
-	    (remember that <command>cygwin</command> is a simple Linux-like
+	    (remember that <command>Cygwin</command> is a simple Linux-like
 	    environment within your Windows system). The two choices are very
 	    similar because it only requires a JRE to be available. The
 	    important step is to set the environment variables ANT_HOME to point
@@ -532,6 +532,7 @@
 	    xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='ADA_DOWNLOAD_URL']/text())"
 	    parse="xml"
 	    xmlns:xi="http://www.w3.org/2001/XInclude"/></command></programlisting>
+
 	  <para>
 	    A list of messages appear on the screen. After a while (depending on
 	    the speed of your net connection), the command terminates and a new
@@ -606,7 +607,7 @@
 
 	  <para>
 	    Try again to execute <command>git pull</command>. This time, the
-	    update process should go smoothless. There could be some conflicts
+	    update process should go smoothly. There could be some conflicts
 	    when <command>git</command> tries to merge these changes with the
 	    ones you introduced. If such situation happens, it is called a
 	    <quote>merge conflict</quote> and it needs to be solved manually by
@@ -729,7 +730,7 @@
 	<answer>
 	  <para>
 	    ADA is a tool that needs from the user a set of files to apply
-	    certain pre-conceinved production rules.  This information is all
+	    certain pre-conceived production rules.  This information is all
 	    contained in a regular text file with name
 	    <filename>Properties.txt</filename>. The structure of this file is
 	    very simple, any line starting with the symbol <quote>#</quote> is
@@ -778,7 +779,7 @@
              filetocopy2.ext</programlisting>
 
 	   <para>
-	     A list of file may be broken accross multiple lines using the
+	     A list of file may be broken across multiple lines using the
 	     symbol <command>\</command>. 
 	   </para>
 	   
@@ -848,7 +849,7 @@ clean.files=../scratch/Theory2</programlisting>
 
 	<answer>
 	  <para>
-	    A file containing all possible varables can be found in the file in
+	    A file containing all possible variables can be found in the file in
 	    <filename>AntImports/Properties.txt</filename> where ADA is
 	    installed. All definitions are commented out, therefore, the file
 	    can be used as the initial template to craft a specific definition
@@ -1203,7 +1204,7 @@ clean.files=../scratch/Theory2</programlisting>
 	  </informaltable>
 	  
 	  <para>
-	    For example, if the DocBook document with name
+	    For example, if the Docbook document with name
 	    <filename>manual.xml</filename> is stored in the current directory
 	    and needs to be translated to HTML, the following definition is
 	    needed in the file <filename>Properties.txt</filename>.
@@ -1229,7 +1230,7 @@ clean.files=../scratch/Theory2</programlisting>
 	</question>
 	<answer>
 	  <para>
-	    The docbook toolchain offers a powerful functionality called
+	    The docbook tool chain offers a powerful functionality called
 	    <emphasis>profiling</emphasis> or <emphasis>conditional
 	    text</emphasis>. (search for <quote>docbook
 	    profiling</quote> for more detailed information). Each docbook
@@ -1314,7 +1315,7 @@ clean.files=../scratch/Theory2</programlisting>
 	  </para>
 
 	  <para>
-	    ADA offers rules to do precisely this task, given a docbook
+	    ADA offers rules to do precisely this task, given a Docbook
 	    containing elements in two languages, English and Spanish, generate
 	    two separate files, one containing each version. Once you produced
 	    the XML file, set the appropriate values to some of following variables
@@ -1573,15 +1574,15 @@ clean.files=../scratch/Theory2</programlisting>
       <qandaentry id="ada_course_home"
 		  xreflabel="How to re-use definitions across an entire project">
 	<question>
-	  <para>Can I have definitions or files that are shared accross a
+	  <para>Can I have definitions or files that are shared across a
 	  <quote>project</quote>?</para>
 	</question>
 	<answer>
 	  <para>
-	    Yes. Although there is no forma definition of a
+	    Yes. Although there is no formal definition of a
 	    <quote>project</quote> within ADA, it is very common to have files
 	    or definitions that apply to all files included in a directory and
-	    its set of subdirectories. This directory is called the
+	    its set of sub-directories. This directory is called the
 	    <emphasis>course home</emphasis> directory within ADA. A user may
 	    have multiple of these directories one for each large project of
 	    shared resources.
@@ -1753,7 +1754,7 @@ docbook.files=index.xml</programlisting>
 
           <para>
 	    The previous definitions instruct ADA to process the file
-	    <filename>index.xml</filename> with docbook applying the stylesheet
+	    <filename>index.xml</filename> with Docbook applying the stylesheet
 	    which is the combination of the ADA stylesheet with name
 	    <filename>HeadTail.xsl</filename> with the file
 	    <filename>MyPersonalValues.xml</filename> containing my personal
@@ -1939,8 +1940,8 @@ docbook.files=index.xml</programlisting>
 	  </para>
 
 	  <para>
-	    The special markup in docbook to include a a showkwave is shown in
-	    the following example:
+	    The special markup in Docbook to include a Shockwave file is shown
+	    in the following example:
 	  </para>
 
 	  <example>
@@ -1949,7 +1950,7 @@ docbook.files=index.xml</programlisting>
   <phrase condition="width">425</phrase>
   <phrase condition="height">355</phrase>
   <phrase condition="file">File.swf</phrase>
-  Additonal text and <ulink url="link.html">links</ulink> you might include.
+  Additional text and <ulink url="link.html">links</ulink> you might include.
 </para>]]></programlisting>
 	  </example>
 	   
@@ -1975,7 +1976,7 @@ docbook.files=index.xml</programlisting>
 	      <tbody>
 		<row>
 		  <entry>file</entry>
-		  <entry>URL pointing at the shockwave file to use</entry>
+		  <entry>URL pointing at the Shockwave file to use</entry>
 		  <entry></entry>
 		</row>
 		<row>
@@ -2007,7 +2008,7 @@ docbook.files=index.xml</programlisting>
 	  </para>
 
 	  <para>
-	    I have some diretories that, although present in my project, I would
+	    I have some directories that, although present in my project, I would
 	    like to control its presence in the final version easily. For
 	    example, suppose I would like to control the presence of a special
 	    page in my final site, that is, go from a version in which that page
@@ -2224,8 +2225,8 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
   <!--                             GIT                              -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <section id="Git" xreflabel="Top of the Section">
-    <title>Using Git with ADA</title>
+  <section id="Git_for_authors" xreflabel="Top of the Section">
+    <title>Using Git as an author with ADA</title>
 
     <qandaset defaultlabel="qanda">
 
@@ -2334,7 +2335,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    information exchange with any other repository. However, if the
 	    different versions need to be shared through an external repository,
 	    <command>git</command> offers commands to send these changes or
-	    update the local files with the latest revision respecto to the
+	    update the local files with the latest revision respect to the
 	    remote repository. These commands are explained in the
 	    following questions.
 	  </para>
@@ -2356,7 +2357,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    with a name (simply duplicate the content of the current branch),
 	    change the current branch, and merge the content of one branch with
 	    the current branch. Branches might be a bit counterintiutive at
-	    first, but together with an extremelly powerful merge capability,
+	    first, but together with an extremely powerful merge capability,
 	    offer an effective way to organize multiple versions in a complex
 	    set of files.
 	  </para>
@@ -2366,7 +2367,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    url="http://git.or.cz/">official Git Web site</ulink>.
 	  </para>
 
-	  <para>Back to <xref linkend="Git"/>.</para>
+	  <para>Back to <xref linkend="Git_for_authors"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -2383,7 +2384,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	  <itemizedlist>
 	    <listitem>
 	      <para>
-		On Windows, you have two options: the software is alreay
+		On Windows, you have two options: the software is already
 		installed as part of Cygwin (see <xref
 		linkend="howtoinstallcygwin"/>) or as an standalone windows
 		program called <ulink
@@ -2479,7 +2480,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    </listitem>
 	  </itemizedlist>
 
-	  <para>Back to <xref linkend="Git"/>.</para>
+	  <para>Back to <xref linkend="Git_for_authors"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -2548,7 +2549,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	  <para>
 	    As it can be seen, in addition to the course shared repository,
 	    authors have their own local repository in their workspace (their
-	    laptop, corporative user account, etc.) These repositories can be
+	    laptop, corporate user account, etc.) These repositories can be
 	    easily set up by cloning the course repository (see <xref
 	    linkend="gitclone" />). Authors then edit and store their versions
 	    in their local repositories, and when the new version is ready to be
@@ -2557,7 +2558,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    linkend="gitpush"/>).
 	  </para>
 
-	  <para>Back to <xref linkend="Git"/>.</para>
+	  <para>Back to <xref linkend="Git_for_authors"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -2623,9 +2624,23 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    You will be asked to authenticate with <command>mycourse</command>'s
 	    password. The program will then print several messages and after a
 	    while a clone of the shared repository should appear now in a new
-	    subdirectory called <command>material</command> inside your current
-	    directory. Enter into that directory and type <command>git
-	    status</command>:
+	    sub-directory called <command>material</command> inside your current
+	    directory. The following figure illustrates this process.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/GitAuthorCloned.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Cloned repository in author area</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>
+	    Now enter in that directory and type <command>git status</command>:
 	  </para>
 
 	  <programlisting>$ <command>git status</command>
@@ -2653,19 +2668,8 @@ nothing to commit (working directory clean)</programlisting>
 
 	  <para>
 	    Your repository should now be placed on branch
-	    <command>master</command> as ilustrated in the following figure.
+	    <command>master</command> as illustrated in the following figure.
 	  </para>
-
-	  <informalfigure>
-	    <mediaobject>
-	      <imageobject>
-		<imagedata fileref="images/GitAuthorCloned.png" format="PNG"/>
-	      </imageobject>
-	      <textobject>
-		<phrase>Cloned respository in author area</phrase>
-	      </textobject>
-	    </mediaobject>
-	  </informalfigure>
 
 	  <para>
 	    Before beginning to work, you need to edit the configuration file of
@@ -2705,7 +2709,7 @@ nothing to commit (working directory clean)</programlisting>
 	    
 	  </para>
 
-	  <para>Back to <xref linkend="Git"/>.</para>
+	  <para>Back to <xref linkend="Git_for_authors"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -2786,7 +2790,7 @@ nothing to commit (working directory clean)</programlisting>
 	    the command is <command>git commit</command>. In order to be
 	    considered as changes, files need to be explicitly placed in the
 	    index with the command <command>git add file</command>. If this
-	    concept of the index is too confussing, forget about it for the time
+	    concept of the index is too confusing, forget about it for the time
 	    being and use it only once you feed the need for it.
 	  </para>
 
@@ -2811,7 +2815,7 @@ nothing to commit (working directory clean)</programlisting>
 	    <title>Example of a comment attached to a git commit</title>
 	    <programlisting>Redesigned completely the figure on this section
 
-The figure was actually very confussing, so I modified the arrows (which were
+The figure was actually very confusing, so I modified the arrows (which were
 backwards and added some colors so make it more intuitive.
        <command>modified:   MyCoolResource.xml</command></programlisting>
 	  </example>
@@ -2838,7 +2842,7 @@ backwards and added some colors so make it more intuitive.
 	  <para>
 	    Sometimes, but only sometimes, you've modified lots of files, and
 	    instead of creating a new version with all the changes, you would
-	    like to document the changes separatedly by grouping some files. For
+	    like to document the changes separately by grouping some files. For
 	    example, you made two clearly identified changes. One in files
 	    <filename>f1</filename> and <filename>f2</filename>, and the second
 	    in files <filename>f3</filename> and <filename>f4</filename>. The
@@ -2850,7 +2854,7 @@ backwards and added some colors so make it more intuitive.
 
 	  <para>
 	    This is precisely the purpose of the index! The index is this
-	    ficticious box in which files are prepared and packed to be sent to
+	    fictitious box in which files are prepared and packed to be sent to
 	    the local repository. By using the command <command>git add
 	    &lt;filenames></command>, you can place the files you want in the
 	    index. Once you have the right files, run the command <command>git
@@ -2861,7 +2865,7 @@ backwards and added some colors so make it more intuitive.
 	    second set of files and execute the second commit.
 	  </para>
 
-	  <para>Back to <xref linkend="Git"/>.</para>
+	  <para>Back to <xref linkend="Git_for_authors"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -2891,7 +2895,7 @@ backwards and added some colors so make it more intuitive.
 	  </para>
 	  <para>
 	    In the case of ADA, add into the Git repository your Docbook source
-	    files, your figures in the vectorial format produced by your
+	    files, your figures in the vector format produced by your
 	    favorite drawing program (normally SVG files), configuration files
 	    like <filename>Properties.txt</filename> and
 	    <filename>Params.xml</filename> and, in general, any other resources
@@ -2905,14 +2909,14 @@ backwards and added some colors so make it more intuitive.
 	    that are saved by some editors, etc.
 	  </para>
 
-	  <para>Back to <xref linkend="Git"/>.</para>
+	  <para>Back to <xref linkend="Git_for_authors"/>.</para>
 	</answer>
       </qandaentry>
 
       <qandaentry id="gitcommitlocal">
 	<question>
 	  <para>
-	    I have just commited some changes, why are they not visible in the
+	    I have just committed some changes, why are they not visible in the
 	    shared repository?
 	  </para>
 	</question>
@@ -2925,7 +2929,7 @@ backwards and added some colors so make it more intuitive.
 	    committing. See <xref linkend="gitpush"/> for further explanation.
 	  </para>
 
-	  <para>Back to <xref linkend="Git"/>.</para>
+	  <para>Back to <xref linkend="Git_for_authors"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -2959,7 +2963,7 @@ backwards and added some colors so make it more intuitive.
 	    <command>git pull</command>.
 	  </para>
 
-	  <para>Back to <xref linkend="Git"/>.</para>
+	  <para>Back to <xref linkend="Git_for_authors"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -2997,46 +3001,129 @@ backwards and added some colors so make it more intuitive.
 	  </para>
 
 
-	  <para>Back to <xref linkend="Git"/>.</para>
+	  <para>Back to <xref linkend="Git_for_authors"/>.</para>
 	</answer>
       </qandaentry>
+
+      <qandaentry id="git_author_triangle_flow"
+		  xreflabel="How to exchange files with the shared repository">
+	<question>
+	  <para>
+	    I got a clone of the shared repository and know a few commands. How
+	    is the interaction then taking place?
+	  </para>
+
+	  <para>
+	    After cloning, and modified files, I sent the new version to my
+	    local repository, I <quote>pulled</quote> new versions from the
+	    shared repository and I see how new files appear/dissapear/change,
+	    and I even <quote>pushed</quote> some changes of my own to that
+	    repository, can I see the big picture now?
+	  </para>
+	</question>
+	
+	<answer>
+	  <para>
+	    The proposed workflow (there are many others possible) is
+	    illustrated in the following figure.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/GitAuthorTriangle.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Git/Author interaction triangle</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>
+	    You initiated the process by cloning the shared repository (see
+	    <xref linkend="gitclone"/>), then modified your own files and first
+	    committed those new versions to your local repository (see <xref
+	    linkend="gitclone"/>), once these changes were ready to be shared
+	    you pushed them to the shared repository (see <xref
+	    linkend="gitpush"/>) and where stored in a different branch
+	    specially reserved for your changes. Somebody else, after inspecting
+	    (or not) your changes, took them and promoted them to the master
+	    branch by a <quote>merge</quote> operation. If any other file has
+	    changed in the shared repository, you may pull them (see <xref
+	    linkend="gitpull"/>.
+	  </para>
+
+	  <para>
+	    So, a hypothetical sequence of commands in your regular day to day
+	    work as an author would be:
+	  </para>
+
+	  <programlisting>$ <command>git pull</command> # (Get the latest files)
+... Work on your material and produce really cool stuff ...
+$ <command>git add &lt;new files&gt;</command> # (Some new files need to be added)
+$ <command>git commit (-a)</command> # (I'm done, store the changes locally)
+... Go home/coffee up/take a nap/Lunch/Phone/ whatever
+... Work on your material and modify it again ...
+$ <command>git commit (-a)</command> # (I'm done with this other set of changes)
+$ <command>git push</command> # (Ready for prime time. Send it to the shared repository)
+... Notify the coordinator that there is new stuff ready ...
+... Wait for any comments ...
+$ <command>git pull</command> # (Get the latest files again)
+...</programlisting>
+	</answer>
+      </qandaentry>
+
+    </qandaset>
+  </section>
+
+  <section id="Git_for_course_coordinator" xreflabel="Top of the Section">
+    <title>Using Git as a course coordinator with ADA</title>
+
+    <qandaset defaultlabel="qanda">
 
       <qandaentry id="git-admin-shared-repo"
 	xreflabel="How to set-up the shared repository">
 	<question>
-	  <para>I am a course coordinator. How do I set-up the
-	    shared repository?</para>
+	  <para>
+	    I am a course coordinator. How do I set-up the shared repository?
+	  </para>
 	</question>
 	<answer>
 	  <para>
-	    Enter the course account and decide where you want to
-	    put the shared repository. It can be anywhere in your account,
-	    but remember not to put it in a place served by a Web server,
-	    to avoid the repository from being public. Once you have created
-	    a directory for the repository (named, for example,
-	    <filename>material</filename>), enter into this directory
-	    and type:
+	    You need first some account or location which is accessible to the
+	    rest of authors. It will be assumed that you have such
+	    account. Enter in the course account and decide where you want to
+	    put the shared repository. It can be anywhere, but remember not to
+	    put it in a place served by a Web server if you want your repository
+	    not to be public. Once you have created a directory for the
+	    repository (named, for example, <filename>material</filename>),
+	    enter into this directory and type:
 	  </para>
 
 	  <programlisting>$ <command>git init</command></programlisting>
 
 	  <para>
-	    The <filename>material</filename> directory is now a
-	    Git repository placed on branch <command>master</command>,
-	    that will be the official branch of the course.
+	    The <filename>material</filename> directory is now a Git repository
+	    placed on branch <command>master</command>, with no content. This
+	    will be the official branch of the shared course repository. It
+	    means that whatever files are on that branch, they are taken as the
+	    official versions.
 	  </para>
+
 	  <para>
 	    Create the initial layout for your course (directories, common
 	    files, etc.) and commit your changes.  The command <command>git
-	    add</command> will be useful for that (see <xref linkend="gitcommit"
-	    />). Remember that Git do not handle directories which do not
-	    contain files. Therefore, if you create directories with no material
-	    yet, you may want to create an initial version of
-	    <filename>Properties.txt</filename> inside that directory.
+	    add</command> will be useful to include files in the version control
+	    mechanism (see <xref linkend="gitcommit" />). Remember that Git does
+	    not handle empty directories. Therefore, if you create directories
+	    with no material , you may want to create an initial version of
+	    <filename>Properties.txt</filename> inside that directory and add it
+	    at the set of files controlled by Git.
 	  </para>
+
 	  <para>
-	    After you have finished your initial layout and committed it,
-	    create a new branch for each contributing author:
+	    After you have finished your initial layout and committed it, create
+	    a new branch for each contributing author:
 	  </para>
 
 	  <programlisting>$ <command>git branch john</command>
@@ -3044,29 +3131,32 @@ $ <command>git branch mary</command>
 $ <command>git branch laura</command>
 $ <command>git branch peter</command></programlisting>
 
+          <para>
+	    There is no need to create all the required branches in advance. You
+	    may create additional branches whenever new authors are considered.
+	  </para>
+
 	  <para>
 	    The shared repository is now ready. Tell the authors the basic
-	    parameters to access it (remote machine they should connect to,
-	    name of the course account, location of the repository
-	    in the course account, and their branch name).
+	    parameters to access it (remote machine they should connect to, name
+	    of the course account, location of the repository in the course
+	    account, and their author branch name).
 	  </para>
 
 	  <para>
-	    You may want to keep a clone of the repository in your
-	    local workspace. Follow the instructions in
-	    <xref linkend="gitclone" />. Probably, it will be convenient
-	    to work on the official branch in your local repository
-	    and push it into the branch <command>master</command> when
-	    it is ready to be made public.
-	  </para>
-	  
-	  <para>
-	    Now, you probably may want to clone the shared repository into
-	    your workspace. Follow the instructions in
-	    <xref linkend="git-admin-clone" />.
+	    There are several ways you may interact with this repository. One of
+	    them could be to keep a clone of this repository in your local
+	    workspace. Follow the instructions in <xref linkend="gitclone" />
+	    and obtain such clone. One possible workflow produces all the
+	    changes in the <command>master</command> branch in your local
+	    repository and push the changes into the <command>master</command>
+	    branch of the shared repository when it is ready to be made
+	    public. For more detailed instructions on how to manage all the
+	    changes, follow the instructions in <xref
+	    linkend="git-admin-clone"/>.
 	  </para>
 
-	  <para>Back to <xref linkend="Git"/>.</para>
+	  <para>Back to <xref linkend="Git_for_course_coordinator"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -3079,13 +3169,13 @@ $ <command>git branch peter</command></programlisting>
 	</question>
 	<answer>
 	  <para>
-	    We recommend you to create a clone of the shared repository
-	    in your own workspace (probably your laptop or desktop computer).
-	    Follow instructions in <xref linkend="gitclone" />
-	    to create your repository and set-up your
-	    branch <command>master</command>, with the exception that
-	    the line you should add to your <filename>.git/config</filename>
-	    directory is <command>push = master:master</command>:	    
+	    We recommend you to create a clone of the shared repository in your
+	    own workspace (probably your laptop or desktop computer).  Follow
+	    the instructions in <xref linkend="gitclone" /> to create your
+	    repository and set-up your branch <command>master</command>, with
+	    the exception that the line you should add to your
+	    <filename>.git/config</filename> file which in your case is
+	    <command>push = master:master</command>:
 	  </para>
 
 <programlisting>$ <command>cat .git/config</command>
@@ -3095,25 +3185,28 @@ $ <command>git branch peter</command></programlisting>
         bare = false
         logallrefupdates = true
 [remote "origin"]
-        url = ssh://jaf@ariadna.it.uc3m.es/~/tmp/tmp-ada/ADA
+        url = ssh://YourLogin@accounts.example.com/home/mycourse/repository/material
         fetch = +refs/heads/*:refs/remotes/origin/*
-        push = master:master
+        <command>push = master:master</command>
 [branch "master"]
         remote = origin
         merge = refs/heads/master</programlisting>
 
 	  <para>
-	    This is because your local branch <command>master</command>
-	    is the branch where
-	    you prepare the official material that other authors
-	    see after you push it into the branch <command>master</command>
-	    of the shared repository.
+	    This change is because your <command>master</command> branch in your
+	    local repository will be the branch where you prepare the official
+	    material that other authors will see after you push the changes into
+	    the <command>master</command> branch of the shared repository.
 	  </para>
 
 	  <para>
-	    Now, create a new branch in your local repository
-	    for each author branch in the shared repository.
-	    For example:
+	    Your main role as the course coordinator is to supervise the changes
+	    proposed by your team of authors and incorporate them to the
+	    official <command>master</command> branch of the shared
+	    repository. But in order to do that, you have to access to the
+	    contributions of all the authors. To perform such task replicate in
+	    your local repository the author branches in the shared
+	    repository. For example:
 	  </para>
 
 	  <programlisting>$ <command>git branch --track john origin/john</command>
@@ -3122,12 +3215,14 @@ $ <command>git branch --track laura origin/laura</command>
 $ <command>git branch --track peter origin/peter</command></programlisting>
 
 	  <para>
-	    Your local repository is now prepared for merging contributions
-	    from other authors. Probably, you are also a contributor.
-	    In that case, it is recommended to do your changes in temporary
-	    short-lived branches (a few days, probably, while you do a
-	    thematic change) and then merge them into the branch
-	    <command>master</command>:
+	    Your local repository is now prepared for merging contributions from
+	    other authors. Don't worry, the merging will be done with the help
+	    of Git which is really good at it. If you happen to be not only the
+	    course coordinator but also an author, then it is recommended to
+	    have your own local branch to do such changes and then merge them
+	    into the <command>master</command> branch. A typical sequence when
+	    you have changes and you want them to be included in the master
+	    branch is:
 	  </para>
 
 	  <programlisting>$ <command>git checkout master</command>
@@ -3141,15 +3236,14 @@ $ <command>git branch -d new-calendar</command></programlisting>
 	    The command <command>git checkout -b</command> creates a new branch
 	    starting from the current branch (<command>master</command> in this
 	    case). After you have edited and committed (probably several
-	    commits), you can merge those changes into the official branch
-	    with <command>git merge</command>. Finally, you can safely remove
-	    the temporary branch with <command>git branch -d</command>.
-	    If you plan to do further changes in the short-term about the
-	    same topic, you can skip the last step, in order to reuse the
-	    branch.
+	    commits), you can merge those changes into the official branch with
+	    <command>git merge</command>. Finally, you can safely remove the
+	    temporary branch with <command>git branch -d</command>.  If you plan
+	    to do further changes in the short-term about the same topic, you
+	    can skip the last step, and reuse the branch.
 	  </para>
 
-	  <para>Back to <xref linkend="Git"/>.</para>
+	  <para>Back to <xref linkend="Git_for_course_coordinator"/>.</para>
 	</answer>
 	
 
@@ -3158,68 +3252,85 @@ $ <command>git branch -d new-calendar</command></programlisting>
       <qandaentry id="git-admin-merge"
 	xreflabel="How to merge contributions from authors">
 	<question>
-	  <para>I am a course coordinator. How do I merge contents
-	    from authors into the official course branch?</para>
+	  <para>
+	    I am a course coordinator. How do I merge contents from authors into
+	    the official course branch?
+	  </para>
 	</question>
 	<answer>
 	  <para>
-	    Git gives you a lot of flexibility for doing this.
-	    One possible way of merging contributions from authors
-	    is explained here. 
+	    Merging is probably the most delicate of the steps, but Git gives
+	    you a lot of flexibility to perform this operation. As with the rest
+	    of the proposed workflow, there are multiple alterntives for merging
+	    contributions from a set of authors, but a concrete one is explained
+	    here.
 	  </para>
+
 	  <para>
-	    You should have created a local repository as explained
-	    in <xref linkend="git-admin-clone" />. Do it now if you
-	    have not. 
+	    You should have created a local repository and you have your
+	    <command>master</command> branch as well as one branch per
+	    author. If you are not at this point, stop right here and go back to
+	    <xref linkend="git-admin-clone" />.
 	  </para>
+
 	  <para>
-	    Suppose you want to merge some changes introduced by
-	    Mary. She should have pushed her changes
-	    into branch <command>mary</command> in the shared repository.
-	    Go to your local branch <command>mary</command> and update it:
+	    Suppose you want to merge some changes introduced by Mary. She
+	    should have pushed her changes into the <command>mary</command>
+	    branch in the shared repository.  Go to your <command>mary</command>
+	    local branch and update it (that is, fetch those changes from the
+	    shared repository):
 	  </para>
+
 	  <programlisting>$ <command>git checkout mary</command>
 $ <command>git pull</command></programlisting>
 
 	  <para>
-	    Her changes should be now in branch <command>mary</command>.
-	    You may want to review them and take a look at the history
-	    with <command>git log</command>.
-	    If there are no problems,
-	    or you want to fix the problems yourself, it is time
-	    to merge her changes into branch <command>master</command>
-	    (otherwise, ask Mary to fix the problems):
+	    The first command places you in the branch assigned to Mary, the
+	    second, as the name says, <quote>pulls</quote> those changes to your
+	    local copy of such branch. You may review them and take a look at
+	    the history of commits performed by Mary with <command>git
+	    log</command>. If you see no problems and the changes are good to be
+	    incorporated to the official branch, it is time then to
+	    <emphasis>merge</emphasis> her changes into the
+	    <command>master</command> branch (if you are not happy with the
+	    changes ask Mary to fix the problems). In order to merge
+	    <emphasis>into</emphasis> the master branch, you need to change to
+	    such branch:
 	  </para>
 
 	  <programlisting>$ <command>git checkout master</command>
 $ <command>git merge mary</command></programlisting>
 
 	  <para>
-	    The changes of Mary are now available in your
-	    branch <command>master</command>.
-	    Check that the material is built correctly with
-	    <command>adado</command>. If you need to fix details,
-	    do it and commit. Once you are finished with the
-	    modifications and want them to be in the official
-	    branch of the shared repository, available for all
-	    the authors, push them:
+	    The changes of Mary should now be available in your local
+	    <command>master</command> branch. Since this is the official source
+	    of material for the entire course, make sure the material is built
+	    correctly with <command>adado</command>. If you need to fix details,
+	    you may do so and commit the changes normally to your local
+	    repository. So far, no change has left your local repository to the
+	    shared one. Once you are finished with the modifications and see the
+	    material perfectly stable again, you want them to be in the official
+	    branch of the shared repository, available for all the authors. It
+	    is time then to push these changes:
 	  </para>
 
 	  <programlisting>$ <command>git push</command></programlisting>
 
 	  <para>
-	    Authors will see these changes the next time they
-	    execute <command>git pull</command> from their local
-	    repository.
+	    Authors will now be able to obtain these changes the next time they
+	    execute <command>git pull</command> from their local repository.
 	  </para>
 
-	  <!-- as explained in the Git user guide, a merge can
-	  be uncommitted with git reset - -hard ORIG_HEAD
-	  or, if there are unresolved conflicts, with
-	  git reset - -hard HEAD. Explain this in a new question?
-	  -->
 
-	  <para>Back to <xref linkend="Git"/>.</para>
+	  <para>
+	    If you made it to this point, and you went several times around this
+	    loop of pulling changes, review them and pushing them to the shared
+	    repository, you are ready to explore a bit deeper what Git is
+	    capable of doing. The commands in this FAQ are just a small subset
+	    of the real functionality.
+	  </para>
+
+	  <para>Back to <xref linkend="Git_for_course_coordinator"/>.</para>
 	</answer>
       </qandaentry>
     </qandaset>
