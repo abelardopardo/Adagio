@@ -93,7 +93,7 @@
   to notify the user -->
   <target name="gimp.processing.NOT" depends="gimp.bomb.out" 
 	  unless="gimp.check">
-    <echo>gimp.processing             ---</echo>
+    <echo level="${gimp.debug.level}">gimp.processing             ---</echo>
     <echo level="${gimp.debug.level}">${basedir}</echo>
   </target>
     
@@ -141,7 +141,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="gimp.clean.NOT" unless="gimp.check">
-    <echo>gimp.clean                  ---</echo>
+    <echo level="${gimp.debug.level}">gimp.clean                  ---</echo>
     <echo level="${gimp.debug.level}">${basedir}</echo>
   </target>
     

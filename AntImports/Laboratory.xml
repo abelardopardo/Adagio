@@ -71,7 +71,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="laboratory.processing.NOT" unless="laboratory.check">
-    <echo>laboratory.processing       ---</echo>
+    <echo level="${laboratory.debug.level}">laboratory.processing       ---</echo>
     <echo level="${laboratory.debug.level}">${basedir}</echo>
   </target>
 
@@ -114,7 +114,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="laboratory.clean.NOT" unless="laboratory.check">
-    <echo>laboratory.clean            ---</echo>
+    <echo level="${laboratory.debug.level}">laboratory.clean            ---</echo>
     <echo level="${laboratory.debug.level}">${basedir}</echo>
   </target>
 

@@ -91,7 +91,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="rss.processing.NOT" unless="rss.check">
-    <echo>rss.processing              ---</echo>
+    <echo level="${rss.debug.level}">rss.processing              ---</echo>
     <echo level="${rss.debug.level}">${basedir}</echo>
   </target>
 
@@ -135,7 +135,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="rss.clean.NOT" unless="rss.check">
-    <echo>rss.clean                   ---</echo>
+    <echo level="${rss.debug.level}">rss.clean                   ---</echo>
     <echo level="${rss.debug.level}">${basedir}</echo>
   </target>
 

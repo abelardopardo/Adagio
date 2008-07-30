@@ -85,7 +85,7 @@
   to notify the user -->
   <target name="dvips.processing.NOT" depends="dvips.bomb.out" 
 	  unless="dvips.check">
-    <echo>dvips.processing            ---</echo>
+    <echo level="${dvips.debug.level}">dvips.processing            ---</echo>
     <echo level="${dvips.debug.level}">${basedir}</echo>
   </target>
 
@@ -120,7 +120,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="dvips.clean.NOT" unless="dvips.check">
-    <echo>dvips.clean                 ---</echo>
+    <echo level="${dvips.debug.level}">dvips.clean                 ---</echo>
     <echo level="${dvips.debug.level}">${basedir}</echo>
   </target>
 

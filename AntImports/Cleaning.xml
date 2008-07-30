@@ -42,7 +42,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="clean.clean.NOT" unless="clean.check">
-    <echo>clean.clean                 ---</echo>
+    <echo level="${clean.debug.level}">clean.clean                 ---</echo>
     <echo level="${clean.debug.level}">${basedir}</echo>
   </target>
 

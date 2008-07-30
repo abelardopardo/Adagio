@@ -112,7 +112,7 @@
   to notify the user -->
   <target name="inkscape.processing.NOT" depends="inkscape.bomb.out" 
 	  unless="inkscape.check">
-    <echo>inkscape.processing         ---</echo>
+    <echo level="${inkscape.debug.level}">inkscape.processing         ---</echo>
     <echo level="${inkscape.debug.level}">${basedir}</echo>
   </target>
 
@@ -184,7 +184,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="inkscape.clean.NOT" unless="inkscape.check">
-    <echo>inkscape.clean              ---</echo>
+    <echo level="${inkscape.debug.level}">inkscape.clean              ---</echo>
     <echo level="${inkscape.debug.level}">${basedir}</echo>
   </target>
 

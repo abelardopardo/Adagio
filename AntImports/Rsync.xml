@@ -59,7 +59,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="rsync.processing.NOT" unless="rsync.check">
-    <echo>rsync.processing           ---</echo>
+    <echo level="${rsync.debug.level}">rsync.processing           ---</echo>
     <echo level="${rsync.debug.level}">${basedir}</echo>
   </target>
 
@@ -88,7 +88,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="rsync.clean.NOT" unless="rsync.check">
-    <echo>rsync.clean               ---</echo>
+    <echo level="${rsync.debug.level}">rsync.clean               ---</echo>
     <echo level="${rsync.debug.level}">${basedir}</echo>
   </target>
 

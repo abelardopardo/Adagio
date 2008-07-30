@@ -57,7 +57,7 @@
        to notify the user -->
   <target name="extraant.processing.NOT"
 	  unless="extraant.check">
-    <echo>extraant.processing         ---</echo>
+    <echo level="${extraant.debug.level}">extraant.processing         ---</echo>
     <echo level="${extraant.debug.level}">${basedir}</echo>
   </target>
 

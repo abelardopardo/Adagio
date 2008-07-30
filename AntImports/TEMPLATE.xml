@@ -90,7 +90,7 @@
   to notify the user -->
   <target name="@NAME@.processing.NOT" depends="@NAME@.bomb.out" 
 	  unless="@NAME@.check">
-    <echo>@NAME@.processing           ---</echo>
+    <echo level="${@NAME@.debug.level}">@NAME@.processing           ---</echo>
     <echo level="${@NAME@.debug.level}">${basedir}</echo>
   </target>
 
@@ -125,7 +125,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="@NAME@.clean.NOT" unless="@NAME@.check">
-    <echo>@NAME@.clean               ---</echo>
+    <echo level="${@NAME@.debug.level}">@NAME@.clean               ---</echo>
     <echo level="${@NAME@.debug.level}">${basedir}</echo>
   </target>
 

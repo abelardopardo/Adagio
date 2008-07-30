@@ -95,7 +95,7 @@
   to notify the user -->
   <target name="xfig.processing.NOT" depends="xfig.bomb.out"
 	  unless="xfig.check">
-    <echo>xfig.processing             ---</echo>
+    <echo level="${xfig.debug.level}">xfig.processing             ---</echo>
     <echo level="${xfig.debug.level}">${basedir}</echo>
   </target>
 
@@ -134,7 +134,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="xfig.clean.NOT" unless="xfig.check">
-    <echo>xfig.clean                  ---</echo>
+    <echo level="${xfig.debug.level}">xfig.clean                  ---</echo>
     <echo level="${xfig.debug.level}">${basedir}</echo>
   </target>
 

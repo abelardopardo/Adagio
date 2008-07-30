@@ -87,7 +87,7 @@
   to notify the user -->
   <target name="copyfiles.processing.NOT" depends="copyfiles.bomb.out" 
 	  unless="copyfiles.check">
-    <echo>copyfiles.processing        ---</echo>
+    <echo level="${copyfiles.debug.level}">copyfiles.processing        ---</echo>
     <echo level="${copyfiles.debug.level}">${basedir}</echo>
   </target>
 
@@ -114,7 +114,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="copyfiles.clean.NOT" unless="copyfiles.check">
-    <echo>copyfiles.clean             ---</echo>
+    <echo level="${copyfiles.debug.level}">copyfiles.clean             ---</echo>
     <echo level="${copyfiles.debug.level}">${basedir}</echo>
   </target>
 
