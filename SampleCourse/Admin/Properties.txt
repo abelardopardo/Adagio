@@ -5,19 +5,18 @@
 # variables as well as an explanation.
 #
 
-subrecursive.dst.dir=
 # subrecursive.dirs=Guide3
-subrecursive.dirs=Laboratory1 \
-                  Laboratory2 \
-                  Laboratory3 \
-   		  Theory1 \
-   		  Theory2 \
-   		  Theory3 \
-   		  Guide1 \
-   		  Guide2 \
-   		  Guide3 \
- 		  images \
-		  lib
+subrecursive.dirs.nodst=Laboratory1 \
+                  	Laboratory2 \
+                  	Laboratory3 \
+   		  	Theory1 \
+   		  	Theory2 \
+   		  	Theory3 \
+   		  	Guide1 \
+   		  	Guide2 \
+   		  	Guide3 \
+ 		  	images \
+		  	lib
 
 mergestyles.master.style=AdaCourseParams.xml
 
