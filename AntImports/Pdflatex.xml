@@ -85,7 +85,7 @@
   to notify the user -->
   <target name="pdflatex.processing.NOT" depends="pdflatex.bomb.out"
 	  unless="pdflatex.check">
-    <echo>pdflatex.processing         ---</echo>
+    <echo level="${pdflatex.debug.level}">pdflatex.processing         ---</echo>
     <echo level="${pdflatex.debug.level}">${basedir}</echo>
   </target>
 
@@ -119,7 +119,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="pdflatex.clean.NOT" unless="pdflatex.check">
-    <echo>pdflatex.clean              ---</echo>
+    <echo level="${pdflatex.debug.level}">pdflatex.clean              ---</echo>
     <echo level="${pdflatex.debug.level}">${basedir}</echo>
   </target>
 

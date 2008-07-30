@@ -86,7 +86,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="mergestyles.processing.NOT" unless="mergestyles.check">
-    <echo>mergestyles.processing       ---</echo>
+    <echo level="${mergestyles.debug.level}">mergestyles.processing       ---</echo>
     <echo level="${mergestyles.debug.level}">${basedir}</echo>
   </target>
 

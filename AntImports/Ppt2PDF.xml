@@ -80,7 +80,7 @@
   to notify the user -->
   <target name="ppt2pdf.processing.NOT" depends="ppt2pdf.bomb.out" 
 	  unless="ppt2pdf.check">
-    <echo>ppt2pdf.processing          ---</echo>
+    <echo level="${ppt2pdf.debug.level}">ppt2pdf.processing          ---</echo>
     <echo level="${ppt2pdf.debug.level}">${basedir}</echo>
   </target>
 
@@ -109,7 +109,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="ppt2pdf.clean.NOT" unless="ppt2pdf.check">
-    <echo>ppt2pdf.clean               ---</echo>
+    <echo level="${ppt2pdf.debug.level}">ppt2pdf.clean               ---</echo>
     <echo level="${ppt2pdf.debug.level}">${basedir}</echo>
   </target>
 

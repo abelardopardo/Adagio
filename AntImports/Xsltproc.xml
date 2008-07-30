@@ -153,7 +153,7 @@
   to notify the user -->
   <target name="xsltproc.processing.NOT"  depends="xsltproc.bomb.out" 
 	  unless="xsltproc.check">
-    <echo>xsltproc.processing         ---</echo>
+    <echo level="${xsltproc.debug.level}">xsltproc.processing         ---</echo>
     <echo level="${xsltproc.debug.level}">${basedir}</echo>
   </target>
 
@@ -281,7 +281,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="xsltproc.clean.NOT" unless="xsltproc.check">
-    <echo>xsltproc.clean              ---</echo>
+    <echo level="${xsltproc.debug.level}">xsltproc.clean              ---</echo>
     <echo level="${xsltproc.debug.level}">${basedir}</echo>
   </target>
 

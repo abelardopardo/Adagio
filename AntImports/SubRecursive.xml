@@ -78,7 +78,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="subrecursive.processing.NOT" unless="subrecursive.check">
-    <echo>subrecursive.processing     ---</echo>
+    <echo level="${subrecursive.debug.level}">subrecursive.processing     ---</echo>
     <echo level="${subrecursive.debug.level}">${basedir}</echo>
   </target>
 
@@ -120,7 +120,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="subrecursive.clean.NOT" unless="subrecursive.check">
-    <echo>subrecursive.clean          ---</echo>
+    <echo level="${subrecursive.debug.level}">subrecursive.clean          ---</echo>
     <echo level="${subrecursive.debug.level}">${basedir}</echo>
   </target>
 

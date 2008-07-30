@@ -88,7 +88,7 @@
   to notify the user -->
   <target name="pdfnup.processing.NOT" depends="pdfnup.bomb.out"
 	  unless="pdfnup.check">
-    <echo>pdfnup.processing           ---</echo>
+    <echo level="${pdfnup.debug.level}">pdfnup.processing           ---</echo>
     <echo level="${pdfnup.debug.level}">${basedir}</echo>
   </target>
 
@@ -125,7 +125,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="pdfnup.clean.NOT" unless="pdfnup.check">
-    <echo>pdfnup.clean                ---</echo>
+    <echo level="${pdfnup.debug.level}">pdfnup.clean                ---</echo>
     <echo level="${pdfnup.debug.level}">${basedir}</echo>
   </target>
 

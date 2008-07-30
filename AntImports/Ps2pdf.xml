@@ -85,7 +85,7 @@
   to notify the user -->
   <target name="ps2pdf.processing.NOT" depends="ps2pdf.bomb.out" 
 	  unless="ps2pdf.check">
-    <echo>ps2pdf.processing           ---</echo>
+    <echo level="${ps2pdf.debug.level}">ps2pdf.processing           ---</echo>
     <echo level="${ps2pdf.debug.level}">${basedir}</echo>
   </target>
 
@@ -120,7 +120,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="ps2pdf.clean.NOT" unless="ps2pdf.check">
-    <echo>ps2pdf.clean                ---</echo>
+    <echo level="${ps2pdf.debug.level}">ps2pdf.clean                ---</echo>
     <echo level="${ps2pdf.debug.level}">${basedir}</echo>
   </target>
 

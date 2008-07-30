@@ -86,7 +86,7 @@
   to notify the user -->
   <target name="dblatex.processing.NOT" depends="dblatex.bomb.out" 
 	  unless="dblatex.check">
-    <echo>dblatex.processing          ---</echo>
+    <echo level="${dblatex.debug.level}">dblatex.processing          ---</echo>
     <echo level="${dblatex.debug.level}">${basedir}</echo>
   </target>
 
@@ -121,7 +121,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="dblatex.clean.NOT" unless="dblatex.check">
-    <echo>dblatex.clean               ---</echo>
+    <echo level="${dblatex.debug.level}">dblatex.clean               ---</echo>
     <echo level="${dblatex.debug.level}">${basedir}</echo>
   </target>
 

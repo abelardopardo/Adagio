@@ -57,7 +57,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="scp.processing.NOT" unless="scp.check">
-    <echo>scp.processing           ---</echo>
+    <echo level="${scp.debug.level}">scp.processing           ---</echo>
     <echo level="${scp.debug.level}">${basedir}</echo>
   </target>
 
@@ -86,7 +86,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="scp.clean.NOT" unless="scp.check">
-    <echo>scp.clean               ---</echo>
+    <echo level="${scp.debug.level}">scp.clean               ---</echo>
     <echo level="${scp.debug.level}">${basedir}</echo>
   </target>
 

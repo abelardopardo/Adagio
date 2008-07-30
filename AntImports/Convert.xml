@@ -96,7 +96,7 @@
   to notify the user -->
   <target name="convert.processing.NOT"  depends="convert.bomb.out" 
 	  unless="convert.check">
-    <echo>convert.processing          ---</echo>
+    <echo level="${convert.debug.level}">convert.processing          ---</echo>
     <echo level="${convert.debug.level}">${basedir}</echo>
   </target>
     
@@ -134,7 +134,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="convert.clean.NOT" unless="convert.check">
-    <echo>convert.clean               ---</echo>
+    <echo level="${convert.debug.level}">convert.clean               ---</echo>
     <echo level="${convert.debug.level}">${basedir}</echo>
   </target>
     

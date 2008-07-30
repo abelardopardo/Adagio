@@ -58,7 +58,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="docbook.processing.NOT" unless="docbook.check">
-    <echo>docbook.processing          ---</echo>
+    <echo level="${docbook.debug.level}">docbook.processing          ---</echo>
     <echo level="${docbook.debug.level}">${basedir}</echo>
   </target>
 
@@ -86,7 +86,7 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="docbook.clean.NOT" unless="docbook.check">
-    <echo>docbook.clean               ---</echo>
+    <echo level="${docbook.debug.level}">docbook.clean               ---</echo>
     <echo level="${docbook.debug.level}">${basedir}</echo>
   </target>
 
