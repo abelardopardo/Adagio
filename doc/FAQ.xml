@@ -1494,20 +1494,44 @@ clean.files=../scratch/Theory2</programlisting>
 	    hierarchical resource building. The generic scenario considered is
 	    such that to obtain the final version of a set of resources, some
 	    other resources need to be created in different locations and
-	    <emphasis>exported</emphasis> to the current location to obtain the
-	    final product.
+	    <emphasis>exported</emphasis> to obtain the final product.
 	  </para>
 
 	  <para>
 	    Let us assume that all the remote directories contain the
 	    <filename>Properties.txt</filename> file in which the export
 	    variables containing the list of files to export have been defined
-	    (see <xref linkend="export_processing"/> for the details).
+	    (see <xref linkend="export_processing"/> for the details). Two
+	    scenarios are considered by this functionality depending on where is
+	    the location where to export the resource is decided.
 	  </para>
 
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		A remote directory is pre-processed but the location to copy the
+		exported resources is passed as a parameter. This means that if
+		in the <filename>Properties.txt</filename> of the remote file
+		the variable <varname>export.dst.dir</varname> is defined, it is
+		<emphasis>overwritten</emphasis> by the value given in the
+		invoking directory.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		A remote directory is pre-processed and the location to copy the
+		exported resources is taken from the
+		<filename>Properties.txt</filename> file in this remote
+		directory.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
 	  <para>
-	    The following variables control the execution of the production
-	    process in a set of directories:
+	    ADA allows the definition of two sets of directories each of them
+	    processed in each of the scenarios previously described. The
+	    following variables control the execution of the production process
+	    in a set of directories:
 	  </para>
 
 	  <informaltable frame="all" id="subrecursive_vars">
@@ -1527,23 +1551,36 @@ clean.files=../scratch/Theory2</programlisting>
 		  <entry><varname>subrecursive.dirs</varname></entry>
 		  <entry>
 		    Directories (with respect to the the current location) to be
-		    processed prior to any other rule.
+		    processed prior to any other. The value of
+		    <varname>export.dst.dir</varname> in these repositories is
+		    overwritten by the following value.
 		  </entry>
-		  <entry>Current directory</entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry><varname>subrecursive.dst.dir</varname></entry>
+		  <entry>
+		    Value used to pass to the directories specified in the
+		    previous variables to export their resources. It then
+		    overrides the variable <varname>export.dst.dir</varname> (if
+		    given) in the remote directory.
+		  </entry>
+		  <entry><emphasis>The current directory</emphasis></entry>
+		</row>
+		<row>
+		  <entry><varname>subrecursive.dirs.nodst</varname></entry>
+		  <entry>
+		    Directories (with respect to the the current location) to be
+		    processed prior to any other. The resources will be exported
+		    wherever is specified in the variable
+		    <varname>export.dst.dir</varname> in the remote directory.
+		  </entry>
+		  <entry></entry>
 		</row>
 		<row>
 		  <entry><varname>subrecursive.target</varname></entry>
 		  <entry>Rule to execute in those remote directories</entry>
 		  <entry>A regular <command>adado</command></entry>
-		</row>
-		<row>
-		  <entry><varname>subrecursive.dst.dir</varname></entry>
-		  <entry>
-		    Directory where files are to be exported. It overrides the
-		    variable <varname>export.dst.dir</varname> given in the
-		    remote directory.
-		  </entry>
-		  <entry><emphasis>The current directory</emphasis></entry>
 		</row>
 	      </tbody>
 	    </tgroup>
@@ -1552,7 +1589,8 @@ clean.files=../scratch/Theory2</programlisting>
 	  <para>
 	    The values stored in these variables have a special effect when
 	    combined with the variables used for exporting resources in the
-	    remote repository (see <xref linkend="export_processing"/>.) The
+	    remote repository (see <xref linkend="export_processing"/>.) For the
+	    directories specified as to overwrite the export destination the
 	    following figure shows the possible scenarios:
 	  </para>
 
@@ -1563,6 +1601,23 @@ clean.files=../scratch/Theory2</programlisting>
 	      </imageobject>
 	      <textobject>
 		<phrase>Exporting recursively</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>
+	    The following figure shows the effect of the two types of
+	    subrecursive processing with and without a destination for the
+	    exported resources.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/SubrecursiveExport2.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Exporting recursively in both scenarios</phrase>
 	      </textobject>
 	    </mediaobject>
 	  </informalfigure>
