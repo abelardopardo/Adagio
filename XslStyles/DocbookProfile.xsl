@@ -26,4 +26,15 @@
   <!-- Allows the inclusion of Flash videos and MP3 -->
   <xsl:import href="SWFObj.xsl"/>
 
+  <!-- 
+       The variable l10n.gentext.language takes its value from the presence of
+       the attribute lang or xml:lang in any of the ancestors of a node. This
+       does not work when processing a multi-language document in which that
+       attribute is not at the root of the document but in elements deeper in
+       the hierarchy. One consequence, for example is that it renders "Table of
+       Contents" despite processing a document with profile.lang = es. The
+       assignment forces l10n.gentext.language to have the same value.
+       -->
+  <xsl:param name="l10n.gentext.language"><xsl:value-of select="$profile.lang"/></xsl:param>  
+
 </xsl:stylesheet>
