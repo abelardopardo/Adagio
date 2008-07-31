@@ -88,6 +88,8 @@
 
   <target name="local.clean" depends="initial.delete.build.out">
 
+    <echo>BEGIN CLEAN: ${basedir}</echo>
+
     <ant antfile="${ada.home}/AntImports/Export.xml" 
 	 target="export.clean" inheritAll="false"/>
 
@@ -157,8 +159,6 @@
   <target name="redo" depends="clean, execute"/>
 
   <target name="clean" depends="local.clean">
-
-    <echo>BEGIN CLEAN: ${basedir}</echo>
 
     <ant antfile="${ada.home}/AntImports/SubRecursive.xml" 
 	 target="subrecursive.clean" inheritAll="false"/>
