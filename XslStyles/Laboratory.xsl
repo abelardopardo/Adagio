@@ -138,7 +138,7 @@
         <hr align="center"/>
       </xsl:if>
       
-      <xsl:call-template name="InsertChatRoomLink"/>
+      <xsl:call-template name="ada.insert.chatroom.link"/>
       
       <table width="97%" style="border:0" cellspacing="0" cellpadding="2" 
         align="center">

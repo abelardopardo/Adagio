@@ -79,7 +79,7 @@
       <hr style="text-align: center"/>
     </xsl:if>
 
-    <xsl:call-template name="InsertChatRoomLink"/>
+    <xsl:call-template name="ada.insert.chatroom.link"/>
 
     <xsl:if test="$ada.submit.asap.verifyemail.js != ''">
       <xsl:element name="script">

@@ -23,7 +23,7 @@
     </xsl:choose>
   </xsl:variable>
 
-  <xsl:template name="InsertChatRoomLink">
+  <xsl:template name="ada.insert.chatroom.link">
     <xsl:if test="$ada.page.chatroom.link.var != ''">
       <div class="noprint head-center">
         <a>
