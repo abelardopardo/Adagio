@@ -5,8 +5,9 @@
   <!--
       Given the following properties:
 
-      subrecursive.dirs:   List of directories to call recursively
-      subrecursive.dst.dir: Export dir to give the recursive dirs
+      subrecursive.dirs:       List of directories to call recursively
+      subrecursive.dst.dir:    Dir to receive the exported material
+      subrecursive.dirs.nodst: Dirs to call recursively but with no dst dir
       subrecursive.target: Target to execute in those directories
 
       Perform target subrecursive.target in these directories. If the property
@@ -20,9 +21,10 @@
   <import file="InitialCheck.xml"/>
   
   <!-- Public Property definition -->
-  <property name="subrecursive.dst.dir" value="${basedir}"/>
-  <property name="subrecursive.dirs"    value=""/>
-  <property name="subrecursive.target"  value=""/>
+  <property name="subrecursive.dirs"       value=""/>
+  <property name="subrecursive.dst.dir"    value="${basedir}"/>
+  <property name="subrecursive.dirs.nodst" value=""/>
+  <property name="subrecursive.target"     value=""/>
 
   <!-- Private properties -->
   <property name="subrecursive.debug.level"    value="${ada.debug.level}"/>
@@ -36,46 +38,61 @@
   <filelist id="subrecursive.dirlist" dir="${basedir}"
 	    files="${subrecursive.dirs}"/>
 
+  <filelist id="subrecursive.dirlist.nodst" dir="${basedir}"
+	    files="${subrecursive.dirs.nodst}"/>
+
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="subrecursive.check.values" 
 	  depends="initial.check, subrecursive.dump.properties">
 
-    <!-- Condition to enable/disable the rest of the execution -->
-    <condition property="subrecursive.check">
-      <not><equals arg1="${subrecursive.dirs}" arg2=""/></not>
+    <!-- Conditions to see which one of the two targets needs to be executed -->
+    <condition property="subrecursive.check.withdst">
+      <and>
+	<not><equals arg1="${subrecursive.dirs}" arg2=""/></not>
+	<not><equals arg1="${subrecursive.dst.dir}" arg2=""/></not>
+      </and>
     </condition>
 
-    <!-- Condition to detect if subrecursive.dst.dir is given -->
-    <condition property="subrecursive.dstdir.given">
-      <not><equals arg1="${subrecursive.dst.dir}" arg2=""/></not>
+    <condition property="subrecursive.check.nodst">
+      <not><equals arg1="${subrecursive.dirs.nodst}" arg2=""/></not>
     </condition>
+
+    <!-- Condition to enable/disable the entire rule execution -->
+    <condition property="subrecursive.check">
+      <or>
+	<istrue value="${subrecursive.check.withdst}"/>
+	<istrue value="${subrecursive.check.nodst}"/>
+      </or>
+    </condition>
+
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${subrecursive.debug.level}">    subrecursive.check          = "${subrecursive.check}"
-    subrecursive.dirs         = "${subrecursive.dirs}"
-    subrecursive.absdst.dir   = "${subrecursive.absdst.dir}"
-    subrecursive.dstdir.given = "${subrecursive.dstdir.given}"</echo>
+    <echo level="${subrecursive.debug.level}">    subrecursive.check         = "${subrecursive.check}"
+    subrecursive.check.withdst = "${subrecursive.check.withdst}"
+    subrecursive.check.nodst   = "${subrecursive.check.nodst}"
+    subrecursive.dirs          = "${subrecursive.dirs}"
+    subrecursive.absdst.dir    = "${subrecursive.absdst.dir}"
+    subrecursive.dirs.nodst    = "${subrecursive.dirs.nodst}"</echo>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="subrecursive.processing.NOT" unless="subrecursive.check">
-    <echo>subrecursive.processing     ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${subrecursive.debug.level}">subrecursive.processing     ---</echo>
+    <echo level="${subrecursive.debug.level}">${basedir}</echo>
   </target>
 
-  <!-- Regular target. It simply loops over all the subdirs and calls the given
-       target -->
+  <!-- Regular target. Invokes the check and then both sub-targets -->
   <target name="subrecursive.processing" 
 	  depends="subrecursive.check.values, subrecursive.processing.NOT,
 		   subrecursive.processing.withdstdir,
 		   subrecursive.processing.nodstdir"
-	  if="subrecursive.check" description="Loop over the given dirs"/>
+	  description="Loop over the given dirs"/>
+  
+  <target name="subrecursive.processing.withdstdir" if="subrecursive.check.withdst">
 
-  <target name="subrecursive.processing.withdstdir"
-	  if="subrecursive.dstdir.given">
     <echo>subrecursive.processing.dst RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${subrecursive.debug.level}">${basedir}</echo>
 
     <echo level="${subrecursive.debug.level}">    subrecursive.dirs="${subrecursive.dirs}"</echo>
 
@@ -87,28 +104,24 @@
     </subant>
   </target>
 
-  <target name="subrecursive.processing.nodstdir"
-	  unless="subrecursive.dstdir.given">
+  <target name="subrecursive.processing.nodstdir" if="subrecursive.check.nodst">
     <echo>subrecursive.proc..ng.nodst RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${subrecursive.debug.level}">${basedir}</echo>
 
-    <echo level="${subrecursive.debug.level}">    subrecursive.dirs="${subrecursive.dirs}"</echo>
-    <!-- Dirs with material required by the lab  -->
-    <filelist id="subrecursive.dirlist" dir="${basedir}"
-	      files="${subrecursive.dirs}"/> 
+    <echo level="${subrecursive.debug.level}">    subrecursive.dirs.nodst="${subrecursive.dirs.nodst}"</echo>
 
     <subant target="${subrecursive.target}" 
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
 	    inheritAll="false" inheritrefs="false">
-      <filelist refid="subrecursive.dirlist"/>
+      <filelist refid="subrecursive.dirlist.nodst"/>
     </subant>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="subrecursive.clean.NOT" unless="subrecursive.check">
-    <echo>subrecursive.clean          ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${subrecursive.debug.level}">subrecursive.clean          ---</echo>
+    <echo level="${subrecursive.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean the produced files -->
@@ -116,12 +129,11 @@
 	  depends="subrecursive.check.values, subrecursive.clean.NOT,
 		   subrecursive.clean.withdstdir,
 		   subrecursive.clean.nodstdir"
-    if="subrecursive.check" description="Delete files produced here"/>
+	  description="Delete files produced here"/>
 
-  <target name="subrecursive.clean.withdstdir"
-	  if="subrecursive.dstdir.given">
+  <target name="subrecursive.clean.withdstdir" if="subrecursive.check.withdst">
     <echo>subrecursive.clean.dst      RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${subrecursive.debug.level}">${basedir}</echo>
 
     <!-- Call the subdirs with the clean target -->
     <subant target="clean" 
@@ -132,23 +144,25 @@
     </subant>
   </target>
 
-  <target name="subrecursive.clean.nodstdir"
-	  unless="subrecursive.dstdir.given">
-    <echo>subrecursive.clean.nodst  RUN</echo>
-    <echo>${basedir}</echo>
+  <target name="subrecursive.clean.nodstdir" if="subrecursive.check.nodst">
+    <echo>subrecursive.clean.nodst    RUN</echo>
+    <echo level="${subrecursive.debug.level}">${basedir}</echo>
 
     <!-- Call the subdirs with the clean target -->
     <subant target="clean" 
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
 	    inheritAll="false">
-      <filelist refid="subrecursive.dirlist"/>
+      <filelist refid="subrecursive.dirlist.nodst"/>
     </subant>
   </target>
 
   <!-- Dump the properties defined in this script -->
   <target name="subrecursive.dump.properties" depends="initial.check">
     <echo level="${subrecursive.debug.level}"> ------ Subrecursive properties ----
-    subrecursive.target="${subrecursive.target}"</echo>
+    subrecursive.dirs       ="${subrecursive.dirs}"
+    subrecursive.dst.dir    ="${subrecursive.dst.dir}"
+    subrecursive.dirs.nodst ="${subrecursive.dirs.nodst}"
+    subrecursive.target     ="${subrecursive.target}"</echo>
   </target>
 
   <!-- If entering through this target, build.out is deleted -->

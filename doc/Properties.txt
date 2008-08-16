@@ -13,10 +13,12 @@ docbook.extra.args=--stringparam chapter.autolabel 0 \
 		   --stringparam section.toc.depth 0 \
 		   --stringparam html.stylesheet style.css
 
-# dblatex.files=FAQ.xml
+dblatex.files=FAQ.xml
 
 export.dst.dir=scratch
 export.files=FAQ.html FAQ.pdf images/*.png style.css
+
+clean.files=scratch/images scratch
 
 rsync.source=scratch/
 rsync.destination=abel@varpa.it.uc3m.es:lib/www/ADA/doc

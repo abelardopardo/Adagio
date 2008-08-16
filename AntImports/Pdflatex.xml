@@ -22,6 +22,7 @@
   <property name="pdflatex.files"          value=""/>
 
   <!-- Private properties -->
+  <property name="pdflatex.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define two properties containing the absolute src and dst paths -->
   <pathconvert property="pdflatex.abssrc.dir" pathsep=" ">
@@ -70,7 +71,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">    pdflatex.check          = "${pdflatex.check}"
+    <echo level="${pdflatex.debug.level}">    pdflatex.check          = "${pdflatex.check}"
   pdflatex.execution.possible = ${pdflatex.execution.possible}
   pdflatex.failure            = ${pdflatex.failure}</echo>
   </target>
@@ -84,8 +85,8 @@
   to notify the user -->
   <target name="pdflatex.processing.NOT" depends="pdflatex.bomb.out"
 	  unless="pdflatex.check">
-    <echo>pdflatex.processing         ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${pdflatex.debug.level}">pdflatex.processing         ---</echo>
+    <echo level="${pdflatex.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -98,7 +99,7 @@
 	  description="Process the given files by pdflatex">
 
     <echo>pdflatex.processing         RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${pdflatex.debug.level}">${basedir}</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${pdflatex.absdst.dir}" />
@@ -118,8 +119,8 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="pdflatex.clean.NOT" unless="pdflatex.check">
-    <echo>pdflatex.clean              ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${pdflatex.debug.level}">pdflatex.clean              ---</echo>
+    <echo level="${pdflatex.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean files produced by pdflatex -->
@@ -128,7 +129,7 @@
 	  if="pdflatex.check" description="Remove files produced by pdflatex">
 
     <echo>pdflatex.clean              RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${pdflatex.debug.level}">${basedir}</echo>
 
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="pdflatex.target.filelist.property" pathsep=" ">
@@ -183,7 +184,7 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="pdflatex.dump.properties" depends="initial.check">
-    <echo level="info"> ------ pdflatex properties ----
+    <echo level="${pdflatex.debug.level}"> ------ pdflatex properties ----
     pdflatex.exec       ="${pdflatex.exec}"
     pdflatex.abssrc.dir ="${pdflatex.abssrc.dir}"
     pdflatex.absdst.dir ="${pdflatex.absdst.dir}"

@@ -4,7 +4,4 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
-subrecursive.dst.dir=${export.dst.dir}
-subrecursive.dirs=mediaplayer
-
 export.files=countdown.js

@@ -135,6 +135,11 @@ h1.title,
 /* Remove border in images that are part of an ancho */
 a span.inlinemediaobject img { border: 0; }
 
+span.command 
+{ 
+  font-weight: bold;
+  }
+
 /* Hide elements of class noprint when printing */
 @media print {
     body { background:white; color:black; margin:0 }

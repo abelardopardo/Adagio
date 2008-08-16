@@ -153,8 +153,8 @@
   to notify the user -->
   <target name="xsltproc.processing.NOT"  depends="xsltproc.bomb.out" 
 	  unless="xsltproc.check">
-    <echo>xsltproc.processing         ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${xsltproc.debug.level}">xsltproc.processing         ---</echo>
+    <echo level="${xsltproc.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -179,7 +179,7 @@
 	  description="Apply a style to an XML file WITH NO pre-processing">
 
     <echo>xsltproc.processing.nopre   RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${xsltproc.debug.level}">${basedir}</echo>
 
     <pathconvert property="xsltproc.source.dependency.property" pathsep=" ">
       <fileset refid="xsltproc.fileset"/>
@@ -202,6 +202,10 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
       </srcfileset>
+      <srcfileset dir="${ada.course.home}">
+	<include name="AdaCourseParams.xml" />
+	<include name="Ada.properties" />
+      </srcfileset>
       <srcfilelist files="${xsltproc.dependency.files}"/>
       <targetfilelist refid="xsltproc.target.filelist" />
     </dependset>
@@ -223,7 +227,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 	  description="Apply a style to an XML file WITH pre-processing">
 
     <echo>xsltproc.processing.prepr   RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${xsltproc.debug.level}">${basedir}</echo>
 
     <antcall target="mergestyles.processing" inheritAll="false">
       <param name="mergestyles.dst.dir" value="${xsltproc.dst.dir}"/>
@@ -262,6 +266,10 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
       </srcfileset>
+      <srcfileset dir="${ada.course.home}">
+	<include name="AdaCourseParams.xml" />
+	<include name="Ada.properties" />
+      </srcfileset>
       <srcfilelist files="${xsltproc.dependency.files}"/>
       <targetfilelist refid="xsltproc.target.filelist" />
     </dependset>
@@ -281,8 +289,8 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="xsltproc.clean.NOT" unless="xsltproc.check">
-    <echo>xsltproc.clean              ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${xsltproc.debug.level}">xsltproc.clean              ---</echo>
+    <echo level="${xsltproc.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean files produced by xsltproc -->
@@ -292,7 +300,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 	  description="Remove files produced by xsltproc">
 
     <echo>xsltproc.clean              RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${xsltproc.debug.level}">${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${xsltproc.target.filelist.property}</echo>

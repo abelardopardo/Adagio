@@ -24,6 +24,7 @@
   <property name="gimp.files" value=""/>
 
   <!-- Private properties -->
+  <property name="gimp.debug.level"    value="${ada.debug.level}"/>
 
   <!-- Define two properties containing the absolute src and dst paths -->
   <pathconvert property="gimp.abssrc.dir" pathsep=" ">
@@ -77,7 +78,7 @@
 	      files="${gimp.target.filelist.property}"/>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="info">  gimp.check          = "${gimp.check}"
+    <echo level="${gimp.debug.level}">  gimp.check          = "${gimp.check}"
   gimp.target.filelist     = "${gimp.target.filelist.property}"
   gimp.execution.possible = ${gimp.execution.possible}
   gimp.failure            = ${gimp.failure}</echo>
@@ -92,8 +93,8 @@
   to notify the user -->
   <target name="gimp.processing.NOT" depends="gimp.bomb.out" 
 	  unless="gimp.check">
-    <echo>gimp.processing             ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${gimp.debug.level}">gimp.processing             ---</echo>
+    <echo level="${gimp.debug.level}">${basedir}</echo>
   </target>
     
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -106,7 +107,7 @@
 	  description="Transform XCF files to PNG">
 
     <echo>gimp.processing             RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${gimp.debug.level}">${basedir}</echo>
 
     <!-- Force the dependency checking on changes on the script file -->
     <dependset>
@@ -140,8 +141,8 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="gimp.clean.NOT" unless="gimp.check">
-    <echo>gimp.clean                  ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${gimp.debug.level}">gimp.clean                  ---</echo>
+    <echo level="${gimp.debug.level}">${basedir}</echo>
   </target>
     
   <!-- Clean files produced by gimp -->
@@ -150,7 +151,7 @@
 	  if="gimp.check" description="Remove files produced by gimp">
     
     <echo>gimp.clean                  RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${gimp.debug.level}">${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${gimp.target.filelist.property}</echo>
@@ -166,7 +167,7 @@
 
   <!-- Dump the properties defined in this script -->
   <target name="gimp.dump.properties" depends="initial.check">
-    <echo level="info"> ------ Gimp properties ----
+    <echo level="${gimp.debug.level}"> ------ Gimp properties ----
     gimp.exec        ="${gimp.exec}"
     gimp.abssrc.dir     = "${gimp.abssrc.dir}"
     gimp.script.file = "${gimp.script.file}"

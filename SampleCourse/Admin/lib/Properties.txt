@@ -4,8 +4,8 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
-subrecursive.dst.dir=${basedir}/../scratch/lib
 subrecursive.dirs=${ada.home}/lib
+subrecursive.dst.dir=${basedir}/../scratch/lib
 
 clean.files=../scratch/lib
 

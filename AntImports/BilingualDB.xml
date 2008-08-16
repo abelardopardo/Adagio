@@ -58,8 +58,8 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="bilingualdb.processing.NOT" unless="bilingualdb.check">
-    <echo>bilingualdb.processing      ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${bilingualdb.debug.level}">bilingualdb.processing      ---</echo>
+    <echo level="${bilingualdb.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Invoke xsltprocessing -->
@@ -98,8 +98,8 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="bilingualdb.clean.NOT" unless="bilingualdb.check">
-    <echo>bilingualdb.clean           ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${bilingualdb.debug.level}">bilingualdb.clean           ---</echo>
+    <echo level="${bilingualdb.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean files produced by bilingualdb -->

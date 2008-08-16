@@ -8,8 +8,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="676.9201"
-   height="279.12579"
+   width="606.76752"
+   height="185.31177"
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.46"
@@ -62,9 +62,9 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.2098359"
-     inkscape:cx="345.13391"
-     inkscape:cy="134.1533"
+     inkscape:zoom="1.7402349"
+     inkscape:cx="347.25593"
+     inkscape:cy="139.5629"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -125,7 +125,7 @@
          sodipodi:role="line"
          id="tspan3163"
          x="50.776218"
-         y="96.811256">subrecursive.dir=remote</tspan><tspan
+         y="96.811256">subrecursive.dirs=remote</tspan><tspan
          sodipodi:role="line"
          x="50.776218"
          y="111.81126"
@@ -152,7 +152,7 @@
        style="fill:#ffd42a;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.60371917;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.59460878;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 235.15513,42.191378 L 235.15513,309.78363"
+       d="M 235.15513,41.91225 L 235.15513,215.82262"
        id="path3181" />
     <text
        xml:space="preserve"
@@ -249,7 +249,7 @@
          y="144.81125"
          x="50.776218"
          id="tspan4788"
-         sodipodi:role="line">subrecursive.dir=remote</tspan><tspan
+         sodipodi:role="line">subrecursive.dirs=remote</tspan><tspan
          id="tspan4790"
          y="159.81125"
          x="50.776218"
@@ -293,132 +293,6 @@
          x="473.40552"
          id="tspan4804"
          sodipodi:role="line">Files copied to dest</tspan></text>
-    <rect
-       ry="4.648963"
-       rx="4.648963"
-       y="226.46155"
-       x="36.979511"
-       height="34.763855"
-       width="182.35123"
-       id="rect4828"
-       style="fill:#ff8080;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.60371917;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-    <text
-       sodipodi:linespacing="125%"
-       id="text4830"
-       y="240.81125"
-       x="50.776218"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
-       xml:space="preserve"><tspan
-         y="240.81125"
-         x="50.776218"
-         id="tspan4832"
-         sodipodi:role="line">subrecursive.dir=remote</tspan><tspan
-         id="tspan4834"
-         y="255.81125"
-         x="50.776218"
-         sodipodi:role="line">subrecursive.dst.dir=</tspan></text>
-    <rect
-       style="fill:#ffd42a;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.60371917;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="rect4836"
-       width="182.35123"
-       height="34.763855"
-       x="250.97951"
-       y="226.46155"
-       rx="4.648963"
-       ry="4.648963" />
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
-       x="260.29086"
-       y="239.72433"
-       id="text4838"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan4840"
-         x="260.29086"
-         y="239.72433">export.files=Files to export</tspan><tspan
-         sodipodi:role="line"
-         x="260.29086"
-         y="254.72433"
-         id="tspan4842">export.dst.dir=dest2</tspan></text>
-    <path
-       id="path4844"
-       d="M 433.50329,243.8611 L 469.69859,243.8611"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1" />
-    <text
-       sodipodi:linespacing="125%"
-       id="text4846"
-       y="247.22433"
-       x="473.40552"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
-       xml:space="preserve"><tspan
-         y="247.22433"
-         x="473.40552"
-         id="tspan4848"
-         sodipodi:role="line">Files copied to dest2</tspan></text>
-    <rect
-       style="fill:#ff8080;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.60371917;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="rect4850"
-       width="182.35123"
-       height="34.763855"
-       x="36.979511"
-       y="272.46155"
-       rx="4.648963"
-       ry="4.648963" />
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
-       x="50.776218"
-       y="286.81125"
-       id="text4852"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan4854"
-         x="50.776218"
-         y="286.81125">subrecursive.dir=remote</tspan><tspan
-         sodipodi:role="line"
-         x="50.776218"
-         y="301.81125"
-         id="tspan4856">subrecursive.dst.dir=dest</tspan></text>
-    <rect
-       ry="4.648963"
-       rx="4.648963"
-       y="272.46155"
-       x="250.97951"
-       height="34.763855"
-       width="182.35123"
-       id="rect4858"
-       style="fill:#ffd42a;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.60371917;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-    <text
-       sodipodi:linespacing="125%"
-       id="text4860"
-       y="285.72433"
-       x="260.29086"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
-       xml:space="preserve"><tspan
-         y="285.72433"
-         x="260.29086"
-         id="tspan4862"
-         sodipodi:role="line">export.files=Files to export</tspan><tspan
-         id="tspan4864"
-         y="300.72433"
-         x="260.29086"
-         sodipodi:role="line">export.dst.dir=dest2</tspan></text>
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-opacity:1"
-       d="M 433.50329,289.8611 L 469.69859,289.8611"
-       id="path4866" />
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
-       x="473.40552"
-       y="293.22433"
-       id="text4868"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan4870"
-         x="473.40552"
-         y="293.22433">Files copied to dest, dest2 ignored!</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
@@ -473,7 +347,7 @@
            y="192.81125"
            x="50.776218"
            id="tspan4810"
-           sodipodi:role="line">subrecursive.dir=remote</tspan><tspan
+           sodipodi:role="line">subrecursive.dirs=remote</tspan><tspan
            id="tspan4812"
            y="207.81125"
            x="50.776218"
@@ -518,28 +392,6 @@
          id="tspan4882"
          x="19.58223"
          y="200.2966">B.2</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text4884"
-       y="248.20578"
-       x="19.58223"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
-       xml:space="preserve"><tspan
-         y="248.20578"
-         x="19.58223"
-         id="tspan4886"
-         sodipodi:role="line">C</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
-       x="19.58223"
-       y="294.20578"
-       id="text4888"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan4890"
-         x="19.58223"
-         y="294.20578">D</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"

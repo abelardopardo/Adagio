@@ -76,13 +76,19 @@
   <!-- Apply timeline -->
   <target name="execute" depends="initial.delete.build.out">
 
+    <echo>BEGIN EXE: ${basedir}</echo>
+
     <ant antfile="${ada.home}/AntImports/SubRecursive.xml" 
 	 target="subrecursive.processing" inheritAll="false"/>
 
     <antcall target="local.execute"/>
+
+    <echo>END EXE: ${basedir}</echo>
   </target>
 
   <target name="local.clean" depends="initial.delete.build.out">
+
+    <echo>BEGIN CLEAN: ${basedir}</echo>
 
     <ant antfile="${ada.home}/AntImports/Export.xml" 
 	 target="export.clean" inheritAll="false"/>
@@ -163,6 +169,8 @@
     <ant antfile="${ada.home}/AntImports/Cleaning.xml" 
 	 target="clean.clean" inheritAll="false"/>
     
+    <echo>END CLEAN: ${basedir}</echo>
+
   </target>
 
   <target name="report">

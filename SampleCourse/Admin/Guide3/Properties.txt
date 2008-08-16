@@ -4,7 +4,8 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
-subrecursive.dirs=../../Material/Author10 ${ada.home}/lib
+subrecursive.dirs=../../Material/Author10 \
+                  ${ada.home}/lib/mediaplayer
 
 mergestyles.src.dir=..
 mergestyles.master.style=AdaCourseParams.xml

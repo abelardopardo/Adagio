@@ -87,8 +87,8 @@
   to notify the user -->
   <target name="copyfiles.processing.NOT" depends="copyfiles.bomb.out" 
 	  unless="copyfiles.check">
-    <echo>copyfiles.processing        ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${copyfiles.debug.level}">copyfiles.processing        ---</echo>
+    <echo level="${copyfiles.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true, and it has
@@ -100,7 +100,7 @@
 	  if="copyfiles.check" description="Actually perform the copy">
 
     <echo>copyfiles.processing        RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${copyfiles.debug.level}">${basedir}</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${copyfiles.absdst.dir}" />
@@ -114,8 +114,8 @@
   <!-- Target to notify that the regular target has not been executed. This is
   to notify the user -->
   <target name="copyfiles.clean.NOT" unless="copyfiles.check">
-    <echo>copyfiles.clean             ---</echo>
-    <echo>${basedir}</echo>
+    <echo level="${copyfiles.debug.level}">copyfiles.clean             ---</echo>
+    <echo level="${copyfiles.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Clean the produced files -->
@@ -124,7 +124,7 @@
     if="copyfiles.check" description="Delete files copied to dst">
 
     <echo>copyfiles.clean             RUN</echo>
-    <echo>${basedir}</echo>
+    <echo level="${copyfiles.debug.level}">${basedir}</echo>
 
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="copyfiles.target.filelist.property" pathsep=" ">
