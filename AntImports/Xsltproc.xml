@@ -202,6 +202,10 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
       </srcfileset>
+      <srcfileset dir="${ada.course.home}">
+	<include name="AdaCourseParams.xml" />
+	<include name="Ada.properties" />
+      </srcfileset>
       <srcfilelist files="${xsltproc.dependency.files}"/>
       <targetfilelist refid="xsltproc.target.filelist" />
     </dependset>
@@ -261,6 +265,10 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
       <srcfileset file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}_${xsltproc.output.suffix}"/>
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
+      </srcfileset>
+      <srcfileset dir="${ada.course.home}">
+	<include name="AdaCourseParams.xml" />
+	<include name="Ada.properties" />
       </srcfileset>
       <srcfilelist files="${xsltproc.dependency.files}"/>
       <targetfilelist refid="xsltproc.target.filelist" />
