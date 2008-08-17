@@ -47,9 +47,10 @@
       <div class="noprint head-center">
         <xsl:if
           test="(note[@condition = 'AdminInfo']/para[@condition =
-                'handinlink']/text() != '') and 
+                'handinlink']) and 
                 ($solutions.include.guide != 'yes')">
           <p>
+            <!--
             <xsl:choose>
               <xsl:when test="$laboratory.submission.page != ''">
                 <xsl:copy-of select="$laboratory.submission.page"/>
@@ -75,6 +76,10 @@
                                     'AdminInfo']/para[@condition =
                                     'handinlink']/text()"/> 
             </xsl:element>.
+            -->
+            <xsl:apply-templates 
+              select="note[@condition = 'AdminInfo']/para[@condition =
+                      'handinlink']/node()"/>
           </p>
         </xsl:if>
 
