@@ -164,14 +164,11 @@
         </th>
         <th width="10pt"/>
         <th/>
-        <xsl:if test="$ada.testquestions.include.history='yes'">
-          <th/>
-        </xsl:if>
       </tr>
       <tr>
         <xsl:variable name="trueBgnd">
           <xsl:choose>
-            <xsl:when test="($include.solutions = 'yes') and
+            <xsl:when test="($ada.testquestions.include.solutions = 'yes') and
                             (contains(answer/@condition, 'Cierto') or
                             contains(answer/@condition, 'Verdadero') or
                             contains(answer/@condition, 'Correct') or
@@ -181,7 +178,7 @@
         </xsl:variable>
         <xsl:variable name="falseBgnd">
           <xsl:choose>
-            <xsl:when test="($include.solutions = 'yes') and
+            <xsl:when test="($ada.testquestions.include.solutions = 'yes') and
                             (contains(answer/@condition, 'Falso') or
                             contains(answer/@condition, 'False'))">background: black</xsl:when>
             <xsl:otherwise>background: white</xsl:otherwise>
@@ -228,26 +225,25 @@
         <td class="qtext">
           <xsl:apply-templates select="question/node()"/>
         </td>
-        <xsl:call-template name="dump-history"/>
       </tr>
+      <xsl:if test="$ada.testquestions.include.history='yes'">
+        <tr>
+          <xsl:call-template name="dump-history">
+            <xsl:with-param name="colspan">5</xsl:with-param>
+          </xsl:call-template>
+        </tr>
+      </xsl:if>
     </table>
   </xsl:template>
   
   <!-- One single multiple choice question -->
   <xsl:template name="singleMCquestion">
     <xsl:variable name="answerNumber" select="count(answer)"/>
-    <xsl:variable name="colspan">
-      <xsl:choose>
-        <xsl:when test="$ada.testquestions.include.history = 'yes'">4</xsl:when>
-        <xsl:otherwise>3</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
     <table 
       style="border: 0; border-collapse: collapse;pageBreakInside: false" 
       width="95%" align="center" cellspacing="0" cellpadding="3">
       <tr>
-        <td class="qtext">
-          <xsl:attribute name="colspan"><xsl:value-of select="$colspan"/></xsl:attribute>
+        <td class="qtext" colspan="3">
           <xsl:apply-templates select="question/node()"/>
         </td>
       </tr>
@@ -255,7 +251,7 @@
         <tr>
           <xsl:variable name="trueBgnd">
             <xsl:choose>
-              <xsl:when test="($include.solutions = 'yes') and
+              <xsl:when test="($ada.testquestions.include.solutions = 'yes') and
                               (contains(@condition, 'Cierto') or
                               contains(@condition, 'Verdadero') or
                               contains(@condition, 'Correct') or
@@ -265,7 +261,7 @@
           </xsl:variable>
           <xsl:variable name="falseBgnd">
             <xsl:choose>
-              <xsl:when test="($include.solutions = 'yes') and
+              <xsl:when test="($ada.testquestions.include.solutions = 'yes') and
                               (contains(@condition, 'Falso') or
                               contains(@condition, 'False'))">background: black</xsl:when>
               <xsl:otherwise>background: white</xsl:otherwise>
@@ -291,14 +287,10 @@
           <td width="90%">
             <xsl:apply-templates />
           </td>
-          <xsl:if test="position() = 1">
-            <xsl:call-template name="dump-history">
-              <xsl:with-param name="rowspan">
-                <xsl:value-of select="$answerNumber"/>
-              </xsl:with-param>
-            </xsl:call-template>
-          </xsl:if>
         </tr>
+        <xsl:call-template name="dump-history">
+          <xsl:with-param name="colspan">3</xsl:with-param>
+        </xsl:call-template>
       </xsl:for-each>
     </table>
   </xsl:template>
@@ -330,21 +322,13 @@
           </xsl:choose>
         </th>
         <th />
-        <xsl:if test="$ada.testquestions.include.history='yes'">
-          <th>
-            <xsl:choose>
-              <xsl:when test="$profile.lang='en'">Statistics</xsl:when>
-              <xsl:otherwise>Estadísticas</xsl:otherwise>
-            </xsl:choose>
-          </th>
-        </xsl:if>
       </tr>
       
       <xsl:for-each select="qandaentry">
         <tr>
           <xsl:variable name="trueBgnd">
             <xsl:choose>
-              <xsl:when test="($include.solutions = 'yes') and
+              <xsl:when test="($ada.testquestions.include.solutions = 'yes') and
                               (contains(answer/@condition, 'Cierto') or
                               contains(answer/@condition, 'Verdadero') or
                               contains(answer/@condition, 'Correct') or
@@ -354,7 +338,7 @@
           </xsl:variable>
           <xsl:variable name="falseBgnd">
             <xsl:choose>
-              <xsl:when test="($include.solutions = 'yes') and
+              <xsl:when test="($ada.testquestions.include.solutions = 'yes') and
                               (contains(answer/@condition, 'Falso') or
                               contains(answer/@condition, 'False'))">background: black</xsl:when>
               <xsl:otherwise>background: white</xsl:otherwise>
@@ -393,18 +377,33 @@
             </table>
           </td>
           <td class="qtext"><xsl:apply-templates select="question/node()"/></td>
-          <xsl:call-template name="dump-history"/>
         </tr>
+        <xsl:if test="$ada.testquestions.include.history='yes'">
+          <tr>
+            <xsl:call-template name="dump-history">
+              <xsl:with-param name="colspan">4</xsl:with-param>
+            </xsl:call-template>
+          </tr>
+        </xsl:if>
       </xsl:for-each>
     </table>
   </xsl:template>
   
   <!-- Dump element containing history --> 
   <xsl:template name="dump-history">
-    <xsl:param name="rowspan" select="1"/>
+    <xsl:param name="colspan" select="1"/>
     <xsl:if test="$ada.testquestions.include.history='yes'">
-      <td>
-        <xsl:attribute name="rowspan"><xsl:value-of select="$rowspan"/></xsl:attribute>
+      <td style="text-align: center">
+        <xsl:attribute name="colspan"><xsl:value-of
+        select="$colspan"/></xsl:attribute>
+        
+        <hr />
+        <p>
+          <xsl:choose>
+            <xsl:when test="$profile.lang='en'">Statistics</xsl:when>
+            <xsl:otherwise>Estadísticas</xsl:otherwise>
+          </xsl:choose>
+        </p>
         <table style="border: 1px solid black; border-collapse: collapse;" 
           align="center" cellpadding="3">
           <tr>

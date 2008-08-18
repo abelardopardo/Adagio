@@ -13,6 +13,9 @@
   <!-- Show the qandadiv ID -->
   <xsl:param name="ada.exam.render.separate.cover" select="'yes'"/>
 
+  <!-- Author/s of the exam -->
+  <xsl:param name="ada.exam.author" />
+
   <!-- Logo to use in the upper left corner -->
   <xsl:param name="ada.exam.topleft.image"/>
   <xsl:param name="ada.exam.topleft.image.alt"/>

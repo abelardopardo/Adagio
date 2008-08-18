@@ -16,8 +16,10 @@
 
 <!--   <xsl:include href="removespanquote.xsl"/> -->
 
-  <xsl:output method="html" indent="yes" encoding="UTF-8"/>
-  
+  <xsl:output method="xml" indent="yes" encoding="UTF-8"
+    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
+    doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"/>
+
   <xsl:template match="section">
     <xsl:variable name="part">
       <xsl:apply-templates select="para[@condition='part']"/>
@@ -39,11 +41,11 @@
             <img align="center">
               <xsl:if test="$ada.exam.topleft.image.alt != ''">
                 <xsl:attribute name="alt"><xsl:value-of                
-                select="ada.exam.topleft.image.alt"/></xsl:attribute>
+                select="$ada.exam.topleft.image.alt"/></xsl:attribute>
               </xsl:if>
               <xsl:attribute name="src"><xsl:value-of
               select="$ada.course.home"/><xsl:value-of
-              select="ada.exam.topleft.image"/></xsl:attribute>
+              select="$ada.exam.topleft.image"/></xsl:attribute>
             </img>
           </td>
         </xsl:if>
@@ -339,12 +341,16 @@
   -->
   <xsl:template name="user.head.content">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <xsl:element name="meta">
-      <xsl:attribute name="name">Author</xsl:attribute>
-      <xsl:attribute name="content">
-        Carlos III University of Madrid, Spain
-      </xsl:attribute>
-    </xsl:element>
+
+    <xsl:if test="$ada.exam.author">
+      <xsl:element name="meta">
+        <xsl:attribute name="name">Author</xsl:attribute>
+        <xsl:attribute name="content">
+          <xsl:value-of select="$ada.exam.author"/>
+        </xsl:attribute>
+      </xsl:element>
+    </xsl:if>
+
     <title><xsl:value-of select="title"/></title>
     <style type="text/css">
       body { 
@@ -353,16 +359,23 @@
         color: black; 
         background: white;
       }
+
       table       { page-break-inside: avoid; 
                     border-collapse: collapse; 
                     margin-right: auto; 
                     margin-left: auto; 
                   }
-      hr                { height: 2px; background: black; }
+
+      hr                { height: 1px solid black; }
+
       table.data        { border: 2px solid black; }
+
       th.data           { border: 2px solid black; }
+
       td.data           { border: 2px solid black; }
+
       tr                { page-break-inside: avoid; }
+
       code.code { 
         font-family: Courier New, Courier, monospace;
         font-style: normal;
@@ -375,6 +388,7 @@
       td.qtext p { margin-top: 2pt; margin-bottom: 2pt; }
 
       .underline { text-decoration: underline; }
+
       /* Add a class attribute with these values to force PDF page
       breaks */
       .pageBreakBefore {

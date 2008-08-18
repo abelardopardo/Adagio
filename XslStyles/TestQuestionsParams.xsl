@@ -4,6 +4,9 @@
   xmlns:exsl="http://exslt.org/common" 
   xmlns="http://www.w3.org/1999/xhtml" version="1.0">
 
+  <!-- Show the solutions -->
+  <xsl:param name="ada.testquestions.include.solutions" select="'no'"/>
+
   <!-- Show the qandadiv ID -->
   <xsl:param name="ada.testquestions.include.id" select="'no'"/>
 
