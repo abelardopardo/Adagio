@@ -72,7 +72,8 @@ Junio de 2008 (Test)</title>
 
   <qandaset defaultlabel="number">
     <xi:include xml:base="./" 
-      href="../../../../TTAO/Material/ExamQuestions/main.xml#xpointer(//*/qandadiv/blockinfo/printhistory/para[@arch='TTAO'][@revision='JUN'][@vendor='2008']/ancestor::qandadiv)"
+      href="../../../../TTAO/Material/ExamQuestions/main.xml"
+      xpointer="xpointer(//*/qandadiv)"
       parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
       <xi:fallback>
         <para>No questions found in catalog with revision="TTAO/JUN/2008"</para>

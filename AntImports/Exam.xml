@@ -19,12 +19,18 @@
 
   <!-- Checks for availability of different binaries -->
   <import file="Xsltproc.xml"/>
+  <import file="Latex.xml"/>
+  <import file="Dvi2bitmap.xml"/>
 
   <!-- Public Property definition -->
   <property name="exam.src.dir"        value="${basedir}"/>
   <property name="exam.dst.dir"        value="${exam.src.dir}"/>
+  <property name="exam.equation.dir"   value="equations"/>
   <property name="exam.output.format"  value=".html"/>
-  <property name="exam.extra.args"     value=""/>
+  <property name="exam.extra.args"     value="--stringparam
+					      passivetex.extensions 1
+					      --stringparam 
+					      tex.math.in.alt latex"/>
   <property name="exam.file"           value=""/>
   <property name="exam.bilingual.file" value=""/>
   <property name="exam.style.file"     value="${ada.home}/XslStyles/Exam.xsl"/>
@@ -94,7 +100,7 @@
 	  if="exam.check"
 	  description="Process the exam file">
 
-    <echo>exam.processing (Step 1/4)  CALL(xsltproc.processing)</echo>
+    <echo>exam.processing (Step 1/5)  CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
@@ -115,7 +121,7 @@
       <mapper type="glob" from="*.xml" to="*_raw.xml"/>
     </pathconvert>
 
-    <echo>exam.processing (Step 2/4)  RUN(Shuffling)</echo>
+    <echo>exam.processing (Step 2/5)  RUN(Shuffling)</echo>
 
     <!-- Generating the shuffled versions -->
     <java classname="Shuffle" jvm="/usr/bin/java" output="build.out"
@@ -167,16 +173,12 @@
       <filelist refid="exam.bilingual.filelist"/>
       <mapper type="glob" from="${exam.absdst.dir}/*.xml" to="*_2.xml"/>
     </pathconvert>
-    <filelist id="exam.raw.filelist"
-	      files="${exam.raw.version1.filelist.property} 
-		     ${exam.raw.version2.filelist.property}"/>
 
-    <echo>exam.processing (Step 3/4)  CALL(xsltproc.processing)</echo>
-    <echo>AAA ${exam.raw.version1.filelist.property} 
-BBB ${exam.raw.version2.filelist.property}</echo>
+    <echo>exam.processing (Step 3/5)  CALL(xsltproc.processing)</echo>
+
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${exam.src.dir}"/>
+      <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="xsltproc.files"         
@@ -186,6 +188,31 @@ BBB ${exam.raw.version2.filelist.property}</echo>
     </antcall>
 
     <echo>exam.processing             END(xsltproc.processing ES)</echo>
+
+    <echo>exam.processing (Step 4/5)  CALL(latex.processing)</echo>
+
+    <!-- Call latex -->
+    <antcall target="latex.processing" inheritAll="false">
+      <param name="latex.src.dir"       value="${exam.dst.dir}"/>
+      <param name="latex.dst.dir"       value="${exam.dst.dir}"/>
+      <param name="latex.files"         value="tex-math-equations.tex"/>
+      <param name="latex.extra.args"    value="-interaction=nonstopmode"/>
+    </antcall>
+
+    <echo>exam.processing             END(latex.processing ES)</echo>
+
+    <echo>exam.processing (Step 5/5)  CALL(dvi2bitmap.processing)</echo>
+
+    <mkdir dir="${exam.absdst.dir}${file.separator}${exam.equation.dir}"/>
+
+    <!-- Call dvi2bitmap -->
+    <antcall target="dvi2bitmap.processing" inheritAll="false">
+      <param name="dvi2bitmap.src.dir"       value="${exam.dst.dir}"/>
+      <param name="dvi2bitmap.dst.dir"       value="${exam.dst.dir}"/>
+      <param name="dvi2bitmap.files"         value="tex-math-equations.dvi"/>
+    </antcall>
+
+    <echo>exam.processing             END(dvi2bitmap.processing ES)</echo>
 
   </target>
 
@@ -204,12 +231,64 @@ BBB ${exam.raw.version2.filelist.property}</echo>
 
     <echo>exam.clean                  CALL(xsltproc.clean ES)</echo>
 
+    <!-- Call dvi2bitmap -->
+    <antcall target="dvi2bitmap.clean" inheritAll="false">
+      <param name="dvi2bitmap.src.dir"       value="${exam.dst.dir}"/>
+      <param name="dvi2bitmap.dst.dir"       value="${exam.dst.dir}"/>
+      <param name="dvi2bitmap.files"         value="tex-math-equations.dvi"/>
+    </antcall>
+
+    <delete failonerror="false">
+      <fileset dir="${exam.equation.dir}" includes="*"/>
+    </delete>
+
+    <delete dir="${exam.equation.dir}" failonerror="false"/>
+
+    <delete failonerror="false" file="missfont.log"/>
+
+    <!-- Call latex -->
+    <antcall target="latex.clean" inheritAll="false">
+      <param name="latex.src.dir"       value="${exam.dst.dir}"/>
+      <param name="latex.dst.dir"       value="${exam.dst.dir}"/>
+      <param name="latex.files"         value="tex-math-equations.tex"/>
+      <param name="latex.extra.args"    value="-interaction=nonstopmode"/>
+    </antcall>
+
+    <delete failonerror="false" file="tex-math-equations.tex"/>
+
+    <!-- Obtain a filelist with the newly produced files -->
+    <pathconvert property="exam.raw.version1.filelist.property" pathsep=" ">
+      <filelist refid="exam.filelist"/>
+      <filelist refid="exam.bilingual.filelist"/>
+      <mapper type="glob" from="${exam.absdst.dir}/*.xml" to="*_1.xml"/>
+    </pathconvert>
+    <pathconvert property="exam.raw.version2.filelist.property" pathsep=" ">
+      <filelist refid="exam.filelist"/>
+      <filelist refid="exam.bilingual.filelist"/>
+      <mapper type="glob" from="${exam.absdst.dir}/*.xml" to="*_2.xml"/>
+    </pathconvert>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.clean" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="xsltproc.files"         
+	     value="${exam.raw.version1.filelist.property} 
+		    ${exam.raw.version2.filelist.property}"/>
+      <param name="xsltproc.extra.args"    value="${exam.extra.args}"/>
+    </antcall>
+
+    <delete dir="${exam.absdst.dir}" 
+	    includes="${exam.raw.version1.filelist.property} 
+		      ${exam.raw.version2.filelist.property}"/>
+
     <!-- Call xsltproc -->
     <antcall target="xsltproc.clean"       inheritAll="false">
       <param name="xsltproc.src.dir"       value="${exam.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Dump.xsl"/>
-      <param name="xsltproc.output.format" value="_raw${exam.output.format}"/>
+      <param name="xsltproc.output.format" value="_raw.xml"/>
       <param name="xsltproc.files"         value="${exam.file}"/>
       <param name="xsltproc.extra.args"    value="${exam.extra.args}"/>
     </antcall>

@@ -20,6 +20,7 @@
   <property name="pdflatex.src.dir"        value="${basedir}"/>
   <property name="pdflatex.dst.dir"        value="${pdflatex.src.dir}"/>
   <property name="pdflatex.files"          value=""/>
+  <property name="pdflatex.extra.args"     value=""/>
 
   <!-- Private properties -->
   <property name="pdflatex.debug.level"    value="${ada.debug.level}"/>
@@ -110,6 +111,7 @@
 	   output="build.out">
       <arg value="-output-directory"/>
       <arg value="${pdflatex.dst.dir}"/>
+      <arg line="${pdflatex.extra.args}"/>
       <fileset refid="pdflatex.fileset"/>
       <!-- Mapper from source files to produced files -->
       <mapper type="glob" from="*.tex" to="*.pdf"/>
@@ -188,7 +190,8 @@
     pdflatex.exec       ="${pdflatex.exec}"
     pdflatex.abssrc.dir ="${pdflatex.abssrc.dir}"
     pdflatex.absdst.dir ="${pdflatex.absdst.dir}"
-    pdflatex.files      ="${pdflatex.files}"</echo>
+    pdflatex.files      ="${pdflatex.files}"
+    pdflatex.extra.args ="${pdflatex.extra.args}"</echo>
   </target>
 
   <target name="pdflatex.report.YES" depends="pdflatex.check.values"

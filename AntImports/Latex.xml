@@ -20,6 +20,7 @@
   <property name="latex.src.dir"        value="${basedir}"/>
   <property name="latex.dst.dir"        value="${latex.src.dir}"/>
   <property name="latex.files"          value=""/>
+  <property name="latex.extra.args"     value=""/>
 
   <!-- Private properties -->
   <property name="latex.debug.level"    value="${ada.debug.level}"/>
@@ -108,6 +109,7 @@
     <apply dir="${basedir}" parallel="false" dest="${latex.absdst.dir}" 
 	   append="yes" failonerror="true" executable="${latex.exec}" 
 	   output="build.out">
+      <arg line="${latex.extra.args}"/>
       <srcfile/>
       <fileset refid="latex.fileset"/>
       <!-- Mapper from source files to produced files -->
@@ -187,7 +189,8 @@
     latex.exec       ="${latex.exec}"
     latex.abssrc.dir ="${latex.abssrc.dir}"
     latex.absdst.dir ="${latex.absdst.dir}"
-    latex.files      ="${latex.files}"</echo>
+    latex.files      ="${latex.files}"
+    latex.extra.args ="${latex.extra.args}"</echo>
   </target>
 
   <target name="latex.report.YES" depends="latex.check.values"

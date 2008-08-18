@@ -13,5 +13,6 @@ xsltproc \
 #   --stringparam ada.testquestions.include.id yes \
 #  --stringparam ada.testquestions.include.history yes \
 
-# adado -Dexam.file=Test.xml -f ../../../AntImports/Exam.xml
+# adado -Dexam.extra.args="--stringparam passivetex.extensions 1 \
+        -Dexam.file=Test2.xml -f ../../../AntImports/Exam.xml
 

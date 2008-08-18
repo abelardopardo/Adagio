@@ -108,7 +108,7 @@ FS:            3 APS   + 1
   <qandaset defaultlabel="number">
     <xi:include xml:base="./"
       href="../../../../TAO/Theory/Exams/TestPool/questions.xml"
-      xpointer="xpointer(//*/qandadiv/blockinfo/printhistory/para[@arch='TAO'][@revision='FEB'][@vendor='2008']/ancestor::qandadiv)"
+      xpointer="xpointer(//*/qandadiv/blockinfo/printhistory/para/ancestor::qandadiv)"
       parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
       <xi:fallback>
         <para>No questions found in catalog with revision="TAO/???/2008"</para>

@@ -309,19 +309,19 @@
       style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false" 
       width="95%" align="center" cellspacing="0" cellpadding="3">
       <tr>
-        <th width="60pt">
+        <th style="border: 1px solid black;" width="60pt">
           <xsl:choose>
             <xsl:when test="$profile.lang='en'">True</xsl:when>
             <xsl:otherwise>Verdadero</xsl:otherwise>
           </xsl:choose>
         </th>
-        <th width="60pt">
+        <th style="border: 1px solid black;" width="60pt">
           <xsl:choose>
             <xsl:when test="$profile.lang='en'">False</xsl:when>
             <xsl:otherwise>Falso</xsl:otherwise>
           </xsl:choose>
         </th>
-        <th />
+        <th style="border: 1px solid black;" />
       </tr>
       
       <xsl:for-each select="qandaentry">
@@ -344,7 +344,7 @@
               <xsl:otherwise>background: white</xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
-          <td align="center" height="20pt">
+          <td style="border: 1px solid black;" align="center" height="20pt">
             <table 
               style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false" 
               width="10pt" align="center">
@@ -360,7 +360,7 @@
               </tr>
             </table>
           </td>
-          <td align="center" height="20pt">
+          <td style="border: 1px solid black;" align="center" height="20pt">
             <table 
               style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false" 
               width="10pt" align="center">
@@ -376,7 +376,9 @@
               </tr>
             </table>
           </td>
-          <td class="qtext"><xsl:apply-templates select="question/node()"/></td>
+          <td style="border: 1px solid black;" class="qtext">
+            <xsl:apply-templates select="question/node()"/>
+          </td>
         </tr>
         <xsl:if test="$ada.testquestions.include.history='yes'">
           <tr>
