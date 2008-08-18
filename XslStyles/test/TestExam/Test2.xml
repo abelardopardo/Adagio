@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+    "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!--
+             Sobre 20  Sobre 25
+Progc:         3 APS    
+Proc/Sche:     3 LSF   + 1
+IPC:           2 APS   + 1
+MemManag:      5 LSF   + 1
+I/O:           2 LSF
+Disc:          2 APS   + 1
+FS:            3 APS   + 1
+-->
+<section id="Feb08">
+  <sectioninfo id="ShuffleSeeds">
+    <productnumber>
+      1107505702116
+      <remark lang="en" condition="7"/>
+      <remark condition="12"/>
+      <remark condition="15"/>
+      <remark condition="19"/>
+    </productnumber>
+    <productnumber>
+      1107444885538
+      <remark condition="5"/>
+      <remark condition="11"/>
+      <remark condition="21"/>
+    </productnumber>
+  </sectioninfo>
+  
+  <title>
+    <xi:include 
+      href="common2.xml"
+      xpointer="xpointer(//*/para[@condition='coursename']/node())"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>. 
+    <phrase lang="es">Examen de Febrero de 2008 (Test)</phrase>
+    <phrase lang="en">February 2008 Examination (Test)</phrase>
+  </title>
+  
+  <xi:include 
+    href="common2.xml"
+    xpointer="xpointer(//*/para[@condition='department'])"
+    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:fallback>
+      <para>Missing Department Field</para>
+    </xi:fallback>
+  </xi:include>
+
+  <xi:include 
+    href="common2.xml"
+    xpointer="xpointer(//*/para[@condition='university'])"
+    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:fallback>
+      <para>Missing University Field</para>
+    </xi:fallback>
+  </xi:include>
+
+  <xi:include 
+    href="common2.xml"
+    xpointer="xpointer(//*/para[@condition='degree'])"
+    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:fallback>
+      <para>Missing Degree Field</para>
+    </xi:fallback>
+  </xi:include>
+
+  <xi:include 
+    href="common2.xml"
+    xpointer="xpointer(//*/para[@condition='coursename'])"
+    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:fallback>
+      <para>Missing Coursename Field</para>
+    </xi:fallback>
+  </xi:include>
+
+  <para condition="monthyear">
+    <phrase lang="es">Febrero 2008</phrase>
+    <phrase lang="en">February 2008</phrase>
+  </para>
+
+  <para condition="part">Test</para>
+  
+  <para condition="duration">
+    1 <phrase lang="es">hora</phrase>
+    <phrase lang="en">hour</phrase> 
+  </para>
+
+  <para condition="scoring">
+    50 <phrase lang="es">puntos sobre</phrase>
+    <phrase lang="en">points over</phrase> 100
+  </para>
+
+  <para condition="date">
+    <phrase lang="es">12 de febrero de 2008, 10:00h</phrase>
+    <phrase lang="en">February 12th, 2008, 10:00h</phrase>
+  </para>
+
+  <xi:include href="common2.xml"
+	      xpointer="xpointer(//*/para[@condition='note'])" 
+	      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  
+  <para condition="name"/>
+
+  <para condition="score"/>
+
+  <qandaset defaultlabel="number">
+    <xi:include xml:base="./"
+      href="../../../../TAO/Theory/Exams/TestPool/questions.xml"
+      xpointer="xpointer(//*/qandadiv/blockinfo/printhistory/para[@arch='TAO'][@revision='FEB'][@vendor='2008']/ancestor::qandadiv)"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
+      <xi:fallback>
+        <para>No questions found in catalog with revision="TAO/???/2008"</para>
+      </xi:fallback>
+    </xi:include>
+
+  </qandaset>
+</section>

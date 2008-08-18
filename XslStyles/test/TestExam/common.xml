@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+
+<section lang="es" id="ComonExamBits">
+  <title>Porciones comunes de texto para exámenes</title>
+  <para id="common:department" 
+    condition="department">Departamento de Ingeniería Telemática</para>
+  <para id="common:university" 
+    condition="university">Universidad Carlos III de Madrid</para>
+
+  <para id="common:degree" 
+    condition="degree">Ingeniería Técnica de Telecomunicación. Telemática</para>
+  <para id="common:coursename" 
+    condition="coursename">Arquitectura de Ordenadores</para>
+
+  <para id="common:note" condition="note">
+    Para la realización del examen debe tenerse en cuenta:
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          Escribir apellidos, nombre y NIA al comienzo del examen.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          No se permite el uso de material adicional alguno ni calculadora
+          durante el examen.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Cada respuesta correcta puntúa <emphasis>+1</emphasis>, cada
+          respuesta incorrecta puntúa <emphasis>-1</emphasis> y las respuestas
+          en blanco no puntúan.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Responder a las preguntas sólo en estas hojas y entregar todas ellas.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Utilizar un bolígrafo de color azul o negro. No utilizar lápiz ni el
+          color rojo.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Marcar con una <quote>X</quote> una sola respuesta por pregunta. Las
+          respuestas que no estén claramente marcadas se contarán como no
+          respondidas.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          El test y los problemas deben aprobarse por separado. Si se obtiene el
+          mínimo (50%) en una de las dos partes (test o problemas), dicha parte
+          se libera para la convocatoria extraordinaria.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+
+  <para id="common:problem:note" condition="note">
+    Para la realización del examen debe tenerse en cuenta:
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          Escribir apellidos, nombre y NIA al comienzo del examen en
+          <emphasis>todas</emphasis> las hojas.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          No se permite el uso de material adicional alguno ni calculadora
+          durante el examen.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          La solución debe estar comentada. Una respuesta sin comentarios se
+          considerará incorrecta.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Se deben entregar <emphasis>todas las hojas</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          El test y los problemas deben aprobarse por separado. Si se obtiene el
+          mínimo (50%) en una de las dos partes (test o problemas), dicha parte
+          se libera para la convocatoria extraordinaria.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+
+
+</section>

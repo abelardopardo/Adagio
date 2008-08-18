@@ -1,0 +1,966 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<section lang="es" id="Sep05" status="1107444885538">
+  <title>
+    <para id="common:coursename" condition="coursename" xml:base="../common.xml">Arquitectura de Ordenadores</para>
+    . Examen de Septiembre de 2005 (Test)
+  </title>
+  <para id="common:department" condition="department" xml:base="../common.xml">Departamento de Ingeniería Telemática</para>
+  <para id="common:university" condition="university" xml:base="../common.xml">Universidad Carlos III de Madrid</para>
+  <para id="common:degree" condition="degree" xml:base="../common.xml">Ingeniería de Telecomunicación</para>
+  <para id="common:coursename" condition="coursename" xml:base="../common.xml">Arquitectura de Ordenadores</para>
+  <para condition="monthyear">Septiembre 2005</para>
+  <para condition="part">Test</para>
+  <para condition="duration">45 minutos</para>
+  <para condition="scoring">50 puntos</para>
+  <para condition="date">8 de septiembre de 2005, 16:00h</para>
+  <para id="common:note" condition="note" xml:base="../common.xml">
+    Para la realización del examen debe tenerse en cuenta:
+    <itemizedlist>
+      <listitem>
+        <para>Escribir NIA, nombre y apellidos al comienzo del examen.</para>
+      </listitem>
+      <listitem>
+        <para>No se permite el uso de material adicional alguno ni calculadora
+          durante el examen.</para>
+      </listitem>
+      <listitem>
+        <para>
+          Cada respuesta correcta puntúa
+          <emphasis>+1</emphasis>
+          , cada
+          respuesta incorrecta puntúa
+          <emphasis>-1</emphasis>
+          y las respuestas
+          en blanco no puntúan.
+        </para>
+      </listitem>
+      <listitem>
+        <para>Responder a las preguntas únicamente en estas hojas y entregar todas
+          ellas.</para>
+      </listitem>
+      <listitem>
+        <para>
+          Marcar con una
+          <quote>X</quote>
+          únicamente una respuesta por
+          pregunta, sin escribir nada más en las hojas. Las respuestas que no
+          estén claramente marcadas se contarán como no respondidas.
+        </para>
+      </listitem>
+      <listitem>
+        <para>El test y los problemas deben aprobarse por separado.</para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  <para condition="name" />
+  <qandaset defaultlabel="number">
+    <qandadiv condition="TestQuestion" id="Processes_004" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/Processes/questions.xml">
+      <blockinfo>
+        <author>Ralf Seepold</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <para>Se debe implementar un algoritmo de planificación de procesos para un
+        sistema interactivo diseñado para servir múltiples usuarios. Decidir si
+        el siguiente algoritmo es el adecuado para este escenario.</para>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>Colas multinivel realimentadas con Round Robin con quantum de 500
+            ms. en el primer nivel y Menor Tiempo Restante (Shortest Remaining
+            Time Next) en el segundo nivel.</para>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="IO_004" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/InputOutput/questions.xml">
+      <blockinfo>
+        <author>Abelardo Pardo</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>En el sistema operativo Linux, el kernel y los drivers comparten
+            estructuras de datos.</para>
+        </question>
+        <answer role="Cierto" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="Disk_003" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/Disk/questions.xml">
+      <blockinfo>
+        <author>Abelardo Pardo</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>Un conjunto de discos duros conectados en cualquier estructura de
+            tipo RAID es capaz de soportar el fallo de uno de los dispositivos
+            sin que se produzca pérdida alguna de datos.</para>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="Processes_006" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/Processes/questions.xml">
+      <blockinfo>
+        <author>Ralf Seepold</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <para>
+        Decir si la siguiente afirmación es cierta respecto a la llamada al
+        sistema
+        <code>fork()</code>
+        en Linux.
+      </para>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>Para la ejecución de un proceso hijo, el código completo debe estar
+            siempre con el código del proceso padre en tiempo de compilación
+            porque el proceso hijo es una copia del proceso padre.</para>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="FS_002" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/FileSystems/questions.xml">
+      <blockinfo>
+        <author>Luis Sánchez Fernández</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>Un sistema de ficheros que utilice asignación enlazada de bloques de
+            disco es adecuado para el acceso secuencial a ficheros.</para>
+        </question>
+        <answer role="Cierto" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="Disk_001" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/Disk/questions.xml">
+      <blockinfo>
+        <author>Abelardo Pardo</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>Un disco tiene dos operaciones pendientes. La primera sobre el
+            cilindro 16, pista 2, sector 4, y la segunda en el cilindro 9,
+            pista 8, sector 19. Se acaba de leer el cilindro 12, pista 2,
+            sector 3. Si se escoge aquella operación que menos tiempo requiera,
+            el disco seleccionará la primera de ellas.</para>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="IO_003" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/InputOutput/questions.xml">
+      <blockinfo>
+        <author>Abelardo Pardo</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>Es posible que el DMA realice una transferencia de datos entre un
+            dispositivo y memoria, y al mismo tiempo el procesador obtenga un
+            operando de una instrucción.</para>
+        </question>
+        <answer role="Cierto" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="MM_005" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/MemoryManagement/questions.xml">
+      <blockinfo>
+        <author>Luis Sánchez Fernández</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>La gestión de memoria con paginación tiene la desventaja frente a
+            otras técnicas de que no permite que dos procesos compartan
+            memoria.</para>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="ProgC_002" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/ProgC/questions.xml">
+      <blockinfo>
+        <author>Abelardo Pardo</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <para>
+        La función
+        <code>concat</code>
+        que se muestra en la siguiente tabla
+        recibe como parámetros una tabla de strings, el número de elementos de
+        dicha tabla y la dirección de un puntero en el que devolver el string
+        resultante de concatenar todos los strings de la tabla. La función
+        <code>strlen</code>
+        devuelve el número de caracteres de un string (sin
+        contar el cero que termina su representación). Se propone la siguiente
+        implementación:
+      </para>
+      <informaltable align="center" frame="all">
+        <tgroup cols="2" colsep="1" rowsep="0">
+          <?dbhtml cellpadding="5" ?>
+          <colspec colnum="1" colname="col1" align="center" />
+          <colspec colnum="2" colname="col2" align="left" />
+          <thead>
+            <row rowsep="1">
+              <entry>Línea</entry>
+              <entry>Código</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                <programlisting format="linespecific">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</programlisting>
+              </entry>
+              <entry align="left">
+                <programlisting format="linespecific">int concat(char **src, int a, char **dst) {
+    int i, j, size;
+    char *result;
+
+    size = 0;
+    for (i = 0; i &lt; a; i++) {
+	size += strlen(src[i]);
+    }
+    
+    result = (char *)malloc(size * sizeof(char) + 1);
+    if (result == NULL) {
+	return -1;
+    }
+
+    size = 0;
+    for (i = 0; i &lt; a; i++) {
+	j = 0;
+	while (src[i][j] != 0) {
+	    result[size++] = src[i][j++];
+	}
+    }
+    result[size] = 0;
+
+    dst = result;
+
+    return 0;
+}</programlisting>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para>Responder a las siguientes preguntas sobre la implementación dada:</para>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>Se reserva más memoria de la necesaria.</para>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>La línea 24 es correcta.</para>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>
+            A la implementación le falta una invocación a
+            <code>malloc</code>
+            para reservar espacio para
+            <code>dst</code>
+            .
+          </para>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="FS_004" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/FileSystems/questions.xml">
+      <blockinfo>
+        <author>Luis Sánchez Fernández</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>Los ficheros son la unidad de almacenamiento físico en Memoria
+            Secundaria.</para>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="Processes_005" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/Processes/questions.xml">
+      <blockinfo>
+        <author>Ralf Seepold</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <para>Se dispone de un algoritmo de planificación de procesos por Round
+        Robin. El tiempo restante de un proceso es 1/d y el quantum es q. El
+        número n de unidades de quantum necesarias es:</para>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <informalequation>
+            <mediaobject>
+              <imageobject role="html">
+                <imagedata fileref="Processes_005.png" format="PNG" />
+              </imageobject>
+              <textobject role="tex">
+                <phrase>n = \frac{q}{d}</phrase>
+              </textobject>
+            </mediaobject>
+          </informalequation>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="MM_001" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/MemoryManagement/questions.xml">
+      <blockinfo>
+        <author>Luis Sánchez Fernández</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <para>
+        Tenemos un ordenador que usa memoria virtual paginada. Tanto las
+        direcciones lógicas como las direcciones físicas son de 32 bits. Las
+        páginas tienen un tamaño de 4 Kbytes. Un proceso ocupa 5 páginas
+        (limitado por el registro PTLR) y tiene la siguiente tabla de páginas
+        (los números que comienzan por
+        <quote>0x</quote>
+        están codificados en
+        hexadecimal):
+      </para>
+      <informaltable align="center" frame="all">
+        <tgroup cols="3" colsep="1" rowsep="1">
+          <?dbhtml cellpadding="5" ?>
+          <colspec colnum="1" colname="col1" align="center" />
+          <colspec colnum="2" colname="col2" align="center" />
+          <colspec colnum="3" colname="col3" align="center" />
+          <thead>
+            <row>
+              <entry>Número de página</entry>
+              <entry>Bit de validez</entry>
+              <entry>Dirección de marco</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>0</entry>
+              <entry>0</entry>
+              <entry>-</entry>
+            </row>
+            <row>
+              <entry>1</entry>
+              <entry>1</entry>
+              <entry>0x00abc</entry>
+            </row>
+            <row>
+              <entry>2</entry>
+              <entry>0</entry>
+              <entry>-</entry>
+            </row>
+            <row>
+              <entry>3</entry>
+              <entry>0</entry>
+              <entry>-</entry>
+            </row>
+            <row>
+              <entry>4</entry>
+              <entry>1</entry>
+              <entry>0x0f000</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>
+            Un acceso a la dirección lógica
+            <code>0x00004abc</code>
+            no causaría
+            fallo de página y se traduciría a la dirección física
+            <code>0x0f0000bc</code>
+            .
+          </para>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>
+            Un acceso a la dirección lógica
+            <code>0x00001abc</code>
+            no causaría
+            fallo de página y se traduciría a la dirección física
+            <code>0x00abcabc</code>
+            .
+          </para>
+        </question>
+        <answer role="Cierto" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="IPC_003" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/IPC/questions.xml">
+      <blockinfo>
+        <author>Ralf Seepold</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <para>El siguiente fragmento de código ha sido utilizado para la comunicación
+        entre procesos.</para>
+      <informaltable align="center" frame="all">
+        <tgroup cols="2" colsep="1" rowsep="0">
+          <?dbhtml cellpadding="5" ?>
+          <colspec colnum="1" colname="col1" align="center" />
+          <colspec colnum="2" colname="col2" align="left" />
+          <thead>
+            <row rowsep="1">
+              <entry>Línea</entry>
+              <entry>Código</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                <programlisting format="linespecific">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</programlisting>
+              </entry>
+              <entry align="left">
+                <programlisting format="linespecific">#include &lt;stdio.h&gt; 
+#include &lt;stdlib.h&gt; 
+#include &lt;unistd.h&gt; 
+#include &lt;sys/wait.h&gt;
+
+int main(int argc, char **argv) { 
+    int fd[2]; 
+    pid_t pid; 
+    int status; 
+    int secret = 0;
+    if(pipe(fd) == 0) { 
+	pid = fork(); 
+	if(pid == 0) { 
+            secret = -1; 
+            close(fd[1]); 
+            read(fd[0], (void *)&amp;secret, sizeof(int)); 
+            close(fd[0]); 
+            printf("[%d]: %d\n", getpid(), secret); 
+	} else { 
+            close(fd[0]); 
+            write(fd[1], (const void *)&amp;secret, sizeof(int));
+            wait(&amp;status); 
+            printf("[%d]: %d\n", getpid(), secret); 
+            close(fd[1]); 
+	} 
+    } 
+    return 0; 
+}</programlisting>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para>Asumir que el proceso padre tiene PID 3605 y que el proceso hijo tiene
+        PID 3606. Decir si la siguiente afirmación es verdadera o falsa:</para>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>La salida es:</para>
+          <programlisting format="linespecific">[3606]: 0
+[3605]: 0</programlisting>
+        </question>
+        <answer role="Cierto" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="FS_001" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/FileSystems/questions.xml">
+      <blockinfo>
+        <author>Luis Sánchez Fernández</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>Utilizando acceso secuencial es posible moverse hacia atrás
+            a un punto intermedio de un fichero en una sola operación.</para>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="IO_005" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/InputOutput/questions.xml">
+      <blockinfo>
+        <author>Abelardo Pardo</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>Un socket es una estructura de datos en Unix que se utiliza para
+            acceder a dispositivos de bloque.</para>
+        </question>
+        <answer role="Falso" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="Intro_002" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/Intro/questions.xml">
+      <blockinfo>
+        <author>Abelardo Pardo</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>
+            Cuando un proceso realiza una
+            <emphasis>llamada al sistema</emphasis>
+            ,
+            se pasa a ejecutar código propio del sistema operativo.
+          </para>
+        </question>
+        <answer role="Cierto" />
+      </qandaentry>
+    </qandadiv>
+    <qandadiv condition="TestQuestion" id="CacheMemory_003" xml:base="/home/abel/Courses/TAO/Material/Theory/Exams/TPool/CacheMemory/questions.xml">
+      <blockinfo>
+        <author>Luis Sánchez Fernández</author>
+        <printhistory>
+          <para arch="TAO" revision="SEP" vendor="2005" />
+        </printhistory>
+      </blockinfo>
+      <para>Considere una caché que usa correspondencia directa, con 4 líneas, cada
+        línea contiene 1 palabra y cada palabra contiene 4 bytes. El tag tiene
+        16 bits.</para>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="TAO" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+            <para arch="TAO-E" revision="SEP" vendor="2005">
+              <phrase role="correct" />
+              <phrase role="incorrect" />
+              <phrase role="blank" />
+              <phrase role="total" />
+              <phrase role="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>Las direcciones de memoria principal son de 20 bits.</para>
+        </question>
+        <answer role="Cierto" />
+      </qandaentry>
+    </qandadiv>
+  </qandaset>
+</section>
+

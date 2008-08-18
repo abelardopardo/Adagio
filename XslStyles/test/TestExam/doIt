@@ -1,0 +1,17 @@
+xsltproc \
+  --xinclude \
+  --stringparam ada.exam.topleft.image ../../../lib/images/LogoUC3M_55x55.png \
+  --stringparam ada.exam.topleft.image.alt UC3M \
+  --stringparam ada.exam.author 'Abelardo Pardo et al.' \
+  --stringparam ada.course.home '' \
+  -o Test.html \
+  -o Test.html \
+  ../../Exam.xsl \
+  Test.xml
+
+#   --stringparam ada.testquestions.include.solutions yes \
+#   --stringparam ada.testquestions.include.id yes \
+#  --stringparam ada.testquestions.include.history yes \
+
+# adado -Dexam.file=Test.xml -f ../../../AntImports/Exam.xml
+

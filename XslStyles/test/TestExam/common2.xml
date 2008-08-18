@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+    "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section id="ComonExamBits">
+  <title>
+    <phrase lang="es">Porciones de texto común para exámenes</phrase>
+    <phrase lang="en">Common text portions for exams</phrase>
+  </title>
+
+  <para condition="department">
+    <phrase lang="es">Departamento de Ingeniería Telemática</phrase>
+    <phrase lang="en">Department of Telematic Engineering</phrase>
+  </para>
+
+  <para condition="university">
+    <phrase lang="es">Universidad Carlos III de Madrid</phrase>
+    <phrase lang="en">Carlos III University of Madrid</phrase>
+  </para>
+
+  <para condition="degree">
+    <phrase lang="es">Ingeniería de Telecomunicación</phrase>
+    <phrase lang="en">Telecommunication Engineering</phrase>
+  </para>
+
+  <para condition="coursename">
+    <phrase lang="es">Arquitectura de los Ordenadores</phrase>
+    <phrase lang="en">Computer Architecture</phrase>
+  </para>
+
+  <para condition="note">
+    <phrase lang="es">Normas del examen:</phrase>
+    <phrase lang="en">Rules for the exam:</phrase>
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          <phrase lang="es">
+            Escribir NIA, nombre y apellidos al comienzo del examen.
+          </phrase>
+          <phrase lang="en">
+            Write your student ID, first name and last name in the exam.
+          </phrase>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <phrase lang="es">
+            No se permite el uso de calculadora ni de material adicional alguno.
+          </phrase>
+          <phrase lang="en">
+            No additional material nor calculator is allowed to be used.
+          </phrase>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <phrase lang="es">
+            Cada respuesta correcta puntúa <emphasis>+1</emphasis>, cada
+            respuesta incorrecta puntúa <emphasis>-1</emphasis> y las respuestas
+            en blanco no puntúan. Sólo se deben responder un máximo de 20
+	    preguntas.
+          </phrase>
+          <phrase lang="en">
+            Each correct answer counts <emphasis>+1</emphasis>, each incorrect
+            answer counts <emphasis>-1</emphasis> and empty answers count as
+	    zero. Only a maximum of 20 questions must be answered.
+          </phrase>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <phrase lang="es">
+            Responder a las preguntas únicamente en estas hojas y entregar todas
+            ellas.
+          </phrase>
+          <phrase lang="en">
+            Answer questions in these sheets and return all of them.
+          </phrase>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <phrase lang="es">
+            Si se precisa espacio adicional se puede utilizar el reverso de 
+            las hojas.
+          </phrase>
+          <phrase lang="en">
+            If additional space is required, the back of these pages may be 
+	    used.
+          </phrase>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <phrase lang="es">
+            Marcar con una <quote>X</quote> únicamente una respuesta por
+            pregunta. Las respuestas que no estén claramente marcadas se
+            contarán como no respondidas. No utilizar bolígrafo de color rojo.
+          </phrase>
+          <phrase lang="en">
+            Write an <quote>X</quote> in only one of the answers for each
+            question. Answers not clearly marked will be counted as no
+            answer. Do not use red colored pen. 
+          </phrase>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <phrase lang="es">
+            El test y los problemas deben aprobarse por separado.
+          </phrase>
+          <phrase lang="en">
+            Test and problems must be passed separately.
+          </phrase>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <informaltable frame="all">
+      <tgroup cols="1" colsep="0" rowsep="0">
+	<?dbhtml cellpadding="3" ?>
+	<colspec colnum="1" colname="col1" align="center" />
+	<tbody>
+	  <row>
+	    <entry>
+	      <para lang="es">
+		Se debe responder a un <emphasis>máximo de 20
+		preguntas</emphasis> de las 25 de las que consta el test. Por
+		tanto, al menos debe haber 5 preguntas en blanco. En caso de que
+		no se respete esta condición, se restarán de la nota las
+		preguntas respondidas a mayores.
+	      </para>
+	      <para lang="en">
+		Only <emphasis>a maximum of 20 questions</emphasis> out of the
+		25 in test must be answered. Therefore, there must be at least
+		5 questions not answered. If such condition is not observed, the
+		additional questions will be subtracted from the final score.
+	      </para>
+	    </entry>
+	  </row>
+	</tbody>
+      </tgroup>
+    </informaltable>
+  </para>
+
+  <para condition="problem:note">
+    <phrase lang="es">Normas del examen:</phrase>
+    <phrase lang="en">Rules for the exam:</phrase>
+    
+    <itemizedlist>
+      <listitem>
+         <para>
+          <phrase lang="es">
+            Poner el nombre, apellidos y NIA en <emphasis>todas</emphasis> las
+	    hojas.
+          </phrase>
+          <phrase lang="en">
+            Write your first name, last name and student ID in <emphasis>all the
+            sheets</emphasis>.
+          </phrase>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <phrase lang="es">
+            No se permite el uso de material adicional alguno ni calculadora.
+          </phrase>
+          <phrase lang="en">
+            No additional material nor calculator is allowed to be used.
+          </phrase>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <phrase lang="es">
+            La solución debe estar comentada. Una respuesta sin comentarios se
+            considera incorrecta.
+          </phrase>
+          <phrase lang="en">
+            The solution must be properly commented. A solution without comments
+            is considered incorrect.
+          </phrase>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <phrase lang="es">
+            Se deben entregar <emphasis>todas las hojas</emphasis>.
+          </phrase>
+          <phrase lang="en">
+            <emphasis>All sheets</emphasis> must be returned.
+          </phrase>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <phrase lang="es">No utilizar bolígrafo de color rojo.</phrase>
+          <phrase lang="en">Do not use red colored pen.</phrase>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <phrase lang="es">
+            El test y los problemas deben aprobarse por separado.
+          </phrase>
+          <phrase lang="en">
+            Test and problems must be passed separately.
+          </phrase>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+</section>
