@@ -5,53 +5,50 @@
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="exsl" version="1.0">
   
-  <xsl:import
-    href="file:///usr/share/sgml/docbook/stylesheet/xsl/nwalsh/xhtml/profile-docbook.xsl"/> 
-  <xsl:import
-    href="file:///usr/share/sgml/docbook/stylesheet/xsl/nwalsh/html/manifest.xsl"/>
-
-  <!-- Figure/Section names go in lowercase -->
-  <xsl:include href="es-modify.xsl"/>
+  <xsl:import href="DocbookProfile.xsl"/> 
 
   <xsl:include href="TestQuestions.xsl"/>
-  <xsl:include href="solutionsection.xsl"/>
-  <xsl:include href="pguidesection.xsl"/>
-  <xsl:include href="submitsection.xsl"/>
-  <xsl:include href="removespanquote.xsl"/>
+  <xsl:include href="SolutionSection.xsl"/>
+  <xsl:include href="PguideSection.xsl"/>
+  <xsl:include href="SubmitIgnore.xsl"/>
+
+  <xsl:include href="ExamParams.xsl"/>
+
+<!--   <xsl:include href="removespanquote.xsl"/> -->
 
   <xsl:output method="html" indent="yes" encoding="UTF-8"/>
   
-  <!-- Control the font size -->
-  <xsl:param name="testexam.fontsize" select="'10pt'"/>
-
-  <!-- Show the qandadiv ID -->
-  <xsl:param name="include.id" select="'no'"/>
-
-  <!-- Show the qandadiv ID -->
-  <xsl:param name="render.separate.cover" select="'yes'"/>
-
-  <!-- Prefix to include in all images -->
-  <xsl:param name="rootPrefix" select="'./'"/>
-
   <xsl:template match="section">
     <xsl:variable name="part">
       <xsl:apply-templates select="para[@condition='part']"/>
     </xsl:variable>
     <xsl:variable name="duration" select="para[@condition='duration']/node()"/>
-    <xsl:variable name="scoring" select="para[@condition='scoring']/node()"/>
-    <xsl:variable name="date" select="para[@condition='date']/node()"/>
-    <xsl:variable name="note" select="para[@condition='note']/node()"/>
-    <xsl:variable name="name" select="para[@condition='name']"/>
-    <xsl:variable name="score" select="para[@condition='score']"/>
+    <xsl:variable name="scoring"  select="para[@condition='scoring']/node()"/>
+    <xsl:variable name="date"     select="para[@condition='date']/node()"/>
+    <xsl:variable name="note"     select="para[@condition='note']/node()"/>
+    <xsl:variable name="name"     select="para[@condition='name']"/>
+    <xsl:variable name="score"    select="para[@condition='score']"/>
     
+    <!-- Table to show Logo, Degree, Dept and institution on the left and Course
+    and date on the right -->
     <table width="100%" style="border:0">
       <tr>
-        <td width="10%" align="left" rowspan="3">
-          <img align="center" alt="UC3M">
-            <xsl:attribute name="src"><xsl:value-of
-            select="$rootPrefix"/>images/basic/uc3mlogo70.png</xsl:attribute>
-          </img>
-        </td>
+        <!-- Include the logo if given in var ada.exam.topleft.image -->
+        <xsl:if test="$ada.exam.topleft.image != ''">
+          <td width="10%" align="left" rowspan="3">
+            <img align="center">
+              <xsl:if test="$ada.exam.topleft.image.alt != ''">
+                <xsl:attribute name="alt"><xsl:value-of                
+                select="ada.exam.topleft.image.alt"/></xsl:attribute>
+              </xsl:if>
+              <xsl:attribute name="src"><xsl:value-of
+              select="$ada.course.home"/><xsl:value-of
+              select="ada.exam.topleft.image"/></xsl:attribute>
+            </img>
+          </td>
+        </xsl:if>
+
+        <!-- First row is completed with degree and coursename -->
         <td width="50%" align="left">
           <b><xsl:apply-templates select="/*/para[@condition='degree']/node()"/></b>
         </td>
@@ -60,6 +57,7 @@
         </td>
       </tr>
       <tr>
+        <!-- Second row include department and date -->
         <td>
           <b><xsl:apply-templates select="/*/para[@condition='department']/node()"/></b>
         </td>
@@ -68,26 +66,31 @@
         </td>
       </tr>
       <tr>
+        <!-- And final row include University on the left -->
         <td>
           <b><xsl:apply-templates select="/*/para[@condition='university']/node()"/></b>
         </td>
+        <td/>
       </tr>
     </table>
     
     <xsl:comment>Part heading</xsl:comment>
     
+    <!-- If the exam has a "part" label, stick it right at the top of the page -->
     <xsl:if test="$part">
       <div style="text-align: center;">
         <u><xsl:copy-of select="$part"/></u>
-        <xsl:if test="($include.id = 'yes') and (/section/@status)">
+        <xsl:if test="($ada.exam.include.id = 'yes') and (/section/@status)">
           (<xsl:value-of select="/section/@status"/>)
         </xsl:if>
       </div>
     </xsl:if>
     
+    <!-- Include paragraph with duration, scoring, date and/or note -->
     <xsl:if test="$duration or $scoring or $date or $note">
       <p>
         <table style="margin-left: 0%;">
+          <!-- Duration -->
           <xsl:if test="$duration">
             <xsl:comment>Duration/Score/Date</xsl:comment>
             <tr>
@@ -106,6 +109,8 @@
               <td><xsl:apply-templates select="$duration"/></td>
             </tr>
           </xsl:if>
+
+          <!-- Scoring -->
           <xsl:if test="$scoring">
             <tr>
               <td>
@@ -123,6 +128,8 @@
               <td><xsl:apply-templates select="$scoring"/></td>
             </tr>
           </xsl:if>
+
+          <!-- Date -->
           <xsl:if test="$date">
             <tr>
               <td>
@@ -140,6 +147,8 @@
               <td><xsl:apply-templates select="$date"/></td>
             </tr>
           </xsl:if>
+
+          <!-- Note -->
           <xsl:if test="$note">
             <tr>
               <td valign="top">
@@ -162,10 +171,12 @@
       <hr width="100%" align="center"/>
     </xsl:if>
     
+    <!-- Include a box to write the student first/last/id -->
     <xsl:if test="$name">
       <table width="100%" 
         style="border: 1px solid black; border-collapse: collapse;" 
         cellpadding="10">
+        <!-- Last name -->
         <tr>
           <td style="border: 1px solid black; border-collapse: collapse;"
               width="11%" align="left">
@@ -181,6 +192,8 @@
           <td style="border: 1px solid black; border-collapse: collapse;"
               width="90%" ></td>
         </tr>
+
+        <!-- First name -->
         <tr>
           <td style="border: 1px solid black; border-collapse: collapse;"
               align="left">
@@ -195,6 +208,8 @@
           </td>
           <td style="border: 1px solid black; border-collapse: collapse;"></td>
         </tr>
+
+        <!-- Student ID -->
         <tr>
           <td style="border: 1px solid black; border-collapse: collapse;"
               align="left">
@@ -213,6 +228,14 @@
       <hr width="100%" align="center"/>
     </xsl:if>
     
+    <!-- 
+         Insert a box to fill with the scoring: Correct/Incorrect/Blank. Only
+         suitable for tests.
+
+         Possible improvement: provide several types of score boxes. Another one
+         in which a bunch of boxes are created (given by a parameter) and a
+         total box for the final score. All this controlled by a parameter.
+    -->
     <xsl:if test="$score">
       <table style="border: 1px solid black; border-collapse: collapse;" 
              cellpadding="10">
@@ -270,12 +293,13 @@
         </tr>
       </table>
       <hr width="100%" align="center"/>
-
-      <xsl:if test="$render.separate.cover = 'yes'">
-        <br class="pageBreakBefore"/>
-      </xsl:if>
     </xsl:if>
     
+    <!-- If cover is to be rendered in a single page, insert the page break -->
+    <xsl:if test="$ada.exam.render.separate.cover = 'yes'">
+      <br class="pageBreakBefore"/>
+    </xsl:if>
+
     <!-- Test questions within qandaset element -->
     <xsl:apply-templates select='qandaset/node()'/>
     
@@ -300,12 +324,6 @@
             <xsl:apply-templates select="sectioninfo/subtitle/node()"/>
           </xsl:when>
         </xsl:choose>
-        <!--
-        <xsl:if test="@condition"> 
-          <xsl:text> </xsl:text>
-          <xsl:value-of select="@condition"/>
-        </xsl:if>
-        -->
       </b>
       <xsl:apply-templates/>
       <xsl:if test="not(position() = last())">
@@ -314,6 +332,11 @@
     </xsl:for-each>
   </xsl:template>
 
+  <!-- 
+       Style to be included in the header. It is included instead of inserting a
+       link to a css file to make the HTML self-contained and be visualized as close
+       as possible to its final appearance without requiring a net connection.
+  -->
   <xsl:template name="user.head.content">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <xsl:element name="meta">
@@ -326,8 +349,7 @@
     <style type="text/css">
       body { 
         font-family: 'Verdana';
-      /* font-family: sans-serif; */
-        font-size: <xsl:value-of select="$testexam.fontsize"/>;
+        font-size: <xsl:value-of select="$ada.exam.fontsize"/>;
         color: black; 
         background: white;
       }
@@ -343,7 +365,6 @@
       tr                { page-break-inside: avoid; }
       code.code { 
         font-family: Courier New, Courier, monospace;
-        /* font-size: 10pt; */
         font-style: normal;
         font-variant: normal;
         font-weight: normal;

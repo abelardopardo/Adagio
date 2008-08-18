@@ -5,32 +5,17 @@
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="exsl" version="1.0">
 
-  <!-- Lang attribute -->
-  <xsl:param name="lang"/>
-
-  <!-- Show the qandadiv ID -->
-  <xsl:param name="include.id" select="'no'"/>
-
-  <!-- Insert history remarks -->
-  <xsl:param name="include.history" select="'no'"/>
-
-  <!-- Insert pagebreaks as specified in the sectioninfo -->
-  <xsl:param name="insert.pagebreaks" select="'yes'"/>
-
-  <!-- Render one question per page -->
-  <xsl:param name="render.onequestionperpage" select="'no'"/>
-
-  <!-- Size of the square to mark -->
-  <xsl:param name="render.squaresize" select="'10pt'"/>
+  <xsl:import href="TestQuestionsParams.xsl"/> 
 
   <!-- Number QandA with correlative integers within a section -->
   <xsl:template match="question" mode="label.markup">
     <xsl:number level="any" count="qandaentry" from="section" format="1"/>
   </xsl:template>
 
-  <!-- Those qandadiv with condition TestQuestion or TestMCQuestion
-       are processed in a different way -->
-  <xsl:template match="qandadiv[@condition='TestQuestion']|qandadiv[@condition='TestMCQuestion']">
+  <!-- Only those qandadiv with condition TestQuestion or TestMCQuestion
+       are processed by this stylesheet -->
+  <xsl:template match="qandadiv[@condition='TestQuestion'] |
+                       qandadiv[@condition='TestMCQuestion']">
     <xsl:variable name="beginnumber">
       <xsl:number level="any" count="qandaentry" from="section"/>
     </xsl:variable>
@@ -40,12 +25,16 @@
          blockinfo that instructs this table to have a
          class="pageBreakBefore" attribute 
     -->
-    <table style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false" 
+
+    <!-- Table surrounding one qandadiv (might have several questions) -->
+    <table style="border: 1px solid black; border-collapse: collapse; 
+                  pageBreakInside: false" 
       width="100%" align="center" cellspacing="5" cellpadding="5">
       <xsl:if 
-        test="($render.onequestionperpage = 'yes') or
-              ((/section/sectioninfo/productnumber/remark[@condition=($beginnumber + 1)]) and
-              ($insert.pagebreaks = 'yes'))">
+        test="($ada.testquestions.render.onequestionperpage = 'yes') or
+              ((/section/sectioninfo/productnumber/remark[@condition =
+              ($beginnumber + 1)]) and 
+              ($ada.testquestions.insert.pagebreaks = 'yes'))">
         <xsl:attribute name="class">pageBreakBefore</xsl:attribute>
       </xsl:if>
       <tr>
@@ -73,7 +62,7 @@
                   <xsl:value-of select="$beginnumber + 1"/>
                 </xsl:otherwise>
               </xsl:choose>
-              <xsl:if test="$include.id = 'yes'">
+              <xsl:if test="$ada.testquestions.include.id = 'yes'">
                 (id = <xsl:value-of select="@id"/>
                 <xsl:if test="blockinfo/author">
                   <xsl:text>, </xsl:text>
@@ -111,10 +100,8 @@
     <br />
   </xsl:template>
 
+  <!-- Render one individual question -->
   <xsl:template match="qandaentry">
-    <!--
-    match="qandaentry[@condition='TestQuestion']|qandadiv[@condition='TestQuestion']//qandaentry">
-    -->
     <xsl:if test="not(boolean(ancestor::qandadiv))">
       <table style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false" 
         width="100%" align="center" cellspacing="3" cellpadding="3">
@@ -122,11 +109,12 @@
           <td>
             <b>
               <xsl:choose>
-                <xsl:when test="$profile.lang='en'">Question</xsl:when>
+                <xsl:when test="$profile.lang = 'en'">Question</xsl:when>
                 <xsl:otherwise>Pregunta</xsl:otherwise>
               </xsl:choose>
-              <xsl:value-of select="count(ancestor::section/preceding::qandaentry) + 1"/>
-              <xsl:if test="$include.id = 'yes'">
+              <xsl:value-of
+                select="count(ancestor::section/preceding::qandaentry) + 1"/> 
+              <xsl:if test="$ada.testquestions.include.id = 'yes'">
                 (id=<xsl:value-of select="@id"/>
                 <xsl:for-each select="blockinfo/printhistory/para">
                   , <xsl:value-of select="@arch"/>/<xsl:value-of select="@revision"/>/<xsl:value-of select="@vendor"/>
@@ -143,8 +131,8 @@
     </xsl:if>
   </xsl:template>
   
-  <!-- Formats a qandaentry. To be used, either when not in a
-       qandadiv, or if in a qandadiv but the only one -->
+  <!-- Formats the question of the qandaentry. To be used, either when not in a
+       qandadiv, or when it is the only one in a qandadiv -->
   <xsl:template name="singlequestion">
     <xsl:choose>
       <xsl:when test="count(answer) = 1">
@@ -176,7 +164,7 @@
         </th>
         <th width="10pt"/>
         <th/>
-        <xsl:if test="$include.history='yes'">
+        <xsl:if test="$ada.testquestions.include.history='yes'">
           <th/>
         </xsl:if>
       </tr>
@@ -207,9 +195,9 @@
               <xsl:element name="td">
                 <xsl:attribute name="align">center</xsl:attribute>
                 <xsl:attribute name="height"><xsl:value-of
-                select="$render.squaresize"/></xsl:attribute>
+                select="$ada.testquestions.render.squaresize"/></xsl:attribute>
                 <xsl:attribute name="width"><xsl:value-of
-                select="$render.squaresize"/></xsl:attribute>
+                select="$ada.testquestions.render.squaresize"/></xsl:attribute>
                 <xsl:attribute name="style">
                   <xsl:value-of select="$trueBgnd"/>
                 </xsl:attribute>
@@ -226,9 +214,9 @@
               <xsl:element name="td">
                 <xsl:attribute name="align">center</xsl:attribute>
                 <xsl:attribute name="height"><xsl:value-of
-                select="$render.squaresize"/></xsl:attribute>
+                select="$ada.testquestions.render.squaresize"/></xsl:attribute>
                 <xsl:attribute name="width"><xsl:value-of
-                select="$render.squaresize"/></xsl:attribute>
+                select="$ada.testquestions.render.squaresize"/></xsl:attribute>
                 <xsl:attribute name="style">
                   <xsl:value-of select="$falseBgnd"/>
                 </xsl:attribute>
@@ -250,7 +238,7 @@
     <xsl:variable name="answerNumber" select="count(answer)"/>
     <xsl:variable name="colspan">
       <xsl:choose>
-        <xsl:when test="$include.history = 'yes'">4</xsl:when>
+        <xsl:when test="$ada.testquestions.include.history = 'yes'">4</xsl:when>
         <xsl:otherwise>3</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
@@ -342,7 +330,7 @@
           </xsl:choose>
         </th>
         <th />
-        <xsl:if test="$include.history='yes'">
+        <xsl:if test="$ada.testquestions.include.history='yes'">
           <th>
             <xsl:choose>
               <xsl:when test="$profile.lang='en'">Statistics</xsl:when>
@@ -414,7 +402,7 @@
   <!-- Dump element containing history --> 
   <xsl:template name="dump-history">
     <xsl:param name="rowspan" select="1"/>
-    <xsl:if test="$include.history='yes'">
+    <xsl:if test="$ada.testquestions.include.history='yes'">
       <td>
         <xsl:attribute name="rowspan"><xsl:value-of select="$rowspan"/></xsl:attribute>
         <table style="border: 1px solid black; border-collapse: collapse;" 
@@ -493,6 +481,6 @@
     </xsl:if>
   </xsl:template>
 
-  <!-- Just discovered that blockinfo element is passed to the HTML -->
+  <!-- The blockinfo needs to be matched to avoid to appear in the output -->
   <xsl:template match="blockinfo"/>
 </xsl:stylesheet>
