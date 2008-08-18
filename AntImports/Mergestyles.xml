@@ -137,7 +137,7 @@
 	  if="mergestyles.check"
 	  description="Remove files produced by mergestyles">
 
-    <echo>mergestyles.clean          CALL(mergestyles.clean)</echo>
+    <echo>mergestyles.clean           CALL(mergestyles.clean)</echo>
     <echo level="${mergestyles.debug.level}">${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->
