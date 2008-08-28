@@ -399,7 +399,6 @@
         <xsl:attribute name="colspan"><xsl:value-of
         select="$colspan"/></xsl:attribute>
         
-        <hr />
         <p>
           <xsl:choose>
             <xsl:when test="$profile.lang='en'">Statistics</xsl:when>
