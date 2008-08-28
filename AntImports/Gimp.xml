@@ -46,9 +46,9 @@
 	<available file="${gimp.script.file}"/>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${gimp.abssrc.dir}" arg2=""/></not>
+        <not><equals arg1="${gimp.abssrc.dir}" arg2="" trim="true"/></not>
 	<!-- There must be some files defined -->
-        <not><equals arg1="${gimp.files}" arg2=""/></not>
+        <not><equals arg1="${gimp.files}" arg2="" trim="true"/></not>
       </and>
     </condition>
 

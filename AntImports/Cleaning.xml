@@ -27,7 +27,7 @@
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="clean.check">
-      <not><equals arg1="${clean.files}" arg2=""/></not>
+      <not><equals arg1="${clean.files}" arg2="" trim="true"/></not>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->

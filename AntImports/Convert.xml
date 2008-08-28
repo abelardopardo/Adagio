@@ -55,13 +55,13 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${convert.abssrc.dir}" arg2=""/></not>
+        <not><equals arg1="${convert.abssrc.dir}" arg2="" trim="true"/></not>
 	<!-- There must be some files defined -->
-        <not><equals arg1="${convert.files}" arg2=""/></not>
+        <not><equals arg1="${convert.files}" arg2="" trim="true"/></not>
 	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${convert.absdst.dir}" arg2=""/></not>
+        <not><equals arg1="${convert.absdst.dir}" arg2="" trim="true"/></not>
 	<!-- Require a non-empty geometry -->
-        <not><equals arg1="${convert.geometry}" arg2=""/></not>
+        <not><equals arg1="${convert.geometry}" arg2="" trim="true"/></not>
       </and>
     </condition>
 

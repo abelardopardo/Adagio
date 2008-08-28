@@ -106,7 +106,7 @@ build templates
     <condition property="ada.check.home.property">
       <and>
         <not>
-	  <equals arg1="${ada.home}" arg2=""/>
+	  <equals arg1="${ada.home}" arg2="" trim="true"/>
         </not>
         <available file="${ada.home}" type="dir"/>
       </and>
