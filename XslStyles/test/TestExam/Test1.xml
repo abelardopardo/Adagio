@@ -29,9 +29,9 @@
   <para condition="scoring">50 puntos sobre 100</para>
   <para condition="date">10 de junio de 2008, 16:00h</para>
 
-  <xi:include 
-    href="common.xml#xpointer(//*/para[@id='common:note'])"
-    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <xi:include href="common.xml"
+	      xpointer="xpointer(//*/para[@id='common:note'])"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
   <para condition="name"/>
 

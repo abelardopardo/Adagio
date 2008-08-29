@@ -37,8 +37,8 @@
     <table width="100%" style="border:0">
       <tr>
         <!-- Include the logo if given in var ada.exam.topleft.image -->
-        <td width="10%" align="left" rowspan="3">
-          <xsl:if test="$ada.exam.topleft.image">
+        <xsl:if test="$ada.exam.topleft.image">
+          <td width="10%" align="left" rowspan="3">
             <img align="center">
               <xsl:if test="$ada.exam.topleft.image.alt">
                 <xsl:attribute name="alt"><xsl:value-of                
@@ -48,9 +48,9 @@
               select="$ada.course.home"/><xsl:value-of
               select="$ada.exam.topleft.image"/></xsl:attribute>
             </img>
-          </xsl:if>
-        </td>
-
+          </td>
+        </xsl:if>
+          
         <!-- First row is completed with additinal text vars -->
         <td width="50%" align="left">
           <xsl:if test="$ada.exam.topleft.toptext or $ada.exam.topleft.toptext.en">

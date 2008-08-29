@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:exsl="http://exslt.org/common" 
+  xmlns="http://www.w3.org/1999/xhtml" version="1.0">
+
+  <!-- Author/s of the exam -->
+  <xsl:param name="ada.exam.author">Abelardo Pardo</xsl:param>
+
+  <!-- Text to include in the top left (next to icon) -->
+  <xsl:param name="ada.exam.topleft.toptext">
+    Ingeniería de Telecomunicación
+  </xsl:param>
+  <xsl:param name="ada.exam.topleft.toptext.en">
+    Telecommunication Engineering
+  </xsl:param>
+
+  <!-- Text to include in the center left (next to icon) -->
+  <xsl:param name="ada.exam.topleft.centertext">
+    Departamento de Ingeniería Telemática
+  </xsl:param>
+  <xsl:param name="ada.exam.topleft.centertext.en">
+    Department of Telematic Engineering
+  </xsl:param>
+
+  <!-- Text to include in the bottom left (next to icon) -->
+  <xsl:param name="ada.exam.topleft.bottomtext">
+    Universidad Carlos III de Madrid
+  </xsl:param>
+  <xsl:param name="ada.exam.topleft.bottomtext.en">
+    Carlos III University of Madrid
+  </xsl:param>
+
+  <!-- Text to include in the top right (next to icon) -->
+  <xsl:param name="ada.exam.topright.toptext">
+    Arquitectura de los ordenadores
+  </xsl:param>
+  <xsl:param name="ada.exam.topright.toptext.en">
+    Computer Architecture
+  </xsl:param>
+
+  <!-- Text to include in the center right (next to icon) -->
+  <xsl:param name="ada.exam.topright.centertext">Junio 2008</xsl:param>
+  <xsl:param name="ada.exam.topright.centertext.en">June 2008</xsl:param>
+
+</xsl:stylesheet>

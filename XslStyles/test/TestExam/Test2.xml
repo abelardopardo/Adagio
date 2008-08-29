@@ -39,47 +39,6 @@ FS:            3 APS   + 1
     <phrase lang="en">February 2008 Examination (Test)</phrase>
   </title>
   
-  <xi:include 
-    href="common2.xml"
-    xpointer="xpointer(//*/para[@condition='department'])"
-    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <xi:fallback>
-      <para>Missing Department Field</para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include 
-    href="common2.xml"
-    xpointer="xpointer(//*/para[@condition='university'])"
-    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <xi:fallback>
-      <para>Missing University Field</para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include 
-    href="common2.xml"
-    xpointer="xpointer(//*/para[@condition='degree'])"
-    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <xi:fallback>
-      <para>Missing Degree Field</para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include 
-    href="common2.xml"
-    xpointer="xpointer(//*/para[@condition='coursename'])"
-    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <xi:fallback>
-      <para>Missing Coursename Field</para>
-    </xi:fallback>
-  </xi:include>
-
-  <para condition="monthyear">
-    <phrase lang="es">Febrero 2008</phrase>
-    <phrase lang="en">February 2008</phrase>
-  </para>
-
   <para condition="part">Test</para>
   
   <para condition="duration">
