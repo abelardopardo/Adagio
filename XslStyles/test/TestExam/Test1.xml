@@ -18,44 +18,11 @@
 
   <title>
     <xi:include 
-      href="common.xml#xpointer(//*/para[@id='common:coursename']/node())"
+      href="common.xml"
+      xpointer="xpointer(//*/para[@condition='coursename']/node())"
       parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>. Examen de
-Junio de 2008 (Test)</title>
-  
-  <xi:include 
-    href="common.xml#xpointer(//*/para[@id='common:department'])"
-    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <xi:fallback>
-      <para>Missing Department Field</para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include 
-    href="common.xml#xpointer(//*/para[@id='common:university'])"
-    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <xi:fallback>
-      <para>Missing University Field</para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include 
-    href="common.xml#xpointer(//*/para[@id='common:degree'])"
-    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <xi:fallback>
-      <para>Missing Degree Field</para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include 
-    href="common.xml#xpointer(//*/para[@id='common:coursename'])"
-    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <xi:fallback>
-      <para>Missing Coursename Field</para>
-    </xi:fallback>
-  </xi:include>
-
-  <para condition="monthyear">Junio 2008</para>
-
+    Junio de 2008 (Test)
+  </title>
   <para condition="part">Test</para>
   
   <para condition="duration">45 minutos</para>
