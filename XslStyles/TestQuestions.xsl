@@ -288,10 +288,12 @@
             <xsl:apply-templates />
           </td>
         </tr>
-        <xsl:call-template name="dump-history">
-          <xsl:with-param name="colspan">3</xsl:with-param>
-        </xsl:call-template>
       </xsl:for-each>
+    </table>
+    <table 
+      style="border: 0; border-collapse: collapse;pageBreakInside: false" 
+      width="95%" align="center" cellspacing="0" cellpadding="3">
+      <xsl:call-template name="dump-history" />
     </table>
   </xsl:template>
   
