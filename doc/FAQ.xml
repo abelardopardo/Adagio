@@ -2311,6 +2311,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    source document.
 	  </para>
 
+	  <para>Back to <xref linkend="Typesetting_exams"/>.</para>
 	</answer>
       </qandaentry>
 
@@ -2449,6 +2450,25 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 </section>]]></programlisting>
 
 	  <para>
+	    If the exam contains only true/false questions, the style includes a
+	    table with scoring data (number of correct, incorrect and empty
+	    answers as well as the final score) if the element <code>&lt;para
+	    condition="score"/&gt;</code> is included in the root
+	    <command>section</command> element. The following figure shows the
+	    resulting box if the element is included.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="Samples/TestExam/ScoreRendering.png"
+			   format="PNG"/> 
+	      </imageobject>
+	      <textobject><phrase>Box for scores</phrase></textobject>
+	    </mediaobject>
+	  </informalfigure>
+	  
+	  <para>
 	    The file containing the parameter values would have a structure
 	    similar to:
 	  </para>
@@ -2473,13 +2493,133 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    containing these definitions is included in the
 	    <filename>Properties.txt</filename> file
 	  </para>
+
+	  <para>Back to <xref linkend="Typesetting_exams"/>.</para>
 	</answer>
       </qandaentry>
 
-      <qandaentry>
+      <qandaentry id="typeset_tf_questions"
+		  xreflabel="How to typeset a true/false question exam">
 	<question>
 	  <para>
-	    How to typeset an exam with several true/false and multiple choice
+	    How to typeset an exam with true/false questions?
+	  </para>
+	</question>
+
+	<answer>
+	  <para>
+	    Additionaly to producing an exam heading (see <xref
+	    linkend="ada_exam_elements_parameterized"/>) the ADA stylesheet is
+	    capable of detecting true/false questions with certain structure and
+	    produce two HTML documents with these questions shuffled.
+	  </para>
+
+	  <para>
+	    The questions must be described using the
+	    <command>qandaentry</command> docbook element which is provided
+	    preciselly to mark the content of questions and answers.
+	  </para>
+
+	  <para>
+	    The following listing shows the content of a <ulink
+	    url="Samples/TestQuestions/TFQuestion.xml">Docbook file with the
+	    definition of a multiple choice question</ulink>:
+	  </para>
+
+	  <programlisting><![CDATA[<qandadiv condition="TestQuestion" id="Question ID">
+  <blockinfo>
+    <author>
+      <personname>
+	<firstname>AuthorFirst</firstname><surname>AuthorLast</surname>
+      </personname>
+    </author>
+  </blockinfo>
+  <para>Any text preceding the (possible) multiple questions.</para>
+  <qandaentry>
+    <!-- Any text to precede the question -->
+    <para>
+	Include here any Docbook subset introducing the first question.
+    </para>
+    <question>
+      <para>First Question text</para>
+    </question>
+    <!-- Answer value as attribute -->
+    <answer condition="False" />
+  </qandaentry>
+  <qandaentry>
+    <!-- Any text to precede the question -->
+    <para>
+	Include here any Docbook subset introducing the second question.
+    </para>
+    <question>
+      <para>Second question text</para>
+    </question>
+    <!-- Answer value as attribute -->
+    <answer condition="True" />
+  </qandaentry>
+</qandadiv>]]></programlisting>
+
+	  <para>
+	    The <command>condition</command> attribute in the
+	    <command>qandadiv</command> element with the value
+	    <command>TestQuestion</command> is used to state the type of
+	    rendering to be used, in this case, two possible answers,
+	    <quote>True</quote> or <quote>False</quote>. The
+	    <command>id</command> attribute can be used to uniquely identify
+	    questions in a catalog.
+	  </para>
+
+	  <para>
+	    The <command>blockinfo</command> element is used to store some basic
+	    information about the question. Some additional elements can be
+	    included within this block as explained in <xref linkend="TO BE
+	    DEFINED"/>. Following this element, an arbitrary Docbook fragment
+	    can be included. This is useful if, for example, a problem statement
+	    is followed by several related true/false questions. These questions
+	    need to be included in the same <command>qandadiv</command>
+	    element. When shuffling questions, ADA shuffles independently the
+	    questions within this unit.
+	  </para>
+
+	  <para>
+	    After this optional portion, questions are each included inside a
+	    <command>qandaentry</command>. This element may include again an
+	    arbitrary Docbook fragment to introduce the question, the question
+	    itself surrounded by the <command>question</command> element and a
+	    signe <command>answer</command>
+	    element with the <command>condition</command> attribute equal to the
+	    correct answer. Acceptable true values are 
+	    <quote>Correct</quote>, <quote>Correcto</quote>,
+	    <quote>True</quote>, and <quote>Cierto</quote>. Acceptable false values
+	    are <quote>Incorrect</quote>, <quote>Incorrecto</quote>,
+	    <quote>False</quote>, and <quote>Falso</quote>.
+	  </para>
+
+	  <para>
+	    The HTML obtained with the previously included Docbook structure is
+	    shown in the following figure.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="Samples/TestQuestions/TFRendering.png" 
+			   format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Sample of multiple choice question</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>Back to <xref linkend="Typesetting_exams"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="typeset_mc_questions">
+	<question>
+	  <para>
+	    How to typeset an exam with multiple choice
 	    questions?
 	  </para>
 	</question>
@@ -2493,6 +2633,98 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    shuffled.
 	  </para>
 
+	  <para>
+	    The questions must be described using the
+	    <command>qandaentry</command> docbook element which is provided
+	    preciselly to mark the content of questions and answers.
+	  </para>
+
+	  <para>
+	    The following listing shows the content of a <ulink
+	    url="Samples/TestQuestions/MCQuestion.xml">Docbook file with the
+	    definition of a multiple choice question</ulink>:
+	  </para>
+
+	  <programlisting><![CDATA[<qandadiv condition="TestMCQuestion" id="Your own unique id">
+  <blockinfo>   <!-- Basic meta info for this question -->
+    <author>
+      <personname>
+        <firstname>AuthorName</firstname><surname>AuthorSurname</surname>
+      </personname>
+    </author>
+  </blockinfo>
+  <para>Any text preceding the (possible) multiple questions.</para>
+  <qandaentry>
+    <para> <!-- Any text to precede the question -->
+	Include here any Docbook subset introducing the questions
+    </para>
+    <question>
+      <para>Question text.</para>
+    </question>
+    <!-- 
+	 Answer list. The correct one needs to include the condition attribute
+	 with value "Correct, True, Correcto or Cierto". 
+    -->
+    <answer condition="Correct"><para>First answer</para></answer>
+    <answer><para>Second answer</para></answer>
+    <answer><para>Third answer</para></answer>
+    <answer><para>Fourth answer</para></answer>
+  </qandaentry>
+</qandadiv>]]></programlisting>
+
+	  <para>
+	    The <command>condition</command> attribute with the value
+	    <command>TestMCQuestion</command> attribute is used to state the
+	    type of rendering to be used, in this case, a set of possible answer
+	    with a white square on their left. The <command>id</command>
+	    attribute can be used to uniquely identify questions in a wider
+	    catalog.
+	  </para>
+
+	  <para>
+	    The <command>blockinfo</command> element is used to store some basic
+	    information about the question. Some additional elements can be
+	    included within this block as explained in <xref linkend="TO BE
+	    DEFINED"/>. Following this element, an arbitrary Docbook fragment
+	    can be included. This is useful if, for example, a problem statement
+	    is followed by several related questions (see <xref
+	    linkend="typeset_tf_questions"/> for an example). These questions
+	    need to be included in the same <command>qandadiv</command>
+	    element. When shuffling questions, ADA shuffles independently the
+	    questions within this unit.
+	  </para>
+
+	  <para>
+	    After this optional portion, questions are each included inside a
+	    <command>qandaentry</command>. This element may include again an
+	    arbitrary Docbook fragment to introduce the question, the question
+	    itself surrounded by the <command>question</command> element and the
+	    multiple answers surrounded by the <command>answer</command>
+	    element. Correct answers are distinguished by the
+	    <command>condition</command> attribute in the
+	    <command>answer</command> element with one of the values
+	    <quote>Correct</quote>, <quote>Correcto</quote>, <quote>True</quote>
+	    or <quote>Cierto</quote>.
+	  </para>
+
+	  <para>
+	    The HTML obtained with the previously included Docbook structure is
+	    shown in the following figure.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="Samples/TestQuestions/MCRendering.png" 
+			   format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Sample of multiple choice question</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <!-- AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -->
 	  <para>
 	    The following figure shows an example of an exam with some
 	    true/false questions. The parts of the document that are controlled
@@ -2510,6 +2742,8 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	      </textobject>
 	    </mediaobject>
 	  </informalfigure>
+
+	  <para>Back to <xref linkend="Typesetting_exams"/>.</para>
 	</answer>
       </qandaentry>
 

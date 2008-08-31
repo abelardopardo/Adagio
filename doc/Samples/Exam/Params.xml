@@ -20,7 +20,7 @@
   <xsl:param name="ada.exam.author">Author that created the exam</xsl:param>
 
   <!-- Logo to use in the upper left corner -->
-  <xsl:param name="ada.exam.topleft.image">Logo.png</xsl:param>
+  <xsl:param name="ada.exam.topleft.image">../Logo.png</xsl:param>
   <xsl:param name="ada.exam.topleft.image.alt">ada.exam.topleft.image.alt</xsl:param>
 
   <!-- Text to include in the top left (next to icon) -->

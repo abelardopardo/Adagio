@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<section lang="en" id="ExamID">
+  <title>&lt;title&gt; element in the Docbook root section</title>
+  <para condition="part">&lt;para condition="part"&gt; text content</para>
+  
+  <para condition="duration">&lt;para condition="duration"> text content</para>
+  <para condition="scoring">&lt;para condition="scoring"> text content</para>
+  <para condition="date">&lt;para condition="date"> text content</para>
+
+  <para condition="note">
+    Any additional text you want to include can be added as a regular
+    docbook chunk surrounded by the &lt;para condition="note"&gt; element.
+  </para>
+
+  <para condition="name"/> <!-- To include the name box -->
+
+  <para condition="score"/> <!-- To include the score box for tests -->
+
+  <qandaset defaultlabel="number">
+    <xi:include href="MCQuestion.xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="TFQuestion.xml"
+	    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  </qandaset>
+</section>

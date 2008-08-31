@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE qandadiv PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<qandadiv condition="TestMCQuestion" id="Your own unique id">
+  <!-- Meta info for this question -->
+  <blockinfo>
+    <author>
+      <personname>
+        <firstname>AuthorName</firstname><surname>AuthorSurname</surname>
+      </personname>
+    </author>
+    <!-- Set of IDs identifying when the question was used -->
+    <printhistory>
+      <para arch="ID_1" revision="ID_2" vendor="ID_3" />
+    </printhistory>
+  </blockinfo>
+  <qandaentry>
+    <!-- Stats for the different usages of this questions -->
+    <blockinfo>
+      <printhistory>
+        <para arch="ID_1" revision="ID_2" vendor="ID_3">
+          <phrase condition="correct" />
+          <phrase condition="incorrect" />
+          <phrase condition="blank" />
+          <phrase condition="total" />
+	    <phrase condition="remarks" />
+        </para>
+      </printhistory>
+    </blockinfo>
+    <!-- Any text to precede the question -->
+    <para>
+	Include here any Docbook subset introducing the questions
+    </para>
+
+    <question>
+      <para>Question text.</para>
+    </question>
+
+    <!-- 
+	 Answer list. The correct one needs to include the condition attribute
+	 with value "Correct, True, Correcto or Cierto". 
+    -->
+    <answer condition="Correct">
+      <para>First answer</para>
+    </answer>
+    <answer>
+      <para>Second answer</para>
+    </answer>
+    <answer>
+      <para>Third answer</para>
+    </answer>
+    <answer>
+      <para>Fourth answer</para>
+    </answer>
+  </qandaentry>
+</qandadiv>

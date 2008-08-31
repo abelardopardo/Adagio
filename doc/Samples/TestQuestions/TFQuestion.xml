@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE qandadiv PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<qandadiv condition="TestQuestion" id="Intro_001">
+  <blockinfo>
+    <author>
+      <personname>
+	<firstname>AuthorFirst</firstname><surname>AuthorLast</surname>
+      </personname>
+    </author>
+  </blockinfo>
+  <para>Any text preceding the (possible) multiple questions.</para>
+  <qandaentry>
+    <!-- Any text to precede the question -->
+    <para>
+	Include here any Docbook subset introducing the first question.
+    </para>
+    <question>
+      <para>First Question text</para>
+    </question>
+    <!-- Answer value as attribute -->
+    <answer condition="False" />
+  </qandaentry>
+  <qandaentry>
+    <!-- Any text to precede the question -->
+    <para>
+	Include here any Docbook subset introducing the second question.
+    </para>
+    <question>
+      <para>Second question text</para>
+    </question>
+    <!-- Answer value as attribute -->
+    <answer condition="True" />
+  </qandaentry>
+</qandadiv>
