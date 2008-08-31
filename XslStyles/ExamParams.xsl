@@ -4,7 +4,8 @@
   xmlns:exsl="http://exslt.org/common" 
   xmlns="http://www.w3.org/1999/xhtml" version="1.0">
 
-  <!-- Control the font size -->
+  <!-- Control the font family and size -->
+  <xsl:param name="ada.exam.fontfamily" select="'Verdana'"/>
   <xsl:param name="ada.exam.fontsize" select="'10pt'"/>
 
   <!-- Show the qandadiv ID -->
@@ -44,4 +45,8 @@
   <xsl:param name="ada.exam.topright.bottomtext"/>
   <xsl:param name="ada.exam.topright.bottomtext.en"/>
 
+  <!-- Label to precede each exercise in a regular exam. The default is
+       "problem" or "problema" -->
+  <xsl:param name="ada.exam.exercise.name">Problema</xsl:param>
+  <xsl:param name="ada.exam.exercise.name.en">Problem</xsl:param>
 </xsl:stylesheet>

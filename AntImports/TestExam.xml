@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Exam processing rules" default="testexam">
+
+  <!--
+      Given the following properties:
+
+      testexam.src.dir: directory from where to take the source files
+      testexam.dst.dir: directory where the produced files are stored
+      testexam.file: file to process (insert exam heading)
+      testexam.bilingual.file: file to process (insert exam heading)
+      testexam.output.format: Extension of the output file
+      testexam.extra.args: Extra arguments to invoke xsltproc
+
+      Given one single file either in testexam.file or testexam.bilingual.file, process
+      it to obtain two versions with the shuffled questions.
+
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="Latex.xml"/>
+  <import file="Dvi2bitmap.xml"/>
+  <import file="BilingualDB.xml"/>
+
+  <!-- Public Property definition -->
+  <property name="testexam.src.dir"        value="${basedir}"/>
+  <property name="testexam.dst.dir"        value="${testexam.src.dir}"/>
+  <property name="testexam.equation.dir"   value="equations"/>
+  <property name="testexam.output.format"  value=".html"/>
+  <property name="testexam.extra.args"     value="--stringparam
+					      passivetex.extensions 1
+					      --stringparam 
+					      tex.math.in.alt latex"/>
+  <property name="testexam.file"           value=""/>
+  <property name="testexam.bilingual.file" value=""/>
+  <property name="testexam.style.file"     value="${ada.home}/XslStyles/Exam.xsl"/>
+
+  <!-- Private properties -->
+  <property name="testexam.debug.level"    value="${ada.debug.level}"/>
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="testexam.abssrc.dir" pathsep=" ">
+    <path location="${testexam.src.dir}"/>
+  </pathconvert>
+  <pathconvert property="testexam.absdst.dir" pathsep=" ">
+    <path  location="${testexam.dst.dir}"/>
+  </pathconvert>
+
+  <!-- Source file to be processed by testexam -->
+  <filelist id="testexam.filelist" dir="${testexam.abssrc.dir}"
+	   files="${testexam.file}"/>
+
+  <!-- Bilingual source file to be processed by testexam -->
+  <filelist id="testexam.bilingual.filelist" dir="${testexam.abssrc.dir}"
+	   files="${testexam.bilingual.file}"/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="testexam.check.values" 
+	  depends="initial.check, testexam.dump.properties">
+
+    <!-- Obtain the filelist with the source file to see if it is empty -->
+    <pathconvert property="testexam.source.filelist.property" pathsep=" ">
+      <filelist refid="testexam.filelist"/>
+      <filelist refid="testexam.bilingual.filelist"/>
+    </pathconvert>
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="testexam.check">
+      <and>
+	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
+	empty definition of this variable. At least a . needs to be present -->
+        <not><equals arg1="${testexam.abssrc.dir}" arg2="" trim="true"/></not>
+	<!-- There must be some file defined -->
+        <not><equals arg1="${testexam.source.filelist.property}" arg2="" trim="true"/></not>
+	<!-- At least one of the variable must be empty -->
+	<or>
+	  <equals arg1="${testexam.file}" arg2="" trim="true"/>
+	  <equals arg1="${testexam.bilingual.file}" arg2="" trim="true"/>
+	</or>
+	<!-- Require a non-empty dst.dir as well -->
+        <not><equals arg1="${testexam.absdst.dir}" arg2="" trim="true"/></not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="${testexam.debug.level}">  testexam.check              = "${testexam.check}"</echo>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="testexam.processing.NOT" unless="testexam.check">
+    <echo level="${testexam.debug.level}">testexam.processing                ---</echo>
+    <echo level="${testexam.debug.level}">${basedir}</echo>
+  </target>
+
+  <!-- Process the file through the four steps until the exam is produced -->
+  <target name="testexam.processing" 
+	  depends="testexam.check.values, testexam.processing.NOT"
+	  if="testexam.check"
+	  description="Process the testexam file">
+
+    <echo>testexam.processing (Step 1/5)  CALL(xsltproc.processing)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.processing" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${testexam.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Dump.xsl"/>
+      <param name="xsltproc.output.format" value="_raw.xml"/>
+      <param name="xsltproc.files"         value="${testexam.file}
+						  ${testexam.bilingual.file}"/>
+      <param name="xsltproc.extra.args"    value="${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing             END(xsltproc.processing ES)</echo>
+
+    <!-- Obtain the filelist with the source file to see if it is empty -->
+    <pathconvert property="testexam.source.raw.filelist.property" pathsep=" ">
+      <filelist refid="testexam.filelist"/>
+      <filelist refid="testexam.bilingual.filelist"/>
+      <mapper type="glob" from="*.xml" to="*_raw.xml"/>
+    </pathconvert>
+
+    <echo>testexam.processing (Step 2/5)  RUN(Shuffling)</echo>
+
+    <!-- Generating the shuffled versions -->
+    <java classname="Shuffle" jvm="/usr/bin/java" output="build.out"
+	  append="yes">
+      <classpath>
+	<pathelement 
+	  location="${ada.home}/lib/TestShuffle/gol.jar"/>
+	<pathelement 
+	  location="${ada.home}/lib/TestShuffle/xercesImpl.jar"/>
+	<pathelement 
+	  location="${ada.home}/lib/TestShuffle/jdom.jar"/>
+	<pathelement 
+	  location="${ada.home}/lib/TestShuffle"/>
+      </classpath>
+      <arg value="${testexam.source.raw.filelist.property}"/>
+    </java>
+
+    <!-- Obtain the filelist with the source file to see if it is empty -->
+    <pathconvert property="testexam.source.raw.filelist.property" pathsep=" ">
+      <filelist refid="testexam.filelist"/>
+      <filelist refid="testexam.bilingual.filelist"/>
+      <mapper type="glob" from="*.xml" to="*_raw.xml"/>
+    </pathconvert>
+
+    <!-- Remove _raw from version 1 file name -->
+    <move todir="${testexam.absdst.dir}" includeemptydirs="false">
+      <fileset dir="${testexam.absdst.dir}">
+	<include name="*_raw_1.xml"/>
+      </fileset>
+      <mapper type="glob" from="*_raw_1.xml" to="*_1.xml"/>
+    </move>
+    
+    <!-- Remove _raw from version 2 file name -->
+    <move todir="${testexam.absdst.dir}" includeemptydirs="false">
+      <fileset dir="${testexam.absdst.dir}">
+	<include name="*_raw_2.xml"/>
+      </fileset>
+      <mapper type="glob" from="*_raw_2.xml" to="*_2.xml"/>
+    </move>
+    
+    <!-- Obtain a filelist with the newly produced files -->
+    <pathconvert property="testexam.bilingual.raw.version1.filelist.property" pathsep=" ">
+      <filelist refid="testexam.bilingual.filelist"/>
+      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_1.xml"/>
+    </pathconvert>
+    <pathconvert property="testexam.bilingual.raw.version2.filelist.property" pathsep=" ">
+      <filelist refid="testexam.bilingual.filelist"/>
+      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
+    </pathconvert>
+
+    <echo>testexam.processing (Step 3a/5) CALL(bilingualdb.processing)</echo>
+
+    <!-- Call bilingualdb -->
+    <antcall target="bilingualdb.processing" inheritAll="false">
+      <param name="bilingualdb.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Testexam.xsl"/>
+      <param name="bilingualdb.files"         
+	     value="${testexam.bilingual.raw.version1.filelist.property} 
+		    ${testexam.bilingual.raw.version2.filelist.property}"/>
+      <param name="bilingualdb.extra.args"    value="${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing             END(bilingualdb.processing ES)</echo>
+
+    <echo>testexam.processing (Step 3b/5) CALL(bilingualdb.processing)</echo>
+
+    <!-- Call bilingualdb -->
+    <antcall target="bilingualdb.processing" inheritAll="false">
+      <param name="bilingualdb.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Testexam.xsl"/>
+      <param name="bilingualdb.files"         
+	     value="${testexam.bilingual.raw.version1.filelist.property} 
+		    ${testexam.bilingual.raw.version2.filelist.property}"/>
+      <param name="bilingualdb.output.format" value="_solution.html"/>
+      <param name="bilingualdb.extra.args"    
+	     value="--stringparam ada.testquestions.include.solutions yes 
+		    ${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing             END(bilingualdb.processing ES)</echo>
+
+    <echo>testexam.processing (Step 3c/5) CALL(bilingualdb.processing)</echo>
+
+    <!-- Call bilingualdb -->
+    <antcall target="bilingualdb.processing" inheritAll="false">
+      <param name="bilingualdb.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Testexam.xsl"/>
+      <param name="bilingualdb.files"         
+	     value="${testexam.bilingual.raw.version1.filelist.property} 
+		    ${testexam.bilingual.raw.version2.filelist.property}"/>
+      <param name="bilingualdb.output.format" value="_stats.html"/>
+      <param name="bilingualdb.extra.args"    
+	     value="--stringparam ada.testquestions.include.solutions yes 
+		    --stringparam ada.testquestions.include.history yes 
+		    --stringparam ada.testquestions.include.id yes 
+		    ${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing             END(bilingualdb.processing ES)</echo>
+
+    <!-- Obtain a filelist with the newly produced files -->
+    <pathconvert property="testexam.raw.version1.filelist.property" pathsep=" ">
+      <filelist refid="testexam.filelist"/>
+      <filelist refid="testexam.bilingual.filelist"/>
+      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_1.xml"/>
+    </pathconvert>
+    <pathconvert property="testexam.raw.version2.filelist.property" pathsep=" ">
+      <filelist refid="testexam.filelist"/>
+      <filelist refid="testexam.bilingual.filelist"/>
+      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
+    </pathconvert>
+
+    <echo>testexam.processing (Step 3d/5) CALL(xsltproc.processing)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.processing" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="xsltproc.files"         
+	     value="${testexam.raw.version1.filelist.property} 
+		    ${testexam.raw.version2.filelist.property}"/>
+      <param name="xsltproc.extra.args"    value="${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing             END(xsltproc.processing ES)</echo>
+
+    <echo>testexam.processing (Step 3e/5) CALL(xsltproc.processing)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.processing" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="xsltproc.files"         
+	     value="${testexam.raw.version1.filelist.property} 
+		    ${testexam.raw.version2.filelist.property}"/>
+      <param name="xsltproc.output.format" value="_solution.html"/>
+      <param name="xsltproc.extra.args"    
+	     value="--stringparam ada.testquestions.include.solutions yes 
+		    ${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing             END(xsltproc.processing ES)</echo>
+
+    <echo>testexam.processing (Step 3f/5) CALL(xsltproc.processing)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.processing" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="xsltproc.files"         
+	     value="${testexam.raw.version1.filelist.property} 
+		    ${testexam.raw.version2.filelist.property}"/>
+      <param name="xsltproc.output.format" value="_stats.html"/>
+      <param name="xsltproc.extra.args"    
+	     value="--stringparam ada.testquestions.include.solutions yes 
+		    --stringparam ada.testquestions.include.history yes 
+		    --stringparam ada.testquestions.include.id yes 
+		    ${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing             END(xsltproc.processing ES)</echo>
+
+    <echo>testexam.processing (Step 4/5)  CALL(latex.processing)</echo>
+
+    <!-- Call latex -->
+    <antcall target="latex.processing" inheritAll="false">
+      <param name="latex.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="latex.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="latex.files"         value="tex-math-equations.tex"/>
+      <param name="latex.extra.args"    value="-interaction=nonstopmode"/>
+    </antcall>
+
+    <echo>testexam.processing             END(latex.processing ES)</echo>
+
+    <echo>testexam.processing (Step 5/5)  CALL(dvi2bitmap.processing)</echo>
+
+    <mkdir dir="${testexam.absdst.dir}${file.separator}${testexam.equation.dir}"/>
+
+    <!-- Call dvi2bitmap -->
+    <antcall target="dvi2bitmap.processing" inheritAll="false">
+      <param name="dvi2bitmap.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="dvi2bitmap.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="dvi2bitmap.files"         value="tex-math-equations.dvi"/>
+    </antcall>
+
+    <echo>testexam.processing             END(dvi2bitmap.processing ES)</echo>
+
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="testexam.clean.NOT" unless="testexam.check">
+    <echo level="${testexam.debug.level}">testexam.clean                  ---</echo>
+    <echo level="${testexam.debug.level}">${basedir}</echo>
+  </target>
+
+  <!-- Clean files produced by testexam -->
+  <target name="testexam.clean" 
+	  depends="testexam.check.values, testexam.clean.NOT"
+	  if="testexam.check" 
+	  description="Remove files produced by testexam">
+
+    <echo>testexam.clean                  CALL(xsltproc.clean ES)</echo>
+
+    <!-- Call dvi2bitmap -->
+    <antcall target="dvi2bitmap.clean" inheritAll="false">
+      <param name="dvi2bitmap.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="dvi2bitmap.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="dvi2bitmap.files"         value="tex-math-equations.dvi"/>
+    </antcall>
+
+    <delete failonerror="false">
+      <fileset dir="${testexam.equation.dir}" includes="*"/>
+    </delete>
+
+    <delete dir="${testexam.equation.dir}" failonerror="false"/>
+
+    <delete failonerror="false" file="missfont.log"/>
+
+    <!-- Call latex -->
+    <antcall target="latex.clean" inheritAll="false">
+      <param name="latex.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="latex.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="latex.files"         value="tex-math-equations.tex"/>
+      <param name="latex.extra.args"    value="-interaction=nonstopmode"/>
+    </antcall>
+
+    <delete failonerror="false" file="tex-math-equations.tex"/>
+
+    <!-- Obtain a filelist with the newly produced files -->
+    <pathconvert property="testexam.raw.version1.filelist.property" pathsep=" ">
+      <filelist refid="testexam.filelist"/>
+      <filelist refid="testexam.bilingual.filelist"/>
+      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_1.xml"/>
+    </pathconvert>
+    <pathconvert property="testexam.raw.version2.filelist.property" pathsep=" ">
+      <filelist refid="testexam.filelist"/>
+      <filelist refid="testexam.bilingual.filelist"/>
+      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
+    </pathconvert>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.clean" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="xsltproc.files"         
+	     value="${testexam.raw.version1.filelist.property} 
+		    ${testexam.raw.version2.filelist.property}"/>
+      <param name="xsltproc.extra.args"    value="${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing (Step 3f/5) CALL(xsltproc.processing)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.clean" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="xsltproc.files"         
+	     value="${testexam.raw.version1.filelist.property} 
+		    ${testexam.raw.version2.filelist.property}"/>
+      <param name="xsltproc.output.format" value="_stats.html"/>
+      <param name="xsltproc.extra.args"    
+	     value="--stringparam ada.testquestions.include.solutions yes 
+		    --stringparam ada.testquestions.include.history yes 
+		    --stringparam ada.testquestions.include.id yes 
+		    ${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing             END(xsltproc.processing ES)</echo>
+
+    <echo>testexam.processing (Step 3e/5) CALL(xsltproc.processing)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.clean" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="xsltproc.files"         
+	     value="${testexam.raw.version1.filelist.property} 
+		    ${testexam.raw.version2.filelist.property}"/>
+      <param name="xsltproc.output.format" value="_solution.html"/>
+      <param name="xsltproc.extra.args"    
+	     value="--stringparam ada.testquestions.include.solutions yes 
+		    ${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing             END(xsltproc.processing ES)</echo>
+
+    <echo>testexam.processing (Step 3d/5) CALL(xsltproc.processing)</echo>
+
+    <!-- Obtain a filelist with the newly produced files -->
+    <pathconvert property="testexam.bilingual.raw.version1.filelist.property" pathsep=" ">
+      <filelist refid="testexam.bilingual.filelist"/>
+      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_1.xml"/>
+    </pathconvert>
+    <pathconvert property="testexam.bilingual.raw.version2.filelist.property" pathsep=" ">
+      <filelist refid="testexam.bilingual.filelist"/>
+      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
+    </pathconvert>
+
+    <echo>testexam.processing (Step 3c/5) CALL(bilingualdb.processing)</echo>
+
+    <!-- Call bilingualdb -->
+    <antcall target="bilingualdb.clean" inheritAll="false">
+      <param name="bilingualdb.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="bilingualdb.files"         
+	     value="${testexam.bilingual.raw.version1.filelist.property} 
+		    ${testexam.bilingual.raw.version2.filelist.property}"/>
+      <param name="bilingualdb.output.format" value="_stats.html"/>
+      <param name="bilingualdb.extra.args"    
+	     value="--stringparam ada.testquestions.include.solutions yes 
+		    --stringparam ada.testquestions.include.history yes 
+		    --stringparam ada.testquestions.include.id yes 
+		    ${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing             END(bilingualdb.processing ES)</echo>
+
+    <echo>testexam.processing (Step 3b/5) CALL(bilingualdb.processing)</echo>
+
+    <!-- Call bilingualdb -->
+    <antcall target="bilingualdb.clean" inheritAll="false">
+      <param name="bilingualdb.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="bilingualdb.files"         
+	     value="${testexam.bilingual.raw.version1.filelist.property} 
+		    ${testexam.bilingual.raw.version2.filelist.property}"/>
+      <param name="bilingualdb.output.format" value="_solution.html"/>
+      <param name="bilingualdb.extra.args"    
+	     value="--stringparam ada.testquestions.include.solutions yes 
+		    ${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing             END(bilingualdb.processing ES)</echo>
+
+    <echo>testexam.processing (Step 3a/5) CALL(bilingualdb.processing)</echo>
+
+    <!-- Call bilingualdb -->
+    <antcall target="bilingualdb.clean" inheritAll="false">
+      <param name="bilingualdb.src.dir"       value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="bilingualdb.files"         
+	     value="${testexam.bilingual.raw.version1.filelist.property} 
+		    ${testexam.bilingual.raw.version2.filelist.property}"/>
+      <param name="bilingualdb.extra.args"    value="${testexam.extra.args}"/>
+    </antcall>
+
+    <echo>testexam.processing             END(bilingualdb.processing ES)</echo>
+
+    <delete dir="${testexam.absdst.dir}" 
+	    includes="${testexam.raw.version1.filelist.property} 
+		      ${testexam.raw.version2.filelist.property}"/>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.clean"       inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${testexam.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Dump.xsl"/>
+      <param name="xsltproc.output.format" value="_raw.xml"/>
+      <param name="xsltproc.files"         value="${testexam.file}
+						  ${testexam.bilingual.file}"/>
+      <param name="xsltproc.extra.args"    value="${testexam.extra.args}"/>
+    </antcall>
+
+  </target>
+
+  <!-- Dump the properties defined in this script -->
+  <target name="testexam.dump.properties" depends="initial.check">
+    <echo level="${testexam.debug.level}"> ------ testexam properties ----
+    testexam.exec           ="${testexam.exec}"
+    testexam.abssrc.dir     ="${testexam.abssrc.dir}"
+    testexam.absdst.dir     ="${testexam.absdst.dir}"
+    testexam.file           ="${testexam.file}"
+    testexam.bilingual.file ="${testexam.bilingual.file}"</echo>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="testexam" depends="initial.delete.build.out, testexam.processing"/>
+
+</project>

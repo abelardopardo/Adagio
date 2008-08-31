@@ -135,7 +135,7 @@
             </b>
           </xsl:if>
         </td>
-        <td>
+        <td align="right">
           <xsl:if test="$ada.exam.topright.bottomtext or 
                         $ada.exam.topright.bottomtext.en">
             <b>
@@ -384,27 +384,37 @@
     
     <!-- Problems within a section element -->
     <xsl:for-each select="section/section">
-      <b>
-        <xsl:choose>
-          <xsl:when test="$profile.lang='en'">Problem </xsl:when>
-          <xsl:otherwise>Problema </xsl:otherwise>
-        </xsl:choose>
-        <xsl:if test="count(preceding-sibling::section) +
-                      count(following-sibling::section) &gt;= 1">
-          <xsl:value-of select="count(preceding-sibling::section) + 1"/>.
-        </xsl:if>
-        <xsl:choose>
-          <xsl:when test="@condition">
-            <xsl:text> </xsl:text>
-            <xsl:value-of select="@condition"/>
-          </xsl:when>
-          <xsl:when test="sectioninfo/subtitle">
-            <xsl:text> </xsl:text>
-            <xsl:apply-templates select="sectioninfo/subtitle/node()"/>
-          </xsl:when>
-        </xsl:choose>
-      </b>
+      <xsl:if test="$ada.exam.exercise.name.en or $ada.exam.exercise.name">
+        <b>
+          <xsl:choose>
+            <xsl:when test="$profile.lang='en'">
+              <xsl:copy-of select="$ada.exam.exercise.name.en"/>
+              <xsl:text> </xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:copy-of select="$ada.exam.exercise.name"/>
+              <xsl:text> </xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:if test="count(preceding-sibling::section) +
+                        count(following-sibling::section) &gt;= 1">
+            <xsl:value-of select="count(preceding-sibling::section) + 1"/>.
+          </xsl:if>
+          <xsl:choose>
+            <xsl:when test="@condition">
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="@condition"/>
+            </xsl:when>
+            <xsl:when test="sectioninfo/subtitle">
+              <xsl:text> </xsl:text>
+              <xsl:apply-templates select="sectioninfo/subtitle/node()"/>
+            </xsl:when>
+          </xsl:choose>
+        </b>
+      </xsl:if>
+
       <xsl:apply-templates/>
+
       <xsl:if test="not(position() = last())">
         <hr width="100%"/>
       </xsl:if>
@@ -430,7 +440,7 @@
 
     <style type="text/css">
       body { 
-        font-family: 'Verdana';
+        font-family: '<xsl:value-of select="$ada.exam.fontfamily"/>';
         font-size: <xsl:value-of select="$ada.exam.fontsize"/>;
         color: black; 
         background: white;

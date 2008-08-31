@@ -1,0 +1,7 @@
+inkscape.images=*.svg
+
+mergestyles.master.style=Params.xml
+
+exam.file=Test.xml
+
+# adado -f ../../../AntImports/Exam.xml

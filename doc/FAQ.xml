@@ -1686,9 +1686,10 @@ export.dst.dir=${ada.course.home}scratch</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry id="global_rule" xreflabel="How to define global rules">
+      <qandaentry id="global_rule" 
+		  xreflabel="How to make a variable declaration valid everywhere">
 	<question>
-	  <para>Can I make a variable declaration to be used everywhere?</para>
+	  <para>Can I make a variable declaration valid everywhere?</para>
 	  
 	  <para>
 	    The file <filename>Properties.txt</filename> contains variable
@@ -1759,7 +1760,8 @@ export.dst.dir=${ada.course.home}scratch</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry id="modified_stylesheet">
+      <qandaentry id="modified_stylesheet"
+		  xreflabel="How to use a slightly modified stylesheet">
 	<question>
 	  <para>
 	    How can I use a slightly modified generic stylesheet without
@@ -2275,6 +2277,256 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
     </qandaset>
   </section>
 
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                      TYPESETTING EXAMS                       -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <section id="Typesetting_exams" xreflabel="Top of the Section">
+    <title>Typesetting exams with ADA</title>
+
+    <qandaset defaultlabel="qanda">
+
+      <qandaentry id="Ada_and_exam_typesetting">
+	<question>
+	  <para>
+	    How does ADA support exam typesetting?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    ADA includes a set of stylesheets to transform a Docbook document
+	    with certain special elements into an HTML document with the
+	    appearance of an exam. As with the rest of styles in ADA, some
+	    elements are parameters and therefore can be easily
+	    customized. Alternatively, you may use this style as the basis
+	    for your own customized style.
+	  </para>
+
+	  <para>
+	    The style to produce exams offers two functions: create only the
+	    exam heading for a set of exercises, or typeset a test exam with a
+	    set of true/false or multiple choice questions. The selection is
+	    deducted by the stylesheet depending on the structure of the docbook
+	    source document.
+	  </para>
+
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="ada_exam_elements_parameterized"
+		  xreflabel="How to produce the exam heading">
+	<question>
+	  <para>
+	    How to produce the exam heading?
+	  </para>
+	</question>
+	
+	<answer>
+	  <para>
+	    The stylesheet needs certain special elements and parameters to
+	    generate the exam heading. Furthermore, certain special elements
+	    may be included in the Docbook source document to produce additional
+	    elements in the HTML version. The customization then is achieved by
+	    using both mechanisms: parameters and elements in the document. The
+	    following figure shows an exam in which all the customizable parts
+	    have been substituted by the parameter names or the element to
+	    include in the source document.
+	  </para>
+
+	  <informaltable frame="all">
+	    <tgroup rowsep="1" colsep="1" cols="1">
+	      <colspec colnum="1" colname="col1" align="center"/>
+	      <tbody>
+		<row>
+		  <entry>
+		    <para>
+		      <informalfigure>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="Samples/Exam/ExamCapture.png"
+				       format="PNG"/> 
+			  </imageobject>
+			  <textobject>
+			    <phrase>
+			      Sample of exam heading with stylesheet parameters
+			    </phrase> 
+			  </textobject>
+			</mediaobject>
+		      </informalfigure>
+		    </para>
+		  </entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+
+	  <para>
+	    The <ulink url="Samples/Exam/Test.xml">docbook source document to
+	    create an exam like the one shown in the previous figure</ulink>
+	    must have a &lt;section&gt; element as root. The content of this
+	    section together with the values of the parameters are used to
+	    produce the HTML file.
+	  </para>
+
+	  <para>
+	    Additional parameters available for customization but not shown in
+	    the figure are:
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<varname>ada.exam.fontfamily</varname>: Font family used in the
+		HTML head section (default to Verdana).
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<varname>ada.exam.fontsize</varname>: Font size used in the
+		HTML head section (default to 10pt).
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<varname>ada.exam.render.separate.cover</varname>: Boolean to
+		force a pagebreak after the exam cover (if value is
+		<quote>yes</quote>), or include the exam content right after the
+		head (any value different from <quote>yes</quote>.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<varname>ada.exam.author</varname>: Author name to include in the
+		HTML head section.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<varname>ada.exam.include.id</varname>: Include an ID
+		identifying the exam right below the <quote>part</quote>
+		variable in the version including the solutions. The value is
+		taken from the <command>status</command> attribute given in the
+		root <command>section</command> element.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <para>
+	    The generic structure of a Docbook file to render with the exam
+	    heading would be something similar to (see also the <ulink
+	    url="Samples/Exam/Test.xml">Docbook source file used to create the
+	    exam in the previous figure</ulink>):
+	  </para>
+
+	  <programlisting><![CDATA[<section lang="en" id="ExamID">
+
+  <title>Title to insert in the HTML head</title>
+  <para condition="part">Problems</para>
+  
+  <para condition="duration">1 hour and 15 minutes</para>
+  <para condition="scoring">50 points over 100</para>
+  <para condition="date">May 16th, 2008 at 16:30</para>
+
+  <para condition="note">
+    The rules for the exam are...
+  </para>
+
+  <para condition="name"/> <!-- To include the name box -->
+
+  <section>
+    <title>Section with the exercises (this title is ignored)</title>
+    <section>
+      <title>This is the first exercise (this title is ignored)</title>
+      <para>
+        Exam content. Either regular docbook describing a problem or a 
+        qandaset element with several qandaentry elements each of them
+        containing one or several questions
+      </para>
+    </section>
+    ...
+  </section>
+</section>]]></programlisting>
+
+	  <para>
+	    The file containing the parameter values would have a structure
+	    similar to:
+	  </para>
+	  <programlisting><![CDATA[<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns="http://www.w3.org/1999/xhtml" version="1.0">
+
+  <xsl:param name="ada.exam.include.id" select="'no'"/>
+  <xsl:param name="ada.exam.render.separate.cover" select="'yes'"/>
+  <xsl:param name="ada.exam.author">Author that created the exam</xsl:param>
+  <xsl:param name="ada.exam.topleft.image">Logo.png</xsl:param>
+  <xsl:param name="ada.exam.topleft.image.alt">My Logo</xsl:param>
+  <xsl:param name="ada.exam.topleft.toptext">The degree name</xsl:param>
+  <xsl:param name="ada.exam.topleft.centertext">Course name</xsl:param>
+  <xsl:param name="ada.exam.topleft.centertext.en">Date</xsl:param>
+  <xsl:param name="ada.exam.topleft.bottomtext">Some other message</xsl:param>
+  ...
+</xsl:stylesheet>]]></programlisting>
+
+	  <para>
+	    See <xref linkend="modified_stylesheet"/> to see how the file
+	    containing these definitions is included in the
+	    <filename>Properties.txt</filename> file
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry>
+	<question>
+	  <para>
+	    How to typeset an exam with several true/false and multiple choice
+	    questions?
+	  </para>
+	</question>
+
+	<answer>
+	  <para>
+	    Additionaly to producing an exam heading (see <xref
+	    linkend="ada_exam_elements_parameterized"/>) the ADA stylesheet is
+	    capable of detecting true/false and multiple choice questions with
+	    certain structure and produce two versions with these questions
+	    shuffled.
+	  </para>
+
+	  <para>
+	    The following figure shows an example of an exam with some
+	    true/false questions. The parts of the document that are controlled
+	    either by parameters offered in the stylesheet or
+	    elements in the source documents have been highlighted.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="images/ExamStyle.png" format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Sample of exam with stylesheet parameters</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+	</answer>
+      </qandaentry>
+
+<!--       <qandaentry id=""> -->
+<!-- 	<question> -->
+<!-- 	  <para> -->
+<!-- 	  </para> -->
+<!-- 	</question> -->
+<!-- 	<answer> -->
+<!-- 	  <para> -->
+<!-- 	  </para> -->
+<!-- 	</answer> -->
+<!--       </qandaentry> -->
+
+    </qandaset>
+
+  </section>
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->

@@ -7,13 +7,13 @@
 
       exam.src.dir: directory from where to take the source files
       exam.dst.dir: directory where the produced files are stored
-      exam.file: file to process
+      exam.file: file to process (insert exam heading)
+      exam.bilingual.file: file to process (insert exam heading)
       exam.output.format: Extension of the output file
       exam.extra.args: Extra arguments to invoke xsltproc
-      exam.bilingual.file: file to process
 
       Given one single file either in exam.file or exam.bilingual.file, process
-      it to obtain two versions with the shuffled questions.
+      it to obtain the HTML rendering of the file.
 
   -->
 
@@ -56,8 +56,7 @@
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
-  <target name="exam.check.values" 
-	  depends="initial.check, exam.dump.properties">
+  <target name="exam.check.values" depends="initial.check, exam.dump.properties">
 
     <!-- Obtain the filelist with the source file to see if it is empty -->
     <pathconvert property="exam.source.filelist.property" pathsep=" ">
@@ -72,7 +71,9 @@
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${exam.abssrc.dir}" arg2="" trim="true"/></not>
 	<!-- There must be some file defined -->
-        <not><equals arg1="${exam.source.filelist.property}" arg2="" trim="true"/></not>
+        <not>
+	  <equals arg1="${exam.source.filelist.property}" arg2="" trim="true"/>
+	</not>
 	<!-- At least one of the variable must be empty -->
 	<or>
 	  <equals arg1="${exam.file}" arg2="" trim="true"/>
@@ -95,109 +96,30 @@
   </target>
 
   <!-- Process the file through the four steps until the exam is produced -->
-  <target name="exam.processing" 
-	  depends="exam.check.values, exam.processing.NOT"
-	  if="exam.check"
-	  description="Process the exam file">
+  <target name="exam.processing" depends="exam.check.values, exam.processing.NOT"
+	  if="exam.check" description="Process the exam file">
 
-    <echo>exam.processing (Step 1/5)  CALL(xsltproc.processing)</echo>
-
-    <!-- Call xsltproc -->
-    <antcall target="xsltproc.processing" inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${exam.src.dir}"/>
-      <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Dump.xsl"/>
-      <param name="xsltproc.output.format" value="_raw.xml"/>
-      <param name="xsltproc.files"         value="${exam.file}
-						  ${exam.bilingual.file}"/>
-      <param name="xsltproc.extra.args"    value="${exam.extra.args}"/>
-    </antcall>
-
-    <echo>exam.processing             END(xsltproc.processing ES)</echo>
-
-    <!-- Obtain the filelist with the source file to see if it is empty -->
-    <pathconvert property="exam.source.raw.filelist.property" pathsep=" ">
-      <filelist refid="exam.filelist"/>
-      <filelist refid="exam.bilingual.filelist"/>
-      <mapper type="glob" from="*.xml" to="*_raw.xml"/>
-    </pathconvert>
-
-    <echo>exam.processing (Step 2/5)  RUN(Shuffling)</echo>
-
-    <!-- Generating the shuffled versions -->
-    <java classname="Shuffle" jvm="/usr/bin/java" output="build.out"
-	  append="yes">
-      <classpath>
-	<pathelement 
-	  location="${ada.home}/lib/TestShuffle/gol.jar"/>
-	<pathelement 
-	  location="${ada.home}/lib/TestShuffle/xercesImpl.jar"/>
-	<pathelement 
-	  location="${ada.home}/lib/TestShuffle/jdom.jar"/>
-	<pathelement 
-	  location="${ada.home}/lib/TestShuffle"/>
-      </classpath>
-      <arg value="${exam.source.raw.filelist.property}"/>
-    </java>
-
-    <!-- Obtain the filelist with the source file to see if it is empty -->
-    <pathconvert property="exam.source.raw.filelist.property" pathsep=" ">
-      <filelist refid="exam.filelist"/>
-      <filelist refid="exam.bilingual.filelist"/>
-      <mapper type="glob" from="*.xml" to="*_raw.xml"/>
-    </pathconvert>
-
-    <!-- Remove _raw from version 1 file name -->
-    <move todir="${exam.absdst.dir}" includeemptydirs="false">
-      <fileset dir="${exam.absdst.dir}">
-	<include name="*_raw_1.xml"/>
-      </fileset>
-      <mapper type="glob" from="*_raw_1.xml" to="*_1.xml"/>
-    </move>
-    
-    <!-- Remove _raw from version 2 file name -->
-    <move todir="${exam.absdst.dir}" includeemptydirs="false">
-      <fileset dir="${exam.absdst.dir}">
-	<include name="*_raw_2.xml"/>
-      </fileset>
-      <mapper type="glob" from="*_raw_2.xml" to="*_2.xml"/>
-    </move>
-    
-    <!-- Obtain a filelist with the newly produced files -->
-    <pathconvert property="exam.bilingual.raw.version1.filelist.property" pathsep=" ">
-      <filelist refid="exam.bilingual.filelist"/>
-      <mapper type="glob" from="${exam.absdst.dir}/*.xml" to="*_1.xml"/>
-    </pathconvert>
-    <pathconvert property="exam.bilingual.raw.version2.filelist.property" pathsep=" ">
-      <filelist refid="exam.bilingual.filelist"/>
-      <mapper type="glob" from="${exam.absdst.dir}/*.xml" to="*_2.xml"/>
-    </pathconvert>
-
-    <echo>exam.processing (Step 3a/5) CALL(bilingualdb.processing)</echo>
+    <echo>exam.processing (Step 1a/5)  CALL(xsltproc.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.processing" inheritAll="false">
       <param name="bilingualdb.src.dir"       value="${exam.dst.dir}"/>
       <param name="bilingualdb.dst.dir"       value="${exam.dst.dir}"/>
       <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="bilingualdb.files"         
-	     value="${exam.bilingual.raw.version1.filelist.property} 
-		    ${exam.bilingual.raw.version2.filelist.property}"/>
+      <param name="bilingualdb.files"         value="${exam.bilingual.file}"/>
       <param name="bilingualdb.extra.args"    value="${exam.extra.args}"/>
     </antcall>
 
     <echo>exam.processing             END(bilingualdb.processing ES)</echo>
 
-    <echo>exam.processing (Step 3b/5) CALL(bilingualdb.processing)</echo>
+    <echo>exam.processing (Step 1b/5) CALL(bilingualdb.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.processing" inheritAll="false">
       <param name="bilingualdb.src.dir"       value="${exam.dst.dir}"/>
       <param name="bilingualdb.dst.dir"       value="${exam.dst.dir}"/>
       <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="bilingualdb.files"         
-	     value="${exam.bilingual.raw.version1.filelist.property} 
-		    ${exam.bilingual.raw.version2.filelist.property}"/>
+      <param name="bilingualdb.files"         value="${exam.bilingual.file}"/>
       <param name="bilingualdb.output.format" value="_solution.html"/>
       <param name="bilingualdb.extra.args"    
 	     value="--stringparam ada.testquestions.include.solutions yes 
@@ -206,67 +128,34 @@
 
     <echo>exam.processing             END(bilingualdb.processing ES)</echo>
 
-    <echo>exam.processing (Step 3c/5) CALL(bilingualdb.processing)</echo>
+    <echo>exam.processing (Step 1c/5) CALL(bilingualdb.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.processing" inheritAll="false">
       <param name="bilingualdb.src.dir"       value="${exam.dst.dir}"/>
       <param name="bilingualdb.dst.dir"       value="${exam.dst.dir}"/>
       <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="bilingualdb.files"         
-	     value="${exam.bilingual.raw.version1.filelist.property} 
-		    ${exam.bilingual.raw.version2.filelist.property}"/>
-      <param name="bilingualdb.output.format" value="_stats.html"/>
+      <param name="bilingualdb.files"         value="${exam.bilingual.file}"/>
+      <param name="bilingualdb.output.format" value="_pguide.html"/>
       <param name="bilingualdb.extra.args"    
 	     value="--stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
+		    --stringparam professorguide.include.guide yes
 		    ${exam.extra.args}"/>
     </antcall>
 
     <echo>exam.processing             END(bilingualdb.processing ES)</echo>
 
-    <!-- Obtain a filelist with the newly produced files -->
-    <pathconvert property="exam.raw.version1.filelist.property" pathsep=" ">
-      <filelist refid="exam.filelist"/>
-      <filelist refid="exam.bilingual.filelist"/>
-      <mapper type="glob" from="${exam.absdst.dir}/*.xml" to="*_1.xml"/>
-    </pathconvert>
-    <pathconvert property="exam.raw.version2.filelist.property" pathsep=" ">
-      <filelist refid="exam.filelist"/>
-      <filelist refid="exam.bilingual.filelist"/>
-      <mapper type="glob" from="${exam.absdst.dir}/*.xml" to="*_2.xml"/>
-    </pathconvert>
-
-    <echo>exam.processing (Step 3d/5) CALL(xsltproc.processing)</echo>
+    <echo>exam.processing (Step 1d/5) CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltproc.files"         
-	     value="${exam.raw.version1.filelist.property} 
-		    ${exam.raw.version2.filelist.property}"/>
+      <param name="xsltproc.files"         value="${exam.file}"/>
       <param name="xsltproc.extra.args"    value="${exam.extra.args}"/>
-    </antcall>
-
-    <echo>exam.processing             END(xsltproc.processing ES)</echo>
-
-    <echo>exam.processing (Step 3e/5) CALL(xsltproc.processing)</echo>
-
-    <!-- Call xsltproc -->
-    <antcall target="xsltproc.processing" inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
-      <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltproc.files"         
-	     value="${exam.raw.version1.filelist.property} 
-		    ${exam.raw.version2.filelist.property}"/>
-      <param name="xsltproc.output.format" value="_solution.html"/>
-      <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.testquestions.include.solutions yes 
-		    ${exam.extra.args}"/>
     </antcall>
 
     <echo>exam.processing             END(xsltproc.processing ES)</echo>
@@ -278,14 +167,29 @@
       <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltproc.files"         
-	     value="${exam.raw.version1.filelist.property} 
-		    ${exam.raw.version2.filelist.property}"/>
-      <param name="xsltproc.output.format" value="_stats.html"/>
+      <param name="xsltproc.files"         value="${exam.file}"/>
+      <param name="xsltproc.output.format" value="_solution.html"/>
+      <param name="xsltproc.extra.args"    
+	     value="--stringparam ada.testquestions.include.solutions yes 
+		    ${exam.extra.args}"/>
+    </antcall>
+
+    <echo>exam.processing             END(xsltproc.processing ES)</echo>
+
+    <echo>exam.processing (Step 1f/5) CALL(xsltproc.processing)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.processing" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="xsltproc.files"         value="${exam.file}"/>
+      <param name="xsltproc.output.format" value="_pguide.html"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
+		    --stringparam professorguide.include.guide yes
 		    ${exam.extra.args}"/>
     </antcall>
 
@@ -358,26 +262,12 @@
 
     <delete failonerror="false" file="tex-math-equations.tex"/>
 
-    <!-- Obtain a filelist with the newly produced files -->
-    <pathconvert property="exam.raw.version1.filelist.property" pathsep=" ">
-      <filelist refid="exam.filelist"/>
-      <filelist refid="exam.bilingual.filelist"/>
-      <mapper type="glob" from="${exam.absdst.dir}/*.xml" to="*_1.xml"/>
-    </pathconvert>
-    <pathconvert property="exam.raw.version2.filelist.property" pathsep=" ">
-      <filelist refid="exam.filelist"/>
-      <filelist refid="exam.bilingual.filelist"/>
-      <mapper type="glob" from="${exam.absdst.dir}/*.xml" to="*_2.xml"/>
-    </pathconvert>
-
     <!-- Call xsltproc -->
     <antcall target="xsltproc.clean" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltproc.files"         
-	     value="${exam.raw.version1.filelist.property} 
-		    ${exam.raw.version2.filelist.property}"/>
+      <param name="xsltproc.files"         value="${exam.file}"/>
       <param name="xsltproc.extra.args"    value="${exam.extra.args}"/>
     </antcall>
 
@@ -388,14 +278,13 @@
       <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltproc.files"         
-	     value="${exam.raw.version1.filelist.property} 
-		    ${exam.raw.version2.filelist.property}"/>
-      <param name="xsltproc.output.format" value="_stats.html"/>
+      <param name="xsltproc.files"         value="${exam.file}"/>
+      <param name="xsltproc.output.format" value="_pguide.html"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
+		    --stringparam professorguide.include.guide yes
 		    ${exam.extra.args}"/>
     </antcall>
 
@@ -408,9 +297,7 @@
       <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltproc.files"         
-	     value="${exam.raw.version1.filelist.property} 
-		    ${exam.raw.version2.filelist.property}"/>
+      <param name="xsltproc.files"         value="${exam.file}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.testquestions.include.solutions yes 
@@ -421,16 +308,6 @@
 
     <echo>exam.processing (Step 3d/5) CALL(xsltproc.processing)</echo>
 
-    <!-- Obtain a filelist with the newly produced files -->
-    <pathconvert property="exam.bilingual.raw.version1.filelist.property" pathsep=" ">
-      <filelist refid="exam.bilingual.filelist"/>
-      <mapper type="glob" from="${exam.absdst.dir}/*.xml" to="*_1.xml"/>
-    </pathconvert>
-    <pathconvert property="exam.bilingual.raw.version2.filelist.property" pathsep=" ">
-      <filelist refid="exam.bilingual.filelist"/>
-      <mapper type="glob" from="${exam.absdst.dir}/*.xml" to="*_2.xml"/>
-    </pathconvert>
-
     <echo>exam.processing (Step 3c/5) CALL(bilingualdb.processing)</echo>
 
     <!-- Call bilingualdb -->
@@ -438,14 +315,13 @@
       <param name="bilingualdb.src.dir"       value="${exam.dst.dir}"/>
       <param name="bilingualdb.dst.dir"       value="${exam.dst.dir}"/>
       <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="bilingualdb.files"         
-	     value="${exam.bilingual.raw.version1.filelist.property} 
-		    ${exam.bilingual.raw.version2.filelist.property}"/>
-      <param name="bilingualdb.output.format" value="_stats.html"/>
+      <param name="bilingualdb.files"         value="${exam.bilingual.file}"/>
+      <param name="bilingualdb.output.format" value="_pguide.html"/>
       <param name="bilingualdb.extra.args"    
 	     value="--stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
+		    --stringparam professorguide.include.guide yes
 		    ${exam.extra.args}"/>
     </antcall>
 
@@ -458,9 +334,7 @@
       <param name="bilingualdb.src.dir"       value="${exam.dst.dir}"/>
       <param name="bilingualdb.dst.dir"       value="${exam.dst.dir}"/>
       <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="bilingualdb.files"         
-	     value="${exam.bilingual.raw.version1.filelist.property} 
-		    ${exam.bilingual.raw.version2.filelist.property}"/>
+      <param name="bilingualdb.files"         value="${exam.bilingual.file}"/>
       <param name="bilingualdb.output.format" value="_solution.html"/>
       <param name="bilingualdb.extra.args"    
 	     value="--stringparam ada.testquestions.include.solutions yes 
@@ -476,9 +350,7 @@
       <param name="bilingualdb.src.dir"       value="${exam.dst.dir}"/>
       <param name="bilingualdb.dst.dir"       value="${exam.dst.dir}"/>
       <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="bilingualdb.files"         
-	     value="${exam.bilingual.raw.version1.filelist.property} 
-		    ${exam.bilingual.raw.version2.filelist.property}"/>
+      <param name="bilingualdb.files"         value="${exam.bilingual.file}"/>
       <param name="bilingualdb.extra.args"    value="${exam.extra.args}"/>
     </antcall>
 
