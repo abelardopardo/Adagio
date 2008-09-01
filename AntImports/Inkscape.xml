@@ -52,7 +52,6 @@
       <fileset refid="inkscape.fileset"/>
     </pathconvert>
     
-    <echo>AAA ${inkscape.source.filelist.property}</echo>
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="inkscape.check">
       <and>
