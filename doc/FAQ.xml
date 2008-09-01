@@ -2404,11 +2404,13 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    </listitem>
 	    <listitem>
 	      <para>
-		<varname>ada.exam.include.id</varname>: Include an ID
-		identifying the exam right below the <quote>part</quote>
-		variable in the version including the solutions. The value is
-		taken from the <command>status</command> attribute given in the
-		root <command>section</command> element.
+		<varname>ada.exam.include.id</varname>: Boolean to control the
+		inclusion of an ID identifying the exam right below the
+		<quote>part</quote> variable in the version including the
+		solutions. The parameter takes values <quote>yes/no</quote>, and
+		the value shown in the HTML document is taken from the
+		<command>status</command> attribute given in the root
+		<command>section</command> element.
 	      </para>
 	    </listitem>
 	  </itemizedlist>
@@ -2720,25 +2722,6 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	      </imageobject>
 	      <textobject>
 		<phrase>Sample of multiple choice question</phrase>
-	      </textobject>
-	    </mediaobject>
-	  </informalfigure>
-
-	  <!-- AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -->
-	  <para>
-	    The following figure shows an example of an exam with some
-	    true/false questions. The parts of the document that are controlled
-	    either by parameters offered in the stylesheet or
-	    elements in the source documents have been highlighted.
-	  </para>
-
-	  <informalfigure>
-	    <mediaobject>
-	      <imageobject>
-		<imagedata fileref="images/ExamStyle.png" format="PNG"/>
-	      </imageobject>
-	      <textobject>
-		<phrase>Sample of exam with stylesheet parameters</phrase>
 	      </textobject>
 	    </mediaobject>
 	  </informalfigure>

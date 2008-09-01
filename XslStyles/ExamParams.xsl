@@ -11,7 +11,7 @@
   <!-- Show the qandadiv ID -->
   <xsl:param name="ada.exam.include.id" select="'no'"/>
 
-  <!-- Show the qandadiv ID -->
+  <!-- Insert a page break after the cover -->
   <xsl:param name="ada.exam.render.separate.cover" select="'yes'"/>
 
   <!-- Author/s of the exam -->

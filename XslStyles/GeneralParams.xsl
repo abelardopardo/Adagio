@@ -16,6 +16,7 @@
   <xsl:param name="ada.course.icon" />
   <xsl:param name="ada.course.icon.type" select="'image/x-icon'" />
   <xsl:param name="ada.course.degree" />
+  <xsl:param name="ada.course.degree.en" />
   <xsl:param name="ada.course.edition" />
   <xsl:param name="ada.course.home.url" />
   <xsl:param name="ada.course.image" />

@@ -100,7 +100,7 @@
 	  if="testexam.check"
 	  description="Process the testexam file">
 
-    <echo>testexam.processing (Step 1/5)  CALL(xsltproc.processing)</echo>
+    <echo>testexam.processing  (1/5)  CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
@@ -113,7 +113,7 @@
       <param name="xsltproc.extra.args"    value="${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing             END(xsltproc.processing ES)</echo>
+    <echo>testexam.processing         END(xsltproc.processing ES)</echo>
 
     <!-- Obtain the filelist with the source file to see if it is empty -->
     <pathconvert property="testexam.source.raw.filelist.property" pathsep=" ">
@@ -122,7 +122,7 @@
       <mapper type="glob" from="*.xml" to="*_raw.xml"/>
     </pathconvert>
 
-    <echo>testexam.processing (Step 2/5)  RUN(Shuffling)</echo>
+    <echo>testexam.processing  (2/5)  RUN(Shuffling)</echo>
 
     <!-- Generating the shuffled versions -->
     <java classname="Shuffle" jvm="/usr/bin/java" output="build.out"
@@ -173,28 +173,28 @@
       <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
     </pathconvert>
 
-    <echo>testexam.processing (Step 3a/5) CALL(bilingualdb.processing)</echo>
+    <echo>testexam.processing  (3a/5) CALL(bilingualdb.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.processing" inheritAll="false">
       <param name="bilingualdb.src.dir"       value="${testexam.dst.dir}"/>
       <param name="bilingualdb.dst.dir"       value="${testexam.dst.dir}"/>
-      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Testexam.xsl"/>
+      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="bilingualdb.files"         
 	     value="${testexam.bilingual.raw.version1.filelist.property} 
 		    ${testexam.bilingual.raw.version2.filelist.property}"/>
       <param name="bilingualdb.extra.args"    value="${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing             END(bilingualdb.processing ES)</echo>
+    <echo>testexam.processing         END(bilingualdb.processing ES)</echo>
 
-    <echo>testexam.processing (Step 3b/5) CALL(bilingualdb.processing)</echo>
+    <echo>testexam.processing  (3b/5) CALL(bilingualdb.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.processing" inheritAll="false">
       <param name="bilingualdb.src.dir"       value="${testexam.dst.dir}"/>
       <param name="bilingualdb.dst.dir"       value="${testexam.dst.dir}"/>
-      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Testexam.xsl"/>
+      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="bilingualdb.files"         
 	     value="${testexam.bilingual.raw.version1.filelist.property} 
 		    ${testexam.bilingual.raw.version2.filelist.property}"/>
@@ -204,15 +204,15 @@
 		    ${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing             END(bilingualdb.processing ES)</echo>
+    <echo>testexam.processing         END(bilingualdb.processing ES)</echo>
 
-    <echo>testexam.processing (Step 3c/5) CALL(bilingualdb.processing)</echo>
+    <echo>testexam.processing  (3c/5) CALL(bilingualdb.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.processing" inheritAll="false">
       <param name="bilingualdb.src.dir"       value="${testexam.dst.dir}"/>
       <param name="bilingualdb.dst.dir"       value="${testexam.dst.dir}"/>
-      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Testexam.xsl"/>
+      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="bilingualdb.files"         
 	     value="${testexam.bilingual.raw.version1.filelist.property} 
 		    ${testexam.bilingual.raw.version2.filelist.property}"/>
@@ -224,7 +224,7 @@
 		    ${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing             END(bilingualdb.processing ES)</echo>
+    <echo>testexam.processing         END(bilingualdb.processing ES)</echo>
 
     <!-- Obtain a filelist with the newly produced files -->
     <pathconvert property="testexam.raw.version1.filelist.property" pathsep=" ">
@@ -238,7 +238,7 @@
       <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
     </pathconvert>
 
-    <echo>testexam.processing (Step 3d/5) CALL(xsltproc.processing)</echo>
+    <echo>testexam.processing  (3d/5) CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
@@ -251,9 +251,9 @@
       <param name="xsltproc.extra.args"    value="${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing             END(xsltproc.processing ES)</echo>
+    <echo>testexam.processing         END(xsltproc.processing ES)</echo>
 
-    <echo>testexam.processing (Step 3e/5) CALL(xsltproc.processing)</echo>
+    <echo>testexam.processing  (3e/5) CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
@@ -269,9 +269,9 @@
 		    ${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing             END(xsltproc.processing ES)</echo>
+    <echo>testexam.processing         END(xsltproc.processing ES)</echo>
 
-    <echo>testexam.processing (Step 3f/5) CALL(xsltproc.processing)</echo>
+    <echo>testexam.processing  (3f/5) CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
@@ -289,9 +289,9 @@
 		    ${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing             END(xsltproc.processing ES)</echo>
+    <echo>testexam.processing         END(xsltproc.processing ES)</echo>
 
-    <echo>testexam.processing (Step 4/5)  CALL(latex.processing)</echo>
+    <echo>testexam.processing  (4/5)  CALL(latex.processing)</echo>
 
     <!-- Call latex -->
     <antcall target="latex.processing" inheritAll="false">
@@ -301,9 +301,9 @@
       <param name="latex.extra.args"    value="-interaction=nonstopmode"/>
     </antcall>
 
-    <echo>testexam.processing             END(latex.processing ES)</echo>
+    <echo>testexam.processing         END(latex.processing ES)</echo>
 
-    <echo>testexam.processing (Step 5/5)  CALL(dvi2bitmap.processing)</echo>
+    <echo>testexam.processing  (5/5)  CALL(dvi2bitmap.processing)</echo>
 
     <mkdir dir="${testexam.absdst.dir}${file.separator}${testexam.equation.dir}"/>
 
@@ -314,7 +314,7 @@
       <param name="dvi2bitmap.files"         value="tex-math-equations.dvi"/>
     </antcall>
 
-    <echo>testexam.processing             END(dvi2bitmap.processing ES)</echo>
+    <echo>testexam.processing         END(dvi2bitmap.processing ES)</echo>
 
   </target>
 
@@ -381,7 +381,7 @@
       <param name="xsltproc.extra.args"    value="${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing (Step 3f/5) CALL(xsltproc.processing)</echo>
+    <echo>testexam.processing  (3f/5) CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.clean" inheritAll="false">
@@ -399,9 +399,9 @@
 		    ${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing             END(xsltproc.processing ES)</echo>
+    <echo>testexam.processing         END(xsltproc.processing ES)</echo>
 
-    <echo>testexam.processing (Step 3e/5) CALL(xsltproc.processing)</echo>
+    <echo>testexam.processing  (3e/5) CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.clean" inheritAll="false">
@@ -417,9 +417,9 @@
 		    ${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing             END(xsltproc.processing ES)</echo>
+    <echo>testexam.processing         END(xsltproc.processing ES)</echo>
 
-    <echo>testexam.processing (Step 3d/5) CALL(xsltproc.processing)</echo>
+    <echo>testexam.processing  (3d/5) CALL(xsltproc.processing)</echo>
 
     <!-- Obtain a filelist with the newly produced files -->
     <pathconvert property="testexam.bilingual.raw.version1.filelist.property" pathsep=" ">
@@ -431,7 +431,7 @@
       <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
     </pathconvert>
 
-    <echo>testexam.processing (Step 3c/5) CALL(bilingualdb.processing)</echo>
+    <echo>testexam.processing  (3c/5) CALL(bilingualdb.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.clean" inheritAll="false">
@@ -449,9 +449,9 @@
 		    ${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing             END(bilingualdb.processing ES)</echo>
+    <echo>testexam.processing         END(bilingualdb.processing ES)</echo>
 
-    <echo>testexam.processing (Step 3b/5) CALL(bilingualdb.processing)</echo>
+    <echo>testexam.processing  (3b/5) CALL(bilingualdb.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.clean" inheritAll="false">
@@ -467,9 +467,9 @@
 		    ${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing             END(bilingualdb.processing ES)</echo>
+    <echo>testexam.processing         END(bilingualdb.processing ES)</echo>
 
-    <echo>testexam.processing (Step 3a/5) CALL(bilingualdb.processing)</echo>
+    <echo>testexam.processing  (3a/5) CALL(bilingualdb.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.clean" inheritAll="false">
@@ -482,7 +482,7 @@
       <param name="bilingualdb.extra.args"    value="${testexam.extra.args}"/>
     </antcall>
 
-    <echo>testexam.processing             END(bilingualdb.processing ES)</echo>
+    <echo>testexam.processing         END(bilingualdb.processing ES)</echo>
 
     <delete dir="${testexam.absdst.dir}" 
 	    includes="${testexam.raw.version1.filelist.property} 
