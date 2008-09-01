@@ -34,7 +34,7 @@
 
   <!-- Source files to be processed by ps2pdf (fileset to allow wildcards) -->
   <fileset id="ps2pdf.fileset" dir="${ps2pdf.abssrc.dir}"
-	   includes="${ps2pdf.files}"/>
+	   includes="__bogus__file__name ${ps2pdf.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->

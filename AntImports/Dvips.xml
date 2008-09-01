@@ -34,7 +34,7 @@
 
   <!-- Source files to be processed by dvips (fileset to allow wildcards) -->
   <fileset id="dvips.fileset" dir="${dvips.abssrc.dir}"
-	   includes="${dvips.files}"/>
+	   includes="__bogus__file__name ${dvips.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->

@@ -485,7 +485,8 @@
     <echo>testexam.processing         END(bilingualdb.processing ES)</echo>
 
     <delete dir="${testexam.absdst.dir}" 
-	    includes="${testexam.raw.version1.filelist.property} 
+	    includes="__bogus__file__name 
+                      ${testexam.raw.version1.filelist.property} 
 		      ${testexam.raw.version2.filelist.property}"/>
 
     <!-- Call xsltproc -->

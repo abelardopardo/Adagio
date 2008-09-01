@@ -39,7 +39,7 @@
   
   <!-- Source files to be processed by rss (fileset to allow wildcards) -->
   <fileset id="rss.fileset" dir="${rss.abssrc.dir}"
-	   includes="${rss.files}"/>
+	   includes="__bogus__file__name ${rss.files}"/>
 
   <!-- Obtain the filelist with the produced files. -->
   <pathconvert property="rss.target.filelist.property" pathsep=" ">

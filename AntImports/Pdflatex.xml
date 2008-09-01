@@ -35,7 +35,7 @@
 
   <!-- Source files to be processed by pdflatex (fileset to allow wildcards) -->
   <fileset id="pdflatex.fileset" dir="${pdflatex.abssrc.dir}"
-	   includes="${pdflatex.files}"/>
+	   includes="__bogus__file__name ${pdflatex.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
