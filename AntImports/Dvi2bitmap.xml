@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Rules to transform dvi equations to bitmaps" default="dvi2bitmap">
+
+  <!--
+      Given the following properties:
+
+      dvi2bitmap.src.dir: directory from where to take the source files
+      dvi2bitmap.files: comma/space separated list of files to process
+
+      Produce ??
+  -->
+
+  <!-- Checks for availability of different binaries -->
+  <import file="InitialCheck.xml"/>
+
+  <!-- Public Property definition -->
+  <property name="dvi2bitmap.exec"        value="dvi2bitmap"/>
+  <property name="dvi2bitmap.src.dir"     value="${basedir}"/>
+  <property name="dvi2bitmap.output.type" value="png"/>
+  <property name="dvi2bitmap.args"        value="--magnification=5 --scale=5"/>
+  <property name="dvi2bitmap.extra.args"  value=""/>
+  <property name="dvi2bitmap.files"       value=""/>
+
+  <!-- Private properties -->
+  <property name="dvi2bitmap.debug.level"    value="${ada.debug.level}"/>
+
+  <!-- Define two properties containing the absolute src and dst paths -->
+  <pathconvert property="dvi2bitmap.abssrc.dir" pathsep=" ">
+    <path location="${dvi2bitmap.src.dir}"/>
+  </pathconvert>
+
+  <!-- Source files to be processed by dvi2bitmap (fileset to allow wildcards) -->
+  <fileset id="dvi2bitmap.fileset" dir="${dvi2bitmap.abssrc.dir}"
+	   includes="__bogus__file__name ${dvi2bitmap.files}"/>
+
+  <!-- Preliminary target to verify that certain minimum conditions hold before
+  executing the regular targets. -->
+  <target name="dvi2bitmap.check.values" 
+	  depends="initial.check, dvi2bitmap.dump.properties">
+
+    <!-- Obtain the filelist with the source files to see if it is empty -->
+    <pathconvert property="dvi2bitmap.source.filelist.property" pathsep=" ">
+      <fileset refid="dvi2bitmap.fileset"/>
+    </pathconvert>
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="dvi2bitmap.check">
+      <and>
+	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
+	empty definition of this variable. At least a . needs to be present -->
+        <not><equals arg1="${dvi2bitmap.abssrc.dir}" arg2="" trim="true"/></not>
+	<!-- There must be some files defined -->
+        <not><equals arg1="${dvi2bitmap.source.filelist.property}" arg2="" trim="true"/></not>
+      </and>
+    </condition>
+
+    <!-- The required condition not to bomb out -->
+    <condition property="dvi2bitmap.execution.possible">
+      <and>
+	<available file="${dvi2bitmap.exec}${executable.file.extension}"
+		   filepath="${env.PATH}"/>
+	<available file="${dvi2bitmap.abssrc.dir}"/> 
+      </and>
+    </condition>
+
+    <condition property="dvi2bitmap.failure">
+      <and>
+	<isset property="dvi2bitmap.check"/>
+	<not><isset property="dvi2bitmap.execution.possible"/></not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="${dvi2bitmap.debug.level}">  dvi2bitmap.check              = "${dvi2bitmap.check}"
+  dvi2bitmap.execution.possible = ${dvi2bitmap.execution.possible}
+  dvi2bitmap.failure            = ${dvi2bitmap.failure}</echo>
+  </target>
+
+  <target name="dvi2bitmap.bomb.out" if="dvi2bitmap.failure">
+    <fail message="dvi2bitmap rule cannot be executed. Review the value of
+		   variables dvi2bitmap.src.dir and dvi2bitmap.exec"/>
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="dvi2bitmap.processing.NOT" depends="dvi2bitmap.bomb.out" 
+	  unless="dvi2bitmap.check">
+    <echo level="${dvi2bitmap.debug.level}">dvi2bitmap.processing       ---</echo>
+    <echo level="${dvi2bitmap.debug.level}">${basedir}</echo>
+  </target>
+
+  <!-- Regular target. It is executed if the check property is true, and it has
+  as dependency the NOT target. That way, if the property is not set, this
+  target is not executed and instead, the one notifying the user of such event
+  is executed. -->
+  <target name="dvi2bitmap.processing" 
+	  depends="dvi2bitmap.check.values, dvi2bitmap.processing.NOT"
+	  if="dvi2bitmap.check"
+	  description="Translate the files to PNGs">
+
+    <echo>dvi2bitmap.processing       RUN</echo>
+    <echo level="${dvi2bitmap.debug.level}">${basedir}</echo>
+
+    <!-- Execute the command. -->
+    <apply dir="${dvi2bitmap.abssrc.dir}" parallel="false" 
+	   append="yes" failonerror="true" executable="${dvi2bitmap.exec}" 
+	   output="build.out">
+      <arg value="-T"/>
+      <arg value="${dvi2bitmap.output.type}"/>
+      <arg line="${dvi2bitmap.args}"/>
+      <arg line="${dvi2bitmap.extra.args}"/>
+      <srcfile/>
+      <fileset refid="dvi2bitmap.fileset"/>
+    </apply>    
+  </target>
+
+  <!-- Target to notify that the regular target has not been executed. This is
+  to notify the user -->
+  <target name="dvi2bitmap.clean.NOT" unless="dvi2bitmap.check">
+    <echo level="${dvi2bitmap.debug.level}">dvi2bitmap.clean           ---</echo>
+    <echo level="${dvi2bitmap.debug.level}">${basedir}</echo>
+  </target>
+
+  <!-- Clean files produced by dvi2bitmap -->
+  <target name="dvi2bitmap.clean" 
+	  depends="dvi2bitmap.check.values, dvi2bitmap.clean.NOT"
+	  if="dvi2bitmap.check" 
+	  description="Remove files produced by dvi2bitmap">
+
+    <echo>dvi2bitmap.clean       RUN</echo>
+    <echo level="${dvi2bitmap.debug.level}">${basedir}</echo>
+
+  </target>
+
+  <!-- Dump the properties defined in this script -->
+  <target name="dvi2bitmap.dump.properties" depends="initial.check">
+    <echo level="${dvi2bitmap.debug.level}"> ------ dvi2bitmap properties ----
+    dvi2bitmap.exec       ="${dvi2bitmap.exec}"
+    dvi2bitmap.abssrc.dir ="${dvi2bitmap.abssrc.dir}"
+    dvi2bitmap.args       ="${dvi2bitmap.args}"
+    dvi2bitmap.extra.args ="${dvi2bitmap.extra.args}"
+    dvi2bitmap.files      ="${dvi2bitmap.files}"</echo>
+  </target>
+
+  <target name="dvi2bitmap.report.YES" depends="dvi2bitmap.check.values"
+	  if="dvi2bitmap.execution.possible">
+    <echo>dvi2bitmap             |     *     |</echo>
+  </target>
+
+  <target name="dvi2bitmap.report.NO" depends="dvi2bitmap.check.values"
+	  unless="dvi2bitmap.execution.possible">
+    <echo>dvi2bitmap             |           |     * (install ${dvi2bitmap.exec})</echo>
+  </target>
+
+  <target name="dvi2bitmap.report" depends="dvi2bitmap.report.YES,
+				      dvi2bitmap.report.NO"/>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="dvi2bitmap" depends="initial.delete.build.out, dvi2bitmap.processing"/>
+</project>

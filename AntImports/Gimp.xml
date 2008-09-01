@@ -33,7 +33,7 @@
 
   <!--  Source files to be processed by Gimp (fileset to allow wildcards) -->
   <fileset id="gimp.fileset" dir="${gimp.abssrc.dir}"
-	   includes="${gimp.files}"/>
+	   includes="__bogus__file__name ${gimp.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->

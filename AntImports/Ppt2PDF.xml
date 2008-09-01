@@ -31,7 +31,7 @@
 
   <!-- Source files to be processed by ppt2pdf (fileset to allow wildcards) -->
   <fileset id="ppt2pdf.fileset" dir="${ppt2pdf.abssrc.dir}"
-	   includes="${ppt2pdf.files}"/>
+	   includes="__bogus__file__name ${ppt2pdf.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->

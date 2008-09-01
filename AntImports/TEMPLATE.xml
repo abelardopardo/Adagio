@@ -34,7 +34,7 @@
 
   <!-- Source files to be processed by @NAME@ (fileset to allow wildcards) -->
   <fileset id="@NAME@.fileset" dir="${@NAME@.abssrc.dir}"
-	   includes="${@NAME@.files}"/>
+	   includes="__bogus__file__name ${@NAME@.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->

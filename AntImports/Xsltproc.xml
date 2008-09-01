@@ -42,7 +42,7 @@
   
   <!-- Source files to be processed by xsltproc (fileset to allow wildcards) -->
   <fileset id="xsltproc.fileset" dir="${xsltproc.abssrc.dir}"
-	   includes="${xsltproc.files}"/>
+	   includes="__bogus__file__name ${xsltproc.files}"/>
 
   <!-- Obtain the filelist with the produced files. -->
   <pathconvert property="xsltproc.target.filelist.property" pathsep=" ">

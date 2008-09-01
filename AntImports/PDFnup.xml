@@ -37,7 +37,7 @@
 
   <!-- Source files to be processed by pdfnup (fileset to allow wildcards) -->
   <fileset id="pdfnup.fileset" dir="${pdfnup.abssrc.dir}"
-	   includes="${pdfnup.files}"/>
+	   includes="__bogus__file__name ${pdfnup.files}"/>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->

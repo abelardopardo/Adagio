@@ -44,7 +44,7 @@
 
   <!-- Source files to be processed by fig2dev (fileset to allow wildcards) -->
   <fileset id="xfig.fileset" dir="${xfig.abssrc.dir}"
-	   includes="${xfig.files}"/>
+	   includes="__bogus__file__name ${xfig.files}"/>
   
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->

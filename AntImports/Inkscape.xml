@@ -39,7 +39,7 @@
 
   <!-- Source files to be processed by inkscape (fileset to allow wildcards) -->
   <fileset id="inkscape.fileset" dir="${inkscape.abssrc.dir}"
-	   includes="${inkscape.files}"/>
+	   includes="___bogus___file__name ${inkscape.files}"/>
 
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
@@ -51,7 +51,8 @@
     <pathconvert property="inkscape.source.filelist.property" pathsep=" ">
       <fileset refid="inkscape.fileset"/>
     </pathconvert>
-
+    
+    <echo>AAA ${inkscape.source.filelist.property}</echo>
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="inkscape.check">
       <and>
@@ -59,7 +60,8 @@
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${inkscape.abssrc.dir}" arg2=""/></not>
 	<!-- There must be some files defined -->
-        <not><equals arg1="${inkscape.source.filelist.property}" arg2=""/></not>
+        <not><equals arg1="${inkscape.source.filelist.property}" arg2="" trim="true"/></not>
+        <not><equals arg1="${inkscape.files}" arg2="" trim="true"/></not>
 	<!-- Require a non-empty dst.dir as well -->
 	<not><equals arg1="${inkscape.absdst.dir}" arg2=""/></not>
       </and>
