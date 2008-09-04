@@ -226,7 +226,7 @@
           <xsl:apply-templates select="question/node()"/>
         </td>
       </tr>
-      <xsl:if test="$ada.testquestions.include.history='yes'">
+      <xsl:if test="$ada.testquestions.include.history = 'yes'">
         <tr>
           <xsl:call-template name="dump-history">
             <xsl:with-param name="colspan">5</xsl:with-param>
@@ -396,7 +396,7 @@
   <!-- Dump element containing history --> 
   <xsl:template name="dump-history">
     <xsl:param name="colspan" select="1"/>
-    <xsl:if test="$ada.testquestions.include.history='yes'">
+    <xsl:if test="$ada.testquestions.include.history = 'yes'">
       <td style="text-align: center">
         <xsl:attribute name="colspan"><xsl:value-of
         select="$colspan"/></xsl:attribute>
@@ -441,8 +441,7 @@
                     select="@revision"/>/<xsl:value-of
                     select="@vendor"/>
                   </td>
-                  <td style="border: 1px solid black; border-collapse:
-                             collapse;" 
+                  <td style="border: 1px solid black; border-collapse: collapse;" 
                     align="center">
                     <xsl:value-of
                       select="phrase[@condition='correct']/text()"/>

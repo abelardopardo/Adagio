@@ -2279,7 +2279,7 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                      TYPESETTING EXAMS                       -->
+  <!--                   TYPESETTING EXAMINATIONS                   -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <section id="Typesetting_exams" xreflabel="Top of the Section">
@@ -2304,14 +2304,124 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	  </para>
 
 	  <para>
-	    The style to produce exams offers two functions: create only the
-	    exam heading for a set of exercises, or typeset a test exam with a
-	    set of true/false or multiple choice questions. The selection is
-	    deducted by the stylesheet depending on the structure of the docbook
-	    source document.
+	    There are two sets of variables and rules depending on the type of
+	    exam.  If an exam contains a set of questions that need to be
+	    shuffled and two versions be produced, then the variables with the
+	    prefix <varname>testexam</varname> are used. If the exam is simply a set
+	    of exercises and no shuffle is required, then the varaiables with
+	    the prefix <varname>exam</varname> are required. In the same
+	    directory, two exams, one of each type may coexist.
 	  </para>
 
-	  <para>Back to <xref linkend="Typesetting_exams"/>.</para>
+	  <para>
+	    The variables that can be included in the
+	    <filename>Properties.txt</filename> file are:
+	  </para>
+
+	  <informaltable frame="all" id="exam_vars">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="center"/>
+	      <thead>
+		<row>
+		  <entry align="center">Variable name</entry>
+		  <entry align="center">Description</entry>
+		  <entry align="center">Default</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry>
+		    <varname>testexam.src.dir</varname> or
+		    <varname>exam.src.dir</varname>
+		  </entry>
+		  <entry>
+		    Directory from where to obtain the source file for the test
+		    exam. 
+		  </entry>
+		  <entry>Current directory</entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.file</varname> or
+		    <varname>exam.file</varname> 
+		  </entry>
+		  <entry>
+		    File containing the exam to be processed.
+		  </entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.bilingual.file</varname> or
+		    <varname>exam.bilingual.file</varname> 
+		  </entry>
+		  <entry>
+		    File containing the exam to be processed in bilingual mode,
+		    that is, an English version and a Spanish version. Note that
+		    one and only one bilingual or non-bilingual file can be
+		    specified as source. Any combination between Test exam or
+		    regular exam is allowed.
+		  </entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.dst.dir</varname> or
+		    <varname>exam.dst.dir</varname>
+		  </entry>
+		  <entry>Directory where the new files are created.</entry>
+		  <entry>Current directory</entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.equation.dir</varname> or
+		    <varname>exam.equation.dir</varname>
+		  </entry>
+		  <entry>
+		    Directory where the auxliary files to render equations are
+		    pcreated
+		  </entry>
+		  <entry>
+		    Value of <varname>testexam.src.dir</varname> or
+		    <varname>exam.src.dir</varname>
+		  </entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.output.format</varname> or
+		    <varname>exam.output.format</varname>
+		  </entry>
+		  <entry>
+		    The resulting HTML files are created with this extension.
+		  </entry>
+		  <entry><filename>.html</filename></entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.style.file</varname> or
+		    <varname>exam.style.file</varname>
+		  </entry>
+		  <entry>
+		    Stylesheet to apply to the source file.
+		  </entry>
+		  <entry>Installed Exam Stylesheet</entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.extra.args</varname> or
+		    <varname>exam.extra.args</varname>
+		  </entry>
+		  <entry>
+		    Additional options to pass directly to <command>xsltproc</command>.
+		  </entry>
+		  <entry></entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+
 	</answer>
       </qandaentry>
 
@@ -2574,13 +2684,13 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	  <para>
 	    The <command>blockinfo</command> element is used to store some basic
 	    information about the question. Some additional elements can be
-	    included within this block as explained in <xref linkend="TO BE
-	    DEFINED"/>. Following this element, an arbitrary Docbook fragment
-	    can be included. This is useful if, for example, a problem statement
-	    is followed by several related true/false questions. These questions
-	    need to be included in the same <command>qandadiv</command>
-	    element. When shuffling questions, ADA shuffles independently the
-	    questions within this unit.
+	    included within this block as explained in <xref
+	    linkend="exam_handling_question_catalogs"/>. Following this element,
+	    an arbitrary Docbook fragment can be included. This is useful if,
+	    for example, a problem statement is followed by several related
+	    true/false questions. These questions need to be included in the
+	    same <command>qandadiv</command> element. When shuffling questions,
+	    ADA shuffles independently the questions within this unit.
 	  </para>
 
 	  <para>
@@ -2686,14 +2796,14 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	  <para>
 	    The <command>blockinfo</command> element is used to store some basic
 	    information about the question. Some additional elements can be
-	    included within this block as explained in <xref linkend="TO BE
-	    DEFINED"/>. Following this element, an arbitrary Docbook fragment
-	    can be included. This is useful if, for example, a problem statement
-	    is followed by several related questions (see <xref
-	    linkend="typeset_tf_questions"/> for an example). These questions
-	    need to be included in the same <command>qandadiv</command>
-	    element. When shuffling questions, ADA shuffles independently the
-	    questions within this unit.
+	    included within this block as explained in <xref
+	    linkend="exam_handling_question_catalogs"/>. Following this element,
+	    an arbitrary Docbook fragment can be included. This is useful if,
+	    for example, a problem statement is followed by several related
+	    questions (see <xref linkend="typeset_tf_questions"/> for an
+	    example). These questions need to be included in the same
+	    <command>qandadiv</command> element. When shuffling questions, ADA
+	    shuffles independently the questions within this unit.
 	  </para>
 
 	  <para>
@@ -2730,7 +2840,184 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	</answer>
       </qandaentry>
 
-<!--       <qandaentry id=""> -->
+      <qandaentry id="exam_handling_question_catalogs"
+		  xreflabel="How to select a subset of questions from a catalog">
+	<question>
+	  <para>
+	    Is it possible to have a Docbook file that selects only a subset of
+	    questions from a catalog?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    Although not a functionality provided by ADA, by combining questions
+	    encoded in Docbook with the possibility of including a fragment of
+	    an XML file into another (using <code>xinclude</code>), questions
+	    can be managed in large catalogs and select only a subset for a
+	    given exam.
+	  </para>
+
+	  <para>
+	    The idea is to centralize all the test questions created over the
+	    years into a single large Docbook file with the format explaned in
+	    <xref linkend="typeset_tf_questions"/> and <xref
+	    linkend="typeset_mc_questions"/>. When creating a new exam, a
+	    special set of questions can be selected by providing a set of
+	    identifiers. Two conditions are required to perform such operation:
+	    question sets need to have identifiers (aside from the unique
+	    question identifier stored in the <command>id</command> attribute)
+	    and a mechanism to select from the file only those questions with a
+	    given identifier.
+	  </para>
+
+	  <para>
+	    ADA proposes to identify sets of questions by means of three
+	    identifiers to facilitate stratified searches. An example of the
+	    Docbook element chosen to include this information is as follows:
+	  </para>
+
+	  <programlisting>&lt;qandadiv condition="TestQuestion" id="Q Id"&gt;
+  &lt;blockinfo&gt;
+    &lt;author&gt;
+      &lt;personname&gt;
+        &lt;firstname&gt;Author First&lt;/firstname&gt;&lt;surname&gt;Author Last&lt;/surname&gt;
+      &lt;/personname&gt;
+    &lt;/author&gt;
+    <command>&lt;printhistory&gt;
+      &lt;para arch="ID_1" revision="ID_2" vendor="ID_3" /&gt;
+    &lt;/printhistory&gt;</command>
+  &lt;/blockinfo&gt;
+  &lt;qandaentry&gt;
+    &lt;question&gt;Question Text&lt;/question&gt;
+    &lt;/question&gt;
+    &lt;answer condition="True" /&gt;
+  &lt;/qandaentry&gt;
+&lt;/qandadiv&gt;</programlisting>
+
+          <para>
+	    The <command>printhistory</command> element may contain an arbitrary
+	    number of <command>para</command> elements each of them with three
+	    identifiers. With this scheme, a question may belong to more than
+	    one set of questions (for example when re-used in more than one
+	    exam) and have one of these identifiers for each set.
+	  </para>
+
+	  <para>
+	    For example, given the file <filename>QuestionCatalog.xml</filename>
+	    with a large number of questions, selecting those questions that
+	    belong to a set is achieved by using the <quote>Xinclude</quote>
+	    notation. The usage of such element within an XML file is shown in
+	    the following listing:
+	  </para>
+
+	  <programlisting>&lt;qandaset defaultlabel="number"&gt;
+  <command>&lt;xi:include href="QuestionCatalog.xml"
+    xpointer="xpointer(//*/qandadiv/blockinfo/printhistory/para[@arch =
+	      'ID_1'][@revision = 'ID_2'][@vendor = 'ID_3']/ancestor::qandadiv)"
+              xmlns:xi="http://www.w3.org/2001/XInclude"&gt;
+    &lt;xi:fallback&gt;
+      &lt;para&gt;No questions found in catalog with id="ID_1/ID_2/ID_3"&lt;/para&gt;
+    &lt;/xi:fallback&gt;
+  &lt;/xi:include&gt;</command>
+&lt;/qandaset&gt;</programlisting>
+
+          <para>
+	    The resulting <command>qandaset</command> element contains only
+	    those questions that match the three given identifiers. With this
+	    technique, a possible usage scenario would be to keep all questions
+	    for a course, or set of courses, all encoded in a single file and
+	    then preparing an exam would be simply to label the questions with
+	    the proper identifiers and them pull all of them in the source
+	    document with the <command>xinclude</command> construction as shown
+	    above.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="exam_keep_stats"
+		  xreflabel="How to keep statistics about questions">
+	<question>
+	  <para>
+	    Is it possible to store and maintain statistics about questions in
+	    the same Docbook document?
+	  </para>
+	  
+	  <para>
+	    Collecting quiz questions is nice. With enough time and patiente you
+	    may end up with a large pool from which to design high quality
+	    exams. But, wouldn't it be nice to know how a question performed in
+	    a test? Is there a way to keep this information organized and then
+	    visualize it?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    ADA offers some support to implement this scenario. It assumes that
+	    the information attached to a question after it has been used in a
+	    test (generically referred as <quote>stats</quote>) is also stored
+	    in the Docbook source structure.
+	  </para>
+
+	  <para>
+	    The idea is to extend the mechanism of question group identifier
+	    (see <xref linkend="exam_handling_question_catalogs"/>) and include
+	    certain typical measurements. The proposed structure is shown in the
+	    following listing:
+	  </para>
+
+	  <programlisting>&lt;qandaentry&gt;
+  &lt;blockinfo&gt;
+    &lt;printhistory&gt;
+      &lt;para arch="ID_1" revision="ID_2" vendor="ID_3"&gt;
+        &lt;phrase condition="correct"&gt;20&lt;/phrase&gt;
+        &lt;phrase condition="incorrect"&gt;0&lt;/phrase&gt;
+        &lt;phrase condition="blank"&gt;2&lt;/phrase&gt;
+        &lt;phrase condition="total"&gt;22&lt;/phrase&gt;
+        &lt;phrase condition="remarks" /&gt;
+      &lt;/para&gt;
+    &lt;/printhistory&gt;
+  &lt;/blockinfo&gt;
+  &lt;question&gt;
+    &lt;para&gt;Question text&lt;/para&gt;
+  &lt;/question&gt;
+  &lt;answer condition="False" /&gt;
+&lt;/qandaentry&gt;</programlisting>
+
+          <para>
+	    Each <command>qandaentry</command> element may include a
+	    <command>blockinfo</command> with several
+	    <command>printhistory</command> blocks. Each of them contains a
+	    paragraph with a group identifier made of the same three attributes
+	    as described in <xref linkend="exam_handling_question_catalogs"/>
+	    and five <command>phrase</command> elements with the numbers derived
+	    from the use of the question in that set. In the example the
+	    question was answered by 22 perons, 20 of them answered correctly,
+	    nobody answered incorrectly and only two persons left it blank.
+	  </para>
+
+	  <para>
+	    ADA does not provide any support on how to collect and insert that
+	    information within each question. Since the files have an XML
+	    structure, it would be feasible to design some application that
+	    given a set of question identifiers and the proper data, it inserts
+	    them with the proper markup, but at this time, ADA does not offer
+	    such functionality.
+	  </para>
+
+	  <para>
+	    However, the rules to produce test exams (see <xref
+	    linkend="typeset_tf_questions"/> and <xref
+	    linkend="typeset_mc_questions"/>) produce an additional files with
+	    extension <filename>_stats</filename> in which all the data include
+	    for the questions are shown in tables. The following figure shows
+	    the table resulting from processing the data in the previous example:
+	  </para>
+
+
+	</answer>
+      </qandaentry>
+
+<!-- <qandaentry id=""> -->
 <!-- 	<question> -->
 <!-- 	  <para> -->
 <!-- 	  </para> -->
