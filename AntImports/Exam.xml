@@ -377,7 +377,6 @@
   <!-- Dump the properties defined in this script -->
   <target name="exam.dump.properties" depends="initial.check">
     <echo level="${exam.debug.level}"> ------ exam properties ----
-    exam.exec           ="${exam.exec}"
     exam.abssrc.dir     ="${exam.abssrc.dir}"
     exam.absdst.dir     ="${exam.absdst.dir}"
     exam.file           ="${exam.file}"
