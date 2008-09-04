@@ -4,6 +4,9 @@
   xmlns:exsl="http://exslt.org/common" 
   xmlns="http://www.w3.org/1999/xhtml" version="1.0">
 
+  <xsl:param name="section.autolabel" select="0"/>
+  <xsl:param name="chapter.autolabel" select="0"/>
+
   <!-- Control the font family and size -->
   <xsl:param name="ada.exam.fontfamily" select="'Verdana'"/>
   <xsl:param name="ada.exam.fontsize" select="'10pt'"/>
