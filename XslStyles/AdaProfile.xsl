@@ -231,7 +231,6 @@
                   $attribute.ok">
       <xsl:copy>
         <xsl:copy-of select="@*"/>
-        
         <!-- 
              Entity references must be replaced with filereferences for
              temporary tree 
@@ -349,5 +348,20 @@
     </xsl:if>
   </xsl:template>
 
+  <!-- Returns non-empty string if list in $b contains one ore more values from list $a -->
+  <xsl:template name="cross.compare">
+    <xsl:param name="a"/>
+    <xsl:param name="b"/>
+    <xsl:param name="sep" select="$profile.separator"/>
+    <xsl:variable name="head" select="substring-before(concat($a, $sep), $sep)"/>
+    <xsl:variable name="tail" select="substring-after($a, $sep)"/>
+    <xsl:if test="contains(concat($sep, $b, $sep), concat($sep, $head, $sep))">1</xsl:if>
+    <xsl:if test="$tail">
+      <xsl:call-template name="cross.compare">
+        <xsl:with-param name="a" select="$tail"/>
+        <xsl:with-param name="b" select="$b"/>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
 </xsl:stylesheet>
 

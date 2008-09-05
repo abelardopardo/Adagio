@@ -18,7 +18,7 @@
        Allows the inclusion in the audience attribute a date/time range in which
        the element is visible 
        -->
-  <xsl:import href="AudienceDateProfile.xsl"/>
+  <xsl:import href="AdaProfile.xsl"/>
 
   <!-- Allows the inclusion of Flash videos and MP3 -->
   <xsl:import href="FLVObj.xsl"/>
