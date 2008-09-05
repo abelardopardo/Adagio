@@ -12,6 +12,9 @@
   <xsl:include href="PguideSection.xsl"/>
   <xsl:include href="SubmitIgnore.xsl"/>
 
+  <!-- This one for sure is needed in all documents -->
+  <xsl:param name="xref.with.number.and.title" select="'0'"/>
+
   <xsl:include href="ExamParams.xsl"/>
 
 <!--   <xsl:include href="removespanquote.xsl"/> -->
@@ -461,13 +464,6 @@
       td.data           { border: 2px solid black; }
 
       tr                { page-break-inside: avoid; }
-
-      code.code { 
-        font-family: Courier New, Courier, monospace;
-        font-style: normal;
-        font-variant: normal;
-        font-weight: normal;
-      }
 
       div.informalfigure { text-align: center; }
 
