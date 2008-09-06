@@ -61,7 +61,6 @@
       <filelist refid="testexam.filelist"/>
       <filelist refid="testexam.bilingual.filelist"/>
     </pathconvert>
-    
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="testexam.check">
       <and>
