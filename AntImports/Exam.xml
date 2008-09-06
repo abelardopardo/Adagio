@@ -99,7 +99,7 @@
   <target name="exam.processing" depends="exam.check.values, exam.processing.NOT"
 	  if="exam.check" description="Process the exam file">
 
-    <echo>exam.processing (Step 1a/5)  CALL(xsltproc.processing)</echo>
+    <echo>exam.processing (Step 1a/4) CALL(xsltproc.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.processing" inheritAll="false">
@@ -110,9 +110,9 @@
       <param name="bilingualdb.extra.args"    value="${exam.extra.args}"/>
     </antcall>
 
-    <echo>exam.processing             END(bilingualdb.processing ES)</echo>
+    <echo>exam.processing             END(bilingualdb.processing)</echo>
 
-    <echo>exam.processing (Step 1b/5) CALL(bilingualdb.processing)</echo>
+    <echo>exam.processing (Step 1b/4) CALL(bilingualdb.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.processing" inheritAll="false">
@@ -126,9 +126,9 @@
 		    ${exam.extra.args}"/>
     </antcall>
 
-    <echo>exam.processing             END(bilingualdb.processing ES)</echo>
+    <echo>exam.processing             END(bilingualdb.processing)</echo>
 
-    <echo>exam.processing (Step 1c/5) CALL(bilingualdb.processing)</echo>
+    <echo>exam.processing (Step 1c/4) CALL(bilingualdb.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.processing" inheritAll="false">
@@ -145,9 +145,9 @@
 		    ${exam.extra.args}"/>
     </antcall>
 
-    <echo>exam.processing             END(bilingualdb.processing ES)</echo>
+    <echo>exam.processing             END(bilingualdb.processing)</echo>
 
-    <echo>exam.processing (Step 1d/5) CALL(xsltproc.processing)</echo>
+    <echo>exam.processing (Step 2a/4) CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
@@ -158,9 +158,9 @@
       <param name="xsltproc.extra.args"    value="${exam.extra.args}"/>
     </antcall>
 
-    <echo>exam.processing             END(xsltproc.processing ES)</echo>
+    <echo>exam.processing             END(xsltproc.processing)</echo>
 
-    <echo>exam.processing (Step 3f/5) CALL(xsltproc.processing)</echo>
+    <echo>exam.processing (Step 2b/4) CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
@@ -174,9 +174,9 @@
 		    ${exam.extra.args}"/>
     </antcall>
 
-    <echo>exam.processing             END(xsltproc.processing ES)</echo>
+    <echo>exam.processing             END(xsltproc.processing)</echo>
 
-    <echo>exam.processing (Step 1f/5) CALL(xsltproc.processing)</echo>
+    <echo>exam.processing (Step 2c/4) CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
@@ -193,9 +193,9 @@
 		    ${exam.extra.args}"/>
     </antcall>
 
-    <echo>exam.processing             END(xsltproc.processing ES)</echo>
+    <echo>exam.processing             END(xsltproc.processing)</echo>
 
-    <echo>exam.processing (Step 4/5)  CALL(latex.processing)</echo>
+    <echo>exam.processing (Step 3/4)  CALL(latex.processing)</echo>
 
     <!-- Call latex -->
     <antcall target="latex.processing" inheritAll="false">
@@ -205,9 +205,9 @@
       <param name="latex.extra.args"    value="-interaction=nonstopmode"/>
     </antcall>
 
-    <echo>exam.processing             END(latex.processing ES)</echo>
+    <echo>exam.processing             END(latex.processing)</echo>
 
-    <echo>exam.processing (Step 5/5)  CALL(dvi2bitmap.processing)</echo>
+    <echo>exam.processing (Step 4/4)  CALL(dvi2bitmap.processing)</echo>
 
     <mkdir dir="${exam.absdst.dir}${file.separator}${exam.equation.dir}"/>
 
@@ -218,7 +218,7 @@
       <param name="dvi2bitmap.files"         value="tex-math-equations.dvi"/>
     </antcall>
 
-    <echo>exam.processing             END(dvi2bitmap.processing ES)</echo>
+    <echo>exam.processing             END(dvi2bitmap.processing)</echo>
 
   </target>
 
@@ -235,7 +235,7 @@
 	  if="exam.check" 
 	  description="Remove files produced by exam">
 
-    <echo>exam.clean                  CALL(xsltproc.clean ES)</echo>
+    <echo>exam.clean                  CALL(dvi2bitmap.clean)</echo>
 
     <!-- Call dvi2bitmap -->
     <antcall target="dvi2bitmap.clean" inheritAll="false">
@@ -244,12 +244,17 @@
       <param name="dvi2bitmap.files"         value="tex-math-equations.dvi"/>
     </antcall>
 
+    <echo>exam.clean                  END(dvi2bitmap.clean)</echo>
+
+    <echo level="${exam.debug.level}">Delete files in ${exam.equation.dir}</echo>
     <delete failonerror="false">
       <fileset dir="${exam.equation.dir}" includes="*"/>
     </delete>
 
+    <echo level="${exam.debug.level}">Delete dir ${exam.equation.dir}</echo>
     <delete dir="${exam.equation.dir}" failonerror="false"/>
 
+    <echo level="${exam.debug.level}">Delete missfont.log</echo>
     <delete failonerror="false" file="missfont.log"/>
 
     <!-- Call latex -->
@@ -271,8 +276,6 @@
       <param name="xsltproc.extra.args"    value="${exam.extra.args}"/>
     </antcall>
 
-    <echo>exam.processing (Step 3f/5) CALL(xsltproc.processing)</echo>
-
     <!-- Call xsltproc -->
     <antcall target="xsltproc.clean" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
@@ -288,10 +291,6 @@
 		    ${exam.extra.args}"/>
     </antcall>
 
-    <echo>exam.processing             END(xsltproc.processing ES)</echo>
-
-    <echo>exam.processing (Step 3e/5) CALL(xsltproc.processing)</echo>
-
     <!-- Call xsltproc -->
     <antcall target="xsltproc.clean" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
@@ -303,12 +302,6 @@
 	     value="--stringparam ada.testquestions.include.solutions yes 
 		    ${exam.extra.args}"/>
     </antcall>
-
-    <echo>exam.processing             END(xsltproc.processing ES)</echo>
-
-    <echo>exam.processing (Step 3d/5) CALL(xsltproc.processing)</echo>
-
-    <echo>exam.processing (Step 3c/5) CALL(bilingualdb.processing)</echo>
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.clean" inheritAll="false">
@@ -325,10 +318,6 @@
 		    ${exam.extra.args}"/>
     </antcall>
 
-    <echo>exam.processing             END(bilingualdb.processing ES)</echo>
-
-    <echo>exam.processing (Step 3b/5) CALL(bilingualdb.processing)</echo>
-
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.clean" inheritAll="false">
       <param name="bilingualdb.src.dir"       value="${exam.dst.dir}"/>
@@ -341,10 +330,6 @@
 		    ${exam.extra.args}"/>
     </antcall>
 
-    <echo>exam.processing             END(bilingualdb.processing ES)</echo>
-
-    <echo>exam.processing (Step 3a/5) CALL(bilingualdb.processing)</echo>
-
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.clean" inheritAll="false">
       <param name="bilingualdb.src.dir"       value="${exam.dst.dir}"/>
@@ -353,8 +338,6 @@
       <param name="bilingualdb.files"         value="${exam.bilingual.file}"/>
       <param name="bilingualdb.extra.args"    value="${exam.extra.args}"/>
     </antcall>
-
-    <echo>exam.processing             END(bilingualdb.processing ES)</echo>
 
     <delete dir="${exam.absdst.dir}" 
 	    includes="__bogus__file__name 
