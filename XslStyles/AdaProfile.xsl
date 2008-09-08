@@ -4,6 +4,9 @@
   xmlns:date="http://exslt.org/dates-and-times"
   version="1.0">
 
+  <xsl:import
+     href="http://docbook.sourceforge.net/release/xsl/current/xhtml/param.xsl" />
+
   <!-- This variable is supposed to have the format YYYY-MM-DDTHH:MM:SS -->
   <xsl:param name="ada.current.datetime" select="''"/> 
   <xsl:param name="ada.audience.date.separator" select="'--'"/>

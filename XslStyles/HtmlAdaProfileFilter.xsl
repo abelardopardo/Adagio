@@ -13,6 +13,10 @@
 
   <xsl:output method="xml" indent="yes" encoding="UTF-8" />
 
+  <!-- Params needed by AdaProfile -->
+  <xsl:param name="stylesheet.result.type" select="'xhtml'"/>
+  <xsl:param name="profile.baseuri.fixup" select="false()"/>
+
   <!-- Bootstrap the filter -->
   <xsl:template match="/">
       <xsl:apply-templates select="node()" mode="profile"/>
