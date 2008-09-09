@@ -39,6 +39,12 @@
     <ant antfile="${ada.home}/AntImports/Laboratory.xml" 
 	 target="laboratory.processing" inheritAll="false"/>
 
+    <ant antfile="${ada.home}/AntImports/Exam.xml" 
+	 target="exam.processing" inheritAll="false"/>
+
+    <ant antfile="${ada.home}/AntImports/TestExam.xml" 
+	 target="testexam.processing" inheritAll="false"/>
+
     <ant antfile="${ada.home}/AntImports/Rss.xml" 
 	 target="rss.processing" inheritAll="false"/>
 
@@ -121,6 +127,12 @@
 
     <ant antfile="${ada.home}/AntImports/Rss.xml" 
 	 target="rss.clean" inheritAll="false"/>
+
+    <ant antfile="${ada.home}/AntImports/TestExam.xml" 
+	 target="testexam.clean" inheritAll="false"/>
+
+    <ant antfile="${ada.home}/AntImports/Exam.xml" 
+	 target="exam.clean" inheritAll="false"/>
 
     <ant antfile="${ada.home}/AntImports/Laboratory.xml" 
 	 target="laboratory.clean" inheritAll="false"/>
