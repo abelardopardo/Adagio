@@ -12,32 +12,35 @@
       Produce a pdf file directly from a Docbook file
   -->
 
-  <!-- Public Property definition -->
-  <property name="dblatex.exec"           value="dblatex"/>
-  <property name="dblatex.src.dir"        value="${basedir}"/>
-  <property name="dblatex.dst.dir"        value="${dblatex.src.dir}"/>
-  <property name="dblatex.files"          value=""/>
-  <property name="dblatex.extra.args"      value=""/>
+  <target name="dblatex.init" depends="ada.init">
 
-  <!-- Private properties -->
-  <property name="dblatex.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="dblatex.abssrc.dir" pathsep=" ">
-    <path location="${dblatex.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="dblatex.absdst.dir" pathsep=" ">
-    <path  location="${dblatex.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by dblatex (fileset to allow wildcards) -->
-  <fileset id="dblatex.fileset" dir="${dblatex.abssrc.dir}"
+    <!-- Public Property definition -->
+    <property name="dblatex.exec"           value="dblatex"/>
+    <property name="dblatex.src.dir"        value="${basedir}"/>
+    <property name="dblatex.dst.dir"        value="${dblatex.src.dir}"/>
+    <property name="dblatex.files"          value=""/>
+    <property name="dblatex.extra.args"      value=""/>
+    
+    <!-- Private properties -->
+    <property name="dblatex.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="dblatex.abssrc.dir" pathsep=" ">
+      <path location="${dblatex.src.dir}"/>
+    </pathconvert>
+    <pathconvert property="dblatex.absdst.dir" pathsep=" ">
+      <path  location="${dblatex.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Source files to be processed by dblatex (fileset to allow wildcards) -->
+    <fileset id="dblatex.fileset" dir="${dblatex.abssrc.dir}"
 	   includes="__bogus__file__name ${dblatex.files}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
        executing the regular targets. -->
   <target name="dblatex.check.values" 
-	  depends="ada.init, dblatex.dump.properties">
+	  depends="dblatex.init, dblatex.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="dblatex.check">

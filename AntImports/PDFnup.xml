@@ -13,33 +13,36 @@
       Producd 2up PDF files
   -->
 
-  <!-- Public Property definition -->
-  <property name="pdfnup.exec"           value="pdfnup"/>
-  <property name="pdfnup.src.dir"        value="${basedir}"/>
-  <property name="pdfnup.dst.dir"        value="${pdfnup.src.dir}"/>
-  <property name="pdfnup.nup.option"     value="1x2"/>
-  <property name="pdfnup.files"          value=""/>
+  <target name="pdfnup.init" depends="ada.init">
 
-
-  <!-- Private properties -->
-  <property name="pdfnup.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="pdfnup.abssrc.dir" pathsep=" ">
-    <path location="${pdfnup.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="pdfnup.absdst.dir" pathsep=" ">
-    <path  location="${pdfnup.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by pdfnup (fileset to allow wildcards) -->
-  <fileset id="pdfnup.fileset" dir="${pdfnup.abssrc.dir}"
-	   includes="__bogus__file__name ${pdfnup.files}"/>
+    <!-- Public Property definition -->
+    <property name="pdfnup.exec"           value="pdfnup"/>
+    <property name="pdfnup.src.dir"        value="${basedir}"/>
+    <property name="pdfnup.dst.dir"        value="${pdfnup.src.dir}"/>
+    <property name="pdfnup.nup.option"     value="1x2"/>
+    <property name="pdfnup.files"          value=""/>
+    
+    
+    <!-- Private properties -->
+    <property name="pdfnup.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="pdfnup.abssrc.dir" pathsep=" ">
+      <path location="${pdfnup.src.dir}"/>
+    </pathconvert>
+    <pathconvert property="pdfnup.absdst.dir" pathsep=" ">
+      <path  location="${pdfnup.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Source files to be processed by pdfnup (fileset to allow wildcards) -->
+    <fileset id="pdfnup.fileset" dir="${pdfnup.abssrc.dir}"
+	     includes="__bogus__file__name ${pdfnup.files}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="pdfnup.check.values" 
-	  depends="ada.init, pdfnup.dump.properties">
+	  depends="pdfnup.init, pdfnup.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="pdfnup.check">

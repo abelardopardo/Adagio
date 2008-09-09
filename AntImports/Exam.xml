@@ -17,37 +17,40 @@
 
   -->
 
-  <!-- Public Property definition -->
-  <property name="exam.src.dir"        value="${basedir}"/>
-  <property name="exam.dst.dir"        value="${exam.src.dir}"/>
-  <property name="exam.equation.dir"   value="equations"/>
-  <property name="exam.output.format"  value=".html"/>
-  <property name="exam.extra.args"     value="--stringparam
-					      passivetex.extensions 1
-					      --stringparam 
-					      tex.math.in.alt latex"/>
-  <property name="exam.file"           value=""/>
-  <property name="exam.bilingual.file" value=""/>
-  <property name="exam.style.file"     value="${ada.home}/XslStyles/Exam.xsl"/>
+  <target name="exam.init" depends="ada.init">
 
-  <!-- Private properties -->
-  <property name="exam.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="exam.abssrc.dir" pathsep=" ">
-    <path location="${exam.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="exam.absdst.dir" pathsep=" ">
-    <path  location="${exam.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source file to be processed by exam -->
-  <filelist id="exam.filelist" dir="${exam.abssrc.dir}"
-	   files="${exam.file}"/>
-
-  <!-- Bilingual source file to be processed by exam -->
-  <filelist id="exam.bilingual.filelist" dir="${exam.abssrc.dir}"
-	   files="${exam.bilingual.file}"/>
+    <!-- Public Property definition -->
+    <property name="exam.src.dir"        value="${basedir}"/>
+    <property name="exam.dst.dir"        value="${exam.src.dir}"/>
+    <property name="exam.equation.dir"   value="equations"/>
+    <property name="exam.output.format"  value=".html"/>
+    <property name="exam.extra.args"     value="--stringparam
+						passivetex.extensions 1
+						--stringparam 
+						tex.math.in.alt latex"/>
+    <property name="exam.file"           value=""/>
+    <property name="exam.bilingual.file" value=""/>
+    <property name="exam.style.file"     value="${ada.home}/XslStyles/Exam.xsl"/>
+    
+    <!-- Private properties -->
+    <property name="exam.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="exam.abssrc.dir" pathsep=" ">
+      <path location="${exam.src.dir}"/>
+    </pathconvert>
+    <pathconvert property="exam.absdst.dir" pathsep=" ">
+      <path  location="${exam.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Source file to be processed by exam -->
+    <filelist id="exam.filelist" dir="${exam.abssrc.dir}"
+	      files="${exam.file}"/>
+    
+    <!-- Bilingual source file to be processed by exam -->
+    <filelist id="exam.bilingual.filelist" dir="${exam.abssrc.dir}"
+	      files="${exam.bilingual.file}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
@@ -349,7 +352,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="exam.dump.properties" depends="ada.init">
+  <target name="exam.dump.properties" depends="exam.init">
     <echo level="${exam.debug.level}"> ------ exam properties ----
     exam.abssrc.dir     ="${exam.abssrc.dir}"
     exam.absdst.dir     ="${exam.absdst.dir}"

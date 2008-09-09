@@ -16,36 +16,37 @@
       for chainging the geometry of a PNG file and cropping part of it. 
   -->
 
-  <!-- Property definition -->
-  <property name="convert.exec"     value="convert"/>
-  <property name="convert.src.dir"  value="${basedir}"/>
-  <property name="convert.dst.dir"  value="${convert.src.dir}"/>
-  <property name="convert.geometry" value=""/>
-  <property name="convert.suffix"   value="${convert.geometry}"/>
-  <property name="convert.crop"     value=""/>
-  <property name="convert.format"   value="png"/>
-  <property name="convert.files"    value=""/>
-
-  <!-- Private properties -->
-  <property name="convert.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="convert.abssrc.dir" pathsep=" ">
-    <path location="${convert.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="convert.absdst.dir" pathsep=" ">
-    <path  location="${convert.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by convert (fileset to allow wildcards) -->
-  <fileset id="convert.fileset" dir="${convert.abssrc.dir}"
-	   includes="__bogus__file__name ${convert.files}"/>
-
+  <target name="convert.init" depends="ada.init">
+    <!-- Property definition -->
+    <property name="convert.exec"     value="convert"/>
+    <property name="convert.src.dir"  value="${basedir}"/>
+    <property name="convert.dst.dir"  value="${convert.src.dir}"/>
+    <property name="convert.geometry" value=""/>
+    <property name="convert.suffix"   value="${convert.geometry}"/>
+    <property name="convert.crop"     value=""/>
+    <property name="convert.format"   value="png"/>
+    <property name="convert.files"    value=""/>
+    
+    <!-- Private properties -->
+    <property name="convert.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="convert.abssrc.dir" pathsep=" ">
+      <path location="${convert.src.dir}"/>
+    </pathconvert>
+    <pathconvert property="convert.absdst.dir" pathsep=" ">
+      <path  location="${convert.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Source files to be processed by convert (fileset to allow wildcards) -->
+    <fileset id="convert.fileset" dir="${convert.abssrc.dir}"
+	     includes="__bogus__file__name ${convert.files}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="convert.check.values" 
-	  depends="ada.init, convert.dump.properties">
+	  depends="convert.init, convert.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="convert.check">

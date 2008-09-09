@@ -18,8 +18,6 @@
       smooth.
   -->
 
-  <import file="InitialCheck.xml"/>
-
   <target name="xfig.init" depends="ada.init">
 
     <!-- Public Property definition -->
@@ -87,32 +85,6 @@
   xfig.execution.possible = ${xfig.execution.possible}
   xfig.failure            = ${xfig.failure}</echo>
   
-    <macrodef name="xfig.execute.fig2dev">
-      <sequential>
-	<echo>xfig.processing             RUN</echo>
-	<echo level="${xfig.debug.level}">${basedir}</echo>
-	
-	<!-- Create the dst directory -->
-	<mkdir dir="${xfig.absdst.dir}" />
-	
-	<apply dir="${basedir}" parallel="false"
-	       dest="${xfig.absdst.dir}" append="yes" failonerror="true"
-	       executable="${xfig.exec}" forwardslash="true" output="build.out">
-	  <arg value="-L"/>
-	  <arg value="${xfig.output.format}"/>
-	  <arg value="-b"/>
-	  <arg value="${xfig.border}"/>
-	  <arg value="-S"/>
-	  <arg value="${xfig.smooth}"/>
-	  <arg line="${xfig.extra.args}"/>
-	  <srcfile/>
-	  <targetfile/>
-	  <fileset refid="xfig.fileset"/>
-	  <!-- Mapper from source files to produced files -->
-	  <mapper type="glob" from="*.fig" to="*.${xfig.output.format}"/>
-	</apply>
-      </sequential>
-    </macrodef>
   </target>
 
   <target name="xfig.bomb.out" if="xfig.failure">
@@ -136,7 +108,27 @@
 	  depends="xfig.check.values, xfig.processing.NOT"
 	  if="xfig.check" description="creates the figures from the fig files">
 
-    <xfig.execute.fig2dev />
+    <echo level="${xfig.debug.level}">${basedir}</echo>
+    
+    <!-- Create the dst directory -->
+    <mkdir dir="${xfig.absdst.dir}" />
+    
+    <apply dir="${basedir}" parallel="false"
+	   dest="${xfig.absdst.dir}" append="yes" failonerror="true"
+	   executable="${xfig.exec}" forwardslash="true" output="build.out">
+      <arg value="-L"/>
+      <arg value="${xfig.output.format}"/>
+      <arg value="-b"/>
+      <arg value="${xfig.border}"/>
+      <arg value="-S"/>
+      <arg value="${xfig.smooth}"/>
+      <arg line="${xfig.extra.args}"/>
+      <srcfile/>
+      <targetfile/>
+      <fileset refid="xfig.fileset"/>
+      <!-- Mapper from source files to produced files -->
+      <mapper type="glob" from="*.fig" to="*.${xfig.output.format}"/>
+    </apply>
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is

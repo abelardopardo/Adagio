@@ -15,22 +15,24 @@
       Produce the aplication of a stylefile to the files in docbook.files
   -->
 
-  <!-- Property definition -->
-  <property name="docbook.src.dir"        value="${basedir}"/>
-  <property name="docbook.dst.dir"        value="${docbook.src.dir}"/>
-  <property name="docbook.output.format"  value=".html"/>
-  <property name="docbook.extra.args"     value=""/>
-  <property name="docbook.files"          value=""/>
-  <property name="docbook.style.file"     
-	    value="${ada.home}/XslStyles/DocbookProfile.xsl"/>
-
-  <!-- Private properties -->
-  <property name="docbook.debug.level"    value="${ada.debug.level}"/>
+  <target name="docbook.init" depends="ada.init">
+    <!-- Property definition -->
+    <property name="docbook.src.dir"        value="${basedir}"/>
+    <property name="docbook.dst.dir"        value="${docbook.src.dir}"/>
+    <property name="docbook.output.format"  value=".html"/>
+    <property name="docbook.extra.args"     value=""/>
+    <property name="docbook.files"          value=""/>
+    <property name="docbook.style.file"     
+	      value="${ada.home}/XslStyles/DocbookProfile.xsl"/>
+    
+    <!-- Private properties -->
+    <property name="docbook.debug.level"    value="${ada.debug.level}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
        executing the regular targets. -->
   <target name="docbook.check.values" 
-	  depends="ada.init, docbook.dump.properties">
+	  depends="docbook.init, docbook.dump.properties">
     
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="docbook.check">

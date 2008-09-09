@@ -13,8 +13,6 @@
       to PNG, PDF, EPS or PS format.
   -->
 
-  <import file="InitialCheck.xml"/>
-
   <target name="inkscape.init" depends="ada.init">
 
     <!-- Public Property definition -->

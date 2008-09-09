@@ -12,28 +12,31 @@
       Produce ??
   -->
 
-  <!-- Public Property definition -->
-  <property name="ppt2pdf.exec"           
-	    value="${ada.home}${file.separator}bin${file.separator}ada_ppt_to_pdf"/>
-  <property name="ppt2pdf.src.dir"        value="${basedir}"/>
-  <property name="ppt2pdf.files"          value=""/>
+  <target name="ppt2pdf.init" depends="ada.init">
 
-  <!-- Private properties -->
-  <property name="ppt2pdf.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="ppt2pdf.abssrc.dir" pathsep=" ">
-    <path location="${ppt2pdf.src.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by ppt2pdf (fileset to allow wildcards) -->
-  <fileset id="ppt2pdf.fileset" dir="${ppt2pdf.abssrc.dir}"
-	   includes="__bogus__file__name ${ppt2pdf.files}"/>
+    <!-- Public Property definition -->
+    <property name="ppt2pdf.exec"           
+	      value="${ada.home}${file.separator}bin${file.separator}ada_ppt_to_pdf"/>
+    <property name="ppt2pdf.src.dir"        value="${basedir}"/>
+    <property name="ppt2pdf.files"          value=""/>
+    
+    <!-- Private properties -->
+    <property name="ppt2pdf.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="ppt2pdf.abssrc.dir" pathsep=" ">
+      <path location="${ppt2pdf.src.dir}"/>
+    </pathconvert>
+    
+    <!-- Source files to be processed by ppt2pdf (fileset to allow wildcards) -->
+    <fileset id="ppt2pdf.fileset" dir="${ppt2pdf.abssrc.dir}"
+	     includes="__bogus__file__name ${ppt2pdf.files}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="ppt2pdf.check.values" 
-	  depends="ada.init, ppt2pdf.dump.properties">
+	  depends="ppt2pdf.init, ppt2pdf.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="ppt2pdf.check">

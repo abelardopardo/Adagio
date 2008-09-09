@@ -12,32 +12,35 @@
       Produce ??
   -->
 
-  <!-- Public Property definition -->
-  <property name="latex.exec"           value="latex"/>
-  <property name="latex.src.dir"        value="${basedir}"/>
-  <property name="latex.dst.dir"        value="${latex.src.dir}"/>
-  <property name="latex.files"          value=""/>
-  <property name="latex.extra.args"     value=""/>
+  <target name="latex.init" depends="ada.init">
 
-  <!-- Private properties -->
-  <property name="latex.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="latex.abssrc.dir" pathsep=" ">
-    <path location="${latex.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="latex.absdst.dir" pathsep=" ">
-    <path  location="${latex.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by latex (fileset to allow wildcards) -->
-  <fileset id="latex.fileset" dir="${latex.abssrc.dir}"
-	   includes="__bogus__file__name ${latex.files}"/>
+    <!-- Public Property definition -->
+    <property name="latex.exec"           value="latex"/>
+    <property name="latex.src.dir"        value="${basedir}"/>
+    <property name="latex.dst.dir"        value="${latex.src.dir}"/>
+    <property name="latex.files"          value=""/>
+    <property name="latex.extra.args"     value=""/>
+    
+    <!-- Private properties -->
+    <property name="latex.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="latex.abssrc.dir" pathsep=" ">
+      <path location="${latex.src.dir}"/>
+    </pathconvert>
+    <pathconvert property="latex.absdst.dir" pathsep=" ">
+      <path  location="${latex.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Source files to be processed by latex (fileset to allow wildcards) -->
+    <fileset id="latex.fileset" dir="${latex.abssrc.dir}"
+	     includes="__bogus__file__name ${latex.files}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="latex.check.values" 
-	  depends="ada.init, latex.dump.properties">
+	  depends="latex.init, latex.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="latex.check">

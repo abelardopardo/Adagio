@@ -12,30 +12,32 @@
       Translate the files in gimp to the format and leave them in the same
       directory but with different extension.
   -->
-  
-  <!-- Property definition -->
-  <property name="gimp.exec"    value="gimp"/>
-  <property name="gimp.src.dir" value="${basedir}"/>
-  <property name="gimp.script.file" 
-            value="${ada.home}${file.separator}AntImports${file.separator}xcftopng.scm"/>
-  <property name="gimp.files" value=""/>
 
-  <!-- Private properties -->
-  <property name="gimp.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="gimp.abssrc.dir" pathsep=" ">
-    <path location="${gimp.src.dir}"/>
-  </pathconvert>
-
-  <!--  Source files to be processed by Gimp (fileset to allow wildcards) -->
-  <fileset id="gimp.fileset" dir="${gimp.abssrc.dir}"
-	   includes="__bogus__file__name ${gimp.files}"/>
+  <target name="gimp.init" depends="ada.init">
+    <!-- Property definition -->
+    <property name="gimp.exec"    value="gimp"/>
+    <property name="gimp.src.dir" value="${basedir}"/>
+    <property name="gimp.script.file" 
+	      value="${ada.home}${file.separator}AntImports${file.separator}xcftopng.scm"/>
+    <property name="gimp.files" value=""/>
+    
+    <!-- Private properties -->
+    <property name="gimp.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="gimp.abssrc.dir" pathsep=" ">
+      <path location="${gimp.src.dir}"/>
+    </pathconvert>
+    
+    <!--  Source files to be processed by Gimp (fileset to allow wildcards) -->
+    <fileset id="gimp.fileset" dir="${gimp.abssrc.dir}"
+	     includes="__bogus__file__name ${gimp.files}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="gimp.check.values" 
-	  depends="ada.init, gimp.dump.properties">
+	  depends="gimp.init, gimp.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="gimp.check">

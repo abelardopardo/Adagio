@@ -12,31 +12,34 @@
       Produce ??
   -->
 
-  <!-- Public Property definition -->
-  <property name="ps2pdf.exec"           value="ps2pdf"/>
-  <property name="ps2pdf.src.dir"        value="${basedir}"/>
-  <property name="ps2pdf.dst.dir"        value="${ps2pdf.src.dir}"/>
-  <property name="ps2pdf.files"          value=""/>
+  <target name="ps2pdf.init" depends="ada.init">
 
-  <!-- Private properties -->
-  <property name="ps2pdf.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="ps2pdf.abssrc.dir" pathsep=" ">
-    <path location="${ps2pdf.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="ps2pdf.absdst.dir" pathsep=" ">
-    <path  location="${ps2pdf.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by ps2pdf (fileset to allow wildcards) -->
-  <fileset id="ps2pdf.fileset" dir="${ps2pdf.abssrc.dir}"
-	   includes="__bogus__file__name ${ps2pdf.files}"/>
+    <!-- Public Property definition -->
+    <property name="ps2pdf.exec"           value="ps2pdf"/>
+    <property name="ps2pdf.src.dir"        value="${basedir}"/>
+    <property name="ps2pdf.dst.dir"        value="${ps2pdf.src.dir}"/>
+    <property name="ps2pdf.files"          value=""/>
+    
+    <!-- Private properties -->
+    <property name="ps2pdf.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="ps2pdf.abssrc.dir" pathsep=" ">
+      <path location="${ps2pdf.src.dir}"/>
+    </pathconvert>
+    <pathconvert property="ps2pdf.absdst.dir" pathsep=" ">
+      <path  location="${ps2pdf.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Source files to be processed by ps2pdf (fileset to allow wildcards) -->
+    <fileset id="ps2pdf.fileset" dir="${ps2pdf.abssrc.dir}"
+	     includes="__bogus__file__name ${ps2pdf.files}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="ps2pdf.check.values" 
-	  depends="ada.init, ps2pdf.dump.properties">
+	  depends="ps2pdf.init, ps2pdf.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="ps2pdf.check">

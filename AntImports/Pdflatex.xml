@@ -12,32 +12,35 @@
       Produce a pdf file directly from a latex file using pdflatex
   -->
 
-  <!-- Public Property definition -->
-  <property name="pdflatex.exec"           value="pdflatex"/>
-  <property name="pdflatex.src.dir"        value="${basedir}"/>
-  <property name="pdflatex.dst.dir"        value="${pdflatex.src.dir}"/>
-  <property name="pdflatex.files"          value=""/>
-  <property name="pdflatex.extra.args"     value=""/>
+  <target name="pdflatex.init" depends="ada.init">
 
-  <!-- Private properties -->
-  <property name="pdflatex.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="pdflatex.abssrc.dir" pathsep=" ">
-    <path location="${pdflatex.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="pdflatex.absdst.dir" pathsep=" ">
-    <path  location="${pdflatex.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by pdflatex (fileset to allow wildcards) -->
-  <fileset id="pdflatex.fileset" dir="${pdflatex.abssrc.dir}"
-	   includes="__bogus__file__name ${pdflatex.files}"/>
+    <!-- Public Property definition -->
+    <property name="pdflatex.exec"           value="pdflatex"/>
+    <property name="pdflatex.src.dir"        value="${basedir}"/>
+    <property name="pdflatex.dst.dir"        value="${pdflatex.src.dir}"/>
+    <property name="pdflatex.files"          value=""/>
+    <property name="pdflatex.extra.args"     value=""/>
+    
+    <!-- Private properties -->
+    <property name="pdflatex.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="pdflatex.abssrc.dir" pathsep=" ">
+      <path location="${pdflatex.src.dir}"/>
+    </pathconvert>
+    <pathconvert property="pdflatex.absdst.dir" pathsep=" ">
+      <path  location="${pdflatex.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Source files to be processed by pdflatex (fileset to allow wildcards) -->
+    <fileset id="pdflatex.fileset" dir="${pdflatex.abssrc.dir}"
+	     includes="__bogus__file__name ${pdflatex.files}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="pdflatex.check.values" 
-	  depends="ada.init, pdflatex.dump.properties">
+	  depends="pdflatex.init, pdflatex.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="pdflatex.check">

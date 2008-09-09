@@ -22,41 +22,43 @@
 
   -->
 
-  <!-- Property definition -->
-  <property name="mergestyles.exec"           value="xsltproc"/>
-  <property name="mergestyles.src.dir"        value="${basedir}"/>
-  <property name="mergestyles.master.style"   value=""/>
-  <property name="mergestyles.dst.dir"        value="${mergestyles.dst.dir}"/>
-  <property name="mergestyles.file.to.import" value=""/>
-  <property name="mergestyles.style.file"     
-	    value="${ada.home}/XslStyles/Mergesheets.xsl"/>
-
-  <!-- Private properties -->
-  <property name="mergestyles.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Source files to be processed by mergestyles -->
-  <filelist id="mergestyles.master.filelist" dir="${mergestyles.src.dir}"
-	    files="${mergestyles.master.style}"/>
-
-
-  <!-- Local variables -->
-  <pathconvert property="mergestyles.output.prefix">
-    <filelist refid="mergestyles.master.filelist"/>
-    <chainedmapper>
-      <mapper type="glob" from="*.xml" to="*"/>
+  <target name="mergestyles.init" depends="ada.init">
+    <!-- Property definition -->
+    <property name="mergestyles.exec"           value="xsltproc"/>
+    <property name="mergestyles.src.dir"        value="${basedir}"/>
+    <property name="mergestyles.master.style"   value=""/>
+    <property name="mergestyles.dst.dir"        value="${mergestyles.dst.dir}"/>
+    <property name="mergestyles.file.to.import" value=""/>
+    <property name="mergestyles.style.file"     
+	      value="${ada.home}/XslStyles/Mergesheets.xsl"/>
+    
+    <!-- Private properties -->
+    <property name="mergestyles.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Source files to be processed by mergestyles -->
+    <filelist id="mergestyles.master.filelist" dir="${mergestyles.src.dir}"
+	      files="${mergestyles.master.style}"/>
+    
+    
+    <!-- Local variables -->
+    <pathconvert property="mergestyles.output.prefix">
+      <filelist refid="mergestyles.master.filelist"/>
+      <chainedmapper>
+	<mapper type="glob" from="*.xml" to="*"/>
+	<mapper type="flatten"/>
+      </chainedmapper>
+    </pathconvert>
+    <pathconvert property="mergestyles.output.suffix">
+      <filelist id="mergestyles.import.filelist" 
+		files="${mergestyles.file.to.import}"/>
       <mapper type="flatten"/>
-    </chainedmapper>
-  </pathconvert>
-  <pathconvert property="mergestyles.output.suffix">
-    <filelist id="mergestyles.import.filelist" 
-	      files="${mergestyles.file.to.import}"/>
-    <mapper type="flatten"/>
-  </pathconvert>
+    </pathconvert>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="mergestyles.check.values" 
-	  depends="ada.init, mergestyles.dump.properties"> 
+	  depends="mergestyles.init, mergestyles.dump.properties"> 
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="mergestyles.check">

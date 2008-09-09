@@ -12,31 +12,34 @@
       Produce ??
   -->
 
-  <!-- Public Property definition -->
-  <property name="dvips.exec"           value="dvips"/>
-  <property name="dvips.src.dir"        value="${basedir}"/>
-  <property name="dvips.dst.dir"        value="${dvips.src.dir}"/>
-  <property name="dvips.files"          value=""/>
-
-  <!-- Private properties -->
-  <property name="dvips.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="dvips.abssrc.dir" pathsep=" ">
-    <path location="${dvips.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="dvips.absdst.dir" pathsep=" ">
-    <path  location="${dvips.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by dvips (fileset to allow wildcards) -->
-  <fileset id="dvips.fileset" dir="${dvips.abssrc.dir}"
-	   includes="__bogus__file__name ${dvips.files}"/>
+  <target name="dvips.init" depends="ada.init">
+    
+    <!-- Public Property definition -->
+    <property name="dvips.exec"           value="dvips"/>
+    <property name="dvips.src.dir"        value="${basedir}"/>
+    <property name="dvips.dst.dir"        value="${dvips.src.dir}"/>
+    <property name="dvips.files"          value=""/>
+    
+    <!-- Private properties -->
+    <property name="dvips.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="dvips.abssrc.dir" pathsep=" ">
+      <path location="${dvips.src.dir}"/>
+    </pathconvert>
+    <pathconvert property="dvips.absdst.dir" pathsep=" ">
+      <path  location="${dvips.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Source files to be processed by dvips (fileset to allow wildcards) -->
+    <fileset id="dvips.fileset" dir="${dvips.abssrc.dir}"
+	     includes="__bogus__file__name ${dvips.files}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="dvips.check.values" 
-	  depends="ada.init, dvips.dump.properties">
+	  depends="dvips.init, dvips.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="dvips.check">

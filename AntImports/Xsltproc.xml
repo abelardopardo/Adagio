@@ -17,92 +17,94 @@
       Produce the aplication of a stylefile to the files in xsltproc.fileset
   -->
 
-  <!-- Public Property definition -->
-  <property name="xsltproc.exec"           value="xsltproc"/>
-  <property name="xsltproc.src.dir"        value="${basedir}"/>
-  <property name="xsltproc.dst.dir"        value="${xsltproc.src.dir}"/>
-  <property name="xsltproc.style.file"     value=""/>
-  <property name="xsltproc.output.format"  value=".html"/>
-  <property name="xsltproc.extra.args"     value=""/>
-  <property name="xsltproc.files"          value=""/>
-
-  <!-- Private properties -->
-  <property name="xsltproc.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="xsltproc.abssrc.dir" pathsep=" ">
-    <path location="${xsltproc.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="xsltproc.absdst.dir" pathsep=" ">
-    <path  location="${xsltproc.dst.dir}"/>
-  </pathconvert>
-  
-  <!-- Source files to be processed by xsltproc (fileset to allow wildcards) -->
-  <fileset id="xsltproc.fileset" dir="${xsltproc.abssrc.dir}"
-	   includes="__bogus__file__name ${xsltproc.files}"/>
-
-  <!-- Obtain the filelist with the produced files. -->
-  <pathconvert property="xsltproc.target.filelist.property" pathsep=" ">
-    <fileset refid="xsltproc.fileset"/>
-    <chainedmapper>
-      <mapper type="glob" from="${xsltproc.abssrc.dir}/*" 
-	      to="${xsltproc.absdst.dir}/*"/>
-      <mapper type="glob" from="*.xml" to="*${xsltproc.output.format}"/>
-    </chainedmapper>
-  </pathconvert>
-  <filelist id="xsltproc.target.filelist"
-	    files="${xsltproc.target.filelist.property}"/>
-
-  <!-- Condition to detect if the stylefile needs to be pre-processed with
-  Mergestyles -->
-  <condition property="xsltproc.mergestyles">
-    <and>
-      <not><equals arg1="${mergestyles.master.style}" arg2="" trim="true"/></not>
-      <not><equals arg1="${mergestyles.src.dir}" arg2="" trim="true"/></not>
-      <available file="${mergestyles.src.dir}/${mergestyles.master.style}"/>
-    </and>
-  </condition>
-
-  <macrodef name="run.xsltproc">
-    <attribute name="DIR"/>
-    <attribute name="XSLTPROC.ABSDST.DIR"/>
-    <attribute name="XSLTPROC.EXTRA.ARGS"/>
-    <attribute name="XSLTPROC.STYLE.FILE"/>
-    <element name="fileset.and.mapper" implicit="yes"/>
-    <sequential>
-      <!-- Execute the command. Watch out for src.dir and dst.dir -->
-      <apply dir="@{DIR}" parallel="false" dest="@{XSLTPROC.ABSDST.DIR}" 
-	     append="yes" failonerror="true" executable="${xsltproc.exec}" 
-	     output="build.out">
-	<arg value="--xinclude"/>
-	<arg value="--stringparam"/>
-	<arg value="ada.home"/>
-	<arg value="${ada.home}"/>
-	<arg value="--stringparam"/>
-	<arg value="basedir"/>
-	<arg value="${basedir}"/>
-	<arg value="--stringparam"/>
-	<arg value="ada.course.home"/>
-	<arg value="${ada.course.home}"/>
-	<arg value="--stringparam"/>
-	<arg value="ada.current.datetime"/>
-	<arg value="${ada.current.datetime}"/>
-	<arg value="--stringparam"/>
-	<arg value="profile.revision"/>
-	<arg value="${ada.profile.revision}"/>
-	<arg line="@{XSLTPROC.EXTRA.ARGS}"/>
-	<arg value="-o"/>
-	<targetfile/>
-	<arg value="@{XSLTPROC.STYLE.FILE}"/>
-	<fileset.and.mapper />
-      </apply>
-    </sequential>
-  </macrodef>
+  <target name="xsltproc.init" depends="ada.init">
+    <!-- Public Property definition -->
+    <property name="xsltproc.exec"           value="xsltproc"/>
+    <property name="xsltproc.src.dir"        value="${basedir}"/>
+    <property name="xsltproc.dst.dir"        value="${xsltproc.src.dir}"/>
+    <property name="xsltproc.style.file"     value=""/>
+    <property name="xsltproc.output.format"  value=".html"/>
+    <property name="xsltproc.extra.args"     value=""/>
+    <property name="xsltproc.files"          value=""/>
+    
+    <!-- Private properties -->
+    <property name="xsltproc.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="xsltproc.abssrc.dir" pathsep=" ">
+      <path location="${xsltproc.src.dir}"/>
+    </pathconvert>
+    <pathconvert property="xsltproc.absdst.dir" pathsep=" ">
+      <path  location="${xsltproc.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Source files to be processed by xsltproc (fileset to allow wildcards) -->
+    <fileset id="xsltproc.fileset" dir="${xsltproc.abssrc.dir}"
+	     includes="__bogus__file__name ${xsltproc.files}"/>
+    
+    <!-- Obtain the filelist with the produced files. -->
+    <pathconvert property="xsltproc.target.filelist.property" pathsep=" ">
+      <fileset refid="xsltproc.fileset"/>
+      <chainedmapper>
+	<mapper type="glob" from="${xsltproc.abssrc.dir}/*" 
+		to="${xsltproc.absdst.dir}/*"/>
+	<mapper type="glob" from="*.xml" to="*${xsltproc.output.format}"/>
+      </chainedmapper>
+    </pathconvert>
+    <filelist id="xsltproc.target.filelist"
+	      files="${xsltproc.target.filelist.property}"/>
+    
+    <!-- Condition to detect if the stylefile needs to be pre-processed with
+	 Mergestyles -->
+    <condition property="xsltproc.mergestyles">
+      <and>
+	<not><equals arg1="${mergestyles.master.style}" arg2="" trim="true"/></not>
+	<not><equals arg1="${mergestyles.src.dir}" arg2="" trim="true"/></not>
+	<available file="${mergestyles.src.dir}/${mergestyles.master.style}"/>
+      </and>
+    </condition>
+    
+    <macrodef name="run.xsltproc">
+      <attribute name="DIR"/>
+      <attribute name="XSLTPROC.ABSDST.DIR"/>
+      <attribute name="XSLTPROC.EXTRA.ARGS"/>
+      <attribute name="XSLTPROC.STYLE.FILE"/>
+      <element name="fileset.and.mapper" implicit="yes"/>
+      <sequential>
+	<!-- Execute the command. Watch out for src.dir and dst.dir -->
+	<apply dir="@{DIR}" parallel="false" dest="@{XSLTPROC.ABSDST.DIR}" 
+	       append="yes" failonerror="true" executable="${xsltproc.exec}" 
+	       output="build.out">
+	  <arg value="--xinclude"/>
+	  <arg value="--stringparam"/>
+	  <arg value="ada.home"/>
+	  <arg value="${ada.home}"/>
+	  <arg value="--stringparam"/>
+	  <arg value="basedir"/>
+	  <arg value="${basedir}"/>
+	  <arg value="--stringparam"/>
+	  <arg value="ada.course.home"/>
+	  <arg value="${ada.course.home}"/>
+	  <arg value="--stringparam"/>
+	  <arg value="ada.current.datetime"/>
+	  <arg value="${ada.current.datetime}"/>
+	  <arg value="--stringparam"/>
+	  <arg value="profile.revision"/>
+	  <arg value="${ada.profile.revision}"/>
+	  <arg line="@{XSLTPROC.EXTRA.ARGS}"/>
+	  <arg value="-o"/>
+	  <targetfile/>
+	  <arg value="@{XSLTPROC.STYLE.FILE}"/>
+	  <fileset.and.mapper />
+	</apply>
+      </sequential>
+    </macrodef>
+  </target>
   
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="xsltproc.check.values" 
-	  depends="ada.init, xsltproc.dump.properties"> 
+	  depends="xsltproc.init, xsltproc.dump.properties"> 
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="xsltproc.check">

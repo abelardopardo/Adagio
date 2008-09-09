@@ -17,31 +17,35 @@
       stated in a resource, or be able to overwrite it.
   -->
 
-  <!-- Public Property definition -->
-  <property name="subrecursive.dirs"       value=""/>
-  <property name="subrecursive.dst.dir"    value="${basedir}"/>
-  <property name="subrecursive.dirs.nodst" value=""/>
-  <property name="subrecursive.target"     value=""/>
+  <import file="InitialCheck.xml"/>
 
-  <!-- Private properties -->
-  <property name="subrecursive.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define a property containing the absolute dst path -->
-  <pathconvert property="subrecursive.absdst.dir" pathsep=" ">
-    <path  location="${subrecursive.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Dirs to recur  -->
-  <filelist id="subrecursive.dirlist" dir="${basedir}"
-	    files="${subrecursive.dirs}"/>
-
-  <filelist id="subrecursive.dirlist.nodst" dir="${basedir}"
-	    files="${subrecursive.dirs.nodst}"/>
+  <target name="subrecursive.init" depends="ada.init">
+    <!-- Public Property definition -->
+    <property name="subrecursive.dirs"       value=""/>
+    <property name="subrecursive.dst.dir"    value="${basedir}"/>
+    <property name="subrecursive.dirs.nodst" value=""/>
+    <property name="subrecursive.target"     value=""/>
+    
+    <!-- Private properties -->
+    <property name="subrecursive.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define a property containing the absolute dst path -->
+    <pathconvert property="subrecursive.absdst.dir" pathsep=" ">
+      <path  location="${subrecursive.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Dirs to recur  -->
+    <filelist id="subrecursive.dirlist" dir="${basedir}"
+	      files="${subrecursive.dirs}"/>
+    
+    <filelist id="subrecursive.dirlist.nodst" dir="${basedir}"
+	      files="${subrecursive.dirs.nodst}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="subrecursive.check.values" 
-	  depends="ada.init, subrecursive.dump.properties">
+	  depends="subrecursive.init, subrecursive.dump.properties">
 
     <!-- Conditions to see which one of the two targets needs to be executed -->
     <condition property="subrecursive.check.withdst">

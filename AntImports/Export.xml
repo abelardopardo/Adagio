@@ -17,13 +17,15 @@
       set, the target is not executed.
   -->
 
-  <!-- Public Property definition -->
-  <property name="export.src.dir" value="${basedir}" />
-  <property name="export.dst.dir" value="${export.src.dir}" />
-  <property name="export.files"   value=""/>
-
-  <!-- Private properties -->
-  <property name="export.debug.level"    value="${ada.debug.level}"/>
+  <target name="export.init" depends="ada.init">
+    <!-- Public Property definition -->
+    <property name="export.src.dir" value="${basedir}" />
+    <property name="export.dst.dir" value="${export.src.dir}" />
+    <property name="export.files"   value=""/>
+    
+    <!-- Private properties -->
+    <property name="export.debug.level"    value="${ada.debug.level}"/>
+  </target>
 
   <target name="export.processing.NOT"
 	  unless="exportcontrol.check">
@@ -36,7 +38,7 @@
   target is not executed and instead, the one notifying the user of such event
   is executed. -->
   <target name="export.processing" 
-	  depends="exportcontrol, export.processing.NOT"
+	  depends="export.init, exportcontrol, export.processing.NOT"
 	  if="exportcontrol.check"
 	  description="It only invokes copyfiles">
     
@@ -53,7 +55,7 @@
   </target>
 
   <!-- Clean the produced files -->
-  <target name="export.clean" depends="exportcontrol"
+  <target name="export.clean" depends="export.init, exportcontrol"
 	  if="exportcontrol.check"
 	  description="Delete files copied to dst">
 
@@ -68,7 +70,7 @@
     <echo>export.clean                END(copyfiles.clean)</echo>
   </target>
 
-  <target name="export.check.garbage.clean" depends="exportcontrol"
+  <target name="export.check.garbage.clean" depends="export.init, exportcontrol"
 	  description="Check if the garbage clean is needed">
     <condition property="export.check.garbage">
       <and>

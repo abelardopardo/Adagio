@@ -12,28 +12,30 @@
       Produce ??
   -->
 
-  <!-- Public Property definition -->
-  <property name="extraant.src.dir"          value="${basedir}"/>
-  <property name="extraant.file"             value="build.xml"/>
-  <property name="extraant.pretarget"        value=""/>
-  <property name="extraant.posttarget"       value=""/>
-  <property name="extraant.pretarget.clean"  value=""/>
-  <property name="extraant.posttarget.clean" value=""/>
-
-  <!-- Private properties -->
-  <property name="extraant.target"         value=""/>
-  <property name="extraant.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define a property containing the absolute src paths -->
-  <pathconvert property="extraant.abssrc.dir" pathsep=" ">
-    <path location="${extraant.src.dir}"/>
-  </pathconvert>
+  <target name="extraant.init" depends="ada.init">
+    <!-- Public Property definition -->
+    <property name="extraant.src.dir"          value="${basedir}"/>
+    <property name="extraant.file"             value="build.xml"/>
+    <property name="extraant.pretarget"        value=""/>
+    <property name="extraant.posttarget"       value=""/>
+    <property name="extraant.pretarget.clean"  value=""/>
+    <property name="extraant.posttarget.clean" value=""/>
+    
+    <!-- Private properties -->
+    <property name="extraant.target"         value=""/>
+    <property name="extraant.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define a property containing the absolute src paths -->
+    <pathconvert property="extraant.abssrc.dir" pathsep=" ">
+      <path location="${extraant.src.dir}"/>
+    </pathconvert>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
+       executing the regular targets. -->
   <target name="extraant.check.values" 
-	  depends="ada.init, extraant.dump.properties">
-
+	  depends="extraant.init, extraant.dump.properties">
+    
     <!-- Condition to enable/disable the execution of the target -->
     <condition property="extraant.check">
       <and>
@@ -47,6 +49,20 @@
     </condition>
     <!-- Dump the value of the properties just computed. -->
     <echo level="${extraant.debug.level}">  extraant.check              = "${extraant.check}"</echo>
+
+    <macrodef name="extraant.execute.invokation">
+      <attribute name="EXTRAANT.EXECUTE.TARGET" />
+      <sequential>
+	<echo>extraant.processing         RUN</echo>
+	<echo level="${extraant.debug.level}">${basedir}</echo>
+	
+	<ant antfile="${extraant.file}" dir="${extraant.src.dir}" 
+	     target="@{EXTRAANT.EXECUTE.TARGET}" inheritall="false">
+	  <property name="ada.home"        value="${ada.home}"/>
+	  <property name="ada.course.home" value="${ada.course.home}"/>
+	</ant>
+      </sequential>
+    </macrodef>
   </target>
 
   <!-- 
@@ -67,14 +83,23 @@
 	  if="extraant.check"
 	  description="Simply invoke the extra ant with target target">
 
-    <echo>extraant.processing         RUN</echo>
-    <echo level="${extraant.debug.level}">${basedir}</echo>
+    <extraant.execute.invokation EXTRAANT.EXECUTE.TARGET="${extraant.target}" />
+  </target>
 
-    <ant antfile="${extraant.file}" dir="${extraant.src.dir}" 
-	 target="${extraant.target}" inheritall="false">
-      <property name="ada.home"        value="${ada.home}"/>
-      <property name="ada.course.home" value="${ada.course.home}"/>
-    </ant>
+  <target name="extraant.processing.pretarget" 
+	  depends="extraant.check.values, extraant.processing.NOT"
+	  if="extraant.check"
+	  description="Simply invoke the extra ant with target target">
+
+    <extraant.execute.invokation EXTRAANT.EXECUTE.TARGET="${extraant.pretarget}" />
+  </target>
+
+  <target name="extraant.processing.posttarget" 
+	  depends="extraant.check.values, extraant.processing.NOT"
+	  if="extraant.check"
+	  description="Simply invoke the extra ant with target target">
+
+    <extraant.execute.invokation EXTRAANT.EXECUTE.TARGET="${extraant.posttarget}" />
   </target>
 
   <!-- Dump the properties defined in this script -->
