@@ -108,6 +108,8 @@ td.noclass
   border: 1px solid black;
   }
 
+td.rowhead { font-weight: bold; }
+
 .grey1head 
 { 
   background-color: #EEEEEE;

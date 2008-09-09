@@ -2840,6 +2840,195 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	</answer>
       </qandaentry>
 
+      <qandaentry id="exam_how_many_files_are_produced"
+		  xreflabel="How many files are produced when processing an
+			     exam">
+	<question>
+	  <para>
+	    How many files are produced when processing the source file for an
+	    exam?
+	  </para>
+	</question>
+
+	<answer>
+	  <para>
+	    That depends on the type of exam being manipulated. If the exam
+	    contains a test (either variable <varname>testexam.file</varname> or
+	    <varname>testexam.bilingual.file</varname> are defined) then there
+	    are numerous extra files produced because of the shuffling
+	    mechanism. The following table summarizes the four possible
+	    scenarios when combined with single language file or bilingual file
+	    when processing an exam file with name
+	    <filename>examfile.xml</filename> (the expression 
+	    <code>foo_[a,b]</code> means that two files are produced,
+	    <filename>foo_a</filename> and <filename>foo_b</filename>).
+	  </para>
+
+	  <informaltable frame="all" id="exam_created_files">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="center"/>
+	      <thead>
+		<row>
+		  <entry align="center"/>
+		  <entry align="center">Test (T/F or Multiple Choice)</entry>
+		  <entry align="center">Exam</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry role="rowhead" align="center">One language</entry>
+		  <entry>
+		    <itemizedlist>
+		      <listitem>
+			<para>
+			  <filename>examfile.html</filename>: Exam as it is
+			  supposed to be taken.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_solutions.html</filename>:
+			  Exam including the solution.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_pguide.html</filename>: Exam with
+			  solutions and annotations done by the teaching staff.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>tex-math-equations.*</filename>: Files to
+			  support mathematical formulas. For ADA internal use.
+			</para>
+		      </listitem>
+		    </itemizedlist>
+		  </entry>
+		  <entry>
+		    <itemizedlist>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2].html</filename>: Two sets of
+			  shuffled questions.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile.html</filename>: Questions in the
+			  given order.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2]_solution.html</filename>: Two
+			  sets of shuffled questions with solutions.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_solutions.html</filename>:
+			  Questions with the solutions in the given order.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2]_stats.html</filename>: Two
+			  sets of shuffled questions with solutions and
+			  statistics (see <xref linkend="exam_keep_stats"/>)
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_stats.html</filename>: Questions
+			  with solutions and statistics in the given order.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_raw.xml</filename>: File for ADA
+			  internal use.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>tex-math-equations.*</filename>: Files to
+			  support mathematical formulas. For ADA internal use.
+			</para>
+		      </listitem>
+		    </itemizedlist>
+		  </entry>
+		</row>
+		<row>
+		  <entry role="rowhead" align="center">Bilingual</entry>
+		  <entry>
+		    <itemizedlist>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2]_[en,es].html</filename>: Two
+			  sets of shuffled questions in each language.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile.html</filename>: Questions in both
+			  languages and the given order (for consistency
+			  reviewing purposes).
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2]_[en,es]_solution.html</filename>:
+			  Two sets of shuffled questions with solutions in each
+			  language.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_solutions.html</filename>:
+			  Questions in both languages with the solutions in the
+			  given order.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2]_[en,es]_stats.html</filename>:
+			  Two sets of shuffled questions in each language with
+			  solutions and statistics (see <xref
+			  linkend="exam_keep_stats"/>)
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_stats.html</filename>: Questions in
+			  both languages with solutions and statistics in the
+			  given order.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_raw.xml</filename>: File for ADA
+			  internal use.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>tex-math-equations.*</filename>: Files to
+			  support mathematical formulas. For ADA internal use.
+			</para>
+		      </listitem>
+		    </itemizedlist>
+		  </entry>
+		  <entry></entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+	</answer>
+      </qandaentry>
+
       <qandaentry id="exam_handling_question_catalogs"
 		  xreflabel="How to select a subset of questions from a catalog">
 	<question>

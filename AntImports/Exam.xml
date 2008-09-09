@@ -122,7 +122,8 @@
       <param name="bilingualdb.files"         value="${exam.bilingual.file}"/>
       <param name="bilingualdb.output.format" value="_solution.html"/>
       <param name="bilingualdb.extra.args"    
-	     value="--stringparam ada.testquestions.include.solutions yes 
+	     value="--stringparam solutions.include.guide yes 
+		    --stringparam ada.testquestions.include.solutions yes 
 		    ${exam.extra.args}"/>
     </antcall>
 
@@ -138,7 +139,8 @@
       <param name="bilingualdb.files"         value="${exam.bilingual.file}"/>
       <param name="bilingualdb.output.format" value="_pguide.html"/>
       <param name="bilingualdb.extra.args"    
-	     value="--stringparam ada.testquestions.include.solutions yes 
+	     value="--stringparam solutions.include.guide yes 
+		    --stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
 		    --stringparam professorguide.include.guide yes
@@ -170,7 +172,8 @@
       <param name="xsltproc.files"         value="${exam.file}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.testquestions.include.solutions yes 
+	     value="--stringparam solutions.include.guide yes 
+		    --stringparam ada.testquestions.include.solutions yes 
 		    ${exam.extra.args}"/>
     </antcall>
 
@@ -186,7 +189,8 @@
       <param name="xsltproc.files"         value="${exam.file}"/>
       <param name="xsltproc.output.format" value="_pguide.html"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.testquestions.include.solutions yes 
+	     value="--stringparam solutions.include.guide yes 
+		    --stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
 		    --stringparam professorguide.include.guide yes
@@ -284,7 +288,8 @@
       <param name="xsltproc.files"         value="${exam.file}"/>
       <param name="xsltproc.output.format" value="_pguide.html"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.testquestions.include.solutions yes 
+	     value="--stringparam solutions.include.guide yes 
+		    --stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
 		    --stringparam professorguide.include.guide yes
@@ -299,7 +304,8 @@
       <param name="xsltproc.files"         value="${exam.file}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.testquestions.include.solutions yes 
+	     value="--stringparam solutions.include.guide yes 
+		    --stringparam ada.testquestions.include.solutions yes 
 		    ${exam.extra.args}"/>
     </antcall>
 
@@ -311,7 +317,8 @@
       <param name="bilingualdb.files"         value="${exam.bilingual.file}"/>
       <param name="bilingualdb.output.format" value="_pguide.html"/>
       <param name="bilingualdb.extra.args"    
-	     value="--stringparam ada.testquestions.include.solutions yes 
+	     value="--stringparam solutions.include.guide yes 
+		    --stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
 		    --stringparam professorguide.include.guide yes
@@ -326,7 +333,8 @@
       <param name="bilingualdb.files"         value="${exam.bilingual.file}"/>
       <param name="bilingualdb.output.format" value="_solution.html"/>
       <param name="bilingualdb.extra.args"    
-	     value="--stringparam ada.testquestions.include.solutions yes 
+	     value="--stringparam solutions.include.guide yes 
+		    --stringparam ada.testquestions.include.solutions yes 
 		    ${exam.extra.args}"/>
     </antcall>
 
