@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+    "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section lang="en" status="ExamID">
+  <!-- This title is only shown by the browser in the title bar -->
+  <title>&lt;title&gt; element in the Docbook root section</title>
+
+  <!-- Element to insert a part text after the main heading -->
+  <para condition="part">&lt;para condition="part"&gt; text content</para>
+  
+  <!-- These parameters define some specific values to include in the heading -->
+  <para condition="duration">&lt;para condition="duration"> text content</para>
+  <para condition="scoring">&lt;para condition="scoring"> text content</para>
+  <para condition="date">&lt;para condition="date"> text content</para>
+
+  <!-- 
+       An arbitrary text can be included right after the administrative data
+       with the following element.
+   -->
+  <para condition="note">
+    Any additional text you want to include can be added as a regular
+    docbook chunk surrounded by the &lt;para condition="note"&gt; element.
+  </para>
+
+  <!-- The following element produces the name/last name/student id box -->
+  <para condition="name"/>
+
+  <!-- 
+       The content of the exam must be organized within sections inside another
+       section. Titles are ignore.
+  -->
+  <section>
+    <title>Section with the exercises (this title is ignored)</title>
+    <section>
+      <title>This is the first exercise (this title is ignored)</title>
+        <para>
+          The exam content must be contained as independent sections within
+	  another extra section. This is have all the pieces that form the
+	  content both contained in a single section element, but at the same
+	  time offer the possibility of writing exercises independently, each of
+	  them in a section, and include them as part of the exam.
+        </para>
+
+	<para>
+	  The exercise heading is controlled by the variables
+	  <varname>ada.exam.exercise.name</varname> and
+	  <varname>ada.exam.exercise.name.en</varname>.
+	</para>
+    </section>
+
+    <section>
+      <title/>
+      <para>
+	If the style detects more than one section within the content section,
+	it inserts a number after the exercise heading.
+      </para>
+    </section>
+  </section>
+</section>

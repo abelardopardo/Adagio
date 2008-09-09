@@ -1686,9 +1686,10 @@ export.dst.dir=${ada.course.home}scratch</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry id="global_rule" xreflabel="How to define global rules">
+      <qandaentry id="global_rule" 
+		  xreflabel="How to make a variable declaration valid everywhere">
 	<question>
-	  <para>Can I make a variable declaration to be used everywhere?</para>
+	  <para>Can I make a variable declaration valid everywhere?</para>
 	  
 	  <para>
 	    The file <filename>Properties.txt</filename> contains variable
@@ -1759,7 +1760,8 @@ export.dst.dir=${ada.course.home}scratch</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry id="modified_stylesheet">
+      <qandaentry id="modified_stylesheet"
+		  xreflabel="How to use a slightly modified stylesheet">
 	<question>
 	  <para>
 	    How can I use a slightly modified generic stylesheet without
@@ -2275,6 +2277,1046 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
     </qandaset>
   </section>
 
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                   TYPESETTING EXAMINATIONS                   -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <section id="Typesetting_exams" xreflabel="Top of the Section">
+    <title>Typesetting exams with ADA</title>
+
+    <qandaset defaultlabel="qanda">
+
+      <qandaentry id="Ada_and_exam_typesetting">
+	<question>
+	  <para>
+	    How does ADA support exam typesetting?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    ADA includes a set of stylesheets to transform a Docbook document
+	    with certain special elements into an HTML document with the
+	    appearance of an exam. As with the rest of styles in ADA, some
+	    elements are parameters and therefore can be easily
+	    customized. Alternatively, you may use this style as the basis
+	    for your own customized style.
+	  </para>
+
+	  <para>
+	    There are two sets of variables and rules depending on the type of
+	    exam.  If an exam contains a set of questions that need to be
+	    shuffled and two versions be produced, then the variables with the
+	    prefix <varname>testexam</varname> are used. If the exam is simply a set
+	    of exercises and no shuffle is required, then the varaiables with
+	    the prefix <varname>exam</varname> are required. In the same
+	    directory, two exams, one of each type may coexist.
+	  </para>
+
+	  <para>
+	    The variables that can be included in the
+	    <filename>Properties.txt</filename> file are:
+	  </para>
+
+	  <informaltable frame="all" id="exam_vars">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="center"/>
+	      <thead>
+		<row>
+		  <entry align="center">Variable name</entry>
+		  <entry align="center">Description</entry>
+		  <entry align="center">Default</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry>
+		    <varname>testexam.src.dir</varname> or
+		    <varname>exam.src.dir</varname>
+		  </entry>
+		  <entry>
+		    Directory from where to obtain the source file for the test
+		    exam. 
+		  </entry>
+		  <entry>Current directory</entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.file</varname> or
+		    <varname>exam.file</varname> 
+		  </entry>
+		  <entry>
+		    File containing the exam to be processed.
+		  </entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.bilingual.file</varname> or
+		    <varname>exam.bilingual.file</varname> 
+		  </entry>
+		  <entry>
+		    File containing the exam to be processed in bilingual mode,
+		    that is, an English version and a Spanish version. Note that
+		    one and only one bilingual or non-bilingual file can be
+		    specified as source. Any combination between Test exam or
+		    regular exam is allowed.
+		  </entry>
+		  <entry></entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.dst.dir</varname> or
+		    <varname>exam.dst.dir</varname>
+		  </entry>
+		  <entry>Directory where the new files are created.</entry>
+		  <entry>Current directory</entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.equation.dir</varname> or
+		    <varname>exam.equation.dir</varname>
+		  </entry>
+		  <entry>
+		    Directory where the auxliary files to render equations are
+		    pcreated
+		  </entry>
+		  <entry>
+		    Value of <varname>testexam.src.dir</varname> or
+		    <varname>exam.src.dir</varname>
+		  </entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.output.format</varname> or
+		    <varname>exam.output.format</varname>
+		  </entry>
+		  <entry>
+		    The resulting HTML files are created with this extension.
+		  </entry>
+		  <entry><filename>.html</filename></entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.style.file</varname> or
+		    <varname>exam.style.file</varname>
+		  </entry>
+		  <entry>
+		    Stylesheet to apply to the source file.
+		  </entry>
+		  <entry>Installed Exam Stylesheet</entry>
+		</row>
+		<row>
+		  <entry>
+		    <varname>testexam.extra.args</varname> or
+		    <varname>exam.extra.args</varname>
+		  </entry>
+		  <entry>
+		    Additional options to pass directly to <command>xsltproc</command>.
+		  </entry>
+		  <entry></entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+
+	  <para>
+	    You main check the content of the following samples of the
+	    <filename>Properties.txt</filename> file to:
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<ulink url="Samples/TestExam/Properties.txt">Create a True/False
+		or Multiple Choice test exam</ulink>
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<ulink url="Samples/TestExamBL/Properties.txt">Create a
+		True/False or Multiple Choice bilingual test exam</ulink>
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<ulink url="Samples/Exam/Properties.txt">Create a regular
+		exam</ulink> (No T/F or Multiple choice questions)
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<ulink url="Samples/ExamBL/Properties.txt">Create a regular
+		bilingual exam</ulink>  (No T/F or Multiple choice questions)
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="ada_exam_elements_parameterized"
+		  xreflabel="How to produce the exam heading">
+	<question>
+	  <para>
+	    How to produce the exam heading?
+	  </para>
+	</question>
+	
+	<answer>
+	  <para>
+	    The stylesheet needs certain special elements and parameters to
+	    generate the exam heading. Furthermore, certain special elements
+	    may be included in the Docbook source document to produce additional
+	    elements in the HTML version. The customization then is achieved by
+	    using both mechanisms: parameters and elements in the document. The
+	    following figure shows an exam in which all the customizable parts
+	    have been substituted by the parameter names or the element to
+	    include in the source document.
+	  </para>
+
+	  <informaltable frame="all">
+	    <tgroup rowsep="1" colsep="1" cols="1">
+	      <colspec colnum="1" colname="col1" align="center"/>
+	      <tbody>
+		<row>
+		  <entry>
+		    <para>
+		      <informalfigure>
+			<mediaobject>
+			  <imageobject>
+			    <imagedata fileref="Samples/Exam/ExamCapture.png"
+				       format="PNG"/> 
+			  </imageobject>
+			  <textobject>
+			    <phrase>
+			      Sample of exam heading with stylesheet parameters
+			    </phrase> 
+			  </textobject>
+			</mediaobject>
+		      </informalfigure>
+		    </para>
+		  </entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+
+	  <para>
+	    The <ulink url="Samples/Exam/Test.xml">docbook source document to
+	    create an exam like the one shown in the previous figure</ulink>
+	    must have a &lt;section&gt; element as root. The content of this
+	    section together with the values of the parameters are used to
+	    produce the HTML file.
+	  </para>
+
+	  <para>
+	    Additional parameters available for customization but not shown in
+	    the figure are:
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<varname>ada.exam.fontfamily</varname>: Font family used in the
+		HTML head section (default to Verdana).
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<varname>ada.exam.fontsize</varname>: Font size used in the
+		HTML head section (default to 10pt).
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<varname>ada.exam.render.separate.cover</varname>: Boolean to
+		force a pagebreak after the exam cover (if value is
+		<quote>yes</quote>), or include the exam content right after the
+		head (any value different from <quote>yes</quote>.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<varname>ada.exam.author</varname>: Author name to include in the
+		HTML head section.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<varname>ada.exam.include.id</varname>: Boolean to control the
+		inclusion of an ID identifying the exam right below the
+		<quote>part</quote> variable in the version including the
+		solutions. The parameter takes values <quote>yes/no</quote>, and
+		the value shown in the HTML document is taken from the
+		<command>status</command> attribute given in the root
+		<command>section</command> element.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <para>
+	    The generic structure of a Docbook file to render with the exam
+	    heading would be something similar to (see also the <ulink
+	    url="Samples/Exam/Test.xml">Docbook source file used to create the
+	    exam in the previous figure</ulink>):
+	  </para>
+
+	  <programlisting><![CDATA[<section lang="en" id="ExamID">
+
+  <title>Title to insert in the HTML head</title>
+  <para condition="part">Problems</para>
+  
+  <para condition="duration">1 hour and 15 minutes</para>
+  <para condition="scoring">50 points over 100</para>
+  <para condition="date">May 16th, 2008 at 16:30</para>
+
+  <para condition="note">
+    The rules for the exam are...
+  </para>
+
+  <para condition="name"/> <!-- To include the name box -->
+
+  <section>
+    <title>Section with the exercises (this title is ignored)</title>
+    <section>
+      <title>This is the first exercise (this title is ignored)</title>
+      <para>
+        Exam content. Either regular docbook describing a problem or a 
+        qandaset element with several qandaentry elements each of them
+        containing one or several questions
+      </para>
+    </section>
+    ...
+  </section>
+</section>]]></programlisting>
+
+	  <para>
+	    If the exam contains only true/false questions, the style includes a
+	    table with scoring data (number of correct, incorrect and empty
+	    answers as well as the final score) if the element <code>&lt;para
+	    condition="score"/&gt;</code> is included in the root
+	    <command>section</command> element. The following figure shows the
+	    resulting box if the element is included.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="Samples/TestExam/ScoreRendering.png"
+			   format="PNG"/> 
+	      </imageobject>
+	      <textobject><phrase>Box for scores</phrase></textobject>
+	    </mediaobject>
+	  </informalfigure>
+	  
+	  <para>
+	    The <ulink url="Samples/TestExam/Params.xml">file containing the
+	    parameter values</ulink> would have a structure similar to:
+	  </para>
+	  <programlisting><![CDATA[<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns="http://www.w3.org/1999/xhtml" version="1.0">
+
+  <xsl:param name="ada.exam.include.id" select="'no'"/>
+  <xsl:param name="ada.exam.render.separate.cover" select="'yes'"/>
+  <xsl:param name="ada.exam.author">Author that created the exam</xsl:param>
+  <xsl:param name="ada.exam.topleft.image">Logo.png</xsl:param>
+  <xsl:param name="ada.exam.topleft.image.alt">My Logo</xsl:param>
+  <xsl:param name="ada.exam.topleft.toptext">The degree name</xsl:param>
+  <xsl:param name="ada.exam.topleft.centertext">Course name</xsl:param>
+  <xsl:param name="ada.exam.topleft.centertext.en">Date</xsl:param>
+  <xsl:param name="ada.exam.topleft.bottomtext">Some other message</xsl:param>
+  ...
+</xsl:stylesheet>]]></programlisting>
+
+	  <para>
+	    See <xref linkend="modified_stylesheet"/> to see how the file
+	    containing these definitions is included in the
+	    <filename>Properties.txt</filename> file
+	  </para>
+
+	  <para>Back to <xref linkend="Typesetting_exams"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="typeset_tf_questions"
+		  xreflabel="How to typeset a true/false question exam">
+	<question>
+	  <para>
+	    How to typeset an exam with true/false questions?
+	  </para>
+	</question>
+
+	<answer>
+	  <para>
+	    Additionaly to producing an exam heading (see <xref
+	    linkend="ada_exam_elements_parameterized"/>) the ADA stylesheet is
+	    capable of detecting true/false questions with certain structure and
+	    produce two HTML documents with these questions shuffled.
+	  </para>
+
+	  <para>
+	    The questions must be described using the
+	    <command>qandaentry</command> docbook element which is provided
+	    preciselly to mark the content of questions and answers.
+	  </para>
+
+	  <para>
+	    The following listing shows the content of a <ulink
+	    url="Samples/TestQuestions/TFQuestion.xml">Docbook file with the
+	    definition of a multiple choice question</ulink>:
+	  </para>
+
+	  <programlisting><![CDATA[<qandadiv condition="TestQuestion" id="Question ID">
+  <blockinfo>
+    <author>
+      <personname>
+	<firstname>AuthorFirst</firstname><surname>AuthorLast</surname>
+      </personname>
+    </author>
+  </blockinfo>
+  <para>Any text preceding the (possible) multiple questions.</para>
+  <qandaentry>
+    <!-- Any text to precede the question -->
+    <para>
+	Include here any Docbook subset introducing the first question.
+    </para>
+    <question>
+      <para>First Question text</para>
+    </question>
+    <!-- Answer value as attribute -->
+    <answer condition="False" />
+  </qandaentry>
+  <qandaentry>
+    <!-- Any text to precede the question -->
+    <para>
+	Include here any Docbook subset introducing the second question.
+    </para>
+    <question>
+      <para>Second question text</para>
+    </question>
+    <!-- Answer value as attribute -->
+    <answer condition="True" />
+  </qandaentry>
+</qandadiv>]]></programlisting>
+
+	  <para>
+	    The <command>condition</command> attribute in the
+	    <command>qandadiv</command> element with the value
+	    <command>TestQuestion</command> is used to state the type of
+	    rendering to be used, in this case, two possible answers,
+	    <quote>True</quote> or <quote>False</quote>. The
+	    <command>id</command> attribute can be used to uniquely identify
+	    questions in a catalog.
+	  </para>
+
+	  <para>
+	    The <command>blockinfo</command> element is used to store some basic
+	    information about the question. Some additional elements can be
+	    included within this block as explained in <xref
+	    linkend="exam_handling_question_catalogs"/>. Following this element,
+	    an arbitrary Docbook fragment can be included. This is useful if,
+	    for example, a problem statement is followed by several related
+	    true/false questions. These questions need to be included in the
+	    same <command>qandadiv</command> element. When shuffling questions,
+	    ADA shuffles independently the questions within this unit.
+	  </para>
+
+	  <para>
+	    After this optional portion, questions are each included inside a
+	    <command>qandaentry</command>. This element may include again an
+	    arbitrary Docbook fragment to introduce the question, the question
+	    itself surrounded by the <command>question</command> element and a
+	    signe <command>answer</command>
+	    element with the <command>condition</command> attribute equal to the
+	    correct answer. Acceptable true values are 
+	    <quote>Correct</quote>, <quote>Correcto</quote>,
+	    <quote>True</quote>, and <quote>Cierto</quote>. Acceptable false values
+	    are <quote>Incorrect</quote>, <quote>Incorrecto</quote>,
+	    <quote>False</quote>, and <quote>Falso</quote>.
+	  </para>
+
+	  <para>
+	    The HTML obtained with the previously included Docbook structure is
+	    shown in the following figure.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="Samples/TestQuestions/TFRendering.png" 
+			   format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Sample of multiple choice question</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>Back to <xref linkend="Typesetting_exams"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="typeset_mc_questions"
+		  xreflabel="How to typeset a multiple choice question exam">
+	<question>
+	  <para>
+	    How to typeset an exam with multiple choice
+	    questions?
+	  </para>
+	</question>
+
+	<answer>
+	  <para>
+	    Additionaly to producing an exam heading (see <xref
+	    linkend="ada_exam_elements_parameterized"/>) the ADA stylesheet is
+	    capable of detecting true/false and multiple choice questions with
+	    certain structure and produce two versions with these questions
+	    shuffled.
+	  </para>
+
+	  <para>
+	    The questions must be described using the
+	    <command>qandaentry</command> docbook element which is provided
+	    preciselly to mark the content of questions and answers.
+	  </para>
+
+	  <para>
+	    The following listing shows the content of a <ulink
+	    url="Samples/TestQuestions/MCQuestion.xml">Docbook file with the
+	    definition of a multiple choice question</ulink>:
+	  </para>
+
+	  <programlisting><![CDATA[<qandadiv condition="TestMCQuestion" id="Your own unique id">
+  <blockinfo>   <!-- Basic meta info for this question -->
+    <author>
+      <personname>
+        <firstname>AuthorName</firstname><surname>AuthorSurname</surname>
+      </personname>
+    </author>
+  </blockinfo>
+  <para>Any text preceding the (possible) multiple questions.</para>
+  <qandaentry>
+    <para> <!-- Any text to precede the question -->
+	Include here any Docbook subset introducing the questions
+    </para>
+    <question>
+      <para>Question text.</para>
+    </question>
+    <!-- 
+	 Answer list. The correct one needs to include the condition attribute
+	 with value "Correct, True, Correcto or Cierto". 
+    -->
+    <answer condition="Correct"><para>First answer</para></answer>
+    <answer><para>Second answer</para></answer>
+    <answer><para>Third answer</para></answer>
+    <answer><para>Fourth answer</para></answer>
+  </qandaentry>
+</qandadiv>]]></programlisting>
+
+	  <para>
+	    The <command>condition</command> attribute with the value
+	    <command>TestMCQuestion</command> attribute is used to state the
+	    type of rendering to be used, in this case, a set of possible answer
+	    with a white square on their left. The <command>id</command>
+	    attribute can be used to uniquely identify questions in a wider
+	    catalog.
+	  </para>
+
+	  <para>
+	    The <command>blockinfo</command> element is used to store some basic
+	    information about the question. Some additional elements can be
+	    included within this block as explained in <xref
+	    linkend="exam_handling_question_catalogs"/>. Following this element,
+	    an arbitrary Docbook fragment can be included. This is useful if,
+	    for example, a problem statement is followed by several related
+	    questions (see <xref linkend="typeset_tf_questions"/> for an
+	    example). These questions need to be included in the same
+	    <command>qandadiv</command> element. When shuffling questions, ADA
+	    shuffles independently the questions within this unit.
+	  </para>
+
+	  <para>
+	    After this optional portion, questions are each included inside a
+	    <command>qandaentry</command>. This element may include again an
+	    arbitrary Docbook fragment to introduce the question, the question
+	    itself surrounded by the <command>question</command> element and the
+	    multiple answers surrounded by the <command>answer</command>
+	    element. Correct answers are distinguished by the
+	    <command>condition</command> attribute in the
+	    <command>answer</command> element with one of the values
+	    <quote>Correct</quote>, <quote>Correcto</quote>, <quote>True</quote>
+	    or <quote>Cierto</quote>.
+	  </para>
+
+	  <para>
+	    The HTML obtained with the previously included Docbook structure is
+	    shown in the following figure.
+	  </para>
+
+	  <informalfigure>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="Samples/TestQuestions/MCRendering.png" 
+			   format="PNG"/>
+	      </imageobject>
+	      <textobject>
+		<phrase>Sample of multiple choice question</phrase>
+	      </textobject>
+	    </mediaobject>
+	  </informalfigure>
+
+	  <para>Back to <xref linkend="Typesetting_exams"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="exam_how_many_files_are_produced"
+		  xreflabel="How many files are produced when processing an
+			     exam">
+	<question>
+	  <para>
+	    How many files are produced when processing the source file for an
+	    exam?
+	  </para>
+	</question>
+
+	<answer>
+	  <para>
+	    That depends on the type of exam being manipulated. If the exam
+	    contains a test (either variable <varname>testexam.file</varname> or
+	    <varname>testexam.bilingual.file</varname> are defined) then there
+	    are numerous extra files produced because of the shuffling
+	    mechanism. The following table summarizes the four possible
+	    scenarios when combined with single language file or bilingual file
+	    when processing an exam file with name
+	    <filename>examfile.xml</filename> (the expression 
+	    <code>foo_[a,b]</code> means that two files are produced,
+	    <filename>foo_a</filename> and <filename>foo_b</filename>).
+	  </para>
+
+	  <informaltable frame="all" id="exam_created_files">
+	    <tgroup rowsep="1" colsep="1" cols="3">
+	      <colspec colnum="1" colname="col1" align="left"/>
+	      <colspec colnum="2" colname="col2" align="left"/>
+	      <colspec colnum="3" colname="col3" align="left"/>
+	      <thead>
+		<row>
+		  <entry align="center"/>
+		  <entry align="center">Test (T/F or Multiple Choice)</entry>
+		  <entry align="center">Regular Exam</entry>
+		</row>
+	      </thead>
+	      <tbody>
+		<row>
+		  <entry role="rowhead" align="center">One language</entry>
+		  <entry>
+		    <itemizedlist>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2].html</filename>: Two sets of
+			  shuffled questions.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile.html</filename>: Questions in the
+			  given order.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2]_solution.html</filename>: Two
+			  sets of shuffled questions with solutions.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2]_stats.html</filename>: Two
+			  sets of shuffled questions with solutions and
+			  statistics (see <xref linkend="exam_keep_stats"/>)
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_stats.html</filename>: Questions
+			  with solutions and statistics in the given order.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_raw.xml</filename>: File for ADA
+			  internal use.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>tex-math-equations.*</filename>: Files to
+			  support mathematical formulas. For ADA internal use.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>equations</filename>: Directory where
+			  equations are stored as PNG files. For ADA internal use.
+			</para>
+		      </listitem>
+		    </itemizedlist>
+		  </entry>
+		  <entry>
+		    <itemizedlist>
+		      <listitem>
+			<para>
+			  <filename>examfile.html</filename>: Exam as it is
+			  supposed to be taken.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_solutions.html</filename>:
+			  Exam including the solution.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_pguide.html</filename>: Exam with
+			  solutions and annotations done by the teaching staff.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>tex-math-equations.*</filename>: Files to
+			  support mathematical formulas. For ADA internal use.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>equations</filename>: Directory where
+			  equations are stored as PNG files. For ADA internal use.
+			</para>
+		      </listitem>
+		    </itemizedlist>
+		  </entry>
+		</row>
+		<row>
+		  <entry role="rowhead" align="center">Bilingual</entry>
+		  <entry>
+		    <itemizedlist>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2]_[en,es].html</filename>: Two
+			  sets of shuffled questions in each language.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile.html</filename>: Questions in both
+			  languages and the given order (for consistency
+			  reviewing purposes).
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2]_[en,es]_solution.html</filename>:
+			  Two sets of shuffled questions with solutions in each
+			  language.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_solutions.html</filename>:
+			  Questions in both languages with the solutions in the
+			  given order.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2]_[en,es]_stats.html</filename>:
+			  Two sets of shuffled questions in each language with
+			  solutions and statistics (see <xref
+			  linkend="exam_keep_stats"/>)
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_stats.html</filename>: Questions in
+			  both languages with solutions and statistics in the
+			  given order.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_raw.xml</filename>: File for ADA
+			  internal use.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>tex-math-equations.*</filename>: Files to
+			  support mathematical formulas. For ADA internal use.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>equations</filename>: Directory where
+			  equations are stored as PNG files. For ADA internal use.
+			</para>
+		      </listitem>
+		    </itemizedlist>
+		  </entry>
+		  <entry>
+		    <itemizedlist>
+		      <listitem>
+			<para>
+			  <filename>examfile_[en,es].html</filename>: Two
+			  versions of the exam, one in each language.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile.html</filename>: File with text in
+			  both languages together (for consistency purposes).
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[en,es]_solution.html</filename>:
+			  The exam including solutions in each language.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_solutions.html</filename>:
+			  Text in both languages with the solutions.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[en,es]_pguide.html</filename>:
+			  Exam in each language including the solution and the
+			  comments by the teaching staff.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_pguide.html</filename>: File with
+			  text, solution and comments by the teaching staff in
+			  both languages together.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>tex-math-equations.*</filename>: Files to
+			  support mathematical formulas. For ADA internal use.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>equations</filename>: Directory where
+			  equations are stored as PNG files. For ADA internal use.
+			</para>
+		      </listitem>
+		    </itemizedlist>
+		  </entry>
+		</row>
+	      </tbody>
+	    </tgroup>
+	  </informaltable>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="exam_handling_question_catalogs"
+		  xreflabel="How to select a subset of questions from a catalog">
+	<question>
+	  <para>
+	    Is it possible to have a Docbook file that selects only a subset of
+	    questions from a catalog?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    Although not a functionality provided by ADA, by combining questions
+	    encoded in Docbook with the possibility of including a fragment of
+	    an XML file into another (using <code>xinclude</code>), questions
+	    can be managed in large catalogs and select only a subset for a
+	    given exam.
+	  </para>
+
+	  <para>
+	    The idea is to centralize all the test questions created over the
+	    years into a single large Docbook file with the format explaned in
+	    <xref linkend="typeset_tf_questions"/> and <xref
+	    linkend="typeset_mc_questions"/>. When creating a new exam, a
+	    special set of questions can be selected by providing a set of
+	    identifiers. Two conditions are required to perform such operation:
+	    question sets need to have identifiers (aside from the unique
+	    question identifier stored in the <command>id</command> attribute)
+	    and a mechanism to select from the file only those questions with a
+	    given identifier.
+	  </para>
+
+	  <para>
+	    ADA proposes to identify sets of questions by means of three
+	    identifiers to facilitate stratified searches. An example of the
+	    Docbook element chosen to include this information is as follows:
+	  </para>
+
+	  <programlisting>&lt;qandadiv condition="TestQuestion" id="Q Id"&gt;
+  &lt;blockinfo&gt;
+    &lt;author&gt;
+      &lt;personname&gt;
+        &lt;firstname&gt;Author First&lt;/firstname&gt;&lt;surname&gt;Author Last&lt;/surname&gt;
+      &lt;/personname&gt;
+    &lt;/author&gt;
+    <command>&lt;printhistory&gt;
+      &lt;para arch="ID_1" revision="ID_2" vendor="ID_3" /&gt;
+    &lt;/printhistory&gt;</command>
+  &lt;/blockinfo&gt;
+  &lt;qandaentry&gt;
+    &lt;question&gt;Question Text&lt;/question&gt;
+    &lt;/question&gt;
+    &lt;answer condition="True" /&gt;
+  &lt;/qandaentry&gt;
+&lt;/qandadiv&gt;</programlisting>
+
+          <para>
+	    The <command>printhistory</command> element may contain an arbitrary
+	    number of <command>para</command> elements each of them with three
+	    identifiers. With this scheme, a question may belong to more than
+	    one set of questions (for example when re-used in more than one
+	    exam) and have one of these identifiers for each set.
+	  </para>
+
+	  <para>
+	    For example, given the file <filename>QuestionCatalog.xml</filename>
+	    with a large number of questions, selecting those questions that
+	    belong to a set is achieved by using the <quote>Xinclude</quote>
+	    notation. The usage of such element within an XML file is shown in
+	    the following listing:
+	  </para>
+
+	  <programlisting>&lt;qandaset defaultlabel="number"&gt;
+  <command>&lt;xi:include href="QuestionCatalog.xml"
+    xpointer="xpointer(//*/qandadiv/blockinfo/printhistory/para[@arch =
+	      'ID_1'][@revision = 'ID_2'][@vendor = 'ID_3']/ancestor::qandadiv)"
+              xmlns:xi="http://www.w3.org/2001/XInclude"&gt;
+    &lt;xi:fallback&gt;
+      &lt;para&gt;No questions found in catalog with id="ID_1/ID_2/ID_3"&lt;/para&gt;
+    &lt;/xi:fallback&gt;
+  &lt;/xi:include&gt;</command>
+&lt;/qandaset&gt;</programlisting>
+
+          <para>
+	    The resulting <command>qandaset</command> element contains only
+	    those questions that match the three given identifiers. With this
+	    technique, a possible usage scenario would be to keep all questions
+	    for a course, or set of courses, all encoded in a single file and
+	    then preparing an exam would be simply to label the questions with
+	    the proper identifiers and them pull all of them in the source
+	    document with the <command>xinclude</command> construction as shown
+	    above.
+	  </para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="exam_keep_stats"
+		  xreflabel="How to keep statistics about questions">
+	<question>
+	  <para>
+	    Is it possible to store and maintain statistics about questions in
+	    the same Docbook document?
+	  </para>
+	  
+	  <para>
+	    Collecting quiz questions is nice. With enough time and patiente you
+	    may end up with a large pool from which to design high quality
+	    exams. But, wouldn't it be nice to know how a question performed in
+	    a test? Is there a way to keep this information organized and then
+	    visualize it?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    ADA offers some support to implement this scenario. It assumes that
+	    the information attached to a question after it has been used in a
+	    test (generically referred as <quote>stats</quote>) is also stored
+	    in the Docbook source structure.
+	  </para>
+
+	  <para>
+	    The idea is to extend the mechanism of question group identifier
+	    (see <xref linkend="exam_handling_question_catalogs"/>) and include
+	    certain typical measurements. The proposed structure is shown in the
+	    following listing:
+	  </para>
+
+	  <programlisting>&lt;qandaentry&gt;
+  &lt;blockinfo&gt;
+    &lt;printhistory&gt;
+      &lt;para arch="ID_1" revision="ID_2" vendor="ID_3"&gt;
+        &lt;phrase condition="correct"&gt;20&lt;/phrase&gt;
+        &lt;phrase condition="incorrect"&gt;0&lt;/phrase&gt;
+        &lt;phrase condition="blank"&gt;2&lt;/phrase&gt;
+        &lt;phrase condition="total"&gt;22&lt;/phrase&gt;
+        &lt;phrase condition="remarks" /&gt;
+      &lt;/para&gt;
+    &lt;/printhistory&gt;
+  &lt;/blockinfo&gt;
+  &lt;question&gt;
+    &lt;para&gt;Question text&lt;/para&gt;
+  &lt;/question&gt;
+  &lt;answer condition="False" /&gt;
+&lt;/qandaentry&gt;</programlisting>
+
+          <para>
+	    Each <command>qandaentry</command> element may include a
+	    <command>blockinfo</command> with several
+	    <command>printhistory</command> blocks. Each of them contains a
+	    paragraph with a group identifier made of the same three attributes
+	    as described in <xref linkend="exam_handling_question_catalogs"/>
+	    and five <command>phrase</command> elements with the numbers derived
+	    from the use of the question in that set. In the example the
+	    question was answered by 22 perons, 20 of them answered correctly,
+	    nobody answered incorrectly and only two persons left it blank.
+	  </para>
+
+	  <para>
+	    ADA does not provide any support on how to collect and insert that
+	    information within each question. Since the files have an XML
+	    structure, it would be feasible to design some application that
+	    given a set of question identifiers and the proper data, it inserts
+	    them with the proper markup, but at this time, ADA does not offer
+	    such functionality.
+	  </para>
+
+	  <para>
+	    However, the rules to produce test exams (see <xref
+	    linkend="typeset_tf_questions"/> and <xref
+	    linkend="typeset_mc_questions"/>) produce an additional files with
+	    extension <filename>_stats</filename> in which all the data include
+	    for the questions are shown in tables. The following figure shows
+	    the table resulting from processing the data in the previous example:
+	  </para>
+
+
+	</answer>
+      </qandaentry>
+
+<!-- <qandaentry id=""> -->
+<!-- 	<question> -->
+<!-- 	  <para> -->
+<!-- 	  </para> -->
+<!-- 	</question> -->
+<!-- 	<answer> -->
+<!-- 	  <para> -->
+<!-- 	  </para> -->
+<!-- 	</answer> -->
+<!--       </qandaentry> -->
+
+    </qandaset>
+
+  </section>
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->

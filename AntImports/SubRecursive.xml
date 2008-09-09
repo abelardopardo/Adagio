@@ -49,13 +49,13 @@
     <!-- Conditions to see which one of the two targets needs to be executed -->
     <condition property="subrecursive.check.withdst">
       <and>
-	<not><equals arg1="${subrecursive.dirs}" arg2=""/></not>
-	<not><equals arg1="${subrecursive.dst.dir}" arg2=""/></not>
+	<not><equals arg1="${subrecursive.dirs}" arg2="" trim="true"/></not>
+	<not><equals arg1="${subrecursive.dst.dir}" arg2="" trim="true"/></not>
       </and>
     </condition>
 
     <condition property="subrecursive.check.nodst">
-      <not><equals arg1="${subrecursive.dirs.nodst}" arg2=""/></not>
+      <not><equals arg1="${subrecursive.dirs.nodst}" arg2="" trim="true"/></not>
     </condition>
 
     <!-- Condition to enable/disable the entire rule execution -->

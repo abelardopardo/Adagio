@@ -20,6 +20,7 @@
   <property name="pdflatex.src.dir"        value="${basedir}"/>
   <property name="pdflatex.dst.dir"        value="${pdflatex.src.dir}"/>
   <property name="pdflatex.files"          value=""/>
+  <property name="pdflatex.extra.args"     value=""/>
 
   <!-- Private properties -->
   <property name="pdflatex.debug.level"    value="${ada.debug.level}"/>
@@ -46,11 +47,11 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${pdflatex.abssrc.dir}" arg2=""/></not>
+        <not><equals arg1="${pdflatex.abssrc.dir}" arg2="" trim="true"/></not>
 	<!-- There must be some files defined -->
-        <not><equals arg1="${pdflatex.files}" arg2=""/></not>
+        <not><equals arg1="${pdflatex.files}" arg2="" trim="true"/></not>
 	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${pdflatex.absdst.dir}" arg2=""/></not>
+        <not><equals arg1="${pdflatex.absdst.dir}" arg2="" trim="true"/></not>
       </and>
     </condition>
 
@@ -110,6 +111,7 @@
 	   output="build.out">
       <arg value="-output-directory"/>
       <arg value="${pdflatex.dst.dir}"/>
+      <arg line="${pdflatex.extra.args}"/>
       <fileset refid="pdflatex.fileset"/>
       <!-- Mapper from source files to produced files -->
       <mapper type="glob" from="*.tex" to="*.pdf"/>
@@ -188,7 +190,8 @@
     pdflatex.exec       ="${pdflatex.exec}"
     pdflatex.abssrc.dir ="${pdflatex.abssrc.dir}"
     pdflatex.absdst.dir ="${pdflatex.absdst.dir}"
-    pdflatex.files      ="${pdflatex.files}"</echo>
+    pdflatex.files      ="${pdflatex.files}"
+    pdflatex.extra.args ="${pdflatex.extra.args}"</echo>
   </target>
 
   <target name="pdflatex.report.YES" depends="pdflatex.check.values"

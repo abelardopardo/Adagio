@@ -64,15 +64,15 @@
   <property name="exportcontrol.debug.level"    value="${ada.debug.level}"/>
 
   <condition property="exportcontrol.begin.defined">
-    <not><equals arg1="${exportcontrol.begin}" arg2=""/></not>
+    <not><equals arg1="${exportcontrol.begin}" arg2="" trim="true"/></not>
   </condition>
 
   <condition property="exportcontrol.end.defined">
-    <not><equals arg1="${exportcontrol.end}" arg2=""/></not>
+    <not><equals arg1="${exportcontrol.end}" arg2="" trim="true"/></not>
   </condition>
 
   <condition property="exportcontrol.now.defined">
-    <not><equals arg1="${exportcontrol.now}" arg2=""/></not>
+    <not><equals arg1="${exportcontrol.now}" arg2="" trim="true"/></not>
   </condition>
 
   <target name="exportcontrol" 
@@ -114,18 +114,18 @@ exportcontrol.profile.revision.value=${exportcontrol.profile.revision.value}</ec
       <and>
 	<equals arg1="${exportcontrol.open}" arg2="true"/>
 	<or>
-	  <equals arg1="${exportcontrol.begin}" arg2=""/>
+	  <equals arg1="${exportcontrol.begin}" arg2="" trim="true"/>
 	  <isset property="exportcontrol.begin.uptodate"/>
 	</or>
 	<or>
-	  <equals arg1="${exportcontrol.end}" arg2=""/>
+	  <equals arg1="${exportcontrol.end}" arg2="" trim="true"/>
 	  <isset property="exportcontrol.end.uptodate"/>
 	</or>
 	<or>
           <!-- (exportcontrol.profile.revision is empty) -->
-	  <equals arg1="${exportcontrol.profile.revision}" arg2=""/>
+	  <equals arg1="${exportcontrol.profile.revision}" arg2="" trim="true"/>
           <!-- (exportcontrol.profile.revision.value is empty) -->
-	  <equals arg1="${exportcontrol.profile.revision.value}" arg2=""/>
+	  <equals arg1="${exportcontrol.profile.revision.value}" arg2="" trim="true"/>
           <!-- (exportcontrol.profile.revision matches ";value;") -->
 	  <matches pattern=";${exportcontrol.profile.revision.value};" 
 		   string="${exportcontrol.profile.revision}"/>	  

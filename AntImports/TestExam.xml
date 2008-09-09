@@ -27,10 +27,7 @@
   <property name="testexam.dst.dir"        value="${testexam.src.dir}"/>
   <property name="testexam.equation.dir"   value="equations"/>
   <property name="testexam.output.format"  value=".html"/>
-  <property name="testexam.extra.args"     value="--stringparam
-					      passivetex.extensions 1
-					      --stringparam 
-					      tex.math.in.alt latex"/>
+  <property name="testexam.extra.args"     value=""/>
   <property name="testexam.file"           value=""/>
   <property name="testexam.bilingual.file" value=""/>
   <property name="testexam.style.file"     value="${ada.home}/XslStyles/Exam.xsl"/>
@@ -64,7 +61,6 @@
       <filelist refid="testexam.filelist"/>
       <filelist refid="testexam.bilingual.filelist"/>
     </pathconvert>
-
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="testexam.check">
       <and>
@@ -72,7 +68,9 @@
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${testexam.abssrc.dir}" arg2="" trim="true"/></not>
 	<!-- There must be some file defined -->
-        <not><equals arg1="${testexam.source.filelist.property}" arg2="" trim="true"/></not>
+        <not>
+	  <equals arg1="${testexam.source.filelist.property}" arg2="" trim="true"/>
+	</not>
 	<!-- At least one of the variable must be empty -->
 	<or>
 	  <equals arg1="${testexam.file}" arg2="" trim="true"/>
@@ -110,12 +108,15 @@
       <param name="xsltproc.output.format" value="_raw.xml"/>
       <param name="xsltproc.files"         value="${testexam.file}
 						  ${testexam.bilingual.file}"/>
-      <param name="xsltproc.extra.args"    value="${testexam.extra.args}"/>
+      <param name="xsltproc.extra.args"
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    ${testexam.extra.args}"/>
     </antcall>
 
     <echo>testexam.processing         END(xsltproc.processing ES)</echo>
 
-    <!-- Obtain the filelist with the source file to see if it is empty -->
+    <!-- Obtain the filelist with the _raw suffix  -->
     <pathconvert property="testexam.source.raw.filelist.property" pathsep=" ">
       <filelist refid="testexam.filelist"/>
       <filelist refid="testexam.bilingual.filelist"/>
@@ -140,13 +141,6 @@
       <arg value="${testexam.source.raw.filelist.property}"/>
     </java>
 
-    <!-- Obtain the filelist with the source file to see if it is empty -->
-    <pathconvert property="testexam.source.raw.filelist.property" pathsep=" ">
-      <filelist refid="testexam.filelist"/>
-      <filelist refid="testexam.bilingual.filelist"/>
-      <mapper type="glob" from="*.xml" to="*_raw.xml"/>
-    </pathconvert>
-
     <!-- Remove _raw from version 1 file name -->
     <move todir="${testexam.absdst.dir}" includeemptydirs="false">
       <fileset dir="${testexam.absdst.dir}">
@@ -164,11 +158,13 @@
     </move>
     
     <!-- Obtain a filelist with the newly produced files -->
-    <pathconvert property="testexam.bilingual.raw.version1.filelist.property" pathsep=" ">
+    <pathconvert property="testexam.bilingual.raw.version1.filelist.property" 
+		 pathsep=" ">
       <filelist refid="testexam.bilingual.filelist"/>
       <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_1.xml"/>
     </pathconvert>
-    <pathconvert property="testexam.bilingual.raw.version2.filelist.property" pathsep=" ">
+    <pathconvert property="testexam.bilingual.raw.version2.filelist.property" 
+		 pathsep=" ">
       <filelist refid="testexam.bilingual.filelist"/>
       <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
     </pathconvert>
@@ -177,13 +173,16 @@
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.processing" inheritAll="false">
-      <param name="bilingualdb.src.dir"       value="${testexam.dst.dir}"/>
-      <param name="bilingualdb.dst.dir"       value="${testexam.dst.dir}"/>
-      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="bilingualdb.src.dir"    value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.dst.dir"    value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="bilingualdb.files"         
 	     value="${testexam.bilingual.raw.version1.filelist.property} 
 		    ${testexam.bilingual.raw.version2.filelist.property}"/>
-      <param name="bilingualdb.extra.args"    value="${testexam.extra.args}"/>
+      <param name="bilingualdb.extra.args"    
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    ${testexam.extra.args}"/>
     </antcall>
 
     <echo>testexam.processing         END(bilingualdb.processing ES)</echo>
@@ -192,15 +191,17 @@
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.processing" inheritAll="false">
-      <param name="bilingualdb.src.dir"       value="${testexam.dst.dir}"/>
-      <param name="bilingualdb.dst.dir"       value="${testexam.dst.dir}"/>
-      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="bilingualdb.src.dir"    value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.dst.dir"    value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="bilingualdb.files"         
 	     value="${testexam.bilingual.raw.version1.filelist.property} 
 		    ${testexam.bilingual.raw.version2.filelist.property}"/>
       <param name="bilingualdb.output.format" value="_solution.html"/>
       <param name="bilingualdb.extra.args"    
 	     value="--stringparam ada.testquestions.include.solutions yes 
+		    --stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
 		    ${testexam.extra.args}"/>
     </antcall>
 
@@ -210,9 +211,9 @@
 
     <!-- Call bilingualdb -->
     <antcall target="bilingualdb.processing" inheritAll="false">
-      <param name="bilingualdb.src.dir"       value="${testexam.dst.dir}"/>
-      <param name="bilingualdb.dst.dir"       value="${testexam.dst.dir}"/>
-      <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="bilingualdb.src.dir"    value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.dst.dir"    value="${testexam.dst.dir}"/>
+      <param name="bilingualdb.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="bilingualdb.files"         
 	     value="${testexam.bilingual.raw.version1.filelist.property} 
 		    ${testexam.bilingual.raw.version2.filelist.property}"/>
@@ -221,6 +222,8 @@
 	     value="--stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
+		    --stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
 		    ${testexam.extra.args}"/>
     </antcall>
 
@@ -229,12 +232,10 @@
     <!-- Obtain a filelist with the newly produced files -->
     <pathconvert property="testexam.raw.version1.filelist.property" pathsep=" ">
       <filelist refid="testexam.filelist"/>
-      <filelist refid="testexam.bilingual.filelist"/>
       <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_1.xml"/>
     </pathconvert>
     <pathconvert property="testexam.raw.version2.filelist.property" pathsep=" ">
       <filelist refid="testexam.filelist"/>
-      <filelist refid="testexam.bilingual.filelist"/>
       <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
     </pathconvert>
 
@@ -247,8 +248,13 @@
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="xsltproc.files"         
 	     value="${testexam.raw.version1.filelist.property} 
-		    ${testexam.raw.version2.filelist.property}"/>
-      <param name="xsltproc.extra.args"    value="${testexam.extra.args}"/>
+		    ${testexam.raw.version2.filelist.property}
+		    ${testexam.file}
+		    ${testexam.bilingual.file}"/>
+      <param name="xsltproc.extra.args"
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    ${testexam.extra.args}"/>
     </antcall>
 
     <echo>testexam.processing         END(xsltproc.processing ES)</echo>
@@ -262,10 +268,14 @@
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="xsltproc.files"         
 	     value="${testexam.raw.version1.filelist.property} 
-		    ${testexam.raw.version2.filelist.property}"/>
+		    ${testexam.raw.version2.filelist.property}
+		    ${testexam.file}
+		    ${testexam.bilingual.file}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.testquestions.include.solutions yes 
+		    --stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
 		    ${testexam.extra.args}"/>
     </antcall>
 
@@ -280,12 +290,16 @@
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="xsltproc.files"         
 	     value="${testexam.raw.version1.filelist.property} 
-		    ${testexam.raw.version2.filelist.property}"/>
+		    ${testexam.raw.version2.filelist.property}
+		    ${testexam.file}
+		    ${testexam.bilingual.file}"/>
       <param name="xsltproc.output.format" value="_stats.html"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
+		    --stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
 		    ${testexam.extra.args}"/>
     </antcall>
 
@@ -378,7 +392,10 @@
       <param name="xsltproc.files"         
 	     value="${testexam.raw.version1.filelist.property} 
 		    ${testexam.raw.version2.filelist.property}"/>
-      <param name="xsltproc.extra.args"    value="${testexam.extra.args}"/>
+      <param name="xsltproc.extra.args"
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    ${testexam.extra.args}"/>
     </antcall>
 
     <echo>testexam.processing  (3f/5) CALL(xsltproc.processing)</echo>
@@ -396,6 +413,8 @@
 	     value="--stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
+		    --stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
 		    ${testexam.extra.args}"/>
     </antcall>
 
@@ -414,6 +433,8 @@
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.testquestions.include.solutions yes 
+		    --stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
 		    ${testexam.extra.args}"/>
     </antcall>
 
@@ -446,6 +467,8 @@
 	     value="--stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
+		    --stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
 		    ${testexam.extra.args}"/>
     </antcall>
 
@@ -464,6 +487,8 @@
       <param name="bilingualdb.output.format" value="_solution.html"/>
       <param name="bilingualdb.extra.args"    
 	     value="--stringparam ada.testquestions.include.solutions yes 
+		    --stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
 		    ${testexam.extra.args}"/>
     </antcall>
 
@@ -479,7 +504,10 @@
       <param name="bilingualdb.files"         
 	     value="${testexam.bilingual.raw.version1.filelist.property} 
 		    ${testexam.bilingual.raw.version2.filelist.property}"/>
-      <param name="bilingualdb.extra.args"    value="${testexam.extra.args}"/>
+      <param name="bilingualdb.extra.args"
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    ${testexam.extra.args}"/>
     </antcall>
 
     <echo>testexam.processing         END(bilingualdb.processing ES)</echo>
@@ -497,7 +525,10 @@
       <param name="xsltproc.output.format" value="_raw.xml"/>
       <param name="xsltproc.files"         value="${testexam.file}
 						  ${testexam.bilingual.file}"/>
-      <param name="xsltproc.extra.args"    value="${testexam.extra.args}"/>
+      <param name="xsltproc.extra.args"
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    ${testexam.extra.args}"/>
     </antcall>
 
   </target>

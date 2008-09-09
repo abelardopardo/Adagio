@@ -49,17 +49,17 @@
     <condition property="laboratory.check">
       <and>
 	<!-- The src.dir needs to be non-empty. -->
-        <not><equals arg1="${laboratory.src.dir}" arg2=""/></not>
+        <not><equals arg1="${laboratory.src.dir}" arg2="" trim="true"/></not>
 	<available file="${laboratory.src.dir}"/> 
 	<!-- There must be some files defined -->
 	<or>
-	  <not><equals arg1="${laboratory.files}" arg2=""/></not>
-	  <not><equals arg1="${laboratory.bilingual.files}" arg2=""/></not>
+	  <not><equals arg1="${laboratory.files}" arg2="" trim="true"/></not>
+	  <not><equals arg1="${laboratory.bilingual.files}" arg2="" trim="true"/></not>
 	</or>
 	<!-- Require a non-empty dst.dir -->
-        <not><equals arg1="${laboratory.dst.dir}" arg2=""/></not>
+        <not><equals arg1="${laboratory.dst.dir}" arg2="" trim="true"/></not>
 	<!-- Require a non-empty and available stylesheet -->
-        <not><equals arg1="${laboratory.style.file}" arg2=""/></not>
+        <not><equals arg1="${laboratory.style.file}" arg2="" trim="true"/></not>
 	<available file="${laboratory.style.file}"/>
       </and>
     </condition>

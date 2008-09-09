@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+    "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section status="ExamID">
+  <!-- This title is only shown by the browser in the title bar -->
+  <title>
+    <phrase lang="es">elemento &lt;title&gt; en el raíz del documento Docbook</phrase>
+    <phrase lang="en">&lt;title&gt; element in the Docbook root section</phrase>
+  </title>
+
+  <!-- Element to insert a part text after the main heading -->
+  <para lang="es" condition="part">
+    Texto contenido en&lt;para condition="part"&gt;
+  </para>
+  <para lang="en" condition="part">&lt;para condition="part"&gt; text content</para>
+  
+  <!-- These parameters define some specific values to include in the heading -->
+  <para lang="es" condition="duration">
+    Texto contenido en &lt;para condition="duration">
+  </para>
+  <para lang="en" condition="duration">
+    &lt;para condition="duration"> text content
+  </para>
+
+  <para lang="es" condition="scoring">
+    Texto contenido en &lt;para condition="scoring">
+  </para>
+  <para lang="en" condition="scoring">
+    &lt;para condition="scoring"> text content
+  </para>
+
+  <para lang="es" condition="date">
+    Texto contenido en &lt;para condition="date">
+  </para>
+  <para lang="en" condition="date">
+    &lt;para condition="date"> text content
+  </para>
+
+  <!-- 
+       An arbitrary text can be included right after the administrative data
+       with the following element.
+   -->
+  <para condition="note" lang="es">
+    Cualquier texto adicional que se quiera insertar puede ser incluido como un
+    fagmento de docbook convencional rodeado del elemento &lt;para
+    condition="note"&gt;
+  </para>
+
+  <para condition="note" lang="en">
+    Any additional text you want to include can be added as a regular
+    docbook chunk surrounded by the &lt;para condition="note"&gt; element.
+  </para>
+
+  <!-- The following element produces the name/last name/student id box -->
+  <para condition="name"/>
+
+  <!-- 
+       The content of the exam must be organized within sections inside another
+       section. Titles are ignore.
+  -->
+  <section>
+    <title>
+      <phrase lang="es">
+	Sección con los ejercicios (el título se ignora).
+      </phrase>
+      <phrase lang="en">
+	Section with the exercises (this title is ignored)
+      </phrase>
+    </title>
+    <section>
+      <title>
+        <phrase lang="es">Este es el primer ejercicio (título se ignora)</phrase>
+        <phrase lang="en">This is the first exercise (this title is ignored)</phrase>
+      </title>
+        <para lang="es">
+	  El examen debe estar contenido en secciones separadas dentro de una
+	  sección extra. Esto se hace para tener todas las partes de las que
+	  consta un examen en una única sección, pero al mismo tiempo en
+	  secciones independientes para facilitar contar sus elementos y que se
+	  escriban los ejercicios de forma independiente.
+        </para>
+
+        <para lang="en">
+          The exam content must be contained as independent sections within
+	  another extra section. This is to have all the pieces that form the
+	  content both contained in a single section element, but at the same
+	  time offer the possibility of writing exercises independently, each of
+	  them in a section, and include them as part of the exam.
+        </para>
+
+	<para>
+	  <phrase lang="en">The exercise heading is controlled by the
+	  variables</phrase><phrase lang="es">El encabezado de los ejercicios se
+	  controla por las variables</phrase>
+	  <varname>ada.exam.exercise.name</varname> <phrase
+	  lang="en">and</phrase> <phrase lang="es">y</phrase>
+	  <varname>ada.exam.exercise.name.en</varname>.
+	</para>
+    </section>
+
+    <section>
+      <title/>
+      <para lang="en">
+	Si la hoja de estilo detecta más de una sección dentro de la sección de
+	contenido, inserta un número tras el encabezado del ejercicio.
+      </para>
+      <para lang="en">
+	If the style detects more than one section within the content section,
+	it inserts a number after the exercise heading.
+      </para>
+    </section>
+  </section>
+</section>

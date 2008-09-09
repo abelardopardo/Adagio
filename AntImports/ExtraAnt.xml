@@ -42,9 +42,9 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	     empty definition of this variable. At least a . needs to be present -->
-	<not><equals arg1="${extraant.abssrc.dir}" arg2=""/></not>
+	<not><equals arg1="${extraant.abssrc.dir}" arg2="" trim="true"/></not>
 	<!-- Target cannot be empty -->
-	<not><equals arg1="${extraant.target}" arg2=""/></not>
+	<not><equals arg1="${extraant.target}" arg2="" trim="true"/></not>
 	<available file="${extraant.abssrc.dir}${file.separator}${extraant.file}"/>
       </and>
     </condition>

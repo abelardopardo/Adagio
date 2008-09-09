@@ -1,0 +1,5 @@
+mergestyles.master.style=Params.xml
+
+testexam.file=Test.xml
+
+# adado -f ../../../AntImports/TestExam.xml

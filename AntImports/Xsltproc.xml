@@ -60,8 +60,8 @@
   Mergestyles -->
   <condition property="xsltproc.mergestyles">
     <and>
-      <not><equals arg1="${mergestyles.master.style}" arg2=""/></not>
-      <not><equals arg1="${mergestyles.src.dir}" arg2=""/></not>
+      <not><equals arg1="${mergestyles.master.style}" arg2="" trim="true"/></not>
+      <not><equals arg1="${mergestyles.src.dir}" arg2="" trim="true"/></not>
       <available file="${mergestyles.src.dir}/${mergestyles.master.style}"/>
     </and>
   </condition>
@@ -112,13 +112,13 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${xsltproc.abssrc.dir}" arg2=""/></not>
+        <not><equals arg1="${xsltproc.abssrc.dir}" arg2="" trim="true"/></not>
 	<!-- There must be some files defined -->
-        <not><equals arg1="${xsltproc.files}" arg2=""/></not>
+        <not><equals arg1="${xsltproc.files}" arg2="" trim="true"/></not>
 	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${xsltproc.absdst.dir}" arg2=""/></not>
+        <not><equals arg1="${xsltproc.absdst.dir}" arg2="" trim="true"/></not>
 	<!-- Require a non-empty style file -->
-        <not><equals arg1="${xsltproc.style.file}" arg2=""/></not>
+        <not><equals arg1="${xsltproc.style.file}" arg2="" trim="true"/></not>
       </and>
     </condition>
 

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<section lang="en" id="ExamID">
+  <sectioninfo id="ShuffleSeeds">
+    <productnumber>1107505702116</productnumber>
+    <productnumber>1107444885583</productnumber>
+  </sectioninfo>
+
+  <title>&lt;title&gt; element in the Docbook root section</title>
+  <para condition="part">&lt;para condition="part"&gt; text content</para>
+  
+  <para condition="duration">&lt;para condition="duration"> text content</para>
+  <para condition="scoring">&lt;para condition="scoring"> text content</para>
+  <para condition="date">&lt;para condition="date"> text content</para>
+
+  <para condition="note">
+    Any additional text you want to include can be added as a regular
+    docbook chunk surrounded by the &lt;para condition="note"&gt; element.
+  </para>
+
+  <para condition="name"/> <!-- To include the name box -->
+
+  <para condition="score"/> <!-- To include the score box for tests -->
+
+  <qandaset defaultlabel="number">
+    <qandadiv condition="TestMCQuestion" id="YourUniqueQuestionId">
+      <blockinfo>
+        <author>
+          <personname>
+            <firstname>AuthorFirst</firstname>
+            <surname>AuthorLAST</surname>
+          </personname>
+        </author>
+        <printhistory>
+          <para arch="ID_1" revision="ID_2" vendor="ID_3" />
+        </printhistory>
+      </blockinfo>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="ID_1" revision="ID_2" vendor="ID_3">
+              <phrase condition="correct" />
+              <phrase condition="incorrect" />
+              <phrase condition="blank" />
+              <phrase condition="total" />
+              <phrase condition="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>
+            xx xxxxxxx xx xx xxxxxxxx xx xxxxxxxxxxxxx xxxxxxx xxxxxxxxxx xx xx
+            xxxxxx xx xxxxxxxxx x xxxx xxxxxxxxx. xx xxxxxx xx xxxxxxxxx xxxxx
+            xxxxx xxxx xxxxxxxx xxxxxxx. xxx xxxxxxxxx
+            xxxxxx xxx xxx xx x xxxxxxxx xxxxxxxxx. xxxxxx xxxx
+            xxxx xxxxxx xxx xxxxxxxxxx xxxx xxxxxxxxx xxxxx xxxxxxxxxxxxx?
+          </para>
+        </question>
+        <answer condition="Correcto">
+          <para>xx xxxx</para>
+        </answer>
+        <answer>
+          <para>xx xxxx</para>
+        </answer>
+        <answer>
+          <para>xx xxxx</para>
+        </answer>
+      </qandaentry>
+    </qandadiv>
+  </qandaset>
+</section>

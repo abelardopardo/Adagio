@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<section lang="es" id="Jun08">
+  <sectioninfo id="ShuffleSeeds">
+    <productnumber>
+      1107505702116
+      <!-- <remark condition=""/> -->
+      <remark condition="12"/>
+    </productnumber>
+    <productnumber>
+      1107444885583
+      <!-- <remark condition=""/> -->
+      <remark condition="13"/> 
+    </productnumber>
+  </sectioninfo>
+
+  <title>
+    <xi:include 
+      href="common.xml"
+      xpointer="xpointer(//*/para[@condition='coursename']/node())"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>. Examen de
+    Junio de 2008 (Test)
+  </title>
+  <para condition="part">Test</para>
+  
+  <para condition="duration">45 minutos</para>
+  <para condition="scoring">50 puntos sobre 100</para>
+  <para condition="date">10 de junio de 2008, 16:00h</para>
+
+  <xi:include href="common.xml"
+	      xpointer="xpointer(//*/para[@id='common:note'])"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <para condition="name"/>
+
+  <para condition="score"/>
+
+  <qandaset defaultlabel="number">
+    <xi:include xml:base="./" 
+      href="../../../../TTAO/Material/ExamQuestions/main.xml"
+      xpointer="xpointer(//*/qandadiv)"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
+      <xi:fallback>
+        <para>No questions found in catalog with revision="TTAO/JUN/2008"</para>
+      </xi:fallback>
+    </xi:include>
+
+  </qandaset>
+</section>

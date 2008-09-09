@@ -20,6 +20,7 @@
   <property name="latex.src.dir"        value="${basedir}"/>
   <property name="latex.dst.dir"        value="${latex.src.dir}"/>
   <property name="latex.files"          value=""/>
+  <property name="latex.extra.args"     value=""/>
 
   <!-- Private properties -->
   <property name="latex.debug.level"    value="${ada.debug.level}"/>
@@ -46,11 +47,11 @@
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${latex.abssrc.dir}" arg2=""/></not>
+        <not><equals arg1="${latex.abssrc.dir}" arg2="" trim="true"/></not>
 	<!-- There must be some files defined -->
-        <not><equals arg1="${latex.files}" arg2=""/></not>
+        <not><equals arg1="${latex.files}" arg2="" trim="true"/></not>
 	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${latex.absdst.dir}" arg2=""/></not>
+        <not><equals arg1="${latex.absdst.dir}" arg2="" trim="true"/></not>
       </and>
     </condition>
 
@@ -108,6 +109,7 @@
     <apply dir="${basedir}" parallel="false" dest="${latex.absdst.dir}" 
 	   append="yes" failonerror="true" executable="${latex.exec}" 
 	   output="build.out">
+      <arg line="${latex.extra.args}"/>
       <srcfile/>
       <fileset refid="latex.fileset"/>
       <!-- Mapper from source files to produced files -->
@@ -187,7 +189,8 @@
     latex.exec       ="${latex.exec}"
     latex.abssrc.dir ="${latex.abssrc.dir}"
     latex.absdst.dir ="${latex.absdst.dir}"
-    latex.files      ="${latex.files}"</echo>
+    latex.files      ="${latex.files}"
+    latex.extra.args ="${latex.extra.args}"</echo>
   </target>
 
   <target name="latex.report.YES" depends="latex.check.values"

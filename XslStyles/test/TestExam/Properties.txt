@@ -1,0 +1,3 @@
+subrecursive.dirs=../../../../TAO/Theory/Exams/TestPool
+
+clean.files=Figures

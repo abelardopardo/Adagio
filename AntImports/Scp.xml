@@ -40,12 +40,12 @@
 		   filepath="${env.PATH}"/>
 	<!-- The source needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${scp.source}" arg2=""/></not>
+        <not><equals arg1="${scp.source}" arg2="" trim="true"/></not>
         <available file="${scp.source}"/>
 	<!-- There must be some files defined -->
-        <not><equals arg1="${scp.files}" arg2=""/></not>
+        <not><equals arg1="${scp.files}" arg2="" trim="true"/></not>
 	<!-- Require a non-empty destination as well -->
-        <not><equals arg1="${scp.destination}" arg2=""/></not>
+        <not><equals arg1="${scp.destination}" arg2="" trim="true"/></not>
         <available file="${scp.destination}"/>
       </and>
     </condition>

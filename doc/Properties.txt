@@ -4,7 +4,7 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
-subrecursive.dirs=images
+subrecursive.dirs=images Samples/Exam
 
 docbook.files=FAQ.xml
 docbook.style.file=QandaentryTable.xsl

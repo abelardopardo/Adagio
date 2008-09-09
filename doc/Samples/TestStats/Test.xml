@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+    "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+<section id="ExamID">
+
+  <qandaset defaultlabel="number">
+    <qandadiv condition="TestMCQuestion" id="Question ID">
+      <blockinfo>
+        <author>
+          <personname>
+            <firstname>Abelardo</firstname>
+            <surname>Pardo</surname>
+          </personname>
+        </author>
+        <printhistory>
+          <para arch="ID_1" revision="ID_2" vendor="ID_3" />
+        </printhistory>
+      </blockinfo>
+      <qandaentry>
+        <blockinfo>
+          <printhistory>
+            <para arch="ID_1" revision="ID_2" vendor="ID_3">
+              <phrase condition="correct">20</phrase>
+              <phrase condition="incorrect">0</phrase>
+              <phrase condition="blank">2</phrase>
+              <phrase condition="total">22</phrase>
+              <phrase condition="remarks" />
+            </para>
+          </printhistory>
+        </blockinfo>
+        <question>
+          <para>Question Text</para>
+        </question>
+        <answer condition="False"/>
+      </qandaentry>
+    </qandadiv>
+  </qandaset>
+</section>
