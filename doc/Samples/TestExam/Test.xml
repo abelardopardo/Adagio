@@ -25,22 +25,22 @@
   <para condition="score"/> <!-- To include the score box for tests -->
 
   <qandaset defaultlabel="number">
-    <qandadiv condition="TestMCQuestion" id="cod:mc:001">
+    <qandadiv condition="TestMCQuestion" id="YourUniqueQuestionId">
       <blockinfo>
         <author>
           <personname>
-            <firstname>Abelardo</firstname>
-            <surname>Pardo</surname>
+            <firstname>AuthorFirst</firstname>
+            <surname>AuthorLAST</surname>
           </personname>
         </author>
         <printhistory>
-          <para arch="TFO2" revision="JUN" vendor="2003" />
+          <para arch="ID_1" revision="ID_2" vendor="ID_3" />
         </printhistory>
       </blockinfo>
       <qandaentry>
         <blockinfo>
           <printhistory>
-            <para arch="TFO2" revision="JUN" vendor="2003">
+            <para arch="ID_1" revision="ID_2" vendor="ID_3">
               <phrase condition="correct" />
               <phrase condition="incorrect" />
               <phrase condition="blank" />

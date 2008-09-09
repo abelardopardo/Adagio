@@ -2422,6 +2422,37 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    </tgroup>
 	  </informaltable>
 
+	  <para>
+	    You main check the content of the following samples of the
+	    <filename>Properties.txt</filename> file to:
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<ulink url="Samples/TestExam/Properties.txt">Create a True/False
+		or Multiple Choice test exam</ulink>
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<ulink url="Samples/TestExamBL/Properties.txt">Create a
+		True/False or Multiple Choice bilingual test exam</ulink>
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<ulink url="Samples/Exam/Properties.txt">Create a regular
+		exam</ulink> (No T/F or Multiple choice questions)
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<ulink url="Samples/ExamBL/Properties.txt">Create a regular
+		bilingual exam</ulink>  (No T/F or Multiple choice questions)
+	      </para>
+	    </listitem>
+	  </itemizedlist>
 	</answer>
       </qandaentry>
 
@@ -2581,8 +2612,8 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	  </informalfigure>
 	  
 	  <para>
-	    The file containing the parameter values would have a structure
-	    similar to:
+	    The <ulink url="Samples/TestExam/Params.xml">file containing the
+	    parameter values</ulink> would have a structure similar to:
 	  </para>
 	  <programlisting><![CDATA[<xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
@@ -2728,7 +2759,8 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	</answer>
       </qandaentry>
 
-      <qandaentry id="typeset_mc_questions">
+      <qandaentry id="typeset_mc_questions"
+		  xreflabel="How to typeset a multiple choice question exam">
 	<question>
 	  <para>
 	    How to typeset an exam with multiple choice
@@ -2868,17 +2900,70 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	    <tgroup rowsep="1" colsep="1" cols="3">
 	      <colspec colnum="1" colname="col1" align="left"/>
 	      <colspec colnum="2" colname="col2" align="left"/>
-	      <colspec colnum="3" colname="col3" align="center"/>
+	      <colspec colnum="3" colname="col3" align="left"/>
 	      <thead>
 		<row>
 		  <entry align="center"/>
 		  <entry align="center">Test (T/F or Multiple Choice)</entry>
-		  <entry align="center">Exam</entry>
+		  <entry align="center">Regular Exam</entry>
 		</row>
 	      </thead>
 	      <tbody>
 		<row>
 		  <entry role="rowhead" align="center">One language</entry>
+		  <entry>
+		    <itemizedlist>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2].html</filename>: Two sets of
+			  shuffled questions.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile.html</filename>: Questions in the
+			  given order.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2]_solution.html</filename>: Two
+			  sets of shuffled questions with solutions.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[1,2]_stats.html</filename>: Two
+			  sets of shuffled questions with solutions and
+			  statistics (see <xref linkend="exam_keep_stats"/>)
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_stats.html</filename>: Questions
+			  with solutions and statistics in the given order.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_raw.xml</filename>: File for ADA
+			  internal use.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>tex-math-equations.*</filename>: Files to
+			  support mathematical formulas. For ADA internal use.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>equations</filename>: Directory where
+			  equations are stored as PNG files. For ADA internal use.
+			</para>
+		      </listitem>
+		    </itemizedlist>
+		  </entry>
 		  <entry>
 		    <itemizedlist>
 		      <listitem>
@@ -2905,57 +2990,10 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 			  support mathematical formulas. For ADA internal use.
 			</para>
 		      </listitem>
-		    </itemizedlist>
-		  </entry>
-		  <entry>
-		    <itemizedlist>
 		      <listitem>
 			<para>
-			  <filename>examfile_[1,2].html</filename>: Two sets of
-			  shuffled questions.
-			</para>
-		      </listitem>
-		      <listitem>
-			<para>
-			  <filename>examfile.html</filename>: Questions in the
-			  given order.
-			</para>
-		      </listitem>
-		      <listitem>
-			<para>
-			  <filename>examfile_[1,2]_solution.html</filename>: Two
-			  sets of shuffled questions with solutions.
-			</para>
-		      </listitem>
-		      <listitem>
-			<para>
-			  <filename>examfile_solutions.html</filename>:
-			  Questions with the solutions in the given order.
-			</para>
-		      </listitem>
-		      <listitem>
-			<para>
-			  <filename>examfile_[1,2]_stats.html</filename>: Two
-			  sets of shuffled questions with solutions and
-			  statistics (see <xref linkend="exam_keep_stats"/>)
-			</para>
-		      </listitem>
-		      <listitem>
-			<para>
-			  <filename>examfile_stats.html</filename>: Questions
-			  with solutions and statistics in the given order.
-			</para>
-		      </listitem>
-		      <listitem>
-			<para>
-			  <filename>examfile_raw.xml</filename>: File for ADA
-			  internal use.
-			</para>
-		      </listitem>
-		      <listitem>
-			<para>
-			  <filename>tex-math-equations.*</filename>: Files to
-			  support mathematical formulas. For ADA internal use.
+			  <filename>equations</filename>: Directory where
+			  equations are stored as PNG files. For ADA internal use.
 			</para>
 		      </listitem>
 		    </itemizedlist>
@@ -3019,9 +3057,68 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 			  support mathematical formulas. For ADA internal use.
 			</para>
 		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>equations</filename>: Directory where
+			  equations are stored as PNG files. For ADA internal use.
+			</para>
+		      </listitem>
 		    </itemizedlist>
 		  </entry>
-		  <entry></entry>
+		  <entry>
+		    <itemizedlist>
+		      <listitem>
+			<para>
+			  <filename>examfile_[en,es].html</filename>: Two
+			  versions of the exam, one in each language.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile.html</filename>: File with text in
+			  both languages together (for consistency purposes).
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[en,es]_solution.html</filename>:
+			  The exam including solutions in each language.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_solutions.html</filename>:
+			  Text in both languages with the solutions.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_[en,es]_pguide.html</filename>:
+			  Exam in each language including the solution and the
+			  comments by the teaching staff.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>examfile_pguide.html</filename>: File with
+			  text, solution and comments by the teaching staff in
+			  both languages together.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>tex-math-equations.*</filename>: Files to
+			  support mathematical formulas. For ADA internal use.
+			</para>
+		      </listitem>
+		      <listitem>
+			<para>
+			  <filename>equations</filename>: Directory where
+			  equations are stored as PNG files. For ADA internal use.
+			</para>
+		      </listitem>
+		    </itemizedlist>
+		  </entry>
 		</row>
 	      </tbody>
 	    </tgroup>

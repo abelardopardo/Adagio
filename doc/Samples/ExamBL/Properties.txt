@@ -1,7 +1,5 @@
-# inkscape.images=*.svg
-
+# Use the file with parameters to control the exam appearance
 mergestyles.master.style=Params.xml
 
+# File containing the exam information
 exam.bilingual.file=Test.xml
-
-# adado -f ../../../AntImports/Exam.xml

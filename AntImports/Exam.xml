@@ -140,10 +140,10 @@
       <param name="bilingualdb.output.format" value="_pguide.html"/>
       <param name="bilingualdb.extra.args"    
 	     value="--stringparam solutions.include.guide yes 
+		    --stringparam professorguide.include.guide yes
 		    --stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
-		    --stringparam professorguide.include.guide yes
 		    ${exam.extra.args}"/>
     </antcall>
 
@@ -153,11 +153,11 @@
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
-      <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltproc.files"         value="${exam.file}"/>
-      <param name="xsltproc.extra.args"    value="${exam.extra.args}"/>
+      <param name="xsltproc.src.dir"    value="${exam.dst.dir}"/>
+      <param name="xsltproc.dst.dir"    value="${exam.dst.dir}"/>
+      <param name="xsltproc.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="xsltproc.files"      value="${exam.file} ${exam.bilingual.file}"/>
+      <param name="xsltproc.extra.args" value="${exam.extra.args}"/>
     </antcall>
 
     <echo>exam.processing             END(xsltproc.processing)</echo>
@@ -169,7 +169,8 @@
       <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltproc.files"         value="${exam.file}"/>
+      <param name="xsltproc.files"         
+	     value="${exam.file}  ${exam.bilingual.file}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam solutions.include.guide yes 
@@ -186,14 +187,15 @@
       <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltproc.files"         value="${exam.file}"/>
+      <param name="xsltproc.files"         
+	     value="${exam.file} ${exam.bilingual.file}"/>
       <param name="xsltproc.output.format" value="_pguide.html"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam solutions.include.guide yes 
+		    --stringparam professorguide.include.guide yes
 		    --stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
-		    --stringparam professorguide.include.guide yes
 		    ${exam.extra.args}"/>
     </antcall>
 
@@ -276,23 +278,15 @@
       <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltproc.files"         value="${exam.file}"/>
-      <param name="xsltproc.extra.args"    value="${exam.extra.args}"/>
-    </antcall>
-
-    <!-- Call xsltproc -->
-    <antcall target="xsltproc.clean" inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
-      <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltproc.files"         value="${exam.file}"/>
+      <param name="xsltproc.files"         
+	     value="${exam.file} ${exam.bilingual.file}"/>
       <param name="xsltproc.output.format" value="_pguide.html"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam solutions.include.guide yes 
+		    --stringparam professorguide.include.guide yes
 		    --stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
-		    --stringparam professorguide.include.guide yes
 		    ${exam.extra.args}"/>
     </antcall>
 
@@ -301,12 +295,22 @@
       <param name="xsltproc.src.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltproc.files"         value="${exam.file}"/>
+      <param name="xsltproc.files"         
+	     value="${exam.file} ${exam.bilingual.file}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam solutions.include.guide yes 
 		    --stringparam ada.testquestions.include.solutions yes 
 		    ${exam.extra.args}"/>
+    </antcall>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.clean" inheritAll="false">
+      <param name="xsltproc.src.dir"    value="${exam.dst.dir}"/>
+      <param name="xsltproc.dst.dir"    value="${exam.dst.dir}"/>
+      <param name="xsltproc.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
+      <param name="xsltproc.files"      value="${exam.file} ${exam.bilingual.file}"/>
+      <param name="xsltproc.extra.args" value="${exam.extra.args}"/>
     </antcall>
 
     <!-- Call bilingualdb -->
@@ -345,22 +349,6 @@
       <param name="bilingualdb.style.file"    value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="bilingualdb.files"         value="${exam.bilingual.file}"/>
       <param name="bilingualdb.extra.args"    value="${exam.extra.args}"/>
-    </antcall>
-
-    <delete dir="${exam.absdst.dir}" 
-	    includes="__bogus__file__name 
-                      ${exam.raw.version1.filelist.property} 
-		      ${exam.raw.version2.filelist.property}"/>
-
-    <!-- Call xsltproc -->
-    <antcall target="xsltproc.clean"       inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${exam.src.dir}"/>
-      <param name="xsltproc.dst.dir"       value="${exam.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${ada.home}/XslStyles/Dump.xsl"/>
-      <param name="xsltproc.output.format" value="_raw.xml"/>
-      <param name="xsltproc.files"         value="${exam.file}
-						  ${exam.bilingual.file}"/>
-      <param name="xsltproc.extra.args"    value="${exam.extra.args}"/>
     </antcall>
 
   </target>
