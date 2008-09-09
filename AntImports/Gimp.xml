@@ -13,9 +13,6 @@
       directory but with different extension.
   -->
   
-  <!-- Checks for availability of different binaries -->
-  <import file="InitialCheck.xml" />
-
   <!-- Property definition -->
   <property name="gimp.exec"    value="gimp"/>
   <property name="gimp.src.dir" value="${basedir}"/>
@@ -38,7 +35,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="gimp.check.values" 
-	  depends="initial.check, gimp.dump.properties">
+	  depends="ada.init, gimp.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="gimp.check">
@@ -166,7 +163,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="gimp.dump.properties" depends="initial.check">
+  <target name="gimp.dump.properties" depends="ada.init">
     <echo level="${gimp.debug.level}"> ------ Gimp properties ----
     gimp.exec        ="${gimp.exec}"
     gimp.abssrc.dir     = "${gimp.abssrc.dir}"

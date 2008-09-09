@@ -12,9 +12,6 @@
       Produce ??
   -->
 
-  <!-- Checks for availability of different binaries -->
-  <import file="InitialCheck.xml"/>
-
   <!-- Public Property definition -->
   <property name="ps2pdf.exec"           value="ps2pdf"/>
   <property name="ps2pdf.src.dir"        value="${basedir}"/>
@@ -39,7 +36,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="ps2pdf.check.values" 
-	  depends="initial.check, ps2pdf.dump.properties">
+	  depends="ada.init, ps2pdf.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="ps2pdf.check">
@@ -157,7 +154,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="ps2pdf.dump.properties" depends="initial.check">
+  <target name="ps2pdf.dump.properties" depends="ada.init">
     <echo level="${ps2pdf.debug.level}"> ------ ps2pdf properties ----
     ps2pdf.exec       ="${ps2pdf.exec}"
     ps2pdf.abssrc.dir ="${ps2pdf.abssrc.dir}"

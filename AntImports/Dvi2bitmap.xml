@@ -11,9 +11,6 @@
       Produce ??
   -->
 
-  <!-- Checks for availability of different binaries -->
-  <import file="InitialCheck.xml"/>
-
   <!-- Public Property definition -->
   <property name="dvi2bitmap.exec"        value="dvi2bitmap"/>
   <property name="dvi2bitmap.src.dir"     value="${basedir}"/>
@@ -37,7 +34,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="dvi2bitmap.check.values" 
-	  depends="initial.check, dvi2bitmap.dump.properties">
+	  depends="ada.init, dvi2bitmap.dump.properties">
 
     <!-- Obtain the filelist with the source files to see if it is empty -->
     <pathconvert property="dvi2bitmap.source.filelist.property" pathsep=" ">
@@ -134,7 +131,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="dvi2bitmap.dump.properties" depends="initial.check">
+  <target name="dvi2bitmap.dump.properties" depends="ada.init">
     <echo level="${dvi2bitmap.debug.level}"> ------ dvi2bitmap properties ----
     dvi2bitmap.exec       ="${dvi2bitmap.exec}"
     dvi2bitmap.abssrc.dir ="${dvi2bitmap.abssrc.dir}"

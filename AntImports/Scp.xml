@@ -15,9 +15,6 @@
       properly installed to bypass this step.
   -->
 
-  <!-- Checks for availability of different binaries -->
-  <import file="InitialCheck.xml"/>
-
   <!-- Public Property definition -->
   <property name="scp.exec"                value="scp"/>
   <property name="scp.source"              value="${basedir}"/>
@@ -30,7 +27,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="scp.check.values" 
-	  depends="initial.check, scp.dump.properties">
+	  depends="ada.init, scp.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="scp.check">
@@ -105,7 +102,7 @@
   </target>
   
   <!-- Dump the properties defined in this script -->
-  <target name="scp.dump.properties" depends="initial.check">
+  <target name="scp.dump.properties" depends="ada.init">
     <echo level="${scp.debug.level}">------ scp properties ----
  scp.exec                =${scp.exec}
  scp.source              =${scp.source}

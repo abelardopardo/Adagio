@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="Apply stylesheet to bilingual docbook files" default="rss">
+<project name="Create Rss channel" default="rss">
 
   <!--
       Given the following properties:
@@ -11,9 +11,6 @@
 
       Apply the Rss stylefile to the files in rss.files
   -->
-
-  <!-- Checks for availability of different binaries -->
-  <import file="Xsltproc.xml"/>
 
   <!-- Property definition -->
   <property name="rss.src.dir"       value="."/>
@@ -54,7 +51,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
        executing the regular targets. -->
   <target name="rss.check.values" 
-	  depends="initial.check, rss.dump.properties">
+	  depends="ada.init, rss.dump.properties">
     
     <!-- 
     Fetch the date/time in RFC 822 format. I need this hack because the
@@ -177,7 +174,7 @@
     <echo>rss.clean                   END(xsltproc.clean EN)</echo>
   </target>
 
-  <target name="rss.dump.properties" depends="initial.check">
+  <target name="rss.dump.properties" depends="ada.init">
     <echo level="${rss.debug.level}"> ------ Rss properties ----
     rss.src.dir       ="${rss.src.dir}"
     rss.dst.dir       ="${rss.dst.dir}"

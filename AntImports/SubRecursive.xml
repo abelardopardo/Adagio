@@ -17,9 +17,6 @@
       stated in a resource, or be able to overwrite it.
   -->
 
-  <!-- Checks for availability of different binaries -->
-  <import file="InitialCheck.xml"/>
-  
   <!-- Public Property definition -->
   <property name="subrecursive.dirs"       value=""/>
   <property name="subrecursive.dst.dir"    value="${basedir}"/>
@@ -44,7 +41,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="subrecursive.check.values" 
-	  depends="initial.check, subrecursive.dump.properties">
+	  depends="ada.init, subrecursive.dump.properties">
 
     <!-- Conditions to see which one of the two targets needs to be executed -->
     <condition property="subrecursive.check.withdst">
@@ -157,7 +154,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="subrecursive.dump.properties" depends="initial.check">
+  <target name="subrecursive.dump.properties" depends="ada.init">
     <echo level="${subrecursive.debug.level}"> ------ Subrecursive properties ----
     subrecursive.dirs       ="${subrecursive.dirs}"
     subrecursive.dst.dir    ="${subrecursive.dst.dir}"

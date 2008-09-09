@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="@SCRIPT_NAME@" default="ppt2pdf">
+<project name="Transltate PPT to PDF with OpenOffice" default="ppt2pdf">
 
   <!--
       Given the following properties:
@@ -11,9 +11,6 @@
 
       Produce ??
   -->
-
-  <!-- Checks for availability of different binaries -->
-  <import file="InitialCheck.xml"/>
 
   <!-- Public Property definition -->
   <property name="ppt2pdf.exec"           
@@ -36,7 +33,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="ppt2pdf.check.values" 
-	  depends="initial.check, ppt2pdf.dump.properties">
+	  depends="ada.init, ppt2pdf.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="ppt2pdf.check">
@@ -142,7 +139,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="ppt2pdf.dump.properties" depends="initial.check">
+  <target name="ppt2pdf.dump.properties" depends="ada.init">
     <echo level="${ppt2pdf.debug.level}"> ------ ppt2pdf properties ----
     ppt2pdf.exec       ="${ppt2pdf.exec}"
     ppt2pdf.abssrc.dir ="${ppt2pdf.abssrc.dir}"

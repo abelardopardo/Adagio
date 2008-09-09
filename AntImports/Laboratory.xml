@@ -16,11 +16,6 @@
       one with the solution and pguide profiles.
   -->
 
-  <!-- Checks for availability of different binaries -->
-  <import file="Cleaning.xml"/>
-  <import file="SubRecursive.xml"/>
-  <import file="Xsltproc.xml"/>
-
   <!-- Property definition -->
   <property name="laboratory.src.dir"       value="${basedir}"/>
   <property name="laboratory.dst.dir"       value="${laboratory.src.dir}"/>
@@ -43,7 +38,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
        executing the regular targets. -->
   <target name="laboratory.check.values" 
-	  depends="initial.check, laboratory.dump.properties">
+	  depends="ada.init, laboratory.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="laboratory.check">
@@ -155,7 +150,7 @@
     <echo>laboratory.clean            END(xsltproc.processing 3 versions)</echo>
   </target>
 
-  <target name="laboratory.dump.properties" depends="initial.check">
+  <target name="laboratory.dump.properties" depends="ada.init">
     <echo level="${laboratory.debug.level}"> ------ Laboratory properties ----
     laboratory.src.dir           ="${laboratory.src.dir}"
     laboratory.dst.dir           ="${laboratory.dst.dir}"

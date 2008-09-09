@@ -17,10 +17,6 @@
       set, the target is not executed.
   -->
 
-  <!-- Checks for availability of different binaries -->
-  <import file="Copyfiles.xml"/>
-  <import file="ExportControl.xml"/>
-
   <!-- Public Property definition -->
   <property name="export.src.dir" value="${basedir}" />
   <property name="export.dst.dir" value="${export.src.dir}" />

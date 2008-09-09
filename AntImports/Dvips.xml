@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="@SCRIPT_NAME@" default="dvips">
+<project name="Execute Dvips" default="dvips">
 
   <!--
       Given the following properties:
@@ -11,9 +11,6 @@
 
       Produce ??
   -->
-
-  <!-- Checks for availability of different binaries -->
-  <import file="InitialCheck.xml"/>
 
   <!-- Public Property definition -->
   <property name="dvips.exec"           value="dvips"/>
@@ -39,7 +36,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="dvips.check.values" 
-	  depends="initial.check, dvips.dump.properties">
+	  depends="ada.init, dvips.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="dvips.check">
@@ -157,7 +154,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="dvips.dump.properties" depends="initial.check">
+  <target name="dvips.dump.properties" depends="ada.init">
     <echo level="${dvips.debug.level}"> ------ dvips properties ----
     dvips.exec       ="${dvips.exec}"
     dvips.abssrc.dir ="${dvips.abssrc.dir}"

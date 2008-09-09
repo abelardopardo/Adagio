@@ -15,9 +15,6 @@
       Produce the aplication of a stylefile to the files in docbook.files
   -->
 
-  <!-- Checks for availability of different binaries -->
-  <import file="Xsltproc.xml"/>
-
   <!-- Property definition -->
   <property name="docbook.src.dir"        value="${basedir}"/>
   <property name="docbook.dst.dir"        value="${docbook.src.dir}"/>
@@ -33,7 +30,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
        executing the regular targets. -->
   <target name="docbook.check.values" 
-	  depends="initial.check, docbook.dump.properties">
+	  depends="ada.init, docbook.dump.properties">
     
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="docbook.check">
@@ -111,7 +108,7 @@
     <echo>docbook.clean               END(xsltproc.clean)</echo>
   </target>
 
-  <target name="docbook.dump.properties" depends="initial.check">
+  <target name="docbook.dump.properties" depends="ada.init">
     <echo level="${docbook.debug.level}"> ------ Docbook properties ----
     docbook.src.dir       ="${docbook.src.dir}"
     docbook.dst.dir       ="${docbook.dst.dir}"

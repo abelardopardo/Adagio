@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="Exam processing rules" default="exam">
+<project name="Exam processing to create heading" default="exam">
 
   <!--
       Given the following properties:
@@ -16,11 +16,6 @@
       it to obtain the HTML rendering of the file.
 
   -->
-
-  <!-- Checks for availability of different binaries -->
-  <import file="Latex.xml"/>
-  <import file="Dvi2bitmap.xml"/>
-  <import file="BilingualDB.xml"/>
 
   <!-- Public Property definition -->
   <property name="exam.src.dir"        value="${basedir}"/>
@@ -56,7 +51,7 @@
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
-  <target name="exam.check.values" depends="initial.check, exam.dump.properties">
+  <target name="exam.check.values" depends="ada.init, exam.dump.properties">
 
     <!-- Obtain the filelist with the source file to see if it is empty -->
     <pathconvert property="exam.source.filelist.property" pathsep=" ">
@@ -354,7 +349,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="exam.dump.properties" depends="initial.check">
+  <target name="exam.dump.properties" depends="ada.init">
     <echo level="${exam.debug.level}"> ------ exam properties ----
     exam.abssrc.dir     ="${exam.abssrc.dir}"
     exam.absdst.dir     ="${exam.absdst.dir}"

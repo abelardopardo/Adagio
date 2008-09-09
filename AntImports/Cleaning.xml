@@ -10,8 +10,6 @@
       Delete the given files from the directory.
   -->
 
-  <import file="InitialCheck.xml"/>
-
   <property name="clean.files"   value=""/>
   
   <!-- Private properties -->
@@ -23,7 +21,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="clean.check.values" 
-	  depends="initial.check, clean.dump.properties"> 
+	  depends="ada.init, clean.dump.properties"> 
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="clean.check">
@@ -64,7 +62,7 @@
     </delete>
   </target>
 
-  <target name="clean.dump.properties" depends="initial.check">
+  <target name="clean.dump.properties" depends="ada.init">
     <echo level="${clean.debug.level}"> ------ Clean properties ----
     clean.files        = "${clean.files}"</echo>
   </target>

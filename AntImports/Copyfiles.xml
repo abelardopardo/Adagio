@@ -13,9 +13,6 @@
       performed only if the two dirs are non empty.
   -->
 
-  <!-- Checks for availability of different binaries -->
-  <import file="InitialCheck.xml"/>
-
   <!-- Property definition -->
   <property name="copyfiles.src.dir"      value="${basedir}" />
   <property name="copyfiles.dst.dir"      value="${basedir}" />
@@ -39,7 +36,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="copyfiles.check.values" 
-	  depends="initial.check, copyfiles.dump.properties">
+	  depends="ada.init, copyfiles.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="copyfiles.check">
@@ -147,7 +144,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="copyfiles.dump.properties" depends="initial.check">
+  <target name="copyfiles.dump.properties" depends="ada.init">
     <echo level="${copyfiles.debug.level}"> ------ Copyfiles properties ----
     copyfiles.abssrc.dir ="${copyfiles.abssrc.dir}"
     copyfiles.absdst.dir ="${copyfiles.absdst.dir}"

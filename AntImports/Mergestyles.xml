@@ -22,9 +22,6 @@
 
   -->
 
-  <!-- Checks for availability of different binaries -->
-  <import file="InitialCheck.xml"/>
-
   <!-- Property definition -->
   <property name="mergestyles.exec"           value="xsltproc"/>
   <property name="mergestyles.src.dir"        value="${basedir}"/>
@@ -59,7 +56,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="mergestyles.check.values" 
-	  depends="initial.check, mergestyles.dump.properties"> 
+	  depends="ada.init, mergestyles.dump.properties"> 
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="mergestyles.check">
@@ -148,7 +145,7 @@
   </target>
 
   <!-- Dump the properties and filelists defined in this script -->
-  <target name="mergestyles.dump.properties" depends="initial.check">
+  <target name="mergestyles.dump.properties" depends="ada.init">
     <echo level="${mergestyles.debug.level}"> ------ mergestyles properties ----
     mergestyles.src.dir        ="${mergestyles.src.dir}"
     mergestyles.dst.dir        ="${mergestyles.dst.dir}"

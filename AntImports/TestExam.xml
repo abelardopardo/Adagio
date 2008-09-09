@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="Exam processing rules" default="testexam">
+<project name="Test Exam processing rules" default="testexam">
 
   <!--
       Given the following properties:
@@ -16,11 +16,6 @@
       it to obtain two versions with the shuffled questions.
 
   -->
-
-  <!-- Checks for availability of different binaries -->
-  <import file="Latex.xml"/>
-  <import file="Dvi2bitmap.xml"/>
-  <import file="BilingualDB.xml"/>
 
   <!-- Public Property definition -->
   <property name="testexam.src.dir"        value="${basedir}"/>
@@ -54,7 +49,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="testexam.check.values" 
-	  depends="initial.check, testexam.dump.properties">
+	  depends="ada.init, testexam.dump.properties">
 
     <!-- Obtain the filelist with the source file to see if it is empty -->
     <pathconvert property="testexam.source.filelist.property" pathsep=" ">
@@ -529,7 +524,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="testexam.dump.properties" depends="initial.check">
+  <target name="testexam.dump.properties" depends="ada.init">
     <echo level="${testexam.debug.level}"> ------ testexam properties ----
     testexam.exec           ="${testexam.exec}"
     testexam.abssrc.dir     ="${testexam.abssrc.dir}"

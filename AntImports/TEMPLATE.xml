@@ -15,32 +15,35 @@
   <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
 
-  <!-- Public Property definition -->
-  <property name="@NAME@.exec"           value="@NAME@"/>
-  <property name="@NAME@.src.dir"        value="${basedir}"/>
-  <property name="@NAME@.dst.dir"        value="${@NAME@.src.dir}"/>
-  <property name="@NAME@.files"          value=""/>
+  <target name="@NAME@.init" depends="ada.init">
 
-  <!-- Private properties -->
-  <property name="@NAME@.debug.level"    value="${ada.debug.level}"/>
+    <!-- Public Property definition -->
+    <property name="@NAME@.exec"           value="@NAME@"/>
+    <property name="@NAME@.src.dir"        value="${basedir}"/>
+    <property name="@NAME@.dst.dir"        value="${@NAME@.src.dir}"/>
+    <property name="@NAME@.files"          value=""/>
 
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="@NAME@.abssrc.dir" pathsep=" ">
-    <path location="${@NAME@.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="@NAME@.absdst.dir" pathsep=" ">
-    <path  location="${@NAME@.dst.dir}"/>
-  </pathconvert>
+    <!-- Private properties -->
+    <property name="@NAME@.debug.level"    value="${ada.debug.level}"/>
 
-  <!-- Source files to be processed by @NAME@ (fileset to allow wildcards) -->
-  <fileset id="@NAME@.fileset" dir="${@NAME@.abssrc.dir}"
-	   includes="__bogus__file__name ${@NAME@.files}"/>
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="@NAME@.abssrc.dir" pathsep=" ">
+      <path location="${@NAME@.src.dir}"/>
+    </pathconvert>
+    <pathconvert property="@NAME@.absdst.dir" pathsep=" ">
+      <path  location="${@NAME@.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Source files to be processed by @NAME@ (fileset to allow wildcards) -->
+    <fileset id="@NAME@.fileset" dir="${@NAME@.abssrc.dir}"
+	     includes="__bogus__file__name ${@NAME@.files}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
+       executing the regular targets. -->
   <target name="@NAME@.check.values" 
-	  depends="initial.check, @NAME@.dump.properties">
-
+	  depends="@NAME@.init, @NAME@.dump.properties">
+      
     <!-- Obtain the filelist with the source files to see if it is empty -->
     <pathconvert property="@NAME@.source.filelist.property" pathsep=" ">
       <fileset refid="@NAME@.fileset"/>
@@ -79,6 +82,10 @@
     <echo level="${@NAME@.debug.level}">  @NAME@.check              = "${@NAME@.check}"
   @NAME@.execution.possible = ${@NAME@.execution.possible}
   @NAME@.failure            = ${@NAME@.failure}</echo>
+
+    <macrodef name="@NAME@.execute.">
+    </macrodef>
+
   </target>
 
   <target name="@NAME@.bomb.out" if="@NAME@.failure">
@@ -162,7 +169,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="@NAME@.dump.properties" depends="initial.check">
+  <target name="@NAME@.dump.properties" depends="ada.init">
     <echo level="${@NAME@.debug.level}"> ------ @NAME@ properties ----
     @NAME@.exec       ="${@NAME@.exec}"
     @NAME@.abssrc.dir ="${@NAME@.abssrc.dir}"

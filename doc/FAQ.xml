@@ -1061,6 +1061,16 @@ clean.files=../scratch/Theory2</programlisting>
 	</answer>
       </qandaentry>
 
+<!--
+      <TOBEWRITTEN>
+      <qandaentry id="inkscape_processing">
+	<question>
+	  <para>Inkscape cannot be executed. Why?</para>
+	</question>
+	<answer>
+        </answer>
+      <qandaentry>
+-->
       <qandaentry id="using_regexp_for_files">
 	<question>
 	  <para>

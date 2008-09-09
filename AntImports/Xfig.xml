@@ -18,52 +18,54 @@
       smooth.
   -->
 
-  <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
 
-  <!-- Public Property definition -->
-  <property name="xfig.exec"          value="fig2dev"/>
-  <property name="xfig.src.dir"       value="${basedir}"/>
-  <property name="xfig.dst.dir"       value="${xfig.src.dir}"/>
-  <property name="xfig.output.format" value="png"/>
-  <property name="xfig.border"        value="2"/>
-  <property name="xfig.smooth"        value="4"/>
-  <property name="xfig.extra.args"    value=""/>
-  <property name="xfig.files"         value=""/>
+  <target name="xfig.init" depends="ada.init">
 
-  <!-- Private properties -->
-  <property name="xfig.debug.level"    value="${ada.debug.level}"/>
+    <!-- Public Property definition -->
+    <property name="xfig.exec"          value="fig2dev"/>
+    <property name="xfig.src.dir"       value="${basedir}"/>
+    <property name="xfig.dst.dir"       value="${xfig.src.dir}"/>
+    <property name="xfig.output.format" value="png"/>
+    <property name="xfig.border"        value="2"/>
+    <property name="xfig.smooth"        value="4"/>
+    <property name="xfig.extra.args"    value=""/>
+    <property name="xfig.files"         value=""/>
+    
+    <!-- Private properties -->
+    <property name="xfig.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="xfig.abssrc.dir" pathsep=" ">
+      <path location="${xfig.src.dir}"/>
+    </pathconvert>
+    <pathconvert property="xfig.absdst.dir" pathsep=" ">
+      <path  location="${xfig.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Source files to be processed by fig2dev (fileset to allow wildcards) -->
+    <fileset id="xfig.fileset" dir="${xfig.abssrc.dir}"
+	     includes="__bogus__file__name ${xfig.files}"/>
+  </target>
 
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="xfig.abssrc.dir" pathsep=" ">
-    <path location="${xfig.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="xfig.absdst.dir" pathsep=" ">
-    <path  location="${xfig.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by fig2dev (fileset to allow wildcards) -->
-  <fileset id="xfig.fileset" dir="${xfig.abssrc.dir}"
-	   includes="__bogus__file__name ${xfig.files}"/>
-  
   <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
+       executing the regular targets. -->
   <target name="xfig.check.values" 
-	  depends="initial.check, xfig.dump.properties">
-
+	  depends="xfig.init, xfig.dump.properties">
+    
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="xfig.check">
       <and>
 	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
-	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${xfig.abssrc.dir}" arg2="" trim="true"/></not>
+	     empty definition of this variable. At least a . needs to be present -->
+	<not><equals arg1="${xfig.abssrc.dir}" arg2="" trim="true"/></not>
 	<!-- There must be some files defined -->
-        <not><equals arg1="${xfig.files}" arg2="" trim="true"/></not>
+	<not><equals arg1="${xfig.files}" arg2="" trim="true"/></not>
 	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${xfig.absdst.dir}" arg2="" trim="true"/></not>
+	<not><equals arg1="${xfig.absdst.dir}" arg2="" trim="true"/></not>
       </and>
     </condition>
-
+    
     <!-- The required condition not to bomb out -->
     <condition property="xfig.execution.possible">
       <and>
@@ -72,18 +74,45 @@
 	<available file="${xfig.abssrc.dir}"/> 
       </and>
     </condition>
-
+    
     <condition property="xfig.failure">
       <and>
 	<isset property="xfig.check"/>
 	<not><isset property="xfig.execution.possible"/></not>
       </and>
     </condition>
-
+    
     <!-- Dump the value of the properties just computed. -->
     <echo level="${xfig.debug.level}">  xfig.check  = "${xfig.check}"
   xfig.execution.possible = ${xfig.execution.possible}
   xfig.failure            = ${xfig.failure}</echo>
+  
+    <macrodef name="xfig.execute.fig2dev">
+      <sequential>
+	<echo>xfig.processing             RUN</echo>
+	<echo level="${xfig.debug.level}">${basedir}</echo>
+	
+	<!-- Create the dst directory -->
+	<mkdir dir="${xfig.absdst.dir}" />
+	
+	<apply dir="${basedir}" parallel="false"
+	       dest="${xfig.absdst.dir}" append="yes" failonerror="true"
+	       executable="${xfig.exec}" forwardslash="true" output="build.out">
+	  <arg value="-L"/>
+	  <arg value="${xfig.output.format}"/>
+	  <arg value="-b"/>
+	  <arg value="${xfig.border}"/>
+	  <arg value="-S"/>
+	  <arg value="${xfig.smooth}"/>
+	  <arg line="${xfig.extra.args}"/>
+	  <srcfile/>
+	  <targetfile/>
+	  <fileset refid="xfig.fileset"/>
+	  <!-- Mapper from source files to produced files -->
+	  <mapper type="glob" from="*.fig" to="*.${xfig.output.format}"/>
+	</apply>
+      </sequential>
+    </macrodef>
   </target>
 
   <target name="xfig.bomb.out" if="xfig.failure">
@@ -107,28 +136,7 @@
 	  depends="xfig.check.values, xfig.processing.NOT"
 	  if="xfig.check" description="creates the figures from the fig files">
 
-    <echo>xfig.processing             RUN</echo>
-    <echo level="${xfig.debug.level}">${basedir}</echo>
-
-    <!-- Create the dst directory -->
-    <mkdir dir="${xfig.absdst.dir}" />
-
-    <apply dir="${basedir}" parallel="false"
-      dest="${xfig.absdst.dir}" append="yes" failonerror="true"
-      executable="${xfig.exec}" forwardslash="true" output="build.out">
-      <arg value="-L"/>
-      <arg value="${xfig.output.format}"/>
-      <arg value="-b"/>
-      <arg value="${xfig.border}"/>
-      <arg value="-S"/>
-      <arg value="${xfig.smooth}"/>
-      <arg line="${xfig.extra.args}"/>
-      <srcfile/>
-      <targetfile/>
-      <fileset refid="xfig.fileset"/>
-      <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.fig" to="*.${xfig.output.format}"/>
-    </apply>    
+    <xfig.execute.fig2dev />
   </target>
 
   <!-- Target to notify that the regular target has not been executed. This is
@@ -180,7 +188,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="xfig.dump.properties" depends="initial.check">
+  <target name="xfig.dump.properties" depends="ada.init">
     <echo level="${xfig.debug.level}"> ------ Xfig properties ----
     xfig.exec          ="${xfig.exec}"
     xfig.abssrc.dir    ="${xfig.abssrc.dir}"

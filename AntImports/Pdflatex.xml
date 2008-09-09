@@ -12,9 +12,6 @@
       Produce a pdf file directly from a latex file using pdflatex
   -->
 
-  <!-- Checks for availability of different binaries -->
-  <import file="InitialCheck.xml"/>
-
   <!-- Public Property definition -->
   <property name="pdflatex.exec"           value="pdflatex"/>
   <property name="pdflatex.src.dir"        value="${basedir}"/>
@@ -40,7 +37,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="pdflatex.check.values" 
-	  depends="initial.check, pdflatex.dump.properties">
+	  depends="ada.init, pdflatex.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="pdflatex.check">
@@ -185,7 +182,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="pdflatex.dump.properties" depends="initial.check">
+  <target name="pdflatex.dump.properties" depends="ada.init">
     <echo level="${pdflatex.debug.level}"> ------ pdflatex properties ----
     pdflatex.exec       ="${pdflatex.exec}"
     pdflatex.abssrc.dir ="${pdflatex.abssrc.dir}"

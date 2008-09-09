@@ -43,9 +43,6 @@
 
 -->
 
-  <!-- Slurp a bunch of properties and definitions -->
-  <import file="InitialCheck.xml"/>
-
   <!-- Public Property definition -->
   <property name="exportcontrol.begin"   value=""/>
   <property name="exportcontrol.end"     value=""/>

@@ -12,9 +12,6 @@
       Produce a pdf file directly from a Docbook file
   -->
 
-  <!-- Checks for availability of different binaries -->
-  <import file="InitialCheck.xml"/>
-
   <!-- Public Property definition -->
   <property name="dblatex.exec"           value="dblatex"/>
   <property name="dblatex.src.dir"        value="${basedir}"/>
@@ -40,7 +37,7 @@
   <!-- Preliminary target to verify that certain minimum conditions hold before
        executing the regular targets. -->
   <target name="dblatex.check.values" 
-	  depends="initial.check, dblatex.dump.properties">
+	  depends="ada.init, dblatex.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="dblatex.check">
@@ -156,7 +153,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="dblatex.dump.properties" depends="initial.check">
+  <target name="dblatex.dump.properties" depends="ada.init">
     <echo level="${dblatex.debug.level}"> ------ dblatex properties ----
     dblatex.exec       ="${dblatex.exec}"
     dblatex.abssrc.dir ="${dblatex.abssrc.dir}"
