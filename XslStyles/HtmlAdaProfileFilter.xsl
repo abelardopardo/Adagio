@@ -11,7 +11,9 @@
   <!-- AdaProfile filter import -->
   <xsl:import href="AdaProfile.xsl"/>
 
-  <xsl:output method="xml" indent="yes" encoding="UTF-8" />
+  <xsl:output method="xml" indent="yes" encoding="UTF-8"
+              doctype-public="-//W3C//DTD XHTML 1.1//EN"
+              doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" />
 
   <!-- Params needed by AdaProfile -->
   <xsl:param name="stylesheet.result.type" select="'xhtml'"/>
