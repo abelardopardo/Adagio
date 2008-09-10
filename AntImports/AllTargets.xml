@@ -3,6 +3,7 @@
 <project name="Gather all target definitions" default="execute">
 
   <import file="InitialCheck.xml"/>
+  <import file="ExtraAnt.xml"/>
 
 <!--   <import file="Mergestyles.xml"/> -->
 <!--   <import file="Xsltproc.xml"/> -->
@@ -18,7 +19,6 @@
 <!--   <import file="ExportControl.xml"/> -->
 <!--   <import file="Export.xml"/> -->
 <!--   <import file="Copyfiles.xml"/> -->
-<!--   <import file="ExtraAnt.xml"/> -->
 <!--   <import file="Gimp.xml"/> -->
 <!--   <import file="Inkscape.xml"/> -->
 <!--   <import file="SubRecursive.xml"/> -->
@@ -127,7 +127,7 @@
 
     <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
 	 target="extraant.processing" inheritAll="false">
-      <param name="extraant.target" value="${extraant.posttarget.clean}"/>
+      <property name="extraant.target" value="${extraant.posttarget.clean}"/>
     </ant>
 
     <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
@@ -186,7 +186,7 @@
 
     <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
 	 target="extraant.processing" inheritAll="false">
-      <param name="extraant.target" value="${extraant.pretarget.clean}"/>
+      <property name="extraant.target" value="${extraant.pretarget.clean}"/>
     </ant>
  
     <ant antfile="${ada.home}/AntImports/Copyfiles.xml" 
@@ -215,7 +215,7 @@
 
     <ant antfile="${ada.home}/AntImports/InitialCheck.xml" 
 	 target="ada.properties.init.dump">
-      <param name="ada.debug.level" value="warning"/>
+      <property name="ada.debug.level" value="warning"/>
     </ant>
     <echo/>
 

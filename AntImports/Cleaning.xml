@@ -10,6 +10,8 @@
       Delete the given files from the directory.
   -->
 
+  <import file="InitialCheck.xml"/>
+
   <target name="clean.init" depends="ada.init">
     <property name="clean.files"   value=""/>
     

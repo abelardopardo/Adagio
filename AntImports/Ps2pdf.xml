@@ -12,6 +12,8 @@
       Produce ??
   -->
 
+  <import file="InitialCheck.xml"/>
+
   <target name="ps2pdf.init" depends="ada.init">
 
     <!-- Public Property definition -->

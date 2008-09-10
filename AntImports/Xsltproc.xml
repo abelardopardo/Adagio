@@ -17,6 +17,8 @@
       Produce the aplication of a stylefile to the files in xsltproc.fileset
   -->
 
+  <import file="Mergestyles.xml"/>
+
   <target name="xsltproc.init" depends="ada.init">
     <!-- Public Property definition -->
     <property name="xsltproc.exec"           value="xsltproc"/>

@@ -2,7 +2,7 @@
 
 <project name="Calculate if a Time Window is active or not"
 	 default="exportcontrol">
-<!--
+  <!--
     Given the following properties:
     
     exportcontrol.begin: Date/time when the window of validity begins
@@ -41,8 +41,10 @@
     string to contain multiple values that enable different export rules at
     different locations.
 
--->
-
+  -->
+  
+  <import file="InitialCheck.xml"/>
+  
   <target name="exportcontrol.init" depends="ada.init">
     <!-- Public Property definition -->
     <property name="exportcontrol.begin"   value=""/>

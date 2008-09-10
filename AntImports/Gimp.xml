@@ -13,6 +13,8 @@
       directory but with different extension.
   -->
 
+  <import file="InitialCheck.xml" />
+
   <target name="gimp.init" depends="ada.init">
     <!-- Property definition -->
     <property name="gimp.exec"    value="gimp"/>

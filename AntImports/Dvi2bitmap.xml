@@ -11,30 +11,34 @@
       Produce ??
   -->
 
-  <!-- Public Property definition -->
-  <property name="dvi2bitmap.exec"        value="dvi2bitmap"/>
-  <property name="dvi2bitmap.src.dir"     value="${basedir}"/>
-  <property name="dvi2bitmap.output.type" value="png"/>
-  <property name="dvi2bitmap.args"        value="--magnification=5 --scale=5"/>
-  <property name="dvi2bitmap.extra.args"  value=""/>
-  <property name="dvi2bitmap.files"       value=""/>
+  <import file="InitialCheck.xml"/>
 
-  <!-- Private properties -->
-  <property name="dvi2bitmap.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="dvi2bitmap.abssrc.dir" pathsep=" ">
-    <path location="${dvi2bitmap.src.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by dvi2bitmap (fileset to allow wildcards) -->
-  <fileset id="dvi2bitmap.fileset" dir="${dvi2bitmap.abssrc.dir}"
-	   includes="__bogus__file__name ${dvi2bitmap.files}"/>
+  <target name="dvi2bitmap.init" depends="ada.init">
+    <!-- Public Property definition -->
+    <property name="dvi2bitmap.exec"        value="dvi2bitmap"/>
+    <property name="dvi2bitmap.src.dir"     value="${basedir}"/>
+    <property name="dvi2bitmap.output.type" value="png"/>
+    <property name="dvi2bitmap.args"        value="--magnification=5 --scale=5"/>
+    <property name="dvi2bitmap.extra.args"  value=""/>
+    <property name="dvi2bitmap.files"       value=""/>
+    
+    <!-- Private properties -->
+    <property name="dvi2bitmap.debug.level"    value="${ada.debug.level}"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="dvi2bitmap.abssrc.dir" pathsep=" ">
+      <path location="${dvi2bitmap.src.dir}"/>
+    </pathconvert>
+    
+    <!-- Source files to be processed by dvi2bitmap (fileset to allow wildcards) -->
+    <fileset id="dvi2bitmap.fileset" dir="${dvi2bitmap.abssrc.dir}"
+	     includes="__bogus__file__name ${dvi2bitmap.files}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="dvi2bitmap.check.values" 
-	  depends="ada.init, dvi2bitmap.dump.properties">
+	  depends="dvi2bitmap.init, dvi2bitmap.dump.properties">
 
     <!-- Obtain the filelist with the source files to see if it is empty -->
     <pathconvert property="dvi2bitmap.source.filelist.property" pathsep=" ">

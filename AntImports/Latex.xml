@@ -12,6 +12,8 @@
       Produce ??
   -->
 
+  <import file="InitialCheck.xml"/>
+
   <target name="latex.init" depends="ada.init">
 
     <!-- Public Property definition -->

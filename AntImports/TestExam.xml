@@ -17,6 +17,10 @@
 
   -->
 
+  <import file="Latex.xml"/>
+  <import file="Dvi2bitmap.xml"/>
+  <import file="BilingualDB.xml"/>
+
   <target name="testexam.init" depends="ada.init">
     
     <!-- Public Property definition -->

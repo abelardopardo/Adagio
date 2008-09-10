@@ -12,6 +12,8 @@
       Produce ??
   -->
 
+  <import file="InitialCheck.xml"/>
+
   <target name="ppt2pdf.init" depends="ada.init">
 
     <!-- Public Property definition -->

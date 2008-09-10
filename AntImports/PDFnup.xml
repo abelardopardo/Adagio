@@ -13,6 +13,8 @@
       Producd 2up PDF files
   -->
 
+  <import file="InitialCheck.xml"/>
+
   <target name="pdfnup.init" depends="ada.init">
 
     <!-- Public Property definition -->

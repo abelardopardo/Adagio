@@ -22,6 +22,8 @@
 
   -->
 
+  <import file="InitialCheck.xml"/>
+
   <target name="mergestyles.init" depends="ada.init">
     <!-- Property definition -->
     <property name="mergestyles.exec"           value="xsltproc"/>

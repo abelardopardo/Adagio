@@ -12,6 +12,8 @@
       Apply the Rss stylefile to the files in rss.files
   -->
 
+  <import file="Xsltproc.xml"/>
+
   <target name="rss.init" depends="ada.init">
     
     <!-- Property definition -->

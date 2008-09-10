@@ -12,6 +12,8 @@
       Produce ??
   -->
 
+  <import file="InitialCheck.xml"/>
+
   <target name="extraant.init" depends="ada.init">
     <!-- Public Property definition -->
     <property name="extraant.src.dir"          value="${basedir}"/>

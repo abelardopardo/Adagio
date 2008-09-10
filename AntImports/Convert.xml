@@ -16,6 +16,8 @@
       for chainging the geometry of a PNG file and cropping part of it. 
   -->
 
+  <import file="InitialCheck.xml" />
+
   <target name="convert.init" depends="ada.init">
     <!-- Property definition -->
     <property name="convert.exec"     value="convert"/>

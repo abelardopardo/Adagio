@@ -12,6 +12,8 @@
       Produce a pdf file directly from a Docbook file
   -->
 
+  <import file="InitialCheck.xml"/>
+
   <target name="dblatex.init" depends="ada.init">
 
     <!-- Public Property definition -->

@@ -18,6 +18,8 @@
       smooth.
   -->
 
+  <import file="InitialCheck.xml"/>
+
   <target name="xfig.init" depends="ada.init">
 
     <!-- Public Property definition -->

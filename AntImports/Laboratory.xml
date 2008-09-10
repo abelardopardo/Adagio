@@ -16,6 +16,10 @@
       one with the solution and pguide profiles.
   -->
 
+  <import file="Cleaning.xml"/>
+  <import file="SubRecursive.xml"/>
+  <import file="Xsltproc.xml"/>
+
   <target name="laboratory.init" depends="ada.init">
     <!-- Property definition -->
     <property name="laboratory.src.dir"       value="${basedir}"/>

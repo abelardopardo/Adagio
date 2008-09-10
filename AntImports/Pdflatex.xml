@@ -12,6 +12,8 @@
       Produce a pdf file directly from a latex file using pdflatex
   -->
 
+  <import file="InitialCheck.xml"/>
+
   <target name="pdflatex.init" depends="ada.init">
 
     <!-- Public Property definition -->

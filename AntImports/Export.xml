@@ -17,6 +17,9 @@
       set, the target is not executed.
   -->
 
+  <import file="Copyfiles.xml"/>
+  <import file="ExportControl.xml"/>
+
   <target name="export.init" depends="ada.init">
     <!-- Public Property definition -->
     <property name="export.src.dir" value="${basedir}" />

@@ -15,19 +15,23 @@
       properly installed to bypass this step.
   -->
 
-  <!-- Public Property definition -->
-  <property name="scp.exec"                value="scp"/>
-  <property name="scp.source"              value="${basedir}"/>
-  <property name="scp.destination"         value="${scp.source}"/>
-  <property name="scp.extra.args"          value=""/>
+  <import file="InitialCheck.xml"/>
 
-  <!-- Private properties -->
-  <property name="scp.debug.level"    value="${ada.debug.level}"/>
+  <target name="scp.init" depends="ada.init">
+    <!-- Public Property definition -->
+    <property name="scp.exec"                value="scp"/>
+    <property name="scp.source"              value="${basedir}"/>
+    <property name="scp.destination"         value="${scp.source}"/>
+    <property name="scp.extra.args"          value=""/>
+    
+    <!-- Private properties -->
+    <property name="scp.debug.level"    value="${ada.debug.level}"/>
+  </target>
 
   <!-- Preliminary target to verify that certain minimum conditions hold before
   executing the regular targets. -->
   <target name="scp.check.values" 
-	  depends="ada.init, scp.dump.properties">
+	  depends="scp.init, scp.dump.properties">
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="scp.check">
