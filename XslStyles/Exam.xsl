@@ -261,7 +261,7 @@
         <!-- Last name -->
         <tr>
           <td style="border: 1px solid black; border-collapse: collapse;"
-              width="11%" align="left">
+              width="15%" align="left">
             <xsl:choose>
               <xsl:when test="$profile.lang='en'">
                 Last Name:
@@ -272,7 +272,7 @@
             </xsl:choose>
           </td>
           <td style="border: 1px solid black; border-collapse: collapse;"
-              width="90%" ></td>
+              width="85%" ></td>
         </tr>
 
         <!-- First name -->
