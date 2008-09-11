@@ -11,6 +11,8 @@
   <!-- AdaProfile filter import -->
   <xsl:import href="AdaProfile.xsl"/>
 
+  <xsl:param name="ada.profile.suppress.profiling.attributes">yes</xsl:param>
+
   <xsl:output method="xml" indent="yes" encoding="UTF-8"
               doctype-public="-//W3C//DTD XHTML 1.1//EN"
               doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" />
