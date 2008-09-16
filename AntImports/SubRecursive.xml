@@ -50,7 +50,11 @@
     <condition property="subrecursive.check.withdst">
       <and>
 	<not><equals arg1="${subrecursive.dirs}" arg2="" trim="true"/></not>
-	<not><equals arg1="${subrecursive.dst.dir}" arg2="" trim="true"/></not>
+<!--	
+        Removed to allow subrecursive.dirs with no dir, this fires the build
+        process remotely, and then copyfiles applied to a subset of files.
+        <not><equals arg1="${subrecursive.dst.dir}" arg2="" trim="true"/></not>
+ -->
       </and>
     </condition>
 
