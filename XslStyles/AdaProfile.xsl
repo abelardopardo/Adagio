@@ -11,6 +11,7 @@
   <xsl:param name="ada.current.datetime" select="''"/> 
   <xsl:param name="ada.audience.date.separator" select="'--'"/>
   <xsl:param name="ada.audience.debug"/>
+  <xsl:param name="ada.profile.suppress.profiling.attributes">no</xsl:param>
 
   <!-- 
        Translate the previous variable from its original format to
@@ -233,7 +234,24 @@
                   $wordsize.ok and 
                   $attribute.ok">
       <xsl:copy>
-        <xsl:copy-of select="@*"/>
+        <xsl:if test="@*[($ada.profile.suppress.profiling.attributes = 'no')
+                      or (local-name() != 'arch'
+                      and local-name() != 'audience'
+                      and local-name() != 'condition'
+                      and local-name() != 'conformance'
+                      and local-name() != 'lang'
+                      and local-name() != 'os'
+                      and local-name() != 'revision'
+                      and local-name() != 'revisionflag'
+                      and local-name() != 'role'
+                      and local-name() != 'security'
+                      and local-name() != 'status'
+                      and local-name() != 'userlevel'
+                      and local-name() != 'vendor'
+                      and local-name() != 'wordsize'
+                      and local-name() != $profile.attribute)]">
+          <xsl:copy-of select="@*"/>
+        </xsl:if>
         <!-- 
              Entity references must be replaced with filereferences for
              temporary tree 
