@@ -63,5 +63,10 @@ ant -q -Dada.home="$ADA_HOME" \
        -f "$AllTargets" $*
 
 # Check for status: 0 = OK, 1 = Something went wrong!
+adaAntStatus="$?"
+if [ $adaAntStatus -ne 0 ]; then
+  echo "An error has occurred. Check build.out for more information."
+fi
+
 exit
 
