@@ -6,7 +6,14 @@
 #
 
 export.dst.dir=../scratch/images
-export.files=*
+export.files=agenda.40x40.png \
+             ao.120x120.png \
+             ao.16x16.ico \
+             info.png \
+             logoit3.gif \
+             LogoUC3M_55x55.png \
+             somerights30.png \
+             titular3.gif
 
 clean.files=../scratch/images 
 
