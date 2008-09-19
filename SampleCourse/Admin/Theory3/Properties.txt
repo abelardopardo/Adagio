@@ -10,7 +10,6 @@ subrecursive.dirs=../latexCommonFiles \
 
 myfilename=servlets_jsp_integration
 
-mergestyles.src.dir=.
 mergestyles.master.style=Params.xml
 
 xsltproc.files=${myfilename}.xml

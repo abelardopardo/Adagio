@@ -20,10 +20,15 @@
 
   <import file="InitialCheck.xml"/>
 
-  <target name="xfig.init" depends="ada.init">
+  <property name="xfig.exec"          value="fig2dev"/>
 
+  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${xfig.exec}"/>
+  
+  <!-- Private properties -->
+  <property name="xfig.debug.level"    value="${ada.debug.level}"/>
+
+  <target name="xfig.init" depends="ada.init" if="xfig.execution.possible">
     <!-- Public Property definition -->
-    <property name="xfig.exec"          value="fig2dev"/>
     <property name="xfig.src.dir"       value="${basedir}"/>
     <property name="xfig.dst.dir"       value="${xfig.src.dir}"/>
     <property name="xfig.output.format" value="png"/>
@@ -32,83 +37,30 @@
     <property name="xfig.extra.args"    value=""/>
     <property name="xfig.files"         value=""/>
     
-    <!-- Private properties -->
-    <property name="xfig.debug.level"    value="${ada.debug.level}"/>
-    
     <!-- Define two properties containing the absolute src and dst paths -->
-    <pathconvert property="xfig.abssrc.dir" pathsep=" ">
-      <path location="${xfig.src.dir}"/>
-    </pathconvert>
-    <pathconvert property="xfig.absdst.dir" pathsep=" ">
-      <path  location="${xfig.dst.dir}"/>
-    </pathconvert>
-    
-    <!-- Source files to be processed by fig2dev (fileset to allow wildcards) -->
-    <fileset id="xfig.fileset" dir="${xfig.abssrc.dir}"
-	     includes="__bogus__file__name ${xfig.files}"/>
-  </target>
+    <ada.expand.srcdst.paths
+      ADA.PREFIX="xfig" ADA.SRC.DIR="${xfig.src.dir}"
+      ADA.DST.DIR="${xfig.dst.dir}" ADA.FILES="${xfig.files}"/>
 
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-       executing the regular targets. -->
-  <target name="xfig.check.values" 
-	  depends="xfig.init, xfig.dump.properties">
-    
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="xfig.check">
-      <and>
-	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
-	     empty definition of this variable. At least a . needs to be present -->
-	<not><equals arg1="${xfig.abssrc.dir}" arg2="" trim="true"/></not>
-	<!-- There must be some files defined -->
-	<not><equals arg1="${xfig.files}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty dst.dir as well -->
-	<not><equals arg1="${xfig.absdst.dir}" arg2="" trim="true"/></not>
-      </and>
+      <!-- 
+	   There must be some files in the fileset (after regexp expansion) 
+      -->
+      <not>
+	<equals arg1="${xfig.source.filelist.property}" arg2="" trim="true"/>
+      </not>
     </condition>
-    
-    <!-- The required condition not to bomb out -->
-    <condition property="xfig.execution.possible">
-      <and>
-	<available file="${xfig.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
-	<available file="${xfig.abssrc.dir}"/> 
-      </and>
-    </condition>
-    
-    <condition property="xfig.failure">
-      <and>
-	<isset property="xfig.check"/>
-	<not><isset property="xfig.execution.possible"/></not>
-      </and>
-    </condition>
-    
+
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${xfig.debug.level}">  xfig.check  = "${xfig.check}"
-  xfig.execution.possible = ${xfig.execution.possible}
-  xfig.failure            = ${xfig.failure}</echo>
-  
+    <echo level="${xfig.debug.level}">xfig.check              = "${xfig.check}"
+xfig.execution.possible = ${xfig.execution.possible}</echo>
+
   </target>
 
-  <target name="xfig.bomb.out" if="xfig.failure">
-    <fail message="xfig rule cannot be executed. Review the value of
-		   variables xfig.src.dir and xfig.exec"/>
-  </target>
-
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="xfig.processing.NOT" depends="xfig.bomb.out"
-	  unless="xfig.check">
-    <echo level="${xfig.debug.level}">xfig.processing             ---</echo>
-    <echo level="${xfig.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Regular target. It is executed if the check property is true, and it has
-  as dependency the NOT target. That way, if the property is not set, this
-  target is not executed and instead, the one notifying the user of such event
-  is executed. -->
+  <!-- Regular target. It is executed if the check property is true -->
   <target name="xfig.processing" 
-	  depends="xfig.check.values, xfig.processing.NOT"
-	  if="xfig.check" description="creates the figures from the fig files">
+	  depends="xfig.init" if="xfig.check" description="creates the figures from the fig files">
 
     <echo level="${xfig.debug.level}">${basedir}</echo>
     
@@ -133,22 +85,14 @@
     </apply>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="xfig.clean.NOT" unless="xfig.check">
-    <echo level="${xfig.debug.level}">xfig.clean                  ---</echo>
-    <echo level="${xfig.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Clean the produced files -->
-  <target name="xfig.clean" depends="xfig.check.values, xfig.clean.NOT"
-	  if="xfig.check" 
-	  description="Clean files derived from the fig files"> 
+  <!-- Clean files produced by xfig -->
+  <target name="xfig.clean" depends="xfig.init"
+	  if="xfig.check" description="Remove files produced by xfig">
 
     <echo>xfig.clean                  RUN</echo>
     <echo level="${xfig.debug.level}">${basedir}</echo>
 
-    <!-- Obtain the fileset with the produced files. -->
+    <!-- Obtain a property with the produced files. -->
     <pathconvert property="xfig.target.filelist.property" pathsep=" ">
       <fileset refid="xfig.fileset"/>
       <chainedmapper>
@@ -158,17 +102,14 @@
       </chainedmapper>
     </pathconvert>
 
-    <filelist id="xfig.target.filelist"
-	      files="${xfig.target.filelist.property}"/>
-
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${xfig.target.filelist.property}</echo>
 
-    <!-- Perform the delete operation. The failonerror attributge is needed
+    <!-- Perform the delete operation. The failonerror attribute is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
     <delete failonerror="false" includeemptydirs="true">
-      <filelist refid="xfig.target.filelist"/>
+      <files includes="${xfig.target.filelist.property}"/>
     </delete>
 
     <!-- Backup and *.out files in figure dir -->
@@ -194,12 +135,12 @@
     xfig.files         ="${xfig.files}" </echo>
   </target>
 
-  <target name="xfig.report.YES" depends="xfig.check.values"
+  <target name="xfig.report.YES" depends="xfig.init"
 	  if="xfig.execution.possible">
     <echo>Xfig               |     *     |</echo>
   </target>
 
-  <target name="xfig.report.NO" depends="xfig.check.values"
+  <target name="xfig.report.NO" depends="xfig.init"
 	  unless="xfig.execution.possible">
     <echo>Xfig               |           |     * (install ${xfig.exec})</echo>
   </target>
@@ -208,5 +149,5 @@
 				      xfig.report.NO"/>
 
   <!-- If entering through this target, build.out is deleted -->
-  <target name="xfig" depends="initial.delete.build.out, xfig.processing"/>
+  <target name="xfig" depends="xfig.init, initial.delete.build.out, xfig.processing"/>
 </project>

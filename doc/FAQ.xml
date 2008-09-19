@@ -1778,35 +1778,33 @@ export.dst.dir=${ada.course.home}scratch</programlisting>
 	    modifying it?
 	  </para>
 	  <para>
-	    I want to use a stylesheet that has lots of parameters to customize
-	    its behavior. However, I cannot touch it since it's being shared by
-	    a pool of authors.
+	    I want to use a slightly modified version of a stylesheet that has
+	    lots of parameters to customize its behavior. However, I cannot
+	    touch it since it's being shared by a pool of authors.
 	  </para>
 	  <para>
-	    How can I still use such style sheet but set any parameter to my own
-	    values?
+	    How can I still re-use most of the definitions and override some of
+	    them?
 	  </para>
 	</question>
 	<answer>
 	  <para>
 	    ADA offers support for this task automatically by taking all your
 	    personal definitions in an extra XML file and merging that file with
-	    the regular style file you use.
+	    the regular style you use.
 	  </para>
 
 	  <para>
-	    Suppose your style file is in
-	    <filename>/path/to/another/location/MainStyle.xsl</filename>. The
-	    stylesheet has multiple parameters suitable to be defined. You then
-	    create a local stylesheet containing <emphasis>only</emphasis> the
-	    definitions of the parameters with the personalized values (for
-	    example, a file with name
-	    <filename>MyPersonalValues.xml</filename>). You then include in the
-	    file <filename>Properties.txt</filename> the necessary definitions
-	    to apply the style sheet
-	    <filename>/path/to/another/location/HeadTail.xsl</filename> to your
-	    XML source file. Additionally, you inform ADA that the final style
-	    needs to be modified with your personal definitions. For example:
+	    Suppose there is a style file in
+	    <filename>/path/to/another/location/MainStyle.xsl</filename> with
+	    multiple parameters suitable to be defined. To override only some of
+	    them you create a local stylesheet (for example, a file with name
+	    <filename>MyPersonalValues.xml</filename>) containing
+	    <emphasis>only</emphasis> the definitions you want to override. You
+	    then include in the file <filename>Properties.txt</filename> one
+	    definition to instruct the style processor to derive all the styles
+	    from <filename>/path/to/another/location/HeadTail.xsl</filename>. For
+	    example:
 	  </para>
 
 	  <example>
@@ -1829,43 +1827,8 @@ docbook.files=index.xml</programlisting>
 	  </para>
 
 	  <para>
-	    In general, you may use the following two variables in the file
-	    <filename>Properties.txt</filename>:
-	  </para>
-
-	  <informaltable frame="all" id="mergestyles_vars">
-	    <tgroup rowsep="1" colsep="1" cols="3">
-	      <colspec colnum="1" colname="col1" align="left"/>
-	      <colspec colnum="2" colname="col2" align="left"/>
-	      <colspec colnum="3" colname="col3" align="center"/>
-	      <thead>
-		<row>
-		  <entry align="center">Variable name</entry>
-		  <entry align="center">Description</entry>
-		  <entry align="center">Default</entry>
-		</row>
-	      </thead>
-	      <tbody>
-		<row>
-		  <entry>mergestyles.src.dir</entry>
-		  <entry>
-		    Directory from where to obtain the style sheet with local
-		    values.
-		  </entry>
-		  <entry>Current directory</entry>
-		</row>
-		<row>
-		  <entry>mergestyles.master.style</entry>
-		  <entry>Name of the style sheet with the local variables</entry>
-		  <entry></entry>
-		</row>
-	      </tbody>
-	    </tgroup>
-	  </informaltable>
-	  
-	  <para>
 	    The style sheet resulting of the merge between the two given files
-	    is left in the current directory.
+	    is a temporary file that is left in the current directory.
 	  </para>
 
 	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>

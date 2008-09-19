@@ -17,8 +17,11 @@
 
   <import file="Xsltproc.xml"/>
 
+  <!-- Private properties -->
+  <property name="docbook.debug.level"    value="${ada.debug.level}"/>
+
   <target name="docbook.init" depends="ada.init">
-    <!-- Property definition -->
+    <!-- Public Property definition -->
     <property name="docbook.src.dir"        value="${basedir}"/>
     <property name="docbook.dst.dir"        value="${docbook.src.dir}"/>
     <property name="docbook.output.format"  value=".html"/>
@@ -27,46 +30,10 @@
     <property name="docbook.style.file"     
 	      value="${ada.home}/XslStyles/DocbookProfile.xsl"/>
     
-    <!-- Private properties -->
-    <property name="docbook.debug.level"    value="${ada.debug.level}"/>
-  </target>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-       executing the regular targets. -->
-  <target name="docbook.check.values" 
-	  depends="docbook.init, docbook.dump.properties">
-    
-    <!-- Condition to enable/disable the rest of the execution -->
-    <condition property="docbook.check">
-      <and>
-	<!-- The src.dir needs to be non-empty. -->
-        <not><equals arg1="${docbook.src.dir}" arg2="" trim="true"/></not>
-	<available file="${docbook.src.dir}"/> 
-	<!-- There must be some files defined -->
-	<not><equals arg1="${docbook.files}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty dst.dir -->
-        <not><equals arg1="${docbook.dst.dir}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty and available stylesheet -->
-        <not><equals arg1="${docbook.style.file}" arg2="" trim="true"/></not>
-	<available file="${docbook.style.file}"/>
-      </and>
-    </condition>
-
-    <!-- Dump the value of the properties just computed. -->
-    <echo level="${docbook.debug.level}">    docbook.check          = "${docbook.check}"</echo>
-  </target>
-
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="docbook.processing.NOT" unless="docbook.check">
-    <echo level="${docbook.debug.level}">docbook.processing          ---</echo>
-    <echo level="${docbook.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Invoke xsltprocessing -->
-  <target name="docbook.processing" 
-	  depends="docbook.check.values, docbook.processing.NOT"
-	  if="docbook.check" 
+  <target name="docbook.processing" depends="docbook.init"
 	  description="Call the xsltproc with the given style">
 
     <echo>docbook.processing          CALL(xsltproc.processing)</echo>
@@ -84,20 +51,11 @@
     <echo>docbook.processing          END(xsltproc.processing)</echo>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="docbook.clean.NOT" unless="docbook.check">
-    <echo level="${docbook.debug.level}">docbook.clean               ---</echo>
-    <echo level="${docbook.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by docbook -->
-  <target name="docbook.clean" 
-	  depends="docbook.check.values, docbook.clean.NOT"
-	  if="docbook.check"
+  <target name="docbook.clean" depends="docbook.init"
 	  description="Remove files produced by docbook">
 
-    <echo>docbook.clean               CALL(xsltproc.clean)</echo>
+<!--     <echo>docbook.clean               CALL(xsltproc.clean)</echo> -->
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.clean" inheritAll="false">
@@ -109,10 +67,10 @@
       <param name="xsltproc.files"         value="${docbook.files}"/>
     </antcall>
 
-    <echo>docbook.clean               END(xsltproc.clean)</echo>
+<!--     <echo>docbook.clean               END(xsltproc.clean)</echo> -->
   </target>
 
-  <target name="docbook.dump.properties" depends="ada.init">
+  <target name="docbook.dump.properties" depends="docbook.init">
     <echo level="${docbook.debug.level}"> ------ Docbook properties ----
     docbook.src.dir       ="${docbook.src.dir}"
     docbook.dst.dir       ="${docbook.dst.dir}"

@@ -93,16 +93,7 @@
 # xsltproc.output.format=.html		# Output format (WITH DOT!)
 # xsltproc.extra.args=			# Addtnl. args to pass to xsltproc
 # xsltproc.files=			# List of *.xml files to process
-
-#
-# Stylesheet file to merge with another stylesheet
-#
-# mergestyles.exec=xsltproc		# Tool to use. Normally xsltproc
-# mergestyles.src.dir=current dir	# Dir from where to take the stylesheet
 # mergestyles.master.style=   		# Sheet to use as base
-# mergestyles.dst.dir=${mergestyles.dst.dir} # Destination dir.
-# mergestyles.file.to.import=		# Sheet to add at the end of master
-# mergestyles.style.file=${ada.home}/XslStyles/Mergesheets.xsl # To combine them     
 
 #
 # Docbook processing

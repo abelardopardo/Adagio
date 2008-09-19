@@ -7,8 +7,7 @@
 subrecursive.dirs=../../Material/Author10 \
                   ${ada.home}/lib/mediaplayer
 
-mergestyles.src.dir=..
-mergestyles.master.style=AdaCourseParams.xml
+mergestyles.master.style=../AdaCourseParams.xml
 
 docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
 docbook.files=index.xml

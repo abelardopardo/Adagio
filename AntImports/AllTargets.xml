@@ -34,75 +34,79 @@
 
 <!--   <import file="Rsync.xml"/> -->
 
+  <macrodef name="ada.apply.processing.rules">
+    <sequential>
+      <ant antfile="${ada.home}/AntImports/Copyfiles.xml" 
+	   target="copyfiles.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
+	   target="extraant.processing.pretarget" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Xfig.xml" 
+	   target="xfig.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Inkscape.xml" 
+	   target="inkscape.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Gimp.xml" 
+	   target="gimp.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Convert.xml" 
+	   target="convert.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Xsltproc.xml" 
+	   target="xsltproc.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Docbook.xml" 
+	   target="docbook.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/BilingualDB.xml" 
+	   target="bilingualdb.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Laboratory.xml" 
+	   target="laboratory.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Exam.xml" 
+	   target="exam.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/TestExam.xml" 
+	   target="testexam.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Rss.xml" 
+	   target="rss.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Latex.xml" 
+	   target="latex.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Dvips.xml" 
+	   target="dvips.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Ps2pdf.xml" 
+	   target="ps2pdf.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Pdflatex.xml" 
+	   target="pdflatex.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Dblatex.xml" 
+	   target="dblatex.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Ppt2PDF.xml" 
+	   target="ppt2pdf.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
+	   target="pdfnup.processing" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
+	   target="extraant.processing.posttarget" inheritAll="false"/>
+      
+      <ant antfile="${ada.home}/AntImports/Export.xml" 
+	   target="export.processing" inheritAll="false"/>
+    </sequential>
+  </macrodef>
+
   <target name="local.execute" 
 	  depends="initial.delete.build.out">
-
-    <ant antfile="${ada.home}/AntImports/Copyfiles.xml" 
-	 target="copyfiles.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
-	 target="extraant.processing.pretarget" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Xfig.xml" 
-	 target="xfig.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Inkscape.xml" 
-	 target="inkscape.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Gimp.xml" 
-	 target="gimp.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Convert.xml" 
-	 target="convert.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Xsltproc.xml" 
-	 target="xsltproc.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Docbook.xml" 
-	 target="docbook.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/BilingualDB.xml" 
-	 target="bilingualdb.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Laboratory.xml" 
-	 target="laboratory.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Exam.xml" 
-	 target="exam.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/TestExam.xml" 
-	 target="testexam.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Rss.xml" 
-	 target="rss.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Latex.xml" 
-	 target="latex.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Dvips.xml" 
-	 target="dvips.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Ps2pdf.xml" 
-	 target="ps2pdf.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Pdflatex.xml" 
-	 target="pdflatex.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Dblatex.xml" 
-	 target="dblatex.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Ppt2PDF.xml" 
-	 target="ppt2pdf.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
-	 target="pdfnup.processing" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
-	 target="extraant.processing.posttarget" inheritAll="false"/>
-
-    <ant antfile="${ada.home}/AntImports/Export.xml" 
-	 target="export.processing" inheritAll="false"/>
-
+    <ada.apply.processing.rules/>
   </target>
 
   <!-- Apply timeline -->
@@ -113,7 +117,7 @@
     <ant antfile="${ada.home}/AntImports/SubRecursive.xml" 
 	 target="subrecursive.processing" inheritAll="false"/>
 
-    <antcall target="local.execute"/>
+    <ada.apply.processing.rules/>
 
     <echo>END EXE: ${basedir}</echo>
   </target>

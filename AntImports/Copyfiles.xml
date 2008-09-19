@@ -5,9 +5,9 @@
   <!--
       Given the following properties:
 
-      copyfiles.files:   List of files to copy from src to dst
       copyfiles.src.dir: source directory to obtain the files
       copyfiles.dst.dir: directory where the files are to be copied
+      copyfiles.files:   List of files to copy from src to dst
 
       copies copyfiles.files in copy.src.dir to copyfiles.dst.dir. The copy is
       performed only if the two dirs are non empty.
@@ -15,91 +15,44 @@
 
   <import file="InitialCheck.xml"/>
 
+  <!-- Private properties -->
+  <property name="copyfiles.debug.level"    value="${ada.debug.level}"/>
+  
   <target name="copyfiles.init" depends="ada.init">
-    
-    <!-- Property definition -->
+    <!-- Public Property definition -->
     <property name="copyfiles.src.dir"      value="${basedir}" />
     <property name="copyfiles.dst.dir"      value="${basedir}" />
     <property name="copyfiles.files"        value=""/>
     
-    <!-- Private properties -->
-    <property name="copyfiles.debug.level"    value="${ada.debug.level}"/>
-    
     <!-- Define two properties containing the absolute src and dst paths -->
-    <pathconvert property="copyfiles.abssrc.dir" pathsep=" ">
-      <path location="${copyfiles.src.dir}"/>
-    </pathconvert>
-    <pathconvert property="copyfiles.absdst.dir" pathsep=" ">
-      <path  location="${copyfiles.dst.dir}"/>
-    </pathconvert>
-    
-    <!-- Source files to be copied (fileset to allow wildcards) -->
-    <fileset id="copyfiles.fileset" dir="${copyfiles.abssrc.dir}"
-	     includes="__bogus__file__name ${copyfiles.files}"/>
-  </target>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="copyfiles.check.values" 
-	  depends="copyfiles.init, copyfiles.dump.properties">
+    <ada.expand.srcdst.paths
+      ADA.PREFIX="copyfiles" ADA.SRC.DIR="${copyfiles.src.dir}"
+      ADA.DST.DIR="${copyfiles.dst.dir}" ADA.FILES="${copyfiles.files}"/>
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="copyfiles.check">
       <and>
-	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
-	     empty definition of this variable. At least a . needs to be present -->
-	<not><equals arg1="${copyfiles.abssrc.dir}" arg2="" trim="true"/></not>
-	<!-- There must be some files defined -->
-	<not><equals arg1="${copyfiles.files}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty dst.dir as well -->
-	<not><equals arg1="${copyfiles.absdst.dir}" arg2="" trim="true"/></not>
+      <!-- 
+	   There must be some files in the fileset (after regexp expansion) 
+      -->
+	<not>
+	  <equals arg1="${copyfiles.source.filelist.property}" arg2="" trim="true"/>
+	</not>
 	<!-- SRC and DST directories must be different -->
 	<not>
-	  <equals arg1="${copyfiles.absdst.dir}" arg2="${copyfiles.abssrc.dir}"/>
+	  <equals arg1="${copyfiles.absdst.dir}" arg2="${copyfiles.abssrc.dir}" trim="true"/>
 	</not>
-      </and>
-    </condition>
-
-    <!-- The required condition not to bomb out -->
-    <condition property="copyfiles.execution.possible">
-      <and>
-	<available file="${copyfiles.abssrc.dir}"/> 
-      </and>
-    </condition>
-
-    <condition property="copyfiles.failure">
-      <and>
-	<isset property="copyfiles.check"/>
-	<not><isset property="copyfiles.execution.possible"/></not>
       </and>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
     <echo level="${copyfiles.debug.level}">copyfiles.check          = "${copyfiles.check}"
-  copyfiles.execution.possible = ${copyfiles.execution.possible}
-  copyfiles.failure            = ${copyfiles.failure}</echo>
+copyfiles.execution.possible = ${copyfiles.execution.possible}</echo>
+
   </target>
 
-  <target name="copyfiles.bomb.out" if="copyfiles.failure">
-    <fail message="Copyfiles rule cannot be executed. Review the value of
-		   variable copyfiles.src.dir"/>
-  </target>
-
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="copyfiles.processing.NOT" depends="copyfiles.bomb.out" 
-	  unless="copyfiles.check">
-    <echo level="${copyfiles.debug.level}">copyfiles.processing        ---</echo>
-    <echo level="${copyfiles.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Regular target. It is executed if the check property is true, and it has
-  as dependency the NOT target. That way, if the property is not set, this
-  target is not executed and instead, the one notifying the user of such event
-  is executed. -->
-  <target name="copyfiles.processing" 
-	  depends="copyfiles.check.values, copyfiles.processing.NOT"
-	  if="copyfiles.check" description="Actually perform the copy">
+  <!-- Regular target. It is executed if the check property is true -->
+  <target name="copyfiles.processing" depends="copyfiles.init" if="copyfiles.check" description="Actually perform the copy">
 
     <echo>copyfiles.processing        RUN</echo>
     <echo level="${copyfiles.debug.level}">${basedir}</echo>
@@ -113,38 +66,28 @@
     </copy>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="copyfiles.clean.NOT" unless="copyfiles.check">
-    <echo level="${copyfiles.debug.level}">copyfiles.clean             ---</echo>
-    <echo level="${copyfiles.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Clean the produced files -->
-  <target name="copyfiles.clean" depends="copyfiles.check.values,
-					  copyfiles.clean.NOT" 
+  <!-- Clean the copied files -->
+  <target name="copyfiles.clean" depends="copyfiles.init"
     if="copyfiles.check" description="Delete files copied to dst">
 
     <echo>copyfiles.clean             RUN</echo>
     <echo level="${copyfiles.debug.level}">${basedir}</echo>
 
-    <!-- Obtain the filelist with the produced files. -->
+    <!-- Obtain a property with the produced files. -->
     <pathconvert property="copyfiles.target.filelist.property" pathsep=" ">
       <fileset refid="copyfiles.fileset"/>
       <mapper type="glob" from="${copyfiles.abssrc.dir}/*" 
 	      to="${copyfiles.absdst.dir}/*"/>
     </pathconvert>
-    <filelist id="copyfiles.target.filelist"
-	      files="${copyfiles.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${copyfiles.target.filelist.property}</echo>
 
-    <!-- Perform the delete operation. The failonerror attributge is needed
+    <!-- Perform the delete operation. The failonerror attribute is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
     <delete failonerror="false" includeemptydirs="true">
-      <filelist refid="copyfiles.target.filelist"/>
+      <files includes="${copyfiles.target.filelist.property}"/>
     </delete>
   </target>
 
@@ -157,5 +100,5 @@
   </target>
 
   <!-- If entering through this target, build.out is deleted -->
-  <target name="copyfiles" depends="initial.delete.build.out, copyfiles.processing"/>
+  <target name="copyfiles" depends="copyfiles.init, initial.delete.build.out, copyfiles.processing"/>
 </project>

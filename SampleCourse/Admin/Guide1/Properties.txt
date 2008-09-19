@@ -8,8 +8,7 @@ copyfiles.src.dir=../../Material/Author2
 copyfiles.dst.dir=../scratch/Guide1
 copyfiles.files=*.gif *.png
 
-mergestyles.src.dir=..
-mergestyles.master.style=AdaCourseParams.xml
+mergestyles.master.style=../AdaCourseParams.xml
 
 docbook.src.dir=../../Material/Author2
 docbook.files=index.xml

@@ -11,8 +11,7 @@ subrecursive.dirs=../../Material/Author4/Problem1 \
 laboratory.style.file=${ada.home}/XslStyles/Laboratory.xsl
 laboratory.files=index.xml
 
-mergestyles.src.dir=..
-mergestyles.master.style=AdaCourseParams.xml
+mergestyles.master.style=../AdaCourseParams.xml
 
 export.dst.dir=../scratch/Lab1
 export.files=buscarmain.s \

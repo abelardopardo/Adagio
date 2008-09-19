@@ -7,8 +7,65 @@ build templates
 
 <project name="Initial Checks" default="ada.init">
 
+  <!-- Overall debug level for the rule scripts -->
+  <property name="ada.debug.level" value="info"/>
+
+  <!-- Include the environment as a set of properties -->
+  <property environment="env"/>
+  
+  <!-- Define the file extensions depending on the OS -->
+  <condition  property="executable.file.extension" value=".exe">
+    <os family="windows"/>
+  </condition>
+  <condition  property="executable.file.extension" value="">
+    <os family="unix"/>
+  </condition>
+  
+  <!-- 
+       Macro that given an executable name, it sets the NAME.execution.possible
+       property 
+  -->
+  <macrodef name="ada.set.execution.possible">
+    <attribute name="ADA.EXECUTABLE.NAME"/>
+    <attribute name="ADA.PREFIX" default="@{ADA.EXECUTABLE.NAME}"/>
+    <sequential>
+      <!-- The required condition not to bomb out -->
+      <available property="@{ADA.PREFIX}.execution.possible"
+		 file="@{ADA.EXECUTABLE.NAME}${executable.file.extension}"
+		 filepath="${env.PATH}"/>
+    </sequential>
+  </macrodef>
+
+  <!-- 
+       Define two properties containing the absolute src and dst paths, create
+       the fileset with the source files and catch its expanded filename list in
+       a property
+  -->
+  <macrodef name="ada.expand.srcdst.paths">
+    <attribute name="ADA.PREFIX"/>
+    <attribute name="ADA.SRC.DIR"/>
+    <attribute name="ADA.DST.DIR"/>
+    <attribute name="ADA.FILES"/>
+    <sequential>
+      <pathconvert property="@{ADA.PREFIX}.abssrc.dir" pathsep=" ">
+	<path location="@{ADA.SRC.DIR}"/>
+      </pathconvert>
+      <pathconvert property="@{ADA.PREFIX}.absdst.dir" pathsep=" ">
+	<path  location="@{ADA.DST.DIR}"/>
+      </pathconvert>
+
+      <!-- Source files to be processed (fileset to allow wildcards) -->
+      <fileset id="@{ADA.PREFIX}.fileset" dir="${@{ADA.PREFIX}.abssrc.dir}"
+	       includes="___bogus___file__name @{ADA.FILES}"/>
+
+      <!-- Obtain the filelist with the source files to see if it is empty -->
+      <pathconvert property="@{ADA.PREFIX}.source.filelist.property" pathsep=" ">
+	<fileset refid="@{ADA.PREFIX}.fileset"/>
+      </pathconvert>
+    </sequential>
+  </macrodef>
+
   <target name="ada.properties.init">
-    
     <!-- 
 	 Script to detect where is the course home by checking for the presence
 	 of AdaCourseParams.xml up to 10 levels up the current basedir. The
@@ -46,9 +103,6 @@ build templates
     <!-- Directory where the toolkit is installed -->
     <property name="ada.home" value="" />
 
-    <!-- Overall debug level for the rule scripts -->
-    <property name="ada.debug.level" value="info"/>
-
     <!-- Overall date/time to be considered when processing the audience and
 	 exportcontrol aspects -->
     <property name="ada.current.datetime" value=""/>
@@ -56,22 +110,11 @@ build templates
     <!-- Overall profile string for the revision attribute in docbook -->
     <property name="ada.profile.revision" value=""/>
 
-    <!-- Include the environment as a set of properties -->
-    <property environment="env"/>
-
     <!-- Detect in which os-family is being executed -->
     <condition  property="ada.os.family.windows" value="true">
       <os family="windows"/>
     </condition>
     <condition  property="ada.os.family.unix" value="true">
-      <os family="unix"/>
-    </condition>
-
-    <!-- Define the file extensions -->
-    <condition  property="executable.file.extension" value=".exe">
-      <os family="windows"/>
-    </condition>
-    <condition  property="executable.file.extension" value="">
       <os family="unix"/>
     </condition>
 
@@ -107,7 +150,7 @@ build templates
   </target>
   
   <target name="ada.init" 
-	  depends="ada.properties.init.dump"
+	  depends="ada.properties.init"
 	  unless="ada.check.home.property">
     <echo> *** ERROR *** ada.home variable with incorrect value!
   ada.home = "${ada.home}"

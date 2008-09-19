@@ -5,5 +5,4 @@
 # variables as well as an explanation.
 #
 rss.files=index.xml
-mergestyles.src.dir=..
-mergestyles.master.style=AdaCourseParams.xml
+mergestyles.master.style=../AdaCourseParams.xml

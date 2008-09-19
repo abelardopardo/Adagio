@@ -19,15 +19,15 @@
 
   <import file="InitialCheck.xml"/>
 
+  <!-- Private properties -->
+  <property name="subrecursive.debug.level"    value="${ada.debug.level}"/>
+    
   <target name="subrecursive.init" depends="ada.init">
     <!-- Public Property definition -->
     <property name="subrecursive.dirs"       value=""/>
     <property name="subrecursive.dst.dir"    value="${basedir}"/>
     <property name="subrecursive.dirs.nodst" value=""/>
     <property name="subrecursive.target"     value=""/>
-    
-    <!-- Private properties -->
-    <property name="subrecursive.debug.level"    value="${ada.debug.level}"/>
     
     <!-- Define a property containing the absolute dst path -->
     <pathconvert property="subrecursive.absdst.dir" pathsep=" ">
@@ -40,23 +40,18 @@
     
     <filelist id="subrecursive.dirlist.nodst" dir="${basedir}"
 	      files="${subrecursive.dirs.nodst}"/>
-  </target>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="subrecursive.check.values" 
-	  depends="subrecursive.init, subrecursive.dump.properties">
 
     <!-- Conditions to see which one of the two targets needs to be executed -->
     <condition property="subrecursive.check.withdst">
-      <and>
+      <or>
 	<not><equals arg1="${subrecursive.dirs}" arg2="" trim="true"/></not>
+	<not><equals arg1="${subrecursive.dirs.nodst}" arg2="" trim="true"/></not>
 <!--	
         Removed to allow subrecursive.dirs with no dir, this fires the build
         process remotely, and then copyfiles applied to a subset of files.
         <not><equals arg1="${subrecursive.dst.dir}" arg2="" trim="true"/></not>
  -->
-      </and>
+      </or>
     </condition>
 
     <condition property="subrecursive.check.nodst">
