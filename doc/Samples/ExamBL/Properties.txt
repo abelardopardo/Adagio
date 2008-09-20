@@ -2,4 +2,4 @@
 mergestyles.master.style=Params.xml
 
 # File containing the exam information
-exam.bilingual.file=Test.xml
+exam.multilingual.file=Test.xml

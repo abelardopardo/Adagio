@@ -8,7 +8,6 @@
 <!--   <import file="Mergestyles.xml"/> -->
 <!--   <import file="Xsltproc.xml"/> -->
 <!--   <import file="Docbook.xml"/> -->
-<!--   <import file="BilingualDB.xml"/> -->
 <!--   <import file="Cleaning.xml"/> -->
 <!--   <import file="Convert.xml"/> -->
 <!--   <import file="Dblatex.xml"/> -->
@@ -62,9 +61,6 @@
       
       <ant antfile="${ada.home}/AntImports/Docbook.xml" 
 	   target="docbook.processing" inheritAll="false"/>
-      
-<!--       <ant antfile="${ada.home}/AntImports/BilingualDB.xml"  -->
-<!-- 	   target="bilingualdb.processing" inheritAll="false"/> -->
       
       <ant antfile="${ada.home}/AntImports/Laboratory.xml" 
 	   target="laboratory.processing" inheritAll="false"/>
@@ -169,9 +165,6 @@
 
     <ant antfile="${ada.home}/AntImports/Laboratory.xml" 
 	 target="laboratory.clean" inheritAll="false"/>
-
-<!--     <ant antfile="${ada.home}/AntImports/BilingualDB.xml"  -->
-<!-- 	 target="bilingualdb.clean" inheritAll="false"/> -->
 
     <ant antfile="${ada.home}/AntImports/Docbook.xml" 
 	 target="docbook.clean" inheritAll="false"/>

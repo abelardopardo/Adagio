@@ -87,8 +87,6 @@
 	<mapper type="glob" from="*.tex" to="*.dvi"/>
       </chainedmapper>
     </pathconvert>
-    <filelist id="latex.target.filelist"
-	      files="${latex.target.filelist.property}"/>
 
     <!-- Obtain the fileset containing the temporary files produced by latex -->
     <pathconvert property="latex.tmptarget.filelist.property" pathsep=" ">
@@ -96,16 +94,16 @@
       <chainedmapper>
 	<compositemapper>
 	  <mapper type="glob" from="*.tex" to="*.aux"/>
-	  <mapper type="glob" from="*.tex" to="*.log"/>
 	  <mapper type="glob" from="*.tex" to="*.bbl"/>
 	  <mapper type="glob" from="*.tex" to="*.blg"/>
 	  <mapper type="glob" from="*.tex" to="*.idx"/>
 	  <mapper type="glob" from="*.tex" to="*.ilg"/>
 	  <mapper type="glob" from="*.tex" to="*.ind"/>
 	  <mapper type="glob" from="*.tex" to="*.lof"/>
+	  <mapper type="glob" from="*.tex" to="*.log"/>
 	  <mapper type="glob" from="*.tex" to="*.lot"/>
-	  <mapper type="glob" from="*.tex" to="*.toc"/>
 	  <mapper type="glob" from="*.tex" to="*.out"/>
+	  <mapper type="glob" from="*.tex" to="*.toc"/>
 	</compositemapper>
 	<mapper type="glob" from="${latex.abssrc.dir}/*" 
 		to="${latex.absdst.dir}/*"/>
@@ -121,7 +119,7 @@
 	 removed  -->
     <delete failonerror="false" includeemptydirs="true">
       <files includes="${latex.target.filelist.property}"/>
-      <filelist refid="latex.tmptarget.filelist"/>
+      <files includes="${latex.tmptarget.filelist.property}"/>
       <fileset file="${basedir}/texput.log"/>
     </delete>
   </target>

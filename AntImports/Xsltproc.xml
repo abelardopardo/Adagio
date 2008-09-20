@@ -260,9 +260,7 @@
   <!-- Multilingual processing instructions -->
   <target name="xsltprocmultilingual.processing"
 	  depends="xsltproc.init" if="xsltprocmultilingual.check">
-    <echo>AAA</echo>
-    <echo>${xsltprocmultilingual.files}</echo>
-    <subant target="xsltproc.processing" inheritall="false">
+    <subant target="xsltproc.processing">
       <fileset dir="${ada.home}/AntImports" includes="Xsltproc-*.xml"/>
       <property name="xsltproc.files" value="${xsltprocmultilingual.files}"/>
       <property name="xsltprocmultilingual.files" value=""/>

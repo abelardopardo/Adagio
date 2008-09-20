@@ -93,6 +93,8 @@
 # xsltproc.output.format=.html		# Output format (WITH DOT!)
 # xsltproc.extra.args=			# Addtnl. args to pass to xsltproc
 # xsltproc.files=			# List of *.xml files to process
+# xsltprocmultilingual.files=		# List of *.xml files to process
+					# with the different languages
 # mergestyles.master.style=   		# Sheet to use as base
 
 #
@@ -105,15 +107,6 @@
 # docbook.files=			# List of *.xml files to process
 
 #
-# Bilingual Docbook processing
-#
-# bilingualdb.src.dir=current dir	# Source directory
-# bilingualdb.dst.dir=${bilingualdb.src.dir} # Destination dir.
-# bilingualdb.output.format=.html	# Output format (WITH DOT!)
-# bilingualdb.style.file=${ada.home}/XslStyles/DocbookProfile.xsl # Default style
-# bilingualdb.files=			# List of *.xml files to process
-
-#
 # Properties to generate files as if to support a lab submission
 #
 # laboratory.src.dir= current dir	# Source directory
@@ -124,7 +117,8 @@
 					# Style for the submission
 # laboratory.output.format=.html	# Output format (WITH DOT!)
 # laboratory.files=			# List of docbook file sto process
-# laboratory.bilingual.files=		# List of docbook to process bilingually
+# laboratory.multilingual.files=	# List of docbook to process 
+				 	# with the languages available 
 
 #
 # Generation of an RSS channel

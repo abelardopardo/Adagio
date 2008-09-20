@@ -19,7 +19,7 @@ subrecursive.dirs=../../Material/Author5
 
 mergestyles.master.style=../AdaCourseParams.xml
 
-laboratory.bilingual.files=index.xml
+laboratory.multilingual.files=index.xml
 
 export.dst.dir=../scratch/Lab2
 export.files=index_e?.html \

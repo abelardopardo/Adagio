@@ -88,8 +88,6 @@
 	<mapper type="glob" from="*.tex" to="*.pdf"/>
       </chainedmapper>
     </pathconvert>
-    <filelist id="pdflatex.target.filelist"
-	      files="${pdflatex.target.filelist.property}"/>
 
     <!-- Obtain the filelist containing the temporary files produced by latex -->
     <pathconvert property="pdflatex.tmptarget.filelist.property" pathsep=" ">
@@ -98,23 +96,21 @@
 	<mapper type="glob" from="${pdflatex.abssrc.dir}/*" 
 		to="${pdflatex.absdst.dir}/*"/>
 	<compositemapper>
-	  <mapper type="glob" from="*.tex" to="*.pdf"/>
 	  <mapper type="glob" from="*.tex" to="*.aux"/>
-	  <mapper type="glob" from="*.tex" to="*.log"/>
 	  <mapper type="glob" from="*.tex" to="*.bbl"/>
 	  <mapper type="glob" from="*.tex" to="*.blg"/>
 	  <mapper type="glob" from="*.tex" to="*.idx"/>
 	  <mapper type="glob" from="*.tex" to="*.ilg"/>
 	  <mapper type="glob" from="*.tex" to="*.ind"/>
 	  <mapper type="glob" from="*.tex" to="*.lof"/>
+	  <mapper type="glob" from="*.tex" to="*.log"/>
 	  <mapper type="glob" from="*.tex" to="*.lot"/>
-	  <mapper type="glob" from="*.tex" to="*.toc"/>
 	  <mapper type="glob" from="*.tex" to="*.out"/>
+	  <mapper type="glob" from="*.tex" to="*.pdf"/>
+	  <mapper type="glob" from="*.tex" to="*.toc"/>
 	</compositemapper>
       </chainedmapper>
     </pathconvert>
-    <filelist id="pdflatex.tmptarget.filelist"
-	      files="${pdflatex.tmptarget.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${pdflatex.target.filelist.property}</echo>
@@ -125,7 +121,7 @@
 	 removed  -->
     <delete failonerror="false" includeemptydirs="true">
       <files includes="${pdflatex.target.filelist.property}"/>
-      <filelist refid="pdflatex.tmptarget.filelist"/>
+      <files includes="${pdflatex.tmptarget.filelist.property}"/>
     </delete>
 
   </target>

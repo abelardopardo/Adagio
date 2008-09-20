@@ -10,7 +10,7 @@
       laboratory.output.format: Extension of the output file
       laboratory.style.file: Style file to be used
       laboratory.files: comma/space separated list of files to process
-      laboratory.files: list of files to process with two languages
+      laboratory.multilingual.files: list of files to process multiple languages
 
       It invokes three times xsltproc to generate the regular HTML document, the
       one with the solution and pguide profiles.
@@ -34,11 +34,13 @@
     <property name="laboratory.extra.args" value=""/>
     <property name="laboratory.output.format"   value=".html"/>
     <property name="laboratory.files"           value=""/>
-    <property name="laboratory.bilingual.files" value=""/>
+    <property name="laboratory.multilingual.files" value=""/>
     
     <!-- Private properties -->
     <property name="laboratory.profile.lang"    value=""/>
     <property name="laboratory.creating.files"  value=""/>
+    <property name="laboratory.creating.multilingual.files"  
+	      value=""/>
     <property name="laboratory.manipulate.target" 
 	      value="xsltproc.processing"/>
 
@@ -48,12 +50,16 @@
       ADA.DST.DIR="${laboratory.dst.dir}" ADA.FILES="${laboratory.files}"/>
 
     <!-- Source files to be processed (fileset to allow wildcards) -->
-    <fileset id="laboratory.bilingual.fileset" dir="${laboratory.abssrc.dir}"
-	     includes="___bogus___file__name ${laboratory.bilingual.files}"/>
+    <fileset id="laboratory.multilingual.fileset" dir="${laboratory.abssrc.dir}"
+	     includes="___bogus___file__name ${laboratory.multilingual.files}"/>
     
-    <!-- Obtain the filelist with the bilingual source files to see if it is empty -->
-    <pathconvert property="laboratory.source.bilingual.filelist.property" pathsep=" ">
-      <fileset refid="laboratory.bilingual.fileset"/>
+    <!-- 
+	 Obtain the filelist with the multilingual source files to see if it is
+	 empty 
+    -->
+    <pathconvert property="laboratory.source.multilingual.filelist.property" 
+		 pathsep=" ">
+      <fileset refid="laboratory.multilingual.fileset"/>
     </pathconvert>
 
     <!-- Condition to enable/disable the rest of the execution -->
@@ -65,7 +71,7 @@
 		  trim="true"/>
 	</not>
 	<not>
-	  <equals arg1="${laboratory.source.bilingual.filelist.property}"
+	  <equals arg1="${laboratory.source.multilingual.filelist.property}"
 		  arg2="" trim="true"/>
 	</not>
       </or>
@@ -89,22 +95,10 @@
       <param name="laboratory.creating.files" value="${laboratory.files}"/>
     </antcall>
 
-    <!-- Create all the files in spanish -->
+    <!-- Create all the multilingual files -->
     <antcall target="laboratory.manipulate.files" inheritAll="false">
-      <param name="laboratory.creating.files" 
-	     value="${laboratory.bilingual.files}"/>
-      <param name="laboratory.profile.lang"
-	     value="--stringparam profile.lang es"/>
-      <param name="laboratory.output.format"   value="_es.html"/>
-    </antcall>
-
-    <!-- Create all the files in english -->
-    <antcall target="laboratory.manipulate.files" inheritAll="false">
-      <param name="laboratory.creating.files" 
-	     value="${laboratory.bilingual.files}"/>
-      <param name="laboratory.profile.lang"
-	     value="--stringparam profile.lang en"/>
-      <param name="laboratory.output.format"   value="_en.html"/>
+      <param name="laboratory.creating.multilingual.files" 
+	     value="${laboratory.multilingual.files}"/>
     </antcall>
 
     <echo>laboratory.processing       END(xsltproc.processing 3 versions)</echo>
@@ -118,27 +112,14 @@
 
     <!-- Delete all the language neutral files -->
     <antcall target="laboratory.manipulate.files" inheritAll="false">
+      <param name="laboratory.creating.multilingualfiles" 
+	     value="${laboratory.multilingual.files}"/>
+      <param name="laboratory.manipulate.target" value="xsltproc.clean"/>
+    </antcall>
+
+    <!-- Delete all the language neutral files -->
+    <antcall target="laboratory.manipulate.files" inheritAll="false">
       <param name="laboratory.creating.files" value="${laboratory.files}"/>
-      <param name="laboratory.manipulate.target" value="xsltproc.clean"/>
-    </antcall>
-
-    <!-- Delete all the files in spanish -->
-    <antcall target="laboratory.manipulate.files" inheritAll="false">
-      <param name="laboratory.creating.files" 
-	     value="${laboratory.bilingual.files}"/>
-      <param name="laboratory.profile.lang"
-	     value="--stringparam profile.lang es"/>
-      <param name="laboratory.output.format"   value="_es.html"/>
-      <param name="laboratory.manipulate.target" value="xsltproc.clean"/>
-    </antcall>
-
-    <!-- Delete all the files in english -->
-    <antcall target="laboratory.manipulate.files" inheritAll="false">
-      <param name="laboratory.creating.files" 
-	     value="${laboratory.bilingual.files}"/>
-      <param name="laboratory.profile.lang"
-	     value="--stringparam profile.lang en"/>
-      <param name="laboratory.output.format"   value="_en.html"/>
       <param name="laboratory.manipulate.target" value="xsltproc.clean"/>
     </antcall>
 
@@ -153,7 +134,8 @@
     laboratory.submit.style.file ="${laboratory.style.file}"
     laboratory.output.format     ="${laboratory.out.format}"
     laboratory.extra.args        ="${laboratory.extra.args}"
-    laboratory.files             ="${laboratory.files}"</echo>
+    laboratory.files             ="${laboratory.files}"
+    laboratory.multilingual.files="${laboratory.files}"</echo>
   </target>
 
   <!-- If entering through this target, build.out is deleted -->
@@ -169,6 +151,8 @@
       <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
       <param name="xsltproc.output.format" value="${laboratory.output.format}"/>
       <param name="xsltproc.files"         value="${laboratory.creating.files}"/>
+      <param name="xsltprocmultilingual.files"
+	     value="${laboratory.creating.multilingual.files}"/>
       <param name="xsltproc.extra.args"    
 	     value="${laboratory.extra.args} ${laboratory.profile.lang}"/>
     </antcall>
@@ -181,6 +165,8 @@
       <param name="xsltproc.output.format"
 	     value="_solution${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
+      <param name="xsltprocmultilingual.files"
+	     value="${laboratory.creating.multilingual.files}"/>
       <param name="xsltproc.extra.args" 
 	     value="${laboratory.extra.args} 
                     --stringparam solutions.include.guide yes
@@ -195,6 +181,8 @@
       <param name="xsltproc.output.format"
 	     value="_pguide${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
+      <param name="xsltprocmultilingual.files"
+	     value="${laboratory.creating.multilingual.files}"/>
       <param name="xsltproc.extra.args" 
 	     value="${laboratory.extra.args} 
                     --stringparam professorguide.include.guide yes
@@ -210,6 +198,8 @@
       <param name="xsltproc.output.format"
 	     value="_submit${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
+      <param name="xsltprocmultilingual.files"
+	     value="${laboratory.creating.multilingual.files}"/>
       <param name="xsltproc.extra.args" 
 	     value="${laboratory.extra.args} ${laboratory.profile.lang}"/>
     </antcall>

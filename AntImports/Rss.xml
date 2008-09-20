@@ -13,7 +13,7 @@
   -->
 
   <!-- Checks for availability of different binaries -->
-  <import file="BilingualDB.xml"/>
+  <import file="Xsltproc.xml"/>
 
   <!-- Private properties -->
   <property name="rss.debug.level"    value="${ada.debug.level}"/>
@@ -25,6 +25,8 @@
     <property name="rss.output.format" value="_rss.xml"/>
     <property name="rss.extra.args"    value=""/>
     <property name="rss.files"         value=""/>
+    <property name="rss.multilingual.files"
+	      value=""/>
     <property name="rss.style.file" 
 	      value="${ada.home}/XslStyles/Rss.xsl"/>
     <property name="rss.style.file.tohtml" 
@@ -99,40 +101,26 @@
 
   </target>
 
-  <!-- Generate the bilingual files, if any -->
-  <target name="rss.processing.bilingual.files"
-	  if="rss.check"
-	  description="Process the bilingual files">
+  <!-- Generate the multilingual files, if any -->
+  <target name="rss.processing.multilingual.files"
+	  if="rss.check" description="Process the multilingual files">
 
-    <echo>rss.processing.bilingual    CALL(xsltproc.processing 2 versions)</echo>
+    <echo>rss.processing.multilingual CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
-    <antcall target="xsltproc.processing" inheritAll="false">
+    <antcall target="xsltprocmultilingual.processing" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${rss.style.file}"/>
-      <param name="xsltproc.output.format" value="_es${rss.output.format}"/>
-      <param name="xsltproc.files"         value="${rss.bilingual.files}"/>
+      <param name="xsltproc.output.format" value="${rss.output.format}"/>
+      <param name="xsltprocmultilingual.files"
+	     value="${rss.multilingual.files}"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
-		    --stringparam profile.lang es
 		    ${rss.extra.args}"/>
     </antcall>
 
-    <!-- Call xsltproc -->
-    <antcall target="xsltproc.processing" inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
-      <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${rss.style.file}"/>
-      <param name="xsltproc.output.format" value="_en${rss.output.format}"/>
-      <param name="xsltproc.files"         value="${rss.bilingual.files}"/>
-      <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
-		    --stringparam profile.lang en
-		    ${rss.extra.args}"/>
-    </antcall>
-
-    <echo>rss.processing.bilingual    END(xsltproc.processing)</echo>
+    <echo>rss.processing.multilingual END(xsltproc.processing)</echo>
 
   </target>
 
@@ -149,7 +137,7 @@
       <param name="xsltproc.output.format" value=".html"/>
       <param name="xsltproc.files"
 	     value="${rss.target.filelist.property}
-		    ${rss.target.bilingual.filelist.property}"/>
+		    ${rss.target.multilingual.filelist.property}"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
 		    ${rss.extra.args}"/>
@@ -162,32 +150,18 @@
 	  if="rss.check" description="Remove files produced by rss">
 
     <!-- Call xsltproc -->
-    <antcall target="xsltproc.clean" inheritAll="false">
+    <antcall target="xsltprocmultilingual.clean" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${rss.style.file}"/>
-      <param name="xsltproc.output.format" value="_es${rss.output.format}"/>
-      <param name="xsltproc.files"         value="${rss.bilingual.files}"/>
+      <param name="xsltproc.output.format" value="${rss.output.format}"/>
+      <param name="xsltprocmultilingual.files"
+	     value="${rss.multilingual.files}"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
-		    --stringparam profile.lang es
 		    ${rss.extra.args}"/>
     </antcall>
 
-    <!-- Call xsltproc -->
-    <antcall target="xsltproc.clean" inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
-      <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${rss.style.file}"/>
-      <param name="xsltproc.output.format" value="_en${rss.output.format}"/>
-      <param name="xsltproc.files"         value="${rss.bilingual.files}"/>
-      <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
-		    --stringparam profile.lang en
-		    ${rss.extra.args}"/>
-    </antcall>
-
-    <echo>rss.clean                   END(xsltproc.clean 2 versions)</echo>
   </target>
 
   <target name="rss.clean.files"
