@@ -20,34 +20,28 @@
   <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
 
-  <!-- Property definition -->
   <property name="rsync.exec"                value="rsync"/>
-  <property name="rsync.source"              value="${basedir}"/>
-  <property name="rsync.destination"         value="${rsync.source}"/>
-  <property name="rsync.basic.args"          value="-avz"/>
-  <property name="rsync.extra.args"          value=""/>
-  <property name="rsync.remote.shell.option" value="-e ssh"/>
 
+  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${rsync.exec}"/>
+  
   <!-- Private properties -->
   <property name="rsync.debug.level"    value="${ada.debug.level}"/>
 
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="rsync.check.values" 
-	  depends="initial.check, rsync.dump.properties">
+  <target name="rsync.init" depends="ada.init" if="rsync.execution.possible">
+    <!-- Property definition -->
+    <property name="rsync.source"              value="${basedir}"/>
+    <property name="rsync.destination"         value="${rsync.source}"/>
+    <property name="rsync.basic.args"          value="-avz"/>
+    <property name="rsync.extra.args"          value=""/>
+    <property name="rsync.remote.shell.option" value="-e ssh"/>
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="rsync.check">
       <and>
-	<!-- The required binaries need to be available. -->
-	<available file="${rsync.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
 	<!-- The source needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${rsync.source}" arg2="" trim="true"/></not>
 	<!-- There must be some files defined -->
-        <not><equals arg1="${rsync.files}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty destination as well -->
         <not><equals arg1="${rsync.destination}" arg2="" trim="true"/></not>
       </and>
     </condition>
@@ -56,21 +50,9 @@
     <echo level="${rsync.debug.level}">  rsync.check              = "${rsync.check}"</echo>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="rsync.processing.NOT" unless="rsync.check">
-    <echo level="${rsync.debug.level}">rsync.processing           ---</echo>
-    <echo level="${rsync.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Regular target. It is executed if the check property is true, and it has
-  as dependency the NOT target. That way, if the property is not set, this
-  target is not executed and instead, the one notifying the user of such event
-  is executed. -->
-  <target name="rsync.processing" 
-	  depends="rsync.check.values, rsync.processing.NOT"
-	  if="rsync.check"
-	  description="Invoke rsync to perform the synchronization">
+  <!-- Regular target. It is executed if the check property is true -->
+  <target name="rsync.processing" depends="rsync.init"
+	  if="rsync.check" description="Invoke rsync to perform the synchronization">
 
     <echo>rsync.processing           RUN</echo>
     <echo level="${rsync.debug.level}">${basedir}</echo>
@@ -85,18 +67,9 @@
     </exec>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="rsync.clean.NOT" unless="rsync.check">
-    <echo level="${rsync.debug.level}">rsync.clean               ---</echo>
-    <echo level="${rsync.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by rsync -->
-  <target name="rsync.clean" 
-	  depends="rsync.check.values, rsync.clean.NOT"
-	  if="rsync.check" 
-	  description="Remove files produced by rsync">
+  <target name="rsync.clean" depends="rsync.init"
+	  if="rsync.check" description="Remove files produced by rsync">
 
     <!-- No action here because is a too high level procedure. Removing the
     destination dir is probably not that frequent, and therefore can be done
@@ -107,7 +80,7 @@
   </target>
   
   <!-- Dump the properties defined in this script -->
-  <target name="rsync.dump.properties" depends="initial.check">
+  <target name="rsync.dump.properties" depends="rsync.init">
     <echo level="${rsync.debug.level}">------ rsync properties ----
  rsync.exec                =${rsync.exec}
  rsync.source              =${rsync.source}
@@ -118,5 +91,5 @@
   </target>
 
   <!-- If entering through this target, build.out is deleted -->
-  <target name="rsync" depends="initial.delete.build.out, rsync.processing"/>
+  <target name="rsync" depends="rsync.init, initial.delete.build.out, rsync.processing"/>
 </project>

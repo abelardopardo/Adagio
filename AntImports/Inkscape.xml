@@ -13,185 +13,123 @@
       to PNG, PDF, EPS or PS format.
   -->
 
-  <!-- Checks for availability of different binaries -->
-  <import file="InitialCheck.xml"/>
+  <import file="InitialCheck.xml" />
 
-  <!-- Property definition -->
-  <property name="inkscape.exec"          value="inkscape"/>
-  <property name="inkscape.src.dir"       value="${basedir}"/>
-  <property name="inkscape.dst.dir"       value="${inkscape.src.dir}"/>
-  <property name="inkscape.output.format" value="png"/>
-  <property name="inkscape.files"         value=""/>
+  <property name="inkscape.exec" value="inkscape"/>
+
+  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${inkscape.exec}"/>
 
   <!-- Private properties -->
   <property name="inkscape.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Property to store the option for inkscape to export in a given format -->
-  <property name="inkscape.export.option" value=""/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="inkscape.abssrc.dir" pathsep=" ">
-    <path location="${inkscape.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="inkscape.absdst.dir" pathsep=" ">
-    <path  location="${inkscape.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by inkscape (fileset to allow wildcards) -->
-  <fileset id="inkscape.fileset" dir="${inkscape.abssrc.dir}"
-	   includes="___bogus___file__name ${inkscape.files}"/>
-
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="inkscape.check.values" 
-	  depends="initial.check, inkscape.dump.properties">
-
-    <!-- Obtain the filelist with the source files to see if it is empty -->
-    <pathconvert property="inkscape.source.filelist.property" pathsep=" ">
-      <fileset refid="inkscape.fileset"/>
-    </pathconvert>
     
+  <target name="inkscape.init" depends="ada.init" if="inkscape.execution.possible">
+    <!-- Public Property definition -->
+    <property name="inkscape.src.dir"       value="${basedir}"/>
+    <property name="inkscape.dst.dir"       value="${inkscape.src.dir}"/>
+    <property name="inkscape.output.format" value="png"/>
+    <property name="inkscape.files"         value=""/>
+
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <ada.expand.srcdst.paths
+      ADA.PREFIX="inkscape" ADA.SRC.DIR="${inkscape.src.dir}"
+      ADA.DST.DIR="${inkscape.dst.dir}" ADA.FILES="${inkscape.files}"/>
+
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="inkscape.check">
-      <and>
-	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
-	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${inkscape.abssrc.dir}" arg2="" trim="true"/></not>
-	<!-- There must be some files defined -->
-        <not><equals arg1="${inkscape.source.filelist.property}" arg2="" trim="true"/></not>
-        <not><equals arg1="${inkscape.files}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty dst.dir as well -->
-	<not><equals arg1="${inkscape.absdst.dir}" arg2="" trim="true"/></not>
-      </and>
-    </condition>
-
-    <!-- The required condition not to bomb out -->
-    <condition property="inkscape.execution.possible">
-      <and>
-	<available file="${inkscape.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
-	<available file="${inkscape.abssrc.dir}"/> 
-      </and>
-    </condition>
-
-    <condition property="inkscape.failure">
-      <and>
-	<isset property="inkscape.check"/>
-	<not><isset property="inkscape.execution.possible"/></not>
-      </and>
+      <!-- 
+	   There must be some files in the fileset (after regexp expansion)
+      -->
+      <not>
+	<equals arg1="${inkscape.source.filelist.property}" arg2=""
+		trim="true"/>
+      </not>
     </condition>
     
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="${inkscape.debug.level}">inkscape.check          = "${inkscape.check}"
+inkscape.execution.possible = ${inkscape.execution.possible}</echo>
+
+  </target>
+
+  <!-- Regular target. It is executed if the check property is true -->
+  <target name="inkscape.processing" 
+	  depends="inkscape.init, inkscape.preprocessing,
+		   inkscape.export.png, inkscape.export.eps,
+		   inkscape.export.ps, inkscape.export.pdf"
+	  description="Creates images from the SVG files"/>
+  
+  <target name="inkscape.preprocessing" if="inkscape.check">
+    <echo>inkscape.processing         RUN</echo>
+    <echo level="${inkscape.debug.level}">${basedir}</echo>
+
+    <macrodef name="inkscape.execute">
+      <attribute name="INKSCAPE.EXPORT.OPTION" />
+      <sequential>
+	<!-- Execute the command. Watch out for src.dir and dst.dir -->
+	<apply dir="${basedir}" parallel="false" dest="${inkscape.dst.dir}"
+	       append="yes" failonerror="true" executable="${inkscape.exec}" 
+	       output="build.out">
+	  <arg line="@{INKSCAPE.EXPORT.OPTION}"/>
+	  <targetfile/>
+	  <srcfile/>
+	  <fileset refid="inkscape.fileset"/>
+	  <!-- Mapper from source files to produced files -->
+	  <mapper type="glob" from="*.svg" to="*.${inkscape.output.format}"/>
+	</apply>    
+      </sequential>
+    </macrodef>
+
     <condition property="inkscape.export.format.png">
-      <equals arg1="${inkscape.output.format}" arg2="png"/>
+      <and>
+	<istrue value="${inkscape.check}"/>
+	<equals arg1="${inkscape.output.format}" arg2="png"/>
+      </and>
     </condition>
 
     <condition property="inkscape.export.format.eps">
-      <equals arg1="${inkscape.output.format}" arg2="eps"/>
+      <and>
+	<istrue value="${inkscape.check}"/>
+	<equals arg1="${inkscape.output.format}" arg2="eps"/>
+      </and>
     </condition>
 
     <condition property="inkscape.export.format.ps">
-      <equals arg1="${inkscape.output.format}" arg2="ps"/>
+      <and>
+	<istrue value="${inkscape.check}"/>
+	<equals arg1="${inkscape.output.format}" arg2="ps"/>
+      </and>
     </condition>
 
     <condition property="inkscape.export.format.pdf">
       <equals arg1="${inkscape.output.format}" arg2="pdf"/>
     </condition>
 
-    <!-- Dump the value of the properties just computed. -->
-    <echo level="${inkscape.debug.level}">  inkscape.check          = "${inkscape.check}"
-  inkscape.execution.possible = ${inkscape.execution.possible}
-  inkscape.failure            = ${inkscape.failure}</echo>
-  </target>
-
-  <target name="inkscape.bomb.out" if="inkscape.failure">
-    <fail message="inkscape rule cannot be executed. Review the value of
-		   variables inkscape.src.dir and inkscape.exec"/>
-  </target>
-
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="inkscape.processing.NOT" depends="inkscape.bomb.out" 
-	  unless="inkscape.check">
-    <echo level="${inkscape.debug.level}">inkscape.processing         ---</echo>
-    <echo level="${inkscape.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Regular target. It is executed if the check property is true, and it has
-  as dependency the NOT target. That way, if the property is not set, this
-  target is not executed and instead, the one notifying the user of such event
-  is executed. -->
-  <target name="inkscape.processing" 
-	  depends="inkscape.check.values, inkscape.processing.NOT"
-	  if="inkscape.check"
-	  description="Creates the files from the SVG files">
-
-    <echo>inkscape.processing         RUN</echo>
-    <echo level="${inkscape.debug.level}">${basedir}</echo>
-
     <!-- Create the dst directory -->
     <mkdir dir="${inkscape.dst.dir}"/>
-
-    <antcall target="inkscape.execute.export.command.png"/>
-    <antcall target="inkscape.execute.export.command.eps"/>
-    <antcall target="inkscape.execute.export.command.ps"/>
-    <antcall target="inkscape.execute.export.command.pdf"/>
   </target>
-
-  <target name="inkscape.execute.export.command.png"
+  
+  <target name="inkscape.export.png"
 	  if="inkscape.export.format.png">
-    <antcall target="inkscape.execute.export.command">
-      <param name="inkscape.export.option" value="--export-png"/>
-    </antcall>
+    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-png"/>
   </target>
-    
-  <target name="inkscape.execute.export.command.pdf"
+  
+  <target name="inkscape.export.pdf"
 	  if="inkscape.export.format.pdf">
-    <antcall target="inkscape.execute.export.command">
-      <param name="inkscape.export.option" value="--export-pdf"/>
-    </antcall>
+    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-pdf"/>
   </target>
-    
-  <target name="inkscape.execute.export.command.eps"
+  
+  <target name="inkscape.export.eps"
 	  if="inkscape.export.format.eps">
-    <antcall target="inkscape.execute.export.command">
-      <param name="inkscape.export.option" value="--export-eps"/>
-    </antcall>
+    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-eps"/>
   </target>
-    
-  <target name="inkscape.execute.export.command.ps"
+  
+  <target name="inkscape.export.ps"
 	  if="inkscape.export.format.ps">
-    <antcall target="inkscape.execute.export.command">
-      <param name="inkscape.export.option" value="--export-ps"/>
-    </antcall>
-  </target>
-
-  <target name="inkscape.execute.export.command">
-    
-    <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${basedir}" parallel="false" dest="${inkscape.dst.dir}"
-	   append="yes" failonerror="true" executable="${inkscape.exec}" 
-	   output="build.out">
-      <arg line="${inkscape.export.option}"/>
-      <targetfile/>
-      <srcfile/>
-      <fileset refid="inkscape.fileset"/>
-      <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.svg" to="*.${inkscape.output.format}"/>
-    </apply>    
-
-  </target>
-
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="inkscape.clean.NOT" unless="inkscape.check">
-    <echo level="${inkscape.debug.level}">inkscape.clean              ---</echo>
-    <echo level="${inkscape.debug.level}">${basedir}</echo>
+    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-ps"/>
   </target>
 
   <!-- Clean files produced by inkscape -->
-  <target name="inkscape.clean" 
-	  depends="inkscape.check.values, inkscape.clean.NOT"
+  <target name="inkscape.clean" depends="inkscape.init"
 	  if="inkscape.check" description="Remove files produced by inkscape">
     
     <echo>inkscape.clean              RUN</echo>
@@ -206,22 +144,20 @@
 	<mapper type="glob" from="*.svg" to="*.${inkscape.output.format}"/>
       </chainedmapper>
     </pathconvert>
-    <filelist id="inkscape.target.filelist"
-	      files="${inkscape.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${inkscape.target.filelist.property}</echo>
 
-    <!-- Perform the delete operation. The failonerror attributge is needed
+    <!-- Perform the delete operation. The failonerror attribute is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
     <delete failonerror="false" includeemptydirs="true">
-      <filelist refid="inkscape.target.filelist"/>
+      <files includes="${inkscape.target.filelist.property}"/>
     </delete>
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="inkscape.dump.properties" depends="initial.check">
+  <target name="inkscape.dump.properties" depends="inkscape.init">
     <echo level="${inkscape.debug.level}"> ------ Inkscape properties ----
     inkscape.exec    ="${inkscape.exec}"
     inkscape.abssrc.dir ="${inkscape.abssrc.dir}"
@@ -229,12 +165,12 @@
     inkscape.files   ="${inkscape.files}" </echo>
   </target>
 
-  <target name="inkscape.report.YES" depends="inkscape.check.values"
+  <target name="inkscape.report.YES" depends="inkscape.init"
 	  if="inkscape.execution.possible">
     <echo>Inkscape           |     *     |</echo>
   </target>
 
-  <target name="inkscape.report.NO" depends="inkscape.check.values"
+  <target name="inkscape.report.NO" depends="inkscape.init"
 	  unless="inkscape.execution.possible">
     <echo>Inkscape           |           |     * (install ${inkscape.exec})</echo>
   </target>
@@ -243,5 +179,5 @@
 				      inkscape.report.NO"/>
 
   <!-- If entering through this target, build.out is deleted -->
-  <target name="inkscape" depends="initial.delete.build.out, inkscape.processing"/>
+  <target name="inkscape" depends="inkscape.init, initial.delete.build.out, inkscape.processing"/>
 </project>

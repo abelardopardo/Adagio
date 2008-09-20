@@ -17,45 +17,33 @@
       stated in a resource, or be able to overwrite it.
   -->
 
-  <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
-  
-  <!-- Public Property definition -->
-  <property name="subrecursive.dirs"       value=""/>
-  <property name="subrecursive.dst.dir"    value="${basedir}"/>
-  <property name="subrecursive.dirs.nodst" value=""/>
-  <property name="subrecursive.target"     value=""/>
 
   <!-- Private properties -->
   <property name="subrecursive.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define a property containing the absolute dst path -->
-  <pathconvert property="subrecursive.absdst.dir" pathsep=" ">
-    <path  location="${subrecursive.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Dirs to recur  -->
-  <filelist id="subrecursive.dirlist" dir="${basedir}"
-	    files="${subrecursive.dirs}"/>
-
-  <filelist id="subrecursive.dirlist.nodst" dir="${basedir}"
-	    files="${subrecursive.dirs.nodst}"/>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="subrecursive.check.values" 
-	  depends="initial.check, subrecursive.dump.properties">
+    
+  <target name="subrecursive.init" depends="ada.init">
+    <!-- Public Property definition -->
+    <property name="subrecursive.dirs"       value=""/>
+    <property name="subrecursive.dst.dir"    value="${basedir}"/>
+    <property name="subrecursive.dirs.nodst" value=""/>
+    <property name="subrecursive.target"     value=""/>
+    
+    <!-- Define a property containing the absolute dst path -->
+    <pathconvert property="subrecursive.absdst.dir" pathsep=" ">
+      <path  location="${subrecursive.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Dirs to recur  -->
+    <filelist id="subrecursive.dirlist" dir="${basedir}"
+	      files="${subrecursive.dirs}"/>
+    
+    <filelist id="subrecursive.dirlist.nodst" dir="${basedir}"
+	      files="${subrecursive.dirs.nodst}"/>
 
     <!-- Conditions to see which one of the two targets needs to be executed -->
     <condition property="subrecursive.check.withdst">
-      <and>
-	<not><equals arg1="${subrecursive.dirs}" arg2="" trim="true"/></not>
-<!--	
-        Removed to allow subrecursive.dirs with no dir, this fires the build
-        process remotely, and then copyfiles applied to a subset of files.
-        <not><equals arg1="${subrecursive.dst.dir}" arg2="" trim="true"/></not>
- -->
-      </and>
+      <not><equals arg1="${subrecursive.dirs}" arg2="" trim="true"/></not>
     </condition>
 
     <condition property="subrecursive.check.nodst">
@@ -79,16 +67,9 @@
     subrecursive.dirs.nodst    = "${subrecursive.dirs.nodst}"</echo>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="subrecursive.processing.NOT" unless="subrecursive.check">
-    <echo level="${subrecursive.debug.level}">subrecursive.processing     ---</echo>
-    <echo level="${subrecursive.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Regular target. Invokes the check and then both sub-targets -->
   <target name="subrecursive.processing" 
-	  depends="subrecursive.check.values, subrecursive.processing.NOT,
+	  depends="subrecursive.init,
 		   subrecursive.processing.withdstdir,
 		   subrecursive.processing.nodstdir"
 	  description="Loop over the given dirs"/>
@@ -121,16 +102,9 @@
     </subant>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="subrecursive.clean.NOT" unless="subrecursive.check">
-    <echo level="${subrecursive.debug.level}">subrecursive.clean          ---</echo>
-    <echo level="${subrecursive.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean the produced files -->
   <target name="subrecursive.clean" 
-	  depends="subrecursive.check.values, subrecursive.clean.NOT,
+	  depends="subrecursive.init,
 		   subrecursive.clean.withdstdir,
 		   subrecursive.clean.nodstdir"
 	  description="Delete files produced here"/>
@@ -161,7 +135,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="subrecursive.dump.properties" depends="initial.check">
+  <target name="subrecursive.dump.properties" depends="subrecursive.init">
     <echo level="${subrecursive.debug.level}"> ------ Subrecursive properties ----
     subrecursive.dirs       ="${subrecursive.dirs}"
     subrecursive.dst.dir    ="${subrecursive.dst.dir}"

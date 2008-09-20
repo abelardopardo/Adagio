@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="@SCRIPT_NAME@" default="dvips">
+<project name="Execute Dvips" default="dvips">
 
   <!--
       Given the following properties:
@@ -12,91 +12,45 @@
       Produce ??
   -->
 
-  <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
 
-  <!-- Public Property definition -->
   <property name="dvips.exec"           value="dvips"/>
-  <property name="dvips.src.dir"        value="${basedir}"/>
-  <property name="dvips.dst.dir"        value="${dvips.src.dir}"/>
-  <property name="dvips.files"          value=""/>
 
+  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${dvips.exec}"/>
+  
   <!-- Private properties -->
   <property name="dvips.debug.level"    value="${ada.debug.level}"/>
 
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="dvips.abssrc.dir" pathsep=" ">
-    <path location="${dvips.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="dvips.absdst.dir" pathsep=" ">
-    <path  location="${dvips.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by dvips (fileset to allow wildcards) -->
-  <fileset id="dvips.fileset" dir="${dvips.abssrc.dir}"
-	   includes="__bogus__file__name ${dvips.files}"/>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="dvips.check.values" 
-	  depends="initial.check, dvips.dump.properties">
+  <target name="dvips.init" depends="ada.init" if="dvips.execution.possible">
+    <!-- Public Property definition -->
+    <property name="dvips.src.dir"        value="${basedir}"/>
+    <property name="dvips.dst.dir"        value="${dvips.src.dir}"/>
+    <property name="dvips.files"          value=""/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <ada.expand.srcdst.paths
+      ADA.PREFIX="dvips" ADA.SRC.DIR="${dvips.src.dir}"
+      ADA.DST.DIR="${dvips.dst.dir}" ADA.FILES="${dvips.files}"/>
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="dvips.check">
-      <and>
-	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
-	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${dvips.abssrc.dir}" arg2="" trim="true"/></not>
-	<!-- There must be some files defined -->
-        <not><equals arg1="${dvips.files}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${dvips.absdst.dir}" arg2="" trim="true"/></not>
-      </and>
-    </condition>
-
-    <!-- The required condition not to bomb out -->
-    <condition property="dvips.execution.possible">
-      <and>
-	<available file="${dvips.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
-	<available file="${dvips.abssrc.dir}"/> 
-      </and>
-    </condition>
-
-    <condition property="dvips.failure">
-      <and>
-	<isset property="dvips.check"/>
-	<not><isset property="dvips.execution.possible"/></not>
-      </and>
+      <!-- 
+	   There must be some files in the fileset (after regexp expansion) 
+      -->
+      <not>
+	<equals arg1="${dvips.source.filelist.property}" arg2="" trim="true"/>
+      </not>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${dvips.debug.level}">  dvips.check              = "${dvips.check}"
-  dvips.execution.possible = ${dvips.execution.possible}
-  dvips.failure            = ${dvips.failure}</echo>
+    <echo level="${dvips.debug.level}">dvips.check              = "${dvips.check}"
+dvips.execution.possible = ${dvips.execution.possible}</echo>
+
   </target>
 
-  <target name="dvips.bomb.out" if="dvips.failure">
-    <fail message="Dvips rule cannot be executed. Review the value of
-		   variables dvips.src.dir and dvips.exec"/>
-  </target>
-
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="dvips.processing.NOT" depends="dvips.bomb.out" 
-	  unless="dvips.check">
-    <echo level="${dvips.debug.level}">dvips.processing            ---</echo>
-    <echo level="${dvips.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Regular target. It is executed if the check property is true, and it has
-  as dependency the NOT target. That way, if the property is not set, this
-  target is not executed and instead, the one notifying the user of such event
-  is executed. -->
-  <target name="dvips.processing" 
-	  depends="dvips.check.values, dvips.processing.NOT"
-	  if="dvips.check"
-	  description="Execute dvips">
+  <!-- Regular target. It is executed if the check property is true -->
+  <target name="dvips.processing" depends="dvips.init"
+	  if="dvips.check" description="Execute dvips">
 
     <echo>dvips.processing            RUN</echo>
     <echo level="${dvips.debug.level}">${basedir}</echo>
@@ -117,23 +71,14 @@
     </apply>    
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="dvips.clean.NOT" unless="dvips.check">
-    <echo level="${dvips.debug.level}">dvips.clean                 ---</echo>
-    <echo level="${dvips.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by dvips -->
-  <target name="dvips.clean" 
-	  depends="dvips.check.values, dvips.clean.NOT"
-	  if="dvips.check" 
-	  description="Remove files produced by dvips">
+  <target name="dvips.clean" depends="dvips.init"
+	  if="dvips.check" description="Remove files produced by dvips">
 
     <echo>dvips.clean                 RUN</echo>
     <echo level="${dvips.debug.level}">${basedir}</echo>
 
-    <!-- Obtain the filelist with the produced files. -->
+    <!-- Obtain a property with the produced files. -->
     <pathconvert property="dvips.target.filelist.property" pathsep=" ">
       <fileset refid="dvips.fileset"/>
       <chainedmapper>
@@ -142,22 +87,20 @@
 	<mapper type="glob" from="*.dvi" to="*.ps"/>
       </chainedmapper>
     </pathconvert>
-    <filelist id="dvips.target.filelist"
-	      files="${dvips.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${dvips.target.filelist.property}</echo>
 
-    <!-- Perform the delete operation. The failonerror attributge is needed
+    <!-- Perform the delete operation. The failonerror attribute is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
     <delete failonerror="false" includeemptydirs="true">
-      <filelist refid="dvips.target.filelist"/>
+      <files includes="${dvips.target.filelist.property}"/>
     </delete>
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="dvips.dump.properties" depends="initial.check">
+  <target name="dvips.dump.properties" depends="dvips.init">
     <echo level="${dvips.debug.level}"> ------ dvips properties ----
     dvips.exec       ="${dvips.exec}"
     dvips.abssrc.dir ="${dvips.abssrc.dir}"
@@ -165,12 +108,12 @@
     dvips.files      ="${dvips.files}"</echo>
   </target>
 
-  <target name="dvips.report.YES" depends="dvips.check.values"
+  <target name="dvips.report.YES" depends="dvips.init"
 	  if="dvips.execution.possible">
     <echo>Dvips              |     *     |</echo>
   </target>
 
-  <target name="dvips.report.NO" depends="dvips.check.values"
+  <target name="dvips.report.NO" depends="dvips.init"
 	  unless="dvips.execution.possible">
     <echo>Dvips             |           |     * (install ${dvips.exec})</echo>
   </target>
@@ -179,5 +122,5 @@
 				      dvips.report.NO"/>
 
   <!-- If entering through this target, build.out is deleted -->
-  <target name="dvips" depends="initial.delete.build.out, dvips.processing"/>
+  <target name="dvips" depends="dvips.init, initial.delete.build.out, dvips.processing"/>
 </project>

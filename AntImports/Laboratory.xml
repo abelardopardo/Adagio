@@ -16,68 +16,67 @@
       one with the solution and pguide profiles.
   -->
 
-  <!-- Checks for availability of different binaries -->
   <import file="Cleaning.xml"/>
   <import file="SubRecursive.xml"/>
   <import file="Xsltproc.xml"/>
 
-  <!-- Property definition -->
-  <property name="laboratory.src.dir"       value="${basedir}"/>
-  <property name="laboratory.dst.dir"       value="${laboratory.src.dir}"/>
-  <property name="laboratory.style.file" 
-	    value="${ada.home}/XslStyles/Laboratory.xsl"/>
-  <property name="laboratory.submit.style.file" 
-	    value="${ada.home}/XslStyles/Submit.xsl"/>
-  <property name="laboratory.extra.args" value=""/>
-  <property name="laboratory.output.format"   value=".html"/>
-  <property name="laboratory.files"           value=""/>
-  <property name="laboratory.bilingual.files" value=""/>
-
   <!-- Private properties -->
-  <property name="laboratory.profile.lang"    value=""/>
-  <property name="laboratory.creating.files"  value=""/>
-  <property name="laboratory.manipulate.target" 
-	    value="xsltproc.processing"/>
   <property name="laboratory.debug.level"    value="${ada.debug.level}"/>
+  
+  <target name="laboratory.init" depends="ada.init">
+    <!-- Property definition -->
+    <property name="laboratory.src.dir"       value="${basedir}"/>
+    <property name="laboratory.dst.dir"       value="${laboratory.src.dir}"/>
+    <property name="laboratory.style.file" 
+	      value="${ada.home}/XslStyles/Laboratory.xsl"/>
+    <property name="laboratory.submit.style.file" 
+	      value="${ada.home}/XslStyles/Submit.xsl"/>
+    <property name="laboratory.extra.args" value=""/>
+    <property name="laboratory.output.format"   value=".html"/>
+    <property name="laboratory.files"           value=""/>
+    <property name="laboratory.bilingual.files" value=""/>
+    
+    <!-- Private properties -->
+    <property name="laboratory.profile.lang"    value=""/>
+    <property name="laboratory.creating.files"  value=""/>
+    <property name="laboratory.manipulate.target" 
+	      value="xsltproc.processing"/>
 
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-       executing the regular targets. -->
-  <target name="laboratory.check.values" 
-	  depends="initial.check, laboratory.dump.properties">
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <ada.expand.srcdst.paths
+      ADA.PREFIX="laboratory" ADA.SRC.DIR="${laboratory.src.dir}"
+      ADA.DST.DIR="${laboratory.dst.dir}" ADA.FILES="${laboratory.files}"/>
+
+    <!-- Source files to be processed (fileset to allow wildcards) -->
+    <fileset id="laboratory.bilingual.fileset" dir="${laboratory.abssrc.dir}"
+	     includes="___bogus___file__name ${laboratory.bilingual.files}"/>
+    
+    <!-- Obtain the filelist with the bilingual source files to see if it is empty -->
+    <pathconvert property="laboratory.source.bilingual.filelist.property" pathsep=" ">
+      <fileset refid="laboratory.bilingual.fileset"/>
+    </pathconvert>
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="laboratory.check">
-      <and>
-	<!-- The src.dir needs to be non-empty. -->
-        <not><equals arg1="${laboratory.src.dir}" arg2="" trim="true"/></not>
-	<available file="${laboratory.src.dir}"/> 
-	<!-- There must be some files defined -->
-	<or>
-	  <not><equals arg1="${laboratory.files}" arg2="" trim="true"/></not>
-	  <not><equals arg1="${laboratory.bilingual.files}" arg2="" trim="true"/></not>
-	</or>
-	<!-- Require a non-empty dst.dir -->
-        <not><equals arg1="${laboratory.dst.dir}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty and available stylesheet -->
-        <not><equals arg1="${laboratory.style.file}" arg2="" trim="true"/></not>
-	<available file="${laboratory.style.file}"/>
-      </and>
+      <!-- There must be some files defined -->
+      <or>
+	<not>
+	  <equals arg1="${laboratory.source.filelist.property}" arg2=""
+		  trim="true"/>
+	</not>
+	<not>
+	  <equals arg1="${laboratory.source.bilingual.filelist.property}"
+		  arg2="" trim="true"/>
+	</not>
+      </or>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
     <echo level="${laboratory.debug.level}">    laboratory.check          = "${laboratory.check}"</echo>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="laboratory.processing.NOT" unless="laboratory.check">
-    <echo level="${laboratory.debug.level}">laboratory.processing       ---</echo>
-    <echo level="${laboratory.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Invoke xsltprocessing -->
-  <target name="laboratory.processing" 
-	  depends="laboratory.check.values, laboratory.processing.NOT"
+  <target name="laboratory.processing" depends="laboratory.init"
 	  if="laboratory.check" description="Call all the multiple xsltprocs">
 
     <echo>laboratory.processing       CALL(xsltproc.processing 3 versions)</echo>
@@ -111,18 +110,9 @@
     <echo>laboratory.processing       END(xsltproc.processing 3 versions)</echo>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="laboratory.clean.NOT" unless="laboratory.check">
-    <echo level="${laboratory.debug.level}">laboratory.clean            ---</echo>
-    <echo level="${laboratory.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by laboratory -->
-  <target name="laboratory.clean" 
-	  depends="laboratory.check.values, laboratory.clean.NOT"
-	  if="laboratory.check"
-	  description="Remove files produced by laboratory">
+  <target name="laboratory.clean" depends="laboratory.init"
+	  if="laboratory.check" description="Remove files produced by laboratory">
 
     <echo>laboratory.clean            CALL(xsltproc.processing 3 versions)</echo>
 
@@ -155,7 +145,7 @@
     <echo>laboratory.clean            END(xsltproc.processing 3 versions)</echo>
   </target>
 
-  <target name="laboratory.dump.properties" depends="initial.check">
+  <target name="laboratory.dump.properties" depends="laboratory.init">
     <echo level="${laboratory.debug.level}"> ------ Laboratory properties ----
     laboratory.src.dir           ="${laboratory.src.dir}"
     laboratory.dst.dir           ="${laboratory.dst.dir}"
@@ -170,7 +160,7 @@
   <target name="laboratory" depends="initial.delete.build.out, laboratory.processing"/>
 
   <!-- Create the regular file, solution and professor guide -->
-  <target name="laboratory.manipulate.files">
+  <target name="laboratory.manipulate.files" depends="laboratory.init">
 
     <!-- Call xsltproc with no extra options -->
     <antcall target="${laboratory.manipulate.target}" inheritAll="false">

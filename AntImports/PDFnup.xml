@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="PDFnup file processing" default="pdfnup.processing">
+<project name="PDFnup file processing" default="pdfnup">
 
   <!--
       Given the following properties:
@@ -13,93 +13,45 @@
       Producd 2up PDF files
   -->
 
-  <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
 
-  <!-- Public Property definition -->
   <property name="pdfnup.exec"           value="pdfnup"/>
-  <property name="pdfnup.src.dir"        value="${basedir}"/>
-  <property name="pdfnup.dst.dir"        value="${pdfnup.src.dir}"/>
-  <property name="pdfnup.nup.option"     value="1x2"/>
-  <property name="pdfnup.files"          value=""/>
 
-
+  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${pdfnup.exec}"/>
+  
   <!-- Private properties -->
   <property name="pdfnup.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="pdfnup.abssrc.dir" pathsep=" ">
-    <path location="${pdfnup.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="pdfnup.absdst.dir" pathsep=" ">
-    <path  location="${pdfnup.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source files to be processed by pdfnup (fileset to allow wildcards) -->
-  <fileset id="pdfnup.fileset" dir="${pdfnup.abssrc.dir}"
-	   includes="__bogus__file__name ${pdfnup.files}"/>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="pdfnup.check.values" 
-	  depends="initial.check, pdfnup.dump.properties">
+    
+  <target name="pdfnup.init" depends="ada.init" if="pdfnup.execution.possible">
+    <!-- Public Property definition -->
+    <property name="pdfnup.src.dir"        value="${basedir}"/>
+    <property name="pdfnup.dst.dir"        value="${pdfnup.src.dir}"/>
+    <property name="pdfnup.nup.option"     value="1x2"/>
+    <property name="pdfnup.files"          value=""/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <ada.expand.srcdst.paths
+      ADA.PREFIX="pdfnup" ADA.SRC.DIR="${pdfnup.src.dir}"
+      ADA.DST.DIR="${pdfnup.dst.dir}" ADA.FILES="${pdfnup.files}"/>
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="pdfnup.check">
-      <and>
-	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
-	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${pdfnup.abssrc.dir}" arg2="" trim="true"/></not>
-	<!-- There must be some files defined -->
-        <not><equals arg1="${pdfnup.files}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${pdfnup.absdst.dir}" arg2="" trim="true"/></not>
-      </and>
-    </condition>
-
-    <!-- The required condition not to bomb out -->
-    <condition property="pdfnup.execution.possible">
-      <and>
-	<available file="${pdfnup.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
-	<available file="${pdfnup.abssrc.dir}"/> 
-      </and>
-    </condition>
-
-    <condition property="pdfnup.failure">
-      <and>
-	<isset property="pdfnup.check"/>
-	<not><isset property="pdfnup.execution.possible"/></not>
-      </and>
+      <!-- 
+	   There must be some files in the fileset (after regexp expansion) 
+      -->
+      <not>
+	<equals arg1="${pdfnup.source.filelist.property}" arg2="" trim="true"/>
+      </not>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
     <echo level="${pdfnup.debug.level}">    pdfnup.check          = "${pdfnup.check}"
-  pdfnup.execution.possible = ${pdfnup.execution.possible}
-  pdfnup.failure            = ${pdfnup.failure}</echo>
+  pdfnup.execution.possible = ${pdfnup.execution.possible}</echo>
   </target>
 
-  <target name="pdfnup.bomb.out" if="pdfnup.failure">
-    <fail message="PDFnup rule cannot be executed. Review the value of
-		   variables pdfnup.src.dir and pdfnup.exec"/>
-  </target>
-
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="pdfnup.processing.NOT" depends="pdfnup.bomb.out"
-	  unless="pdfnup.check">
-    <echo level="${pdfnup.debug.level}">pdfnup.processing           ---</echo>
-    <echo level="${pdfnup.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Regular target. It is executed if the check property is true, and it has
-  as dependency the NOT target. That way, if the property is not set, this
-  target is not executed and instead, the one notifying the user of such event
-  is executed. -->
-  <target name="pdfnup.processing" 
-	  depends="pdfnup.check.values, pdfnup.processing.NOT"
-	  if="pdfnup.check"
-	  description="Creates landscape 2 up latex files">
+  <!-- Regular target. It is executed if the check property is true -->
+  <target name="pdfnup.processing" depends="pdfnup.init"
+	  if="pdfnup.check" description="Creates landscape 2 up latex files">
 
     <echo>pdfnup.processing           RUN</echo>
     <echo level="${pdfnup.debug.level}">${basedir}</echo>
@@ -122,21 +74,14 @@
     </apply>    
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="pdfnup.clean.NOT" unless="pdfnup.check">
-    <echo level="${pdfnup.debug.level}">pdfnup.clean                ---</echo>
-    <echo level="${pdfnup.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by pdfnup -->
-  <target name="pdfnup.clean" depends="pdfnup.check.values, pdfnup.clean.NOT"
+  <target name="pdfnup.clean" depends="pdfnup.init"
 	  if="pdfnup.check" description="Remove files produced by pdfnup">
 
     <echo>pdfnup.clean                RUN</echo>
     <echo level="${pdfnup.debug.level}">${basedir}</echo>
 
-    <!-- Obtain the filelist with the produced files. -->
+    <!-- Obtain a property with the produced files. -->
     <pathconvert property="pdfnup.target.filelist.property" pathsep=" ">
       <fileset refid="pdfnup.fileset"/>
       <chainedmapper>
@@ -145,22 +90,20 @@
 	<mapper type="glob" from="*.pdf" to="*-${pdfnup.nup.option}.pdf"/>
       </chainedmapper>
     </pathconvert>
-    <filelist id="pdfnup.target.filelist"
-	      files="${pdfnup.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${pdfnup.target.filelist.property}</echo>
 
-    <!-- Perform the delete operation. The failonerror attributge is needed
+    <!-- Perform the delete operation. The failonerror attribute is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
     <delete failonerror="false" includeemptydirs="true">
-      <filelist refid="pdfnup.target.filelist"/>
+      <files includes="${pdfnup.target.filelist.property}"/>
     </delete>
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="pdfnup.dump.properties" depends="initial.check">
+  <target name="pdfnup.dump.properties" depends="pdfnup.init">
     <echo level="${pdfnup.debug.level}"> ------ pdfnup properties ----
     pdfnup.exec       ="${pdfnup.exec}"
     pdfnup.abssrc.dir ="${pdfnup.abssrc.dir}"
@@ -169,12 +112,12 @@
     pdfnup.files      ="${pdfnup.files}" </echo>
   </target>
 
-  <target name="pdfnup.report.YES" depends="pdfnup.check.values"
+  <target name="pdfnup.report.YES" depends="pdfnup.init"
 	  if="pdfnup.execution.possible">
     <echo>Pdfnup             |     *     |</echo>
   </target>
 
-  <target name="pdfnup.report.NO" depends="pdfnup.check.values"
+  <target name="pdfnup.report.NO" depends="pdfnup.init"
 	  unless="pdfnup.execution.possible">
     <echo>Pdfnup             |           |     * (install pdfjam)</echo>
   </target>
@@ -183,5 +126,5 @@
 				      pdfnup.report.NO"/>
 
   <!-- If entering through this target, build.out is deleted -->
-  <target name="pdfnup" depends="initial.delete.build.out, pdfnup.processing"/>
+  <target name="pdfnup" depends="pdfnup.init, initial.delete.build.out, pdfnup.processing"/>
 </project>

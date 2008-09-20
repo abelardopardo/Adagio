@@ -17,8 +17,7 @@ exportcontrol.end=2018-06-25T19:00:00
 
 subrecursive.dirs=../../Material/Author5
 
-mergestyles.src.dir=..
-mergestyles.master.style=AdaCourseParams.xml
+mergestyles.master.style=../AdaCourseParams.xml
 
 laboratory.bilingual.files=index.xml
 

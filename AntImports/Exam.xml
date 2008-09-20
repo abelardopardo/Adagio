@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="Exam processing rules" default="exam">
+<project name="Exam processing to create heading" default="exam">
 
   <!--
       Given the following properties:
@@ -17,46 +17,42 @@
 
   -->
 
-  <!-- Checks for availability of different binaries -->
   <import file="Latex.xml"/>
   <import file="Dvi2bitmap.xml"/>
   <import file="BilingualDB.xml"/>
-
-  <!-- Public Property definition -->
-  <property name="exam.src.dir"        value="${basedir}"/>
-  <property name="exam.dst.dir"        value="${exam.src.dir}"/>
-  <property name="exam.equation.dir"   value="equations"/>
-  <property name="exam.output.format"  value=".html"/>
-  <property name="exam.extra.args"     value="--stringparam
-					      passivetex.extensions 1
-					      --stringparam 
-					      tex.math.in.alt latex"/>
-  <property name="exam.file"           value=""/>
-  <property name="exam.bilingual.file" value=""/>
-  <property name="exam.style.file"     value="${ada.home}/XslStyles/Exam.xsl"/>
-
+  
   <!-- Private properties -->
   <property name="exam.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="exam.abssrc.dir" pathsep=" ">
-    <path location="${exam.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="exam.absdst.dir" pathsep=" ">
-    <path  location="${exam.dst.dir}"/>
-  </pathconvert>
-
-  <!-- Source file to be processed by exam -->
-  <filelist id="exam.filelist" dir="${exam.abssrc.dir}"
-	   files="${exam.file}"/>
-
-  <!-- Bilingual source file to be processed by exam -->
-  <filelist id="exam.bilingual.filelist" dir="${exam.abssrc.dir}"
-	   files="${exam.bilingual.file}"/>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="exam.check.values" depends="initial.check, exam.dump.properties">
+    
+  <target name="exam.init" depends="ada.init">
+    <!-- Public Property definition -->
+    <property name="exam.src.dir"        value="${basedir}"/>
+    <property name="exam.dst.dir"        value="${exam.src.dir}"/>
+    <property name="exam.equation.dir"   value="equations"/>
+    <property name="exam.output.format"  value=".html"/>
+    <property name="exam.extra.args"     value="--stringparam
+						passivetex.extensions 1
+						--stringparam 
+						tex.math.in.alt latex"/>
+    <property name="exam.file"           value=""/>
+    <property name="exam.bilingual.file" value=""/>
+    <property name="exam.style.file"     value="${ada.home}/XslStyles/Exam.xsl"/>
+    
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <pathconvert property="exam.abssrc.dir" pathsep=" ">
+      <path location="${exam.src.dir}"/>
+    </pathconvert>
+    <pathconvert property="exam.absdst.dir" pathsep=" ">
+      <path  location="${exam.dst.dir}"/>
+    </pathconvert>
+    
+    <!-- Source file to be processed by exam -->
+    <filelist id="exam.filelist" dir="${exam.abssrc.dir}"
+	      files="${exam.file}"/>
+    
+    <!-- Bilingual source file to be processed by exam -->
+    <filelist id="exam.bilingual.filelist" dir="${exam.abssrc.dir}"
+	      files="${exam.bilingual.file}"/>
 
     <!-- Obtain the filelist with the source file to see if it is empty -->
     <pathconvert property="exam.source.filelist.property" pathsep=" ">
@@ -67,11 +63,10 @@
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="exam.check">
       <and>
-	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
-	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${exam.abssrc.dir}" arg2="" trim="true"/></not>
-	<!-- There must be some file defined -->
-        <not>
+	<!-- 
+	     There must be some files in the fileset (after regexp expansion) 
+	-->
+	<not>
 	  <equals arg1="${exam.source.filelist.property}" arg2="" trim="true"/>
 	</not>
 	<!-- At least one of the variable must be empty -->
@@ -79,25 +74,16 @@
 	  <equals arg1="${exam.file}" arg2="" trim="true"/>
 	  <equals arg1="${exam.bilingual.file}" arg2="" trim="true"/>
 	</or>
-	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${exam.absdst.dir}" arg2="" trim="true"/></not>
       </and>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${exam.debug.level}">  exam.check              = "${exam.check}"</echo>
-  </target>
-
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="exam.processing.NOT" unless="exam.check">
-    <echo level="${exam.debug.level}">exam.processing                ---</echo>
-    <echo level="${exam.debug.level}">${basedir}</echo>
+    <echo level="${exam.debug.level}">exam.check              = "${exam.check}"</echo>
   </target>
 
   <!-- Process the file through the four steps until the exam is produced -->
-  <target name="exam.processing" depends="exam.check.values, exam.processing.NOT"
-	  if="exam.check" description="Process the exam file">
+  <target name="exam.processing" depends="exam.init" if="exam.check" 
+	  description="Process the exam file">
 
     <echo>exam.processing (Step 1a/4) CALL(xsltproc.processing)</echo>
 
@@ -228,18 +214,9 @@
 
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="exam.clean.NOT" unless="exam.check">
-    <echo level="${exam.debug.level}">exam.clean                  ---</echo>
-    <echo level="${exam.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by exam -->
-  <target name="exam.clean" 
-	  depends="exam.check.values, exam.clean.NOT"
-	  if="exam.check" 
-	  description="Remove files produced by exam">
+  <target name="exam.clean" depends="exam.init"
+	  if="exam.check" description="Remove files produced by exam">
 
     <echo>exam.clean                  CALL(dvi2bitmap.clean)</echo>
 
@@ -354,7 +331,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="exam.dump.properties" depends="initial.check">
+  <target name="exam.dump.properties" depends="exam.init">
     <echo level="${exam.debug.level}"> ------ exam properties ----
     exam.abssrc.dir     ="${exam.abssrc.dir}"
     exam.absdst.dir     ="${exam.absdst.dir}"

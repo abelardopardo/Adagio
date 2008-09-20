@@ -9,8 +9,7 @@ subrecursive.dirs=../../Material/Author7
 
 laboratory.files=index.xml
 
-mergestyles.src.dir=..
-mergestyles.master.style=AdaCourseParams.xml
+mergestyles.master.style=../AdaCourseParams.xml
 
 export.dst.dir=../scratch/Lab3
 

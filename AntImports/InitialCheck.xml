@@ -5,120 +5,152 @@ Include here those definitions that are supposed to be shared among several Ant
 build templates
 -->
 
-<project name="Initial Checks" default="initial.check">
-
-  <!-- 
-       Script to detect where is the course home by checking for the presence of
-       AdaCourseParams.xml up to 10 levels up the current basedir. The script
-       needs to be executed the first thing in order to have ada.course.home
-       available to be used in the files that are about to be sourced.
-  -->
-  <exec executable="bash"
-	dir="${basedir}"
-	outputproperty="ada.course.home">
-    <arg value="${ada.home}${file.separator}bin${file.separator}adafindcoursehome"/>
-  </exec>
-  
-  <!-- Default file name to load the propertyes -->
-  <property name="ada.local.property.file" value="Properties.txt"/>
-
-  <!-- Load the properties from the ada.course.home directory -->
-  <property file="${ada.course.home}${file.separator}Ada.properties"/>
-
-  <!-- Load the properties in the basedir directory -->
-  <property file="${basedir}${file.separator}${ada.local.property.file}"/>
-
-  <!-- Load the overridable course properties from the ada.course.home directory -->
-  <property file="${ada.course.home}${file.separator}CourseProperties.txt"/>
-
-  <!-- Load the local properties from .ant.properties -->
-  <property file=".ant.properties"/>
-
-  <!-- Load the properties from the user.home directory -->
-  <property file="${user.home}${file.separator}.ant.properties"/>
-
-  <!-- Load the properties from the cygwin.user.home directory -->
-  <property file="${cygwin.user.home}${file.separator}.ant.properties"/>
-
-  <!-- Directory where the toolkit is installed -->
-  <property name="ada.home" value="" />
+<project name="Initial Checks" default="ada.init">
 
   <!-- Overall debug level for the rule scripts -->
   <property name="ada.debug.level" value="info"/>
 
-  <!-- Overall date/time to be considered when processing the audience and
-       exportcontrol aspects -->
-  <property name="ada.current.datetime" value=""/>
-
-  <!-- Overall profile string for the revision attribute in docbook -->
-  <property name="ada.profile.revision" value=""/>
-
   <!-- Include the environment as a set of properties -->
   <property environment="env"/>
-
-  <!-- Detect in which os-family is being executed -->
-  <condition  property="ada.os.family.windows" value="true">
-    <os family="windows"/>
-  </condition>
-  <condition  property="ada.os.family.unix" value="true">
-    <os family="unix"/>
-  </condition>
-
-  <!-- Define the file extensions -->
+  
+  <!-- Define the file extensions depending on the OS -->
   <condition  property="executable.file.extension" value=".exe">
     <os family="windows"/>
   </condition>
   <condition  property="executable.file.extension" value="">
     <os family="unix"/>
   </condition>
+  
+  <!-- 
+       Macro that given an executable name, it sets the NAME.execution.possible
+       property 
+  -->
+  <macrodef name="ada.set.execution.possible">
+    <attribute name="ADA.EXECUTABLE.NAME"/>
+    <attribute name="ADA.PREFIX" default="@{ADA.EXECUTABLE.NAME}"/>
+    <sequential>
+      <!-- The required condition not to bomb out -->
+      <available property="@{ADA.PREFIX}.execution.possible"
+		 file="@{ADA.EXECUTABLE.NAME}${executable.file.extension}"
+		 filepath="${env.PATH}"/>
+    </sequential>
+  </macrodef>
 
-  <!-- Set the root path prefix to use cygwin in windows -->
-  <condition property="root.path.prefix" value="">
-    <os family="unix"/>
-  </condition>
+  <!-- 
+       Define two properties containing the absolute src and dst paths, create
+       the fileset with the source files and catch its expanded filename list in
+       a property
+  -->
+  <macrodef name="ada.expand.srcdst.paths">
+    <attribute name="ADA.PREFIX"/>
+    <attribute name="ADA.SRC.DIR"/>
+    <attribute name="ADA.DST.DIR"/>
+    <attribute name="ADA.FILES"/>
+    <sequential>
+      <pathconvert property="@{ADA.PREFIX}.abssrc.dir" pathsep=" ">
+	<path location="@{ADA.SRC.DIR}"/>
+      </pathconvert>
+      <pathconvert property="@{ADA.PREFIX}.absdst.dir" pathsep=" ">
+	<path  location="@{ADA.DST.DIR}"/>
+      </pathconvert>
 
-  <exec executable="cygpath" 
-	os="windows"
-	outputproperty="root.path.prefix">
-    <arg value="-d"/>
-    <arg value="/"/>
-  </exec>
+      <!-- Source files to be processed (fileset to allow wildcards) -->
+      <fileset id="@{ADA.PREFIX}.fileset" dir="${@{ADA.PREFIX}.abssrc.dir}"
+	       includes="___bogus___file__name @{ADA.FILES}"/>
 
-<!--   <available property="ada.property.file.ready" -->
-<!-- 	     file="${basedir}${file.separator}${ada.local.property.file}"/> -->
-      
-  <!-- Default location for the catalog -->
-  <property name="xml.catalog.file" 
-	    value="${root.path.prefix}${file.separator}etc${file.separator}xml${file.separator}catalog" />
+      <!-- Obtain the filelist with the source files to see if it is empty -->
+      <pathconvert property="@{ADA.PREFIX}.source.filelist.property" pathsep=" ">
+	<fileset refid="@{ADA.PREFIX}.fileset"/>
+      </pathconvert>
+    </sequential>
+  </macrodef>
 
-  <!-- Detect if the xml catalog file is properly detected -->
-  <condition property="xml.catalog.file.available" value="true">
-    <available file="${xml.catalog.file}" />
-  </condition>
+  <target name="ada.properties.init">
+    <!-- 
+	 Script to detect where is the course home by checking for the presence
+	 of AdaCourseParams.xml up to 10 levels up the current basedir. The
+	 script needs to be executed the first thing in order to have
+	 ada.course.home available to be used in the files that are about to be
+	 sourced.
+    -->
+    <exec executable="bash"
+	  dir="${basedir}"
+	  outputproperty="ada.course.home">
+      <arg value="${ada.home}${file.separator}bin${file.separator}adafindcoursehome"/>
+    </exec>
+  
+    <!-- Default file name to load the propertyes -->
+    <property name="ada.local.property.file" value="Properties.txt"/>
 
+    <!-- Load the properties from the ada.course.home directory -->
+    <property file="${ada.course.home}${file.separator}Ada.properties"/>
 
-<!--   <target name="ada.check.property.file" -->
-<!-- 	  unless="ada.property.file.ready"> -->
-<!--     <fail message="*** ERROR *** No ${ada.local.property.file} found!"/> -->
-<!--   </target> -->
+    <!-- Load the properties in the basedir directory -->
+    <property file="${basedir}${file.separator}${ada.local.property.file}"/>
 
-  <!-- Check if the ada.home property is set to a meaningful value -->
-<!--   <target name="ada.check.basics" depends="ada.check.property.file"> -->
-  <target name="ada.check.basics">
-    
-    <condition property="ada.check.home.property">
-      <and>
-        <not>
-	  <equals arg1="${ada.home}" arg2="" trim="true"/>
-        </not>
-        <available file="${ada.home}" type="dir"/>
-      </and>
+    <!-- Load the overridable course properties from the ada.course.home directory -->
+    <property file="${ada.course.home}${file.separator}CourseProperties.txt"/>
+
+    <!-- Load the local properties from .ant.properties -->
+    <property file=".ant.properties"/>
+
+    <!-- Load the properties from the user.home directory -->
+    <property file="${user.home}${file.separator}.ant.properties"/>
+
+    <!-- Load the properties from the cygwin.user.home directory -->
+    <property file="${cygwin.user.home}${file.separator}.ant.properties"/>
+
+    <!-- Directory where the toolkit is installed -->
+    <property name="ada.home" value="" />
+
+    <!-- Overall date/time to be considered when processing the audience and
+	 exportcontrol aspects -->
+    <property name="ada.current.datetime" value=""/>
+
+    <!-- Overall profile string for the revision attribute in docbook -->
+    <property name="ada.profile.revision" value=""/>
+
+    <!-- Detect in which os-family is being executed -->
+    <condition  property="ada.os.family.windows" value="true">
+      <os family="windows"/>
+    </condition>
+    <condition  property="ada.os.family.unix" value="true">
+      <os family="unix"/>
     </condition>
 
-  </target>
+    <!-- Set the root path prefix to use cygwin in windows -->
+    <condition property="root.path.prefix" value="">
+      <os family="unix"/>
+    </condition>
+    
+    <exec executable="cygpath" os="windows" outputproperty="root.path.prefix">
+      <arg value="-d"/>
+      <arg value="/"/>
+    </exec>
 
-  <target name="initial.check" 
-	  depends="initial.check.dump, ada.check.basics"
+    <!-- Default location for the catalog -->
+    <property name="xml.catalog.file" 
+	      value="${root.path.prefix}${file.separator}etc${file.separator}xml${file.separator}catalog" />
+
+    <!-- Check if the xml catalog file is available -->
+    <condition property="xml.catalog.file.available" value="true">
+      <available file="${xml.catalog.file}" />
+    </condition>
+    
+
+    <!-- Check if the ada.home property is set to a meaningful value -->
+    <condition property="ada.check.home.property">
+      <and>
+	<not>
+	  <equals arg1="${ada.home}" arg2="" trim="true"/>
+	</not>
+	<available file="${ada.home}" type="dir"/>
+      </and>
+    </condition>
+  </target>
+  
+  <target name="ada.init" 
+	  depends="ada.properties.init"
 	  unless="ada.check.home.property">
     <echo> *** ERROR *** ada.home variable with incorrect value!
   ada.home = "${ada.home}"
@@ -126,7 +158,7 @@ build templates
     <fail message="Include ada.home=DIR in the file ${user.home}/.ant.properties"/>
   </target>
 
-  <target name="initial.check.dump">
+  <target name="ada.properties.init.dump" depends="ada.properties.init">
     <echo level="${ada.debug.level}">------ Global properties ----
   basedir              = ${basedir}
   user.dir             = ${user.dir}

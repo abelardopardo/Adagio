@@ -9,100 +9,51 @@
       @NAME@.dst.dir: directory where the produced files are stored
       @NAME@.files: comma/space separated list of files to process
 
-      Produce ??
+      Do...
   -->
 
-  <!-- Checks for availability of different binaries -->
   <import file="InitialCheck.xml"/>
-
-  <!-- Public Property definition -->
+  
   <property name="@NAME@.exec"           value="@NAME@"/>
-  <property name="@NAME@.src.dir"        value="${basedir}"/>
-  <property name="@NAME@.dst.dir"        value="${@NAME@.src.dir}"/>
-  <property name="@NAME@.files"          value=""/>
-
+  
+  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${@NAME@.exec}"/>
+  
   <!-- Private properties -->
   <property name="@NAME@.debug.level"    value="${ada.debug.level}"/>
 
-  <!-- Define two properties containing the absolute src and dst paths -->
-  <pathconvert property="@NAME@.abssrc.dir" pathsep=" ">
-    <path location="${@NAME@.src.dir}"/>
-  </pathconvert>
-  <pathconvert property="@NAME@.absdst.dir" pathsep=" ">
-    <path  location="${@NAME@.dst.dir}"/>
-  </pathconvert>
+  <target name="@NAME@.init" depends="ada.init" if="@NAME@.execution.possible">
+    <!-- Public Property definition -->
+    <property name="@NAME@.src.dir"        value="${basedir}"/>
+    <property name="@NAME@.dst.dir"        value="${@NAME@.src.dir}"/>
+    <property name="@NAME@.files"          value=""/>
 
-  <!-- Source files to be processed by @NAME@ (fileset to allow wildcards) -->
-  <fileset id="@NAME@.fileset" dir="${@NAME@.abssrc.dir}"
-	   includes="__bogus__file__name ${@NAME@.files}"/>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="@NAME@.check.values" 
-	  depends="initial.check, @NAME@.dump.properties">
-
-    <!-- Obtain the filelist with the source files to see if it is empty -->
-    <pathconvert property="@NAME@.source.filelist.property" pathsep=" ">
-      <fileset refid="@NAME@.fileset"/>
-    </pathconvert>
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <ada.expand.srcdst.paths
+      ADA.PREFIX="@NAME@" ADA.SRC.DIR="${@NAME@.src.dir}"
+      ADA.DST.DIR="${@NAME@.dst.dir}" ADA.FILES="${@NAME@.files}"/>
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="@NAME@.check">
-      <and>
-	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
-	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${@NAME@.abssrc.dir}" arg2="" trim="true"/></not>
-	<!-- There must be some files defined -->
-        <not><equals arg1="${@NAME@.source.filelist.property}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${@NAME@.absdst.dir}" arg2="" trim="true"/></not>
-      </and>
-    </condition>
-
-    <!-- The required condition not to bomb out -->
-    <condition property="@NAME@.execution.possible">
-      <and>
-	<available file="${@NAME@.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
-	<available file="${@NAME@.abssrc.dir}"/> 
-      </and>
-    </condition>
-
-    <condition property="@NAME@.failure">
-      <and>
-	<isset property="@NAME@.check"/>
-	<not><isset property="@NAME@.execution.possible"/></not>
-      </and>
+      <!-- 
+	   There must be some files in the fileset (after regexp expansion) 
+      -->
+      <not>
+	<equals arg1="${@NAME@.source.filelist.property}" arg2="" trim="true"/>
+      </not>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${@NAME@.debug.level}">  @NAME@.check              = "${@NAME@.check}"
-  @NAME@.execution.possible = ${@NAME@.execution.possible}
-  @NAME@.failure            = ${@NAME@.failure}</echo>
+    <echo level="${@NAME@.debug.level}">@NAME@.check              = "${@NAME@.check}"
+@NAME@.execution.possible = ${@NAME@.execution.possible}</echo>
+
   </target>
 
-  <target name="@NAME@.bomb.out" if="@NAME@.failure">
-    <fail message="@NAME@ rule cannot be executed. Review the value of
-		   variables @NAME@.src.dir and @NAME@.exec"/>
-  </target>
-
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="@NAME@.processing.NOT" depends="@NAME@.bomb.out" 
-	  unless="@NAME@.check">
-    <echo level="${@NAME@.debug.level}">@NAME@.processing           ---</echo>
-    <echo level="${@NAME@.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Regular target. It is executed if the check property is true, and it has
-  as dependency the NOT target. That way, if the property is not set, this
-  target is not executed and instead, the one notifying the user of such event
-  is executed. -->
+  <!-- Regular target. It is executed if the check property is true -->
   <target name="@NAME@.processing" 
-	  depends="@NAME@.check.values, @NAME@.processing.NOT"
-	  if="@NAME@.check"
-	  description="@DESCRIPTION@">
+	  depends="@NAME@.init, @NAME@.preprocessing"
+	  description="@DESCRIPTION@"/>
 
+  <target name="@NAME@.preprocessing" if="@NAME.check">
     <echo>@NAME@.processing           RUN</echo>
     <echo level="${@NAME@.debug.level}">${basedir}</echo>
 
@@ -122,23 +73,14 @@
     </apply>    
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="@NAME@.clean.NOT" unless="@NAME@.check">
-    <echo level="${@NAME@.debug.level}">@NAME@.clean               ---</echo>
-    <echo level="${@NAME@.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by @NAME@ -->
-  <target name="@NAME@.clean" 
-	  depends="@NAME@.check.values, @NAME@.clean.NOT"
-	  if="@NAME@.check" 
-	  description="Remove files produced by @NAME@">
+  <target name="@NAME@.clean" depends="@NAME@.init"
+	  if="@NAME@.check" description="Remove files produced by @NAME@">
 
     <echo>@NAME@.clean           RUN</echo>
     <echo level="${@NAME@.debug.level}">${basedir}</echo>
 
-    <!-- Obtain the filelist with the produced files. -->
+    <!-- Obtain a property with the produced files. -->
     <pathconvert property="@NAME@.target.filelist.property" pathsep=" ">
       <fileset refid="@NAME@.fileset"/>
       <chainedmapper>
@@ -147,22 +89,20 @@
 	<mapper type="glob" from="*.@FROM@" to="*.@TO@"/>
       </chainedmapper>
     </pathconvert>
-    <filelist id="@NAME@.target.filelist"
-	      files="${@NAME@.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${@NAME@.target.filelist.property}</echo>
 
-    <!-- Perform the delete operation. The failonerror attributge is needed
+    <!-- Perform the delete operation. The failonerror attribute is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
     <delete failonerror="false" includeemptydirs="true">
-      <filelist refid="@NAME@.target.filelist"/>
+      <files includes="${@NAME@.target.filelist.property}"/>
     </delete>
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="@NAME@.dump.properties" depends="initial.check">
+  <target name="@NAME@.dump.properties" depends="@NAME@.init">
     <echo level="${@NAME@.debug.level}"> ------ @NAME@ properties ----
     @NAME@.exec       ="${@NAME@.exec}"
     @NAME@.abssrc.dir ="${@NAME@.abssrc.dir}"
@@ -170,12 +110,12 @@
     @NAME@.files      ="${@NAME@.files}"</echo>
   </target>
 
-  <target name="@NAME@.report.YES" depends="@NAME@.check.values"
+  <target name="@NAME@.report.YES" depends="@NAME@.init"
 	  if="@NAME@.execution.possible">
     <echo>@NAME@             |     *     |</echo>
   </target>
 
-  <target name="@NAME@.report.NO" depends="@NAME@.check.values"
+  <target name="@NAME@.report.NO" depends="@NAME@.init"
 	  unless="@NAME@.execution.possible">
     <echo>@NAME@             |           |     * (install ${@NAME@.exec})</echo>
   </target>
@@ -184,5 +124,5 @@
 				      @NAME@.report.NO"/>
 
   <!-- If entering through this target, build.out is deleted -->
-  <target name="@NAME@" depends="initial.delete.build.out, @NAME@.processing"/>
+  <target name="@NAME@" depends="@NAME@.init, initial.delete.build.out, @NAME@.processing"/>
 </project>

@@ -11,19 +11,15 @@
   -->
 
   <import file="InitialCheck.xml"/>
-
-  <property name="clean.files"   value=""/>
   
   <!-- Private properties -->
   <property name="clean.debug.level"    value="${ada.debug.level}"/>
-
-  <!-- Set of files to delete -->
-  <filelist id="clean.filelist" dir="${basedir}" files="${clean.files}"/>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="clean.check.values" 
-	  depends="initial.check, clean.dump.properties"> 
+  
+  <target name="clean.init" depends="ada.init">
+    <property name="clean.files"   value=""/>
+    
+    <!-- Set of files to delete -->
+    <filelist id="clean.filelist" dir="${basedir}" files="${clean.files}"/>
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="clean.check">
@@ -31,23 +27,11 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${clean.debug.level}">    clean.check          = "${clean.check}"</echo>
+    <echo level="${clean.debug.level}">clean.check          = "${clean.check}"</echo>
 
-    <delete>
-      <fileset followsymlinks="false" dir="${basedir}" includes="*~"
-	       defaultexcludes="no"/>
-    </delete>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="clean.clean.NOT" unless="clean.check">
-    <echo level="${clean.debug.level}">clean.clean                 ---</echo>
-    <echo level="${clean.debug.level}">${basedir}</echo>
-  </target>
-
-  <target name="clean.clean" depends="clean.check.values, clean.clean.NOT"
-	  if="clean.check"
+  <target name="clean.clean" depends="clean.init" if="clean.check"
 	  description="Cleans local and recursive dirs">
     
     <echo>clean.clean                 RUN</echo>
@@ -62,9 +46,14 @@
       </fileset>
       <filelist refid="clean.filelist"/>
     </delete>
+
+    <delete>
+      <fileset followsymlinks="false" dir="${basedir}" includes="*~"
+	       defaultexcludes="no"/>
+    </delete>
   </target>
 
-  <target name="clean.dump.properties" depends="initial.check">
+  <target name="clean.dump.properties" depends="clean.init">
     <echo level="${clean.debug.level}"> ------ Clean properties ----
     clean.files        = "${clean.files}"</echo>
   </target>
