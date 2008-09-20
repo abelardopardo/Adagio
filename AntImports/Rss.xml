@@ -14,8 +14,10 @@
 
   <import file="Xsltproc.xml"/>
 
+  <!-- Private properties -->
+  <property name="rss.debug.level"    value="${ada.debug.level}"/>
+  
   <target name="rss.init" depends="ada.init">
-    
     <!-- Property definition -->
     <property name="rss.src.dir"       value="."/>
     <property name="rss.dst.dir"       value="${rss.src.dir}"/>
@@ -27,21 +29,11 @@
     <property name="rss.style.file.tohtml" 
 	      value="${ada.home}/XslStyles/RssToHtml.xsl"/>
     
-    <!-- Private properties -->
-    <property name="rss.debug.level"    value="${ada.debug.level}"/>
-    
     <!-- Define two properties containing the absolute src and dst paths -->
-    <pathconvert property="rss.abssrc.dir" pathsep=" ">
-      <path location="${rss.src.dir}"/>
-    </pathconvert>
-    <pathconvert property="rss.absdst.dir" pathsep=" ">
-      <path  location="${rss.dst.dir}"/>
-    </pathconvert>
-    
-    <!-- Source files to be processed by rss (fileset to allow wildcards) -->
-    <fileset id="rss.fileset" dir="${rss.abssrc.dir}"
-	     includes="__bogus__file__name ${rss.files}"/>
-    
+    <ada.expand.srcdst.paths
+      ADA.PREFIX="rss" ADA.SRC.DIR="${rss.src.dir}"
+      ADA.DST.DIR="${rss.dst.dir}" ADA.FILES="${rss.files}"/>
+
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="rss.target.filelist.property" pathsep=" ">
       <fileset refid="rss.fileset"/>
@@ -52,13 +44,7 @@
     </pathconvert>
     <filelist id="rss.target.filelist"
 	      files="${rss.target.filelist.property}"/>
-  </target>
 
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-       executing the regular targets. -->
-  <target name="rss.check.values" 
-	  depends="rss.init, rss.dump.properties">
-    
     <!-- 
     Fetch the date/time in RFC 822 format. I need this hack because the
     EXSLT implementation of the date:time functions does not take into account
@@ -72,13 +58,12 @@
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="rss.check">
       <and>
-	<!-- The src.dir needs to be non-empty. -->
-        <not><equals arg1="${rss.src.dir}" arg2="" trim="true"/></not>
-	<available file="${rss.src.dir}"/> 
-	<!-- There must be some files defined -->
-	<not><equals arg1="${rss.files}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty dst.dir -->
-        <not><equals arg1="${rss.dst.dir}" arg2="" trim="true"/></not>
+	<!-- 
+	     There must be some files in the fileset (after regexp expansion) 
+	-->
+	<not>
+	  <equals arg1="${rss.source.filelist.property}" arg2="" trim="true"/>
+	</not>
 	<!-- Require a non-empty and available stylesheet -->
         <not><equals arg1="${rss.style.file}" arg2="" trim="true"/></not>
 	<available file="${rss.style.file}"/>
@@ -91,18 +76,9 @@
     <echo level="${rss.debug.level}">rss.check          = "${rss.check}"</echo>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="rss.processing.NOT" unless="rss.check">
-    <echo level="${rss.debug.level}">rss.processing              ---</echo>
-    <echo level="${rss.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Invoke xsltprocessing -->
-  <target name="rss.processing" 
-	  depends="rss.check.values, rss.processing.NOT"
-	  if="rss.check" 
-	  description="Call the xsltproc with the given style">
+  <target name="rss.processing" depends="rss.init"
+	  if="rss.check" description="Call the xsltproc with the given style">
 
     <echo>rss.processing              CALL(xsltproc.processing)</echo>
 
@@ -135,18 +111,9 @@
     <echo>rss.processing              END(xsltproc.processing HTML)</echo>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="rss.clean.NOT" unless="rss.check">
-    <echo level="${rss.debug.level}">rss.clean                   ---</echo>
-    <echo level="${rss.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by rss -->
-  <target name="rss.clean" 
-	  depends="rss.check.values, rss.clean.NOT"
-	  if="rss.check"
-	  description="Remove files produced by rss">
+  <target name="rss.clean" depends="rss.init"
+	  if="rss.check" description="Remove files produced by rss">
 
     <echo>rss.clean                   CALL(xsltproc.clean ES)</echo>
 
@@ -180,7 +147,7 @@
     <echo>rss.clean                   END(xsltproc.clean EN)</echo>
   </target>
 
-  <target name="rss.dump.properties" depends="ada.init">
+  <target name="rss.dump.properties" depends="rss.init">
     <echo level="${rss.debug.level}"> ------ Rss properties ----
     rss.src.dir       ="${rss.src.dir}"
     rss.dst.dir       ="${rss.dst.dir}"
@@ -191,5 +158,5 @@
   </target>
 
   <!-- If entering through this target, build.out is deleted -->
-  <target name="rss" depends="initial.delete.build.out, rss.processing"/>
+  <target name="rss" depends="rss.init, initial.delete.build.out, rss.processing"/>
 </project>

@@ -21,8 +21,10 @@
   <import file="Dvi2bitmap.xml"/>
   <import file="BilingualDB.xml"/>
 
-  <target name="testexam.init" depends="ada.init">
+  <!-- Private properties -->
+  <property name="testexam.debug.level"    value="${ada.debug.level}"/>
     
+  <target name="testexam.init" depends="ada.init">
     <!-- Public Property definition -->
     <property name="testexam.src.dir"        value="${basedir}"/>
     <property name="testexam.dst.dir"        value="${testexam.src.dir}"/>
@@ -32,9 +34,6 @@
     <property name="testexam.file"           value=""/>
     <property name="testexam.bilingual.file" value=""/>
     <property name="testexam.style.file"     value="${ada.home}/XslStyles/Exam.xsl"/>
-    
-    <!-- Private properties -->
-    <property name="testexam.debug.level"    value="${ada.debug.level}"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <pathconvert property="testexam.abssrc.dir" pathsep=" ">
@@ -51,24 +50,16 @@
     <!-- Bilingual source file to be processed by testexam -->
     <filelist id="testexam.bilingual.filelist" dir="${testexam.abssrc.dir}"
 	      files="${testexam.bilingual.file}"/>
-  </target>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="testexam.check.values" 
-	  depends="testexam.init, testexam.dump.properties">
 
     <!-- Obtain the filelist with the source file to see if it is empty -->
     <pathconvert property="testexam.source.filelist.property" pathsep=" ">
       <filelist refid="testexam.filelist"/>
       <filelist refid="testexam.bilingual.filelist"/>
     </pathconvert>
+
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="testexam.check">
       <and>
-	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
-	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${testexam.abssrc.dir}" arg2="" trim="true"/></not>
 	<!-- There must be some file defined -->
         <not>
 	  <equals arg1="${testexam.source.filelist.property}" arg2="" trim="true"/>
@@ -78,8 +69,6 @@
 	  <equals arg1="${testexam.file}" arg2="" trim="true"/>
 	  <equals arg1="${testexam.bilingual.file}" arg2="" trim="true"/>
 	</or>
-	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${testexam.absdst.dir}" arg2="" trim="true"/></not>
       </and>
     </condition>
 
@@ -87,17 +76,8 @@
     <echo level="${testexam.debug.level}">  testexam.check              = "${testexam.check}"</echo>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="testexam.processing.NOT" unless="testexam.check">
-    <echo level="${testexam.debug.level}">testexam.processing                ---</echo>
-    <echo level="${testexam.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Process the file through the four steps until the exam is produced -->
-  <target name="testexam.processing" 
-	  depends="testexam.check.values, testexam.processing.NOT"
-	  if="testexam.check"
+  <target name="testexam.processing" depends="testexam.init" if="testexam.check"
 	  description="Process the testexam file">
 
     <echo>testexam.processing  (1/5)  CALL(xsltproc.processing)</echo>
@@ -334,19 +314,10 @@
 
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="testexam.clean.NOT" unless="testexam.check">
-    <echo level="${testexam.debug.level}">testexam.clean                  ---</echo>
-    <echo level="${testexam.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by testexam -->
-  <target name="testexam.clean" 
-	  depends="testexam.check.values, testexam.clean.NOT"
-	  if="testexam.check" 
+  <target name="testexam.clean" depends="testexam.init" if="testexam.check" 
 	  description="Remove files produced by testexam">
-
+    
     <echo>testexam.clean                  CALL(dvi2bitmap.clean)</echo>
 
     <!-- Call dvi2bitmap -->
@@ -531,7 +502,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="testexam.dump.properties" depends="ada.init">
+  <target name="testexam.dump.properties" depends="testexam.init">
     <echo level="${testexam.debug.level}"> ------ testexam properties ----
     testexam.exec           ="${testexam.exec}"
     testexam.abssrc.dir     ="${testexam.abssrc.dir}"
@@ -541,6 +512,6 @@
   </target>
 
   <!-- If entering through this target, build.out is deleted -->
-  <target name="testexam" depends="initial.delete.build.out, testexam.processing"/>
+  <target name="testexam" depends="testexam.init, initial.delete.build.out, testexam.processing"/>
 
 </project>

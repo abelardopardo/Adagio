@@ -17,6 +17,9 @@
 
   <import file="Docbook.xml"/>
 
+  <!-- Private properties -->
+  <property name="bilingualdb.debug.level"    value="${ada.debug.level}"/>
+
   <target name="bilingualdb.init" depends="ada.init">
     <!-- Property definition -->
     <property name="bilingualdb.src.dir"       value="."/>
@@ -27,46 +30,10 @@
     <property name="bilingualdb.style.file" 
 	      value="${ada.home}/XslStyles/DocbookProfile.xsl"/>
     
-    <!-- Private properties -->
-    <property name="bilingualdb.debug.level"    value="${ada.debug.level}"/>
-  </target>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-       executing the regular targets. -->
-  <target name="bilingualdb.check.values" 
-	  depends="bilingualdb.init, bilingualdb.dump.properties">
-    
-    <!-- Condition to enable/disable the rest of the execution -->
-    <condition property="bilingualdb.check">
-      <and>
-	<!-- The src.dir needs to be non-empty. -->
-        <not><equals arg1="${bilingualdb.src.dir}" arg2="" trim="true"/></not>
-	<available file="${bilingualdb.src.dir}"/> 
-	<!-- There must be some files defined -->
-	<not><equals arg1="${bilingualdb.files}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty dst.dir -->
-        <not><equals arg1="${bilingualdb.dst.dir}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty and available stylesheet -->
-        <not><equals arg1="${bilingualdb.style.file}" arg2="" trim="true"/></not>
-	<available file="${bilingualdb.style.file}"/>
-      </and>
-    </condition>
-
-    <!-- Dump the value of the properties just computed. -->
-    <echo level="${bilingualdb.debug.level}">    bilingualdb.check          = "${bilingualdb.check}"</echo>
-  </target>
-
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="bilingualdb.processing.NOT" unless="bilingualdb.check">
-    <echo level="${bilingualdb.debug.level}">bilingualdb.processing      ---</echo>
-    <echo level="${bilingualdb.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Invoke xsltprocessing -->
-  <target name="bilingualdb.processing" 
-	  depends="bilingualdb.check.values, bilingualdb.processing.NOT"
-	  if="bilingualdb.check" 
+  <target name="bilingualdb.processing" depends="bilingualdb.init"
 	  description="Call the xsltproc with the given style">
 
     <echo>bilingualdb.processing      CALL(xsltproc.processing ES)</echo>
@@ -96,17 +63,8 @@
     <echo>bilingualdb.processing      END(xsltproc.processing EN)</echo>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="bilingualdb.clean.NOT" unless="bilingualdb.check">
-    <echo level="${bilingualdb.debug.level}">bilingualdb.clean           ---</echo>
-    <echo level="${bilingualdb.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by bilingualdb -->
-  <target name="bilingualdb.clean" 
-	  depends="bilingualdb.check.values, bilingualdb.clean.NOT"
-	  if="bilingualdb.check"
+  <target name="bilingualdb.clean" depends="bilingualdb.init"
 	  description="Remove files produced by bilingualdb">
 
     <echo>bilingualdb.clean           CALL(xsltproc.clean ES)</echo>
@@ -135,7 +93,7 @@
     <echo>bilingualdb.clean           END(xsltproc.clean EN)</echo>
   </target>
 
-  <target name="bilingualdb.dump.properties" depends="ada.init">
+  <target name="bilingualdb.dump.properties" depends="bilingualdb.init">
     <echo level="${bilingualdb.debug.level}"> ------ Bilingualdb properties ----
     bilingualdb.src.dir       ="${bilingualdb.src.dir}"
     bilingualdb.dst.dir       ="${bilingualdb.dst.dir}"

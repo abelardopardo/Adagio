@@ -160,6 +160,34 @@
       </sequential>
     </macrodef>
 
+    <macrodef name="mergestyles.clean">
+      <attribute name="MERGESTYLES.DST.DIR" default="${xsltproc.dst.dir}"/>
+      <attribute name="MERGESTYLES.FILE.TO.IMPORT"/>
+      <sequential>
+	<!-- Style to merge -->
+	<fileset id="mergestyles.master.fileset" file="${mergestyles.master.style}"/>
+
+	<pathconvert property="mergestyles.output.prefix">
+	  <fileset refid="mergestyles.master.fileset"/>
+	  <chainedmapper>
+	    <mapper type="glob" from="*.xml" to="*"/>
+	    <mapper type="flatten"/>
+	  </chainedmapper>
+	</pathconvert>
+	<pathconvert property="mergestyles.output.suffix">
+	  <filelist id="mergestyles.import.filelist" 
+		    files="@{MERGESTYLES.FILE.TO.IMPORT}"/>
+	  <mapper type="flatten"/>
+	</pathconvert>
+
+	<!-- Dump explicitly the files to be deleted -->
+	<echo> deleted = ${mergestyles.output.prefix}_${mergestyles.output.suffix}</echo>
+
+	<delete
+	  file="@{MERGESTYLES.DST.DIR}/${mergestyles.output.prefix}_${mergestyles.output.suffix}"/>
+      </sequential>
+    </macrodef>
+
     <!-- Condition to detect if the stylefile needs to be pre-processed with
 	 Mergestyles -->
     <condition property="xsltproc.mergestyles">
@@ -172,7 +200,7 @@
     
     <!-- Condition to detect if the stylefile needs to only processed normally
 	 Mergestyles -->
-    <condition property="xsltproc.mergestyles">
+    <condition property="xsltproc.nomergestyles">
       <and>
 	<istrue value="${xsltproc.check}"/>
 	<equals arg1="${mergestyles.master.style}" arg2="" trim="true"/>
@@ -315,10 +343,13 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <echo> deleted = ${xsltproc.target.filelist.property}</echo>
 
     <!-- This call has no effect if no mergestyles.master.style is given -->
+    <mergestyles.clean MERGESTYLES.FILE.TO.IMPORT="${xsltproc.style.file}"/>
+    <!--
     <antcall target="mergestyles.clean" inheritAll="false">
       <param name="mergestyles.dst.dir" value="${xsltproc.dst.dir}"/>
       <param name="mergestyles.file.to.import" value="${xsltproc.style.file}"/>
     </antcall>
+    -->
 
     <!-- Perform the delete operation. The failonerror attribute is needed
 	 and must be set fo false because the dst directory might have been
@@ -329,7 +360,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="xsltproc.dump.properties" depends="ada.init">
+  <target name="xsltproc.dump.properties" depends="xsltproc.init">
     <echo level="${xsltproc.debug.level}"> ------ xsltproc properties ----
     xsltproc.exec            ="${xsltproc.exec}"
     xsltproc.abssrc.dir ="${xsltproc.abssrc.dir}"

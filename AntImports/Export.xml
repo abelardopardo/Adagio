@@ -20,30 +20,20 @@
   <import file="Copyfiles.xml"/>
   <import file="ExportControl.xml"/>
 
+  <!-- Private properties -->
+  <property name="export.debug.level"    value="${ada.debug.level}"/>
+
   <target name="export.init" depends="ada.init">
     <!-- Public Property definition -->
     <property name="export.src.dir" value="${basedir}" />
     <property name="export.dst.dir" value="${export.src.dir}" />
     <property name="export.files"   value=""/>
     
-    <!-- Private properties -->
-    <property name="export.debug.level"    value="${ada.debug.level}"/>
   </target>
 
-  <target name="export.processing.NOT"
-	  unless="exportcontrol.check">
-    <echo>export.processing           NOT CALLED (Exportcontrol closed)</echo>
-    <echo level="${export.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Regular target. It is executed if the check property is true, and it has
-  as dependency the NOT target. That way, if the property is not set, this
-  target is not executed and instead, the one notifying the user of such event
-  is executed. -->
-  <target name="export.processing" 
-	  depends="export.init, exportcontrol, export.processing.NOT"
-	  if="exportcontrol.check"
-	  description="It only invokes copyfiles">
+  <!-- Regular target. It is executed if the check property is true -->
+  <target name="export.processing" depends="export.init, exportcontrol"
+	  if="exportcontrol.check" description="It only invokes copyfiles">
     
     <echo>export.processing           CALL(copyfiles.processing)</echo>
 

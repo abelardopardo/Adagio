@@ -157,7 +157,7 @@ inkscape.execution.possible = ${inkscape.execution.possible}</echo>
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="inkscape.dump.properties" depends="ada.init">
+  <target name="inkscape.dump.properties" depends="inkscape.init">
     <echo level="${inkscape.debug.level}"> ------ Inkscape properties ----
     inkscape.exec    ="${inkscape.exec}"
     inkscape.abssrc.dir ="${inkscape.abssrc.dir}"

@@ -102,7 +102,7 @@
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="@NAME@.dump.properties" depends="ada.init">
+  <target name="@NAME@.dump.properties" depends="@NAME@.init">
     <echo level="${@NAME@.debug.level}"> ------ @NAME@ properties ----
     @NAME@.exec       ="${@NAME@.exec}"
     @NAME@.abssrc.dir ="${@NAME@.abssrc.dir}"

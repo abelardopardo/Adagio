@@ -14,16 +14,18 @@
 
   <import file="InitialCheck.xml"/>
 
-  <target name="ppt2pdf.init" depends="ada.init">
+  <property name="ppt2pdf.exec"           
+	    value="${ada.home}${file.separator}bin${file.separator}ada_ppt_to_pdf"/>
 
+  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${ppt2pdf.exec}"/>
+  
+  <!-- Private properties -->
+  <property name="ppt2pdf.debug.level"    value="${ada.debug.level}"/>
+
+  <target name="ppt2pdf.init" depends="ada.init" if="ppt2pdf.execution.possible">
     <!-- Public Property definition -->
-    <property name="ppt2pdf.exec"           
-	      value="${ada.home}${file.separator}bin${file.separator}ada_ppt_to_pdf"/>
     <property name="ppt2pdf.src.dir"        value="${basedir}"/>
     <property name="ppt2pdf.files"          value=""/>
-    
-    <!-- Private properties -->
-    <property name="ppt2pdf.debug.level"    value="${ada.debug.level}"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <pathconvert property="ppt2pdf.abssrc.dir" pathsep=" ">
@@ -33,67 +35,31 @@
     <!-- Source files to be processed by ppt2pdf (fileset to allow wildcards) -->
     <fileset id="ppt2pdf.fileset" dir="${ppt2pdf.abssrc.dir}"
 	     includes="__bogus__file__name ${ppt2pdf.files}"/>
-  </target>
 
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="ppt2pdf.check.values" 
-	  depends="ppt2pdf.init, ppt2pdf.dump.properties">
+    <!-- Obtain the filelist with the source files to see if it is empty -->
+    <pathconvert property="ppt2pdf.source.filelist.property" pathsep=" ">
+      <fileset refid="ppt2pdf.fileset"/>
+    </pathconvert>
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="ppt2pdf.check">
-      <and>
-	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
-	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${ppt2pdf.abssrc.dir}" arg2="" trim="true"/></not>
-	<!-- There must be some files defined -->
-        <not><equals arg1="${ppt2pdf.files}" arg2="" trim="true"/></not>
-      </and>
-    </condition>
-
-    <!-- The required condition not to bomb out -->
-    <condition property="ppt2pdf.execution.possible">
-      <and>
-	<available file="soffice"
-		   filepath="${env.PATH}"/>
-	<available file="${ppt2pdf.abssrc.dir}"/> 
-      </and>
-    </condition>
-
-    <condition property="ppt2pdf.failure">
-      <and>
-	<isset property="ppt2pdf.check"/>
-	<not><isset property="ppt2pdf.execution.possible"/></not>
-      </and>
+      <!-- 
+	   There must be some files in the fileset (after regexp expansion) 
+      -->
+      <not>
+	<equals arg1="${ppt2pdf.source.filelist.property}" arg2="" trim="true"/>
+      </not>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
     <echo level="${ppt2pdf.debug.level}">  ppt2pdf.check              = "${ppt2pdf.check}"
-  ppt2pdf.execution.possible = ${ppt2pdf.execution.possible}
-  ppt2pdf.failure            = ${ppt2pdf.failure}</echo>
+  ppt2pdf.execution.possible = ${ppt2pdf.execution.possible}</echo>
+
   </target>
 
-  <target name="ppt2pdf.bomb.out" if="ppt2pdf.failure">
-    <fail message="ppt2pdf rule cannot be executed. Review the value of
-		   variables ppt2pdf.src.dir and ppt2pdf.exec"/>
-  </target>
-
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="ppt2pdf.processing.NOT" depends="ppt2pdf.bomb.out" 
-	  unless="ppt2pdf.check">
-    <echo level="${ppt2pdf.debug.level}">ppt2pdf.processing          ---</echo>
-    <echo level="${ppt2pdf.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Regular target. It is executed if the check property is true, and it has
-  as dependency the NOT target. That way, if the property is not set, this
-  target is not executed and instead, the one notifying the user of such event
-  is executed. -->
-  <target name="ppt2pdf.processing" 
-	  depends="ppt2pdf.check.values, ppt2pdf.processing.NOT"
-	  if="ppt2pdf.check"
-	  description="Translate the ppt files to pdf using openoffice">
+  <!-- Regular target. It is executed if the check property is true -->
+  <target name="ppt2pdf.processing" depends="ppt2pdf.init"
+	  if="ppt2pdf.check" description="Translate the ppt files to pdf using openoffice">
 
     <echo>ppt2pdf.processing          RUN</echo>
     <echo level="${ppt2pdf.debug.level}">${basedir}</echo>
@@ -108,57 +74,46 @@
     </apply>    
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="ppt2pdf.clean.NOT" unless="ppt2pdf.check">
-    <echo level="${ppt2pdf.debug.level}">ppt2pdf.clean               ---</echo>
-    <echo level="${ppt2pdf.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by ppt2pdf -->
-  <target name="ppt2pdf.clean" 
-	  depends="ppt2pdf.check.values, ppt2pdf.clean.NOT"
-	  if="ppt2pdf.check" 
-	  description="Remove files produced by ppt2pdf">
+  <target name="ppt2pdf.clean" depends="ppt2pdf.init"
+	  if="ppt2pdf.check" description="Remove files produced by ppt2pdf">
 
     <echo>ppt2pdf.clean               RUN</echo>
     <echo level="${ppt2pdf.debug.level}">${basedir}</echo>
 
-    <!-- Obtain the filelist with the produced files. -->
+    <!-- Obtain a property with the produced files. -->
     <pathconvert property="ppt2pdf.target.filelist.property" pathsep=" ">
       <fileset refid="ppt2pdf.fileset"/>
       <mapper type="glob" from="*.ppt" to="*.pdf"/>
     </pathconvert>
-    <filelist id="ppt2pdf.target.filelist"
-	      files="${ppt2pdf.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${ppt2pdf.target.filelist.property}</echo>
 
-    <!-- Perform the delete operation. The failonerror attributge is needed
+    <!-- Perform the delete operation. The failonerror attribute is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
     <delete failonerror="false" includeemptydirs="true">
-      <filelist refid="ppt2pdf.target.filelist"/>
+      <files includes="${ppt2pdf.target.filelist.property}"/>
     </delete>
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="ppt2pdf.dump.properties" depends="ada.init">
+  <target name="ppt2pdf.dump.properties" depends="ppt2pdf.init">
     <echo level="${ppt2pdf.debug.level}"> ------ ppt2pdf properties ----
     ppt2pdf.exec       ="${ppt2pdf.exec}"
     ppt2pdf.abssrc.dir ="${ppt2pdf.abssrc.dir}"
     ppt2pdf.files      ="${ppt2pdf.files}"</echo>
   </target>
 
-  <target name="ppt2pdf.report.YES" depends="ppt2pdf.check.values"
+  <target name="ppt2pdf.report.YES" depends="ppt2pdf.init"
 	  if="ppt2pdf.execution.possible">
     <echo>                   | * Only If |</echo>
     <echo>ppt2pdf            |OpenOffice |</echo>
     <echo>                   |2.4 or latr|</echo>
   </target>
 
-  <target name="ppt2pdf.report.NO" depends="ppt2pdf.check.values"
+  <target name="ppt2pdf.report.NO" depends="ppt2pdf.init"
 	  unless="ppt2pdf.execution.possible">
     <echo>ppt2pdf            |           |     * (needs OpenOffice 2.4 or later)</echo>
   </target>
@@ -167,5 +122,5 @@
 				      ppt2pdf.report.NO"/>
 
   <!-- If entering through this target, build.out is deleted -->
-  <target name="ppt2pdf" depends="initial.delete.build.out, ppt2pdf.processing"/>
+  <target name="ppt2pdf" depends="ppt2pdf.init, initial.delete.build.out, ppt2pdf.processing"/>
 </project>

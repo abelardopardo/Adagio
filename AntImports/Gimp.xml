@@ -121,7 +121,7 @@ gimp.execution.possible = ${gimp.execution.possible}</echo>
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="gimp.dump.properties" depends="ada.init">
+  <target name="gimp.dump.properties" depends="gimp.init">
     <echo level="${gimp.debug.level}"> ------ Gimp properties ----
     gimp.exec        ="${gimp.exec}"
     gimp.abssrc.dir     = "${gimp.abssrc.dir}"

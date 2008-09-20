@@ -45,6 +45,9 @@
   
   <import file="InitialCheck.xml"/>
   
+  <!-- Private properties -->
+  <property name="exportcontrol.debug.level"    value="${ada.debug.level}"/>
+
   <target name="exportcontrol.init" depends="ada.init">
     <!-- Public Property definition -->
     <property name="exportcontrol.begin"   value=""/>
@@ -61,7 +64,6 @@
     <property name="exportcontrol.now.filename"   value=".ada.exportcontrol.now"/>
     <property name="exportcontrol.begin.filename" value=".ada.exportcontrol.begin"/>
     <property name="exportcontrol.end.filename"   value=".ada.exportcontrol.end"/>
-    <property name="exportcontrol.debug.level"    value="${ada.debug.level}"/>
     
     <condition property="exportcontrol.begin.defined">
       <not><equals arg1="${exportcontrol.begin}" arg2="" trim="true"/></not>

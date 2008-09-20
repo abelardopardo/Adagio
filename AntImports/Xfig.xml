@@ -123,7 +123,7 @@ xfig.execution.possible = ${xfig.execution.possible}</echo>
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="xfig.dump.properties" depends="ada.init">
+  <target name="xfig.dump.properties" depends="xfig.init">
     <echo level="${xfig.debug.level}"> ------ Xfig properties ----
     xfig.exec          ="${xfig.exec}"
     xfig.abssrc.dir    ="${xfig.abssrc.dir}"

@@ -14,91 +14,42 @@
 
   <import file="InitialCheck.xml"/>
 
-  <target name="ps2pdf.init" depends="ada.init">
+  <property name="ps2pdf.exec"           value="ps2pdf"/>
 
+  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${ps2pdf.exec}"/>
+  
+  <!-- Private properties -->
+  <property name="ps2pdf.debug.level"    value="${ada.debug.level}"/>
+
+  <target name="ps2pdf.init" depends="ada.init" if="ps2pdf.execution.possible">
     <!-- Public Property definition -->
-    <property name="ps2pdf.exec"           value="ps2pdf"/>
     <property name="ps2pdf.src.dir"        value="${basedir}"/>
     <property name="ps2pdf.dst.dir"        value="${ps2pdf.src.dir}"/>
     <property name="ps2pdf.files"          value=""/>
     
-    <!-- Private properties -->
-    <property name="ps2pdf.debug.level"    value="${ada.debug.level}"/>
-    
     <!-- Define two properties containing the absolute src and dst paths -->
-    <pathconvert property="ps2pdf.abssrc.dir" pathsep=" ">
-      <path location="${ps2pdf.src.dir}"/>
-    </pathconvert>
-    <pathconvert property="ps2pdf.absdst.dir" pathsep=" ">
-      <path  location="${ps2pdf.dst.dir}"/>
-    </pathconvert>
-    
-    <!-- Source files to be processed by ps2pdf (fileset to allow wildcards) -->
-    <fileset id="ps2pdf.fileset" dir="${ps2pdf.abssrc.dir}"
-	     includes="__bogus__file__name ${ps2pdf.files}"/>
-  </target>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="ps2pdf.check.values" 
-	  depends="ps2pdf.init, ps2pdf.dump.properties">
+    <ada.expand.srcdst.paths
+      ADA.PREFIX="ps2pdf" ADA.SRC.DIR="${ps2pdf.src.dir}"
+      ADA.DST.DIR="${ps2pdf.dst.dir}" ADA.FILES="${ps2pdf.files}"/>
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="ps2pdf.check">
-      <and>
-	<!-- The src.dir needs to be non-empty. It is very dangerous to have an
-	empty definition of this variable. At least a . needs to be present -->
-        <not><equals arg1="${ps2pdf.abssrc.dir}" arg2="" trim="true"/></not>
-	<!-- There must be some files defined -->
-        <not><equals arg1="${ps2pdf.files}" arg2="" trim="true"/></not>
-	<!-- Require a non-empty dst.dir as well -->
-        <not><equals arg1="${ps2pdf.absdst.dir}" arg2="" trim="true"/></not>
-      </and>
-    </condition>
-
-    <!-- The required condition not to bomb out -->
-    <condition property="ps2pdf.execution.possible">
-      <and>
-	<available file="${ps2pdf.exec}"
-		   filepath="${env.PATH}"/>
-	<available file="${ps2pdf.abssrc.dir}"/> 
-      </and>
-    </condition>
-
-    <condition property="ps2pdf.failure">
-      <and>
-	<isset property="ps2pdf.check"/>
-	<not><isset property="ps2pdf.execution.possible"/></not>
-      </and>
+      <!-- 
+	   There must be some files in the fileset (after regexp expansion) 
+      -->
+      <not>
+	<equals arg1="${ps2pdf.source.filelist.property}" arg2="" trim="true"/>
+      </not>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
     <echo level="${ps2pdf.debug.level}">  ps2pdf.check              = "${ps2pdf.check}"
-  ps2pdf.execution.possible = ${ps2pdf.execution.possible}
-  ps2pdf.failure            = ${ps2pdf.failure}</echo>
+  ps2pdf.execution.possible = ${ps2pdf.execution.possible}</echo>
   </target>
 
-  <target name="ps2pdf.bomb.out" if="ps2pdf.failure">
-    <fail message="Ps2pdf rule cannot be executed. Review the value of
-		   variables ps2pdf.src.dir and ps2pdf.exec"/>
-  </target>
-
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="ps2pdf.processing.NOT" depends="ps2pdf.bomb.out" 
-	  unless="ps2pdf.check">
-    <echo level="${ps2pdf.debug.level}">ps2pdf.processing           ---</echo>
-    <echo level="${ps2pdf.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Regular target. It is executed if the check property is true, and it has
-  as dependency the NOT target. That way, if the property is not set, this
-  target is not executed and instead, the one notifying the user of such event
-  is executed. -->
-  <target name="ps2pdf.processing" 
-	  depends="ps2pdf.check.values, ps2pdf.processing.NOT"
-	  if="ps2pdf.check"
-	  description="Apply the translation">
+  <!-- Regular target. It is executed if the check property is true -->
+  <target name="ps2pdf.processing" depends="ps2pdf.init"
+	  if="ps2pdf.check" description="Apply the translation">
 
     <echo>ps2pdf.processing           RUN</echo>
     <echo level="${ps2pdf.debug.level}">${basedir}</echo>
@@ -119,23 +70,14 @@
     </apply>    
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="ps2pdf.clean.NOT" unless="ps2pdf.check">
-    <echo level="${ps2pdf.debug.level}">ps2pdf.clean                ---</echo>
-    <echo level="${ps2pdf.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by ps2pdf -->
-  <target name="ps2pdf.clean" 
-	  depends="ps2pdf.check.values, ps2pdf.clean.NOT"
-	  if="ps2pdf.check" 
-	  description="Remove files produced by ps2pdf">
+  <target name="ps2pdf.clean" depends="ps2pdf.init"
+	  if="ps2pdf.check" description="Remove files produced by ps2pdf">
 
     <echo>ps2pdf.clean           RUN</echo>
     <echo level="${ps2pdf.debug.level}">${basedir}</echo>
 
-    <!-- Obtain the filelist with the produced files. -->
+    <!-- Obtain a property with the produced files. -->
     <pathconvert property="ps2pdf.target.filelist.property" pathsep=" ">
       <fileset refid="ps2pdf.fileset"/>
       <chainedmapper>
@@ -144,22 +86,20 @@
 	<mapper type="glob" from="*.ps" to="*.pdf"/>
       </chainedmapper>
     </pathconvert>
-    <filelist id="ps2pdf.target.filelist"
-	      files="${ps2pdf.target.filelist.property}"/>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${ps2pdf.target.filelist.property}</echo>
 
-    <!-- Perform the delete operation. The failonerror attributge is needed
+    <!-- Perform the delete operation. The failonerror attribute is needed
 	 and must be set fo false because the dst directory might have been
 	 removed  -->
     <delete failonerror="false" includeemptydirs="true">
-      <filelist refid="ps2pdf.target.filelist"/>
+      <files includes="${ps2pdf.target.filelist.property}"/>
     </delete>
   </target>
 
   <!-- Dump the properties defined in this script -->
-  <target name="ps2pdf.dump.properties" depends="ada.init">
+  <target name="ps2pdf.dump.properties" depends="ps2pdf.init">
     <echo level="${ps2pdf.debug.level}"> ------ ps2pdf properties ----
     ps2pdf.exec       ="${ps2pdf.exec}"
     ps2pdf.abssrc.dir ="${ps2pdf.abssrc.dir}"
@@ -167,12 +107,12 @@
     ps2pdf.files      ="${ps2pdf.files}"</echo>
   </target>
 
-  <target name="ps2pdf.report.YES" depends="ps2pdf.check.values"
+  <target name="ps2pdf.report.YES" depends="ps2pdf.init"
 	  if="ps2pdf.execution.possible">
     <echo>Ps2pdf             |     *     |</echo>
   </target>
 
-  <target name="ps2pdf.report.NO" depends="ps2pdf.check.values"
+  <target name="ps2pdf.report.NO" depends="ps2pdf.init"
 	  unless="ps2pdf.execution.possible">
     <echo>Ps2pdf             |           |     * (install ${ps2pdf.exec})</echo>
   </target>
@@ -181,5 +121,5 @@
 				      ps2pdf.report.NO"/>
 
   <!-- If entering through this target, build.out is deleted -->
-  <target name="ps2pdf" depends="initial.delete.build.out, ps2pdf.processing"/>
+  <target name="ps2pdf" depends="ps2pdf.init, initial.delete.build.out, ps2pdf.processing"/>
 </project>

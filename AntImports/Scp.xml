@@ -17,28 +17,23 @@
 
   <import file="InitialCheck.xml"/>
 
-  <target name="scp.init" depends="ada.init">
+  <property name="scp.exec"                value="scp"/>
+
+  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${scp.exec}"/>
+
+  <!-- Private properties -->
+  <property name="scp.debug.level"    value="${ada.debug.level}"/>
+
+  <target name="scp.init" depends="ada.init" if="scp.execution.possible">
     <!-- Public Property definition -->
-    <property name="scp.exec"                value="scp"/>
-    <property name="scp.source"              value="${basedir}"/>
-    <property name="scp.destination"         value="${scp.source}"/>
-    <property name="scp.extra.args"          value=""/>
+    <property name="scp.source"      value="${basedir}"/>
+    <property name="scp.destination" value="${scp.source}"/>
+    <property name="scp.files"       value=""/>
+    <property name="scp.extra.args"  value=""/>
     
-    <!-- Private properties -->
-    <property name="scp.debug.level"    value="${ada.debug.level}"/>
-  </target>
-
-  <!-- Preliminary target to verify that certain minimum conditions hold before
-  executing the regular targets. -->
-  <target name="scp.check.values" 
-	  depends="scp.init, scp.dump.properties">
-
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="scp.check">
       <and>
-	<!-- The required binaries need to be available. -->
-	<available file="${scp.exec}${executable.file.extension}"
-		   filepath="${env.PATH}"/>
 	<!-- The source needs to be non-empty. It is very dangerous to have an
 	empty definition of this variable. At least a . needs to be present -->
         <not><equals arg1="${scp.source}" arg2="" trim="true"/></not>
@@ -53,23 +48,12 @@
 
     <!-- Dump the value of the properties just computed. -->
     <echo level="${scp.debug.level}">  scp.check              = "${scp.check}"</echo>
+
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="scp.processing.NOT" unless="scp.check">
-    <echo level="${scp.debug.level}">scp.processing           ---</echo>
-    <echo level="${scp.debug.level}">${basedir}</echo>
-  </target>
-
-  <!-- Regular target. It is executed if the check property is true, and it has
-  as dependency the NOT target. That way, if the property is not set, this
-  target is not executed and instead, the one notifying the user of such event
-  is executed. -->
-  <target name="scp.processing" 
-	  depends="scp.check.values, scp.processing.NOT"
-	  if="scp.check"
-	  description="Invoke scp to perform the synchronization">
+  <!-- Regular target. It is executed if the check property is true -->
+  <target name="scp.processing" depends="scp.init"
+	  if="scp.check" description="Invoke scp to perform the synchronization">
 
     <echo>scp.processing           RUN</echo>
     <echo level="${scp.debug.level}">${basedir}</echo>
@@ -84,18 +68,9 @@
     </exec>
   </target>
 
-  <!-- Target to notify that the regular target has not been executed. This is
-  to notify the user -->
-  <target name="scp.clean.NOT" unless="scp.check">
-    <echo level="${scp.debug.level}">scp.clean               ---</echo>
-    <echo level="${scp.debug.level}">${basedir}</echo>
-  </target>
-
   <!-- Clean files produced by scp -->
-  <target name="scp.clean" 
-	  depends="scp.check.values, scp.clean.NOT"
-	  if="scp.check" 
-	  description="Remove files produced by scp">
+  <target name="scp.clean" depends="scp.init"
+	  if="scp.check" description="Remove files produced by scp">
 
     <!-- No action here because is a too high level procedure. Removing the
     destination dir is probably not that frequent, and therefore can be done
@@ -106,7 +81,7 @@
   </target>
   
   <!-- Dump the properties defined in this script -->
-  <target name="scp.dump.properties" depends="ada.init">
+  <target name="scp.dump.properties" depends="scp.init">
     <echo level="${scp.debug.level}">------ scp properties ----
  scp.exec                =${scp.exec}
  scp.source              =${scp.source}
