@@ -75,7 +75,7 @@ gimp.execution.possible = ${gimp.execution.possible}</echo>
     <!-- Force the dependency checking on changes on the script file -->
     <dependset>
       <srcfileset file="${gimp.script.file}" />
-      <targetfilelist refidf="gimp.target.filelist" />
+      <targetfilelist refid="gimp.target.filelist" />
     </dependset>
 
     <!-- Transform XCF files to PNG IN THE SAME DIRECTORY -->

@@ -17,14 +17,15 @@
   <!-- Private properties -->
   <property name="extraant.debug.level"    value="${ada.debug.level}"/>
 
+  <property name="extraant.pretarget"        value=""/>
+  <property name="extraant.posttarget"       value=""/>
+  <property name="extraant.pretarget.clean"  value=""/>
+  <property name="extraant.posttarget.clean" value=""/>
+
   <target name="extraant.init" depends="ada.init">
     <!-- Public Property definition -->
     <property name="extraant.src.dir"          value="${basedir}"/>
     <property name="extraant.file"             value="build.xml"/>
-    <property name="extraant.pretarget"        value=""/>
-    <property name="extraant.posttarget"       value=""/>
-    <property name="extraant.pretarget.clean"  value=""/>
-    <property name="extraant.posttarget.clean" value=""/>
     
     <!-- Private properties -->
     <property name="extraant.target"         value=""/>
