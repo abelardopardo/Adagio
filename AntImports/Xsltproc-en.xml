@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Apply xsltproc profiling with a set of given languages"
+	 default="xsltproc.processing">
+
+  <property name="xsltproc.profile.lang" value="en"/>
+  <property name="xsltproc.profile.lang.suffix" value="_en"/>
+  <property name="xsltproc.profile.lang.option" 
+	    value="--stringparam profile.lang ${xsltproc.profile.lang}"/>
+
+  <import file="Xsltproc.xml"/>
+
+</project>

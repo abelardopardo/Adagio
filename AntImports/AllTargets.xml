@@ -57,11 +57,14 @@
       <ant antfile="${ada.home}/AntImports/Xsltproc.xml" 
 	   target="xsltproc.processing" inheritAll="false"/>
       
+      <ant antfile="${ada.home}/AntImports/Xsltproc.xml" 
+	   target="xsltprocmultilingual.processing" inheritAll="false"/>
+      
       <ant antfile="${ada.home}/AntImports/Docbook.xml" 
 	   target="docbook.processing" inheritAll="false"/>
       
-      <ant antfile="${ada.home}/AntImports/BilingualDB.xml" 
-	   target="bilingualdb.processing" inheritAll="false"/>
+<!--       <ant antfile="${ada.home}/AntImports/BilingualDB.xml"  -->
+<!-- 	   target="bilingualdb.processing" inheritAll="false"/> -->
       
       <ant antfile="${ada.home}/AntImports/Laboratory.xml" 
 	   target="laboratory.processing" inheritAll="false"/>
@@ -167,11 +170,14 @@
     <ant antfile="${ada.home}/AntImports/Laboratory.xml" 
 	 target="laboratory.clean" inheritAll="false"/>
 
-    <ant antfile="${ada.home}/AntImports/BilingualDB.xml" 
-	 target="bilingualdb.clean" inheritAll="false"/>
+<!--     <ant antfile="${ada.home}/AntImports/BilingualDB.xml"  -->
+<!-- 	 target="bilingualdb.clean" inheritAll="false"/> -->
 
     <ant antfile="${ada.home}/AntImports/Docbook.xml" 
 	 target="docbook.clean" inheritAll="false"/>
+
+    <ant antfile="${ada.home}/AntImports/Xsltproc.xml" 
+	 target="xsltprocmultilingual.clean" inheritAll="false"/>
 
     <ant antfile="${ada.home}/AntImports/Xsltproc.xml" 
 	 target="xsltproc.clean" inheritAll="false"/>
