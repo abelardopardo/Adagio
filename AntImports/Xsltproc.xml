@@ -36,7 +36,7 @@
     <property name="xsltproc.output.format"     value=".html"/>
     <property name="xsltproc.extra.args"        value=""/>
     <property name="xsltproc.files"             value=""/>
-    <property name="xsltprocmultilingual.files" value=""/>
+    <property name="xsltproc.multilingual.files" value=""/>
     <property name="xsltproc.mergestyles.style.file"     
 	      value="${ada.home}/XslStyles/Mergesheets.xsl"/>
     <property name="mergestyles.master.style"   value=""/>
@@ -51,12 +51,12 @@
       ADA.DST.DIR="${xsltproc.dst.dir}" ADA.FILES="${xsltproc.files}"/>
 
     <!-- Multilingual source files to be processed (fileset to allow wildcards) -->
-    <fileset id="xsltprocmultilingual.fileset" dir="${xsltproc.abssrc.dir}"
-	     includes="___bogus___file__name ${xsltprocmultilingual.files}"/>
+    <fileset id="xsltproc.multilingual.fileset" dir="${xsltproc.abssrc.dir}"
+	     includes="___bogus___file__name ${xsltproc.multilingual.files}"/>
     
     <!-- Obtain the filelist with the source files to see if it is empty -->
     <pathconvert property="xsltprocmultilingual.source.filelist.property" pathsep=" ">
-      <fileset refid="xsltprocmultilingual.fileset"/>
+      <fileset refid="xsltproc.multilingual.fileset"/>
     </pathconvert>
 
     <!-- Obtain the filelist with the produced files. -->
@@ -139,16 +139,9 @@
       <attribute name="MERGESTYLES.FILE.TO.IMPORT"/>
       <sequential>
 
-	<!-- Modify the style to merge to add language suffix (if any) -->
-	<pathconvert property="mergestyles.modified.master.style">
-	  <fileset file="${mergestyles.master.style}"/>
-	  <mapper type="glob" from="*.xml" 
-		  to="*${xsltproc.profile.lang.suffix}.xml"/>
-	</pathconvert>
-
 	<!-- Turn mergestyles.master.file to a fileset -->
 	<fileset id="mergestyles.master.fileset" 
-		 file="${mergestyles.modified.master.style}"/>
+		 file="${mergestyles.master.style}"/>
 
 	<pathconvert property="mergestyles.output.prefix">
 	  <fileset refid="mergestyles.master.fileset"/>
@@ -175,7 +168,7 @@
 	  </srcfileset>
 	  <targetfilelist 
 	    dir="@{MERGESTYLES.DST.DIR}"
-	    files="${mergestyles.output.prefix}_${mergestyles.output.suffix}"/>
+	    files="${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}"/>
 	</dependset>
 	
 	<!-- Execute the command. Watch out for src.dir and dst.dir -->
@@ -186,13 +179,17 @@
 	  <arg value="--stringparam"/>
 	  <arg value="mergesheets.file.to.fold"/>
 	  <arg value="@{MERGESTYLES.FILE.TO.IMPORT}"/>
+	  <arg value="--stringparam"/>
+	  <arg value="ada.profile.suppress.profiling.attributes"/>
+	  <arg value="yes"/>
 	  <arg line="${xsltproc.profile.lang.option}"/>
 	  <arg value="-o"/>
 	  <targetfile/>
 	  <arg value="${xsltproc.mergestyles.style.file}"/>
 	  <fileset refid="mergestyles.master.fileset"/>
 	  <!-- Mapper from source files to produced files -->
-	  <mapper type="glob" from="*.xml" to="*_${mergestyles.output.suffix}"/>
+	  <mapper type="glob" from="*.xml" 
+		  to="*${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}"/>
 	</apply>
       </sequential>
     </macrodef>
@@ -218,10 +215,10 @@
 	</pathconvert>
 
 	<!-- Dump explicitly the files to be deleted -->
-	<echo> deleted = ${mergestyles.output.prefix}_${mergestyles.output.suffix}</echo>
+	<echo> deleted = ${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}</echo>
 
 	<delete
-	  file="@{MERGESTYLES.DST.DIR}/${mergestyles.output.prefix}_${mergestyles.output.suffix}"/>
+	  file="@{MERGESTYLES.DST.DIR}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}"/>
       </sequential>
     </macrodef>
 
@@ -262,8 +259,8 @@
 	  depends="xsltproc.init" if="xsltprocmultilingual.check">
     <subant target="xsltproc.processing">
       <fileset dir="${ada.home}/AntImports" includes="Xsltproc-*.xml"/>
-      <property name="xsltproc.files" value="${xsltprocmultilingual.files}"/>
-      <property name="xsltprocmultilingual.files" value=""/>
+      <property name="xsltproc.files" value="${xsltproc.multilingual.files}"/>
+      <property name="xsltproc.multilingual.files" value=""/>
     </subant>
   </target>
 
@@ -336,9 +333,9 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
       <mapper type="flatten"/>
     </pathconvert>
 
-    <echo level="${xsltproc.debug.level}">xsltproc processed stylefile: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}_${xsltproc.output.suffix}</echo>
+    <echo level="${xsltproc.debug.level}">xsltproc processed stylefile: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}</echo>
 
-    <echo level="${xsltproc.debug.level}">Srcfileset: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}_${xsltproc.output.suffix}</echo>
+    <echo level="${xsltproc.debug.level}">Srcfileset: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}</echo>
 
     <pathconvert property="xsltproc.source.dependency.property" pathsep=" ">
       <fileset refid="xsltproc.fileset"/>
@@ -357,7 +354,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 
     <!-- Force the dependency checking on changes on the style sheet -->
     <dependset>
-      <srcfileset file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}_${xsltproc.output.suffix}"/>
+      <srcfileset file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}"/>
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
       </srcfileset>
@@ -373,7 +370,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <xsltproc.execute DIR="${basedir}"
 		  XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
 		  XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
-		  XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}/${mergestyles.output.prefix}_${xsltproc.output.suffix}">
+		  XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}">
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
       <mapper type="glob" from="*.xml" 
@@ -414,7 +411,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 	  depends="xsltproc.init" if="xsltprocmultilingual.check">
     <subant target="xsltproc.clean" inheritall="false">
       <fileset dir="${ada.home}/AntImports" includes="Xsltproc-*.xml"/>
-      <property name="xsltproc.files" value="${xsltprocmultilingual.files}"/>
+      <property name="xsltproc.files" value="${xsltproc.multilingual.files}"/>
     </subant>
   </target>
 

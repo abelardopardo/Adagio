@@ -37,7 +37,6 @@
     <property name="laboratory.multilingual.files" value=""/>
     
     <!-- Private properties -->
-    <property name="laboratory.profile.lang"    value=""/>
     <property name="laboratory.creating.files"  value=""/>
     <property name="laboratory.creating.multilingual.files"  
 	      value=""/>
@@ -99,6 +98,8 @@
     <antcall target="laboratory.manipulate.files" inheritAll="false">
       <param name="laboratory.creating.multilingual.files" 
 	     value="${laboratory.multilingual.files}"/>
+      <param name="laboratory.manipulate.target" 
+	     value="xsltprocmultilingual.processing"/>
     </antcall>
 
     <echo>laboratory.processing       END(xsltproc.processing 3 versions)</echo>
@@ -110,11 +111,12 @@
 
     <echo>laboratory.clean            CALL(xsltproc.processing 3 versions)</echo>
 
-    <!-- Delete all the language neutral files -->
+    <!-- Delete all the multilingual files -->
     <antcall target="laboratory.manipulate.files" inheritAll="false">
       <param name="laboratory.creating.multilingualfiles" 
 	     value="${laboratory.multilingual.files}"/>
-      <param name="laboratory.manipulate.target" value="xsltproc.clean"/>
+      <param name="laboratory.manipulate.target" 
+	     value="xsltprocmultilingual.clean"/>
     </antcall>
 
     <!-- Delete all the language neutral files -->
@@ -151,10 +153,9 @@
       <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
       <param name="xsltproc.output.format" value="${laboratory.output.format}"/>
       <param name="xsltproc.files"         value="${laboratory.creating.files}"/>
-      <param name="xsltprocmultilingual.files"
+      <param name="xsltproc.multilingual.files"
 	     value="${laboratory.creating.multilingual.files}"/>
-      <param name="xsltproc.extra.args"    
-	     value="${laboratory.extra.args} ${laboratory.profile.lang}"/>
+      <param name="xsltproc.extra.args" value="${laboratory.extra.args}"/>
     </antcall>
 
     <!-- Call xsltproc to generate the solution -->
@@ -165,12 +166,11 @@
       <param name="xsltproc.output.format"
 	     value="_solution${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
-      <param name="xsltprocmultilingual.files"
+      <param name="xsltproc.multilingual.files"
 	     value="${laboratory.creating.multilingual.files}"/>
       <param name="xsltproc.extra.args" 
 	     value="${laboratory.extra.args} 
-                    --stringparam solutions.include.guide yes
-                    ${laboratory.profile.lang}"/>
+                    --stringparam solutions.include.guide yes"/>
     </antcall>
 
     <!-- Call xsltproc to generate the professor guide -->
@@ -181,13 +181,12 @@
       <param name="xsltproc.output.format"
 	     value="_pguide${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
-      <param name="xsltprocmultilingual.files"
+      <param name="xsltproc.multilingual.files"
 	     value="${laboratory.creating.multilingual.files}"/>
       <param name="xsltproc.extra.args" 
 	     value="${laboratory.extra.args} 
                     --stringparam professorguide.include.guide yes
-                    --stringparam solutions.include.guide yes
-                    ${laboratory.profile.lang}"/>
+                    --stringparam solutions.include.guide yes"/>
     </antcall>
 
     <!-- Call xsltproc to generate the submission page -->
@@ -198,10 +197,9 @@
       <param name="xsltproc.output.format"
 	     value="_submit${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
-      <param name="xsltprocmultilingual.files"
+      <param name="xsltproc.multilingual.files"
 	     value="${laboratory.creating.multilingual.files}"/>
-      <param name="xsltproc.extra.args" 
-	     value="${laboratory.extra.args} ${laboratory.profile.lang}"/>
+      <param name="xsltproc.extra.args" value="${laboratory.extra.args}"/>
     </antcall>
   </target>
 

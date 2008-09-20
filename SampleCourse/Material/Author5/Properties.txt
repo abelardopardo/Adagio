@@ -6,7 +6,7 @@
 #
 inkscape.files=*.e?.svg 
 
-xsltprocmultilingual.files=problem.xml
+xsltproc.multilingual.files=problem.xml
 
 export.files=*.png reverseTable.c
 

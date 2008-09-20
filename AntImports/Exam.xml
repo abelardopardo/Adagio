@@ -19,6 +19,7 @@
 
   <import file="Latex.xml"/>
   <import file="Dvi2bitmap.xml"/>
+  <import file="Xsltproc.xml"/>
   
   <!-- Private properties -->
   <property name="exam.debug.level"    value="${ada.debug.level}"/>
@@ -91,7 +92,7 @@
       <param name="xsltproc.src.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltprocmultilingual.files" value="${exam.multilingual.file}"/>
+      <param name="xsltproc.multilingual.files" value="${exam.multilingual.file}"/>
       <param name="xsltproc.extra.args"    value="${exam.extra.args}"/>
     </antcall>
 
@@ -104,7 +105,7 @@
       <param name="xsltproc.src.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltprocmultilingual.files"
+      <param name="xsltproc.multilingual.files"
 	     value="${exam.multilingual.file}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
@@ -297,7 +298,7 @@
       <param name="xsltproc.src.dir" value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir" value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltprocmultilingual.files"
+      <param name="xsltproc.multilingual.files"
 	     value="${exam.multilingual.file}"/>
       <param name="xsltproc.output.format" value="_pguide.html"/>
       <param name="xsltproc.extra.args"    
@@ -314,7 +315,7 @@
       <param name="xsltproc.src.dir" value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir" value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltprocmultilingual.files"
+      <param name="xsltproc.multilingual.files"
 	     value="${exam.multilingual.file}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
@@ -328,7 +329,7 @@
       <param name="xsltproc.src.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
-      <param name="xsltprocmultilingual.files"
+      <param name="xsltproc.multilingual.files"
 	     value="${exam.multilingual.file}"/>
       <param name="xsltproc.extra.args" value="${exam.extra.args}"/>
     </antcall>

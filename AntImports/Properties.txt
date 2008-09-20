@@ -93,7 +93,7 @@
 # xsltproc.output.format=.html		# Output format (WITH DOT!)
 # xsltproc.extra.args=			# Addtnl. args to pass to xsltproc
 # xsltproc.files=			# List of *.xml files to process
-# xsltprocmultilingual.files=		# List of *.xml files to process
+# xsltproc.multilingual.files=		# List of *.xml files to process
 					# with the different languages
 # mergestyles.master.style=   		# Sheet to use as base
 

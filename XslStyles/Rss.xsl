@@ -34,40 +34,19 @@
           <ttl><xsl:value-of select="$ada.rss.time.to.live"/></ttl>
         </xsl:if>
 
-        <xsl:if test="($ada.rss.title != '') or ($ada.rss.title.en != '')">
-          <title>
-            <xsl:call-template name="ada.profile.subtree">
-              <xsl:with-param name="subtree" select="exsl:node-set($ada.rss.title)"/>
-            </xsl:call-template>
-          </title>
+        <xsl:if test="$ada.rss.title != ''">
+          <title><xsl:value-of select="$ada.rss.title"/></title>
         </xsl:if>
         <xsl:if test="($ada.rss.title != '') and ($ada.rss.image.url != '') 
                       and ($ada.rss.main.site.url != '')"> 
           <image>
-            <title>
-              <xsl:call-template name="ada.profile.subtree">
-                <xsl:with-param name="subtree" select="exsl:node-set($ada.rss.title)"/>
-              </xsl:call-template>
-            </title>
-            <url>
-              <xsl:call-template name="ada.profile.subtree">
-                <xsl:with-param name="subtree" 
-                  select="exsl:node-set($ada.rss.image.url)"/>
-              </xsl:call-template>
-            </url>
-            <link>
-              <xsl:call-template name="ada.profile.subtree">
-                <xsl:with-param name="subtree" 
-                  select="exsl:node-set($ada.rss.main.site.url)"/>
-              </xsl:call-template>
-            </link>
+            <title><xsl:value-of select="$ada.rss.title"/></title>
+            <url><xsl:value-of select="$ada.rss.image.url"/></url>
+            <link><xsl:value-of select="$ada.rss.main.site.url"/></link>
             <xsl:if test="$ada.rss.image.desc != ''">
               <description><xsl:text
-              disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:call-template
-              name="ada.profile.subtree">
-                <xsl:with-param name="subtree" 
-                  select="exsl:node-set($ada.rss.image.desc)"/>
-              </xsl:call-template><xsl:text 
+              disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of
+              select="$ada.rss.image.desc"/><xsl:text 
               disable-output-escaping="yes">]]&gt;</xsl:text></description>
             </xsl:if>
             <width><xsl:value-of select="$ada.rss.image.width"/></width>
@@ -77,29 +56,18 @@
 
         <xsl:if test="$ada.rss.description != ''">
           <description><xsl:text
-          disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:call-template
-              name="ada.profile.subtree">
-                <xsl:with-param name="subtree" 
-                  select="exsl:node-set($ada.rss.description)"/>
-              </xsl:call-template><xsl:text 
+          disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of
+          select="$ada.rss.description"/><xsl:text 
           disable-output-escaping="yes">]]&gt;</xsl:text></description>
         </xsl:if>
         <xsl:if test="$ada.rss.main.site.url != ''">
           <link><xsl:value-of select="$ada.rss.main.site.url"/></link>
         </xsl:if>
         <xsl:if test="$ada.rss.language != ''">
-          <language><xsl:call-template
-              name="ada.profile.subtree">
-                <xsl:with-param name="subtree" 
-                  select="exsl:node-set($ada.rss.language)"/>
-              </xsl:call-template></language>
+          <language><xsl:value-of select="$ada.rss.language"/></language>
         </xsl:if>
         <xsl:if test="$ada.rss.copyright != ''">
-          <copyright><xsl:call-template
-              name="ada.profile.subtree">
-                <xsl:with-param name="subtree" 
-                  select="exsl:node-set($ada.rss.copyright)"/>
-              </xsl:call-template></copyright>
+          <copyright><xsl:value-of select="$ada.rss.copyright"/></copyright>
         </xsl:if>
       
         <!-- Crucial elements that need to be produced every time with
@@ -108,21 +76,13 @@
         <pubDate><xsl:value-of select="$ada.rss.date.rfc822"/></pubDate>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <xsl:if test="$ada.rss.author.email != ''">
-          <webMaster><xsl:call-template
-              name="ada.profile.subtree">
-                <xsl:with-param name="subtree" 
-                  select="exsl:node-set($ada.rss.author.email)"/>
-              </xsl:call-template></webMaster>
+          <webMaster><xsl:value-of select="$ada.rss.author.email"/></webMaster>
         </xsl:if>
         <!-- ITunes Stuff -->
 
         <!-- Author name in text -->
         <xsl:if test="$ada.rss.author.name != ''">
-          <itunes:author><xsl:call-template
-              name="ada.profile.subtree">
-                <xsl:with-param name="subtree" 
-                  select="exsl:node-set($ada.rss.author.name)"/>
-              </xsl:call-template></itunes:author>
+          <itunes:author><xsl:value-of select="$ada.rss.author.name"/></itunes:author>
         </xsl:if>
         <!-- One line for channel subtitle, similar to description above -->
         <xsl:if test="$ada.rss.subtitle != ''">

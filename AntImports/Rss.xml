@@ -45,8 +45,19 @@
 	<mapper type="flatten"/>
       </chainedmapper>
     </pathconvert>
-    <filelist id="rss.target.filelist"
-	      files="${rss.target.filelist.property}"/>
+
+    <!-- Source files to be processed (fileset to allow wildcards) -->
+    <fileset id="rss.multilingual.fileset" dir="${rss.abssrc.dir}"
+	     includes="___bogus___file__name ${rss.multilingual.files}"/>
+    
+    <!-- 
+	 Obtain the filelist with the multilingual source files to see if it is
+	 empty 
+    -->
+    <pathconvert property="rss.source.multilingual.filelist.property" 
+		 pathsep=" ">
+      <fileset refid="rss.multilingual.fileset"/>
+    </pathconvert>
 
     <!-- 
     Fetch the date/time in RFC 822 format. I need this hack because the
@@ -61,12 +72,18 @@
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="rss.check">
       <and>
-	<!-- 
-	     There must be some files in the fileset (after regexp expansion) 
-	-->
-	<not>
-	  <equals arg1="${rss.source.filelist.property}" arg2="" trim="true"/>
-	</not>
+	<or>
+	  <!-- 
+	       There must be some files in either of the  rss fileset 
+	  -->
+	  <not>
+	    <equals arg1="${rss.source.filelist.property}" arg2="" trim="true"/>
+	  </not>
+	  <not>
+	    <equals arg1="${rss.source.multilingual.filelist.property}" arg2=""
+		    trim="true"/>
+	  </not>
+	</or>
 	<!-- Require a non-empty and available stylesheet -->
         <not><equals arg1="${rss.style.file}" arg2="" trim="true"/></not>
 	<available file="${rss.style.file}"/>
@@ -85,7 +102,7 @@
 
     <echo>rss.processing              CALL(xsltproc.processing)</echo>
 
-    <!-- Call xsltproc -->
+    <!-- Call xsltproc for language neutral -->
     <antcall target="xsltproc.processing" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
@@ -99,12 +116,6 @@
 
     <echo>rss.processing              END(xsltproc.processing)</echo>
 
-  </target>
-
-  <!-- Generate the multilingual files, if any -->
-  <target name="rss.processing.multilingual.files"
-	  if="rss.check" description="Process the multilingual files">
-
     <echo>rss.processing.multilingual CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
@@ -113,7 +124,7 @@
       <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${rss.style.file}"/>
       <param name="xsltproc.output.format" value="${rss.output.format}"/>
-      <param name="xsltprocmultilingual.files"
+      <param name="xsltproc.multilingual.files"
 	     value="${rss.multilingual.files}"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
@@ -122,12 +133,15 @@
 
     <echo>rss.processing.multilingual END(xsltproc.processing)</echo>
 
-  </target>
-
-  <target name="rss.processing.html"
-	  if="rss.check"
-	  description="Produce HTML rendering of all the RSS files">
     <echo>rss.processing              CALL(xsltproc.processing HTML)</echo>
+
+    <!-- Obtain the filelist with the produced multilingual files. -->
+    <pathconvert property="rss.target.multilingual.filelist.property" pathsep=" ">
+      <fileset dir="${rss.dst.dir}" includes="*_*${rss.output.format}"/>
+      <chainedmapper>
+	<mapper type="flatten"/>
+      </chainedmapper>
+    </pathconvert>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.processing" inheritAll="false">
@@ -142,6 +156,7 @@
 	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
 		    ${rss.extra.args}"/>
     </antcall>
+
     <echo>rss.processing              END(xsltproc.processing HTML)</echo>
   </target>
 
@@ -149,26 +164,40 @@
   <target name="rss.clean" depends="rss.init"
 	  if="rss.check" description="Remove files produced by rss">
 
-    <!-- Call xsltproc -->
-    <antcall target="xsltprocmultilingual.clean" inheritAll="false">
-      <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
+    <!-- Obtain the filelist with the produced multilingual files. -->
+    <pathconvert property="rss.target.multilingual.filelist.property" pathsep=" ">
+      <fileset dir="${rss.dst.dir}" includes="*_*${rss.output.format}"/>
+      <chainedmapper>
+	<mapper type="flatten"/>
+      </chainedmapper>
+    </pathconvert>
+
+    <!-- Call HTML clean -->
+    <antcall target="xsltproc.clean" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${rss.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${rss.style.file}"/>
-      <param name="xsltproc.output.format" value="${rss.output.format}"/>
-      <param name="xsltprocmultilingual.files"
-	     value="${rss.multilingual.files}"/>
+      <param name="xsltproc.style.file"    value="${rss.style.file.tohtml}"/>
+      <param name="xsltproc.output.format" value=".html"/>
+      <param name="xsltproc.files"
+	     value="${rss.target.filelist.property}
+		    ${rss.target.multilingual.filelist.property}"/>
       <param name="xsltproc.extra.args"    
 	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
 		    ${rss.extra.args}"/>
     </antcall>
 
-  </target>
-
-  <target name="rss.clean.files"
-	  if="rss.check"
-	  description="Clean the RSS files produced">
-
-    <echo>rss.clean                   CALL(xsltproc.clean)</echo>
+    <!-- Call Multilingual clean -->
+    <antcall target="xsltprocmultilingual.clean" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${rss.style.file}"/>
+      <param name="xsltproc.output.format" value="${rss.output.format}"/>
+      <param name="xsltproc.multilingual.files"
+	     value="${rss.multilingual.files}"/>
+      <param name="xsltproc.extra.args"    
+	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
+		    ${rss.extra.args}"/>
+    </antcall>
 
     <!-- Call xsltproc -->
     <antcall target="xsltproc.clean" inheritAll="false">
@@ -187,12 +216,13 @@
 
   <target name="rss.dump.properties" depends="rss.init">
     <echo level="${rss.debug.level}"> ------ Rss properties ----
-    rss.src.dir       ="${rss.src.dir}"
-    rss.dst.dir       ="${rss.dst.dir}"
-    rss.output.format ="${rss.output.format}"
-    rss.style.file    ="${rss.style.file}"
-    rss.extra.args    ="${rss.extra.args}"
-    rss.files         ="${rss.files}"</echo>
+    rss.src.dir            ="${rss.src.dir}"
+    rss.dst.dir            ="${rss.dst.dir}"
+    rss.output.format      ="${rss.output.format}"
+    rss.style.file         ="${rss.style.file}"
+    rss.extra.args         ="${rss.extra.args}"
+    rss.files              ="${rss.files}"
+    rss.multilingual.files ="${rss.multilingual.files}"</echo>
   </target>
 
   <!-- If entering through this target, build.out is deleted -->

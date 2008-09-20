@@ -6,9 +6,17 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi">
 
+  <xsl:import href="AdaProfile.xsl" />
+
   <xsl:param name="mergesheets.file.to.fold" select="''"/>
 
   <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
+
+  <!-- Params needed by AdaProfile -->
+  <xsl:param name="stylesheet.result.type" select="'xhtml'"/>
+  <xsl:param name="profile.baseuri.fixup" select="false()"/>
+
+  <xsl:param name="ada.profile.suppress.profiling.attributes">yes</xsl:param>
 
   <xsl:template match="xsl:stylesheet">
     <xsl:copy>
@@ -20,8 +28,9 @@
         </xsl:attribute>
       </xsl:element>
       
-      <xsl:copy-of select="node()"/>
+      <!-- <xsl:copy-of select="node()"/> -->
       
+      <xsl:apply-templates select="node()" mode="profile"/>
     </xsl:copy>
   </xsl:template>
   

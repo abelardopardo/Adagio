@@ -25,8 +25,7 @@
   <xsl:param name="ada.page.head.right.logo.url" />
   <xsl:param name="ada.page.license" />
   <xsl:param name="ada.page.license.alt" />
-  <xsl:param name="ada.page.license.institution" select="'&#169; Universidad Carlos III de Madrid'"/>
-  <xsl:param name="ada.page.license.institution.en" select="'&#169; Carlos III University of Madrid, Spain'"/>
+  <xsl:param name="ada.page.license.institution" select="'&#169; Carlos III University of Madrid, Spain'"/>
   <xsl:param name="ada.page.license.logo" />
   <xsl:param name="ada.page.license.url" />
   <xsl:param name="ada.page.refresh.rate" />

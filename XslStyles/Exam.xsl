@@ -56,32 +56,14 @@
           
         <!-- First row is completed with additinal text vars -->
         <td width="50%" align="left">
-          <xsl:if test="$ada.exam.topleft.toptext or $ada.exam.topleft.toptext.en">
-            <b>
-              <xsl:choose>
-                <xsl:when test="$profile.lang='en'">
-                  <xsl:copy-of select="$ada.exam.topleft.toptext.en"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:copy-of select="$ada.exam.topleft.toptext"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </b>
+          <xsl:if test="$ada.exam.topleft.toptext">
+            <b><xsl:copy-of select="$ada.exam.topleft.toptext"/></b>
           </xsl:if>
         </td>
 
         <td width="40%" align="right">
-          <xsl:if test="$ada.exam.topright.toptext or $ada.exam.topright.toptext.en">
-            <b>
-              <xsl:choose>
-                <xsl:when test="$profile.lang='en'">
-                  <xsl:copy-of select="$ada.exam.topright.toptext.en"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:copy-of select="$ada.exam.topright.toptext"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </b>
+          <xsl:if test="$ada.exam.topright.toptext">
+            <b><xsl:copy-of select="$ada.exam.topright.toptext"/></b>
           </xsl:if>
         </td>
       </tr>
@@ -89,34 +71,14 @@
       <tr>
         <!-- Second row include department and date -->
         <td>
-          <xsl:if test="$ada.exam.topleft.centertext or 
-                        $ada.exam.topleft.centertext.en">
-            <b>
-              <xsl:choose>
-                <xsl:when test="$profile.lang='en'">
-                  <xsl:copy-of select="$ada.exam.topleft.centertext.en"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:copy-of select="$ada.exam.topleft.centertext"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </b>
+          <xsl:if test="$ada.exam.topleft.centertext">
+            <b><xsl:copy-of select="$ada.exam.topleft.centertext"/></b>
           </xsl:if>
         </td>
 
         <td align="right">
-          <xsl:if test="$ada.exam.topright.centertext or 
-                        $ada.exam.topright.centertext.en">
-            <b>
-              <xsl:choose>
-                <xsl:when test="$profile.lang='en'">
-                  <xsl:copy-of select="$ada.exam.topright.centertext.en"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:copy-of select="$ada.exam.topright.centertext"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </b>
+          <xsl:if test="$ada.exam.topright.centertext">
+            <b><xsl:copy-of select="$ada.exam.topright.centertext"/></b>
           </xsl:if>
         </td>
       </tr>
@@ -124,33 +86,13 @@
       <tr>
         <!-- And final row include University on the left -->
         <td>
-          <xsl:if test="$ada.exam.topleft.bottomtext or 
-                        $ada.exam.topleft.bottomtext.en">
-            <b>
-              <xsl:choose>
-                <xsl:when test="$profile.lang='en'">
-                  <xsl:copy-of select="$ada.exam.topleft.bottomtext.en"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:copy-of select="$ada.exam.topleft.bottomtext"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </b>
+          <xsl:if test="$ada.exam.topleft.bottomtext">
+            <b><xsl:copy-of select="$ada.exam.topleft.bottomtext"/></b>
           </xsl:if>
         </td>
         <td align="right">
-          <xsl:if test="$ada.exam.topright.bottomtext or 
-                        $ada.exam.topright.bottomtext.en">
-            <b>
-              <xsl:choose>
-                <xsl:when test="$profile.lang='en'">
-                  <xsl:copy-of select="$ada.exam.topright.bottomtext.en"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:copy-of select="$ada.exam.topright.bottomtext"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </b>
+          <xsl:if test="$ada.exam.topright.bottomtext">
+            <b><xsl:copy-of select="$ada.exam.topright.bottomtext"/></b>
           </xsl:if>
         </td>
       </tr>
@@ -387,18 +329,8 @@
     
     <!-- Problems within a section element -->
     <xsl:for-each select="section/section">
-      <xsl:if test="$ada.exam.exercise.name.en or $ada.exam.exercise.name">
-        <b>
-          <xsl:choose>
-            <xsl:when test="$profile.lang='en'">
-              <xsl:copy-of select="$ada.exam.exercise.name.en"/>
-              <xsl:text> </xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:copy-of select="$ada.exam.exercise.name"/>
-              <xsl:text> </xsl:text>
-            </xsl:otherwise>
-          </xsl:choose>
+      <xsl:if test="$ada.exam.exercise.name">
+        <b><xsl:copy-of select="$ada.exam.exercise.name"/>
           <xsl:if test="count(preceding-sibling::section) +
                         count(following-sibling::section) &gt;= 1">
             <xsl:value-of select="count(preceding-sibling::section) + 1"/>.

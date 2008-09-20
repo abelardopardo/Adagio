@@ -214,20 +214,11 @@
             <td class="noprint" style="text-align: left; vertical-align: top;">
               <xsl:call-template name="ggadgetlink"/>
             </td>
-            <xsl:if test="$ada.course.name or $ada.course.name.en or
-                          ada.course.edition or ada.course.image">
+            <xsl:if test="$ada.course.name or ada.course.edition 
+                          or ada.course.image">
               <td align="center">
-                <xsl:if test="$ada.course.name or $ada.course.name.en">
-                  <h1>
-                    <xsl:choose>
-                      <xsl:when test="$profile.lang = 'en'">
-                        <xsl:value-of select="$ada.course.name.en"/>
-                      </xsl:when>
-                      <xsl:otherwise>
-                        <xsl:value-of select="$ada.course.name"/>
-                      </xsl:otherwise>
-                    </xsl:choose>
-                  </h1>
+                <xsl:if test="$ada.course.name">
+                  <h1><xsl:value-of select="$ada.course.name"/></h1>
                 </xsl:if>
                 <xsl:if test="$ada.course.edition">
                   <h4><xsl:value-of select="$ada.course.edition"/></h4>
@@ -266,18 +257,9 @@
         style="border: 0; margin-left: auto; margin-right: auto">
         <tr>
           <td align="center">
-            <xsl:choose>
-              <xsl:when test="$profile.lang='en'">
-                <small>
-                  <xsl:value-of select="$ada.page.license.institution.en"/>
-                </small>
-              </xsl:when>
-              <xsl:otherwise>
-                <small>
-                  <xsl:value-of select="$ada.page.license.institution"/>
-                </small>
-              </xsl:otherwise>
-            </xsl:choose>
+            <small>
+              <xsl:value-of select="$ada.page.license.institution"/>
+            </small>
           </td>
           <xsl:if test="$ada.page.license = 'yes'">
             <td align="center" valign="middle" rowspan="2">
