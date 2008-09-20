@@ -11,16 +11,21 @@
 
   <xsl:param name="ada.rss.time.to.live">30</xsl:param>
   <xsl:param name="ada.rss.title">Rss title goes here</xsl:param>
-  <xsl:param name="ada.rss.description">Rss description goes here</xsl:param>
+  <xsl:param name="ada.rss.description">Descripción del canal</xsl:param>
 
   <!-- Parameter to put in links to the main site documentation -->
   <xsl:param name="ada.rss.main.site.url">http://bogus.net</xsl:param>
 
+  <!-- Name of the file containing the feed (no prefix) -->
+  <xsl:param name="ada.rss.filename">rss.xml</xsl:param>
+
   <!-- URL pointing to the XML file containing the feed -->
-  <xsl:param name="ada.rss.channel.url"/>
+  <xsl:param name="ada.rss.channel.url">
+    <xsl:value-of select="$ada.rss.filename"/>
+  </xsl:param>
 
   <!-- Prefix of the type http://......./a/b/c to use for material links -->
-  <xsl:param name="ada.rss.item.url.prefix"></xsl:param>
+  <xsl:param name="ada.rss.item.url.prefix">Your prefix goes here</xsl:param>
 
   <xsl:param name="ada.rss.language">en</xsl:param>
   <xsl:param name="ada.rss.copyright">Copyright goes here</xsl:param>

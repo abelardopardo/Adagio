@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:exsl="http://exslt.org/common"
   xmlns:date="http://exslt.org/dates-and-times"
   version="1.0">
 
@@ -384,5 +385,15 @@
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
+
+  <!-- Template to profile-apply a subtree -->
+  <xsl:template name="ada.profile.subtree">
+    <xsl:param name="subtree"/>
+    <xsl:variable name="filtered">
+      <xsl:apply-templates select="$subtree" mode="profile"/>
+    </xsl:variable>
+    <xsl:apply-templates select="exsl:node-set($filtered)/node()"/>
+  </xsl:template>
+
 </xsl:stylesheet>
 
