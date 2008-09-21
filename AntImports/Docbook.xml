@@ -30,11 +30,28 @@
     <property name="docbook.style.file"     
 	      value="${ada.home}/XslStyles/DocbookProfile.xsl"/>
     
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <ada.expand.srcdst.paths
+      ADA.PREFIX="docbook" ADA.SRC.DIR="${docbook.src.dir}"
+      ADA.DST.DIR="${docbook.dst.dir}" ADA.FILES="${docbook.files}"/>
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="docbook.check">
+      <!-- 
+	   There must be some files in the fileset (after regexp expansion)
+      -->
+      <not>
+	<equals arg1="${docbook.source.filelist.property}" arg2="" trim="true"/>
+      </not>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="${docbook.debug.level}">docbook.check          = "${docbook.check}"</echo>
   </target>
 
   <!-- Invoke xsltprocessing -->
   <target name="docbook.processing" depends="docbook.init"
-	  description="Call the xsltproc with the given style">
+	  if="docbook.check" description="Call the xsltproc with the given style">
 
     <echo>docbook.processing          CALL(xsltproc.processing)</echo>
 
