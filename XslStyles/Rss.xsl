@@ -10,6 +10,7 @@
   <!-- Templates to process docbook. The HTML are included to avoid the doctype -->
   <xsl:import 
      href="http://docbook.sourceforge.net/release/xsl/current/html/profile-docbook.xsl"/>
+
   <!-- Template with all the customization parameters -->
   <xsl:import href="RssParams.xsl"/>
 
