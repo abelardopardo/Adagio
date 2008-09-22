@@ -58,7 +58,8 @@
     <echo level="${rsync.debug.level}">${basedir}</echo>
 
     <!-- Execute the command. Watch out for source and destination -->
-    <exec executable="${rsync.exec}" failonerror="true">
+    <exec executable="${rsync.exec}" failonerror="true" output="build.out"
+	append="true">
       <arg value="${rsync.remote.shell.option}"/>
       <arg line="${rsync.basic.args}"/>
       <arg line="${rsync.extra.args}"/>

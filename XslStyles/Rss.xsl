@@ -265,8 +265,9 @@
           <xsl:variable name="link.element" 
             select="modespec/ulink[@condition = 'enclosure']"/>
           <enclosure>
-            <xsl:attribute name="url"><xsl:value-of 
-            select="../ulink[@condition = 'enclosurebase']/@url"/><xsl:value-of
+            <xsl:attribute name="url"><xsl:value-of
+            select="$ada.rss.item.url.prefix"/><xsl:value-of  
+            select="../ulink[@condition = 'enclosurebase']/@url"/>/<xsl:value-of
             select="exsl:node-set($link.element)/@url"/></xsl:attribute>
             <xsl:attribute name="length"><xsl:value-of
             select="exsl:node-set($link.element)/@arch"/></xsl:attribute>
