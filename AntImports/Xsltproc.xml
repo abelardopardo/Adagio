@@ -146,7 +146,10 @@
 	<pathconvert property="mergestyles.output.prefix">
 	  <fileset refid="mergestyles.master.fileset"/>
 	  <chainedmapper>
-	    <mapper type="glob" from="*.xml" to="*"/>
+	    <compositemapper>
+	      <mapper type="glob" from="*.xml" to="*"/>
+	      <mapper type="glob" from="*.xsl" to="*"/>
+	    </compositemapper>
 	    <mapper type="flatten"/>
 	  </chainedmapper>
 	</pathconvert>
@@ -188,8 +191,12 @@
 	  <arg value="${xsltproc.mergestyles.style.file}"/>
 	  <fileset refid="mergestyles.master.fileset"/>
 	  <!-- Mapper from source files to produced files -->
-	  <mapper type="glob" from="*.xml" 
-		  to="*${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}"/>
+	  <compositemapper>
+	    <mapper type="glob" from="*.xsl" 
+		    to="*${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}"/>
+	    <mapper type="glob" from="*.xml" 
+		    to="*${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}"/>
+	  </compositemapper>
 	</apply>
       </sequential>
     </macrodef>
