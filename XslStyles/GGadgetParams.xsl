@@ -8,7 +8,6 @@
 
   <!-- Obtain other generic ada variables  -->
   <xsl:import href="GeneralParams.xsl"/>
-  <xsl:import href="HeadTailParams.xsl"/>
 
   <xsl:param name="ada.ggadget.title"><xsl:value-of
   select="$ada.course.name"/></xsl:param>
@@ -18,4 +17,5 @@
   <xsl:param name="ada.ggadget.screenshot.url"/>
   <xsl:param name="ada.ggadget.author"/> <!-- Not used! Check why -->
   <xsl:param name="ada.ggadget.google.analytics.gadgetpath"/>
+  <xsl:param name="ada.ggadget.site.url"><xsl:value-of select="$ada.course.home.url"/></xsl:param>
 </xsl:stylesheet>

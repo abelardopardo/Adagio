@@ -15,7 +15,7 @@
   <!-- Template with all the customization parameters -->
   <xsl:import href="GGadgetParams.xsl"/>
 
-  <xsl:output method="xml" indent="yes" encoding="UTF-8" />
+  <xsl:output method="xml" omit-xml-declaration="no" indent="yes" encoding="UTF-8" />
 
   <xsl:template match="/">
     <Module>
@@ -34,9 +34,9 @@
           <xsl:attribute name="screenshot"><xsl:value-of
           select="$ada.ggadget.screenshot.url"/></xsl:attribute>
         </xsl:if>
-        <xsl:if test="$img.src.path">
+        <xsl:if test="$ada.ggadget.site.url">
           <xsl:attribute name="title_url"><xsl:value-of
-          select="$img.src.path"/></xsl:attribute>
+          select="$ada.ggadget.site.url"/></xsl:attribute>
         </xsl:if>
         <xsl:if test="$ada.page.google.analytics.account">
           <Require feature="analytics"/>
@@ -63,7 +63,7 @@
   </xsl:template>
 
   <xsl:template match="gadget">
-    <xsl:if test="rss[lang = $profile.lang]/channel/item[position() = 1]/link">
+    <xsl:if test="rss/channel/item[position() = 1]/link">
       <fieldset style="background-color: #EEEEEE">
         <legend>
           <xsl:choose>
@@ -97,7 +97,7 @@
           test="not(starts-with(@url, 'http:'))  and 
                 not(starts-with(@url, 'https:')) and 
                 not(starts-with(@url, 'irc:'))"><xsl:value-of
-        select="$img.src.path"/></xsl:if><xsl:value-of select="@url"/></xsl:attribute>
+        select="$ada.ggadget.site.url"/></xsl:if><xsl:value-of select="@url"/></xsl:attribute>
         <xsl:if test="$ulink.target != ''">
           <xsl:attribute name="target">
             <xsl:value-of select="$ulink.target"/>

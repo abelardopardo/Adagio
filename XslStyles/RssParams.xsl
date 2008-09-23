@@ -6,7 +6,7 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi">
 
-  <!-- Obtain variables ada.publish.host ada.publish.dir -->
+  <!-- Obtain genearl ada variables -->
   <xsl:import href="GeneralParams.xsl"/>
 
   <xsl:param name="ada.rss.time.to.live">30</xsl:param>

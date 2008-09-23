@@ -59,7 +59,7 @@
                   <xsl:text> </xsl:text>
                   <img alt="Info" style="border: 0; vertical-align: middle">
                     <xsl:attribute name="src"><xsl:value-of
-                    select="$ada.course.home"/>images/info.png</xsl:attribute>
+                    select="$ada.course.home"/>/images/info.png</xsl:attribute>
                     <xsl:attribute name="title">
                       <xsl:choose>
                         <xsl:when
@@ -84,7 +84,7 @@
                   <xsl:text> </xsl:text>
                   <img alt="Info" style="border: 0; vertical-align: middle">
                     <xsl:attribute name="src"><xsl:value-of
-                    select="$ada.course.home"/>images/info.png</xsl:attribute>
+                    select="$ada.course.home"/>/images/info.png</xsl:attribute>
                     <xsl:attribute name="title">
                       <xsl:choose>
                         <xsl:when
