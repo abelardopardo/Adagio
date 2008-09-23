@@ -15,9 +15,10 @@
   <import file="InitialCheck.xml"/>
 
   <property name="ppt2pdf.exec"           
-	    value="${ada.home}${file.separator}bin${file.separator}ada_ppt_to_pdf"/>
+	    value="ada_ppt_to_pdf"/>
 
-  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${ppt2pdf.exec}"/>
+  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${ppt2pdf.exec}"
+                              ADA.PREFIX="ppt2pdf" />
   
   <!-- Private properties -->
   <property name="ppt2pdf.debug.level"    value="${ada.debug.level}"/>
