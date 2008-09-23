@@ -17,7 +17,7 @@
   <property name="ppt2pdf.exec"           
 	    value="${ada.home}${file.separator}bin${file.separator}ada_ppt_to_pdf"/>
 
-  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${ppt2pdf.exec}"/>
+  <available property="ppt2pdf.execution.possible" file="${ppt2pdf.exec}"/>
   
   <!-- Private properties -->
   <property name="ppt2pdf.debug.level"    value="${ada.debug.level}"/>
@@ -31,7 +31,6 @@
     <pathconvert property="ppt2pdf.abssrc.dir" pathsep=" ">
       <path location="${ppt2pdf.src.dir}"/>
     </pathconvert>
-    
     <!-- Source files to be processed by ppt2pdf (fileset to allow wildcards) -->
     <fileset id="ppt2pdf.fileset" dir="${ppt2pdf.abssrc.dir}"
 	     includes="__bogus__file__name ${ppt2pdf.files}"/>
