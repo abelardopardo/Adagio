@@ -124,4 +124,10 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="@fileref">
+    <xsl:value-of select="$ada.ggadget.site.url"/><xsl:value-of 
+    select="ancestor::*/ulink[@condition = 'itemlinkbase']/@url"/>/<xsl:value-of 
+    select="."/>
+  </xsl:template>
+
 </xsl:stylesheet>
