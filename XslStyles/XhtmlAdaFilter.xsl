@@ -22,20 +22,12 @@
 
   <xsl:param name="ada.profile.suppress.profiling.attributes">yes</xsl:param>
 
-  <!-- Path of the docbook source of the RSS channel. Must be overridden -->
-  <xsl:param name="ada.rss.source.file"></xsl:param>
-
   <!-- Numer of RSS items to show. May be overridden externally -->
   <xsl:param name="ada.rss.display.num">5</xsl:param>
 
   <xsl:output method="xml" indent="yes" encoding="UTF-8"
               doctype-public="-//W3C//DTD XHTML 1.1//EN"
               doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" />
-
-
-  <xsl:param name="rssfile"><xsl:value-of select="$ada.course.home"/><xsl:value-of
-      select="$ada.rss.source.file"/>
-  </xsl:param>
 
   <!-- Bootstrap the filter -->
   <xsl:template match="/">
@@ -59,7 +51,7 @@
   <xsl:template match="html:rss">
     <!-- pass the RSS source file through the profile filter -->
     <xsl:variable name="rsscontent">
-      <xsl:apply-templates mode="profile" select="document(exsl:node-set($rssfile))" />
+      <xsl:apply-templates mode="profile" select="document(@file)" />
     </xsl:variable>
     <!-- take the RSS items -->
     <xsl:variable name="rssitems"
