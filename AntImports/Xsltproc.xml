@@ -83,6 +83,7 @@
 	</not>
 	<!-- Require a non-empty style file -->
         <not><equals arg1="${xsltproc.style.file}" arg2="" trim="true"/></not>
+        <available file="${xsltproc.style.file}"/>
       </and>
     </condition>
 
