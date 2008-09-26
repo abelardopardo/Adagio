@@ -2696,7 +2696,34 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 	  </informalfigure>
 
 	  <para>
-	    Now enter in that directory and type <command>git status</command>:
+	    With the previous command you may have downloaded a self-contained
+	    directory, in which case, all the files are already available for
+	    regular use, or a directory with references to some complementary
+	    material. These directories are called <quote>submodules</quote> and
+	    need a special treatment. A directory contains these modules if the
+	    file <filename>.gitmodules</filename> is present in the top
+	    directory.
+	  </para>
+
+	  <para>
+	    In the presence of modules, there are two additional commands that
+	    need to be executed in order to obtain the
+	    <emphasis>entire</emphasis> repository.
+	  </para>
+
+	  <programlisting>$ <command>git submodule init</command>
+$ <command>git submodule update</command></programlisting>
+
+          <para>
+	    The first command simply inserts the submodule declaration as part
+	    of the repository (a simple declaration is downloaded with the first
+	    <command>clone</command> command). The second effectively clones the
+	    additional modules.
+	  </para>
+
+	  <para>
+	    You may now enter in the top directory of the cloned copy and type
+	    <command>git status</command>:
 	  </para>
 
 	  <programlisting>$ <command>git status</command>
