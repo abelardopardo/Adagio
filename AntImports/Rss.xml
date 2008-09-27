@@ -65,7 +65,7 @@
     Daylight Savings Time!
     -->
     <exec executable="date" os="Linux" failonerror="true"
-      outputproperty="rss.date.rfc822">
+      outputproperty="ada.rss.date.rfc822">
       <arg value="-R"/>
     </exec>
 
@@ -88,7 +88,7 @@
         <not><equals arg1="${rss.style.file}" arg2="" trim="true"/></not>
 	<available file="${rss.style.file}"/>
 	<!-- Require a non-empty RFC 822 date -->
-        <not><equals arg1="${rss.date.rfc822}" arg2="" trim="true"/></not>
+        <not><equals arg1="${ada.rss.date.rfc822}" arg2="" trim="true"/></not>
       </and>
     </condition>
 
@@ -110,7 +110,7 @@
       <param name="xsltproc.output.format" value="${rss.output.format}"/>
       <param name="xsltproc.files"         value="${rss.files}"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
+	     value="--stringparam ada.rss.date.rfc822 '${ada.rss.date.rfc822}'
 		    ${rss.extra.args}"/>
     </antcall>
 
@@ -127,7 +127,7 @@
       <param name="xsltproc.multilingual.files"
 	     value="${rss.multilingual.files}"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
+	     value="--stringparam ada.rss.date.rfc822 '${ada.rss.date.rfc822}'
 		    ${rss.extra.args}"/>
     </antcall>
 
@@ -153,7 +153,7 @@
 	     value="${rss.target.filelist.property}
 		    ${rss.target.multilingual.filelist.property}"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
+	     value="--stringparam ada.rss.date.rfc822 '${ada.rss.date.rfc822}'
 		    ${rss.extra.args}"/>
     </antcall>
 
@@ -182,7 +182,7 @@
 	     value="${rss.target.filelist.property}
 		    ${rss.target.multilingual.filelist.property}"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
+	     value="--stringparam ada.rss.date.rfc822 '${ada.rss.date.rfc822}'
 		    ${rss.extra.args}"/>
     </antcall>
 
@@ -195,7 +195,7 @@
       <param name="xsltproc.multilingual.files"
 	     value="${rss.multilingual.files}"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
+	     value="--stringparam ada.rss.date.rfc822 '${ada.rss.date.rfc822}'
 		    ${rss.extra.args}"/>
     </antcall>
 
@@ -207,7 +207,7 @@
       <param name="xsltproc.output.format" value="${rss.output.format}"/>
       <param name="xsltproc.files"         value="${rss.files}"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam ada.rss.date.rfc822 '${rss.date.rfc822}'
+	     value="--stringparam ada.rss.date.rfc822 '${ada.rss.date.rfc822}'
 		    ${rss.extra.args}"/>
     </antcall>
 
