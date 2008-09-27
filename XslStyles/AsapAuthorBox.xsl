@@ -80,7 +80,13 @@
                   </xsl:choose>
                 </td>
                 <td>
-                  <input type="text" name="__nick__" size="20"/>
+                  <input type="text" name="__nick__" size="20">
+                    <xsl:if test="$ada.asap.groupname.default.value != ''">
+                      <xsl:attribute name="value">
+                        <xsl:value-of select="$ada.asap.groupname.default.value"/>
+                      </xsl:attribute>
+                    </xsl:if>
+                  </input>
                   <xsl:text> </xsl:text>
                   <img alt="Info" style="border: 0; vertical-align: middle">
                     <xsl:attribute name="src"><xsl:value-of

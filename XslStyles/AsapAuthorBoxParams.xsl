@@ -15,6 +15,7 @@
   <!-- all, none, one -->
   <xsl:param name="ada.asap.include.password"  select="'one'"/> 
   <xsl:param name="ada.asap.include.groupname" select="'no'"/>
+  <xsl:param name="ada.asap.groupname.default.value"></xsl:param>
   <!-- yes, no -->
   <xsl:param name="ada.asap.confirmation.email" select="'yes'"/>
     
