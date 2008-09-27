@@ -313,7 +313,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     </dependset>
 
     <!-- Execute the command. Watch out for abssrc.dir and absdst.dir -->
-    <xsltproc.execute DIR="${basedir}"
+    <xsltproc.execute DIR="${xsltproc.abssrc.dir}"
 		  XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
 		  XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
 		  XSLTPROC.STYLE.FILE="${xsltproc.style.file}">
@@ -375,7 +375,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     </dependset>
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <xsltproc.execute DIR="${basedir}"
+    <xsltproc.execute DIR="${xsltproc.abssrc.dir}"
 		  XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
 		  XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
 		  XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}">
@@ -388,23 +388,19 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
   </target>
 
   <!-- Clean files produced by xsltproc -->
-  <target name="xsltproc.clean" depends="xsltproc.init"
-	  if="xsltproc.check" description="Remove files produced by xsltproc">
+  <target name="xsltproc.clean" 
+	  depends="xsltproc.init, xsltproc.mergestyles.clean, 
+		   xsltproc.nomergestyles.clean"
+	  if="xsltproc.check" description="Remove files produced by xsltproc"/>
 
-    <echo>xsltproc.clean              RUN</echo>
+  <target name="xsltproc.nomergestyles.clean" depends="xsltproc.init"
+	  description="Clean those files produced with no mergestyles">
+
+    <echo>xsltproc.clean              RUN(nomerge)</echo>
     <echo level="${xsltproc.debug.level}">${basedir}</echo>
 
     <!-- Dump explicitly the files to be deleted -->
     <echo> deleted = ${xsltproc.target.filelist.property}</echo>
-
-    <!-- This call has no effect if no mergestyles.master.style is given -->
-    <mergestyles.clean MERGESTYLES.FILE.TO.IMPORT="${xsltproc.style.file}"/>
-    <!--
-    <antcall target="mergestyles.clean" inheritAll="false">
-      <param name="mergestyles.dst.dir" value="${xsltproc.dst.dir}"/>
-      <param name="mergestyles.file.to.import" value="${xsltproc.style.file}"/>
-    </antcall>
-    -->
 
     <!-- Perform the delete operation. The failonerror attribute is needed
 	 and must be set fo false because the dst directory might have been
@@ -412,6 +408,16 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <delete failonerror="false" includeemptydirs="true">
       <files includes="${xsltproc.target.filelist.property}"/>
     </delete>
+  </target>
+
+  <target name="xsltproc.mergestyles.clean" depends="xsltproc.init"
+	  if="xsltproc.mergestyles" description="Clean if Mergestyles is used">
+    <!-- This call has no effect if no mergestyles.master.style is given -->
+
+    <echo>xsltproc.clean              RUN(merge)</echo>
+    <echo level="${xsltproc.debug.level}">${basedir}</echo>
+
+    <mergestyles.clean MERGESTYLES.FILE.TO.IMPORT="${xsltproc.style.file}"/>
   </target>
 
   <!-- Multilingual processing instructions -->
