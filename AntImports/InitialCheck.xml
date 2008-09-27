@@ -22,11 +22,11 @@ build templates
   <!-- Default file name to load the propertyes -->
   <property name="ada.local.property.file" value="Properties.txt"/>
 
-  <!-- Load the properties from the ada.course.home directory -->
-  <property file="${ada.course.home}${file.separator}Ada.properties"/>
-
   <!-- Load the properties in the basedir directory -->
   <property file="${basedir}${file.separator}${ada.local.property.file}"/>
+
+  <!-- Load the properties from the ada.course.home directory -->
+  <property file="${ada.course.home}${file.separator}Ada.properties"/>
 
   <!-- Load the overridable course properties from the ada.course.home directory -->
   <property file="${ada.course.home}${file.separator}CourseProperties.txt"/>
