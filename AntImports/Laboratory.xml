@@ -134,7 +134,7 @@
     laboratory.dst.dir           ="${laboratory.dst.dir}"
     laboratory.style.file        ="${laboratory.style.file}"
     laboratory.submit.style.file ="${laboratory.style.file}"
-    laboratory.output.format     ="${laboratory.out.format}"
+    laboratory.output.format     ="${laboratory.output.format}"
     laboratory.extra.args        ="${laboratory.extra.args}"
     laboratory.files             ="${laboratory.files}"
     laboratory.multilingual.files="${laboratory.files}"</echo>
