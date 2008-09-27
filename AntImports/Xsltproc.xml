@@ -387,7 +387,6 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 	  if="xsltproc.check" description="Remove files produced by xsltproc"/>
 
   <target name="xsltproc.nomergestyles.clean" depends="xsltproc.init"
-	  if="xsltproc.nomergestyles"
 	  description="Clean those files produced with no mergestyles">
 
     <echo>xsltproc.clean              RUN(nomerge)</echo>
