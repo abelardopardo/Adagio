@@ -19,8 +19,8 @@
 #
 # I have no idea how to use associative arrays in bash, and since ADA needs to
 # work in a minimal environment, using Python, Perl or any other scripting
-# language is out of the questtion. As a consequence, a less than
-# than ideal processing algorithm follows.
+# language is out of the questtion. As a consequence, a less than ideal
+# processing algorithm follows.
 #
 
 # See where is ADA_HOME
@@ -55,11 +55,18 @@ for fname in $*; do
 	continue
     fi
 
+    # Translate all the files to their absolute path
+    newfiles=""
+    for fname in $files; do
+	absName=$(cd "$(dirname "$fname")"; pwd)/$(basename $fname)
+	newfiles="$newfiles $absName"
+    done
+
     # Accumulate the result in the variable finalfiles
-    finalfiles="$finalfiles $files"
+    finalfiles="$finalfiles $newfiles"
     
     # Recursive invocation of the script
-    recursivefiles=`getdependencies.sh $files`
+    recursivefiles=`getdependencies.sh $newfiles`
 	
     # Accumulate the obtained files.
     finalfiles="$finalfiles $recursivefiles"
@@ -67,12 +74,16 @@ done
 
 # The check for redundant filenames is done only at the level of the includes of
 # each file separatedly, a new check needs to be done for all the resulting files
-finalfiles=`echo $finalfiles | sed -e 's/ +/\n/g' | sort -u`
+finalfiles=`echo $finalfiles | sed -e 's/ /\n/g' | sort -u`
 
 files="$finalfiles"
 finalfiles=""
 for name in $files; do
-  finalfiles="$finalfiles $name"
+    if [ -e $name ]; then
+	finalfiles="$finalfiles $name"
+    fi
 done
 
 echo $finalfiles
+
+#    absName=$(cd "$(dirname "$name")"; pwd)/$(basename $name)

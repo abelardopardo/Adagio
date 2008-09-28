@@ -166,7 +166,8 @@
     <xsl:variable name="date.now">
       <xsl:choose>
         <xsl:when test="($ada.rss.force.date) and ($ada.rss.force.date != '')">
-          <xsl:value-of select="$ada.rss.force.date" />
+          <!--          <xsl:value-of select="$ada.rss.force.date" /> -->
+          <xsl:value-of select="$ada.rss.date.rfc822" />
         </xsl:when>
         <xsl:otherwise><xsl:value-of select="date:date()" /></xsl:otherwise>
       </xsl:choose>
@@ -219,24 +220,30 @@
         <!-- Produce the link element from the modespec/olink -->
         <xsl:if test="modespec/olink[@condition = 'link']">
           <!-- Stick prefix for URL taken from the ancestor -->
-          <link><xsl:value-of select="$ada.rss.item.url.prefix"/><xsl:value-of
-          select="ancestor::*/ulink[@condition = 'itemlinkbase']/@url"/>/<xsl:value-of 
-          select="normalize-space(modespec/olink/text())"/></link>
+          <link><xsl:if test="ancestor::*/ulink[@condition = 'itemlinkbase']">
+                <xsl:value-of select="$ada.rss.item.url.prefix"/><xsl:value-of
+                select="ancestor::*/ulink[@condition =
+                'itemlinkbase']/@url"/>/</xsl:if><xsl:value-of
+                select="normalize-space(modespec/olink/text())"/></link>
         </xsl:if>
         
         <guid>
           <xsl:choose>
             <xsl:when test="modespec/olink[@condition = 'guid']">
               <!-- Stick prefix for URL taken from the ancestor -->
-              <xsl:value-of select="$ada.rss.item.url.prefix"/><xsl:value-of 
+              <xsl:if test="ancestor::*/ulink[@condition =
+                            'itemlinkbase']"><xsl:value-of 
+              select="$ada.rss.item.url.prefix"/><xsl:value-of
               select="ancestor::*/ulink[@condition =
-              'itemlinkbase']/@url"/>/<xsl:value-of
-              select="normalize-space(modespec/olink/text())"/>
+              'itemlinkbase']/@url"/>/</xsl:if><xsl:value-of
+              select="normalize-space(modespec/olink[@condition = 'guid']/text())"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="$ada.rss.item.url.prefix"/><xsl:value-of 
+              <xsl:if test="ancestor::*/ulink[@condition =
+                            'itemlinkbase']"><xsl:value-of
+          select="$ada.rss.item.url.prefix"/><xsl:value-of  
               select="ancestor::*/ulink[@condition =
-              'itemlinkbase']/@url"/>/<xsl:value-of  
+              'itemlinkbase']/@url"/>/</xsl:if><xsl:value-of  
               select="normalize-space(modespec/olink/text())"/>
             </xsl:otherwise>
           </xsl:choose>
