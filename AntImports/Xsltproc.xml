@@ -308,7 +308,13 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 	<include name="AdaCourseParams.xml" />
 	<include name="Ada.properties" />
       </srcfileset>
-      <srcfileset dir="" includes="${xsltproc.dependency.files}"/>
+      <!-- 
+	   Attention: This filelist is not legal because it has not dir, but all
+	   the paths are absolute, therefore, there is no need for it. If an
+	   empty dir attribute is inserted, the dependencies break. I left it
+	   like that on purpose.
+      -->
+      <srcfilelist files="${xsltproc.dependency.files}"/>
       <targetfilelist refid="xsltproc.target.filelist" />
     </dependset>
 
@@ -370,7 +376,13 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 	<include name="AdaCourseParams.xml" />
 	<include name="Ada.properties" />
       </srcfileset>
-      <srcfileset dir="" includes="${xsltproc.dependency.files}"/>
+      <!-- 
+	   Attention: This filelist is not legal because it has not dir, but all
+	   the paths are absolute, therefore, there is no need for it. If an
+	   empty dir attribute is inserted, the dependencies break. I left it
+	   like that on purpose.
+      -->
+      <srcfilelist files="${xsltproc.dependency.files}"/>
       <targetfilelist refid="xsltproc.target.filelist" />
     </dependset>
 
