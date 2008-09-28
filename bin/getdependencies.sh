@@ -11,79 +11,87 @@
 # Due to the fact that the script needs to catch its onwn result in recursive
 # calls, it does not print any message.
 #
-# The weak point of this script is that the structure of included files is in
-# fact a DAG which needs to be traversed. The ideal implementation
-# would require an associative table (or a cache) to store the previously traversed
-# files and their results. That way, whenever the same file is visited, the
-# script cuts the recursion (Complexity O(m) where m is the number of files)
-#
-# I have no idea how to use associative arrays in bash, and since ADA needs to
-# work in a minimal environment, using Python, Perl or any other scripting
-# language is out of the questtion. As a consequence, a less than ideal
-# processing algorithm follows.
-#
 
 # See where is ADA_HOME
 ADA_HOME=`dirname $0`/..
 
-finalfiles=""
-for fname in $*; do
-    # If the argument is not a file, terminate the iteration
-    if [ ! -f "$fname" ]; then
+if [ "$1" = "-cache" ]; then
+    if [ "$#" -lt 3 ]; then
+	exit
+    fi
+    shift
+    cacheSTR=$1
+    shift
+    params="$*"
+elif [ "$#" -lt 1 ]; then
+    exit
+else
+    params="$*"
+fi
+
+idx=0
+fileArray=($params)
+# Translate each file to absolute path
+while [ "$idx" -ne ${#fileArray[*]} ]; do
+    fileArray[$idx]=$(cd "$(dirname "${fileArray[$idx]}")"; pwd)/$(basename ${fileArray[$idx]})
+    idx=`expr $idx + 1`
+done
+
+idx=0
+# Loop over all the files in fileArray
+while [ "$idx" -ne ${#fileArray[*]} ]; do
+    
+    # If the file does not exit keep looping
+    if [ ! -e ${fileArray[$idx]} ]; then
+	idx=`expr $idx + 1`
 	continue
     fi
 
-    # If the file is not an XML file terminate
-    if [ `file $fname | awk '{ print $2 }'` != "XML" ]; then
+    # If the value is not a file, keep looping
+    if [ ! -f "${fileArray[$idx]}" ]; then
+	idx=`expr $idx + 1`
+	continue
+    fi
+
+    # If the file is not an XML file keep looping
+#     if [ `file ${fileArray[$idx]} | awk '{ print $2 }'` != "XML" ]; then
+    ftest=`file -b ${fileArray[$idx]}`
+    if [ "$ftest" != "XML" ]; then
+	idx=`expr $idx + 1`
 	continue
     fi
 
     # Get the directory prefix of the XML file being processed. This is to
     # prepend to the included files, since their paths are considered from the
     # location of the file containing the includes
-    xmldir=`dirname $fname`
+    absDir=$(cd "$(dirname "${fileArray[$idx]}")"; pwd)
 
     # Execute the stylesheet to fetch the xi:include[@href] elements. Filter out
     # a potential #xpointer suffix in the href attribute and prepend the
     # directory where the source file is located. Also, since the relation
     # between included files is not a tree but a DAG, repeated files need to be
     # filtered (thus the invocation to sort -u)
-    files=`xsltproc $ADA_HOME/XslStyles/GetIncludes.xsl $fname | sed -e 's/#xpointer.*$//g' | sort -u | sed -e "s+^+$xmldir/+g"` 
-
-    # If the file has no relevant includes, terminate the iteration
+    files=`xsltproc $ADA_HOME/XslStyles/GetIncludes.xsl ${fileArray[$idx]} | sed -e 's/#xpointer.*$//g' | sort -u | sed -e "s+^+$absDir/+g"` 
+    
     if [ "$files" = "" ]; then
+	idx=`expr $idx + 1`
 	continue
     fi
 
-    # Translate all the files to their absolute path
-    newfiles=""
     for fname in $files; do
 	absName=$(cd "$(dirname "$fname")"; pwd)/$(basename $fname)
-	newfiles="$newfiles $absName"
+	echo ${fileArray[*]} | egrep -q "$absName"
+	if [ "$?" -eq 1 ]; then
+	    fileArray=(${fileArray[*]} $absName)
+	fi
     done
 
-    # Accumulate the result in the variable finalfiles
-    finalfiles="$finalfiles $newfiles"
-    
-    # Recursive invocation of the script
-    recursivefiles=`getdependencies.sh $newfiles`
-	
-    # Accumulate the obtained files.
-    finalfiles="$finalfiles $recursivefiles"
+    # Advance the index to traverse the array
+    idx=`expr $idx + 1`
 done
 
-# The check for redundant filenames is done only at the level of the includes of
-# each file separatedly, a new check needs to be done for all the resulting files
-finalfiles=`echo $finalfiles | sed -e 's/ /\n/g' | sort -u`
+echo ${fileArray[*]}
 
-files="$finalfiles"
-finalfiles=""
-for name in $files; do
-    if [ -e $name ]; then
-	finalfiles="$finalfiles $name"
-    fi
-done
-
-echo $finalfiles
+exit
 
 #    absName=$(cd "$(dirname "$name")"; pwd)/$(basename $name)
