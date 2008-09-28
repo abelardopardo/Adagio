@@ -11,17 +11,6 @@
 # Due to the fact that the script needs to catch its onwn result in recursive
 # calls, it does not print any message.
 #
-# The weak point of this script is that the structure of included files is in
-# fact a DAG which needs to be traversed. The ideal implementation
-# would require an associative table (or a cache) to store the previously traversed
-# files and their results. That way, whenever the same file is visited, the
-# script cuts the recursion (Complexity O(m) where m is the number of files)
-#
-# I have no idea how to use associative arrays in bash, and since ADA needs to
-# work in a minimal environment, using Python, Perl or any other scripting
-# language is out of the questtion. As a consequence, a less than ideal
-# processing algorithm follows.
-#
 
 # See where is ADA_HOME
 ADA_HOME=`dirname $0`/..
