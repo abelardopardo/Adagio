@@ -137,7 +137,7 @@
     laboratory.output.format     ="${laboratory.output.format}"
     laboratory.extra.args        ="${laboratory.extra.args}"
     laboratory.files             ="${laboratory.files}"
-    laboratory.multilingual.files="${laboratory.files}"</echo>
+    laboratory.multilingual.files="${laboratory.multilingual.files}"</echo>
   </target>
 
   <!-- If entering through this target, build.out is deleted -->
@@ -152,6 +152,8 @@
       <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
       <param name="xsltproc.output.format" value="${laboratory.output.format}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
       <param name="xsltproc.files"         value="${laboratory.creating.files}"/>
       <param name="xsltproc.multilingual.files"
 	     value="${laboratory.creating.multilingual.files}"/>
@@ -165,6 +167,8 @@
       <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
       <param name="xsltproc.output.format"
 	     value="_solution${laboratory.output.format}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
       <param name="xsltproc.multilingual.files"
 	     value="${laboratory.creating.multilingual.files}"/>
@@ -180,6 +184,8 @@
       <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
       <param name="xsltproc.output.format"
 	     value="_pguide${laboratory.output.format}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
       <param name="xsltproc.multilingual.files"
 	     value="${laboratory.creating.multilingual.files}"/>
@@ -194,6 +200,8 @@
       <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${laboratory.submit.style.file}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
       <param name="xsltproc.output.format"
 	     value="_submit${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
@@ -211,6 +219,8 @@
       <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${laboratory.submit.style.file}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
       <param name="xsltproc.output.format"
 	     value="_submit${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
@@ -224,6 +234,8 @@
       <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
       <param name="xsltproc.output.format"
 	     value="_pguide${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
@@ -240,6 +252,8 @@
       <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
       <param name="xsltproc.output.format"
 	     value="_solution${laboratory.output.format}"/>
       <param name="xsltproc.files"      value="${laboratory.creating.files}"/>
@@ -255,6 +269,8 @@
       <param name="xsltproc.src.dir"       value="${laboratory.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${laboratory.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${laboratory.style.file}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
       <param name="xsltproc.output.format" value="${laboratory.output.format}"/>
       <param name="xsltproc.files"         value="${laboratory.creating.files}"/>
       <param name="xsltproc.multilingual.files"
