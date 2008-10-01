@@ -17,15 +17,14 @@
   <!-- Private properties -->
   <property name="extraant.debug.level"    value="${ada.debug.level}"/>
 
-  <property name="extraant.pretarget"        value=""/>
-  <property name="extraant.posttarget"       value=""/>
-  <property name="extraant.pretarget.clean"  value=""/>
-  <property name="extraant.posttarget.clean" value=""/>
-
   <target name="extraant.init" depends="ada.init">
     <!-- Public Property definition -->
     <property name="extraant.src.dir"          value="${basedir}"/>
     <property name="extraant.file"             value="build.xml"/>
+    <property name="extraant.pretarget"        value=""/>
+    <property name="extraant.posttarget"       value=""/>
+    <property name="extraant.pretarget.clean"  value=""/>
+    <property name="extraant.posttarget.clean" value=""/>
     
     <!-- Private properties -->
     <property name="extraant.target"         value=""/>
@@ -43,9 +42,39 @@
 	<available file="${extraant.abssrc.dir}${file.separator}${extraant.file}"/>
       </and>
     </condition>
+    <condition property="extraant.pretarget.check">
+      <and>
+	<!-- Target cannot be empty -->
+	<not><equals arg1="${extraant.pretarget}" arg2="" trim="true"/></not>
+	<available file="${extraant.abssrc.dir}${file.separator}${extraant.file}"/>
+      </and>
+    </condition>
+    <condition property="extraant.posttarget.check">
+      <and>
+	<!-- Target cannot be empty -->
+	<not><equals arg1="${extraant.posttarget}" arg2="" trim="true"/></not>
+	<available file="${extraant.abssrc.dir}${file.separator}${extraant.file}"/>
+      </and>
+    </condition>
+    <condition property="extraant.pretarget.clean.check">
+      <and>
+	<!-- Target cannot be empty -->
+	<not><equals arg1="${extraant.pretarget.clean}" arg2="" trim="true"/></not>
+	<available file="${extraant.abssrc.dir}${file.separator}${extraant.file}"/>
+      </and>
+    </condition>
+    <condition property="extraant.posttarget.clean.check">
+      <and>
+	<!-- Target cannot be empty -->
+	<not><equals arg1="${extraant.posttarget.clean}" arg2="" trim="true"/></not>
+	<available file="${extraant.abssrc.dir}${file.separator}${extraant.file}"/>
+      </and>
+    </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${extraant.debug.level}">  extraant.check              = "${extraant.check}"</echo>
+    <echo level="${extraant.debug.level}">  extraant.check              ="${extraant.check}"
+  extraant.pretarget.check    = "${extraant.pretarget.check}"
+  extraant.posttarget.check   = "${extraant.posttarget.check}"</echo>
 
     <macrodef name="extraant.execute.invokation">
       <attribute name="EXTRAANT.EXECUTE.TARGET" />
@@ -64,21 +93,40 @@
 
   <!-- Regular target. It is executed if the check property is true -->
   <target name="extraant.processing" depends="extraant.init"
-	  if="extraant.check" description="Simply invoke the extra ant with target target">
+	  if="extraant.check" 
+	  description="Simply invoke the extra ant with target target">
 
     <extraant.execute.invokation EXTRAANT.EXECUTE.TARGET="${extraant.target}" />
   </target>
 
   <target name="extraant.processing.pretarget" depends="extraant.init"
-	  if="extraant.check" description="Simply invoke the extra ant with target target">
+	  if="extraant.pretarget.check" 
+	  description="Simply invoke the extra ant with target target">
 
     <extraant.execute.invokation EXTRAANT.EXECUTE.TARGET="${extraant.pretarget}" />
   </target>
 
   <target name="extraant.processing.posttarget" depends="extraant.init"
-	  if="extraant.check" description="Simply invoke the extra ant with target target">
+	  if="extraant.posttarget.check" 
+	  description="Simply invoke the extra ant with target target">
 
     <extraant.execute.invokation EXTRAANT.EXECUTE.TARGET="${extraant.posttarget}" />
+  </target>
+
+  <target name="extraant.processing.pretarget.clean" depends="extraant.init"
+	  if="extraant.pretarget.clean.check" 
+	  description="Simply invoke the extra ant with target target">
+
+    <extraant.execute.invokation 
+      EXTRAANT.EXECUTE.TARGET="${extraant.pretarget.clean}" />
+  </target>
+
+  <target name="extraant.processing.posttarget.clean" depends="extraant.init"
+	  if="extraant.posttarget.clean.check" 
+	  description="Simply invoke the extra ant with target target">
+
+    <extraant.execute.invokation 
+      EXTRAANT.EXECUTE.TARGET="${extraant.posttarget.clean}" />
   </target>
 
   <!-- Dump the properties defined in this script -->

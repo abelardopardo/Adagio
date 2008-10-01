@@ -104,12 +104,12 @@
   </macrodef>
 
   <target name="local.execute" 
-	  depends="initial.delete.build.out">
+	  depends="ada.init, initial.delete.build.out">
     <ada.apply.processing.rules/>
   </target>
 
   <!-- Apply timeline -->
-  <target name="execute" depends="initial.delete.build.out">
+  <target name="execute" depends="ada.init, initial.delete.build.out">
 
     <echo>BEGIN EXE: ${basedir}</echo>
 
@@ -121,7 +121,7 @@
     <echo>END EXE: ${basedir}</echo>
   </target>
 
-  <target name="local.clean" depends="initial.delete.build.out">
+  <target name="local.clean" depends="ada.init, initial.delete.build.out">
 
     <echo>BEGIN CLEAN: ${basedir}</echo>
 
@@ -129,9 +129,7 @@
 	 target="export.clean" inheritAll="false"/>
 
     <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
-	 target="extraant.processing" inheritAll="false">
-      <property name="extraant.target" value="${extraant.posttarget.clean}"/>
-    </ant>
+	 target="extraant.processing.posttarget.clean" inheritAll="false"/>
 
     <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
 	 target="pdfnup.clean" inheritAll="false"/>
@@ -188,9 +186,7 @@
 	 target="xfig.clean" inheritAll="false"/>
 
     <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
-	 target="extraant.processing" inheritAll="false">
-      <property name="extraant.target" value="${extraant.pretarget.clean}"/>
-    </ant>
+	 target="extraant.processing.pretarget.clean" inheritAll="false"/>
  
     <ant antfile="${ada.home}/AntImports/Copyfiles.xml" 
 	 target="copyfiles.clean" inheritAll="false"/>
