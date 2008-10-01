@@ -55,8 +55,8 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
 
     # If the file is not an XML file keep looping
 #     if [ `file ${fileArray[$idx]} | awk '{ print $2 }'` != "XML" ]; then
-    ftest=`file -b ${fileArray[$idx]}`
-    if [ "$ftest" != "XML" ]; then
+    ftest=`file ${fileArray[$idx]}`
+    if [ "${ftest/*XML*/XML}" != "XML" ]; then
 	idx=`expr $idx + 1`
 	continue
     fi
