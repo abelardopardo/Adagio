@@ -11,7 +11,7 @@
 
   <xsl:import href="HeadTail.xsl"/>
   <xsl:import href="CountDown.xsl"/>
-  <xsl:import href="ChatRoomLink.xsl"/>
+  <xsl:import href="HeaderLinks.xsl"/>
 
   <!-- Ignore the submit elements -->
   <xsl:import href="SubmitIgnore.xsl"/>
@@ -143,7 +143,7 @@
         <hr align="center"/>
       </xsl:if>
       
-      <xsl:call-template name="ada.insert.chatroom.link"/>
+      <xsl:call-template name="ada.insert.header.links"/>
       
       <table width="97%" style="border:0" cellspacing="0" cellpadding="2" 
         align="center">

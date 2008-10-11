@@ -8,7 +8,7 @@
 
   <xsl:import href="HeadTail.xsl"/>
   <xsl:import href="CountDown.xsl"/>
-  <xsl:import href="ChatRoomLink.xsl"/>
+  <xsl:import href="HeaderLinks.xsl"/>
 
   <xsl:import href="AsapBenchResultsParams.xsl"/>
 
@@ -93,7 +93,7 @@
       </xsl:element>
     </p>
 
-    <xsl:call-template name="ada.insert.chatroom.link"/>
+    <xsl:call-template name="ada.insert.header.links"/>
 
     <xsl:if test="section[@condition = 'legend']">
       <xsl:apply-templates select="section[@condition = 'legend']"/>

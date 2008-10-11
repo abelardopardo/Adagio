@@ -9,7 +9,7 @@
   
   <xsl:import href="HeadTail.xsl"/>
   <xsl:import href="CountDown.xsl"/>
-  <xsl:import href="ChatRoomLink.xsl"/>
+  <xsl:import href="HeaderLinks.xsl"/>
   <xsl:import href="AsapAuthorBox.xsl"/>
 
   <xsl:import href="SubmitParams.xsl"/>
@@ -79,7 +79,7 @@
       <hr style="text-align: center"/>
     </xsl:if>
 
-    <xsl:call-template name="ada.insert.chatroom.link"/>
+    <xsl:call-template name="ada.insert.header.links"/>
 
     <xsl:if test="$ada.submit.asap.verifyemail.js != ''">
       <xsl:element name="script">
