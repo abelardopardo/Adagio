@@ -5,7 +5,43 @@ Include here those definitions that are supposed to be shared among several Ant
 build templates
 -->
 
-<project name="Initial Checks" default="ada.init">
+<project name="Initial Checks" default="initial.check">
+
+  <!-- 
+       Script to detect where is the course home by checking for the presence of
+       AdaCourseParams.xml up to 10 levels up the current basedir. The script
+       needs to be executed the first thing in order to have ada.course.home
+       available to be used in the files that are about to be sourced.
+  -->
+  <exec executable="bash"
+	dir="${basedir}"
+	outputproperty="ada.course.home">
+    <arg value="${ada.home}${file.separator}bin${file.separator}adafindcoursehome"/>
+  </exec>
+  
+  <!-- Default file name to load the propertyes -->
+  <property name="ada.local.property.file" value="Properties.txt"/>
+
+  <!-- Load the properties in the basedir directory -->
+  <property file="${basedir}${file.separator}${ada.local.property.file}"/>
+
+  <!-- Load the properties from the ada.course.home directory -->
+  <property file="${ada.course.home}${file.separator}Ada.properties"/>
+
+  <!-- Load the overridable course properties from the ada.course.home directory -->
+  <property file="${ada.course.home}${file.separator}CourseProperties.txt"/>
+
+  <!-- Load the local properties from .ant.properties -->
+  <property file=".ant.properties"/>
+
+  <!-- Load the properties from the user.home directory -->
+  <property file="${user.home}${file.separator}.ant.properties"/>
+
+  <!-- Load the properties from the cygwin.user.home directory -->
+  <property file="${cygwin.user.home}${file.separator}.ant.properties"/>
+
+  <!-- Directory where the toolkit is installed -->
+  <property name="ada.home" value="" />
 
   <!-- Overall debug level for the rule scripts -->
   <property name="ada.debug.level" value="info"/>
