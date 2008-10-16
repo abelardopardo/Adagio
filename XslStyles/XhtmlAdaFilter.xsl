@@ -88,6 +88,9 @@
   <!-- apply templates to a RSS item (short: first paragraph only) -->
   <xsl:template match="sectioninfo | chapterinfo" mode="rss-short">
     <xsl:param name="numitems">0</xsl:param>
+    <xsl:param name="item.url"><xsl:value-of
+	select="$ada.rss.html.path" />#item<xsl:number
+	value="$numitems - position() + 1" format="1"/></xsl:param>
     <xsl:element name="tr">
       <td>
 	<xsl:if test="../@status">
@@ -99,8 +102,7 @@
 	  <xsl:when test="$ada.rss.html.path != ''">
 	    <xsl:element name="a">
 	      <xsl:attribute name="href"><xsl:value-of
-		  select="$ada.rss.html.path" />#item<xsl:number
-		  value="$numitems - position() + 1" format="1"/></xsl:attribute>
+		  select="$item.url" /></xsl:attribute>
 	      <b><xsl:value-of select="title/text()" /></b>
 	    </xsl:element>
 	  </xsl:when>
@@ -109,6 +111,11 @@
 	  </xsl:otherwise>
 	</xsl:choose>
 	<xsl:apply-templates select="abstract/formalpara/para[position()=1]" />
+	<xsl:if test="count(abstract/formalpara/para) > 1">
+	  <xsl:element name="a">
+	    <xsl:attribute name="href"><xsl:value-of
+		select="$item.url" /></xsl:attribute>[+]</xsl:element>
+	</xsl:if>
       </td>
     </xsl:element>    
   </xsl:template>

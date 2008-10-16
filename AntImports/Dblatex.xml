@@ -8,6 +8,9 @@
       dblatex.src.dir: directory from where to take the source files
       dblatex.dst.dir: directory where the produced files are stored
       dblatex.files: comma/space separated list of files to process
+      dblatex.extra.args: space separated list of extra command-line arguments
+      dblatex.compliant.mode: set to true to get the default behavior
+                              of dblatex (not the ada-flavored behavior)
 
       Produce a pdf file directly from a Docbook file
   -->
@@ -27,6 +30,8 @@
     <property name="dblatex.dst.dir"        value="${dblatex.src.dir}"/>
     <property name="dblatex.files"          value=""/>
     <property name="dblatex.extra.args"      value=""/>
+    <property name="dblatex.compliant.mode" value=""/>
+
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths
@@ -58,12 +63,23 @@
     <!-- Create the dst directory -->
     <mkdir dir="${dblatex.absdst.dir}" />
 
+    <!-- Avoid the revision and authors tables, unless
+         ${dblatex.compliant.mode} is true: -->
+    <condition property="dblatex.extra.args.internal"
+      value="-P doc.collab.show=0 -P latex.output.revhistory=0"
+      else="" >
+      <not>
+	<istrue value="${dblatex.compliant.mode}" />
+      </not>
+    </condition>
+
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
     <apply dir="${basedir}" parallel="false" dest="${dblatex.absdst.dir}" 
 	   append="yes" failonerror="true" executable="${dblatex.exec}" 
 	   output="build.out">
       <arg value="-o"/>
       <targetfile/>
+      <arg line="${dblatex.extra.args.internal}"/>
       <arg line="${dblatex.extra.args}"/>
       <fileset refid="dblatex.fileset"/>
       <!-- Mapper from source files to produced files -->
