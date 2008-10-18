@@ -173,6 +173,7 @@
 	
 	<!-- Force the dependency checking on changes on the style sheet -->
 	<dependset>
+	  <srcfileset file="${ada.local.property.file}" />
 	  <srcfileset file="${xsltproc.mergestyles.style.file}" />
 	  <srcfileset file="@{MERGESTYLES.FILE.TO.IMPORT}" />
 	  <srcfileset dir="${ada.home}/XslStyles">
@@ -308,6 +309,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 
     <!-- Force the dependency checking on changes on the style sheet -->
     <dependset>
+      <srcfileset file="${ada.local.property.file}" />
       <srcfileset file="${xsltproc.style.file}" />
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
@@ -376,6 +378,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 
     <!-- Force the dependency checking on changes on the style sheet -->
     <dependset>
+      <srcfileset file="${ada.local.property.file}" />
       <srcfileset file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}"/>
       <srcfileset dir="${ada.home}/XslStyles">
 	<include name="*.xsl" />
