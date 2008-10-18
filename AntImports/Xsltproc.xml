@@ -42,9 +42,17 @@
     <property name="mergestyles.master.style"   value=""/>
 
     <property name="xsltproc.profile.lang"        value=""/>
-    <property name="xsltproc.profile.lang.suffix" value=""/>
-    <property name="xsltproc.profile.lang.option" value=""/>
-
+    <condition property="xsltproc.profile.lang.suffix"
+               value="_${xsltproc.profile.lang}"
+	       else="">
+      <not><equals arg1="${xsltproc.profile.lang}" arg2="" trim="true"/></not>
+    </condition>
+    <condition property="xsltproc.profile.lang.option"
+               value="--stringparam profile.lang ${xsltproc.profile.lang}"
+               else="">
+      <not><equals arg1="${xsltproc.profile.lang}" arg2="" trim="true"/></not>
+    </condition>
+    
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths
       ADA.PREFIX="xsltproc" ADA.SRC.DIR="${xsltproc.src.dir}"

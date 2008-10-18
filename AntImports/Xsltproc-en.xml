@@ -4,9 +4,6 @@
 	 default="xsltproc.processing">
 
   <property name="xsltproc.profile.lang" value="en"/>
-  <property name="xsltproc.profile.lang.suffix" value="_en"/>
-  <property name="xsltproc.profile.lang.option" 
-	    value="--stringparam profile.lang ${xsltproc.profile.lang}"/>
 
   <import file="Xsltproc.xml"/>
 

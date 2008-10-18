@@ -4,9 +4,6 @@
 	 default="xsltprocmultilingual">
 
   <property name="xsltproc.profile.lang" value="es"/>
-  <property name="xsltproc.profile.lang.suffix" value="_es"/>
-  <property name="xsltproc.profile.lang.option" 
-	    value="--stringparam profile.lang ${xsltproc.profile.lang}"/>
 
   <import file="Xsltproc.xml"/>
 
