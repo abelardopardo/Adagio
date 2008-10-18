@@ -96,6 +96,7 @@ hr
 { 
   height: 1px; 
   background: black; 
+  align: center; 
 }
 
 /* Center text derived from title element */
