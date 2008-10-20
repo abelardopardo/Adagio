@@ -102,17 +102,6 @@
   <xsl:template name="user.header.content">
     <xsl:param name="node" select="."/>
     
-    <!-- Insert Google Analytics snippet -->
-    <xsl:if test="$ada.page.google.analytics.account">
-      <script src="http://www.google-analytics.com/urchin.js" 
-        type="text/javascript">
-      </script>
-      <script type="text/javascript">
-        _uacct = "<xsl:value-of select="$ada.page.google.analytics.account"/>";
-        urchinTracker();
-      </script>
-    </xsl:if>
-
     <xsl:comment> ######## Beginning of title ######## </xsl:comment>
     <div id="titlebox">
       <xsl:if test="$ada.page.head.left.logo or $ada.page.head.center.top.logo 
@@ -325,6 +314,19 @@
       </xsl:if>
       <xsl:comment> ######## End of Tail ######## </xsl:comment>
     </div>
+
+    <!-- Insert Google Analytics snippet -->
+    <xsl:if test="$ada.page.google.analytics.account">
+      <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+        var pageTracker = _gat._getTracker("<xsl:value-of select="$ada.page.google.analytics.account"/>");
+        pageTracker._trackPageview();
+      </script>
+    </xsl:if>
+
   </xsl:template>
 
   <xsl:template name="ggadgetlink">
