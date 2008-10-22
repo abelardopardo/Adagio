@@ -7,7 +7,7 @@
 
 subrecursive.dirs=../../Material/Author7
 
-laboratory.files=index.xml
+exercisesubmit.files=index.xml
 
 mergestyles.master.style=../AdaCourseParams.xml
 

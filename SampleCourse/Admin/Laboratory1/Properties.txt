@@ -8,8 +8,8 @@
 subrecursive.dirs=../../Material/Author4/Problem1 \
                    ../../Material/Author4/Problem2 
 
-laboratory.style.file=${ada.home}/XslStyles/Laboratory.xsl
-laboratory.files=index.xml
+exercisesubmit.style.file=${ada.home}/XslStyles/ExerciseSubmit.xsl
+exercisesubmit.files=index.xml
 
 mergestyles.master.style=../AdaCourseParams.xml
 

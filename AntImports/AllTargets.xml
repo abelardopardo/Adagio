@@ -21,7 +21,7 @@
 <!--   <import file="Gimp.xml"/> -->
 <!--   <import file="Inkscape.xml"/> -->
 <!--   <import file="SubRecursive.xml"/> -->
-<!--   <import file="Laboratory.xml"/> -->
+<!--   <import file="ExerciseSubmit.xml"/> -->
 <!--   <import file="Pdflatex.xml"/> -->
 <!--   <import file="PDFnup.xml"/> -->
 <!--   <import file="Ppt2PDF.xml"/> -->
@@ -62,8 +62,8 @@
       <ant antfile="${ada.home}/AntImports/Docbook.xml" 
 	   target="docbook.processing" inheritAll="false"/>
       
-      <ant antfile="${ada.home}/AntImports/Laboratory.xml" 
-	   target="laboratory.processing" inheritAll="false"/>
+      <ant antfile="${ada.home}/AntImports/ExerciseSubmit.xml" 
+	   target="exercisesubmit.processing" inheritAll="false"/>
       
       <ant antfile="${ada.home}/AntImports/Exam.xml" 
 	   target="exam.processing" inheritAll="false"/>
@@ -161,8 +161,8 @@
     <ant antfile="${ada.home}/AntImports/Exam.xml" 
 	 target="exam.clean" inheritAll="false"/>
 
-    <ant antfile="${ada.home}/AntImports/Laboratory.xml" 
-	 target="laboratory.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/ExerciseSubmit.xml" 
+	 target="exercisesubmit.clean" inheritAll="false"/>
 
     <ant antfile="${ada.home}/AntImports/Docbook.xml" 
 	 target="docbook.clean" inheritAll="false"/>

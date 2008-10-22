@@ -109,15 +109,15 @@
 #
 # Properties to generate files as if to support a lab submission
 #
-# laboratory.src.dir= current dir	# Source directory
-# laboratory.dst.dir=${laboratory.src.dir} # Destination dir
-# laboratory.style.file=${ada.home}/XslStyles/Laboratory.xsl 
+# exercisesubmit.src.dir= current dir	# Source directory
+# exercisesubmit.dst.dir=${exercisesubmit.src.dir} # Destination dir
+# exercisesubmit.style.file=${ada.home}/XslStyles/ExerciseSubmit.xsl 
 					# Default style sheet
-# laboratory.submit.style.file=${ada.home}/XslStyles/Submit.xsl 
+# exercisesubmit.submit.style.file=${ada.home}/XslStyles/Submit.xsl 
 					# Style for the submission
-# laboratory.output.format=.html	# Output format (WITH DOT!)
-# laboratory.files=			# List of docbook file sto process
-# laboratory.multilingual.files=	# List of docbook to process 
+# exercisesubmit.output.format=.html	# Output format (WITH DOT!)
+# exercisesubmit.files=			# List of docbook file sto process
+# exercisesubmit.multilingual.files=	# List of docbook to process 
 				 	# with the languages available 
 
 #
