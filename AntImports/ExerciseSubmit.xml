@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Create documents for a lab" default="exercisesubmit.processing">
+
+  <!--
+      Given the following properties and fileset:
+
+      exercisesubmit.src.dir: directory from where to take the source files
+      exercisesubmit.dst.dir: directory where the produced files are stored
+      exercisesubmit.output.format: Extension of the output file
+      exercisesubmit.style.file: Style file to be used
+      exercisesubmit.files: comma/space separated list of files to process
+      exercisesubmit.multilingual.files: list of files to process multiple languages
+
+      It invokes three times xsltproc to generate a regular HTML document, a
+      document with the section/phrase/note with the attribute
+      condition=solution, a document with the section/phrase/note with the
+      attribute condition=professorguide, and a document with a form to submit
+      the answers derived from the elements with the elements with
+      condition=submit.
+  -->
+
+  <import file="Cleaning.xml"/>
+  <import file="SubRecursive.xml"/>
+  <import file="Xsltproc.xml"/>
+
+  <!-- Private properties -->
+  <property name="exercisesubmit.debug.level"    value="${ada.debug.level}"/>
+  
+  <target name="exercisesubmit.init" depends="ada.init">
+    <!-- Property definition -->
+    <property name="exercisesubmit.src.dir"       value="${basedir}"/>
+    <property name="exercisesubmit.dst.dir"       value="${exercisesubmit.src.dir}"/>
+    <property name="exercisesubmit.style.file" 
+	      value="${ada.home}/XslStyles/Exercisesubmit.xsl"/>
+    <property name="exercisesubmit.submit.style.file" 
+	      value="${ada.home}/XslStyles/Submit.xsl"/>
+    <property name="exercisesubmit.extra.args" value=""/>
+    <property name="exercisesubmit.output.format"   value=".html"/>
+    <property name="exercisesubmit.files"           value=""/>
+    <property name="exercisesubmit.multilingual.files" value=""/>
+    
+    <!-- Private properties -->
+    <property name="exercisesubmit.creating.files"  value=""/>
+    <property name="exercisesubmit.creating.multilingual.files"  
+	      value=""/>
+    <property name="exercisesubmit.manipulate.target" 
+	      value="xsltproc.processing"/>
+
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <ada.expand.srcdst.paths
+      ADA.PREFIX="exercisesubmit" ADA.SRC.DIR="${exercisesubmit.src.dir}"
+      ADA.DST.DIR="${exercisesubmit.dst.dir}" ADA.FILES="${exercisesubmit.files}"/>
+
+    <!-- Source files to be processed (fileset to allow wildcards) -->
+    <fileset id="exercisesubmit.multilingual.fileset" dir="${exercisesubmit.abssrc.dir}"
+	     includes="___bogus___file__name ${exercisesubmit.multilingual.files}"/>
+    
+    <!-- 
+	 Obtain the filelist with the multilingual source files to see if it is
+	 empty 
+    -->
+    <pathconvert property="exercisesubmit.source.multilingual.filelist.property" 
+		 pathsep=" ">
+      <fileset refid="exercisesubmit.multilingual.fileset"/>
+    </pathconvert>
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="exercisesubmit.check">
+      <!-- There must be some files defined -->
+      <or>
+	<not>
+	  <equals arg1="${exercisesubmit.source.filelist.property}" arg2=""
+		  trim="true"/>
+	</not>
+	<not>
+	  <equals arg1="${exercisesubmit.source.multilingual.filelist.property}"
+		  arg2="" trim="true"/>
+	</not>
+      </or>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="${exercisesubmit.debug.level}">    exercisesubmit.check          = "${exercisesubmit.check}"</echo>
+  </target>
+
+  <!-- Invoke xsltprocessing -->
+  <target name="exercisesubmit.processing" depends="exercisesubmit.init"
+	  if="exercisesubmit.check" description="Call all the multiple xsltprocs">
+
+    <echo>exercisesubmit.processing       CALL(xsltproc.processing 3 versions)</echo>
+
+    <!-- Create the dst directory -->
+    <mkdir dir="${exercisesubmit.dst.dir}" />
+
+    <!-- Create all the files (language neutral) -->
+    <antcall target="exercisesubmit.manipulate.files" inheritAll="false">
+      <param name="exercisesubmit.creating.files" value="${exercisesubmit.files}"/>
+    </antcall>
+
+    <!-- Create all the multilingual files -->
+    <antcall target="exercisesubmit.manipulate.files" inheritAll="false">
+      <param name="exercisesubmit.creating.multilingual.files" 
+	     value="${exercisesubmit.multilingual.files}"/>
+      <param name="exercisesubmit.manipulate.target" 
+	     value="xsltprocmultilingual.processing"/>
+    </antcall>
+
+    <echo>exercisesubmit.processing       END(xsltproc.processing 3 versions)</echo>
+  </target>
+
+  <!-- Clean files produced by exercisesubmit -->
+  <target name="exercisesubmit.clean" depends="exercisesubmit.init"
+	  if="exercisesubmit.check" description="Remove files produced by exercisesubmit">
+
+    <echo>exercisesubmit.clean            CALL(xsltproc.processing 3 versions)</echo>
+
+    <!-- Delete all the multilingual files -->
+    <antcall target="exercisesubmit.clean.files" inheritAll="false">
+      <param name="exercisesubmit.creating.multilingual.files" 
+	     value="${exercisesubmit.multilingual.files}"/>
+      <param name="exercisesubmit.manipulate.target" 
+	     value="xsltprocmultilingual.clean"/>
+    </antcall>
+
+    <!-- Delete all the language neutral files -->
+    <antcall target="exercisesubmit.clean.files" inheritAll="false">
+      <param name="exercisesubmit.creating.files" value="${exercisesubmit.files}"/>
+      <param name="exercisesubmit.manipulate.target" value="xsltproc.clean"/>
+    </antcall>
+
+    <echo>exercisesubmit.clean            END(xsltproc.processing 3 versions)</echo>
+  </target>
+
+  <target name="exercisesubmit.dump.properties" depends="exercisesubmit.init">
+    <echo level="${exercisesubmit.debug.level}"> ------ Exercisesubmit properties ----
+    exercisesubmit.src.dir           ="${exercisesubmit.src.dir}"
+    exercisesubmit.dst.dir           ="${exercisesubmit.dst.dir}"
+    exercisesubmit.style.file        ="${exercisesubmit.style.file}"
+    exercisesubmit.submit.style.file ="${exercisesubmit.style.file}"
+    exercisesubmit.output.format     ="${exercisesubmit.output.format}"
+    exercisesubmit.extra.args        ="${exercisesubmit.extra.args}"
+    exercisesubmit.files             ="${exercisesubmit.files}"
+    exercisesubmit.multilingual.files="${exercisesubmit.multilingual.files}"</echo>
+  </target>
+
+  <!-- If entering through this target, build.out is deleted -->
+  <target name="exercisesubmit" depends="initial.delete.build.out, exercisesubmit.processing"/>
+
+  <!-- Create the regular file, solution and professor guide -->
+  <target name="exercisesubmit.manipulate.files" depends="exercisesubmit.init">
+
+    <!-- Call xsltproc with no extra options -->
+    <antcall target="${exercisesubmit.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${exercisesubmit.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${exercisesubmit.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${exercisesubmit.style.file}"/>
+      <param name="xsltproc.output.format" value="${exercisesubmit.output.format}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
+      <param name="xsltproc.files"         value="${exercisesubmit.creating.files}"/>
+      <param name="xsltproc.multilingual.files"
+	     value="${exercisesubmit.creating.multilingual.files}"/>
+      <param name="xsltproc.extra.args" value="${exercisesubmit.extra.args}"/>
+    </antcall>
+
+    <!-- Call xsltproc to generate the solution -->
+    <antcall target="${exercisesubmit.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${exercisesubmit.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${exercisesubmit.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${exercisesubmit.style.file}"/>
+      <param name="xsltproc.output.format"
+	     value="_solution${exercisesubmit.output.format}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
+      <param name="xsltproc.files"      value="${exercisesubmit.creating.files}"/>
+      <param name="xsltproc.multilingual.files"
+	     value="${exercisesubmit.creating.multilingual.files}"/>
+      <param name="xsltproc.extra.args" 
+	     value="${exercisesubmit.extra.args} 
+                    --stringparam solutions.include.guide yes"/>
+    </antcall>
+
+    <!-- Call xsltproc to generate the professor guide -->
+    <antcall target="${exercisesubmit.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${exercisesubmit.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${exercisesubmit.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${exercisesubmit.style.file}"/>
+      <param name="xsltproc.output.format"
+	     value="_pguide${exercisesubmit.output.format}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
+      <param name="xsltproc.files"      value="${exercisesubmit.creating.files}"/>
+      <param name="xsltproc.multilingual.files"
+	     value="${exercisesubmit.creating.multilingual.files}"/>
+      <param name="xsltproc.extra.args" 
+	     value="${exercisesubmit.extra.args} 
+                    --stringparam professorguide.include.guide yes
+                    --stringparam solutions.include.guide yes"/>
+    </antcall>
+
+    <!-- Call xsltproc to generate the submission page -->
+    <antcall target="${exercisesubmit.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${exercisesubmit.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${exercisesubmit.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${exercisesubmit.submit.style.file}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
+      <param name="xsltproc.output.format"
+	     value="_submit${exercisesubmit.output.format}"/>
+      <param name="xsltproc.files"      value="${exercisesubmit.creating.files}"/>
+      <param name="xsltproc.multilingual.files"
+	     value="${exercisesubmit.creating.multilingual.files}"/>
+      <param name="xsltproc.extra.args" value="${exercisesubmit.extra.args}"/>
+    </antcall>
+  </target>
+
+  <!-- Create the regular file, solution and professor guide -->
+  <target name="exercisesubmit.clean.files" depends="exercisesubmit.init">
+
+    <!-- Call xsltproc to generate the submission page -->
+    <antcall target="${exercisesubmit.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${exercisesubmit.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${exercisesubmit.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${exercisesubmit.submit.style.file}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
+      <param name="xsltproc.output.format"
+	     value="_submit${exercisesubmit.output.format}"/>
+      <param name="xsltproc.files"      value="${exercisesubmit.creating.files}"/>
+      <param name="xsltproc.multilingual.files"
+	     value="${exercisesubmit.creating.multilingual.files}"/>
+      <param name="xsltproc.extra.args" value="${exercisesubmit.extra.args}"/>
+    </antcall>
+
+    <!-- Call xsltproc to generate the professor guide -->
+    <antcall target="${exercisesubmit.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${exercisesubmit.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${exercisesubmit.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${exercisesubmit.style.file}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
+      <param name="xsltproc.output.format"
+	     value="_pguide${exercisesubmit.output.format}"/>
+      <param name="xsltproc.files"      value="${exercisesubmit.creating.files}"/>
+      <param name="xsltproc.multilingual.files"
+	     value="${exercisesubmit.creating.multilingual.files}"/>
+      <param name="xsltproc.extra.args" 
+	     value="${exercisesubmit.extra.args} 
+                    --stringparam professorguide.include.guide yes
+                    --stringparam solutions.include.guide yes"/>
+    </antcall>
+
+    <!-- Call xsltproc to generate the solution -->
+    <antcall target="${exercisesubmit.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${exercisesubmit.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${exercisesubmit.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${exercisesubmit.style.file}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
+      <param name="xsltproc.output.format"
+	     value="_solution${exercisesubmit.output.format}"/>
+      <param name="xsltproc.files"      value="${exercisesubmit.creating.files}"/>
+      <param name="xsltproc.multilingual.files"
+	     value="${exercisesubmit.creating.multilingual.files}"/>
+      <param name="xsltproc.extra.args" 
+	     value="${exercisesubmit.extra.args} 
+                    --stringparam solutions.include.guide yes"/>
+    </antcall>
+
+    <!-- Call xsltproc with no extra options -->
+    <antcall target="${exercisesubmit.manipulate.target}" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${exercisesubmit.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${exercisesubmit.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${exercisesubmit.style.file}"/>
+      <param name="mergestyles.master.style" 
+	     value="${mergestyles.master.style}"/>
+      <param name="xsltproc.output.format" value="${exercisesubmit.output.format}"/>
+      <param name="xsltproc.files"         value="${exercisesubmit.creating.files}"/>
+      <param name="xsltproc.multilingual.files"
+	     value="${exercisesubmit.creating.multilingual.files}"/>
+      <param name="xsltproc.extra.args" value="${exercisesubmit.extra.args}"/>
+    </antcall>
+
+  </target>
+
+</project>
+
