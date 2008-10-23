@@ -2,6 +2,8 @@
 
 <project name="XCF Image processing with GIMP" default="gimp">
 
+  <description>Process files using the Gimp translator</description>
+
   <!--
       Given the following properties:
 
@@ -15,19 +17,24 @@
 
   <import file="InitialCheck.xml" />
 
-  <property name="gimp.exec"    value="gimp"/>
+  <property name="gimp.exec"    value="gimp"
+	    description="Name of the Gimp executable"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${gimp.exec}"/>
 
   <!-- Private properties -->
-  <property name="gimp.debug.level"    value="${ada.debug.level}"/>
+  <property name="gimp.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
     
   <target name="gimp.init" depends="ada.init" if="gimp.execution.possible">
     <!-- Public Property definition -->
-    <property name="gimp.src.dir" value="${basedir}"/>
+    <property name="gimp.src.dir" value="${basedir}"
+	      description="Directory where the sources are taken"/>
     <property name="gimp.script.file" 
-	      value="${ada.home}${file.separator}AntImports${file.separator}xcftopng.scm"/>
-    <property name="gimp.files" value=""/>
+	      value="${ada.home}${file.separator}AntImports${file.separator}xcftopng.scm"
+	      description="GIMP script file to use"/>
+    <property name="gimp.files" value=""
+	      description="Source file names (no path, it is gimp.src.dir)"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths

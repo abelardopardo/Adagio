@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+File that simply includes all the rule files together to allow automatic
+processing of the properties description
+-->
+
+<projects>
+
+  <xi:include href="InitialCheck.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Xsltproc.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Docbook.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Xfig.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Inkscape.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Convert.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Gimp.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="PDFnup.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Ps2pdf.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Ppt2PDF.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Export.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="ExportControl.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="SubRecursive.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Copyfiles.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="ExerciseSubmit.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Pdflatex.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Latex.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Dvips.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Dblatex.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Exam.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="TestExam.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Rss.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="ExtraAnt.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Cleaning.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <!-- Either internal or experimental 
+  <xi:include href="Dvi2bitmap.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Rsync.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <xi:include href="Scp.xml"
+	      parse="xml"
+	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  -->
+
+</projects>

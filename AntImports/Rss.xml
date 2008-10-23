@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Apply stylesheet to generate RSS channel" default="rss">
-
-  <!--
-      Given the following properties:
-
-      rss.src.dir: directory from where to take the source files
-      rss.dst.dir: directory where the produced files are stored
-      rss.files: Comma separate list of files to process
-
-      Apply the Rss stylefile to the files in rss.files
-  -->
+  <description>
+    Apply the Rss stylefile to the Docbook files specified in rss.files. This
+    Docbook file needs to have a very specific structure to derive from that an
+    RSS channel suitable to be published. The rule also creates an HTML
+    rendering of the information contained in the RSS file to facilitate its
+    review with a browser to detect errors. The style is prepared to include
+    also the itunes set of labels. Therefore, the produced channel can be
+    processed by the itunes client application.
+  </description>
 
   <!-- Checks for availability of different binaries -->
   <import file="Xsltproc.xml"/>
 
   <!-- Private properties -->
-  <property name="rss.debug.level"    value="${ada.debug.level}"/>
+  <property name="rss.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
   
   <target name="rss.init" depends="ada.init">
     <!-- Property definition -->
-    <property name="rss.src.dir"       value="."/>
-    <property name="rss.dst.dir"       value="${rss.src.dir}"/>
-    <property name="rss.output.format" value="_rss.xml"/>
-    <property name="rss.extra.args"    value=""/>
-    <property name="rss.files"         value=""/>
+    <property name="rss.src.dir"       value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="rss.dst.dir"       value="${rss.src.dir}"
+	      description="Directory where the produced files are created"/>
+    <property name="rss.output.format" value="_rss.xml"
+	      description="Output file has the same name as the source but the
+extension is replaced &#10;# by this value"/>
+    <property name="rss.extra.args"    value=""
+	      description="Extra arguments to pass to the XSLT processor"/>
+    <property name="rss.files"         value=""
+	      description="Source file names (no path, it is rss.src.dir)"/>
     <property name="rss.multilingual.files"
+	      description="Source file names (no path) to process in
+multilingual mode"
 	      value=""/>
     <property name="rss.style.file" 
-	      value="${ada.home}/XslStyles/Rss.xsl"/>
+	      value="${ada.home}/XslStyles/Rss.xsl"
+	      description="Full path to the stylesheet file"/>
     <property name="rss.style.file.tohtml" 
-	      value="${ada.home}/XslStyles/RssToHtml.xsl"/>
+	      value="${ada.home}/XslStyles/RssToHtml.xsl"
+	      description="Full path to the stylesheet file to produce the HTML"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths

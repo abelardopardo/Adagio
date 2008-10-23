@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Copy files outside the resource" default="export">
-
-  <!--
-      Given the following properties and file set:
-      
-      export.files: Filenames to export
-      export.src.dir: source directory for the files
-      export.dst.dir: destination dir
-
-      copies export.files from export.src.dir to export.dst.dir. The
-      copy is performed only if the two dirs are non empty and different
-
-      This functionality is all dependent on the Exportcontrol mechanism. The
-      variable exportcontrol.check, if set, enables the export procedure. If not
-      set, the target is not executed.
-  -->
+  <description>
+    Export files produced in the current directory
+    
+    These variables control if certain files are copied to a different location.
+    
+    The copy is actually performed only if the exportcontrol.check variable is
+    true. If exportcontrol.check is not set or set to false, the export is not
+    executed. The value of this variable can be controled either directly, with
+    a date/time window or if a given value is contained in a previously given
+    profile (set of semi-colon separated strings)
+    
+    See the following section for a detailed description of the
+    exportcontrol.check mechanism.
+  </description>
 
   <import file="Copyfiles.xml"/>
   <import file="ExportControl.xml"/>
 
   <!-- Private properties -->
-  <property name="export.debug.level"    value="${ada.debug.level}"/>
+  <property name="export.debug.level"    value="${ada.debug.level}"
+	    description="Debug level for the export process (see ada.debug.level)"/>
 
   <target name="export.init" depends="ada.init">
     <!-- Public Property definition -->
-    <property name="export.src.dir" value="${basedir}" />
-    <property name="export.dst.dir" value="${export.src.dir}" />
-    <property name="export.files"   value=""/>
+    <property name="export.src.dir" value="${basedir}" 
+	      description="Directory where the sources are taken"/>
+    <property name="export.dst.dir" value="${export.src.dir}" 
+	      description="Directory where the produced files are created"/>
+    <property name="export.files"   value=""
+	      description="Source file names (no path, it is export.src.dir)"/>
     
   </target>
 

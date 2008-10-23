@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Figure Processing with xfig" default="xfig">
+  <description>Produce a figure from an Xfig file</description>
 
   <!--
       Given the following properties:
@@ -20,22 +21,31 @@
 
   <import file="InitialCheck.xml"/>
 
-  <property name="xfig.exec"          value="fig2dev"/>
+  <property name="xfig.exec"          value="fig2dev"
+	    description="Name of the executable to transform *.xfig files"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${xfig.exec}"/>
-  
+
   <!-- Private properties -->
-  <property name="xfig.debug.level"    value="${ada.debug.level}"/>
+  <property name="xfig.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
 
   <target name="xfig.init" depends="ada.init" if="xfig.execution.possible">
     <!-- Public Property definition -->
-    <property name="xfig.src.dir"       value="${basedir}"/>
-    <property name="xfig.dst.dir"       value="${xfig.src.dir}"/>
-    <property name="xfig.output.format" value="png"/>
-    <property name="xfig.border"        value="2"/>
-    <property name="xfig.smooth"        value="4"/>
-    <property name="xfig.extra.args"    value=""/>
-    <property name="xfig.files"         value=""/>
+    <property name="xfig.src.dir"       value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="xfig.dst.dir"       value="${xfig.src.dir}"
+	      description="Directory where the produced files are created"/>
+    <property name="xfig.output.format" value="png"
+	      description="Format of the output file (see fig2dev for options)"/>
+    <property name="xfig.border"        value="2"
+	      description="Border to insert around image"/>
+    <property name="xfig.smooth"        value="4"
+	      description="Smooth factor when exporting to bitmat format"/>
+    <property name="xfig.extra.args"    value=""
+	      description="Extra arguments to pass to fig2dev"/>
+    <property name="xfig.files"         value=""
+	      description="Source file names (no path, it is xfig.src.dir)"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Image processing with convert" default="convert">
+  <description>Post-process images (resize, crop, etc.) with convert</description>
 
   <!--
       Given the following properties:
@@ -18,22 +19,31 @@
 
   <import file="InitialCheck.xml" />
 
-  <property name="convert.exec"     value="convert"/>
+  <property name="convert.exec"     value="convert"
+	    description="Name of the executable to manipulate images"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${convert.exec}"/>
 
   <!-- Private properties -->
-  <property name="convert.debug.level"    value="${ada.debug.level}"/>
+  <property name="convert.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
     
   <target name="convert.init" depends="ada.init" if="convert.execution.possible">
     <!-- Public Property definition -->
-    <property name="convert.src.dir"  value="${basedir}"/>
-    <property name="convert.dst.dir"  value="${convert.src.dir}"/>
-    <property name="convert.geometry" value=""/>
-    <property name="convert.suffix"   value="${convert.geometry}"/>
-    <property name="convert.crop"     value=""/>
-    <property name="convert.format"   value="png"/>
-    <property name="convert.files"    value=""/>
+    <property name="convert.src.dir"  value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="convert.dst.dir"  value="${convert.src.dir}"
+	      description="Directory where the produced files are created"/>
+    <property name="convert.geometry" value=""
+	      description="Geometry to convert image (wxh)"/>
+    <property name="convert.suffix"   value="${convert.geometry}"
+	      description="Suffix to add to the produced file"/>
+    <property name="convert.crop"     value=""
+	      description="Crop option -crop widthxheight+x+y"/>
+    <property name="convert.format"   value="png"
+	      description="Format to translate the image"/>
+    <property name="convert.files"    value=""
+	      description="Source file names (no path, it is convert.src.dir)"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths

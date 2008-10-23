@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Process tex files with pdflatex" default="pdflatex.processing">
-
-  <!--
-      Given the following properties:
-
-      pdflatex.src.dir: directory from where to take the source files
-      pdflatex.dst.dir: directory where the produced files are stored
-      pdflatex.files: comma/space separated list of files to process
-
-      Produce a pdf file directly from a latex file using pdflatex
-  -->
+  <description>
+    Produce a pdf file directly from a latex file using pdflatex
+  </description>
 
   <import file="InitialCheck.xml"/>
 
-  <property name="pdflatex.exec"           value="pdflatex"/>
+  <property name="pdflatex.exec"           value="pdflatex"
+	    description="Name of the LaTeX processor executable"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${pdflatex.exec}"/>
   
   <!-- Private properties -->
-  <property name="pdflatex.debug.level"    value="${ada.debug.level}"/>
+  <property name="pdflatex.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
 
   <target name="pdflatex.init" depends="ada.init" if="pdflatex.execution.possible">
     <!-- Public Property definition -->
-    <property name="pdflatex.src.dir"        value="${basedir}"/>
-    <property name="pdflatex.dst.dir"        value="${pdflatex.src.dir}"/>
-    <property name="pdflatex.files"          value=""/>
-    <property name="pdflatex.extra.args"     value=""/>
+    <property name="pdflatex.src.dir"        value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="pdflatex.dst.dir"        value="${pdflatex.src.dir}"
+	      description="Directory where the produced files are created"/>
+    <property name="pdflatex.files"          value=""
+	      description="Source file names (no path, it is pdflatex.src.dir)"/>
+    <property name="pdflatex.extra.args"     value=""
+	      description="Extra arguments to pass to the LaTeX processor"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths

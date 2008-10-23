@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Invoke an additional ant build file" default="extraant">
-
-  <!--
-      Given the following properties:
-
-      extraant.src.dir: directory from where to take the source files
-      extraant.dst.dir: directory where the produced files are stored
-      extraant.files: comma/space separated list of files to process
-
-      Produce ??
-  -->
+  <description>
+    Executes a target in an ANT build file. This is to provide the opportunity
+    to include any additional and arbitrary processing in a directory.
+  </description>
 
   <import file="InitialCheck.xml"/>
 
   <!-- Private properties -->
-  <property name="extraant.debug.level"    value="${ada.debug.level}"/>
+  <property name="extraant.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
 
   <target name="extraant.init" depends="ada.init">
     <!-- Public Property definition -->
-    <property name="extraant.src.dir"          value="${basedir}"/>
-    <property name="extraant.file"             value="build.xml"/>
-    <property name="extraant.pretarget"        value=""/>
-    <property name="extraant.posttarget"       value=""/>
-    <property name="extraant.pretarget.clean"  value=""/>
-    <property name="extraant.posttarget.clean" value=""/>
+    <property name="extraant.src.dir"          value="${basedir}"
+	      description="Directory where the ANT file is taken"/>
+    <property name="extraant.file"             value="build.xml"
+	      description="Ant file containing the additional rules to apply"/>
+    <property name="extraant.pretarget"        value=""
+	      description="The target to be executed BEFORE all ADA targets &#10;#
+except copyfiles and subrecursive."/>
+    <property name="extraant.posttarget"       value=""
+	      description="The target to be executed AFTER all ADA targets &#10;#
+except export."/>
+    <property name="extraant.pretarget.clean"  value=""
+	      description="The cleaning target to be executed BEFORE all ADA targets &#10;#
+except export.clean."/>
+    <property name="extraant.posttarget.clean" value=""
+	      description="The target to be executed AFTER all ADA targets &#10;#
+except copyfiles.clean and subrecursive.clean."/>
     
     <!-- Private properties -->
     <property name="extraant.target"         value=""/>
@@ -82,7 +87,7 @@
 	<echo>extraant.processing         RUN</echo>
 	<echo level="${extraant.debug.level}">${basedir}</echo>
 	
-	<ant antfile="${extraant.file}" dir="${extraant.src.dir}" 
+	<ant antfile="${extraant.file}" dir="${extraant.abssrc.dir}" 
 	     target="@{EXTRAANT.EXECUTE.TARGET}" inheritall="false">
 	  <property name="ada.home"        value="${ada.home}"/>
 	  <property name="ada.course.home" value="${ada.course.home}"/>

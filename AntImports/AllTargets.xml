@@ -269,7 +269,7 @@
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Ppt2pdf.xml" 
+    <ant antfile="${ada.home}/AntImports/Ppt2PDF.xml" 
 	 target="ppt2pdf.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>

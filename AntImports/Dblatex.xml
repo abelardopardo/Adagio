@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Process docbook with dblatex" default="dblatex">
-
-  <!--
-      Given the following properties:
-
-      dblatex.src.dir: directory from where to take the source files
-      dblatex.dst.dir: directory where the produced files are stored
-      dblatex.files: comma/space separated list of files to process
-      dblatex.extra.args: space separated list of extra command-line arguments
-      dblatex.compliant.mode: set to true to get the default behavior
-                              of dblatex (not the ada-flavored behavior)
-
-      Produce a pdf file directly from a Docbook file
-  -->
+  <description>
+    Produce a pdf file directly from a Docbook file by translating it first to
+    LaTeX
+  </description>
 
   <import file="InitialCheck.xml"/>
 
-  <property name="dblatex.exec"           value="dblatex"/>
+  <property name="dblatex.exec"           value="dblatex"
+	    description="Name of the Docbook to PDF processor executable"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${dblatex.exec}"/>
   
   <!-- Private properties -->
-  <property name="dblatex.debug.level"    value="${ada.debug.level}"/>
+  <property name="dblatex.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
   
   <target name="dblatex.init" depends="ada.init" if="dblatex.execution.possible">
     <!-- Public Property definition -->
-    <property name="dblatex.src.dir"        value="${basedir}"/>
-    <property name="dblatex.dst.dir"        value="${dblatex.src.dir}"/>
-    <property name="dblatex.files"          value=""/>
-    <property name="dblatex.extra.args"      value=""/>
-    <property name="dblatex.compliant.mode" value=""/>
-
+    <property name="dblatex.src.dir"        value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="dblatex.dst.dir"        value="${dblatex.src.dir}"
+	      description="Directory where the produced files are created"/>
+    <property name="dblatex.files"          value=""
+	      description="Source file names (no path, it is dblatex.src.dir)"/>
+    <property name="dblatex.extra.args"      value=""
+	      description="Extra arguments to pass to the LaTeX processor"/>
+    <property name="dblatex.compliant.mode" value=""
+	      description="If true, default dblatex behavior, &#10;#
+otherwise ada-flavored behavior (supress version page)"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths

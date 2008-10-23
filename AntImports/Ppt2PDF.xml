@@ -2,6 +2,7 @@
 
 <project name="Transltate PPT to PDF with OpenOffice" default="ppt2pdf">
 
+  <description>Translate PPT files to PDF (Experimental!)</description>
   <!--
       Given the following properties:
 
@@ -20,12 +21,15 @@
                               ADA.PREFIX="ppt2pdf" />
   
   <!-- Private properties -->
-  <property name="ppt2pdf.debug.level"    value="${ada.debug.level}"/>
+  <property name="ppt2pdf.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
 
   <target name="ppt2pdf.init" depends="ada.init" if="ppt2pdf.execution.possible">
     <!-- Public Property definition -->
-    <property name="ppt2pdf.src.dir"        value="${basedir}"/>
-    <property name="ppt2pdf.files"          value=""/>
+    <property name="ppt2pdf.src.dir"        value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="ppt2pdf.files"          value=""
+	      description="Source file names (no path, it is ppt2pdf.src.dir)"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <pathconvert property="ppt2pdf.abssrc.dir" pathsep=" ">

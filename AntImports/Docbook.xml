@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Apply stylesheet to docbook files" default="docbook">
+  <description>Apply a Docbook stylesheet to a set of XML files</description>
 
   <!--
       Given the following properties:
@@ -18,22 +19,42 @@
   <import file="Xsltproc.xml"/>
 
   <!-- Private properties -->
-  <property name="docbook.debug.level"    value="${ada.debug.level}"/>
+  <property name="docbook.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
 
   <target name="docbook.init" depends="ada.init">
     <!-- Public Property definition -->
-    <property name="docbook.src.dir"        value="${basedir}"/>
-    <property name="docbook.dst.dir"        value="${docbook.src.dir}"/>
-    <property name="docbook.output.format"  value=".html"/>
-    <property name="docbook.extra.args"     value=""/>
-    <property name="docbook.files"          value=""/>
+    <property name="docbook.src.dir"        value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="docbook.dst.dir"        value="${docbook.src.dir}"
+	      description="Directory where the produced files are created"/>
+    <property name="docbook.output.format"  value=".html"
+	      description="Output file has the same name as the source but the
+extension is replaced &#10;# by this value"/>
+    <property name="docbook.extra.args"     value=""
+	      description="Extra arguments to pass to the XSLT processor"/>
+    <property name="docbook.files"          value=""
+	      description="Source file names (no path, it is docbook.src.dir)"/>
+    <property name="docbook.multilingual.files" value=""
+	      description="Source file names (no path) to process in
+multilingual mode"/>
     <property name="docbook.style.file"     
-	      value="${ada.home}/XslStyles/DocbookProfile.xsl"/>
+	      value="${ada.home}/XslStyles/DocbookProfile.xsl"
+	      description="Full path to the stylesheet file"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths
       ADA.PREFIX="docbook" ADA.SRC.DIR="${docbook.src.dir}"
       ADA.DST.DIR="${docbook.dst.dir}" ADA.FILES="${docbook.files}"/>
+
+    <!-- Multilingual source files to be processed (fileset to allow wildcards) -->
+    <fileset id="docbook.multilingual.fileset" dir="${docbook.abssrc.dir}"
+	     includes="___bogus___file__name ${docbook.multilingual.files}"/>
+    
+    <!-- Obtain the filelist with the source files to see if it is empty -->
+    <pathconvert property="docbookmultilingual.source.filelist.property" pathsep=" ">
+      <fileset refid="docbook.multilingual.fileset"/>
+    </pathconvert>
 
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="docbook.check">
@@ -45,13 +66,28 @@
       </not>
     </condition>
 
+    <!-- Condition to enable/disable multilingual the execution -->
+    <condition property="docbookmultilingual.check">
+      <!-- 
+	   There must be some files in the fileset (after regexp expansion) 
+      -->
+      <not>
+	<equals arg1="${docbookmultilingual.source.filelist.property}"
+		arg2="" trim="true"/>
+      </not>
+    </condition>
+
     <!-- Dump the value of the properties just computed. -->
     <echo level="${docbook.debug.level}">docbook.check          = "${docbook.check}"</echo>
   </target>
 
   <!-- Invoke xsltprocessing -->
-  <target name="docbook.processing" depends="docbook.init"
-	  if="docbook.check" description="Call the xsltproc with the given style">
+  <target name="docbook.processing" 
+	  depends="docbook.regular.execution, docbook.multilingual.execution"/>
+
+  <target name="docbook.regular.execution" depends="docbook.init"
+	  if="docbook.check" 
+	  description="Call the xsltproc with the given style">
 
     <echo>docbook.processing          CALL(xsltproc.processing)</echo>
 
@@ -68,12 +104,32 @@
     <echo>docbook.processing          END(xsltproc.processing)</echo>
   </target>
 
+  <target name="docbook.multilingual.execution" depends="docbook.init"
+	  if="docbookmultilingual.check" 
+	  description="Call the xsltproc with the given style">
+
+    <echo>docbook.processing          CALL(xsltproc.multilingual.processing)</echo>
+
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.processing" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${docbook.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${docbook.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${docbook.style.file}"/>
+      <param name="xsltproc.output.format" value="${docbook.output.format}"/>
+      <param name="xsltproc.multilingual.files"         
+	     value="${docbook.multilingual.files}"/>
+      <param name="xsltproc.extra.args"    value="${docbook.extra.args}"/>
+    </antcall>
+
+    <echo>docbook.processing          END(xsltproc.multilingual.processing)</echo>
+  </target>
+
   <!-- Clean files produced by docbook -->
-  <target name="docbook.clean" depends="docbook.init"
+  <target name="docbook.clean" 
+	  depends="docbook.regular.clean, docbook.multilingual.clean"/>
+
+  <target name="docbook.regular.clean" depends="docbook.init"
 	  description="Remove files produced by docbook">
-
-<!--     <echo>docbook.clean               CALL(xsltproc.clean)</echo> -->
-
     <!-- Call xsltproc -->
     <antcall target="xsltproc.clean" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${docbook.src.dir}"/>
@@ -83,18 +139,31 @@
       <param name="xsltproc.extra.args"    value="${docbook.extra.args}"/>
       <param name="xsltproc.files"         value="${docbook.files}"/>
     </antcall>
+  </target>
 
-<!--     <echo>docbook.clean               END(xsltproc.clean)</echo> -->
+  <target name="docbook.multilingual.clean" depends="docbook.init"
+	  description="Remove files produced by docbook">
+    <!-- Call xsltproc -->
+    <antcall target="xsltproc.clean" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${docbook.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${docbook.dst.dir}"/>
+      <param name="xsltproc.style.file"    value="${docbook.style.file}"/>
+      <param name="xsltproc.output.format" value="${docbook.output.format}"/>
+      <param name="xsltproc.extra.args"    value="${docbook.extra.args}"/>
+      <param name="xsltproc.multilingual.files"         
+	     value="${docbook.multilingual.files}"/>
+    </antcall>
   </target>
 
   <target name="docbook.dump.properties" depends="docbook.init">
     <echo level="${docbook.debug.level}"> ------ Docbook properties ----
-    docbook.src.dir       ="${docbook.src.dir}"
-    docbook.dst.dir       ="${docbook.dst.dir}"
-    docbook.style.file    ="${docbook.style.file}"
-    docbook.output.format ="${docbook.output.format}"
-    docbook.extra.args    ="${docbook.extra.args}"
-    docbook.files         ="${docbook.files}"</echo>
+    docbook.src.dir            ="${docbook.src.dir}"
+    docbook.dst.dir            ="${docbook.dst.dir}"
+    docbook.style.file         ="${docbook.style.file}"
+    docbook.output.format      ="${docbook.output.format}"
+    docbook.extra.args         ="${docbook.extra.args}"
+    docbook.files              ="${docbook.files}"
+    docbook.multilingual.files ="${docbook.multilingual.files}"</echo>
   </target>
 
   <!-- If entering through this target, build.out is deleted -->

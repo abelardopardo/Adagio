@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                         WHAT IS ADA                          -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="About_ADA" xreflabel="Top of the Section">
+  <title>About ADA</title>
+
+  <qandaset defaultlabel="qanda">
+    <qandaentry id="whatisada">
+      <question>
+        <para>What is ADA?</para>
+      </question>
+      <answer>
+        <para>
+          ADA is a tool that provides support for <quote>Agile and Distributed
+          Authoring</quote>. Authors usually use a combination of tools to
+          produce documents. The actual variety of documents makes more
+          appropriate to refer to this items as resources. A resource may be a
+          regular text document, but it may also be a screen capture, video
+          clip, audio clip, picture, etc. ADA is conceived to manipulate
+          resources in this context.
+        </para>
+        <para>
+          The challenge appears when a large set of resources with a complex
+          structure is created by a large number of authors working in a
+          distributed environment.
+        </para>
+
+        <para>
+          The first problem is the variety of tools used by the authors. ADA
+          facilitates the post-processing by automatically producing
+          preliminary versions of the created resources. The following figure
+          illustrates a generic authoring environment and the support provided
+          by ADA.
+        </para>
+
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/AuthorEnv.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase>Author environment and ADA role</phrase>
+            </textobject>
+          </mediaobject>
+        </informalfigure>
+
+        <para>
+          Once created, the exported resources can be sent to a location where
+          they are automatically combined to produce the final resource. The
+          following figure illustrates a scenario combining these two aspects.
+        </para>
+        
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/Kitchen.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase>Combining resources with ADA</phrase>
+            </textobject>
+          </mediaobject>
+        </informalfigure>
+
+        <para>
+          ADA offers support in two steps of this procedure.
+        </para>
+
+        <itemizedlist>
+          <listitem>
+            <para>
+              To the author: ADA provides rules to automate typical processing
+              steps to achieve an approximate appearance of the created
+              resources. Authors may then focus on the content and verify,
+              using these rules, that the final resource complies with certain
+              minimum requirements (guidelines, size, quality, etc.)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              In the production phase: ADA allows specifying a set of rules to
+              automatically combine all the contributions from different
+              authors and produce a complex resource.
+            </para>
+          </listitem>
+        </itemizedlist>
+
+        <para>
+          The main element for ADA in the author working directory is the rule
+          file. This file has the name <filename>Properties.txt</filename>
+          (although it can be changed) and specifies which are the resource
+          files and how they need to be processed to obtain the final
+          resources. Each working directory needs a file with the rules
+          applying to the files contained in it.
+        </para>
+
+        <para>Back to <xref linkend="About_ADA"/>.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="whatisnotada">
+      <question>
+        <para>What ADA is not?</para>
+      </question>
+      <answer>
+        <para>
+          ADA is not a text editor, nor a graphic editor, nor an integrated
+          creative environment. The author may use tools to create the
+          resources, and ADA is used to automatically combine them into a
+          global creation process.
+        </para>
+
+        <para>
+          To use an analogy, ADA offers a very efficient courier service that,
+          if you comply with certain requirements when creating resources, it
+          takes them very quickly to the assembling plant, combines them with
+          other resources contributed by other authors and automatically
+          creates a final resource.
+        </para>
+
+        <para>Back to <xref linkend="About_ADA"/>.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry id="whyisadaneeded">
+      <question>
+        <para>Why is ADA needed?</para>
+      </question>
+      <answer>
+        <para>
+          ADA is oriented toward reducing the creation/modification cycle of a
+          set of resources with a non-trivial organization. In the information
+          era, the creation process is changing radically. Authors are no
+          longer required to use a concrete tool, but instead, certain formats
+          are used to easily publish content. But what really takes a
+          multi-user distributed authoring scenario to a new dimension is a
+          <emphasis>simple modification cycle</emphasis>. Think Wikipedia, its
+          distributed authoring paradigm has consolidated beyond any doubt,
+          but in order for those authors to contribute effectively, resources
+          are extremely easy to modify.
+        </para>
+
+        <para>
+          A typical situation when a number of authors contribute toward a
+          common resource is illustrated in the following figure. There is
+          usually an entity that absorbs the complexity of providing a
+          homogeneous view of the material usually through an expensive and
+          time consuming production stage. This production requires then an
+          additional step to bring all the material to the final web
+          publishing platform.
+        </para>
+
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/AuthorCycle.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase>Conventional authoring cycle</phrase>
+            </textobject>
+          </mediaobject>
+        </informalfigure>
+
+        <para>
+          The following picture illustrates the change in methodology that can
+          be achieved with the help of ADA. By providing a fast two-way
+          information channel between creation and production, the management
+          of a set of resources can be truly improved. ADA provides the rules
+          that automatically connect the source documents with the final
+          published resources such that changes can be performed at a very
+          low turnaround cost.
+        </para>
+
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/AuthorNewCycle.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase>Conventional authoring cycle</phrase>
+            </textobject>
+          </mediaobject>
+        </informalfigure>
+        
+        <para>
+          But aside from the turnaround time for changes, resources tend to be
+          built hierarchically from the multiple sources. The internal
+          organization of a resource can be often replicated in the process in
+          which it is built. For example, to create the electronic version of
+          a book, there is certain amount of work that can be done for each
+          chapter individually accompanied by certain inter-chapter
+          processing. The rules defined in ADA are prepared to be applied
+          hierarchically at different points of the overall production
+          procedure. The following picture illustrates a hypothetical scenario
+          in which a resource is built by combining resources from four
+          authors in three gradual stages.
+        </para>
+
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/ProductionCycle.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase>Full production cycle with ADA</phrase>
+            </textobject>
+          </mediaobject>
+        </informalfigure>
+
+        <para>Back to <xref linkend="About_ADA"/>.</para>
+      </answer>
+    </qandaentry>
+  </qandaset>
+</section>
+

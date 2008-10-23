@@ -1,44 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Create documents for a lab" default="exercisesubmit.processing">
-
-  <!--
-      Given the following properties and fileset:
-
-      exercisesubmit.src.dir: directory from where to take the source files
-      exercisesubmit.dst.dir: directory where the produced files are stored
-      exercisesubmit.output.format: Extension of the output file
-      exercisesubmit.style.file: Style file to be used
-      exercisesubmit.files: comma/space separated list of files to process
-      exercisesubmit.multilingual.files: list of files to process multiple languages
-
-      It invokes three times xsltproc to generate a regular HTML document, a
-      document with the section/phrase/note with the attribute
-      condition=solution, a document with the section/phrase/note with the
-      attribute condition=professorguide, and a document with a form to submit
-      the answers derived from the elements with the elements with
-      condition=submit.
-  -->
+  <description>
+    Given the following properties and fileset:
+    
+    exercisesubmit.src.dir: directory from where to take the source files
+    exercisesubmit.dst.dir: directory where the produced files are stored
+    exercisesubmit.output.format: Extension of the output file
+    exercisesubmit.style.file: Style file to be used exercisesubmit.files:
+                               comma/space separated list of files to process
+    exercisesubmit.multilingual.files: list of files to process in multiple
+                                       languages
+    
+    It invokes several times the Docbook to HTML functionality to generate a
+    regular HTML document, a document with the section/phrase/note with the
+    attribute condition=solution, a document with the section/phrase/note with
+    the attribute condition=professorguide, and a document with a form to submit
+    the answers derived from the elements with the elements with
+    condition=submit.
+  </description>
 
   <import file="Cleaning.xml"/>
   <import file="SubRecursive.xml"/>
   <import file="Xsltproc.xml"/>
 
   <!-- Private properties -->
-  <property name="exercisesubmit.debug.level"    value="${ada.debug.level}"/>
+  <property name="exercisesubmit.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
   
   <target name="exercisesubmit.init" depends="ada.init">
     <!-- Property definition -->
-    <property name="exercisesubmit.src.dir"       value="${basedir}"/>
-    <property name="exercisesubmit.dst.dir"       value="${exercisesubmit.src.dir}"/>
+    <property name="exercisesubmit.src.dir"       value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="exercisesubmit.dst.dir"       value="${exercisesubmit.src.dir}"
+	      description="Directory where the produced files are created"/>
     <property name="exercisesubmit.style.file" 
-	      value="${ada.home}/XslStyles/Exercisesubmit.xsl"/>
+	      value="${ada.home}/XslStyles/Exercisesubmit.xsl"
+	      description="Stylesheet to apply all documents except the submission form"/>
     <property name="exercisesubmit.submit.style.file" 
-	      value="${ada.home}/XslStyles/Submit.xsl"/>
-    <property name="exercisesubmit.extra.args" value=""/>
-    <property name="exercisesubmit.output.format"   value=".html"/>
-    <property name="exercisesubmit.files"           value=""/>
-    <property name="exercisesubmit.multilingual.files" value=""/>
+	      value="${ada.home}/XslStyles/Submit.xsl"
+	      description="Stylesheet to apply to the submission form"/>
+    <property name="exercisesubmit.extra.args" value=""
+	      description="Extra options to pass to the XSLT processor"/>
+    <property name="exercisesubmit.output.format"   value=".html"
+	      description="Output file has the same name as the source but the
+extension is replaced &#10;# by this value"/>
+    <property name="exercisesubmit.files"           value=""
+	      description="Source file names (no path, it is exercisesubmit.src.dir)"/>
+    <property name="exercisesubmit.multilingual.files" value=""
+	      description="Source file names (no path) to process in 
+multilingual mode"/>
     
     <!-- Private properties -->
     <property name="exercisesubmit.creating.files"  value=""/>

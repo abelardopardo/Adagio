@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                    PROCESSING RESOURCES                      -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="Processing_resources_with_ADA"
+         xreflabel="Top of the Section">
+  <title>Processing resources with ADA</title>
+  <qandaset>
+    <qandaentry id="run_adacheck" xreflabel="Run adacheck">
+      <question>
+        <para>What kind of resources can be processed by ADA?</para>
+      </question>
+      <answer>
+        <para>
+          ADA is a building tool, and to <quote>build</quote> a resource it
+          needs some applications to be properly installed in your computer. To
+          see what tools are available, open a shell (a regular shell in Linux
+          or a Cygwin shell in Windows) and type the command
+        </para>
+
+        <programlisting>$ <command>adacheck</command></programlisting>
+
+        <para>
+          ADA prints the list of the tools that finds available. For example:
+        </para>
+
+        <programlisting><xi:include href="AdaCheck.txt"
+        parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+	<para>
+	  This listing shows that all the tools that ADA is capable of using are
+	  properly installed. If you don't have all of them available, don't
+	  worry, ADA works anyway with a subset of these tools (although your
+	  functionality is reduced).
+	</para>
+
+        <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="how_to_run_ada" xreflabel="How to run ADA">
+      <question>
+        <para>How to tell ADA which files should process and how?</para>
+      </question>
+      <answer>
+        <para>
+          ADA needs from the user the set of files to apply the pre-defined
+          production rules.  This information is all contained in a regular text
+          file with name <filename>Properties.txt</filename> in the same
+          directory where your files are located. This file is very simple: any
+          line starting with the symbol <quote>#</quote> or empty is ignored and
+          the rest have the structure <command>name=value</command>. The names
+          that can be used are pre-defined. The following sections enumerate
+          these variables and explain the values that can be used.
+        </para>
+
+        <para>
+          The following figure illustrates at a certain level of abstraction how
+	  ADA uses this file to process your files and produce the resources.
+        </para>
+
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/Rules.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase>Rules used by ADA</phrase>
+            </textobject>
+          </mediaobject>
+        </informalfigure>
+
+        <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="properties_txt" xreflabel="Examples of property files">
+      <question>
+        <para>
+          What is the typical structure of the
+          <filename>Properties.txt</filename> file?
+        </para>
+      </question>
+      <answer>
+        <para>
+          It depends mainly on the type of work you want ADA to perform in that
+          directory. For example, if you want to apply certain default
+          stylesheet to several XML files, then the file would have the line:
+        </para>
+        
+	<programlisting>xsltproc.files=datafile1.xml datafile2.xml
+xsltproc.style.file=stylefile.xsl</programlisting>
+
+         <para>
+           If a definition is too large and does not fit in a single line, it
+           may be broken across multiple lines using the symbol
+           <command>\</command> as the last symbol in the line.
+         </para>
+         
+         <para>
+           Suppose that to process the files in your local directory there are
+           some other previous operations that need to be executed in another
+           directory. ADA allows to define a list of directories that are
+           processed before processing the material in the local directory (see
+           <xref linkend="subrecursive_processing"/> for a detailed
+           description). This functionality is specified as follows:
+         </para>
+
+         <programlisting>subrecursive.dirs=../../Material/Author1</programlisting>
+
+          <para>
+            This definition states that before executing any rule in this
+            directory, directory <filename>../../Material/Author1</filename>
+            must be processed. If the remote directory exports files, they are
+            copied to the local directory. This type of definition is very
+	    useful to decompose the building process of a complex resource into
+	    smaller pieces (thus more likely to be reused).
+          </para>
+
+        <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="adado" xreflabel="How to execute ADA">
+      <question>
+        <para>How to tell ADA to build all the resources?</para>
+      </question>
+      <answer>
+        <para>
+          Once the file with name <filename>Properties.txt</filename> with the
+          files to process and the rules to apply has been created, to apply
+          these rules simply open a shell (regular shell in Unix or a Cygwin
+          shell in Windows) and type
+        </para>
+        <programlisting>$ <command>adado</command></programlisting>
+
+        <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
+      </answer>
+    </qandaentry>
+        
+    <qandaentry id="variable_catalog">
+      <question>
+        <para>
+          Which variables can be used in the <filename>Properties.txt</filename>
+	  file?
+        </para>
+      </question>
+
+      <answer>
+        <para>
+          All the variables that can be inlcuded in the file
+          <filename>Properties.txt</filename> are described in the <ulink
+          url="Properties_sample.txt">sample of
+          <filename>Properties.txt</filename></ulink>.
+        </para>
+
+        <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
+      </answer>
+    </qandaentry>
+  </qandaset>
+</section>

@@ -3,6 +3,8 @@
 <project name="Apply xsltproc and a style to a given file list"
 	 default="xsltproc">
 
+  <description>Apply a XSL stylesheet to a set of XML files</description>
+
   <!--
       Given the following properties:
 
@@ -19,29 +21,43 @@
 
   <import file="InitialCheck.xml"/>
 
-  <property name="xsltproc.exec"           value="xsltproc"/>
+  <property name="xsltproc.exec"           value="xsltproc"
+	    description="Name of the XSLT processor executable"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${xsltproc.exec}"/>
   
   <!-- Private properties -->
-  <property name="xsltproc.debug.level"    value="${ada.debug.level}"/>
+  <property name="xsltproc.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
 
   <target name="xsltproc.init" depends="ada.init" if="xsltproc.execution.possible">
 
     <!-- Public Property definition -->
-    <property name="xsltproc.src.dir"           value="${basedir}"/>
-    <property name="xsltproc.dst.dir"           value="${xsltproc.src.dir}"/>
+    <property name="xsltproc.src.dir"           value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="xsltproc.dst.dir"           value="${xsltproc.src.dir}"
+	      description="Directory where the produced files are created"/>
     <property name="xsltproc.style.file"
-              value="${ada.home}/XslStyles/DocbookProfile.xsl"/>
-    <property name="xsltproc.output.format"     value=".html"/>
-    <property name="xsltproc.extra.args"        value=""/>
-    <property name="xsltproc.files"             value=""/>
-    <property name="xsltproc.multilingual.files" value=""/>
+              value="${ada.home}/XslStyles/DocbookProfile.xsl"
+	      description="Full path to the stylesheet file"/>
+    <property name="xsltproc.output.format"     value=".html"
+	      description="Output file has the same name as the source but the
+extension is replaced &#10;# by this value"/>
+    <property name="xsltproc.extra.args"        value=""
+	      description="Extra arguments to pass to the XSLT processor"/>
+    <property name="xsltproc.files"             value=""
+	      description="Source file names (no path, it is xsltproc.src.dir)"/>
+    <property name="xsltproc.multilingual.files" value=""
+	      description="Source file names (no path) to process in
+multilingual mode"/>
     <property name="xsltproc.mergestyles.style.file"     
 	      value="${ada.home}/XslStyles/Mergesheets.xsl"/>
-    <property name="mergestyles.master.style"   value=""/>
+    <property name="mergestyles.master.style"   value=""
+	      description="An additional stylesheet to combine with
+xsltproc.style.file"/>
 
-    <property name="xsltproc.profile.lang"        value=""/>
+    <property name="xsltproc.profile.lang"        value=""
+	      description="Defaul language to consider when processing documents"/>
     <condition property="xsltproc.profile.lang.suffix"
                value="_${xsltproc.profile.lang}"
 	       else="">

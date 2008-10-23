@@ -6,6 +6,7 @@ build templates
 -->
 
 <project name="Initial Checks" default="initial.check">
+  <description>Global ADA properties</description>
 
   <!-- 
        Script to detect where is the course home by checking for the presence of
@@ -44,7 +45,9 @@ build templates
   <property name="ada.home" value="" />
 
   <!-- Overall debug level for the rule scripts -->
-  <property name="ada.debug.level" value="info"/>
+  <property name="ada.debug.level" value="info"
+	    description="Debug level to execute of ADA &#10;#
+Possible values are 'error', 'warning', 'info', 'verbose' and 'debug'"/>
 
   <!-- Include the environment as a set of properties -->
   <property environment="env"/>
@@ -115,9 +118,6 @@ build templates
       <arg value="${ada.home}${file.separator}bin${file.separator}adafindcoursehome"/>
     </exec>
   
-    <!-- Default file name to load the propertyes -->
-    <property name="ada.local.property.file" value="Properties.txt"/>
-
     <!-- Load the properties from the ada.course.home directory -->
     <property file="${ada.course.home}${file.separator}Ada.properties"/>
 
@@ -136,15 +136,17 @@ build templates
     <!-- Load the properties from the cygwin.user.home directory -->
     <property file="${cygwin.user.home}${file.separator}.ant.properties"/>
 
-    <!-- Directory where the toolkit is installed -->
-    <property name="ada.home" value="" />
-
-    <!-- Overall date/time to be considered when processing the audience and
+    <!-- Date/time to be considered when processing the audience and
 	 exportcontrol aspects -->
-    <property name="ada.current.datetime" value=""/>
+    <property name="ada.current.datetime" value=""
+	      description="Date/time to be set when processing the
+resources. &#10;#
+Relevant only when profiling with the audience attribute and for &#10;#
+exportcontrol"/>
 
     <!-- Overall profile string for the revision attribute in docbook -->
-    <property name="ada.profile.revision" value=""/>
+    <property name="ada.profile.revision" value=""
+	      description="Value to profile the revision attribute in XML"/>
 
     <!-- Detect in which os-family is being executed -->
     <condition  property="ada.os.family.windows" value="true">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="PDFnup file processing" default="pdfnup">
-
+  <description>Produce PDF n-up files given a normal PDF file</description>
   <!--
       Given the following properties:
 
@@ -15,19 +15,25 @@
 
   <import file="InitialCheck.xml"/>
 
-  <property name="pdfnup.exec"           value="pdfnup"/>
+  <property name="pdfnup.exec"           value="pdfnup"
+	    description="Name of the executable to use"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${pdfnup.exec}"/>
   
   <!-- Private properties -->
-  <property name="pdfnup.debug.level"    value="${ada.debug.level}"/>
+  <property name="pdfnup.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
     
   <target name="pdfnup.init" depends="ada.init" if="pdfnup.execution.possible">
     <!-- Public Property definition -->
-    <property name="pdfnup.src.dir"        value="${basedir}"/>
-    <property name="pdfnup.dst.dir"        value="${pdfnup.src.dir}"/>
-    <property name="pdfnup.nup.option"     value="1x2"/>
-    <property name="pdfnup.files"          value=""/>
+    <property name="pdfnup.src.dir"        value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="pdfnup.dst.dir"        value="${pdfnup.src.dir}"
+	      description="Directory where the produced files are created"/>
+    <property name="pdfnup.nup.option"     value="1x2"
+	      description="How to organize the pages in a sheet"/>
+    <property name="pdfnup.files"          value=""
+	      description="Source file names (no path, it is pdfnup.src.dir)"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths

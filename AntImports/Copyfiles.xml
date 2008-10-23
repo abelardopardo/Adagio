@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Copy files from SRC to DST" default="copyfiles">
-
-  <!--
-      Given the following properties:
-
-      copyfiles.src.dir: source directory to obtain the files
-      copyfiles.dst.dir: directory where the files are to be copied
-      copyfiles.files:   List of files to copy from src to dst
-
-      copies copyfiles.files in copy.src.dir to copyfiles.dst.dir. The copy is
-      performed only if the two dirs are non empty.
-  -->
+  <description>
+    Given the following properties:
+    
+    copyfiles.src.dir: source directory to obtain the files
+    copyfiles.dst.dir: directory where the files are to be copied
+    copyfiles.files:   List of files to copy from src to dst
+    
+    copies copyfiles.files in copy.src.dir to copyfiles.dst.dir. The copy is
+    performed only if the two dirs are non empty.
+  </description>
 
   <import file="InitialCheck.xml"/>
 
   <!-- Private properties -->
-  <property name="copyfiles.debug.level"    value="${ada.debug.level}"/>
+  <property name="copyfiles.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
   
   <target name="copyfiles.init" depends="ada.init">
     <!-- Public Property definition -->
-    <property name="copyfiles.src.dir"      value="${basedir}" />
-    <property name="copyfiles.dst.dir"      value="${basedir}" />
-    <property name="copyfiles.files"        value=""/>
+    <property name="copyfiles.src.dir"      value="${basedir}" 
+	      description="Directory where the sources are taken"/>
+    <property name="copyfiles.dst.dir"      value="${basedir}" 
+	      description="Directory where the produced files are created"/>
+    <property name="copyfiles.files"        value=""
+	      description="Source file names (no path, it is copyfiles.src.dir)"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths

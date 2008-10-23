@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Execute Dvips" default="dvips">
-
-  <!--
-      Given the following properties:
-
-      dvips.src.dir: directory from where to take the source files
-      dvips.dst.dir: directory where the produced files are stored
-      dvips.files: comma/space separated list of files to process
-
-      Produce ??
-  -->
+  <description>
+    Execute the dvips over a set of given DVI files
+  </description>
 
   <import file="InitialCheck.xml"/>
 
-  <property name="dvips.exec"           value="dvips"/>
+  <property name="dvips.exec"           value="dvips"
+	    description="Name of the dvips executable"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${dvips.exec}"/>
   
   <!-- Private properties -->
-  <property name="dvips.debug.level"    value="${ada.debug.level}"/>
+  <property name="dvips.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
 
   <target name="dvips.init" depends="ada.init" if="dvips.execution.possible">
     <!-- Public Property definition -->
-    <property name="dvips.src.dir"        value="${basedir}"/>
-    <property name="dvips.dst.dir"        value="${dvips.src.dir}"/>
-    <property name="dvips.files"          value=""/>
+    <property name="dvips.src.dir"        value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="dvips.dst.dir"        value="${dvips.src.dir}"
+	      description="Directory where the produced files are created"/>
+    <property name="dvips.files"          value=""
+	      description="Source file names (no path, it is dvips.src.dir)"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths

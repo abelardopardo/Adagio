@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Translate ps files to PDF" default="ps2pdf">
-
+  <description>Translate Postscript files to PDF</description>
   <!--
       Given the following properties:
 
@@ -14,18 +14,23 @@
 
   <import file="InitialCheck.xml"/>
 
-  <property name="ps2pdf.exec"           value="ps2pdf"/>
+  <property name="ps2pdf.exec"           value="ps2pdf"
+	    description="Name of the executable used for the translation"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${ps2pdf.exec}"/>
   
   <!-- Private properties -->
-  <property name="ps2pdf.debug.level"    value="${ada.debug.level}"/>
+  <property name="ps2pdf.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
 
   <target name="ps2pdf.init" depends="ada.init" if="ps2pdf.execution.possible">
     <!-- Public Property definition -->
-    <property name="ps2pdf.src.dir"        value="${basedir}"/>
-    <property name="ps2pdf.dst.dir"        value="${ps2pdf.src.dir}"/>
-    <property name="ps2pdf.files"          value=""/>
+    <property name="ps2pdf.src.dir"        value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="ps2pdf.dst.dir"        value="${ps2pdf.src.dir}"
+	      description="Directory where the produced files are created"/>
+    <property name="ps2pdf.files"          value=""
+	      description="Source file names (no path, it is ps2pdf.src.dir)"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths

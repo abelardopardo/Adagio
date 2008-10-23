@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Recursively build other dirs" default="subrecursive">
-
-  <!--
-      Given the following properties:
-
-      subrecursive.dirs:       List of directories to call recursively
-      subrecursive.dst.dir:    Dir to receive the exported material
-      subrecursive.dirs.nodst: Dirs to call recursively but with no dst dir
-      subrecursive.target: Target to execute in those directories
-
-      Perform target subrecursive.target in these directories. If the property
-      subrecursive.dst.dir is given, it overrides the export.dst.dir in the
-      subdirectory. If not given, such value is left to be set in the
-      subdirectory. This is to be able to either honor the export location
-      stated in a resource, or be able to overwrite it.
-  -->
+  <description>
+    Given the following properties:
+    
+    subrecursive.dirs:       List of directories to call recursively
+    subrecursive.dst.dir:    Dir to receive the exported material
+    subrecursive.dirs.nodst: Dirs to call recursively but with no dst dir
+    subrecursive.target:     Target to execute in those directories
+    
+    Execute target subrecursive.target in the directories given in the variables
+    subrecursive.dirs and subrecursive.dirs.nodst. For those dirs in
+    subrecursive.dirs, the files exported by the remote directory are copied in
+    the location specified by subrecursive.dst.dir. In those directories
+    included in subrecursive.dir.ndst, the files exported by the remote
+    directory are copied as specified by the variable export.dst.dir in that
+    directory.
+  </description>
 
   <import file="InitialCheck.xml"/>
 
   <!-- Private properties -->
-  <property name="subrecursive.debug.level"    value="${ada.debug.level}"/>
+  <property name="subrecursive.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
     
   <target name="subrecursive.init" depends="ada.init">
     <!-- Public Property definition -->
-    <property name="subrecursive.dirs"       value=""/>
-    <property name="subrecursive.dst.dir"    value="${basedir}"/>
-    <property name="subrecursive.dirs.nodst" value=""/>
+    <property name="subrecursive.dirs"       value=""
+	      description="Dirs to execute and export resources to ${subrecursive.dst.dir}"/>
+    <property name="subrecursive.dst.dir"    value="${basedir}"
+	      description="Location where the exported resources in ${subrecursive.dirs} is copied"/>
+    <property name="subrecursive.dirs.nodst" value=""
+	      description="Dirs to execute and export as specified in their Properties.txt file"/>
     <property name="subrecursive.target"     value=""/>
     
     <!-- Define a property containing the absolute dst path -->

@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Run latex over a file twice" default="latex">
-
-  <!--
-      Given the following properties:
-
-      latex.src.dir: directory from where to take the source files
-      latex.dst.dir: directory where the produced files are stored
-      latex.files: comma/space separated list of files to process
-
-      Produce ??
-  -->
+  <description>
+    Execute the LaTeX processor over a set of files
+  </description>
 
   <import file="InitialCheck.xml"/>
 
-  <property name="latex.exec"           value="latex"/>
+  <property name="latex.exec"           value="latex"
+	    description="Name of the LaTeX processor executable"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${latex.exec}"/>
   
   <!-- Private properties -->
-  <property name="latex.debug.level"    value="${ada.debug.level}"/>
+  <property name="latex.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
 
   <target name="latex.init" depends="ada.init" if="latex.execution.possible">
     <!-- Public Property definition -->
-    <property name="latex.src.dir"        value="${basedir}"/>
-    <property name="latex.dst.dir"        value="${latex.src.dir}"/>
-    <property name="latex.files"          value=""/>
-    <property name="latex.extra.args"     value=""/>
+    <property name="latex.src.dir"        value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="latex.dst.dir"        value="${latex.src.dir}"
+	      description="Directory where the produced files are created"/>
+    <property name="latex.files"          value=""
+	      description="Source file names (no path, it is latex.src.dir)"/>
+    <property name="latex.extra.args"     value=""
+	      description="Extra arguments to pass to the LaTeX processor"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                    INSTALLATION IN LINUX                     -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="Installing_ADA_in_Linux"
+         xreflabel="Top of the Section">
+  <title>Installing ADA in Linux</title>
+
+  <qandaset>
+    <qandaentry>
+      <question>
+        <para>Which packages are required to use ADA in Linux?</para>
+      </question>
+      <answer>
+        <para>
+          ADA uses primarily <ulink url="http://ant.apache.org">Ant</ulink>,
+          and it is distributed using <command>git</command>. The bare minimum
+          required packages are: <command>Ant</command>, a Java run-time
+          environment (JRE) and <command>git</command>.
+        </para>
+
+        <para>
+          But to fully exploit ADA functionality, there are additional tools
+          that need to be installed. See <xref linkend="run_adacheck"/> for
+          more details.
+        </para>
+
+        <para>Back to <xref linkend="Installing_ADA_in_Linux"/>.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+        <para>
+          Once I installed all the required packages, how How do I install
+          ADA?
+        </para>
+      </question>
+      <answer>
+        <para>
+          ADA is distributed using the <command>git</command> version control
+          tool. Open a terminal and type the command:
+        </para>
+
+        <xi:include xpointer="xpointer(//*[@id='git_install_command'])"
+                    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+        
+        <para>
+          A new directory with name <filename>ADA</filename> will be
+          created. In order to make ADA available, you need to include the
+          path to its <filename>bin</filename> directory as part of your
+          <varname>PATH</varname> environment variable.
+        </para>
+
+        <para>Back to <xref linkend="Installing_ADA_in_Linux"/>.</para>
+      </answer>
+    </qandaentry>
+
+    <xi:include xpointer="xpointer(//*[@id='new_version_upgrade'])"
+                parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    
+  </qandaset>
+</section>
+

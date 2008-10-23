@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Figure Processing with inkscape" default="inkscape">
+  <description>Translate Inkscape files to PNG, EPS, etc.</description>
 
   <!--
       Given the following properties:
@@ -15,19 +16,25 @@
 
   <import file="InitialCheck.xml" />
 
-  <property name="inkscape.exec" value="inkscape"/>
+  <property name="inkscape.exec" value="inkscape"
+	    description="Name of the inkscape executable"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${inkscape.exec}"/>
 
   <!-- Private properties -->
-  <property name="inkscape.debug.level"    value="${ada.debug.level}"/>
+  <property name="inkscape.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
     
   <target name="inkscape.init" depends="ada.init" if="inkscape.execution.possible">
     <!-- Public Property definition -->
-    <property name="inkscape.src.dir"       value="${basedir}"/>
-    <property name="inkscape.dst.dir"       value="${inkscape.src.dir}"/>
-    <property name="inkscape.output.format" value="png"/>
-    <property name="inkscape.files"         value=""/>
+    <property name="inkscape.src.dir"       value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="inkscape.dst.dir"       value="${inkscape.src.dir}"
+	      description="Directory where the produced files are created"/>
+    <property name="inkscape.output.format" value="png"
+	      description="Format of the produced files"/>
+    <property name="inkscape.files"         value=""
+	      description="Source file names (no path, it is inkscape.src.dir)"/>
 
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths

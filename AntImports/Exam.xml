@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Exam processing to create heading" default="exam">
-
-  <!--
-      Given the following properties:
-
-      exam.src.dir: directory from where to take the source files
-      exam.dst.dir: directory where the produced files are stored
-      exam.file: file to process (insert exam heading)
-      exam.multilingual.file: file to process (insert exam heading)
-      exam.output.format: Extension of the output file
-      exam.extra.args: Extra arguments to invoke xsltproc
-
-      Given one single file either in exam.file or exam.multilingual.file, process
-      it to obtain the HTML rendering of the file.
-
-  -->
+  <description>
+    Given one single file either in exam.file or exam.multilingual.file, process
+    it to obtain the HTML rendering of the file as an exam, with logos, name
+    box, instructions, etc.
+  </description>
 
   <import file="Latex.xml"/>
   <import file="Dvi2bitmap.xml"/>
   <import file="Xsltproc.xml"/>
   
   <!-- Private properties -->
-  <property name="exam.debug.level"    value="${ada.debug.level}"/>
+  <property name="exam.debug.level"    value="${ada.debug.level}"
+	    description="Debug level to apply to these rules (see ada.debug.level)"/>
     
   <target name="exam.init" depends="ada.init">
     <!-- Public Property definition -->
-    <property name="exam.src.dir"        value="${basedir}"/>
-    <property name="exam.dst.dir"        value="${exam.src.dir}"/>
-    <property name="exam.equation.dir"   value="equations"/>
-    <property name="exam.output.format"  value=".html"/>
-    <property name="exam.extra.args"     value="--stringparam
-						passivetex.extensions 1
-						--stringparam 
-						tex.math.in.alt latex"/>
-    <property name="exam.file"           value=""/>
-    <property name="exam.multilingual.file" value=""/>
-    <property name="exam.style.file"     value="${ada.home}/XslStyles/Exam.xsl"/>
+    <property name="exam.src.dir"        value="${basedir}"
+	      description="Directory where the sources are taken"/>
+    <property name="exam.dst.dir"        value="${exam.src.dir}"
+	      description="Directory where the produced files are created"/>
+    <property name="exam.equation.dir"   value="equations"
+	      description="Directory where equation image files are created"/>
+    <property name="exam.output.format"  value=".html"
+	      description="Output file has the same name as the source but the
+extension is replaced &#10;# by this value"/>
+    <property name="exam.extra.args"     value=""
+	      description="Extra arguments to pass to the XSLT processor"/>
+    <property name="exam.file"           value=""
+	      description="Source file name (no path, it is xsltproc.src.dir)"/>
+    <property name="exam.multilingual.file" value=""
+	      description="Source file name (no path) to process in
+multilingual mode"/>
+    <property name="exam.style.file"     value="${ada.home}/XslStyles/Exam.xsl"
+	      description="Full path to the stylesheet file to apply"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <pathconvert property="exam.abssrc.dir" pathsep=" ">
@@ -93,7 +91,10 @@
       <param name="xsltproc.dst.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="xsltproc.multilingual.files" value="${exam.multilingual.file}"/>
-      <param name="xsltproc.extra.args"    value="${exam.extra.args}"/>
+      <param name="xsltproc.extra.args"    
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    ${exam.extra.args}"/>
     </antcall>
 
     <echo>exam.processing             END(xsltproc.processing)</echo>
@@ -109,7 +110,9 @@
 	     value="${exam.multilingual.file}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam solutions.include.guide yes 
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    --stringparam solutions.include.guide yes 
 		    --stringparam ada.testquestions.include.solutions yes 
 		    ${exam.extra.args}"/>
     </antcall>
@@ -128,7 +131,9 @@
 	     value="${exam.multilingual.file}"/>
       <param name="xsltproc.output.format" value="_pguide.html"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam solutions.include.guide yes 
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    --stringparam solutions.include.guide yes 
 		    --stringparam professorguide.include.guide yes
 		    --stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
@@ -146,7 +151,10 @@
       <param name="xsltproc.dst.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="xsltproc.files"      value="${exam.file} ${exam.multilingual.file}"/>
-      <param name="xsltproc.extra.args" value="${exam.extra.args}"/>
+      <param name="xsltproc.extra.args" 
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    ${exam.extra.args}"/>
     </antcall>
 
     <echo>exam.processing             END(xsltproc.processing)</echo>
@@ -162,7 +170,9 @@
 	     value="${exam.file}  ${exam.multilingual.file}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam solutions.include.guide yes 
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    --stringparam solutions.include.guide yes 
 		    --stringparam ada.testquestions.include.solutions yes 
 		    ${exam.extra.args}"/>
     </antcall>
@@ -180,7 +190,9 @@
 	     value="${exam.file} ${exam.multilingual.file}"/>
       <param name="xsltproc.output.format" value="_pguide.html"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam solutions.include.guide yes 
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    --stringparam solutions.include.guide yes 
 		    --stringparam professorguide.include.guide yes
 		    --stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
@@ -262,7 +274,9 @@
 	     value="${exam.file} ${exam.multilingual.file}"/>
       <param name="xsltproc.output.format" value="_pguide.html"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam solutions.include.guide yes 
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    --stringparam solutions.include.guide yes 
 		    --stringparam professorguide.include.guide yes
 		    --stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
@@ -279,7 +293,9 @@
 	     value="${exam.file} ${exam.multilingual.file}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam solutions.include.guide yes 
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    --stringparam solutions.include.guide yes 
 		    --stringparam ada.testquestions.include.solutions yes 
 		    ${exam.extra.args}"/>
     </antcall>
@@ -290,7 +306,10 @@
       <param name="xsltproc.dst.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="xsltproc.files"      value="${exam.file} ${exam.multilingual.file}"/>
-      <param name="xsltproc.extra.args" value="${exam.extra.args}"/>
+      <param name="xsltproc.extra.args" 
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    ${exam.extra.args}"/>
     </antcall>
 
     <!-- Call Multilingual Cleaning for professor guide  -->
@@ -302,7 +321,9 @@
 	     value="${exam.multilingual.file}"/>
       <param name="xsltproc.output.format" value="_pguide.html"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam solutions.include.guide yes 
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    --stringparam solutions.include.guide yes 
 		    --stringparam ada.testquestions.include.solutions yes 
 		    --stringparam ada.testquestions.include.history yes 
 		    --stringparam ada.testquestions.include.id yes 
@@ -319,7 +340,9 @@
 	     value="${exam.multilingual.file}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
       <param name="xsltproc.extra.args"    
-	     value="--stringparam solutions.include.guide yes 
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    --stringparam solutions.include.guide yes 
 		    --stringparam ada.testquestions.include.solutions yes 
 		    ${exam.extra.args}"/>
     </antcall>
@@ -331,7 +354,10 @@
       <param name="xsltproc.style.file" value="${ada.home}/XslStyles/Exam.xsl"/>
       <param name="xsltproc.multilingual.files"
 	     value="${exam.multilingual.file}"/>
-      <param name="xsltproc.extra.args" value="${exam.extra.args}"/>
+      <param name="xsltproc.extra.args" 
+	     value="--stringparam passivetex.extensions 1
+		    --stringparam tex.math.in.alt latex
+		    ${exam.extra.args}"/>
     </antcall>
 
   </target>
