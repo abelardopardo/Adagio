@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Figure Processing with inkscape" default="inkscape">
-  <description>Translate Inkscape files to PNG, EPS, etc.</description>
+  <description>
+    Translate Inkscape files to PNG, EPS, etc.
+  </description>
 
   <!--
       Given the following properties:

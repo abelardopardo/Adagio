@@ -6,7 +6,9 @@ build templates
 -->
 
 <project name="Initial Checks" default="initial.check">
-  <description>Global ADA properties</description>
+  <description>
+    Global ADA properties.
+  </description>
 
   <!-- 
        Script to detect where is the course home by checking for the presence of

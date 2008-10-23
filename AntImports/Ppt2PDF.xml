@@ -2,7 +2,9 @@
 
 <project name="Transltate PPT to PDF with OpenOffice" default="ppt2pdf">
 
-  <description>Translate PPT files to PDF (Experimental!)</description>
+  <description>
+    Translate PPT files to PDF (Experimental!)
+  </description>
   <!--
       Given the following properties:
 

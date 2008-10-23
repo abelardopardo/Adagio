@@ -3,7 +3,9 @@
 <project name="Apply xsltproc and a style to a given file list"
 	 default="xsltproc">
 
-  <description>Apply a XSL stylesheet to a set of XML files</description>
+  <description>
+    Apply a XSL stylesheet to a set of XML files.
+  </description>
 
   <!--
       Given the following properties:

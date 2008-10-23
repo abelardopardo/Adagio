@@ -2,21 +2,11 @@
 
 <project name="Create documents for a lab" default="exercisesubmit.processing">
   <description>
-    Given the following properties and fileset:
-    
-    exercisesubmit.src.dir: directory from where to take the source files
-    exercisesubmit.dst.dir: directory where the produced files are stored
-    exercisesubmit.output.format: Extension of the output file
-    exercisesubmit.style.file: Style file to be used exercisesubmit.files:
-                               comma/space separated list of files to process
-    exercisesubmit.multilingual.files: list of files to process in multiple
-                                       languages
-    
-    It invokes several times the Docbook to HTML functionality to generate a
+    Invoke several times the Docbook to HTML functionality to generate a
     regular HTML document, a document with the section/phrase/note with the
     attribute condition=solution, a document with the section/phrase/note with
-    the attribute condition=professorguide, and a document with a form to submit
-    the answers derived from the elements with the elements with
+    the attribute condition=professorguide, and a document with a form to 
+    submit the answers derived from the elements with the elements with
     condition=submit.
   </description>
 

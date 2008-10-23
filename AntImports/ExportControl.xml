@@ -9,8 +9,8 @@
     exportcontrol.begin: Date/time when the window of validity begins
     exportcontrol.end: Date/time when the window of validity ends
     exportcontrol.now: Date/time to be considered as the actual one
-    exportcontrol.date.format: A SimpleDateFormat pattern to manipulate previous
-                               vars 
+    exportcontrol.date.format: A SimpleDateFormat pattern to manipulate 
+                               previous vars 
     exportcontrol.open: Second gate that is taken into account
     exportcontrol.profile.revision: Revision string to enable the processing of
                                     this dir.

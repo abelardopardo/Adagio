@@ -2,13 +2,7 @@
 
 <project name="Copy files from SRC to DST" default="copyfiles">
   <description>
-    Given the following properties:
-    
-    copyfiles.src.dir: source directory to obtain the files
-    copyfiles.dst.dir: directory where the files are to be copied
-    copyfiles.files:   List of files to copy from src to dst
-    
-    copies copyfiles.files in copy.src.dir to copyfiles.dst.dir. The copy is
+    Copy copyfiles.files in copy.src.dir to copyfiles.dst.dir. The copy is
     performed only if the two dirs are non empty.
   </description>
 

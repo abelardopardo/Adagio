@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Image processing with convert" default="convert">
-  <description>Post-process images (resize, crop, etc.) with convert</description>
+  <description>
+    Post-process images (resize, crop, etc.) with convert.
+  </description>
 
   <!--
       Given the following properties:

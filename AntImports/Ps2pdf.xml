@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Translate ps files to PDF" default="ps2pdf">
-  <description>Translate Postscript files to PDF</description>
+  <description>
+    Translate Postscript files to PDF
+  </description>
   <!--
       Given the following properties:
 

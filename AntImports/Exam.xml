@@ -2,9 +2,9 @@
 
 <project name="Exam processing to create heading" default="exam">
   <description>
-    Given one single file either in exam.file or exam.multilingual.file, process
-    it to obtain the HTML rendering of the file as an exam, with logos, name
-    box, instructions, etc.
+    Given one single file either in exam.file or exam.multilingual.file, 
+    process it to obtain the HTML rendering of the file as an exam, with 
+    logos, name box, instructions, etc.
   </description>
 
   <import file="Latex.xml"/>

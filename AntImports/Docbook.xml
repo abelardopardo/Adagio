@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Apply stylesheet to docbook files" default="docbook">
-  <description>Apply a Docbook stylesheet to a set of XML files</description>
-
-  <!--
-      Given the following properties:
-
-      docbook.src.dir: directory from where to take the source files
-      docbook.dst.dir: directory where the produced files are stored
-      docbook.style.file: Style file to be used
-      docbook.output.format: Extension of the output file
-      docbook.extra.args: Extra arguments to invoke xsltproc
-      docbook.files: Comma separate list of files to process
-
-      Produce the aplication of a stylefile to the files in docbook.files
-  -->
+  <description>
+    Apply a Docbook stylesheet to a set of XML files.
+  </description>
 
   <import file="Xsltproc.xml"/>
 

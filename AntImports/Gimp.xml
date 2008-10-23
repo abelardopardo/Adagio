@@ -2,7 +2,9 @@
 
 <project name="XCF Image processing with GIMP" default="gimp">
 
-  <description>Process files using the Gimp translator</description>
+  <description>
+    Process files using the Gimp translator.
+  </description>
 
   <!--
       Given the following properties:

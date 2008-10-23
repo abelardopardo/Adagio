@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Figure Processing with xfig" default="xfig">
-  <description>Produce a figure from an Xfig file</description>
+  <description>
+    Produce a figure from an Xfig file
+  </description>
 
   <!--
       Given the following properties:

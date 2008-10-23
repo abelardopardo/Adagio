@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="PDFnup file processing" default="pdfnup">
-  <description>Produce PDF n-up files given a normal PDF file</description>
+  <description>
+    Produce PDF n-up files given a normal PDF file
+  </description>
   <!--
       Given the following properties:
 
