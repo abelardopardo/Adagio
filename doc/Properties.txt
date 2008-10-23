@@ -4,7 +4,7 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
-subrecursive.dirs=images Samples/Exam
+subrecursive.dirs=images Samples/Exam ../AntImports
 
 docbook.files=FAQ.xml
 docbook.style.file=QandaentryTable.xsl
@@ -19,7 +19,10 @@ copyfiles.files=Properties_sample.txt
 dblatex.files=FAQ.xml
 
 export.dst.dir=scratch
-export.files=FAQ.html FAQ.pdf images/*.png style.css
+export.files=FAQ.html FAQ.pdf \
+             images/*.png \
+             style.css \
+	     Properties_sample.txt
 
 clean.files=scratch/images scratch
 

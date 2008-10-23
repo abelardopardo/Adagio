@@ -32,6 +32,30 @@
     <property name="export.files"   value=""
 	      description="Source file names (no path, it is export.src.dir)"/>
     
+    <!-- Define two properties containing the absolute src and dst paths -->
+    <ada.expand.srcdst.paths
+      ADA.PREFIX="export" ADA.SRC.DIR="${export.src.dir}"
+      ADA.DST.DIR="${export.dst.dir}" ADA.FILES="${export.files}"/>
+
+    <!-- Condition to enable/disable the rest of the execution -->
+    <condition property="export.files.given">
+      <and>
+      <!-- 
+	   There must be some files in the fileset (after regexp expansion) 
+      -->
+	<not>
+	  <equals arg1="${export.source.filelist.property}" arg2="" trim="true"/>
+	</not>
+	<!-- SRC and DST directories must be different -->
+	<not>
+	  <equals arg1="${export.absdst.dir}" arg2="${export.abssrc.dir}" trim="true"/>
+	</not>
+      </and>
+    </condition>
+
+    <!-- Dump the value of the properties just computed. -->
+    <echo level="${export.debug.level}">export.check          = "${export.check}"</echo>
+
   </target>
 
   <!-- Regular target. It is executed if the check property is true -->

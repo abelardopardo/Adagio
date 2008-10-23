@@ -96,15 +96,16 @@
                    exportcontrol.check.end">
 
     <echo level="${exportcontrol.debug.level}">exportcontrol.now=${exportcontrol.now}
-exportcontrol.begin=${exportcontrol.begin}
-exportcontrol.begin.uptodate=${exportcontrol.begin.uptodate}
-exportcontrol.end=${exportcontrol.end}
-exportcontrol.end.uptodate=${exportcontrol.end.uptodate}
-exportcontrol.open=${exportcontrol.open}
-exportcontrol.profile.revision=${exportcontrol.profile.revision}
+exportcontrol.begin                 =${exportcontrol.begin}
+exportcontrol.begin.uptodate        =${exportcontrol.begin.uptodate}
+exportcontrol.end                   =${exportcontrol.end}
+exportcontrol.end.uptodate          =${exportcontrol.end.uptodate}
+exportcontrol.open                  =${exportcontrol.open}
+exportcontrol.profile.revision      =${exportcontrol.profile.revision}
 exportcontrol.profile.revision.value=${exportcontrol.profile.revision.value}</echo>
 
     <!-- Condition
+	 Some files were given to export (export.files.given = true)
          (exportcontrol.open == "true") 
          and
          (begin = NULL or Uptodate(begin, NOW))
@@ -126,6 +127,7 @@ exportcontrol.profile.revision.value=${exportcontrol.profile.revision.value}</ec
     -->
     <condition property="exportcontrol.check">
       <and>
+	<istrue value="${export.files.given}"/>
         <equals arg1="${exportcontrol.open}" arg2="true"/>
         <or>
           <equals arg1="${exportcontrol.begin}" arg2="" trim="true"/>
