@@ -28,6 +28,9 @@
   <xsl:param name="profile.vendor"/>
   <xsl:param name="profile.wordsize"/>
 
+  <!-- In the two pass processing there is no need for base URI fixup -->
+  <xsl:param name="profile.baseuri.fixup" select="true()"/>
+
   <!-- This variable is supposed to have the format YYYY-MM-DDTHH:MM:SS -->
   <xsl:param name="ada.current.datetime" select="''"/> 
   <xsl:param name="ada.audience.date.separator" select="'--'"/>
