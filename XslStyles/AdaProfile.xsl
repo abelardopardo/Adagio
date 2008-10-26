@@ -5,8 +5,28 @@
   xmlns:date="http://exslt.org/dates-and-times"
   version="1.0">
 
-  <xsl:import
-     href="http://docbook.sourceforge.net/release/xsl/current/xhtml/param.xsl" />
+  <!-- 
+    Vars taken directly from param.xsl of the Docbook XSLT distro. Importing
+    the entire file has the effect of overwriting previously imported values,
+    thus, only the relevant ones have been extracted.
+  -->
+  <xsl:param name="profile.arch"/>
+  <xsl:param name="profile.audience"/>
+  <xsl:param name="profile.attribute"/>
+  <xsl:param name="profile.condition"/>
+  <xsl:param name="profile.conformance"/>
+  <xsl:param name="profile.lang"/>
+  <xsl:param name="profile.os"/>
+  <xsl:param name="profile.revision"/>
+  <xsl:param name="profile.revisionflag"/>
+  <xsl:param name="profile.role"/>
+  <xsl:param name="profile.security"/>
+  <xsl:param name="profile.separator">;</xsl:param>
+  <xsl:param name="profile.status"/>
+  <xsl:param name="profile.userlevel"/>
+  <xsl:param name="profile.value"/>
+  <xsl:param name="profile.vendor"/>
+  <xsl:param name="profile.wordsize"/>
 
   <!-- This variable is supposed to have the format YYYY-MM-DDTHH:MM:SS -->
   <xsl:param name="ada.current.datetime" select="''"/> 
