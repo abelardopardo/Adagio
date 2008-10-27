@@ -43,7 +43,7 @@ processing of the properties description
 	      parse="xml"
 	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
-  <xi:include href="Ppt2PDF.xml"
+  <xi:include href="Msf2PDF.xml"
 	      parse="xml"
 	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
 

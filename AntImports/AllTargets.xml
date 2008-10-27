@@ -24,7 +24,7 @@
 <!--   <import file="ExerciseSubmit.xml"/> -->
 <!--   <import file="Pdflatex.xml"/> -->
 <!--   <import file="PDFnup.xml"/> -->
-<!--   <import file="Ppt2PDF.xml"/> -->
+<!--   <import file="Msf2PDF.xml"/> -->
 <!--   <import file="Ps2pdf.xml"/> -->
 <!--   <import file="Rss.xml"/> -->
 <!--   <import file="Scp.xml"/> -->
@@ -89,8 +89,8 @@
       <ant antfile="${ada.home}/AntImports/Dblatex.xml" 
 	   target="dblatex.processing" inheritAll="false"/>
       
-      <ant antfile="${ada.home}/AntImports/Ppt2PDF.xml" 
-	   target="ppt2pdf.processing" inheritAll="false"/>
+      <ant antfile="${ada.home}/AntImports/Msf2PDF.xml" 
+	   target="msf2pdf.processing" inheritAll="false"/>
       
       <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
 	   target="pdfnup.processing" inheritAll="false"/>
@@ -134,8 +134,8 @@
     <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
 	 target="pdfnup.clean" inheritAll="false"/>
 
-    <ant antfile="${ada.home}/AntImports/Ppt2PDF.xml" 
-	 target="ppt2pdf.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Msf2PDF.xml" 
+	 target="msf2pdf.clean" inheritAll="false"/>
 
     <ant antfile="${ada.home}/AntImports/Dblatex.xml" 
 	 target="dblatex.clean" inheritAll="false"/>
@@ -269,8 +269,8 @@
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Ppt2PDF.xml" 
-	 target="ppt2pdf.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Msf2PDF.xml" 
+	 target="msf2pdf.report" inheritAll="false"/>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
