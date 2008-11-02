@@ -112,6 +112,7 @@
   <target name="execute" depends="ada.init, initial.delete.build.out">
 
     <echo>BEGIN EXE: ${basedir}</echo>
+    <echo file="${user.dir}/build.out" append="true">BEGIN EXE: ${basedir}${line.separator}</echo>
 
     <ant antfile="${ada.home}/AntImports/SubRecursive.xml" 
 	 target="subrecursive.processing" inheritAll="false"/>
@@ -119,6 +120,7 @@
     <ada.apply.processing.rules/>
 
     <echo>END EXE: ${basedir}</echo>
+    <echo file="${user.dir}/build.out" append="true">END EXE: ${basedir}${line.separator}</echo>
   </target>
 
   <target name="local.clean" depends="ada.init, initial.delete.build.out">

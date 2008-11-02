@@ -58,9 +58,10 @@ fi
 ada_check_home
 
 # Invoke ant
+rm -f adado.log
 ant -q -Dada.home="$ADA_HOME" \
        -Dbasedir="$basedir" \
-       -f "$AllTargets" $*
+       -f "$AllTargets" $* 2> adado.log
 
 # Check for status: 0 = OK, 1 = Something went wrong!
 adaAntStatus="$?"
