@@ -60,13 +60,50 @@ ada_check_home
 # Invoke ant
 rm -f adado.log
 ant -q -Dada.home="$ADA_HOME" \
-       -Dbasedir="$basedir" \
-       -f "$AllTargets" $* 2> adado.log
+    -Dbasedir="$basedir" \
+    -f "$AllTargets" $* 2> adado.log
 
 # Check for status: 0 = OK, 1 = Something went wrong!
 adaAntStatus="$?"
 if [ $adaAntStatus -ne 0 ]; then
-  echo "An error has occurred. Check build.out for more information."
+    # In build.out there is a ADA_BEGIN_EXE and ADA_END_EXE when ADA
+    # entries/leaves a directory. Process those messages to find out in which
+    # directory the error has occurred.
+    context=()
+    while read line; do
+        case $line in
+	    # Push begin line to the array
+            ADA_BEGIN_EXE*)
+                context[${#context[@]}]="$line"
+                ;;
+	    # Pop end line off the array
+            ADA_END_EXE*)
+                previous=`expr ${#context[@]} - 1`
+                unset context[$previous]
+                ;;
+        esac
+    done < build.out
+
+    # Dump the path to the proper file to check
+    echo
+    echo "---------------------------------- ADA ERROR ----------------------------------"
+    echo
+    # If the array is empty, the error has been in the curren dir
+    if [ ${#context[@]} -eq 1 ]; then
+	echo "Check build.out for more information."
+    else
+	# The error occurred in the dir contained in the last array value
+	echo "Check the following file:"
+	echo
+        previous=`expr ${#context[@]} - 1`
+	lookDir=`expr match "${context[$previous]}" "ADA_BEGIN_EXE \(.*\)"`
+	echo "$lookDir/build.out"
+	echo
+	echo "for more information."
+    fi
+    echo 
+    echo "-------------------------------------------------------------------------------"
+    echo
 fi
 
 exit
