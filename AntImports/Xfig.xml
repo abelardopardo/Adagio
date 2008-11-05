@@ -26,7 +26,8 @@
   <property name="xfig.exec"          value="fig2dev"
 	    description="Name of the executable to transform *.xfig files"/>
 
-  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${xfig.exec}"/>
+  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${xfig.exec}"
+			      ADA.PREFIX="xfig" />
 
   <!-- Private properties -->
   <property name="xfig.debug.level"    value="${ada.debug.level}"
