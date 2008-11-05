@@ -66,13 +66,22 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
     # location of the file containing the includes
     absDir=$(cd "$(dirname "${fileArray[$idx]}")"; pwd)
 
+    # Need this option to detect if anything goes wrong in the pipe execution
+    set -o pipefail
+
     # Execute the stylesheet to fetch the xi:include[@href] elements. Filter out
     # a potential #xpointer suffix in the href attribute and prepend the
     # directory where the source file is located. Also, since the relation
     # between included files is not a tree but a DAG, repeated files need to be
     # filtered (thus the invocation to sort -u)
-    files=`xsltproc $ADA_HOME/XslStyles/GetIncludes.xsl ${fileArray[$idx]} | sed -e 's/#xpointer.*$//g' | sort -u | sed -e "s+^+$absDir/+g"` 
-    
+    files=`xsltproc $ADA_HOME/XslStyles/GetIncludes.xsl ${fileArray[$idx]} 2>> build.out | sed -e 's/#xpointer.*$//g' | sort -u | sed -e "s+^+$absDir/+g"` 
+
+    # If something went wrong, simply bomb out to catch the error in the proper
+    # location
+    if [ "$?" -ne 0 ]; then
+	exit 1
+    fi
+
     if [ "$files" = "" ]; then
 	idx=`expr $idx + 1`
 	continue
