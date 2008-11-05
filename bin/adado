@@ -85,23 +85,23 @@ if [ $adaAntStatus -ne 0 ]; then
     done < adado.log
 
     # Dump the path to the proper file to check
+    if [ ${#context[@]} -eq 1 ]; then
+	errorDir="."
+    else
+	# The error occurred in the dir contained in the last array value
+        previous=`expr ${#context[@]} - 1`
+	errorDir=`expr match "${context[$previous]}" "ADA_BEGIN_EXE \(.*\)"`
+    fi
     echo
     echo "---------------------------------- ADA ERROR ----------------------------------"
     echo
-    # If the array is empty, the error has been in the curren dir
-    if [ ${#context[@]} -eq 1 ]; then
-	echo "Check build.out for more information."
-    else
-	# The error occurred in the dir contained in the last array value
-	echo "Check the following file:"
-	echo
-        previous=`expr ${#context[@]} - 1`
-	lookDir=`expr match "${context[$previous]}" "ADA_BEGIN_EXE \(.*\)"`
-	echo "$lookDir/build.out"
-	echo
-	echo "for more information."
-    fi
+    echo "-- Full error information in file:"
+    echo "   $errorDir/build.out"
     echo 
+    echo "                            ==== Error excerpt ===="
+    tail $errorDir/build.out 2> /dev/null
+    echo "                            ======================="
+    echo
     echo "-------------------------------------------------------------------------------"
     echo
 fi
