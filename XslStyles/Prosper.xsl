@@ -9,13 +9,34 @@
   <!-- Brings in all the default values -->
   <xsl:import href="Params.xsl"/>
 
+<!-- 
+    Prosper-specific params:
+        * ada.prosper.style: prosper style to apply.
+        * ada.prosper.lang: latex language to declare (e.g.: "es")
+        * ada.prosper.logo.enable: true to enable logo, false otherwise.
+        * ada.prosper.logo.width: scale the logo to the given width.
+        * ada.prosper.logo.pos: put the logo in the given position.
+        * ada.prosper.logo.file: eps/ps file of the logo.
+-->
+
+  <!-- Param defaults -->
+  <xsl:param name="ada.prosper.lang">en</xsl:param>
+  <xsl:param name="ada.prosper.logo.enable">no</xsl:param>
+  <xsl:param name="ada.prosper.logo.width">1cm</xsl:param>
+  <xsl:param name="ada.prosper.logo.pos">(-1.12,-1.25)</xsl:param>
+
+
   <xsl:output method="text" indent="no" encoding="UTF-8" />
 
   <xsl:template match="document">
-\documentclass[pdf,uc3m,slideColor,colorBG]{prosper}
+\documentclass[pdf,<xsl:value-of select="$ada.prosper.style"/>,slideColor,colorBG]{prosper}
 
 \usepackage[utf8]{inputenc}
+
+
+<xsl:if test="$ada.prosper.lang='es'">
 \usepackage[spanish,activeacute]{babel}
+</xsl:if>
 
 \usepackage{pstricks,pst-node,pst-text,pst-3d}
 \usepackage{amsmath}
@@ -31,8 +52,9 @@
   <xsl:apply-templates select="author" />
   <xsl:apply-templates select="institution" />
 
-% \Logo(-1.12,-1.25){\includegraphics[width=1cm]{<xsl:value-of select="$ada.home"/>/<xsl:value-of select="$ada.prosper.logo"/>}}
-\Logo(-1.12,-1.25){\includegraphics[width=1cm]{<xsl:value-of select="$ada.prosper.logo"/>}}
+<xsl:if test="$ada.prosper.logo.enable='true'">
+\Logo<xsl:value-of select="$ada.prosper.logo.pos"/>{\includegraphics[width=<xsl:value-of select="$ada.prosper.logo.width"/>]{<xsl:value-of select="$ada.prosper.logo.file"/>}}
+</xsl:if>
 
 \begin{document}
 \maketitle

@@ -36,9 +36,15 @@
   <xsl:param name="ada.page.head.center.top.logo">images/titular3.gif</xsl:param>
   <xsl:param name="ada.page.head.center.top.logo.alt">Universidad Carlos III de Madrid. Dept. de Ingeniería Telemática</xsl:param>
   <xsl:param name="ada.page.head.center.top.logo.url">http://www.it.uc3m.es</xsl:param>
-  <xsl:param name="ada.prosper.logo">SampleCourse/Admin/latexCommonFiles/uc3m-logo-old.eps</xsl:param>
-  <xsl:param name="ada.prosper.style">uc3m</xsl:param>
-  
   <xsl:param name="ada.page.countdown.js">lib/countdown.js</xsl:param>
+
+  <!-- Prosper parameters -->
+  <xsl:param name="ada.prosper.style">uc3m</xsl:param>
+  <xsl:param name="ada.prosper.lang">es</xsl:param>
+  <xsl:param name="ada.prosper.logo.enable">true</xsl:param>
+  <xsl:param name="ada.prosper.logo.file"><xsl:value-of select="$ada.course.home"/>latexCommonFiles/uc3m-logo.eps</xsl:param>
+  <xsl:param name="ada.prosper.logo.width">2.5cm</xsl:param>
+  <xsl:param name="ada.prosper.logo.pos">(0,-1.25)</xsl:param>
+
 
 </xsl:stylesheet>
