@@ -16,7 +16,7 @@
 
   <xsl:param name="profile.lang"/>
 
-  <xsl:output method="html" indent="yes" encoding="UTF-8"
+  <xsl:output method="xml" indent="yes" encoding="UTF-8"
     doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
     doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"/>
 
