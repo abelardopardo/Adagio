@@ -89,7 +89,7 @@ multilingual mode"/>
   <target name="exercisesubmit.processing" depends="exercisesubmit.init"
 	  if="exercisesubmit.check" description="Call all the multiple xsltprocs">
 
-    <echo>exercisesubmit.processing       CALL(xsltproc.processing 3 versions)</echo>
+    <echo>exercisesubmit.processing   CALL(xsltproc.processing 3 versions)</echo>
 
     <!-- Create the dst directory -->
     <mkdir dir="${exercisesubmit.dst.dir}" />
@@ -107,14 +107,14 @@ multilingual mode"/>
 	     value="xsltprocmultilingual.processing"/>
     </antcall>
 
-    <echo>exercisesubmit.processing       END(xsltproc.processing 3 versions)</echo>
+    <echo>exercisesubmit.processing   END(xsltproc.processing 3 versions)</echo>
   </target>
 
   <!-- Clean files produced by exercisesubmit -->
   <target name="exercisesubmit.clean" depends="exercisesubmit.init"
 	  if="exercisesubmit.check" description="Remove files produced by exercisesubmit">
 
-    <echo>exercisesubmit.clean            CALL(xsltproc.processing 3 versions)</echo>
+    <echo>exercisesubmit.clean        CALL(xsltproc.processing 3 versions)</echo>
 
     <!-- Delete all the multilingual files -->
     <antcall target="exercisesubmit.clean.files" inheritAll="false">
@@ -130,7 +130,7 @@ multilingual mode"/>
       <param name="exercisesubmit.manipulate.target" value="xsltproc.clean"/>
     </antcall>
 
-    <echo>exercisesubmit.clean            END(xsltproc.processing 3 versions)</echo>
+    <echo>exercisesubmit.clean        END(xsltproc.processing 3 versions)</echo>
   </target>
 
   <target name="exercisesubmit.dump.properties" depends="exercisesubmit.init">
