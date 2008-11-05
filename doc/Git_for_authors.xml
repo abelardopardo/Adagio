@@ -10,8 +10,7 @@
 <section id="Git_for_authors" xreflabel="Top of the Section">
   <title>Using Git as an author with ADA</title>
 
-  <qandaset defaultlabel="qanda">
-
+  <qandaset>
     <qandaentry id="what_is_VCS">
       <question>
         <para>
@@ -148,8 +147,6 @@
           For further information about Git, go to the <ulink
           url="http://git.or.cz/">official Git Web site</ulink>.
         </para>
-
-        <para>Back to <xref linkend="Git_for_authors"/>.</para>
       </answer>
     </qandaentry>
 
@@ -261,8 +258,6 @@
             </para>
           </listitem>
         </itemizedlist>
-
-        <para>Back to <xref linkend="Git_for_authors"/>.</para>
       </answer>
     </qandaentry>
 
@@ -339,8 +334,6 @@
           author branch in the shared repository (see <xref
           linkend="gitpush"/>).
         </para>
-
-        <para>Back to <xref linkend="Git_for_authors"/>.</para>
       </answer>
     </qandaentry>
 
@@ -517,8 +510,6 @@ nothing to commit (working directory clean)</programlisting>
           linkend="gitpull" />).
           
         </para>
-
-        <para>Back to <xref linkend="Git_for_authors"/>.</para>
       </answer>
     </qandaentry>
 
@@ -673,8 +664,6 @@ backwards and added some colors so make it more intuitive.
           appears now as empty. You can then proceed to place in the index the
           second set of files and execute the second commit.
         </para>
-
-        <para>Back to <xref linkend="Git_for_authors"/>.</para>
       </answer>
     </qandaentry>
 
@@ -717,8 +706,6 @@ backwards and added some colors so make it more intuitive.
           PNG images produced from SVG figures, the backup files
           that are saved by some editors, etc.
         </para>
-
-        <para>Back to <xref linkend="Git_for_authors"/>.</para>
       </answer>
     </qandaentry>
 
@@ -737,8 +724,6 @@ backwards and added some colors so make it more intuitive.
           explicitly send them (or push them!) to that repository after
           committing. See <xref linkend="gitpush"/> for further explanation.
         </para>
-
-        <para>Back to <xref linkend="Git_for_authors"/>.</para>
       </answer>
     </qandaentry>
 
@@ -771,8 +756,6 @@ backwards and added some colors so make it more intuitive.
           make sure you have no pending changes, commit them before executing
           <command>git pull</command>.
         </para>
-
-        <para>Back to <xref linkend="Git_for_authors"/>.</para>
       </answer>
     </qandaentry>
 
@@ -808,9 +791,6 @@ backwards and added some colors so make it more intuitive.
           The course coordinator will review them and,
           if they are all right, put them into the official branch. 
         </para>
-
-
-        <para>Back to <xref linkend="Git_for_authors"/>.</para>
       </answer>
     </qandaentry>
 

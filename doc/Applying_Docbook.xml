@@ -101,8 +101,6 @@
           With such values defined, execute ADA to obtain the HTML rendering
           of the file (see <xref linkend="adado"/>).
         </para>
-
-        <para>Back to <xref linkend="Applying_Docbook"/>.</para>
       </answer>
     </qandaentry>
 

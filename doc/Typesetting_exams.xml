@@ -10,8 +10,7 @@
 <section id="Typesetting_exams" xreflabel="Top of the Section">
   <title>Typesetting exams with ADA</title>
 
-  <qandaset defaultlabel="qanda">
-
+  <qandaset>
     <qandaentry id="Ada_and_exam_typesetting">
       <question>
         <para>
@@ -361,8 +360,6 @@
           containing these definitions is included in the
           <filename>Properties.txt</filename> file
         </para>
-
-        <para>Back to <xref linkend="Typesetting_exams"/>.</para>
       </answer>
     </qandaentry>
 
@@ -479,8 +476,6 @@
             </textobject>
           </mediaobject>
         </informalfigure>
-
-        <para>Back to <xref linkend="Typesetting_exams"/>.</para>
       </answer>
     </qandaentry>
 
@@ -592,8 +587,6 @@
             </textobject>
           </mediaobject>
         </informalfigure>
-
-        <para>Back to <xref linkend="Typesetting_exams"/>.</para>
       </answer>
     </qandaentry>
 

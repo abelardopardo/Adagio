@@ -10,8 +10,7 @@
 <section id="Git_for_course_coordinator" xreflabel="Top of the Section">
   <title>Using Git as a course coordinator with ADA</title>
 
-  <qandaset defaultlabel="qanda">
-
+  <qandaset>
     <qandaentry id="git-admin-shared-repo"
       xreflabel="How to set-up the shared repository">
       <question>
@@ -86,8 +85,6 @@ $ <command>git branch peter</command></programlisting>
           changes, follow the instructions in <xref
           linkend="git-admin-clone"/>.
         </para>
-
-        <para>Back to <xref linkend="Git_for_course_coordinator"/>.</para>
       </answer>
     </qandaentry>
 
@@ -173,8 +170,6 @@ $ <command>git branch -d new-calendar</command></programlisting>
           to do further changes in the short-term about the same topic, you
           can skip the last step, and reuse the branch.
         </para>
-
-        <para>Back to <xref linkend="Git_for_course_coordinator"/>.</para>
       </answer>
       
 
@@ -260,8 +255,6 @@ $ <command>git merge mary</command></programlisting>
           capable of doing. The commands in this FAQ are just a small subset
           of the real functionality.
         </para>
-
-        <para>Back to <xref linkend="Git_for_course_coordinator"/>.</para>
       </answer>
     </qandaentry>
   </qandaset>

@@ -57,7 +57,7 @@
      showgrid="false"
      inkscape:window-width="1274"
      inkscape:window-height="996"
-     inkscape:window-x="0"
+     inkscape:window-x="640"
      inkscape:window-y="0" />
   <metadata
      id="metadata4956">
@@ -113,103 +113,95 @@
          id="tspan5506"
          x="260.37454"
          y="188.33305">Step 1</tspan></text>
-    <g
-       id="g5625"
-       transform="translate(0,3.8673592e-6)">
-      <text
-         sodipodi:linespacing="125%"
-         id="text4961"
-         y="162.10817"
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
+       x="400.12088"
+       y="250.10817"
+       id="text4961"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4963"
          x="400.12088"
-         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
-         xml:space="preserve"><tspan
-           y="162.10817"
-           x="400.12088"
-           id="tspan4963"
-           sodipodi:role="line">Properties.txt</tspan></text>
-      <g
-         transform="translate(1.1323242,0)"
-         id="g5574">
-        <rect
-           style="opacity:1;fill:#ff8080;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect4973"
-           width="133.96136"
-           height="44.863419"
-           x="332.46783"
-           y="171.45486"
-           rx="5.5269709"
-           ry="5.5269709" />
-        <text
-           xml:space="preserve"
-           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
-           x="337.93436"
-           y="183.35435"
-           id="text5566"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan5568"
-             x="337.93436"
-             y="183.35435">Var1=Value1</tspan><tspan
-             sodipodi:role="line"
-             x="337.93436"
-             y="198.35435"
-             id="tspan5570" /><tspan
-             sodipodi:role="line"
-             x="337.93436"
-             y="213.35435"
-             id="tspan5572" /></text>
-      </g>
-    </g>
+         y="250.10817">Properties.txt</tspan></text>
     <g
-       id="g5615"
-       transform="translate(-1.8750001e-8,-1.0986289)">
+       id="g5574"
+       transform="translate(1.1323242,3.8673592e-6)">
+      <rect
+         ry="5.5269709"
+         rx="5.5269709"
+         y="171.45486"
+         x="332.46783"
+         height="44.863419"
+         width="133.96136"
+         id="rect4973"
+         style="opacity:1;fill:#ff8080;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
       <text
          sodipodi:linespacing="125%"
-         id="text4965"
-         y="250.71906"
-         x="400.37576"
-         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
+         id="text5566"
+         y="183.35435"
+         x="337.93436"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
          xml:space="preserve"><tspan
-           y="250.71906"
-           x="400.37576"
-           id="tspan4967"
-           sodipodi:role="line">${ada.course.dir}Ada.properties</tspan></text>
-      <g
-         id="g5581"
-         transform="translate(1.1323242,90)">
-        <rect
-           ry="5.5269709"
-           rx="5.5269709"
-           y="171.45486"
-           x="332.46783"
-           height="44.863419"
-           width="133.96136"
-           id="rect5583"
-           style="opacity:1;fill:#ddff55;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.10821474;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-        <text
-           sodipodi:linespacing="125%"
-           id="text5585"
            y="183.35435"
            x="337.93436"
-           style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
-           xml:space="preserve"><tspan
-             y="183.35435"
-             x="337.93436"
-             id="tspan5587"
-             sodipodi:role="line">Var1=IgnoredValue</tspan><tspan
-             y="198.35435"
-             x="337.93436"
-             sodipodi:role="line"
-             id="tspan6158">Var2=Value2</tspan><tspan
-             id="tspan5589"
-             y="213.35435"
-             x="337.93436"
-             sodipodi:role="line" /><tspan
-             id="tspan5591"
-             y="228.35435"
-             x="337.93436"
-             sodipodi:role="line" /></text>
-      </g>
+           id="tspan5568"
+           sodipodi:role="line">Var1=Value1</tspan><tspan
+           id="tspan5570"
+           y="198.35435"
+           x="337.93436"
+           sodipodi:role="line" /><tspan
+           id="tspan5572"
+           y="213.35435"
+           x="337.93436"
+           sodipodi:role="line" /></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
+       x="400.37576"
+       y="162.64035"
+       id="text4965"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4967"
+         x="400.37576"
+         y="162.64035">${ada.course.dir}Ada.properties</tspan></text>
+    <g
+       transform="translate(1.1323242,88.901371)"
+       id="g5581">
+      <rect
+         style="opacity:1;fill:#ddff55;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.10821474;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5583"
+         width="133.96136"
+         height="44.863419"
+         x="332.46783"
+         y="171.45486"
+         rx="5.5269709"
+         ry="5.5269709" />
+      <text
+         xml:space="preserve"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana;-inkscape-font-specification:Verdana"
+         x="337.93436"
+         y="183.35435"
+         id="text5585"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5587"
+           x="337.93436"
+           y="183.35435">Var1=IgnoredValue</tspan><tspan
+           id="tspan6158"
+           sodipodi:role="line"
+           x="337.93436"
+           y="198.35435">Var2=Value2</tspan><tspan
+           sodipodi:role="line"
+           x="337.93436"
+           y="213.35435"
+           id="tspan5589" /><tspan
+           sodipodi:role="line"
+           x="337.93436"
+           y="228.35435"
+           id="tspan5591" /></text>
     </g>
     <g
        id="g6213"

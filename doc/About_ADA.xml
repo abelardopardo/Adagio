@@ -10,7 +10,7 @@
 <section id="About_ADA" xreflabel="Top of the Section">
   <title>About ADA</title>
 
-  <qandaset defaultlabel="qanda">
+  <qandaset>
     <qandaentry id="whatisada">
       <question>
         <para>What is ADA?</para>
@@ -98,8 +98,6 @@
           resources. Each working directory needs a file with the rules
           applying to the files contained in it.
         </para>
-
-        <para>Back to <xref linkend="About_ADA"/>.</para>
       </answer>
     </qandaentry>
 
@@ -122,8 +120,6 @@
           other resources contributed by other authors and automatically
           creates a final resource.
         </para>
-
-        <para>Back to <xref linkend="About_ADA"/>.</para>
       </answer>
     </qandaentry>
     <qandaentry id="whyisadaneeded">
@@ -210,8 +206,6 @@
             </textobject>
           </mediaobject>
         </informalfigure>
-
-        <para>Back to <xref linkend="About_ADA"/>.</para>
       </answer>
     </qandaentry>
   </qandaset>

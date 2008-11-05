@@ -29,8 +29,6 @@
           that need to be installed. See <xref linkend="run_adacheck"/> for
           more details.
         </para>
-
-        <para>Back to <xref linkend="Installing_ADA_in_Linux"/>.</para>
       </answer>
     </qandaentry>
 
@@ -47,8 +45,10 @@
           tool. Open a terminal and type the command:
         </para>
 
-        <xi:include xpointer="xpointer(//*[@id='git_install_command'])"
-                    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+        <xi:include 
+	  href="Installing_ADA_in_Windows.xml"
+	  xpointer="xpointer(//*[@id='git_install_command'])"
+	  parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
         
         <para>
           A new directory with name <filename>ADA</filename> will be
@@ -56,13 +56,13 @@
           path to its <filename>bin</filename> directory as part of your
           <varname>PATH</varname> environment variable.
         </para>
-
-        <para>Back to <xref linkend="Installing_ADA_in_Linux"/>.</para>
       </answer>
     </qandaentry>
 
-    <xi:include xpointer="xpointer(//*[@id='new_version_upgrade'])"
-                parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include 
+      href="Installing_ADA_in_Windows.xml"
+      xpointer="xpointer(//*[@id='new_version_upgrade'])"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
     
   </qandaset>
 </section>

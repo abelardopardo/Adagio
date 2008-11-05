@@ -2,7 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
@@ -12,13 +12,20 @@
    height="173.75394"
    id="svg2425"
    sodipodi:version="0.32"
-   inkscape:version="0.45.1"
+   inkscape:version="0.46"
    sodipodi:docbase="/home/abel/Courses/TTAO/SubversionHowTo"
-   sodipodi:docname="checkout.svg"
+   sodipodi:docname="checkout_en.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0">
   <defs
      id="defs2427">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 86.876968 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="773.12665 : 86.876968 : 1"
+       inkscape:persp3d-origin="386.56332 : 57.917979 : 1"
+       id="perspective97" />
     <marker
        inkscape:stockid="Arrow1Lend"
        orient="auto"
@@ -43,12 +50,13 @@
      inkscape:zoom="1.5392045"
      inkscape:cx="386.56332"
      inkscape:cy="86.876968"
-     inkscape:current-layer="g2821"
+     inkscape:current-layer="layer1"
      id="namedview2429"
      inkscape:window-width="1280"
      inkscape:window-height="1000"
      inkscape:window-x="0"
-     inkscape:window-y="0" />
+     inkscape:window-y="0"
+     showgrid="false" />
   <metadata
      id="metadata2431">
     <rdf:RDF>
@@ -78,7 +86,7 @@
            y="53.531963"
            x="401.74207"
            id="tspan3539"
-           sodipodi:role="line">Paso inicial. Una sola vez en el curso</tspan></text>
+           sodipodi:role="line">Initial step. Only once during the course</tspan></text>
       <g
          id="g3735">
         <rect
@@ -113,7 +121,7 @@
                  y="79.419014"
                  x="401.80652"
                  id="tspan3472"
-                 sodipodi:role="line">Comando</tspan></text>
+                 sodipodi:role="line">Command</tspan></text>
             <text
                xml:space="preserve"
                style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Courier New"
@@ -126,7 +134,7 @@
                  x="401.48718"
                  y="99.822563">svn checkout <tspan
    style="font-weight:bold;font-family:Verdana"
-   id="tspan2257">Depósito</tspan></tspan></text>
+   id="tspan2257">Repository</tspan></tspan></text>
           </g>
           <g
              transform="translate(8.000002,0)"
@@ -153,11 +161,11 @@
                    sodipodi:role="line"
                    id="tspan3450"
                    x="203.42737"
-                   y="433.25482">Crea directorio nuevo</tspan><tspan
+                   y="433.25482">Creates a new directory</tspan><tspan
                    sodipodi:role="line"
                    x="203.42737"
                    y="445.25482"
-                   id="tspan3452">con contenido del depósito</tspan></text>
+                   id="tspan3452">with repository content</tspan></text>
             </g>
             <text
                xml:space="preserve"
@@ -169,7 +177,7 @@
                  sodipodi:role="line"
                  id="tspan3697"
                  x="393.55746"
-                 y="135.41901">Efecto</tspan></text>
+                 y="135.41901">Effect</tspan></text>
           </g>
         </g>
       </g>
@@ -226,13 +234,13 @@
                    id="text2225"
                    sodipodi:linespacing="100%"><tspan
                      sodipodi:role="line"
-                     id="tspan2227"
                      x="142.15666"
-                     y="291.43097">Depósito</tspan><tspan
+                     y="291.43097"
+                     id="tspan3980">Remote</tspan><tspan
                      sodipodi:role="line"
                      x="142.15666"
                      y="303.43097"
-                     id="tspan3980">Remoto</tspan></text>
+                     id="tspan2492">Repo.</tspan></text>
               </g>
               <text
                  sodipodi:linespacing="100%"
@@ -244,7 +252,7 @@
                    y="156.77222"
                    x="57.861248"
                    id="tspan3871"
-                   sodipodi:role="line">Ficheros</tspan></text>
+                   sodipodi:role="line">Files</tspan></text>
             </g>
             <g
                id="g3879"
@@ -289,11 +297,11 @@
                    y="123.31354"
                    x="169.18925"
                    id="tspan3875"
-                   sodipodi:role="line">Ningún</tspan><tspan
+                   sodipodi:role="line">No</tspan><tspan
                    id="tspan3877"
                    y="135.31354"
                    x="169.18925"
-                   sodipodi:role="line">Fichero</tspan></text>
+                   sodipodi:role="line">Files</tspan></text>
             </g>
           </g>
           <path
@@ -311,7 +319,7 @@
                y="48.943523"
                x="169.44414"
                id="tspan6877"
-               sodipodi:role="line">Tu ordenador</tspan></text>
+               sodipodi:role="line">Your computer</tspan></text>
         </g>
         <text
            xml:space="preserve"
@@ -323,7 +331,7 @@
              sodipodi:role="line"
              id="tspan3978"
              x="122.35881"
-             y="24.471777">Estado Inicial</tspan></text>
+             y="24.471777">Initial state</tspan></text>
       </g>
       <g
          transform="translate(196.49546,202.04784)"
@@ -393,14 +401,14 @@
                    x="142.15666"
                    style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
                    xml:space="preserve"><tspan
+                     id="tspan4075"
                      y="291.43097"
                      x="142.15666"
-                     id="tspan4073"
-                     sodipodi:role="line">Depósito</tspan><tspan
-                     id="tspan4075"
+                     sodipodi:role="line">Remote</tspan><tspan
                      y="303.43097"
                      x="142.15666"
-                     sodipodi:role="line">Remoto</tspan></text>
+                     sodipodi:role="line"
+                     id="tspan2500">Repo.</tspan></text>
               </g>
               <text
                  xml:space="preserve"
@@ -409,14 +417,14 @@
                  y="156.77222"
                  id="text4077"
                  sodipodi:linespacing="100%"><tspan
-                   sodipodi:role="line"
-                   id="tspan4079"
-                   x="57.861248"
-                   y="156.77222">Ficheros</tspan><tspan
                    id="tspan6893"
                    sodipodi:role="line"
                    x="57.861248"
-                   y="168.77222">actualizados</tspan></text>
+                   y="156.77222">Updated</tspan><tspan
+                   sodipodi:role="line"
+                   x="57.861248"
+                   y="168.77222"
+                   id="tspan2496">files</tspan></text>
             </g>
             <g
                transform="translate(0,7.4680166)"
@@ -461,11 +469,11 @@
                    sodipodi:role="line"
                    x="169.18925"
                    y="123.31354"
-                   id="tspan4097">Ficheros</tspan><tspan
+                   id="tspan4097">Updated</tspan><tspan
                    id="tspan6891"
                    sodipodi:role="line"
                    x="169.18925"
-                   y="135.31354">actualizados</tspan></text>
+                   y="135.31354">files</tspan></text>
             </g>
           </g>
           <text
@@ -478,7 +486,7 @@
                y="48.187256"
                x="169.44414"
                id="tspan6881"
-               sodipodi:role="line">Tu ordenador</tspan></text>
+               sodipodi:role="line">Your computer</tspan></text>
         </g>
         <text
            sodipodi:linespacing="100%"
@@ -490,7 +498,7 @@
              y="244.47177"
              x="216.12543"
              id="tspan4101"
-             sodipodi:role="line">Contenidos idénticos</tspan></text>
+             sodipodi:role="line">Identical content</tspan></text>
       </g>
       <path
          sodipodi:nodetypes="cc"

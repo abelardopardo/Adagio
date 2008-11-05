@@ -6,7 +6,7 @@
 <section id="simpledocument" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Simple Docbook Example with Figure</title>
   
-  <para lang="en">
+  <para>
     Subversion is a tool used to store copies of a set of directories and files
     in a remote repository. Such repository is used mainly for two tasks: share
     these files with other users, and keep all different versions of these files
@@ -28,8 +28,8 @@
     
   <orderedlist>
     <listitem>
-      <para lang="en">Obtain the files for the first time from the remote
-      repository. This is usually the first operation to perform with the client
+      <para>Obtain the files for the first time from the remote repository. This
+      is usually the first operation to perform with the client
       program. Somebody else has created this remote repository with a first
       version of the files with which you must work and they are contained in a
       directory.</para>
