@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                GIT FOR COURSE COORDINATOR                    -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="Git_for_course_coordinator" xreflabel="Top of the Section">
+  <title>Using Git as a course coordinator with ADA</title>
+
+  <qandaset defaultlabel="qanda">
+
+    <qandaentry id="git-admin-shared-repo"
+      xreflabel="How to set-up the shared repository">
+      <question>
+        <para>
+          I am a course coordinator. How do I set-up the shared repository?
+        </para>
+      </question>
+      <answer>
+        <para>
+          You need first some account or location which is accessible to the
+          rest of authors. It will be assumed that you have such
+          account. Enter in the course account and decide where you want to
+          put the shared repository. It can be anywhere, but remember not to
+          put it in a place served by a Web server if you want your repository
+          not to be public. Once you have created a directory for the
+          repository (named, for example, <filename>material</filename>),
+          enter into this directory and type:
+        </para>
+
+        <programlisting>$ <command>git init</command></programlisting>
+
+        <para>
+          The <filename>material</filename> directory is now a Git repository
+          placed on branch <command>master</command>, with no content. This
+          will be the official branch of the shared course repository. It
+          means that whatever files are on that branch, they are taken as the
+          official versions.
+        </para>
+
+        <para>
+          Create the initial layout for your course (directories, common
+          files, etc.) and commit your changes.  The command <command>git
+          add</command> will be useful to include files in the version control
+          mechanism (see <xref linkend="gitcommit" />). Remember that Git does
+          not handle empty directories. Therefore, if you create directories
+          with no material , you may want to create an initial version of
+          <filename>Properties.txt</filename> inside that directory and add it
+          at the set of files controlled by Git.
+        </para>
+
+        <para>
+          After you have finished your initial layout and committed it, create
+          a new branch for each contributing author:
+        </para>
+
+        <programlisting>$ <command>git branch john</command>
+$ <command>git branch mary</command>
+$ <command>git branch laura</command>
+$ <command>git branch peter</command></programlisting>
+
+        <para>
+          There is no need to create all the required branches in advance. You
+          may create additional branches whenever new authors are considered.
+        </para>
+
+        <para>
+          The shared repository is now ready. Tell the authors the basic
+          parameters to access it (remote machine they should connect to, name
+          of the course account, location of the repository in the course
+          account, and their author branch name).
+        </para>
+
+        <para>
+          There are several ways you may interact with this repository. One of
+          them could be to keep a clone of this repository in your local
+          workspace. Follow the instructions in <xref linkend="gitclone" />
+          and obtain such clone. One possible workflow produces all the
+          changes in the <command>master</command> branch in your local
+          repository and push the changes into the <command>master</command>
+          branch of the shared repository when it is ready to be made
+          public. For more detailed instructions on how to manage all the
+          changes, follow the instructions in <xref
+          linkend="git-admin-clone"/>.
+        </para>
+
+        <para>Back to <xref linkend="Git_for_course_coordinator"/>.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="git-admin-clone"
+      xreflabel="How the coordinator clones the shared repository">
+      <question>
+        <para>I am a course coordinator. How do I set-up my local
+          repository?
+        </para>
+      </question>
+      <answer>
+        <para>
+          We recommend you to create a clone of the shared repository in your
+          own workspace (probably your laptop or desktop computer).  Follow
+          the instructions in <xref linkend="gitclone" /> to create your
+          repository and set-up your branch <command>master</command>, with
+          the exception that the line you should add to your
+          <filename>.git/config</filename> file which in your case is
+          <command>push = master:master</command>:
+        </para>
+
+<programlisting>$ <command>cat .git/config</command>
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = ssh://YourLogin@accounts.example.com/home/mycourse/repository/material
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        <command>push = master:master</command>
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master</programlisting>
+
+        <para>
+          This change is because your <command>master</command> branch in your
+          local repository will be the branch where you prepare the official
+          material that other authors will see after you push the changes into
+          the <command>master</command> branch of the shared repository.
+        </para>
+
+        <para>
+          Your main role as the course coordinator is to supervise the changes
+          proposed by your team of authors and incorporate them to the
+          official <command>master</command> branch of the shared
+          repository. But in order to do that, you have to access to the
+          contributions of all the authors. To perform such task replicate in
+          your local repository the author branches in the shared
+          repository. For example:
+        </para>
+
+        <programlisting>$ <command>git branch --track john origin/john</command>
+$ <command>git branch --track mary origin/mary</command>
+$ <command>git branch --track laura origin/laura</command>
+$ <command>git branch --track peter origin/peter</command></programlisting>
+
+        <para>
+          Your local repository is now prepared for merging contributions from
+          other authors. Don't worry, the merging will be done with the help
+          of Git which is really good at it. If you happen to be not only the
+          course coordinator but also an author, then it is recommended to
+          have your own local branch to do such changes and then merge them
+          into the <command>master</command> branch. A typical sequence when
+          you have changes and you want them to be included in the master
+          branch is:
+        </para>
+
+        <programlisting>$ <command>git checkout master</command>
+$ <command>git checkout -b new-calendar</command>
+... edit ... commit ... edit ... commit ...
+$ <command>git checkout master</command>
+$ <command>git merge new-calendar</command>
+$ <command>git branch -d new-calendar</command></programlisting>
+
+        <para>
+          The command <command>git checkout -b</command> creates a new branch
+          starting from the current branch (<command>master</command> in this
+          case). After you have edited and committed (probably several
+          commits), you can merge those changes into the official branch with
+          <command>git merge</command>. Finally, you can safely remove the
+          temporary branch with <command>git branch -d</command>.  If you plan
+          to do further changes in the short-term about the same topic, you
+          can skip the last step, and reuse the branch.
+        </para>
+
+        <para>Back to <xref linkend="Git_for_course_coordinator"/>.</para>
+      </answer>
+      
+
+    </qandaentry>
+
+    <qandaentry id="git-admin-merge"
+      xreflabel="How to merge contributions from authors">
+      <question>
+        <para>
+          I am a course coordinator. How do I merge contents from authors into
+          the official course branch?
+        </para>
+      </question>
+      <answer>
+        <para>
+          Merging is probably the most delicate of the steps, but Git gives
+          you a lot of flexibility to perform this operation. As with the rest
+          of the proposed workflow, there are multiple alterntives for merging
+          contributions from a set of authors, but a concrete one is explained
+          here.
+        </para>
+
+        <para>
+          You should have created a local repository and you have your
+          <command>master</command> branch as well as one branch per
+          author. If you are not at this point, stop right here and go back to
+          <xref linkend="git-admin-clone" />.
+        </para>
+
+        <para>
+          Suppose you want to merge some changes introduced by Mary. She
+          should have pushed her changes into the <command>mary</command>
+          branch in the shared repository.  Go to your <command>mary</command>
+          local branch and update it (that is, fetch those changes from the
+          shared repository):
+        </para>
+
+        <programlisting>$ <command>git checkout mary</command>
+$ <command>git pull</command></programlisting>
+
+        <para>
+          The first command places you in the branch assigned to Mary, the
+          second, as the name says, <quote>pulls</quote> those changes to your
+          local copy of such branch. You may review them and take a look at
+          the history of commits performed by Mary with <command>git
+          log</command>. If you see no problems and the changes are good to be
+          incorporated to the official branch, it is time then to
+          <emphasis>merge</emphasis> her changes into the
+          <command>master</command> branch (if you are not happy with the
+          changes ask Mary to fix the problems). In order to merge
+          <emphasis>into</emphasis> the master branch, you need to change to
+          such branch:
+        </para>
+
+        <programlisting>$ <command>git checkout master</command>
+$ <command>git merge mary</command></programlisting>
+
+        <para>
+          The changes of Mary should now be available in your local
+          <command>master</command> branch. Since this is the official source
+          of material for the entire course, make sure the material is built
+          correctly with <command>adado</command>. If you need to fix details,
+          you may do so and commit the changes normally to your local
+          repository. So far, no change has left your local repository to the
+          shared one. Once you are finished with the modifications and see the
+          material perfectly stable again, you want them to be in the official
+          branch of the shared repository, available for all the authors. It
+          is time then to push these changes:
+        </para>
+
+        <programlisting>$ <command>git push</command></programlisting>
+
+        <para>
+          Authors will now be able to obtain these changes the next time they
+          execute <command>git pull</command> from their local repository.
+        </para>
+
+
+        <para>
+          If you made it to this point, and you went several times around this
+          loop of pulling changes, review them and pushing them to the shared
+          repository, you are ready to explore a bit deeper what Git is
+          capable of doing. The commands in this FAQ are just a small subset
+          of the real functionality.
+        </para>
+
+        <para>Back to <xref linkend="Git_for_course_coordinator"/>.</para>
+      </answer>
+    </qandaentry>
+  </qandaset>
+</section>
+

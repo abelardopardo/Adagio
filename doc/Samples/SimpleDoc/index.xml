@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section id="simpledocument" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Simple Docbook Example with Figure</title>
+  
+  <para lang="en">
+    Subversion is a tool used to store copies of a set of directories and files
+    in a remote repository. Such repository is used mainly for two tasks: share
+    these files with other users, and keep all different versions of these files
+    during time. This type of tools are known generically as <quote>version
+    control tools</quote> and are used quite frequently in industrial
+    environments because they usually require sharing files among team members
+    and keep all the changes perfectly stored. In order to use such tool two
+    programs need to be installed, although for a regular user, only one of them
+    is required.
+  </para>
+
+  <informalfigure>
+    <mediaobject>
+      <imageobject>
+	<imagedata align="center" fileref="figure.png"/>
+      </imageobject>
+    </mediaobject>
+  </informalfigure>
+    
+  <orderedlist>
+    <listitem>
+      <para lang="en">Obtain the files for the first time from the remote
+      repository. This is usually the first operation to perform with the client
+      program. Somebody else has created this remote repository with a first
+      version of the files with which you must work and they are contained in a
+      directory.</para>
+    </listitem>
+    
+    <listitem>
+      <para>After downloading the first version of the files with the
+      <command>checkout</command> command, two identical copies of the files
+      exist. </para>
+    </listitem>
+  </orderedlist>
+</section>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                         APPLYING XSLT                        -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="Applying_Docbook"
+         xreflabel="Top of the Section">
+  <title>Applying a XSL Style Sheet to a Docbook file</title>
+
+  <qandaset>
+    <qandaentry id="docbook_processing">
+      <question>
+        <para>How to process Docbook files in ADA?</para>
+      </question>
+      <answer>
+        <para>
+          Open your favorite XML editor and create a Docbook XML file. Save it
+          in XML format. Depending on the rendering procedure of your editor,
+          you may need to have your figures available to be shown. If you want
+          to simply apply the regular Docbook XSL Stylesheets, then you need
+          to set the appropriate values to some of these variables in
+          <filename>Properties.txt</filename>
+        </para>
+
+        <informaltable frame="all" id="docbook_vars">
+          <tgroup rowsep="1" colsep="1" cols="3">
+            <colspec colnum="1" colname="col1" align="left"/>
+            <colspec colnum="2" colname="col2" align="left"/>
+            <colspec colnum="3" colname="col3" align="center"/>
+            <thead>
+              <row>
+                <entry align="center">Variable name</entry>
+                <entry align="center">Description</entry>
+                <entry align="center">Default</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><varname>docbook.exec</varname></entry>
+                <entry>
+                  Name of the Xslt processor installed in the system
+                </entry>
+                <entry><filename>xsltproc</filename></entry>
+              </row>
+              <row>
+                <entry><varname>docbook.src.dir</varname></entry>
+                <entry>Directory from where to take the Docbook files</entry>
+                <entry>Current directory</entry>
+              </row>
+              <row>
+                <entry><varname>docbook.dst.dir</varname></entry>
+                <entry>Directory where to leave the resulting files</entry>
+                <entry>Value of <varname>docbook.src.dir</varname></entry>
+              </row>
+              <row>
+                <entry><varname>docbook.output.format</varname></entry>
+                <entry>
+                  Extension to replace the extension <command>.xml</command> in the
+                  file name. It must include the dot!
+                </entry>
+                <entry><filename>.html</filename></entry>
+              </row>
+              <row>
+                <entry><varname>docbook.files</varname></entry>
+                <entry>
+                  Space or comma separated list of Docbook file names (with no
+                  path) to process
+                </entry>
+                <entry></entry>
+              </row>
+              <row>
+                <entry><varname>docbook.extra.args</varname></entry>
+                <entry>
+                  Additional options to pass directly to <command>xsltproc</command>.
+                </entry>
+                <entry></entry>
+              </row>
+              <row>
+                <entry><varname>docbook.style.file</varname></entry>
+                <entry>XSL file to use to translate the Docbook file</entry>
+                <entry>Installed Profile Style</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        
+        <para>
+          For example, if the Docbook document with name
+          <filename>manual.xml</filename> is stored in the current directory
+          and needs to be translated to HTML, the following definition is
+          needed in the file <filename>Properties.txt</filename>.
+        </para>
+        
+        <programlisting>docbook.files=manual.xml</programlisting>
+
+        <para>
+          With such values defined, execute ADA to obtain the HTML rendering
+          of the file (see <xref linkend="adado"/>).
+        </para>
+
+        <para>Back to <xref linkend="Applying_Docbook"/>.</para>
+      </answer>
+    </qandaentry>
+
+  </qandaset>
+</section>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                        IMAGE CREATION                        -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="Image_Creation"
+         xreflabel="Top of the Section">
+  <title>Creating and processing Images</title>
+
+  <!--
+  Image Creation
+    Xfig.xml (R)
+    Inkscape.xml (R)
+    Convert.xml (R)
+    Gimp.xml (R)
+
+
+  -->
+
+  <qandaset>
+  </qandaset>
+</section>
