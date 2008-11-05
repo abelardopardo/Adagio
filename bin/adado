@@ -61,7 +61,7 @@ ada_check_home
 rm -f adado.log
 ant -q -Dada.home="$ADA_HOME" \
     -Dbasedir="$basedir" \
-    -f "$AllTargets" $* 2> adado.log
+    -f "$AllTargets" $* 2>> adado.log
 
 # Check for status: 0 = OK, 1 = Something went wrong!
 adaAntStatus="$?"
@@ -85,21 +85,30 @@ if [ $adaAntStatus -ne 0 ]; then
     done < adado.log
 
     # Dump the path to the proper file to check
+    errorFile="build.out"
     if [ ${#context[@]} -eq 1 ]; then
 	errorDir="."
     else
 	# The error occurred in the dir contained in the last array value
         previous=`expr ${#context[@]} - 1`
 	errorDir=`expr match "${context[$previous]}" "ADA_BEGIN_EXE \(.*\)"`
+
+    fi
+
+    # It might be the case such that build.out does not exist. This means an ANT
+    # error. Redirect
+    if [ ! -f $errorDir/$errorFile ]; then
+	errorDir="."
+	errorFile="adado.log"
     fi
     echo
     echo "---------------------------------- ADA ERROR ----------------------------------"
     echo
     echo "-- Full error information in file:"
-    echo "   $errorDir/build.out"
+    echo "   $errorDir/$errorFile"
     echo 
     echo "                            ==== Error excerpt ===="
-    tail $errorDir/build.out 2> /dev/null
+    tail $errorDir/$errorFile 2>/dev/null
     echo "                            ======================="
     echo
     echo "-------------------------------------------------------------------------------"
