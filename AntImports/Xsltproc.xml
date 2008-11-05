@@ -326,7 +326,7 @@ xsltproc.style.file"/>
     </pathconvert>
 
     <exec executable="bash"
-	  dir="${basedir}"
+	  dir="${basedir}" failonerror="true"
 	  outputproperty="xsltproc.dependency.files">
       <arg value="${ada.home}${file.separator}bin${file.separator}getdependencies.sh"/>
       <arg value="${xsltproc.source.dependency.property}"/>
