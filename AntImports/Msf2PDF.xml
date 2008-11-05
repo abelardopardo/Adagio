@@ -20,7 +20,7 @@
   <property name="msf2pdf.exec" value="ada_msf_to_pdf"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${msf2pdf.exec}"
-                              ADA.PREFIX="msf2pdf" />
+			      ADA.PREFIX="msf2pdf" />
   
   <!-- Private properties -->
   <property name="msf2pdf.debug.level"    value="${ada.debug.level}"
