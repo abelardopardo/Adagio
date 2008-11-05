@@ -216,5 +216,6 @@ exportcontrol"/>
   <!-- Target to reset the build.out --> 
   <target name="initial.delete.build.out">
     <delete file="build.out"/>
+    <delete file="adado.log"/>
   </target>
 </project>

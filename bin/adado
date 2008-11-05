@@ -66,7 +66,7 @@ ant -q -Dada.home="$ADA_HOME" \
 # Check for status: 0 = OK, 1 = Something went wrong!
 adaAntStatus="$?"
 if [ $adaAntStatus -ne 0 ]; then
-    # In build.out there is a ADA_BEGIN_EXE and ADA_END_EXE when ADA
+    # In adado.log there is a ADA_BEGIN_EXE and ADA_END_EXE when ADA
     # entries/leaves a directory. Process those messages to find out in which
     # directory the error has occurred.
     context=()
@@ -82,7 +82,7 @@ if [ $adaAntStatus -ne 0 ]; then
                 unset context[$previous]
                 ;;
         esac
-    done < build.out
+    done < adado.log
 
     # Dump the path to the proper file to check
     echo
