@@ -11,6 +11,9 @@
       inkscape.src.dir: directory from where to take the source files
       inkscape.dst.dir: directory where the translated files are stored
       inkscape.files: comma/space separated list of files to process
+      inkscape.output.format: comma separated list of formats to produce
+                              (e.g.: png,eps,ps,pdf). No whitespaces should
+                              appear in the middle.
 
       Process files in fileset. They are processed by inkscape and translated
       to PNG, PDF, EPS or PS format.
@@ -73,6 +76,7 @@ inkscape.execution.possible = ${inkscape.execution.possible}</echo>
 
     <macrodef name="inkscape.execute">
       <attribute name="INKSCAPE.EXPORT.OPTION" />
+      <attribute name="INKSCAPE.EXPORT.EXTENSION" default=""/>
       <sequential>
 	<!-- Execute the command. Watch out for src.dir and dst.dir -->
 	<apply dir="${basedir}" parallel="false" dest="${inkscape.dst.dir}"
@@ -83,7 +87,7 @@ inkscape.execution.possible = ${inkscape.execution.possible}</echo>
 	  <srcfile/>
 	  <fileset refid="inkscape.fileset"/>
 	  <!-- Mapper from source files to produced files -->
-	  <mapper type="glob" from="*.svg" to="*.${inkscape.output.format}"/>
+	  <mapper type="glob" from="*.svg" to="*.@{INKSCAPE.EXPORT.EXTENSION}"/>
 	</apply>    
       </sequential>
     </macrodef>
@@ -91,26 +95,30 @@ inkscape.execution.possible = ${inkscape.execution.possible}</echo>
     <condition property="inkscape.export.format.png">
       <and>
 	<istrue value="${inkscape.check}"/>
-	<equals arg1="${inkscape.output.format}" arg2="png"/>
+	<matches pattern="(^png$)|(^png,)|(,png,)|(,png$)"
+                   string="${inkscape.output.format}"/>
       </and>
     </condition>
 
     <condition property="inkscape.export.format.eps">
       <and>
 	<istrue value="${inkscape.check}"/>
-	<equals arg1="${inkscape.output.format}" arg2="eps"/>
+	<matches pattern="(^eps$)|(^eps,)|(,eps,)|(,eps$)"
+                   string="${inkscape.output.format}"/>
       </and>
     </condition>
 
     <condition property="inkscape.export.format.ps">
       <and>
 	<istrue value="${inkscape.check}"/>
-	<equals arg1="${inkscape.output.format}" arg2="ps"/>
+	<matches pattern="(^ps$)|(^ps,)|(,ps,)|(,ps$)"
+                   string="${inkscape.output.format}"/>
       </and>
     </condition>
 
     <condition property="inkscape.export.format.pdf">
-      <equals arg1="${inkscape.output.format}" arg2="pdf"/>
+	<matches pattern="(^pdf$)|(^pdf,)|(,pdf,)|(,pdf$)"
+                   string="${inkscape.output.format}"/>
     </condition>
 
     <!-- Create the dst directory -->
@@ -119,22 +127,26 @@ inkscape.execution.possible = ${inkscape.execution.possible}</echo>
   
   <target name="inkscape.export.png"
 	  if="inkscape.export.format.png">
-    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-png"/>
+    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-png"
+                      INKSCAPE.EXPORT.EXTENSION="png" />
   </target>
   
   <target name="inkscape.export.pdf"
 	  if="inkscape.export.format.pdf">
-    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-pdf"/>
+    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-pdf"
+                      INKSCAPE.EXPORT.EXTENSION="pdf" />
   </target>
   
   <target name="inkscape.export.eps"
 	  if="inkscape.export.format.eps">
-    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-eps"/>
+    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-eps"
+                      INKSCAPE.EXPORT.EXTENSION="eps" />
   </target>
   
   <target name="inkscape.export.ps"
 	  if="inkscape.export.format.ps">
-    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-ps"/>
+    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-ps"
+                      INKSCAPE.EXPORT.EXTENSION="ps" />
   </target>
 
   <!-- Clean files produced by inkscape -->
