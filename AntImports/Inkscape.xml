@@ -70,7 +70,8 @@ inkscape.execution.possible = ${inkscape.execution.possible}</echo>
 		   inkscape.export.ps, inkscape.export.pdf"
 	  description="Creates images from the SVG files"/>
   
-  <target name="inkscape.preprocessing" if="inkscape.check">
+  <target name="inkscape.preprocessing" if="inkscape.check"
+          depends="inkscape.formats.detect">
     <echo>inkscape.processing         RUN</echo>
     <echo level="${inkscape.debug.level}">${basedir}</echo>
 
@@ -91,6 +92,59 @@ inkscape.execution.possible = ${inkscape.execution.possible}</echo>
 	</apply>    
       </sequential>
     </macrodef>
+
+    <!-- Create the dst directory -->
+    <mkdir dir="${inkscape.dst.dir}"/>
+  </target>
+
+  <target name="inkscape.export.png"
+	  if="inkscape.export.format.png">
+    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-png"
+                      INKSCAPE.EXPORT.EXTENSION="png" />
+  </target>
+
+  <target name="inkscape.export.pdf"
+	  if="inkscape.export.format.pdf">
+    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-pdf"
+                      INKSCAPE.EXPORT.EXTENSION="pdf" />
+  </target>
+
+  <target name="inkscape.export.eps"
+	  if="inkscape.export.format.eps">
+    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-eps"
+                      INKSCAPE.EXPORT.EXTENSION="eps" />
+  </target>
+
+  <target name="inkscape.export.ps"
+	  if="inkscape.export.format.ps">
+    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-ps"
+                      INKSCAPE.EXPORT.EXTENSION="ps" />
+  </target>
+
+  <target name="inkscape.clean.preprocessing" if="inkscape.check"
+          depends="inkscape.formats.detect">
+    <echo>inkscape.clean.preprocessing RUN</echo>
+    <echo level="${inkscape.debug.level}">${basedir}</echo>
+
+    <macrodef name="inkscape.clean.macro">
+      <attribute name="INKSCAPE.CLEAN.FILES" default=""/>
+      <sequential>
+	<!-- Dump explicitly the files to be deleted -->
+	<echo> deleted = @{INKSCAPE.CLEAN.FILES}</echo>
+
+	<!-- Perform the delete operation. The failonerror attribute is needed
+	     and must be set fo false because the dst directory might have been
+             removed  -->
+	<delete failonerror="false" includeemptydirs="true">
+	  <files includes="@{INKSCAPE.CLEAN.FILES}"/>
+	</delete>
+      </sequential>
+    </macrodef>
+  </target>
+
+  <target name="inkscape.formats.detect" if="inkscape.check">
+    <echo>inkscape.formats.detect     RUN</echo>
+    <echo level="${inkscape.debug.level}">${basedir}</echo>
 
     <condition property="inkscape.export.format.png">
       <and>
@@ -120,61 +174,68 @@ inkscape.execution.possible = ${inkscape.execution.possible}</echo>
 	<matches pattern="(^pdf$)|(^pdf,)|(,pdf,)|(,pdf$)"
                    string="${inkscape.output.format}"/>
     </condition>
-
-    <!-- Create the dst directory -->
-    <mkdir dir="${inkscape.dst.dir}"/>
   </target>
-  
-  <target name="inkscape.export.png"
+
+  <target name="inkscape.clean.png"
 	  if="inkscape.export.format.png">
-    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-png"
-                      INKSCAPE.EXPORT.EXTENSION="png" />
+    <pathconvert property="inkscape.target.filelist.png" pathsep=" ">
+      <fileset refid="inkscape.fileset"/>
+      <chainedmapper>
+	<mapper type="glob" from="${inkscape.abssrc.dir}/*"
+	  to="${inkscape.absdst.dir}/*"/>
+	<mapper type="glob" from="*.svg" to="*.png"/>
+      </chainedmapper>
+    </pathconvert>
+    <inkscape.clean.macro INKSCAPE.CLEAN.FILES="${inkscape.target.filelist.png}" /> 
   </target>
-  
-  <target name="inkscape.export.pdf"
+
+  <target name="inkscape.clean.pdf"
 	  if="inkscape.export.format.pdf">
-    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-pdf"
-                      INKSCAPE.EXPORT.EXTENSION="pdf" />
+    <pathconvert property="inkscape.target.filelist.pdf" pathsep=" ">
+      <fileset refid="inkscape.fileset"/>
+      <chainedmapper>
+	<mapper type="glob" from="${inkscape.abssrc.dir}/*"
+	  to="${inkscape.absdst.dir}/*"/>
+	<mapper type="glob" from="*.svg" to="*.pdf"/>
+      </chainedmapper>
+    </pathconvert>
+    <inkscape.clean.macro INKSCAPE.CLEAN.FILES="${inkscape.target.filelist.pdf}" /> 
   </target>
   
-  <target name="inkscape.export.eps"
+  <target name="inkscape.clean.eps"
 	  if="inkscape.export.format.eps">
-    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-eps"
-                      INKSCAPE.EXPORT.EXTENSION="eps" />
+    <pathconvert property="inkscape.target.filelist.eps" pathsep=" ">
+      <fileset refid="inkscape.fileset"/>
+      <chainedmapper>
+	<mapper type="glob" from="${inkscape.abssrc.dir}/*"
+	  to="${inkscape.absdst.dir}/*"/>
+	<mapper type="glob" from="*.svg" to="*.eps"/>
+      </chainedmapper>
+    </pathconvert>
+    <inkscape.clean.macro INKSCAPE.CLEAN.FILES="${inkscape.target.filelist.eps}" /> 
   </target>
   
-  <target name="inkscape.export.ps"
+  <target name="inkscape.clean.ps"
 	  if="inkscape.export.format.ps">
-    <inkscape.execute INKSCAPE.EXPORT.OPTION="--export-ps"
-                      INKSCAPE.EXPORT.EXTENSION="ps" />
-  </target>
-
-  <!-- Clean files produced by inkscape -->
-  <target name="inkscape.clean" depends="inkscape.init"
-	  if="inkscape.check" description="Remove files produced by inkscape">
-    
-    <echo>inkscape.clean              RUN</echo>
-    <echo level="${inkscape.debug.level}">${basedir}</echo>
-
-    <!-- Obtain the filelist with the produced files. -->
-    <pathconvert property="inkscape.target.filelist.property" pathsep=" ">
+    <pathconvert property="inkscape.target.filelist.ps" pathsep=" ">
       <fileset refid="inkscape.fileset"/>
       <chainedmapper>
 	<mapper type="glob" from="${inkscape.abssrc.dir}/*" 
-		to="${inkscape.absdst.dir}/*"/>
-	<mapper type="glob" from="*.svg" to="*.${inkscape.output.format}"/>
+	  to="${inkscape.absdst.dir}/*"/>
+	<mapper type="glob" from="*.svg" to="*.ps"/>
       </chainedmapper>
     </pathconvert>
+    <inkscape.clean.macro INKSCAPE.CLEAN.FILES="${inkscape.target.filelist.ps}" /> 
+  </target>
 
-    <!-- Dump explicitly the files to be deleted -->
-    <echo> deleted = ${inkscape.target.filelist.property}</echo>
-
-    <!-- Perform the delete operation. The failonerror attribute is needed
-	 and must be set fo false because the dst directory might have been
-	 removed  -->
-    <delete failonerror="false" includeemptydirs="true">
-      <files includes="${inkscape.target.filelist.property}"/>
-    </delete>
+  <!-- Clean files produced by inkscape -->
+  <target name="inkscape.clean"
+          depends="inkscape.init, inkscape.clean.preprocessing,
+              inkscape.clean.png, inkscape.clean.pdf, inkscape.clean.eps,
+              inkscape.clean.ps"
+	  if="inkscape.check" description="Remove files produced by inkscape">
+    <echo>inkscape.clean              RUN</echo>
+    <echo level="${inkscape.debug.level}">${basedir}</echo>
   </target>
 
   <!-- Dump the properties defined in this script -->
