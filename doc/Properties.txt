@@ -5,7 +5,7 @@
 # variables as well as an explanation.
 #
 subrecursive.dirs=images \
-                  Samples/Exam \
+                  Samples \
                   ../AntImports \
                   VarTables
 

@@ -34,13 +34,14 @@
 	either <varname>xsltproc.files</varname> or
 	<varname>xsltproc.multilingual.files</varname>. The variable
 	<varname>mergestyles.master.style</varname> is used primarily to merge
-	an external stylesheet with the given one and apply both of them.</para>
+	an external stylesheet with the given one and apply both of them (see
+	<xref linken="modified_stylesheet"/>).</para>
 
 	<para>For example, let us consider <ulink
 	url="Samples/ApplyXSL/index.xml">a simple XML file</ulink> that needs to
 	be processed by the stylesheet <filename>Dump.xsl</filename> (included
-	in the styles directory within ADA). The output of this processing
-	should be left in a files with the same name but with the suffix
+	in the styles directory in ADA). The output of this processing should be
+	left in a files with the same name but with the suffix
 	<filename>_Cump.xml</filename>. The variable definitions required in the
 	<ulink
 	url="Samples/ApplyXSL/Properties.txt"><filename>Properties.txt</filename></ulink>

@@ -1,1 +1,12 @@
+subrecursive.dirs= ApplyXSL \
+                   Docbook \
+                   Exam \
+                   ExamBL \
+                   SimpleDoc \
+                   TestExam \
+                   TestExamBL \
+                   TestQuestions \
+                   TestStats
+subrecursive.dst.dir=
+
 inkscape.files=*.svg
