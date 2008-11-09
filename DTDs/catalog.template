@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD XML Catalogs V1.0//EN"
+  "file:///usr/share/xml/schema/xml-core/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <!--
+  <delegateURI uriStartString="http://docbook.sourceforge.net/release/xsl/" 
+               catalog="file:///etc/xml/docbook-xsl.xml"/>
+  <delegateURI uriStartString="http://docbook.sourceforge.net/release/xsl/" 
+               catalog="file:///usr/share/xml/docbook/stylesheet/nwalsh/catalog.xml"/>
+  -->
+  <rewriteURI 
+    uriStartString="http://www.w3.org/TR/xhtml1/DTD/" 
+    rewritePrefix="@ADA_HOME_DTD@/"/>
+
+  <nextCatalog  catalog="/etc/xml/catalog" />
+</catalog>

@@ -14,6 +14,9 @@
 
 # See where is ADA_HOME
 ADA_HOME=`dirname $0`/..
+ 
+# Redirect catalog enquiries to ADA to avoid going out for DTDs
+XML_CATALOG_FILES="file://$ADA_HOME/DTDs/catalog"
 
 if [ "$1" = "-cache" ]; then
     if [ "$#" -lt 3 ]; then

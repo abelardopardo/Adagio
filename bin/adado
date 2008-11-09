@@ -21,6 +21,13 @@ function ada_check_home() {
     fi
 }
 
+function ada_check_catalog() {
+    if [ ! -f $ADA_HOME/DTDs/catalog ]; then
+	sed -e "s:@ADA_HOME_DTD@:$ADA_HOME/DTDs:" $ADA_HOME/DTDs/catalog.template \
+	    > $ADA_HOME/DTDs/catalog
+    fi
+}
+
 cygwin=false;
 case "`uname`" in
     CYGWIN*) cygwin=true ;;
@@ -57,8 +64,13 @@ fi
 # If ADA_HOME is empty, bomb out with msg
 ada_check_home
 
+# Make sure catalog exists
+ada_check_catalog
+XML_CATALOG_FILES="file://$ADA_HOME/DTDs/catalog"
+
 # Invoke ant
 rm -f adado.log
+echo "XML_CATALOG_FILES is $XML_CATALOG_FILES" >adado.log
 ant -q -Dada.home="$ADA_HOME" \
     -Dbasedir="$basedir" \
     -f "$AllTargets" $* 2>> adado.log
