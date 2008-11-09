@@ -74,7 +74,7 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
     # directory where the source file is located. Also, since the relation
     # between included files is not a tree but a DAG, repeated files need to be
     # filtered (thus the invocation to sort -u)
-    files=`xsltproc $ADA_HOME/XslStyles/GetIncludes.xsl ${fileArray[$idx]} 2>> build.out | sed -e 's/#xpointer.*$//g' | sort -u | sed -e "s+^+$absDir/+g"` 
+    files=`xsltproc --nonet $ADA_HOME/XslStyles/GetIncludes.xsl ${fileArray[$idx]} 2>> build.out | sed -e 's/#xpointer.*$//g' | sort -u | sed -e "s+^+$absDir/+g"` 
 
     # If something went wrong, simply bomb out to catch the error in the proper
     # location
