@@ -37,7 +37,7 @@
     <property name="inkscape.dst.dir"       value="${inkscape.src.dir}"
 	      description="Directory where the produced files are created"/>
     <property name="inkscape.output.format" value="png"
-	      description="Format of the produced files"/>
+	      description="Comma separated list of formats to produce (e.g.: png,eps,ps,pdf).&#10;# No whitespaces should appear in the middle."/>
     <property name="inkscape.files"         value=""
 	      description="Source file names (no path, it is inkscape.src.dir)"/>
 
