@@ -1,0 +1,27 @@
+xsltproc.src.dir=../../AntImports
+xsltproc.style.file=${ada.home}/XslStyles/ProducePropertiesTable.xsl
+xsltproc.output.format=_vars.xml
+xsltproc.files=InitialCheck.xml \
+               Xsltproc.xml \
+               Docbook.xml \
+               Xfig.xml \
+               Inkscape.xml \
+               Convert.xml \
+               Gimp.xml \
+               PDFnup.xml \
+               Ps2pdf.xml \
+               Msf2PDF.xml \
+               Export.xml \
+               ExportControl.xml \
+               SubRecursive.xml \
+               Copyfiles.xml \
+               ExerciseSubmit.xml \
+               Pdflatex.xml \
+               Latex.xml \
+               Dvips.xml \
+               Dblatex.xml \
+               Exam.xml \
+               TestExam.xml \
+               Rss.xml \
+               ExtraAnt.xml \
+               Cleaning.xml
