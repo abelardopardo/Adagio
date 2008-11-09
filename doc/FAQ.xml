@@ -258,7 +258,8 @@
 	</answer>
       </qandaentry>
 
-      <qandaentry id="inkscape_processing">
+      <qandaentry id="inkscape_processing"
+	xreflabel="How to process a figure with Inkscape">
 	<question>
 	  <para>How to process a figure with Inkscape?</para>
 	</question>
@@ -307,6 +308,8 @@
 		    <filename>png</filename>, <filename>eps</filename>
 		    (Encapsulated Postscript), <filename>ps</filename>
 		    (Postscript) or <filename>pdf</filename>.
+                    A comma separated list of formats may also be established
+                    (e.g: <code>png,pdf,ps</code>).
 		  </entry>
 		  <entry><filename>png</filename></entry>
 		</row>
@@ -1117,6 +1120,74 @@ docbook.files=index.xml</programlisting>
 	    The style sheet resulting of the merge between the two given files
 	    is a temporary file that is left in the current directory.
 	  </para>
+
+	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
+	</answer>
+      </qandaentry>
+
+      <qandaentry id="multiple_image_format"
+		  xreflabel="How to use alternative image formats in Docbook">
+	<question>
+	  <para>
+	    How do I select the appropriate image format for Docbook?
+	  </para>
+	</question>
+	<answer>
+	  <para>
+	    Vector graphics (like SVG, Postscript, PDF, etc.) are usually
+	    preferred for graphics drawn with computer programs,
+	    because they maintain quality when they
+	    have to be scaled. Fonts and lines are smooth even when
+	    they are scaled to high resolutions, e.g. for printing.
+	  </para>
+
+	  <para>
+	    However, the only image formats that are guaranteed to
+	    be shown on any browser are bitmap-based (JPEG, GIF and PNG).
+	    HTML documents should include only images in those formats
+	    to maintain compatibility.
+	  </para>
+
+	  <para>
+	    Because sometimes it is interesting to generate both an
+	    HTML and a PDF version of a document, produced
+	    from the same Docbook sources,
+	    Docbook allows the author to
+	    select different image formats for HTML and PDF.
+	    For computer-drawn illustrations, the PNG format
+	    is preferred for HTML documents, whereas PDF format
+	    is preferred for PDF output (because Ada uses internally
+	    <emphasis>dblatex</emphasis> and <emphasis>pdflatex</emphasis>
+	    for producing PDF documents from Docbook sources).
+	  </para>
+
+	  <para>
+	    The following example shows how an author can specify
+	    alternative image formats:
+	  </para>
+
+	  <programlisting>&lt;mediaobject>
+  &lt;imageobject role="html">
+    &lt;imagedata fileref="drawing.png" format="PNG"/>
+  &lt;/imageobject>
+  &lt;imageobject role="dblatex">
+    &lt;imagedata fileref="drawing.pdf" format="PDF"/>
+  &lt;/imageobject>
+  &lt;textobject>
+    &lt;phrase>Example drawing&lt;/phrase>
+  &lt;/textobject>
+&lt;/mediaobject></programlisting>
+
+	  <para>
+	    If the drawing is in SVG format, both the PNG and PDF
+	    versions can be obtained with the <emphasis>Inkscape</emphasis>
+	    rule (see <xref linkend="inkscape_processing"/>).
+	    The following lines in <code>Properties.txt</code>
+	    do that:
+	  </para>
+
+	  <programlisting>inkscape.files=*.svg
+inkscape.output.format= pdf,png</programlisting>
 
 	  <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
 	</answer>
