@@ -37,7 +37,7 @@
     <!-- Public Property definition -->
     <property name="xsltproc.src.dir"           value="${basedir}"
 	      description="Directory where the sources are taken"/>
-    <property name="xsltproc.dst.dir"           value="${xsltproc.src.dir}"
+    <property name="xsltproc.dst.dir"           value="${basedir}"
 	      description="Directory where the produced files are created"/>
     <property name="xsltproc.style.file"
               value="${ada.home}/XslStyles/DocbookProfile.xsl"
@@ -109,6 +109,17 @@ xsltproc.style.file"/>
     <filelist id="xsltproc.target.filelist"
 	      files="${xsltproc.target.filelist.property}"/>
     
+    <!-- Bomb out if incorrect stylesheet -->
+    <fail message="File ${xsltproc.style.file} not found">
+      <condition>
+	<and>
+	  <!-- Require a non-empty style file -->
+	  <not><equals arg1="${xsltproc.style.file}" arg2="" trim="true"/></not>
+	  <not><available file="${xsltproc.style.file}"/></not>
+	</and>
+      </condition>
+    </fail>
+
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="xsltproc.check">
       <and>
@@ -118,9 +129,6 @@ xsltproc.style.file"/>
 	<not>
 	  <equals arg1="${xsltproc.source.filelist.property}" arg2="" trim="true"/>
 	</not>
-	<!-- Require a non-empty style file -->
-        <not><equals arg1="${xsltproc.style.file}" arg2="" trim="true"/></not>
-        <available file="${xsltproc.style.file}"/>
       </and>
     </condition>
 
