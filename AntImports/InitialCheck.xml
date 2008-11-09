@@ -77,6 +77,32 @@ Possible values are 'error', 'warning', 'info', 'verbose' and 'debug'"/>
     </sequential>
   </macrodef>
 
+  <macrodef name="nomempty.file.match">
+    <attribute name="ADA.FILES"/>
+    <attribute name="ADA.SOURCE.FILELIST.PROPERTY"/>
+    <sequential>
+      <!-- 
+	   Check if source files is non empty, but source.filelist.property is
+	   empty. This condition is to detect errors by which an incorrect
+	   filename is given by the user. Without this check, the rule is
+	   quietly ignored and the mistake is not intuitive to fix. The
+	   introduction of this check means that if the user has a global
+	   definition (for example inkscape.files=*.svg) and such definition
+	   matches to nothing in one directory, an empty definition needs to be
+	   present in the Properties.txt file in order to avoid failure due to
+	   this check.
+      -->
+      <fail message="File/s: @{ADA.FILES} not found in ${basedir}">
+	<condition>
+	  <and>
+	    <not><equals arg1="@{ADA.FILES}" arg2="" trim="true"/></not>
+	    <equals arg1="@{ADA.SOURCE.FILELIST.PROPERTY}" arg2="" trim="true"/>
+	  </and>
+	</condition>
+      </fail>
+    </sequential>
+  </macrodef>
+
   <!-- 
        Define two properties containing the absolute src and dst paths, create
        the fileset with the source files and catch its expanded filename list in
@@ -103,6 +129,10 @@ Possible values are 'error', 'warning', 'info', 'verbose' and 'debug'"/>
       <pathconvert property="@{ADA.PREFIX}.source.filelist.property" pathsep=" ">
 	<fileset refid="@{ADA.PREFIX}.fileset"/>
       </pathconvert>
+
+      <nomempty.file.match
+	ADA.FILES="@{ADA.FILES}"
+	ADA.SOURCE.FILELIST.PROPERTY="@{ADA.PREFIX}.source.filelist.property"/>
     </sequential>
   </macrodef>
 
@@ -216,6 +246,5 @@ exportcontrol"/>
   <!-- Target to reset the build.out --> 
   <target name="initial.delete.build.out">
     <delete file="build.out"/>
-    <delete file="adado.log"/>
   </target>
 </project>
