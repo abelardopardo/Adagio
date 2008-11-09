@@ -9,8 +9,139 @@
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <section id="Applying_XSLT"
          xreflabel="Top of the Section">
-  <title>Applying a XSL Style Sheet to an XML file</title>
+  <title>Applying a XSL Style Sheet to a XML file</title>
 
   <qandaset>
+    <qandaentry id="" xreflabel="">
+      <question>
+	<para>How to apply a stylesheet to a XML file?</para>
+      </question>
+      <answer>
+
+	<para>The rule to apply a stylesheel to a XML file requires only to
+	define the source file. ADA has a default stylesheet that is applied to
+	a XML file if none is defined and is based in Docbook (see <xref
+	linkend="Applying_Docbook"/> for more details).</para>
+
+	<para>The following variables can be defined to apply a XSL stylesheet
+	to one or several XML files:</para>
+
+	<xi:include href="VarTables/Xsltproc_vars.xml"
+		    parse="xml"
+		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>The variables that need to be defined to activate this rule are
+	either <varname>xsltproc.files</varname> or
+	<varname>xsltproc.multilingual.files</varname>. The variable
+	<varname>mergestyles.master.style</varname> is used primarily to merge
+	an external stylesheet with the given one and apply both of them.</para>
+
+	<para>For example, let us consider <ulink
+	url="Samples/ApplyXSL/index.xml">a simple XML file</ulink> that needs to
+	be processed by the stylesheet <filename>Dump.xsl</filename> (included
+	in the styles directory within ADA). The output of this processing
+	should be left in a files with the same name but with the suffix
+	<filename>_Cump.xml</filename>. The variable definitions required in the
+	<ulink
+	url="Samples/ApplyXSL/Properties.txt"><filename>Properties.txt</filename></ulink>
+	file are:</para>
+
+	<programlisting><xi:include href="Samples/ApplyXSL/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+	<para>Note the use of the global variable <varname>ada.home</varname> to
+	refer to a style included with ADA (see <xref
+	linkend="ada_course_home"/> for more details).</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="docbook_processing">
+      <question>
+        <para>How to translate a Docbook files to HTML?</para>
+      </question>
+      <answer>
+        <para>
+          Open your favorite XML editor and create a Docbook XML file. Save it
+          in XML format. If you want to apply the Docbook XSL
+          Stylesheets you just need to define the variable
+	  <varname>xsltproc.files</varname>. The default style applied by this
+	  rule translates the file to HTML.
+        </para>
+
+        <para>For example, consider <ulink
+        url="Samples/Docbook/TextBookSelect.xml">the Docbook document with name
+        <filename>TectBookSelect.xml</filename></ulink>. To obtain the
+	corresponding HTML file, the content of the <ulink
+	url="Samples/Docbook/Properties.txt"><filename>Properties.txt</filename></ulink>
+	is:
+        </para>
+        
+	<programlisting><xi:include href="Samples/Docbook/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="modified_stylesheet"
+		xreflabel="How to use a slightly modified stylesheet">
+      <question>
+	<para>
+	  How can I use a slightly modified generic stylesheet without
+	  modifying it?
+	</para>
+	<para>
+	  I want to use a slightly modified version of a stylesheet that has
+	  lots of parameters to customize its behavior. However, I cannot
+	  touch it since it's being shared by a pool of authors.
+	</para>
+	<para>
+	  How can I still re-use most of the definitions and override some of
+	  them?
+	</para>
+      </question>
+      <answer>
+	<para>ADA offers support for this task automatically by taking all your
+	personal definitions in an extra XML file and merging that file with the
+	regular style you use through the use of the variable
+	<varname>mergestyles.master.style</varname>.</para>
+	
+	<para>Suppose there is a style file in
+	<filename>/path/to/another/location/MainStyle.xsl</filename> with
+	multiple parameters suitable to be defined. To override only some of
+	them you create a local stylesheet (for example, a file with name
+	<filename>MyPersonalValues.xml</filename>) containing
+	<emphasis>only</emphasis> the definitions you want to override. You then
+	include in the file <filename>Properties.txt</filename> one definition
+	to instruct the style processor to derive all the styles from
+	<filename>/path/to/another/location/HeadTail.xsl</filename>. For
+	example:</para>
+	
+	<example>
+	  <title>
+	    Definitions to include modifications on a shared stylesheet
+	  </title>
+	  <programlisting>mergestyles.master.style=MyPersonalValues.xml
+
+docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
+docbook.files=index.xml</programlisting>
+	</example>
+	
+	<para>
+	  The previous definitions instruct ADA to process the file
+	  <filename>index.xml</filename> with Docbook applying the stylesheet
+	  which is the combination of the ADA stylesheet with name
+	  <filename>HeadTail.xsl</filename> with the file
+	  <filename>MyPersonalValues.xml</filename> containing my personal
+	  modifications.
+	</para>
+	
+	<para>
+	  The style sheet resulting of the merge between the two given files
+	  is a temporary file that is left in the current directory.
+	</para>
+      </answer>
+    </qandaentry>
   </qandaset>
 </section>

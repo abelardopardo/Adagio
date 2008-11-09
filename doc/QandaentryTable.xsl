@@ -22,7 +22,7 @@
           <xsl:apply-templates/>
           <tr>
             <td colspan="2">
-              Back to <a class="xref" href="#About_ADA" title="1.&#xA0;About ADA">
+              <a class="xref">
                 <xsl:attribute name="href">#<xsl:value-of select="ancestor::section/@id"/></xsl:attribute>
                 <xsl:attribute name="title"><xsl:value-of select="ancestor::section/title/text()"/></xsl:attribute>
                 Top of the Section

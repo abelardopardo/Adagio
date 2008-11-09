@@ -856,7 +856,7 @@
         <para>
           Although not a functionality provided by ADA, by combining questions
           encoded in Docbook with the possibility of including a fragment of
-          an XML file into another (using <code>xinclude</code>), questions
+          a XML file into another (using <code>xinclude</code>), questions
           can be managed in large catalogs and select only a subset for a
           given exam.
         </para>
@@ -910,7 +910,7 @@
           For example, given the file <filename>QuestionCatalog.xml</filename>
           with a large number of questions, selecting those questions that
           belong to a set is achieved by using the <quote>Xinclude</quote>
-          notation. The usage of such element within an XML file is shown in
+          notation. The usage of such element within a XML file is shown in
           the following listing:
         </para>
 
@@ -1001,7 +1001,7 @@
 
         <para>
           ADA does not provide any support on how to collect and insert that
-          information within each question. Since the files have an XML
+          information within each question. Since the files have a XML
           structure, it would be feasible to design some application that
           given a set of question identifiers and the proper data, it inserts
           them with the proper markup, but at this time, ADA does not offer

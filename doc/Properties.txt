@@ -4,11 +4,14 @@
 # See ada.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
-subrecursive.dirs=images Samples/Exam ../AntImports
+subrecursive.dirs=images \
+                  Samples/Exam \
+                  ../AntImports \
+                  VarTables
 
-docbook.files=FAQ.xml
-docbook.style.file=QandaentryTable.xsl
-docbook.extra.args=--stringparam chapter.autolabel 0 \
+xsltproc.files=FAQ.xml
+xsltproc.style.file=QandaentryTable.xsl
+xsltproc.extra.args=--stringparam chapter.autolabel 0 \
                    --stringparam section.autolabel 1 \
 		   --stringparam section.toc.depth 0 \
 		   --stringparam html.stylesheet style.css

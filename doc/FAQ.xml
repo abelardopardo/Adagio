@@ -58,15 +58,6 @@
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                      APPLYING DOCBOOK                        -->
-  <!--                                                              -->
-  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Applying_Docbook.xml"
-	      parse="xml"
-	      xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <!--                                                              -->
   <!--                        STYLE HEADTAIL                        -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -783,69 +774,6 @@
 	      </textobject>
 	    </mediaobject>
 	  </informalfigure>
-	</answer>
-      </qandaentry>
-
-      <qandaentry id="modified_stylesheet"
-		  xreflabel="How to use a slightly modified stylesheet">
-	<question>
-	  <para>
-	    How can I use a slightly modified generic stylesheet without
-	    modifying it?
-	  </para>
-	  <para>
-	    I want to use a slightly modified version of a stylesheet that has
-	    lots of parameters to customize its behavior. However, I cannot
-	    touch it since it's being shared by a pool of authors.
-	  </para>
-	  <para>
-	    How can I still re-use most of the definitions and override some of
-	    them?
-	  </para>
-	</question>
-	<answer>
-	  <para>
-	    ADA offers support for this task automatically by taking all your
-	    personal definitions in an extra XML file and merging that file with
-	    the regular style you use.
-	  </para>
-
-	  <para>
-	    Suppose there is a style file in
-	    <filename>/path/to/another/location/MainStyle.xsl</filename> with
-	    multiple parameters suitable to be defined. To override only some of
-	    them you create a local stylesheet (for example, a file with name
-	    <filename>MyPersonalValues.xml</filename>) containing
-	    <emphasis>only</emphasis> the definitions you want to override. You
-	    then include in the file <filename>Properties.txt</filename> one
-	    definition to instruct the style processor to derive all the styles
-	    from <filename>/path/to/another/location/HeadTail.xsl</filename>. For
-	    example:
-	  </para>
-
-	  <example>
-	    <title>
-	      Definitions to include modifications on a shared stylesheet
-	    </title>
-	    <programlisting>mergestyles.master.style=MyPersonalValues.xml
-
-docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
-docbook.files=index.xml</programlisting>
-	  </example>
-
-          <para>
-	    The previous definitions instruct ADA to process the file
-	    <filename>index.xml</filename> with Docbook applying the stylesheet
-	    which is the combination of the ADA stylesheet with name
-	    <filename>HeadTail.xsl</filename> with the file
-	    <filename>MyPersonalValues.xml</filename> containing my personal
-	    modifications.
-	  </para>
-
-	  <para>
-	    The style sheet resulting of the merge between the two given files
-	    is a temporary file that is left in the current directory.
-	  </para>
 	</answer>
       </qandaentry>
 
