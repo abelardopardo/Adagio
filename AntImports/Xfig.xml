@@ -37,7 +37,7 @@
     <!-- Public Property definition -->
     <property name="xfig.src.dir"       value="${basedir}"
 	      description="Directory where the sources are taken"/>
-    <property name="xfig.dst.dir"       value="${xfig.src.dir}"
+    <property name="xfig.dst.dir"       value="${basedir}"
 	      description="Directory where the produced files are created"/>
     <property name="xfig.output.format" value="png"
 	      description="Format of the output file (see fig2dev for options)"/>
@@ -75,6 +75,7 @@ xfig.execution.possible = ${xfig.execution.possible}</echo>
   <target name="xfig.processing" 
 	  depends="xfig.init" if="xfig.check" description="creates the figures from the fig files">
 
+    <echo>xfig.processing             RUN</echo>
     <echo level="${xfig.debug.level}">${basedir}</echo>
     
     <!-- Create the dst directory -->
