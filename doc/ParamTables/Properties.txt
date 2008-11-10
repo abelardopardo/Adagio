@@ -1,0 +1,6 @@
+xsltproc.src.dir=${ada.home}/XslStyles
+xsltproc.files=HeadTailParams.xsl
+# xsltproc.dst.dir=${basedir}
+
+xsltproc.style.file=${ada.home}/XslStyles/ProduceParamTable.xsl
+xsltproc.output.format=_description.xml
