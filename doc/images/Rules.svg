@@ -111,30 +111,6 @@
              y="357.59491">Gimp</tspan></text>
       </g>
       <g
-         id="g2506"
-         transform="translate(0.8057612,0.7345501)">
-        <path
-           sodipodi:type="arc"
-           style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-           id="path2295"
-           sodipodi:cx="283.86145"
-           sodipodi:cy="198.93036"
-           sodipodi:rx="36.576611"
-           sodipodi:ry="12.566198"
-           d="M 320.43806,198.93036 A 36.576611,12.566198 0 1 1 247.28484,198.93036 A 36.576611,12.566198 0 1 1 320.43806,198.93036 z"
-           transform="translate(179.76972,65.544765)" />
-        <text
-           xml:space="preserve"
-           style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
-           x="437.10284"
-           y="268.9429"
-           id="text3419"><tspan
-             sodipodi:role="line"
-             id="tspan3421"
-             x="437.10284"
-             y="268.9429">Docbook</tspan></text>
-      </g>
-      <g
          id="g2521"
          transform="translate(2.5030484,0.7460387)">
         <path
