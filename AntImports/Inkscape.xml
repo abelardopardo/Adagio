@@ -34,7 +34,7 @@
     <!-- Public Property definition -->
     <property name="inkscape.src.dir"       value="${basedir}"
 	      description="Directory where the sources are taken"/>
-    <property name="inkscape.dst.dir"       value="${inkscape.src.dir}"
+    <property name="inkscape.dst.dir"       value="${basedir}"
 	      description="Directory where the produced files are created"/>
     <property name="inkscape.output.format" value="png"
 	      description="Comma separated list of formats to produce (e.g.: png,eps,ps,pdf).&#10;# No whitespaces should appear in the middle."/>
@@ -123,7 +123,7 @@ inkscape.execution.possible = ${inkscape.execution.possible}</echo>
 
   <target name="inkscape.clean.preprocessing" if="inkscape.check"
           depends="inkscape.formats.detect">
-    <echo>inkscape.clean.preprocessing RUN</echo>
+    <echo>inkscape.clean.preproc.     RUN</echo>
     <echo level="${inkscape.debug.level}">${basedir}</echo>
 
     <macrodef name="inkscape.clean.macro">
