@@ -112,6 +112,9 @@ if [ $adaAntStatus -ne 0 ]; then
     if [ ! -f $errorDir/$errorFile ]; then
 	errorDir="."
 	errorFile="adado.log"
+    else
+	# If adado.log contains no relevant info, nuke it.
+	rm -f adado.log
     fi
     echo
     echo "---------------------------------- ADA ERROR ----------------------------------"
@@ -125,6 +128,9 @@ if [ $adaAntStatus -ne 0 ]; then
     echo
     echo "-------------------------------------------------------------------------------"
     echo
+else
+    # If ant finished successfuly, no need to keep adado.log around
+    rm -f adado.log
 fi
 
 exit
