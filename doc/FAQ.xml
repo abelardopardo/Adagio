@@ -65,19 +65,19 @@
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                      STYLE PARAMETERS                        -->
+  <!--                        IMAGE CREATION                        -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Style_Parameters.xml"
+  <xi:include href="Image_Creation.xml"
               parse="xml"
               xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                        IMAGE CREATION                        -->
+  <!--                      STYLE PARAMETERS                        -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Image_Creation.xml"
+  <xi:include href="Style_Parameters.xml"
               parse="xml"
               xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
@@ -168,200 +168,6 @@
     <title>ADA Rules</title>
 
     <qandaset>
-      <qandaentry id="process_xfig">
-        <question>
-          <para>How to process a figure with Xfig?</para>
-        </question>
-        <answer>
-          <para>Open Xfig and create a figure. Save it in Xfig format. Suppose
-	  that the figure needs to be translated to PNG format. Open the file
-          <filename>Properties.txt</filename> (if not created, see <xref
-          linkend="how_to_run_ada"/>) and set the following variables:</para>
-
-          <informaltable frame="all" id="xfig_vars">
-            <tgroup rowsep="1" colsep="1" cols="3">
-              <colspec colnum="1" colname="col1" align="left"/>
-              <colspec colnum="2" colname="col2" align="left"/>
-              <colspec colnum="3" colname="col3" align="center"/>
-              <thead>
-                <row>
-                  <entry align="center">Variable name</entry>
-                  <entry align="center">Description</entry>
-                  <entry align="center">Default</entry>
-                </row>
-              </thead>
-              <tbody>
-                <row>
-                  <entry><varname>xfig.exec</varname></entry>
-                  <entry>
-                    Name of the xfig executable installed in the system
-                  </entry>
-                  <entry><filename>fig2dev</filename></entry>
-                </row>
-                <row>
-                  <entry><varname>xfig.src.dir</varname></entry>
-                  <entry>Directory from where to take the figures</entry>
-                  <entry>Current directory</entry>
-                </row>
-                <row>
-                  <entry><varname>xfig.dst.dir</varname></entry>
-                  <entry>Directory where to leave the processed figures</entry>
-                  <entry>Value of <varname>xfig.src.dir</varname></entry>
-                </row>
-                <row>
-                  <entry><varname>xfig.output.format</varname></entry>
-                  <entry>
-                    Figures are translated to this format. The formats supported
-                    by xfig are png, eps, gif, jpg, latex, map, etc. For a
-                    detailed list check the manual page of <command>fig2dev</command>..
-                  </entry>
-                  <entry><filename>png</filename></entry>
-                </row>
-                <row>
-                  <entry><varname>xfig.files</varname></entry>
-                  <entry>
-                    Space or comma separated list of file names (with no path)
-                    of the figures to process
-                  </entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry><varname>xfig.border</varname></entry>
-                  <entry>
-                    Border in pixels to add around the figure
-                  </entry>
-                  <entry>2</entry>
-                </row>
-                <row>
-                  <entry><varname>xfig.smooth</varname></entry>
-                  <entry>
-                    Smooth factor to pass to Ghostscript to improve rendering.
-                  </entry>
-                  <entry>4</entry>
-                </row>
-                <row>
-                  <entry><varname>xfig.extra.args</varname></entry>
-                  <entry>
-                    Additional options to pass directly to <command>fig2dev</command>.
-                  </entry>
-                  <entry></entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-
-          <para>For example. If the figures with names
-          <filename>sign.fig</filename> and <filename>office.fig</filename> are
-          stored in the current directory and versions in png format need to be
-          created in the same directory, the following assignment is required in
-          the file <filename>Properties.txt</filename>.</para>
-
-          <programlisting>xfig.files=sign.fig office.fig</programlisting>
-
-          <para>With such values defined, execute ADA to obtain the processed
-          figures (see <xref linkend="adado"/>).</para>
-
-          <para>If you may use files in a different directory, or the produced
-          files need to be stored in a different directory, include the
-          additional variable assignments in the file
-          <filename>Properties.txt</filename>.</para>
-        </answer>
-      </qandaentry>
-
-      <qandaentry id="inkscape_processing"
-        xreflabel="How to process a figure with Inkscape">
-        <question>
-          <para>How to process a figure with Inkscape?</para>
-        </question>
-        <answer>
-          <para>Open Inkscape and create a figure. Save it in SVG
-          format. Suppose that this figure needs to be translated to PNG
-          format. Open the file <filename>Properties.txt</filename> (if not
-          created, see <xref linkend="how_to_run_ada"/>) and set the following
-          variables:</para>
-
-          <informaltable frame="all" id="inkscape_vars">
-            <tgroup rowsep="1" colsep="1" cols="3">
-              <colspec colnum="1" colname="col1" align="left"/>
-              <colspec colnum="2" colname="col2" align="left"/>
-              <colspec colnum="3" colname="col3" align="center"/>
-              <thead>
-                <row>
-                  <entry align="center">Variable name</entry>
-                  <entry align="center">Description</entry>
-                  <entry align="center">Default</entry>
-                </row>
-              </thead>
-              <tbody>
-                <row>
-                  <entry><varname>inkscape.exec</varname></entry>
-                  <entry>
-                    Name of the inkscape executable installed in the system
-                  </entry>
-                  <entry><filename>inkscape</filename></entry>
-                </row>
-                <row>
-                  <entry><varname>inkscape.src.dir</varname></entry>
-                  <entry>Directory from where to take the figures</entry>
-                  <entry>Current directory</entry>
-                </row>
-                <row>
-                  <entry><varname>inkscape.dst.dir</varname></entry>
-                  <entry>Directory where to leave the processed figures</entry>
-                  <entry>Value of <varname>inkscape.src.dir</varname></entry>
-                </row>
-                <row>
-                  <entry><varname>inkscape.output.format</varname></entry>
-                  <entry>
-                    Figures are translated to this format. Allowed values:
-                    <filename>png</filename>, <filename>eps</filename>
-                    (Encapsulated Postscript), <filename>ps</filename>
-                    (Postscript) or <filename>pdf</filename>.
-                    A comma separated list of formats may also be established
-                    (e.g: <code>png,pdf,ps</code>).
-                  </entry>
-                  <entry><filename>png</filename></entry>
-                </row>
-                <row>
-                  <entry><varname>inkscape.files</varname></entry>
-                  <entry>
-                    Space or comma separated list of file names (with no path)
-                    of the figures to process
-                  </entry>
-                  <entry></entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-
-          <para>For example. If the figures with names
-          <filename>chart.svg</filename> and <filename>graph.svg</filename> are
-          stored in the current directory and versions in png format need to be
-          created in the same directory, the following assignment is required in
-          the file <filename>Properties.txt</filename>.</para>
-
-          <programlisting>inkscape.files=chart.svg graph.svg</programlisting>
-
-          <para>With such values defined, execute ADA to obtain the processed
-          figures (see <xref linkend="adado"/>).</para>
-
-          <para>If you may use files in a different directory, or the produced
-          files need to be stored in a different directory, include the
-          additional variable assignments in the file
-          <filename>Properties.txt</filename>.</para>
-        </answer>
-      </qandaentry>
-
-<!--
-      <TOBEWRITTEN>
-      <qandaentry id="inkscape_processing">
-        <question>
-          <para>Inkscape cannot be executed. Why?</para>
-        </question>
-        <answer>
-        </answer>
-      <qandaentry>
--->
       <qandaentry id="profiling">
         <question>
           <para>How to obtain two files from a unique docbook mixing elements in

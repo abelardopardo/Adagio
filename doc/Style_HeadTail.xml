@@ -9,13 +9,30 @@
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <section id="Style_HeadTail"
          xreflabel="Top of the Section">
-  <title>Including a common Head and Tail to Docbook documents</title>
+  <title>Pre-defined styles for HTML documents</title>
 
   <!--
       HeadTail.xml
       HeaderLinks.xsl (S)
   -->
-
   <qandaset>
+    <qandaentry id="headtail_pararms">
+      <question>
+	<para>How can I use the default ADA style to insert a Header and a Tail
+	in a HTML file?</para>
+      </question>
+
+      <answer>
+	<para>The stylesheel with name <filename>HeadTail.xsl</filename> allows
+	the customazation of a HTML document by defining the following
+	parameters:</para>
+
+        <xi:include href="ParamTables/HeadTailParams_description.xml"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+
+      </answer>
+    </qandaentry>
   </qandaset>
 </section>

@@ -23,73 +23,73 @@
         command:</para>
 
         <programlisting>$ <command>adacheck</command></programlisting>
-	
-	<para>ADA prints the value of some relevant variables followed by the
-	list of the tools that are available. For example:</para>
+        
+        <para>ADA prints the value of some relevant variables followed by the
+        list of the tools that are available. For example:</para>
 
-	<programlisting><xi:include href="AdaCheck.txt"
-	parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+        <programlisting><xi:include href="AdaCheck.txt"
+        parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
 
-	<para>This listing shows the tools that ADA is capable of using. If you
-	don't have all of them available, don't worry, ADA is capable of working
-	with a subset of these tools (although your functionality will be
-	reduced).</para>
+        <para>This listing shows the tools that ADA is capable of using. If you
+        don't have all of them available, don't worry, ADA is capable of working
+        with a subset of these tools (although your functionality will be
+        reduced).</para>
       </answer>
     </qandaentry>
 
     <qandaentry id="how_to_run_ada" xreflabel="How to define which files to process">
       <question>
-	<para>How to tell ADA which files should process and how?</para>
+        <para>How to tell ADA which files should process and how?</para>
       </question>
       <answer>
-	<para>ADA needs from the user the set of files to apply a set of
-	pre-defined production rules.  This information should all be contained
-	in a regular text file with name <filename>Properties.txt</filename> in
-	the same directory where your files are located. The format of this file
-	is very simple: any line starting with the symbol <quote>#</quote> or
-	empty is ignored. The rest of lines should have the structure
-	<command>name=value</command>. The names that can be used are
-	pre-defined by ADA. The following sections of this document describe the
-	available variables and explain the values that can be assigned.</para>
+        <para>ADA needs from the user the set of files to apply a set of
+        pre-defined production rules.  This information should all be contained
+        in a regular text file with name <filename>Properties.txt</filename> in
+        the same directory where your files are located. The format of this file
+        is very simple: any line starting with the symbol <quote>#</quote> or
+        empty is ignored. The rest of lines should have the structure
+        <command>name=value</command>. The names that can be used are
+        pre-defined by ADA. The following sections of this document describe the
+        available variables and explain the values that can be assigned.</para>
 
-	<para>The following figure illustrates at a certain level of abstraction
-	how ADA uses this file to process your files and produce the
-	resources.</para>
+        <para>The following figure illustrates at a certain level of abstraction
+        how ADA uses this file to process your files and produce the
+        resources.</para>
 
-	<informalfigure>
-	  <mediaobject>
-	    <imageobject>
-	      <imagedata fileref="images/Rules.png" format="PNG"/>
-	    </imageobject>
-	    <textobject>
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/Rules.png" format="PNG"/>
+            </imageobject>
+            <textobject>
               <phrase>Rules used by ADA</phrase>
             </textobject>
           </mediaobject>
         </informalfigure>
-	
-	<para>An example of a <ulink
-	url="Samples/SimpleDoc/Properties.txt"><filename>Properties.txt</filename>
-	file</ulink> content is shown in the following figure:</para>
-	
-	<programlisting><xi:include href="Samples/SimpleDoc/Properties.txt"
-	parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
-	
-	<para>The first definition simply states that all files with the
-	<filename>*.svg</filename> extension should be processed by
-	inkscape. The default behavior of this rule is to produce a file in PNG
-	format. The second variable assignment states that the <ulink
-	url="Samples/SimpleDoc/index.xml"><filename>index.xml</filename>
-	file</ulink> should be processed with the <command>xsltproc</command>
-	rule, which means that a default stylesheet is applied. Finally, the
-	last assignment states that if this directory is required to
-	<quote>produce</quote> resources from a different location, only the
-	files with extension <filename>*.png</filename> are to be copied to such
-	remote location.</para>
+        
+        <para>An example of a <ulink
+        url="Samples/SimpleDoc/Properties.txt"><filename>Properties.txt</filename>
+        file</ulink> content is shown in the following figure:</para>
+        
+        <programlisting><xi:include href="Samples/SimpleDoc/Properties.txt"
+        parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+        
+        <para>The first definition simply states that all files with the
+        <filename>*.svg</filename> extension should be processed by
+        inkscape. The default behavior of this rule is to produce a file in PNG
+        format. The second variable assignment states that the <ulink
+        url="Samples/SimpleDoc/index.xml"><filename>index.xml</filename>
+        file</ulink> should be processed with the <command>xsltproc</command>
+        rule, which means that a default stylesheet is applied. Finally, the
+        last assignment states that if this directory is required to
+        <quote>produce</quote> resources from a different location, only the
+        files with extension <filename>*.png</filename> are to be copied to such
+        remote location.</para>
 
-	<para>All rules present in ADA have default values assigned with the
-	most common behavior. This means that in most cases, by including a
-	small set of definitions in the <filename>Properties.txt</filename>
-	file, ADA will perform the appropriate operations.</para>
+        <para>All rules present in ADA have default values assigned with the
+        most common behavior. This means that in most cases, by including a
+        small set of definitions in the <filename>Properties.txt</filename>
+        file, ADA will perform the appropriate operations.</para>
       </answer>
     </qandaentry>
 
@@ -105,29 +105,29 @@
 
         <programlisting>$ <command>adado</command></programlisting>
 
-	<para>A few lines will then appear on the screen. ADA is writing the
-	rules that is applying as well as the directories in which the
-	processing is taking place. For example:</para>
+        <para>A few lines will then appear on the screen. ADA is writing the
+        rules that is applying as well as the directories in which the
+        processing is taking place. For example:</para>
 
-	<programlisting>[echo] BEGIN [path to your current dir]
+        <programlisting>     [echo] BEGIN [path to your current dir]
      [echo] inkscape.processing         RUN
      [echo] xsltproc.processing.nopre   RUN
      [echo] END [path to your current dir]
 
 BUILD SUCCESSFUL
 Total time: 4 seconds</programlisting>
-	
+        
         <para>The previous execution shows the result of applying the <ulink
         url="Samples/SimpleDoc/Properties.txt"><filename>Properties.txt</filename>
         file</ulink> shown in the question on <xref
         linkend="run_adacheck"/>. Two rules are executed within the current
         directory.</para>
 
-	<para>If an error appears while ADA executes the rules, the information
-	about the anomaly is stored in the file <filename>build.out</filename>
-	and the first lines are shown on the screen:</para>
+        <para>If an error appears while ADA executes the rules, the information
+        about the anomaly is stored in the file <filename>build.out</filename>
+        and the first lines are shown on the screen:</para>
 
-	<programlisting>     [echo] BEGIN /home/abel/Courses/ADA/doc/Samples/SimpleDoc
+        <programlisting>     [echo] BEGIN /path to current dir]/SimpleDoc
      [echo] inkscape.processing         RUN
      [echo] xsltproc.processing.nopre   RUN
 
@@ -149,212 +149,201 @@ unable to parse /[path to a file]/index.xml
         
     <qandaentry id="variable_catalog">
       <question>
-        <para>
-          Which variables can be used in the <filename>Properties.txt</filename>
-	  file?
-        </para>
+        <para>Which variables can be used in the
+        <filename>Properties.txt</filename> file?</para>
       </question>
 
       <answer>
         <para>The complete collection of variables that can be included in a
-        <filename>Properties.txt</filename> file are included in the <ulink
+        <filename>Properties.txt</filename> file are contained in the <ulink
         url="Properties_sample.txt">sample of
         <filename>Properties.txt</filename> file</ulink>. Remember, however,
         that only those variables that include a definition different from the
-        default need to be included in that file.
-        </para>
+        default need to be included in that file.</para>
       </answer>
     </qandaentry>
 
       <qandaentry id="using_regexp_for_files">
-	<question>
-	  <para>Can I specify a set of files using a regular expression in
-	  <filename>Properties.txt</filename>?</para>
-	</question>
-	<answer>
-	  <para>
-	    Yes. ADA allows two regular expression patterns.
-	  </para>
-	  <itemizedlist>
-	    <listitem>
-	      <para><quote>*</quote> matches zero or more characters</para>
-	    </listitem>
-	    <listitem>
-	      <para><quote>?</quote> matches one character</para>
-	    </listitem>
-	  </itemizedlist>
+        <question>
+          <para>Can I specify a set of files using a regular expression in
+          <filename>Properties.txt</filename>?</para>
+        </question>
+        <answer>
+          <para>Yes. ADA allows two regular expression patterns.</para>
+          <itemizedlist>
+            <listitem>
+              <para><quote>*</quote> matches zero or more characters</para>
+            </listitem>
+            <listitem>
+              <para><quote>?</quote> matches one character</para>
+            </listitem>
+          </itemizedlist>
 
-	  <para>For example, if you have several figures and each of them with a
-	  version with a suffix <command>_en.svg</command> and a suffix
-	  <command>_es.svg</command>), you may select all of them with the
-	  expression <command>*_e?.xml</command>. These patterns may be used
-	  anywhere file lists are required unless otherwise noted. Regular
-	  expressions are not allowed when specifying sets of files to delete
-	  for security reasons.</para>
+          <para>For example, if you have several figures and each of them with a
+          version with a suffix <command>_en.svg</command> and a suffix
+          <command>_es.svg</command>), you may select all of them with the
+          expression <command>*_e?.xml</command>. These patterns may be used
+          anywhere file lists are required unless otherwise noted. Regular
+          expressions are not allowed when specifying sets of files to delete
+          for security reasons.</para>
 
-	  <para>If you want this type of rule to be applied, not only to all the
-	  files matching this pattern in this directory, but to all directories,
-	  see <xref linkend="global_rule"/>.</para>
-	</answer>
+          <para>If you want this type of rule to be applied, not only to all the
+          files matching this pattern in this directory, but to all directories,
+          see <xref linkend="global_rule"/>.</para>
+        </answer>
       </qandaentry>
 
       <qandaentry id="property_in_command_line" xreflabel="How to execute with
-							   one variable modified">
-	<question>
+                                                           one variable modified">
+        <question>
 	  <para>Can I execute the <command>adado</command> once but with one
 	  single variable modified from the definition in
 	  <filename>Properties.txt</filename>?</para>
-	</question>
-	<answer>
-	  <para>
-	    Yes. In fact, you may include as many variable definitions in the
-	    command line as you see fit. They need to be provided with the
-	    following format:
-	  </para>
-	  <programlisting>-Dpropertyname=propertyvalue</programlisting>
+        </question>
+        <answer>
+          <para>Yes. In fact, you may include as many variable definitions in
+          the command line as you see fit. They need to be provided with the
+          following format:</para>
 
-	  <para>Any argument written beyond <command>adado</command> is directly
-	  passed to an invocation of Ant (the rule processing engine used by
-	  ADA). See the Ant manual for a detailed discussion of the available
-	  options.</para>
-	</answer>
+          <programlisting>-Dpropertyname=propertyvalue</programlisting>
+
+	  <para>If tye property value contains spaces, then the parameter needs
+	  to be given with the following syntax:</para>
+
+          <programlisting>'-Dpropertyname="propertyvalue with spaces"'</programlisting>
+
+          <para>Any argument written beyond <command>adado</command> is directly
+          passed to an invocation of Ant (the rule processing engine used by
+          ADA). See the Ant manual for a detailed discussion of the available
+          options.</para>
+        </answer>
       </qandaentry>
 
       <qandaentry id="ada_course_home"
-		  xreflabel="How to re-use definitions across an entire project">
-	<question>
-	  <para>Can I have definitions or use certain files that are used in
-	  different locations within a <quote>project</quote>?</para>
-	</question>
-	<answer>
-	  <para>Yes. Although there is no formal definition of
-	  <quote>project</quote> within ADA, it is very common to have files or
-	  definitions that apply to all files included in a set of
-	  directories. The way this is solved in ADA is by detecting a special
-	  directory in the hierarchy called the <emphasis>course home</emphasis>
-	  directory within ADA. The idea is for users to have multiple of these
-	  directories one for each large project of shared resources.</para>
+                  xreflabel="How to re-use definitions across an entire project">
+        <question>
+          <para>Can I have definitions or use certain files that are used in
+          different locations within a <quote>project</quote>?</para>
+        </question>
+        <answer>
+          <para>Yes. Although there is no formal definition of
+          <quote>project</quote> within ADA, it is very common to have files or
+          definitions that apply to all files included in a set of
+          directories. The way this is solved in ADA is by detecting a special
+          directory in the hierarchy called the <emphasis>course home</emphasis>
+          directory. The idea is for users to have multiple of these directories
+          one for each large project of shared resources.</para>
 
-	  <para>ADA tries to provide the least invasive solution, so rather than
-	  requiring an extra definition with the location of this course home
-	  directory, it detects it automatically by searching for the file with
-	  name <filename>AdaCourseParams.xml</filename> in up to ten levels of
-	  directories above the current one. If a file with this name is found,
-	  the variable <varname>ada.course.home</varname> is then assinged the
-	  directory where the file is located.</para>
-	  
-	  <para>For example, let us assume that your project uses some
-	  stylesheet to be used in multiple locations. You may give this file
-	  the name <filename>AdaCourseParams.xml</filename> and place it at the
-	  highest level in your hierarchy of directories. From any directory you
-	  may refer to such file in the <filename>Properties.txt</filename> file
-	  as shown in the following example.</para>
+          <para>ADA tries to provide the least invasive solution, so rather than
+          requiring an extra definition with the location of this course home
+          directory, it detects it automatically by searching for the file with
+          name <filename>AdaCourseParams.xml</filename> in up to ten levels of
+          directories above the current one. If a file with this name is found,
+          the variable <varname>ada.course.home</varname> is then assinged the
+          directory where the file is located.</para>
+          
+          <para>For example, let us assume that your project contains some
+          stylesheet to be used in multiple locations. You may give this file
+          the name <filename>AdaCourseParams.xml</filename> and place it at the
+          highest level in your hierarchy of directories. From any directory you
+          may refer to such file in the <filename>Properties.txt</filename> file
+          as shown in the following example.</para>
 
-	  <example>
-	    <title>Example of use of <varname>ada.course.home</varname></title>
-	    <programlisting>mergestyles.master.style=${ada.course.home}AdaCourseParams.xml
+          <example>
+            <title>Example of use of <varname>ada.course.home</varname></title>
+            <programlisting>mergestyles.master.style=${ada.course.home}AdaCourseParams.xml
 export.dst.dir=${ada.course.home}scratch</programlisting>
-	  </example>
+          </example>
 
-	  <para>The variable <varname>ada.course.home</varname> is used to
-	  access the common stylesheet as well as a prefix to a directory where
-	  to export resources.</para>
+          <para>The variable <varname>ada.course.home</varname> is used to
+          access the common stylesheet as well as a prefix to a directory where
+          to export resources.</para>
 
-	  <para>Variable <varname>ada.course.home</varname> is one of the global
-	  variables that ADA defines. The entire list is:</para>
+          <para>Variable <varname>ada.course.home</varname> is one of the global
+          variables that ADA defines. The entire list is:</para>
 
-	  <informaltable frame="all" id="global_vars_table">
-	    <tgroup rowsep="1" colsep="1" cols="3">
-	      <colspec colnum="1" colname="col1" align="left"></colspec>
-	      <colspec colnum="2" colname="col2" align="left"></colspec>
-	      <colspec colnum="3" colname="col3" align="center"></colspec>
-	      <thead>
-		<row>
-		  <entry align="center">Variable name</entry>
-		  <entry align="center">Description</entry>
-		  <entry align="center">Default</entry>
-		</row>
-	      </thead>
-	      <tbody>
-		<row>
-		  <entry><varname>basedir</varname></entry>
-		  <entry>The directory where the rules are being applied</entry>
-		  <entry>Initially, current directory</entry>
-		</row>
-		<row>
-		  <entry><varname>user.dir</varname></entry>
-		  <entry>Directory from where ADA has been invoked</entry>
-		  <entry>Current directory</entry>
-		</row>
-		<row>
-		  <entry><varname>user.home</varname></entry>
-		  <entry>Home directory for the user</entry>
-		  <entry>System dependent</entry>
-		</row>
-		<row>
-		  <entry><varname>ada.home</varname></entry>
-		  <entry>Directory where ADA is installed</entry>
-		  <entry>System dependent</entry>
-		</row>
-	      </tbody>
-	    </tgroup>
-	  </informaltable>
+          <informaltable frame="all" id="global_vars_table">
+            <tgroup rowsep="1" colsep="1" cols="3">
+              <colspec colnum="1" colname="col1" align="left"></colspec>
+              <colspec colnum="2" colname="col2" align="left"></colspec>
+              <colspec colnum="3" colname="col3" align="center"></colspec>
+              <thead>
+                <row>
+                  <entry align="center">Variable name</entry>
+                  <entry align="center">Description</entry>
+                  <entry align="center">Default</entry>
+                </row>
+              </thead>
+              <tbody>
+                <row>
+                  <entry><varname>basedir</varname></entry>
+                  <entry>The directory where the rules are being applied</entry>
+                  <entry>Initially, current directory</entry>
+                </row>
+                <row>
+                  <entry><varname>user.dir</varname></entry>
+                  <entry>Directory from where ADA has been invoked</entry>
+                  <entry>Current directory</entry>
+                </row>
+                <row>
+                  <entry><varname>user.home</varname></entry>
+                  <entry>Home directory for the user</entry>
+                  <entry>System dependent</entry>
+                </row>
+                <row>
+                  <entry><varname>ada.home</varname></entry>
+                  <entry>Directory where ADA is installed</entry>
+                  <entry>System dependent</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
 
-	  <para>If what you want is not a variable definition valid for an
-	  entire project, but a variable for all the projects, check <xref
-	  linkend="global_rule"/>.</para>
-	</answer>
+          <para>If what you want is not a variable definition valid for an
+          entire project, but a variable for all the projects, check <xref
+          linkend="global_rule"/>.</para>
+        </answer>
       </qandaentry>
 
     <qandaentry id="global_rule" 
-		xreflabel="How to make a variable declaration valid everywhere">
+                xreflabel="How to make a variable declaration valid for all projects">
       <question>
-	<para>Can I have a variable declaration for all the projects?</para>
-	
-	<para>
-	  The file <filename>Properties.txt</filename> contains variable
-	  assignments only valid for the current directory. Is it possible to
-	  define a variable such that the definition is used in all the
-	  directories of all the projects processed by ADA?
-	</para>
+        <para>Can I have a variable declaration for all the projects?</para>
+        
+        <para>The file <filename>Properties.txt</filename> contains variable
+        assignments only valid for the current directory. Is it possible to
+        define a variable such that the definition is used in all the
+        directories of all the projects processed by ADA?</para>
       </question>
       <answer>
-	<para>
-          Yes. You may have this type of assignments in two additional files
-          that are read by ADA:
-        </para>
+        <para>Yes. You may have this type of assignments in two additional files
+        that are read by ADA:</para>
 
         <itemizedlist>
           <listitem>
-            <para>
-              The file with name <filename>Ada.properties</filename> if
-              present in the ADA Course Home directory (see <xref
-              linkend="ada_course_home"/> to know where is this directory.)
-            </para>
+            <para>The file with name <filename>Ada.properties</filename> if
+            present in the ADA Course Home directory (see <xref
+            linkend="ada_course_home"/> to know where is this directory.)</para>
           </listitem>
           <listitem>
-            <para>
-              The <filename>.ant.properties</filename> file if present in your
-              home directory (see <xref linkend="run_adacheck"/> to find out
-              where Ant assumes where is this directory.)
-            </para>
+            <para>The <filename>.ant.properties</filename> file if present in
+            your home directory (see <xref linkend="run_adacheck"/> to find out
+            where Ant assumes where is this directory.)</para>
           </listitem>
         </itemizedlist>
 
-        <para>
-	  The order in which these files are processed is:
-	  <filename>Ada.properties</filename>,
-	  <filename>Properties.txt</filename>, and
-	  <filename>.ant.properties</filename>. If a variable is defined in more
-	  than one file, only the <emphasis>first definition</emphasis> is taken
-	  into account. As a consequence, you may have general definitions in
-	  the <filename>.ant.properties</filename> of your home directory that
-	  may be overwritten by definitions in the
-	  <filename>Properties.txt</filename> file in the local directory, and
-	  these can be overwritten by the <filename>Ada.properties</filename>
-	  file in the project home. The following figure shows the effect of
-	  reading these files in this order:
-        </para>
+        <para>The order in which these files are processed is:
+        <filename>Ada.properties</filename>,
+        <filename>Properties.txt</filename>, and
+        <filename>.ant.properties</filename>. If a variable is defined in more
+        than one file, only the <emphasis>first definition</emphasis> is taken
+        into account. As a consequence, you may have general definitions in the
+        <filename>.ant.properties</filename> of your home directory that may be
+        overwritten by definitions in the <filename>Properties.txt</filename>
+        file in the local directory, and these can be overwritten by the
+        <filename>Ada.properties</filename> file in the project home. The
+        following figure shows the effect of reading these files in this
+        order:</para>
         
         <informalfigure>
           <mediaobject>
@@ -367,17 +356,18 @@ export.dst.dir=${ada.course.home}scratch</programlisting>
           </mediaobject>
         </informalfigure>
 
-        <para>
-          The value of <varname>Var1</varname> is taken from the
-          <filename>Ada.properties</filename> file, <varname>Var2</varname> is
-          taken from the <filename>Properties.txt</filename> file, and
-          <varname>Var3</varname> is taken from the
-          <filename>.ant.properties</filename> file in the user home directory.
-        </para>
+        <para>The value of <varname>Var1</varname> is taken from the
+        <filename>Ada.properties</filename> file, <varname>Var2</varname> is
+        taken from the <filename>Properties.txt</filename> file, and
+        <varname>Var3</varname> is taken from the
+        <filename>.ant.properties</filename> file in the user home
+        directory.</para>
       </answer>
     </qandaentry>
 
+    <!--
     <qandaentry id="global_vars" xreflabel="Which variables are already defined">
     </qandaentry>
+    -->
   </qandaset>
 </section>

@@ -17,10 +17,83 @@
     Inkscape.xml (R)
     Convert.xml (R)
     Gimp.xml (R)
-
-
   -->
 
   <qandaset>
+    <qandaentry id="process_xfig">
+      <question>
+	<para>How to process a figure with Xfig?</para>
+      </question>
+      <answer>
+	<para>Open Xfig and create a figure. Save it in Xfig format. Suppose
+	that the figure needs to be translated to PNG format. Open the file
+	<filename>Properties.txt</filename> (if not created, see <xref
+	linkend="how_to_run_ada"/>) and set the following variables to suit your
+	needs:</para>
+	
+        <xi:include href="VarTables/Xfig_vars.xml"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>For example. If the figures with names <ulink
+	url="Samples/Xfig/modules.fig"><filename>modules.fig</filename></ulink>
+	and <ulink
+	url="Samples/Xfig/structure.fig"><filename>structure.fig</filename></ulink>
+	are stored in the current directory and versions in PNG format are
+	needed, the following assignment is required in the file <ulink
+	url="Samples/Xfig/Properties.txt"><filename>Properties.txt</filename></ulink>.</para>
+	
+	<programlisting><xi:include href="Samples/Xfig/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	
+	<para>Execute ADA to obtain the processed figures (see <xref
+	linkend="adado"/>).</para>
+      </answer>
+    </qandaentry>
+    
+    <qandaentry id="inkscape_processing"
+		xreflabel="How to process a figure with Inkscape">
+      <question>
+	<para>How to process a figure with Inkscape?</para>
+      </question>
+      <answer>
+	<para>Open Inkscape and create a figure. Save it in SVG format. Suppose
+	that this figure needs to be translated to PNG format. Open the file
+	<filename>Properties.txt</filename> (if not created, see <xref
+	linkend="how_to_run_ada"/>) and set the approriate value for some of the
+	following variables:</para>
+	
+        <xi:include href="VarTables/Inkscape_vars.xml"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>For example. If the figures with names <ulink
+	url="Samples/Inkscape/chart.svg"><filename>chart.svg</filename></ulink>
+	and <ulink
+	url="Samples/Inkscape/kanjidic.svg"><filename>kanjidic.svg</filename></ulink>
+	are stored in the current directory and versions in png format are
+	needed, the following assignment is required in the file
+	<ulink url="Samples/Inkscape/Properties.txt"><filename>Properties.txt</filename></ulink>.</para>
+	
+	<programlisting><xi:include href="Samples/Inkscape/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+	<para>With such values defined, execute ADA to obtain the processed
+	figures (see <xref linkend="adado"/>).</para>
+      </answer>
+    </qandaentry>
+
+<!--
+    <TOBEWRITTEN>
+    <qandaentry id="inkscape_processing">
+      <question>
+        <para>Inkscape cannot be executed. Why?</para>
+      </question>
+      <answer>
+      </answer>
+    <qandaentry>
+-->
   </qandaset>
 </section>
