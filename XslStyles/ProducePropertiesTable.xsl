@@ -19,9 +19,9 @@
         <colspec colnum="3" colname="col3" align="center"/>
         <thead>
           <row>
-            <entry align="center">Variable name</entry>
+            <entry align="center">Name</entry>
             <entry align="center">Description</entry>
-            <entry align="center">Default</entry>
+            <entry align="center">Default value</entry>
           </row>
         </thead>
         <tbody>
