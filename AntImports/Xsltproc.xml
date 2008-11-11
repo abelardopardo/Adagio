@@ -102,8 +102,12 @@ xsltproc.style.file"/>
       <chainedmapper>
 	<mapper type="glob" from="${xsltproc.abssrc.dir}/*" 
 		to="${xsltproc.absdst.dir}/*"/>
-	<mapper type="glob" from="*.xml" 
-		to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
+	<compositemapper>
+	  <mapper type="glob" from="*.xml" 
+		  to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
+	  <mapper type="glob" from="*.xsl" 
+		  to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
+	</compositemapper>
       </chainedmapper>
     </pathconvert>
     <filelist id="xsltproc.target.filelist"
@@ -374,10 +378,13 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 		  XSLTPROC.STYLE.FILE="${xsltproc.style.file}">
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.xml" 
-	      to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
+      <compositemapper>
+	<mapper type="glob" from="*.xml" 
+		to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
+	<mapper type="glob" from="*.xsl" 
+		to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
+      </compositemapper>
     </xsltproc.execute>
-			 
   </target>
 
   <target name="xsltproc.execute.preprocessing.step"
@@ -443,8 +450,12 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 		  XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}">
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.xml" 
-	      to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
+      <compositemapper>
+	<mapper type="glob" from="*.xml" 
+		to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
+	<mapper type="glob" from="*.xsl" 
+		to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
+      </compositemapper>
     </xsltproc.execute>
 
   </target>
