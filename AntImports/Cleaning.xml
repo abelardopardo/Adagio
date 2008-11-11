@@ -45,7 +45,6 @@
     <delete includeemptydirs="true">
       <fileset dir=".">
         <include name="build.out"/>
-        <include name="adado.log"/>
       </fileset>
       <filelist refid="clean.filelist"/>
     </delete>
