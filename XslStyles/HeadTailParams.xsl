@@ -7,7 +7,8 @@
   version="1.0" exclude-result-prefixes="exsl xi">
   
   <!-- Customization variables for Head and Tail -->
-  <xsl:param name="ada.page.author" />
+  <xsl:param name="ada.page.author" 
+    description="Author to include in the meta element in HTML head"/>
   <xsl:param name="ada.page.cssstyle.url" />
   <xsl:param name="ada.page.flash.player.javascript" />
   <xsl:param name="ada.page.google.analytics.account" />
