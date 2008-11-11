@@ -21,9 +21,21 @@
 	<para>Which general style variables are defined by ADA?</para>
       </question>
       <answer>
-        <xi:include href="ParamTables/GenearlParams_description.xml"
+
+	<para>Ada keeps some definitions that are used in multiple locations in
+	the built-in style sheets. The purpose of these definitions are to be
+	overwritten by definitions that apply to each project in particular (see
+	<xref linkend="modified_stylesheet"/> for details.</para>
+
+        <xi:include href="ParamTables/GeneralParams_description.xml"
                     parse="xml"
                     xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>The recommendation is to include these and other style parameters
+	in a common file, name it <filename>AdaCourseParams.xml</filename> and
+	place it at the top of your project to notify ADA the location of the
+	<varname>ada.course.home</varname> (see <xref
+	linkend="ada_course_home"/>).</para>
       </answer>
     </qandaentry>
 
