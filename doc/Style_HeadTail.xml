@@ -16,6 +16,17 @@
       HeaderLinks.xsl (S)
   -->
   <qandaset>
+    <qandaentry id="general_params">
+      <question>
+	<para>Which general style variables are defined by ADA?</para>
+      </question>
+      <answer>
+        <xi:include href="ParamTables/GenearlParams_description.xml"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+      </answer>
+    </qandaentry>
+
     <qandaentry id="headtail_pararms">
       <question>
 	<para>How can I use the default ADA style to insert a Header and a Tail

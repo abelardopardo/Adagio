@@ -5,5 +5,7 @@
 
 <chapter id="head_tail_parameters">
   <title>Parameterized page with HeadTail style</title>
-
+  <para>This is the body of the XML document. This and the title are the only
+  two items appearing in this page that need to be explicitly defined in this
+  document. The rest is inserted by the style processing step.</para>
 </chapter>

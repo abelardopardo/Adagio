@@ -111,8 +111,9 @@
           <tr>
             <td>
               <table style="border:0" cellspacing="1" cellpadding="0">
-                <xsl:if test="$ada.page.head.left.logo or $ada.page.head.center.top.logo 
-                              or $ada.page.head.right.logo">
+                <xsl:if test="$ada.page.head.left.logo or 
+                              $ada.page.head.center.top.logo or 
+                              $ada.page.head.right.logo">
                   <tr style="background-color: #FFFFFF">
                     <xsl:if test="$ada.page.head.left.logo">
                       <td rowspan="2" style="border:1px solid black;">
@@ -241,13 +242,12 @@
     <div id="tailbox">
       <xsl:comment> ######## Beginning of Tail ######## </xsl:comment>
       <hr style="text-align: center"/>
-      <!-- Creative Commons License -->
       <table cellspacing="2" cellpadding="2"
         style="border: 0; margin-left: auto; margin-right: auto">
         <tr>
           <td align="center">
             <small>
-              <xsl:value-of select="$ada.page.license.institution"/>
+              <xsl:copy-of select="$ada.page.license.institution"/>
             </small>
           </td>
           <xsl:if test="$ada.page.license = 'yes'">
@@ -269,16 +269,17 @@
             </td>
           </xsl:if>
         </tr>
-        <xsl:if test="$ada.page.license = 'yes'">
+        <xsl:if test="($ada.page.license = 'yes') and
+                      $ada.page.license.name">
           <tr>
             <td align="center">
               <small>
                 <xsl:choose>
-                  <xsl:when test="$profile.lang='en'">
-                    Work licensed under 
+                  <xsl:when test="$profile.lang='es'">
+                    Material con licencia
                   </xsl:when>
                   <xsl:otherwise>
-                    Material con licencia
+                    Work licensed under 
                   </xsl:otherwise>
                 </xsl:choose>
                 <xsl:text> </xsl:text>
@@ -287,7 +288,7 @@
                     <xsl:attribute name="href"><xsl:value-of 
                     select="$ada.page.license.url"/></xsl:attribute>
                   </xsl:if>
-                  Creative Commons
+                  <xsl:copy-of select="$ada.page.license.name"/>
                 </a>
               </small>
             </td>
@@ -299,8 +300,8 @@
       <xsl:if test="$ada.page.show.lastmodified = 'yes'">
         <p style="text-align: center; font-size: small; font-style: italic;">
           <xsl:choose>
-            <xsl:when test="$profile.lang='en'">Last Revision:</xsl:when>
-            <xsl:otherwise>Última modificación:</xsl:otherwise>
+            <xsl:when test="$profile.lang='es'">Última modificación:</xsl:when>
+            <xsl:otherwise>Last Revision:</xsl:otherwise>
           </xsl:choose>
           <xsl:element name="script">
             <xsl:attribute name="type">text/javascript</xsl:attribute>
@@ -339,8 +340,8 @@
           src="http://buttons.googlesyndication.com/fusion/add.gif">
           <xsl:attribute name="alt"><xsl:choose>
             <xsl:when 
-              test="$profile.lang = 'en'">Add a gadget to your personal page in Google</xsl:when>
-            <xsl:otherwise>Añade un gadget a tu página personal en Google</xsl:otherwise>
+              test="$profile.lang = 'es'">Añade un gadget a tu página personal en Google</xsl:when>
+            <xsl:otherwise>Add a gadget to your personal page in Google</xsl:otherwise>
           </xsl:choose></xsl:attribute>
         </img>
       </a>

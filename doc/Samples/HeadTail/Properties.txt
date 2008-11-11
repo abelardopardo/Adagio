@@ -1,3 +1,6 @@
+inkscape.files=*.svg
+
 mergestyles.master.style=Params.xml
 
 xsltproc.files=index.xml
+xsltproc.style.file=${ada.home}/XslStyles/HeadTail.xsl

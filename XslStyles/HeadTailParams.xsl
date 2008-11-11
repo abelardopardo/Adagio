@@ -9,26 +9,51 @@
   <!-- Customization variables for Head and Tail -->
   <xsl:param name="ada.page.author" 
     description="Author to include in the meta element in HTML head"/>
-  <xsl:param name="ada.page.cssstyle.url" />
-  <xsl:param name="ada.page.flash.player.javascript" />
-  <xsl:param name="ada.page.google.analytics.account" />
-  <xsl:param name="ada.page.google.gadget.url" />
-  <xsl:param name="ada.page.head.bigtitle" />
-  <xsl:param name="ada.page.head.center.bottom" />
-  <xsl:param name="ada.page.head.center.top.logo" />
-  <xsl:param name="ada.page.head.center.top.logo.alt" />
-  <xsl:param name="ada.page.head.center.top.logo.url" />
-  <xsl:param name="ada.page.head.left.logo" />
-  <xsl:param name="ada.page.head.left.logo.alt" />
-  <xsl:param name="ada.page.head.left.logo.url" />
-  <xsl:param name="ada.page.head.right.logo" />
-  <xsl:param name="ada.page.head.right.logo.alt" />
-  <xsl:param name="ada.page.head.right.logo.url" />
-  <xsl:param name="ada.page.license" />
-  <xsl:param name="ada.page.license.alt" />
+  <xsl:param name="ada.page.cssstyle.url" 
+    description="URL pointing to a CSS file to include in the HTML head"/>
+  <xsl:param name="ada.page.google.analytics.account" 
+    description="Account to include in the Google Analytics HTML snippet."/>
+  <xsl:param name="ada.page.google.gadget.url" 
+    description="Link pointing to a Google Gadget to be included in the upper
+                 left corner of the page"/>
+  <xsl:param name="ada.page.head.bigtitle" 
+    description="Value 1/0 to enable a big title on top of the page">0</xsl:param>
+  <xsl:param name="ada.page.head.center.bottom" 
+    description="Text to insert at the bottom row of the Header table"/>
+  <xsl:param name="ada.page.head.center.top.logo" 
+    description="URL to the image to show in the top center of the table
+                 header"/>
+  <xsl:param name="ada.page.head.center.top.logo.alt" 
+    description="Alt attribute for the previous image"/>
+  <xsl:param name="ada.page.head.center.top.logo.url" 
+    description="URL to make the image a link"/>
+  <xsl:param name="ada.page.head.left.logo"
+    description="URL to the image to show in the left side of the table header"/>
+  <xsl:param name="ada.page.head.left.logo.alt" 
+    description="Alt attribute for the previous image"/>
+  <xsl:param name="ada.page.head.left.logo.url"
+    description="URL to make the image a link"/>
+  <xsl:param name="ada.page.head.right.logo"
+    description="URL to the image to show in the right side of the table header"/>
+  <xsl:param name="ada.page.head.right.logo.alt" 
+    description="Alt attribute for the previous image"/>
+  <xsl:param name="ada.page.head.right.logo.url" 
+    description="URL to make the image a link"/>
+  <xsl:param name="ada.page.refresh.rate" 
+    description="Include a refresh rate in the page header"/>
   <xsl:param name="ada.page.license.institution" select="'&#169; Carlos III University of Madrid, Spain'"/>
-  <xsl:param name="ada.page.license.logo" />
-  <xsl:param name="ada.page.license.url" />
-  <xsl:param name="ada.page.refresh.rate" />
-  <xsl:param name="ada.page.show.lastmodified" select="'no'"/>
+  <xsl:param name="ada.page.license" 
+    description="Yes/no to include license information at the bottom of the
+                 page">no</xsl:param>
+  <xsl:param name="ada.page.license.name"
+    description="Name of the license"/>
+  <xsl:param name="ada.page.license.logo"
+    description="URL to an image to accompany the license information"/>
+  <xsl:param name="ada.page.license.alt" 
+    description="Alt attribute for the previous image"/>
+  <xsl:param name="ada.page.license.url" 
+    description="URL to point when clicking in the license image"/>
+  <xsl:param name="ada.page.show.lastmodified" 
+    description="yes/no controlling if the last modified info is shown at
+                 bottom">no</xsl:param>
 </xsl:stylesheet>
