@@ -6,7 +6,30 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi">
   
-  <!-- Customization variables for Head and Tail -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--        Customization variables for General Parameters        -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xsl:param name="ada.institution.name">Your institution name</xsl:param>
+
+  <xsl:param name="ada.course.home.url" />
+
+  <xsl:param name="ada.course.icon">ada_course_icon.png</xsl:param>
+  <xsl:param name="ada.course.icon.type">image/png</xsl:param>
+
+  <xsl:param name="ada.course.degree"/>
+
+  <xsl:param name="ada.course.edition">Value of ada.course.edition</xsl:param>
+
+  <xsl:param name="ada.course.image">ada_course_image.png</xsl:param>
+  <xsl:param name="ada.course.name">Value of ada.course.name</xsl:param>
+  <xsl:param name="ada.course.short.edition">Value of ada.course.short.edition</xsl:param>
+  <xsl:param name="ada.course.short.name" />
+  <xsl:param name="ada.course.year" />
+
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--          Customization variables for Head and Tail           -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <xsl:param name="ada.page.author">Value of ada.page.author parameter</xsl:param>
   <xsl:param name="ada.page.cssstyle.url">../../style.css</xsl:param>
   <xsl:param name="ada.page.google.analytics.account" />

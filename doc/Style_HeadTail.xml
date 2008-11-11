@@ -9,7 +9,7 @@
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <section id="Style_HeadTail"
          xreflabel="Top of the Section">
-  <title>Pre-defined styles for HTML documents</title>
+  <title>Pre-defined styles and parameters for HTML documents</title>
 
   <!--
       HeadTail.xml
@@ -32,10 +32,13 @@
                     xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
 	<para>The recommendation is to include these and other style parameters
-	in a common file, name it <filename>AdaCourseParams.xml</filename> and
-	place it at the top of your project to notify ADA the location of the
+	with the appropriate values in a common file, name it
+	<filename>AdaCourseParams.xml</filename> and place it at the top of your
+	project to notify ADA the location of the
 	<varname>ada.course.home</varname> (see <xref
-	linkend="ada_course_home"/>).</para>
+	linkend="ada_course_home"/>). The stylesheets include the default values
+	of these parameters, therefore, only those with values different from
+	the default need to be included in the file.</para>
       </answer>
     </qandaentry>
 
