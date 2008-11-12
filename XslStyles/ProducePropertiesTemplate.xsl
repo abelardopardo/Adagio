@@ -6,6 +6,7 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl str xi">
   
+  <xsl:import href="BasicFunctions.xsl"/>
   <xsl:strip-space elements="*"/>
 
   <xsl:preserve-space elements="xsl:text"/>
