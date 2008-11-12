@@ -36,7 +36,7 @@
   <xsl:template match="project">
     <xsl:if test="description">
 ###########################################################################
-# <xsl:value-of select="str:replace(str:replace(description/text(), '&#10;', 
+# <xsl:value-of select="str:eplace(str:replace(description/text(), '&#10;', 
       '&#10;#'), '#  ', '#')" />
 ###########################################################################</xsl:if>
     <xsl:for-each select="descendant::property[@description != '']">
