@@ -35,9 +35,20 @@
 
   <xsl:template match="project">
     <xsl:if test="description">
+      <xsl:variable name="repl1"><xsl:call-template name="str:replace">
+      <xsl:with-param name="string" select="description/text()"/>
+      <xsl:with-param name="search" select="'&#10;'"/>
+      <xsl:with-param name="replace" select="'&#10;#'"/></xsl:call-template></xsl:variable>
+      <xsl:variable name="repl2"><xsl:call-template name="str:replace">
+      <xsl:with-param name="string" select="$repl1"/>
+      <xsl:with-param name="search" select="'#  '"/>
+      <xsl:with-param name="replace" select="'#'"/></xsl:call-template></xsl:variable>
 ###########################################################################
+# -<xsl:value-of select="$repl2"/>-
+<!--
 # <xsl:value-of select="str:replace(str:replace(description/text(), '&#10;', 
       '&#10;#'), '#  ', '#')" />
+-->
 ###########################################################################</xsl:if>
     <xsl:for-each select="descendant::property[@description != '']">
 # <xsl:value-of select="@description"/>

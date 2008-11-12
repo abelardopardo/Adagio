@@ -4,8 +4,7 @@
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:exsl="http://exslt.org/common"
   xmlns:str="http://exslt.org/strings"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
-  version="1.0" exclude-result-prefixes="exsl xi">
+  version="1.0" exclude-result-prefixes="exsl">
 
   <xsl:template name="str:replace">
      <xsl:param name="string"
