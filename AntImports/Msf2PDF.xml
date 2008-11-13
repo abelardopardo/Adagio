@@ -17,9 +17,10 @@
 
   <import file="InitialCheck.xml"/>
 
+  <property name="msf2pdf.basic.exec" value="soffice"/>
   <property name="msf2pdf.exec" value="ada_msf_to_pdf"/>
 
-  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${msf2pdf.exec}"
+  <ada.set.execution.possible ADA.EXECUTABLE.NAME="${msf2pdf.basic.exec}"
 			      ADA.PREFIX="msf2pdf" />
   
   <!-- Private properties -->
@@ -126,7 +127,7 @@
 
   <target name="msf2pdf.report.NO" depends="msf2pdf.init"
 	  unless="msf2pdf.execution.possible">
-    <echo>msf2pdf            |           |     * (needs OpenOffice 2.4 or later)</echo>
+    <echo>msf2pdf            |           |     * (OpenOffice 2.4 or later)</echo>
   </target>
 
   <target name="msf2pdf.report" depends="msf2pdf.report.YES,
