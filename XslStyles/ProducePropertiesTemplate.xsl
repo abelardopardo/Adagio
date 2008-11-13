@@ -12,6 +12,18 @@
   <xsl:preserve-space elements="xsl:text"/>
    
   <xsl:output method="text" encoding="UTF-8" indent="no"/>
+
+  <xsl:variable name="rep-node-set1">
+    <replacements>
+      <replacement search="&#10;">&#10;#</replacement>
+    </replacements>
+  </xsl:variable>
+  
+  <xsl:variable name="rep-node-set2">
+    <replacements>
+      <replacement search="#  ">#</replacement>
+    </replacements>
+  </xsl:variable>
   
   <xsl:template match="/projects">#
 # List of properties to include in the file Properties.txt
@@ -35,20 +47,22 @@
 
   <xsl:template match="project">
     <xsl:if test="description">
-      <xsl:variable name="repl1"><xsl:call-template name="str:replace">
-      <xsl:with-param name="string" select="description/text()"/>
-      <xsl:with-param name="search" select="'&#10;'"/>
-      <xsl:with-param name="replace" select="'&#10;#'"/></xsl:call-template></xsl:variable>
-      <xsl:variable name="repl2"><xsl:call-template name="str:replace">
-      <xsl:with-param name="string" select="$repl1"/>
-      <xsl:with-param name="search" select="'#  '"/>
-      <xsl:with-param name="replace" select="'#'"/></xsl:call-template></xsl:variable>
 ###########################################################################
-# -<xsl:value-of select="$repl2"/>-
-<!--
-# <xsl:value-of select="str:replace(str:replace(description/text(), '&#10;', 
+<xsl:choose>
+  <xsl:when test="function-available('str:replace')"># <xsl:value-of select="str:replace(str:replace(description/text(), '&#10;', 
       '&#10;#'), '#  ', '#')" />
--->
+  </xsl:when>
+  <xsl:otherwise>
+    <xsl:variable name="first-change">
+      <xsl:call-template name="str:_replace"><xsl:with-param name="string"
+      select="description/text()"/><xsl:with-param name="replacements" 
+      select="exsl:node-set($rep-node-set1)/replacements/replacement" /></xsl:call-template></xsl:variable>
+# <xsl:call-template name="str:_replace"><xsl:with-param name="string"
+    select="$first-change"/><xsl:with-param name="replacements" 
+    select="exsl:node-set($rep-node-set2)/replacements/replacement"
+    /></xsl:call-template>
+  </xsl:otherwise>
+</xsl:choose>
 ###########################################################################</xsl:if>
     <xsl:for-each select="descendant::property[@description != '']">
 # <xsl:value-of select="@description"/>

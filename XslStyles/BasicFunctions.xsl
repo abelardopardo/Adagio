@@ -6,58 +6,6 @@
   xmlns:str="http://exslt.org/strings"
   version="1.0" exclude-result-prefixes="exsl">
 
-  <xsl:template name="str:replace">
-     <xsl:param name="string"
-                select="''" />
-     <xsl:param name="search"
-                select="/.." />
-     <xsl:param name="replace"
-                select="/.." />
-     <xsl:choose>
-        <xsl:when test="not($string)" />
-        <xsl:when test="not($search)">
-           <xsl:value-of select="$string" />
-        </xsl:when>
-        <xsl:when test="function-available('exsl:node-set')">
-  <!--  this converts the search and replace arguments to node sets
-                if they are one of the other XPath types  -->
-           <xsl:variable name="search-nodes-rtf">
-              <xsl:copy-of select="$search" />
-           </xsl:variable>
-           <xsl:variable name="replace-nodes-rtf">
-              <xsl:copy-of select="$replace" />
-           </xsl:variable>
-           <xsl:variable name="replacements-rtf">
-              <xsl:for-each select="exsl:node-set($search-nodes-rtf)/node()">
-                 <xsl:variable name="pos"
-                               select="position()" />
-                 <replace search="{.}">
-                    <xsl:copy-of select="exsl:node-set($replace-nodes-rtf)/node()[$pos]" />
-                 </replace>
-              </xsl:for-each>
-           </xsl:variable>
-           <xsl:variable name="sorted-replacements-rtf">
-              <xsl:for-each select="exsl:node-set($replacements-rtf)/replace">
-                 <xsl:sort select="string-length(@search)"
-                           data-type="number"
-                           order="descending" />
-                 <xsl:copy-of select="." />
-              </xsl:for-each>
-           </xsl:variable>
-           <xsl:call-template name="str:_replace">
-              <xsl:with-param name="string"
-                              select="$string" />
-              <xsl:with-param name="replacements"
-                              select="exsl:node-set($sorted-replacements-rtf)/replace" />
-           </xsl:call-template>
-        </xsl:when>
-        <xsl:otherwise>
-           <xsl:message terminate="yes">
-              ERROR: template implementation of str:replace relies on exsl:node-set().
-           </xsl:message>
-        </xsl:otherwise>
-     </xsl:choose>
-  </xsl:template>
   <xsl:template name="str:_replace">
      <xsl:param name="string"
                 select="''" />
