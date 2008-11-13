@@ -197,7 +197,7 @@
           </tr>
         </table>
       </xsl:if>
-      <xsl:if test="$ada.page.head.bigtitle = '1'">
+      <xsl:if test="$ada.page.head.bigtitle = 'yes'">
         <table cellspacing="0" cellpadding="0"
           style="border:0; margin-right: auto; margin-left: auto; width: 100%;">
           <tr>

@@ -17,7 +17,7 @@
     description="Link pointing to a Google Gadget to be included in the upper
                  left corner of the page"/>
   <xsl:param name="ada.page.head.bigtitle" 
-    description="Value 1/0 to enable a big title on top of the page">0</xsl:param>
+    description="yes/no to enable a big title on top of the page">no</xsl:param>
   <xsl:param name="ada.page.head.center.bottom" 
     description="Text to insert at the bottom row of the Header table"/>
   <xsl:param name="ada.page.head.center.top.logo" 
