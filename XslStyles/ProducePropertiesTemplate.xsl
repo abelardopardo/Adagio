@@ -52,11 +52,10 @@
   <xsl:when test="function-available('str:replace')"># <xsl:value-of select="str:replace(str:replace(description/text(), '&#10;', 
       '&#10;#'), '#  ', '#')" />
   </xsl:when>
-  <xsl:otherwise>
-    <xsl:variable name="first-change">
-      <xsl:call-template name="str:_replace"><xsl:with-param name="string"
-      select="description/text()"/><xsl:with-param name="replacements" 
-      select="exsl:node-set($rep-node-set1)/replacements/replacement" /></xsl:call-template></xsl:variable>
+  <xsl:otherwise><xsl:variable name="first-change">
+  <xsl:call-template name="str:_replace"><xsl:with-param name="string"
+  select="description/text()"/><xsl:with-param name="replacements" 
+  select="exsl:node-set($rep-node-set1)/replacements/replacement" /></xsl:call-template></xsl:variable>
 # <xsl:call-template name="str:_replace"><xsl:with-param name="string"
     select="$first-change"/><xsl:with-param name="replacements" 
     select="exsl:node-set($rep-node-set2)/replacements/replacement"
