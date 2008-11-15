@@ -120,6 +120,8 @@ xsltproc.style.file"/>
 	  <!-- Require a non-empty style file -->
 	  <not><equals arg1="${xsltproc.style.file}" arg2="" trim="true"/></not>
 	  <not><available file="${xsltproc.style.file}"/></not>
+	  <not><available 
+             file="${ada.home}/ADA_Styles/${xsltproc.style.file}"/></not>
 	</and>
       </condition>
     </fail>
@@ -160,7 +162,7 @@ xsltproc.style.file"/>
 	       output="build.out">
 	  <arg value="--nonet"/>
 	  <arg value="--path"/>
-	  <arg value=".:${ada.home}"/>
+	  <arg value=".:${ada.home}/ADA_Styles"/>
 	  <arg value="--xinclude"/>
 	  <arg value="--stringparam"/>
 	  <arg value="ada.home"/>
@@ -234,7 +236,7 @@ xsltproc.style.file"/>
 	       executable="${xsltproc.exec}"  output="build.out">
 	  <arg value="--nonet"/>
 	  <arg value="--path"/>
-	  <arg value=".:${ada.home}"/>
+	  <arg value=".:${ada.home}/ADA_Styles"/>
 	  <arg value="--xinclude"/>
 	  <arg value="--stringparam"/>
 	  <arg value="mergesheets.file.to.fold"/>
