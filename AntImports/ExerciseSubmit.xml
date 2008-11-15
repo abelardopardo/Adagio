@@ -25,10 +25,10 @@
     <property name="exercisesubmit.dst.dir"       value="${exercisesubmit.src.dir}"
 	      description="Directory where the produced files are created"/>
     <property name="exercisesubmit.style.file" 
-	      value="${ada.home}/XslStyles/ExerciseSubmit.xsl"
+	      value="${ada.home}/ADA_Styles/ExerciseSubmit.xsl"
 	      description="Stylesheet to apply all documents except the submission form"/>
     <property name="exercisesubmit.submit.style.file" 
-	      value="${ada.home}/XslStyles/Submit.xsl"
+	      value="${ada.home}/ADA_Styles/Submit.xsl"
 	      description="Stylesheet to apply to the submission form"/>
     <property name="exercisesubmit.extra.args" value=""
 	      description="Extra options to pass to the XSLT processor"/>

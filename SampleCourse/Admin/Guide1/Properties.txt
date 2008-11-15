@@ -13,7 +13,7 @@ mergestyles.master.style=../AdaCourseParams.xml
 docbook.src.dir=../../Material/Author2
 docbook.files=index.xml
 docbook.dst.dir=../scratch/Guide1
-docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
+docbook.style.file=${ada.home}/ADA_Styles/HeadTail.xsl
 
 # export.dst.dir=../scratch/Guide1
 # export.files=index.html \

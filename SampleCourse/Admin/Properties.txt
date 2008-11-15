@@ -21,7 +21,7 @@ subrecursive.dirs.nodst=Laboratory1 \
 mergestyles.master.style=AdaCourseParams.xml
 
 docbook.files=index.xml
-docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
+docbook.style.file=${ada.home}/ADA_Styles/HeadTail.xsl
 # docbook.extra.args=--stringparam profile.audience true \
 #              --stringparam ada.current.datetime 2108-01-01T00:00:00
 

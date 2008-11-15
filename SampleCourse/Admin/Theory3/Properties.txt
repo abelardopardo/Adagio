@@ -13,7 +13,7 @@ myfilename=servlets_jsp_integration
 mergestyles.master.style=Params.xml
 
 xsltproc.files=${myfilename}.xml
-xsltproc.style.file=${ada.home}/XslStyles/Prosper.xsl
+xsltproc.style.file=${ada.home}/ADA_Styles/Prosper.xsl
 xsltproc.output.format=.tex
 
 latex.files=${myfilename}.tex

@@ -100,7 +100,7 @@
         <varname>mergestyles.master.style</varname>.</para>
         
         <para>Suppose you want to use the style file in
-        <filename>${ada.home}/XslStyles/HeadTail.xsl</filename> to generate an
+        <filename>${ada.home}/ADA_Styles/HeadTail.xsl</filename> to generate an
         HTML page. To reuse those definitions and override some of them, create
         a local stylesheet (for example, a file with name
         <filename>MyPersonalValues.xml</filename>) containing
@@ -108,18 +108,18 @@
         in <filename>Properties.txt</filename> the value
         <filename>MyPersonalValues.xml</filename> to the variable
         <varname>mergestyles.master.style</varname> and use the style sheet
-        <filename>${ada.home}/XslStyles/HeadTail.xsl</filename> by assigning its
+        <filename>${ada.home}/ADA_Styles/HeadTail.xsl</filename> by assigning its
         value to <varname>xsltproc.style.file</varname> as shown in the
         following example:</para>
         
 	<programlisting>mergestyles.master.style=MyPersonalValues.xml
 
-xsltproc.style.file=${ada.home}/XslStyles/HeadTail.xsl
+xsltproc.style.file=${ada.home}/ADA_Styles/HeadTail.xsl
 xsltproc.files=index.xml</programlisting>
         
         <para>The previous definitions instruct ADA to apply to the file
         <filename>index.xml</filename> the style sheet resulting from combining
-        <filename>${ada.home}/XslStyles/HeadTail.xsl</filename> with the file
+        <filename>${ada.home}/ADA_Styles/HeadTail.xsl</filename> with the file
         <filename>MyPersonalValues.xml</filename> containing your
         modifications.</para>
         

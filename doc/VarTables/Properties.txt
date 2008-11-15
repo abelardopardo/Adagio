@@ -1,5 +1,5 @@
 xsltproc.src.dir=../../AntImports
-xsltproc.style.file=${ada.home}/XslStyles/ProducePropertiesTable.xsl
+xsltproc.style.file=${ada.home}/ADA_Styles/ProducePropertiesTable.xsl
 xsltproc.output.format=_vars.xml
 xsltproc.files=InitialCheck.xml \
                Xsltproc.xml \

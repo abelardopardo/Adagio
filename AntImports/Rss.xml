@@ -36,10 +36,10 @@ extension is replaced &#10;# by this value"/>
 multilingual mode"
 	      value=""/>
     <property name="rss.style.file" 
-	      value="${ada.home}/XslStyles/Rss.xsl"
+	      value="${ada.home}/ADA_Styles/Rss.xsl"
 	      description="Full path to the stylesheet file"/>
     <property name="rss.style.file.tohtml" 
-	      value="${ada.home}/XslStyles/RssToHtml.xsl"
+	      value="${ada.home}/ADA_Styles/RssToHtml.xsl"
 	      description="Full path to the stylesheet file to produce the HTML"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->

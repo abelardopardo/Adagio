@@ -9,7 +9,7 @@
      href="http://docbook.sourceforge.net/release/xsl/current/xhtml/profile-docbook.xsl"/>
   <xsl:import 
      href="http://docbook.sourceforge.net/release/xsl/current/xhtml/manifest.xsl"/>
-  <xsl:import href="../XslStyles/es-modify.xsl"/>
+  <xsl:import href="../ADA_Styles/es-modify.xsl"/>
 
   <xsl:output method="xml" indent="yes" encoding="UTF-8"
     doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"

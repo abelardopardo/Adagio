@@ -9,7 +9,7 @@ subrecursive.dirs=../../Material/Author10 \
 
 mergestyles.master.style=../AdaCourseParams.xml
 
-docbook.style.file=${ada.home}/XslStyles/HeadTail.xsl
+docbook.style.file=${ada.home}/ADA_Styles/HeadTail.xsl
 docbook.files=index.xml
 
 export.dst.dir=../scratch/Guide3

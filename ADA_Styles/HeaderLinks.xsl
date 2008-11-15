@@ -37,4 +37,6 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template 
+    match="note[@condition='AdminInfo']"/>
 </xsl:stylesheet>

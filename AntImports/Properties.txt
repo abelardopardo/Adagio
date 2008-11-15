@@ -1,4 +1,4 @@
-xsltproc.style.file=${ada.home}/XslStyles/ProducePropertiesTemplate.xsl
+xsltproc.style.file=${ada.home}/ADA_Styles/ProducePropertiesTemplate.xsl
 xsltproc.files=Properties_sample.xml
 xsltproc.output.format=.txt
 

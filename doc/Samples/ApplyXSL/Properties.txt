@@ -1,5 +1,5 @@
 
 # Definition of the XML files to be processed by Xsltproc
 xsltproc.files=index.xml
-xsltproc.style.file=${ada.home}/XslStyles/Dump.xsl
+xsltproc.style.file=${ada.home}/ADA_Styles/Dump.xsl
 xsltproc.output.format=_Dump.xml

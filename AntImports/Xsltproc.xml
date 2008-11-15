@@ -40,7 +40,7 @@
     <property name="xsltproc.dst.dir"           value="${basedir}"
 	      description="Directory where the produced files are created"/>
     <property name="xsltproc.style.file"
-              value="${ada.home}/XslStyles/DocbookProfile.xsl"
+              value="${ada.home}/ADA_Styles/DocbookProfile.xsl"
 	      description="Full path to the stylesheet file"/>
     <property name="xsltproc.output.format"     value=".html"
 	      description="Output file has the same name as the source but the
@@ -53,7 +53,7 @@ extension is replaced &#10;# by this value"/>
 	      description="Source file names (no path) to process in
 multilingual mode"/>
     <property name="xsltproc.mergestyles.style.file"     
-	      value="${ada.home}/XslStyles/Mergesheets.xsl"/>
+	      value="${ada.home}/ADA_Styles/Mergesheets.xsl"/>
     <property name="mergestyles.master.style"   value=""
 	      description="An additional stylesheet to combine with
 xsltproc.style.file"/>
@@ -159,6 +159,8 @@ xsltproc.style.file"/>
 	       append="yes" failonerror="true" executable="${xsltproc.exec}" 
 	       output="build.out">
 	  <arg value="--nonet"/>
+	  <arg value="--path"/>
+	  <arg value=".:${ada.home}"/>
 	  <arg value="--xinclude"/>
 	  <arg value="--stringparam"/>
 	  <arg value="ada.home"/>
@@ -218,7 +220,7 @@ xsltproc.style.file"/>
 	  <srcfileset file="${ada.local.property.file}" />
 	  <srcfileset file="${xsltproc.mergestyles.style.file}" />
 	  <srcfileset file="@{MERGESTYLES.FILE.TO.IMPORT}" />
-	  <srcfileset dir="${ada.home}/XslStyles">
+	  <srcfileset dir="${ada.home}/ADA_Styles">
 	    <include name="*.xsl" />
 	  </srcfileset>
 	  <targetfilelist 
@@ -231,6 +233,8 @@ xsltproc.style.file"/>
 	       dest="@{MERGESTYLES.DST.DIR}" append="yes" failonerror="true"
 	       executable="${xsltproc.exec}"  output="build.out">
 	  <arg value="--nonet"/>
+	  <arg value="--path"/>
+	  <arg value=".:${ada.home}"/>
 	  <arg value="--xinclude"/>
 	  <arg value="--stringparam"/>
 	  <arg value="mergesheets.file.to.fold"/>
@@ -354,7 +358,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <dependset>
       <srcfileset file="${ada.local.property.file}" />
       <srcfileset file="${xsltproc.style.file}" />
-      <srcfileset dir="${ada.home}/XslStyles">
+      <srcfileset dir="${ada.home}/ADA_Styles">
 	<include name="*.xsl" />
       </srcfileset>
       <srcfileset dir="${ada.course.home}">
@@ -426,7 +430,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <dependset>
       <srcfileset file="${ada.local.property.file}" />
       <srcfileset file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}"/>
-      <srcfileset dir="${ada.home}/XslStyles">
+      <srcfileset dir="${ada.home}/ADA_Styles">
 	<include name="*.xsl" />
       </srcfileset>
       <srcfileset dir="${ada.course.home}">

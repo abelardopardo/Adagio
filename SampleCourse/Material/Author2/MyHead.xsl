@@ -7,6 +7,6 @@
   version="1.0" exclude-result-prefixes="exsl xi">
   
   <!-- Brings in all the default values -->
-  <xsl:import href="../../../XslStyles/HeadTail.xsl"/>
+  <xsl:import href="../../../ADA_Styles/HeadTail.xsl"/>
 
 </xsl:stylesheet>
