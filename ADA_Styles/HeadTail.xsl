@@ -13,6 +13,8 @@
 
   <xsl:import href="DocbookProfile.xsl"/>
 
+  <xsl:import href="DublinCore.xsl"/>
+
   <!-- Template to ignore the chapter/section info with rss.info condition -->
   <xsl:import href="RssIgnore.xsl"/>
 
@@ -46,6 +48,9 @@
 
   <!-- User HEAD content -->
   <xsl:template name="user.head.content">
+
+    <xsl:call-template name="ada.dc.insert.meta.elements"/>
+
     <xsl:if test="$ada.course.icon">
       <link rel="shortcut icon">
         <xsl:attribute name="href"><xsl:value-of
