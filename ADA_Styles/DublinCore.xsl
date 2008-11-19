@@ -56,9 +56,8 @@
       <!-- DC.description -->
       <xsl:variable name="dc.description">
         <xsl:choose>
-          <xsl:when test="/*/*[contains(@condition,
-      'dc.info')]/abstract/*[not(name() = 'title')]">
-            <xsl:apply-templates select="/*/*[contains(@condition, 'dc.info')]/abstract*[not(name() = 'title')]"/>
+          <xsl:when test="/*/*[contains(@condition, 'dc.info')]/abstract/*[name() != 'title']">
+            <xsl:apply-templates select="/*/*[contains(@condition, 'dc.info')]/abstract/*[name() != 'title']"/>
           </xsl:when>
           <xsl:when test="$ada.dc.description != ''">
             <meta name="DC.description"><xsl:attribute name="content"><xsl:value-of
