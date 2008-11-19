@@ -15,7 +15,7 @@
     description="Dublin Core title descriptor (if no title element in root)" />
 
   <xsl:param name="ada.dc.description" 
-    description="Dublin Core description (if no *info/releaseinfo element in root)" />
+    description="Dublin Core description (if no *info/abstract element in root)" />
 
   <xsl:param name="ada.dc.subject" description="Dublin Core subject
                                                      descriptor" />
@@ -56,9 +56,6 @@
       <!-- DC.description -->
       <xsl:variable name="dc.description">
         <xsl:choose>
-          <xsl:when test="/*/*[contains(@condition, 'dc.info')]/releaseinfo">
-            <xsl:apply-templates select="/*/*[contains(@condition, 'dc.info')]/releaseinfo"/>
-          </xsl:when>
           <xsl:when test="/*/*[contains(@condition, 'dc.info')]/abstract">
             <xsl:apply-templates select="/*/*[contains(@condition, 'dc.info')]/abstract"/>
           </xsl:when>
@@ -140,19 +137,16 @@
        -->
   <xsl:template match="chapterinfo[contains(@condition, 'dc.info')]/pubdate|
                        chapterinfo[contains(@condition, 'dc.info')]/abstract|
-                       chapterinfo[contains(@condition, 'dc.info')]/releaseinfo|
                        chapterinfo[contains(@condition, 'dc.info')]/author"
     mode="chapter.titlepage.recto.auto.mode"/>
 
   <xsl:template match="sectioninfo[contains(@condition, 'dc.info')]/pubdate|
                        sectioninfo[contains(@condition, 'dc.info')]/abstract|
-                       sectioninfo[contains(@condition, 'dc.info')]/releaseinfo|
                        sectioninfo[contains(@condition, 'dc.info')]/author"
     mode="section.titlepage.recto.auto.mode"/>
 
   <xsl:template match="articleinfo[contains(@condition, 'dc.info')]/pubdate|
                        articleinfo[contains(@condition, 'dc.info')]/abstract|
-                       articleinfo[contains(@condition, 'dc.info')]/releaseinfo|
                        articleinfo[contains(@condition, 'dc.info')]/author"
     mode="article.titlepage.recto.auto.mode"/>
 
