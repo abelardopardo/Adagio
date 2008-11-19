@@ -161,8 +161,9 @@
   <!--                       ITEM ELEMENT                         -->
   <!--                                                            -->
   <!--############################################################-->
-  <xsl:template match="sectioninfo[@condition = 'rss.info']|
-                       chapterinfo[@condition = 'rss.info']">
+  <xsl:template match="sectioninfo[contains(@condition, 'rss.info')]|
+                       chapterinfo[contains(@condition, 'rss.info')]|
+                       articleinfo[contains(@condition, 'rss.info')]">
     <xsl:variable name="date.now">
       <xsl:choose>
         <xsl:when test="($ada.rss.force.date) and ($ada.rss.force.date != '')">

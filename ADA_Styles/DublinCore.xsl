@@ -41,28 +41,35 @@
     <xsl:if test="$ada.dc.include.descriptors = 'yes'">
       
       <!-- DC.title -->
-      <xsl:choose>
-        <xsl:when test="/*/title">
-          <meta name="DC.title"><xsl:attribute name="content"><xsl:value-of
-          select="/*/title/text()"/></xsl:attribute></meta>
-        </xsl:when>
-        <xsl:when test="$ada.dc.title != ''">
-          <meta name="DC.title"><xsl:attribute name="content"><xsl:value-of
-          select="$ada.dc.title"/></xsl:attribute></meta>
-        </xsl:when>
-      </xsl:choose>
+      <xsl:variable name="dc.title">
+        <xsl:choose>
+          <xsl:when test="/*/title">
+            <xsl:apply-templates select="/*/title/node()"/>
+          </xsl:when>
+          <xsl:when test="$ada.dc.title and ($ada.dc.title != '')"><xsl:value-of
+          select="$ada.dc.title"/></xsl:when>
+        </xsl:choose>
+      </xsl:variable>
+      <meta name="DC.title"><xsl:attribute name="content"><xsl:value-of
+          select="normalize-space(string($dc.title))"/></xsl:attribute></meta>
 
       <!-- DC.description -->
-      <xsl:choose>
-        <xsl:when test="/*/*[contains(@condition, 'dc.info')]/releaseinfo">
-          <meta name="DC.description"><xsl:attribute name="content"><xsl:value-of
-          select="/*/*[contains(@condition, 'dc.info')]/releaseinfo/text()"/></xsl:attribute></meta>
-        </xsl:when>
-        <xsl:when test="$ada.dc.description != ''">
-          <meta name="DC.description"><xsl:attribute name="content"><xsl:value-of
-          select="$ada.dc.description"/></xsl:attribute></meta>
-        </xsl:when>
-      </xsl:choose>
+      <xsl:variable name="dc.description">
+        <xsl:choose>
+          <xsl:when test="/*/*[contains(@condition, 'dc.info')]/releaseinfo">
+            <xsl:apply-templates select="/*/*[contains(@condition, 'dc.info')]/releaseinfo"/>
+          </xsl:when>
+          <xsl:when test="/*/*[contains(@condition, 'dc.info')]/abstract">
+            <xsl:apply-templates select="/*/*[contains(@condition, 'dc.info')]/abstract"/>
+          </xsl:when>
+          <xsl:when test="$ada.dc.description != ''">
+            <meta name="DC.description"><xsl:attribute name="content"><xsl:value-of
+            select="$ada.dc.description"/></xsl:attribute></meta>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:variable>
+      <meta name="DC.description"><xsl:attribute name="content"><xsl:value-of
+      select="normalize-space(string($dc.description))"/></xsl:attribute></meta>
 
       <!-- DC.date -->
       <meta name="DC.date"><xsl:attribute name="content"><xsl:value-of
@@ -108,18 +115,20 @@
       </xsl:choose>
 
       <!-- DC.creator -->
-      <xsl:if test="/*/*[contains(@condition, 'dc.info')]/author or ($ada.dc.creator != '')">
-        <xsl:variable name="dc.creator">
-          <xsl:choose>
-            <xsl:when test="/*/*[contains(@condition, 'dc.info')]/author"><xsl:value-of
-            select="/*/*[contains(@condition, 'dc.info')]/author/firstname"/><xsl:text> </xsl:text><xsl:value-of
-            select="/*/*[contains(@condition, 'dc.info')]/author/surname"/></xsl:when>
-            <xsl:when test="$ada.dc.creator != ''"><xsl:value-of
-            select="$ada.dc.creator"/></xsl:when>
-          </xsl:choose>
-        </xsl:variable>
+      <xsl:variable name="dc.creator">
+        <xsl:choose>
+          <xsl:when test="/*/*[contains(@condition, 'dc.info')]/author">
+            <xsl:apply-templates select="/*/*[contains(@condition,
+                                         'dc.info')]/author"/>
+          </xsl:when>
+          <xsl:when test="$ada.dc.creator">
+            <xsl:value-of select="$ada.dc.creator"/>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:if test="$dc.creator and ($dc.creator != '')">
         <meta name="DC.creator"><xsl:attribute name="content"><xsl:value-of
-        select="$dc.creator"/></xsl:attribute></meta>
+        select="normalize-space(string($dc.creator))"/></xsl:attribute></meta>
       </xsl:if>
 
     </xsl:if>
