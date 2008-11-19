@@ -104,7 +104,6 @@ if [ $adaAntStatus -ne 0 ]; then
 	# The error occurred in the dir contained in the last array value
         previous=`expr ${#context[@]} - 1`
 	errorDir=`expr match "${context[$previous]}" "ADA_BEGIN_EXE \(.*\)"`
-
     fi
 
     # It might be the case such that build.out does not exist. This means an ANT

@@ -101,7 +101,14 @@
 
   <target name="local.execute" 
 	  depends="ada.init, initial.delete.build.out">
+
+    <echo>BEGIN ${basedir}</echo>
+    <echo file="${user.dir}/adado.log" append="true">ADA_BEGIN_EXE ${basedir}${line.separator}</echo>
+
     <ada.apply.processing.rules/>
+
+    <echo>END ${basedir}</echo>
+    <echo file="${user.dir}/adado.log" append="true">ADA_END_EXE ${basedir}${line.separator}</echo>
   </target>
 
   <!-- Apply timeline -->
