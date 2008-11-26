@@ -17,12 +17,11 @@
   <xsl:param name="ada.rss.main.site.url">http://bogus.net</xsl:param>
 
   <!-- Name of the file containing the feed (no prefix) -->
-  <xsl:param name="ada.rss.filename">rss.xml</xsl:param>
+  <xsl:param name="ada.rss.filename"/>
 
   <!-- URL pointing to the XML file containing the feed -->
-  <xsl:param name="ada.rss.channel.url">
-    <xsl:value-of select="$ada.rss.filename"/>
-  </xsl:param>
+  <xsl:param name="ada.rss.channel.url"><xsl:value-of
+  select="$ada.rss.filename"/></xsl:param>
 
   <!-- Prefix of the type http://......./a/b/c to use for material links -->
   <xsl:param name="ada.rss.item.url.prefix">Your prefix goes here</xsl:param>
