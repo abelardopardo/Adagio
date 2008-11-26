@@ -53,7 +53,7 @@
             <!--
             <xsl:choose>
               <xsl:when test="$exercisesubmit.submission.page != ''">
-                <xsl:copy-of select="$exercisesubmit.submission.page"/>
+                <xsl:copy-of select="$exercisesubmit.submission.page.url"/>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:choose>
