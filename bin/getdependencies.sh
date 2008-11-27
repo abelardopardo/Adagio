@@ -41,9 +41,13 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
 done
 
 idx=0
+originDir=`pwd`
 # Loop over all the files in fileArray
 while [ "$idx" -ne ${#fileArray[*]} ]; do
     
+    # Make sure the original directory is restored
+    cd $originDir
+
     # If the file does not exit keep looping
     if [ ! -e ${fileArray[$idx]} ]; then
 	idx=`expr $idx + 1`
@@ -68,6 +72,7 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
     # prepend to the included files, since their paths are considered from the
     # location of the file containing the includes
     absDir=$(cd "$(dirname "${fileArray[$idx]}")"; pwd)
+    cd $absDir
 
     # Need this option to detect if anything goes wrong in the pipe execution
     set -o pipefail
@@ -77,11 +82,10 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
     buildNotPresent=$?
 
     # Execute the stylesheet to fetch the xi:include[@href] elements. Filter out
-    # a potential #xpointer suffix in the href attribute and prepend the
-    # directory where the source file is located. Also, since the relation
-    # between included files is not a tree but a DAG, repeated files need to be
-    # filtered (thus the invocation to sort -u)
-    files=`xsltproc --path .:$ADA_HOME/ADA_Styles --nonet $ADA_HOME/ADA_Styles/GetIncludes.xsl ${fileArray[$idx]} 2>> build.out | sed -e 's/#xpointer.*$//g' | sort -u | sed -e "s+^+$absDir/+g"` 
+    # a potential #xpointer suffix in the href attribute. Also, since the
+    # relation between included files is not a tree but a DAG, repeated files
+    # need to be filtered (thus the invocation to sort -u)
+    files=`xsltproc --path .:$ADA_HOME/ADA_Styles --nonet $ADA_HOME/ADA_Styles/GetIncludes.xsl ${fileArray[$idx]} 2>> build.out | sed -e 's/#xpointer.*$//g' | sort -u ` 
 
     # If something went wrong, simply bomb out to catch the error in the proper
     # location
@@ -94,11 +98,13 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
 	fi
     fi
 
+    # If there are no files included, keep looping
     if [ "$files" = "" ]; then
 	idx=`expr $idx + 1`
 	continue
     fi
 
+    # Process each file included to include them in the Array
     for fname in $files; do
 	absName=$(cd "$(dirname "$fname")"; pwd)/$(basename $fname)
 	echo ${fileArray[*]} | egrep -q "$absName"
