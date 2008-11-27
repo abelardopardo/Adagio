@@ -9,8 +9,9 @@
   
   <!-- Include professor guide text --> 
   <xsl:param name="professorguide.include.guide" select="'no'"/>
+
   <!-- Background color for the professor guide box  --> 
-  <xsl:param name="pguidebgn" select="'#CCD0D6'"/>
+  <xsl:param name="exercisesubmit.pguide.background.color" select="'#CCD0D6'"/>
 
   <!-- Prevent this section from appearing in TOC -->
   <xsl:template match="section[@condition='professorguide']" mode="toc" />
