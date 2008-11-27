@@ -72,6 +72,10 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
     # Need this option to detect if anything goes wrong in the pipe execution
     set -o pipefail
 
+    # Remember if build.out is present before executing this command
+    test -f build.out
+    buildNotPresent=$?
+
     # Execute the stylesheet to fetch the xi:include[@href] elements. Filter out
     # a potential #xpointer suffix in the href attribute and prepend the
     # directory where the source file is located. Also, since the relation
@@ -83,6 +87,11 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
     # location
     if [ "$?" -ne 0 ]; then
 	exit 1
+    else
+	# If build.out was not present, and now it is empty, nuke it
+	if [ "$buildNotPresent" = "1" -a ! -s build.out ]; then
+	    rm -f build.out
+	fi
     fi
 
     if [ "$files" = "" ]; then
