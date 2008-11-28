@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section>
+  <title>
+    <phrase lang="es">Título de este documento</phrase>
+    <phrase lang="en">Title for this document</phrase>
+  </title>
+
+  <para lang="es">El título de este documento debe incluir dos elementos
+  <code>phrase</code> uno con cada valor del atributo <code>lang</code> porque
+  un documento no admite dos títulos. La multiplicidad de lenguajes, por tanto,
+  se acomoda dentro de <code>title</code> mediante el uso del elemento
+  <code>phrase</code> que no tiene efecto en como se visualiza el texto.</para>
+
+  <para lang="en">The document title must include two <code>phrase</code>
+  elements with the title in each language and the appropriate value of the
+  <code>lang</code> attribute because a Docbook section does not admit two
+  <code>title</code> elements. Multilingual elements, then needs to be
+  accomodated within <code>title</code> with the use of the <code>phrase</code>
+  element which has no effect on how the document is rendered.</para>
+
+  <para lang="es">A continuación se muestra una figura en versión multilingüe:</para>
+
+  <para lang="en">The following figure has also a multilingual structure:</para>
+
+  <informalfigure id="">
+    <mediaobject>
+      <imageobject lang="es">
+	<imagedata align="center" fileref="tablestruct_es.png" format="PNG" />
+      </imageobject>
+      <imageobject lang="en">
+	<imagedata align="center" fileref="tablestruct_en.png" format="PNG" />
+      </imageobject>
+    </mediaobject>
+  </informalfigure>
+
+  <para lang="es">La figura se incluye mediante el siguiente Docbook:</para>
+  <para lang="en">The figure is included with the following Docbook:</para>
+
+  <programlisting><![CDATA[<informalfigure id="">
+  <mediaobject>
+    <imageobject lang="es">
+	<imagedata align="center" fileref="tablestruct_es.png" format="PNG" />
+    </imageobject>
+    <imageobject lang="en">
+	<imagedata align="center" fileref="tablestruct_en.png" format="PNG" />
+    </imageobject>
+  </mediaobject>
+</informalfigure>]]></programlisting>
+</section>

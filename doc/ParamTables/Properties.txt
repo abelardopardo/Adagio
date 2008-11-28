@@ -1,6 +1,17 @@
 xsltproc.src.dir=${ada.home}/ADA_Styles
-xsltproc.files=HeadTailParams.xsl \
-	       GeneralParams.xsl
+xsltproc.files=\
+ 	AsapAuthorBoxParams.xsl \
+ 	AsapBenchResultsParams.xsl \
+ 	ExamParams.xsl \
+ 	ExerciseSubmitParams.xsl \
+ 	FLVObjParams.xsl \
+ 	GeneralParams.xsl \
+ 	GGadgetParams.xsl \
+ 	HeadTailParams.xsl \
+ 	Params.xsl \
+ 	RssParams.xsl \
+ 	SubmitParams.xsl \
+ 	TestQuestionsParams.xsl
 
 xsltproc.style.file=${ada.home}/ADA_Styles/ProduceParamTable.xsl
 xsltproc.output.format=_description.xml

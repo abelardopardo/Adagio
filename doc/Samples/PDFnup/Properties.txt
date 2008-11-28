@@ -1,0 +1,2 @@
+pdfnup.files=Document.pdf
+pdfnup.nup.option=2x1

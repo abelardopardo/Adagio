@@ -1,0 +1,2 @@
+dblatex.files=TextBookSelect.xml
+dblatex.compliant.mode=false

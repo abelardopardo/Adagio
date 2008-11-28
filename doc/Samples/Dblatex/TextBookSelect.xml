@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<chapter id="textbook_select">
+  <title>Selection of text book sections to read</title>
+
+  <para>
+    The course material is extracted completely from the text book:
+    A. Silberschatz, P. Galvin. Operating Systems Concepts, Seventh Edition,
+    John Wiley &amp; Sons, 2004 (Chapters 1-5, 7-13).
+  </para>
+
+  <para>
+    From within chapters 1 through 5 and 7 through 13, the following sections
+    are eliminated:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>Chapter 1: Sections 1.9, 1.10 and 1.12</para>
+    </listitem>
+    <listitem>
+      <para>Chapter 2: Sections 2.8, 2.9 and 2.10</para>
+    </listitem>
+    <listitem>
+      <para>Chapter 5: Sections 5.5, 5.10 and 5.12</para>
+    </listitem>
+    <listitem>
+      <para>Chapter 9: Sections 9.7, 9.8, 9.9 and 9.10</para>
+    </listitem>
+    <listitem>
+      <para>Chapter 11: Section 11.10</para>
+    </listitem>
+    <listitem>
+      <para>Chapter 13: Secgtion 13.6</para>
+    </listitem>
+  </itemizedlist>
+</chapter>

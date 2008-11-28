@@ -1,0 +1,3 @@
+xsltproc.files=index.xml
+xsltproc.style.file=HeadTail.xsl
+# xsltproc.style.file=Style.xsl

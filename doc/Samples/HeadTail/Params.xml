@@ -34,7 +34,7 @@
   <xsl:param name="ada.page.cssstyle.url">../../style.css</xsl:param>
   <xsl:param name="ada.page.google.analytics.account" />
   <xsl:param name="ada.page.google.gadget.url" />
-  <xsl:param name="ada.page.head.bigtitle">1</xsl:param>
+  <xsl:param name="ada.page.head.bigtitle">yes</xsl:param>
   <xsl:param name="ada.page.head.center.bottom">Value of ada.page.head.center.bottom</xsl:param>
   <xsl:param name="ada.page.head.center.top.logo">ada_page_head_center_top_logo.png</xsl:param>
   <xsl:param name="ada.page.head.center.top.logo.alt">Value of ada.page.head.center.top.logo.alt</xsl:param>

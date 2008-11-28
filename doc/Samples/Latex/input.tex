@@ -1,0 +1,54 @@
+%
+% Revision $Id: SlidePrelude.tex,v 3.6 2005/02/16 08:45:14 abel Exp $
+%
+\documentclass[a4paper]{article}
+
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{calc}
+\usepackage[pdftex,usenames]{color}
+\usepackage{colortbl}
+\usepackage{enumerate}
+\usepackage[utf8]{inputenc}
+\usepackage{marvosym}
+\usepackage{moreverb}
+
+\ifx\pdfoutput\undefined 
+\usepackage[dvips]{graphicx}
+\DeclareGraphicsExtensions{.eps}
+\else
+\usepackage[pdftex]{graphicx}
+%\usepackage[pdftex]{thumbpdf}       %%% thumbnails for pdflatex
+\DeclareGraphicsExtensions{.png,.pdf}
+\DeclareGraphicsRule{.120x120.png}{png}{*}{}
+%\pdfadjustspacing=1                %%% force LaTeX-like character spacing %%%
+\fi
+
+\usepackage{fancyhdr}
+\usepackage{amsfonts}
+\usepackage{multirow}
+\usepackage{times}
+\usepackage{verbatim}
+
+\usepackage[pdftex,colorlinks=true,linkcolor=normal]{hyperref} 
+\usepackage[spanish]{babel}
+
+\begin{document}
+
+\section{First Section}
+
+Text for the first section.
+
+\section{The second section}
+
+Text for the second section.
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% compile-command: "ant local.build"
+%%% eval: (ispell-change-dictionary "castellano8")
+%%% TeX-master: t
+%%% End: 

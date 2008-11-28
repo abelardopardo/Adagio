@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<chapter id="header_sample">
+  <title>Document containing header links</title>
+
+  <note condition="AdminInfo">
+    <para condition="ada.page.header.links"><ulink url="./index.html">Renderized content of
+    <varname>ada.page.header.links</varname></ulink></para>
+  </note>
+
+  <para>Sample of a document containing header links. The information is 
+  included as regular docbook in the following structure:
+  </para>
+
+  <programlisting><![CDATA[<note condition="AdminInfo">
+  <para condition="ada.page.header.links"><ulink url=".">Renderized content of
+  <varname>ada.page.header.links</varname></ulink></para>
+</note>]]></programlisting>
+</chapter>

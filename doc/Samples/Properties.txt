@@ -1,12 +1,22 @@
 subrecursive.dirs= ApplyXSL \
+                   Copyfiles \
                    Docbook \
+                   Dvips \
                    Exam \
                    ExamBL \
+		   HeadTail \
+		   HeaderLinks \
+		   Inkscape \
+		   Latex \
+		   Multilingual \
+		   PDFnup \
+		   Ps2pdf \
                    SimpleDoc \
                    TestExam \
                    TestExamBL \
                    TestQuestions \
-                   TestStats
+                   TestStats \
+		   Xfig
+
 subrecursive.dst.dir=
 
-inkscape.files=*.svg

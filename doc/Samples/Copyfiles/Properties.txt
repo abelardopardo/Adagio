@@ -1,0 +1,2 @@
+copyfiles.src.dir=..
+copyfiles.files=style.css

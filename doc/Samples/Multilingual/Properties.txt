@@ -1,0 +1,5 @@
+inkscape.files=*.svg
+
+xsltproc.multilingual.files=index.xml
+
+

@@ -36,6 +36,13 @@
     <abstract>
       <para>Frequently Asked Questions of ADA</para>
     </abstract>
+    <copyright>
+      <year><link linkend="gfdl">2008</link></year>
+      <holder>
+        <ulink url="http://www.uc3m.es">Universidad Carlos III de
+          Madrid</ulink>
+      </holder>
+    </copyright>
   </articleinfo>
   
   <para>You may also access to the <ulink url="FAQ.pdf">PDF version of this
@@ -212,6 +219,16 @@
     AsapBenchResults.xsl
     AdaProfile.xsl
 -->
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                        LICENSE GPLv3                         -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xi:include href="fdl-1.3.xml"
+              parse="xml"
+              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
 
 </article>
 
