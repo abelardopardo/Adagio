@@ -1,10 +1,16 @@
 /AdaCourseParams_Laboratory.xsl
 /AdaCourseParams_Submit.xsl
+/AdaCourseParams_en_ExerciseSubmit.xsl
 /AdaCourseParams_en_Submit.xsl
+/AdaCourseParams_es_ExerciseSubmit.xsl
 /AdaCourseParams_es_Submit.xsl
 /index_en.html
+/index_en_pguide.html
+/index_en_solution.html
 /index_en_submit.html
 /index_es.html
+/index_es_pguide.html
+/index_es_solution.html
 /index_es_submit.html
 /index_pguide_en.html
 /index_pguide_es.html
