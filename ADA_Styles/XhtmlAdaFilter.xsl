@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-   Docbook-like processing of XHTML files
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
 
-   Replaces the <rss> element with the latest items from a RSS channel.
-   Filters input HTML documents using the AdaProfile  filter.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
 
-   Imports the AdaProfile filter used for Docbook files. 
-  -->
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+  Docbook-like processing of XHTML files
+
+  Replaces the <rss> element with the latest items from a RSS channel.
+  Filters input HTML documents using the AdaProfile  filter.
+
+  Imports the AdaProfile filter used for Docbook files. 
+
+  Author: Jesús Arias Fisteus
+-->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:exsl="http://exslt.org/common"
