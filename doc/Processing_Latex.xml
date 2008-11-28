@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+-->
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                     LATEX PROCESSING                         -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="Processing_Latex"
+         xreflabel="Top of the Section">
+  <title>Processing LaTeX documents</title>
+
+  <qandaset>
+    <qandaentry id="latex_processing"
+		xreflabel="How to process LaTeX files?">
+      <question>
+	<para>How to process LaTeX files?</para>
+      </question>
+      
+      <answer>
+	<para>ADA provides a rule to specify a set of LaTeX files to be
+	processed. The variables to define in the
+	<filename>Properties.tex</filename> file are:</para>
+
+	<xi:include href="VarTables/Latex_vars.xml"
+		    parse="xml"
+		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>For example, if the source file is <ulink
+	url="Samples/Latex/input.tex">a LaTeX file</ulink>, the required
+	definitions in the <ulink
+	url="Properties.txt"><filename>Properties.txt</filename></ulink> file
+	are:</para>
+
+	<programlisting><xi:include href="Samples/Latex/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+	<para>Note that the rule <emphasis>does not</emphasis> execute LaTeX
+	multiple times to remove potentially undefined references. A more
+	complex rule is required for that task (and it has not been developed
+	yet).</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="dvi_to_ps">
+      <question>
+	<para>How to translate <filename>dvi</filename> files to
+	<filename>ps</filename>?</para>
+      </question>
+      <answer>
+	<para>ADA provides a rule such that given a set of
+	<filename>*.dvi</filename> files, it translates them to Postscript. The
+	variables used in the <filename>Properties.txt</filename> file are:
+	</para>
+
+	<xi:include href="VarTables/Dvips_vars.xml"
+		    parse="xml"
+		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>For example, if in a directory we want to process <ulink
+	url="Samples/Dvips/input.tex">a LaTeX file</ulink> to obtain a DVI file,
+	and then translate this last file to Postscript, the <ulink
+	url="Samples/Dvips/Properties.txt"><filename>Properties.txt</filename>
+	file</ulink> should include the following definitions:</para>
+
+	<programlisting><xi:include href="Samples/Dvips/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="prosper_slides">
+      <question>How to create PDF slides using the LaTeX package
+      Prosper?</question>
+      <answer>
+	<para>Yet to be written.</para>
+      </answer>
+    </qandaentry>
+  </qandaset>
+
+</section>

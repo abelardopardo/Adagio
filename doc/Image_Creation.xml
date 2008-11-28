@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+-->
 <!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
 
@@ -84,6 +105,59 @@
 	figures (see <xref linkend="adado"/>).</para>
       </answer>
     </qandaentry>
+
+      <qandaentry id="multiple_image_format"
+                  xreflabel="How to use alternative image formats in Docbook">
+        <question>
+          <para>How do I select the appropriate image format for Docbook?</para>
+        </question>
+        <answer>
+          <para>Vector graphics (like SVG, Postscript, PDF, etc.) are usually
+          preferred for graphics drawn with computer programs, because they
+          maintain quality when they have to be scaled. Fonts and lines are
+          smooth even when they are scaled to high resolutions, e.g. for
+          printing.</para>
+
+          <para>However, the only image formats that are guaranteed to be shown
+          on any browser are bitmap-based (JPEG, GIF and PNG).  HTML documents
+          should include only images in those formats to maintain
+          compatibility.</para>
+
+          <para>Because sometimes it is interesting to generate both an HTML and
+          a PDF version of a document, produced from the same Docbook sources,
+          Docbook allows the author to select different image formats for HTML
+          and PDF.  For computer-drawn illustrations, the PNG format is
+          preferred for HTML documents, whereas PDF format is preferred for PDF
+          output (because Ada uses internally <emphasis>dblatex</emphasis> and
+          <emphasis>pdflatex</emphasis> for producing PDF documents from Docbook
+          sources).</para>
+
+          <para>The following example shows how an author can specify
+          alternative image formats:</para>
+
+          <programlisting>&lt;mediaobject>
+  &lt;imageobject role="html">
+    &lt;imagedata fileref="drawing.png" format="PNG"/>
+  &lt;/imageobject>
+  &lt;imageobject role="dblatex">
+    &lt;imagedata fileref="drawing.pdf" format="PDF"/>
+  &lt;/imageobject>
+  &lt;textobject>
+    &lt;phrase>Example drawing&lt;/phrase>
+  &lt;/textobject>
+&lt;/mediaobject></programlisting>
+
+          <para>If the drawing is in SVG format, both the PNG and PDF versions
+          can be obtained with the <emphasis>Inkscape</emphasis> rule (see <xref
+          linkend="inkscape_processing"/>).  The following lines in
+          <code>Properties.txt</code> do that:</para>
+
+          <programlisting>inkscape.files=*.svg
+inkscape.output.format= pdf,png</programlisting>
+
+          <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
+        </answer>
+      </qandaentry>
 
 <!--
     <TOBEWRITTEN>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+-->
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                       MULTILINGUAL                           -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="Processing_multilingual">
+  <title>Creating and processing multingual Docbook files</title>
+
+  <qandaset>
+    <qandaentry id="multilingual">
+      <question>
+        <para>How to process multilingual Docbook files?</para>
+      </question>
+      <answer>
+        <para>The Docbook tool chain offers a powerful functionality called
+        <emphasis>profiling</emphasis> or <emphasis>conditional text</emphasis>
+        (search for <quote>Docbook profiling</quote> for more detailed
+        information). Each Docbook element may include a fixed set of attributes
+        that are used to select or ignore portions of a document. The exact
+        definition of profiling with a generic attribute <command>attr</command>
+        is:</para>
+
+        
+        <informaltable frame="all" id="profile_definition">
+          <tgroup rowsep="1" colsep="1" cols="1">
+            <colspec colnum="1" colname="col1" align="left"/>
+            <tbody>
+              <row>
+                <entry>
+                  <para>If a document contains elements with an attribute with
+                  name <command>attr</command> with value
+                  <command>val</command>, and the XSLT processor is given the
+                  option <command>profile.attr</command> with value
+                  <command>val</command>, then all elements that have the
+                  attribute <command>attr</command> with a value not
+                  containing <command>val</command> are suppressed as if they
+                  were not part of the document. To apply a concrete profiling
+                  attribute you need to replace <command>attr</command> by the
+                  name of your attribute and <command>val</command> by the
+                  proper value.</para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+                  
+        <para>The list of attributes which can be used for profiling is fixed by
+        the Docbook stylesheets (there are actually more than 10). One of these
+        attributes is <code>lang</code> and therefore, it may be used to handle
+        documents written in more than one langugage. Each element containing
+        text in a language is marked with the appropritate value of the
+        <code>lang</code> attribute. If an element is common to both languages,
+        it should contain no <code>lang</code> attribute. A possible strategy is
+        then to label each paragraph with the attribute <command>lang</command>
+        and the appropriate language. Currently, the supported languages are
+        English (<code>lang</code> attribute with value <quote>en</quote>) and
+        Spanish (<code>lang</code> attribute with value
+        <quote>es</quote>).</para>
+
+
+	<para>For each language supported by ADA, the produced file names are
+	created by appending a suffix with an underscore followed by the
+	abbreviated language name in lower case (i.e. <quote>_en</quote> for the
+	English version and <quote>_es</quote> for the Spanish version.</para>
+
+	<para>The placement of the <command>lang</command> attribute can be
+	chosen as to minimize the number of duplicated elements and maintain the
+	document valid. The following example shows a snippet of bilingual
+	(English/Spanish) Docbook with a figure that needs also to be
+	distinguished.</para>
+
+        <programlisting><![CDATA[    <para lang="es">
+    La estructura de esta tabla se puede ver en la siguiente figura:</para>
+
+  <para lang="en">
+    The structure of this table can be seen in the following figure:</para>
+
+  <informalfigure id="reversetable_fig_pagetable">
+    <mediaobject>
+      <imageobject lang="es">
+        <imagedata align="center" fileref="tablestruct_es.png" format="PNG" />
+      </imageobject>
+      <imageobject lang="en">
+        <imagedata align="center" fileref="tablestruct_en.png" format="PNG" />
+      </imageobject>
+    </mediaobject>
+  </informalfigure>]]></programlisting>
+
+        <para>Note that the location of the <command>lang</command> attribute is
+        as deep in the document structure as possible to increase the number of
+        common elements and at the same time maintaining the validity of the
+        document. More precisely, checking the Docbook manual, a
+        <command>mediaobject</command> element accepts multiple
+        <command>imageobject</command> elements inside. But this one does not
+        accept multiple <command>imagedata</command> elements. As a conclusion,
+        the multiple language versions can be easily accomodated by including an
+	<code>imagobject</code> element per language.</para>
+
+        <para>ADA contains rules to do process a Docbook file containing
+        elements in various languages (currently English and Spanish), and
+        generate two separated files.</para>
+
+	<para>The variable <varname>xsltproc.multilingual.files</varname> of the
+	rule to apply a XSL stylesheet must contain the file names to be process
+	in multilingual mode (see <xref linkend="apply_xsl"/> for more
+	details).</para>
+
+	<para>For example, the following <ulink
+	url="Samples/Multilingual/index.xml">Docbook file</ulink> uses the
+	<code>lang</code> attribute:</para>
+	
+	<programlisting><xi:include href="Samples/Multilingual/index.xml"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	
+	<para>By including the following definitions in the <ulink
+	url="Samples/Multilingual/Properties.txt"><filename>Properties.txt</filename>
+	file</ulink>:</para>
+
+	<programlisting><xi:include href="Samples/Multilingual/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	
+	<para>Two files <ulink
+	url="Samples/Multilingual/index_en.html"><filename>index_en.html</filename></ulink>
+	and <ulink
+	url="Samples/Multilingual/index_es.html"><filename>index_es.html</filename></ulink>
+	are produced.</para>
+
+
+      </answer>
+
+    </qandaentry>
+
+  </qandaset>
+</section>

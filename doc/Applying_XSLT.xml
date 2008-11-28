@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+-->
 <!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
 
@@ -12,7 +33,7 @@
   <title>Applying a XSL Style Sheet to a XML file</title>
 
   <qandaset>
-    <qandaentry id="" xreflabel="">
+    <qandaentry id="apply_xsl" xreflabel="How to apply a XSL stylesheet">
       <question>
         <para>How to apply a stylesheet to a XML file?</para>
       </question>
@@ -21,7 +42,7 @@
         <para>The rule to apply a stylesheel to a XML file requires only to
         define the source file. ADA has a default stylesheet that is applied to
         a XML file if none is defined and is based in Docbook (see <xref
-        linkend="Applying_Docbook"/> for more details).</para>
+        linkend="docbook_processing"/> for more details).</para>
 
         <para>The following variables can be defined to apply a XSL stylesheet
         to one or several XML files:</para>
@@ -57,7 +78,8 @@
       </answer>
     </qandaentry>
 
-    <qandaentry id="docbook_processing">
+    <qandaentry id="docbook_processing"
+		xreflabel="How to translate Docbook to HTML">
       <question>
         <para>How to translate Docbook files to HTML?</para>
       </question>
@@ -81,6 +103,36 @@
       </answer>
     </qandaentry>
 
+    <qandaentry id="docbook_to_pdf">
+      <question>
+        <para>How to translate Docbook files to PDF?</para>
+      </question>
+
+      <answer>
+	<para>Although in theory there is a workflow to translate Dobook files
+	to PDF using the FO format, the approach used in ADA relies on the
+	<code>dblatex</code> program. This tool takes a Docbook file, translates
+	it to LaTeX and generates a PDF file from it. The rule needs this
+	executable to be properly installed in the system. The variables to use
+	in the <filename>Properties.txt</filename> file are:</para>
+
+        <xi:include href="VarTables/Dblatex_vars.xml"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>For example, given a <ulink
+	url="Samples/Dblatex/TextBookSelect.xml">Docbook file</ulink>, a PDF
+	file is obtained with the following definitions in the <ulink
+	url="Samples/Dblatex/Properties.txt"><filename>Properties.txt</filename>
+	file</ulink>:</para>
+
+	<programlisting><xi:include href="Samples/Dblatex/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+      </answer>
+    </qandaentry>
+	
     <qandaentry id="modified_stylesheet"
                 xreflabel="How to use a slightly modified stylesheet">
       <question>

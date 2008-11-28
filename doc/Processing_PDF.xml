@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+-->
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                   PDF FILE MANIPULATION                      -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="Processing_PDF"
+         xreflabel="Top of the Section">
+  <title>Processing PDF documents</title>
+
+  <qandaset>
+    <qandaentry id="pdfnup">
+      <question>
+	<para>How can I produce n-up PDF files?</para>
+      </question>
+
+      <answer>
+	<para>ADA provides a rule that given a set of PDF files produces n-up
+	files, where <quote>n</quote> is a parameter. The availability of this
+	rule depends on the executable <filename>pdfnup</filename> being
+	properly installed in the system. The set of variables to include in the
+	<filename>Properties.txt</filename> file are:</para>
+
+	<xi:include href="VarTables/PDFnup_vars.xml"
+		    parse="xml"
+		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>For example, to produce a 2-up version of a <ulink
+	url="Samples/PDFnup/Document.pdf">a PDF file</ulink>, the required
+	definitions in the <ulink
+	url="Samples/PDFnup/Properties.txt"><filename>Properties.txt</filename>
+	file</ulink> are:</para>
+
+	<programlisting><xi:include href="Samples/PDFnup/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+	<para>Note that the PDF file to process may be produced by another ADA
+	rule.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="ppt2pdf">
+      <question>
+	<para>How to translate automatically Microsoft PowerPoint or Word files
+	to PDF?</para>
+      </question>
+      
+      <answer>
+
+	<para>WARNING: This functionality is still in Beta. ADA has a rule to
+	invoke OpenOffice directly and produce a PDF file from either a
+	PowerPoint or a Word file. The functionality relies on a specific macro
+	being available in a properly installed OpenOffice instance. The
+	variables to control this rule are:</para>
+
+	<xi:include href="VarTables/Msf2PDF_vars.xml"
+		    parse="xml"
+		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>Note that this rule does not allow to control where the newly
+	produced PDF are stored. It is assumed that the same directory of the
+	source file is considered.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="ps2pdf">
+      <question>
+	<para>How can I translate Postscript to PDF?</para>
+      </question>
+
+      <answer>
+	<para>ADA includes a rule to translate a set of given Postscript files
+	to PDF. The variables to include in the
+	<filename>Properties.txt</filename> file are:</para>
+
+	<xi:include href="VarTables/Ps2pdf_vars.xml"
+		    parse="xml"
+		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>For example, given a <ulink
+	url="Samples/Ps2pdf/Document.ps">PostScript file</ulink>, the content of
+	the <ulink
+	url="Samples/Ps2pdf/Properties.txt"><filename>Properties.txt</filename>
+	file</ulink> should include the definitions:</para>
+
+	<xi:include href="Samples/Ps2pdf/Properties.txt"
+		    parse="text"
+		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	
+	<para>Note that the rule can only be applied if the proper translation
+	tool is installed in the system.</para>
+
+      </answer>
+    </qandaentry>
+  </qandaset>
+</section>

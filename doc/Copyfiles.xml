@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+-->
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                       COPYFILES                              -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="Copyfiles">
+  <title>Copy files from/to a different location</title>
+
+  <qandaset>
+    <qandaentry id="copyfile_cases">
+      <question>
+	<para>Are there multiple ways to copy files between directories?</para>
+      </question>
+      <answer>
+	<para>ADA consider the following scenarios to copy files from one
+	location to another.</para>
+
+	<orderedlist>
+	  <listitem>
+	    <para>Copy an auxiliary file that exists as-is from one location to
+	    another. This is the simplest case. Consider a set of files that are
+	    always present in one location and simply need to be replicated on a
+	    different location. ADA executes a rule to perform this task just at
+	    the beginning of the production step. See <xref
+	    linkend="copyfiles"/> for more details.</para>
+	  </listitem>
+	  <listitem>
+	    <para>Invoke the production rules in a remote directory to create
+	    certain required files and then copy them to a different
+	    location. The difference between this case and the previous one is
+	    that the files to be copied are a result of production rules
+	    provided by ADA. In other words, they first need to be produced and
+	    then copied. The production of this resources in remote directories
+	    is the first rule executed when invoking ADA. See <xref
+	    linkend="subrecursive_processing"/> for a detailed description.</para>
+	  </listitem>
+	  <listitem>
+	    <para>The third considered scenario is when the files produced in
+	    the current directory are declared to be copied (although they are
+	    not specifically copied until requested). In other words, certain
+	    files are stated to be suitable to be copied or
+	    <quote>exported</quote>. See <xref linkend="export_processing"/> for
+	    a detailed description.</para>
+	  </listitem>
+	</orderedlist>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="copyfiles"
+		xreflabel="How to copy auxiliary files">
+      <question>
+	<para>How to copy auxiliary files from/to a different location?</para>
+
+	<para>Two possible scenarios are considered by this rule. The first one
+	is when you need to select and copy certain specific files from a
+	different location into your current directory before processing the
+	rules localy. The second is when some of your files need to be copied to
+	a specific location.</para>
+      </question>
+      <answer>
+	
+	<para>ADA allows to specify the source directory and a collection of
+	files and copy them to a destination directory. The variables to include
+	in the <filename>Properties.txt</filename> to control this procedure
+	are:</para>
+
+	<xi:include href="VarTables/Copyfiles_vars.xml"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>For example, let us assume that you need the auxiliary file
+	<filename>styles.css</filename> from the directory above the one you are
+	currently working. The following definitions in the <ulink
+	url="Samples/Copyfiles/Properties.txt"><filename>Properties.txt</filename></ulink>
+	are required:</para>
+
+	<programlisting><xi:include href="Samples/Copyfiles/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+	<para>This rule is executed at the very begining of the directory
+	processing and therefore is specially suited to manipulate files that
+	are always present. If you need to copy files from/to a location that
+	are the result of applying a production rule, then you need to use
+	either the Export (copy files that have been produced, see <xref
+	linkend="export_processing"/>) or the Subrecursive (produce files before
+	the local production, see <xref linkend="subrecursive_processing"/>)
+	rules.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="subrecursive_processing"
+                xreflabel="How to process other directories before the current one">
+      <question>
+        <para>Can I specify some directories to be processed before executing
+	the production rules in the current one?</para>
+
+	<para>I have a directory that processes a bunch of files, but before
+        that, it needs some other resources in other locations to be produced
+        by ADA and placed in this directory. Is it possible to simply specify
+        those directories?</para>
+      </question>
+
+      <answer>
+        <para>Yes. And this is one of the key features that ADA uses to allow
+        hierarchical resource building. The generic scenario considered is such
+        that to produce a set of resources, some other resources need to be
+        created in different locations and <emphasis>exported</emphasis> to
+        obtain the final product.</para>
+
+        <para>Let us assume that all the remote directories contain the
+        <filename>Properties.txt</filename> file in which the export variables
+        containing the list of files to export have been defined (see <xref
+        linkend="export_processing"/> for the details). Two scenarios are
+        considered by this functionality depending on the location where to
+        export the resource is decided.</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>A remote directory is pre-processed but the location to copy
+            the exported resources is passed as a parameter. This means that
+            if in the <filename>Properties.txt</filename> of the remote file
+            the variable <varname>export.dst.dir</varname> is defined, it is
+            <emphasis>overwritten</emphasis> by the value given in the
+            invoking directory.</para>
+          </listitem>
+          <listitem>
+            <para>A remote directory is pre-processed and the location to copy
+            the exported resources is taken from the
+            <filename>Properties.txt</filename> file in this remote
+            directory.</para>
+          </listitem>
+        </itemizedlist>
+
+        <para>ADA allows the definition of two sets of directories each of
+        them processed in each of the scenarios previously described. The
+        following variables control the execution of the production process in
+        a set of directories:</para>
+
+	<xi:include href="VarTables/SubRecursive_vars.xml"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+
+        <para>The values stored in these variables have a special effect when
+        combined with the variables used for exporting resources in the remote
+        repository (see <xref linkend="export_processing"/>.) The
+        following figure shows the possible scenarios when combining the
+	definitions of the destination where the files are copied:</para>
+
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/SubrecursiveExport.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase>Exporting recursively</phrase>
+            </textobject>
+          </mediaobject>
+        </informalfigure>
+
+        <para>The following figure shows the effect of the two types of
+        subrecursive processing with and without a destination for the
+        exported resources.</para>
+
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/SubrecursiveExport2.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase>Exporting recursively in both scenarios</phrase>
+            </textobject>
+          </mediaobject>
+        </informalfigure>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="export_processing"
+                xreflabel="How to declare which resources are exported">
+      <question>
+        <para>How to specify which resources should be exported?</para>
+      </question>
+      <answer>
+        <para>When creating resources in a directory, typically, only a subset
+        of files are supposed to be used in the outside. These files are what
+        we call the <emphasis>exported</emphasis> resources. The variables
+        inside the <filename>Properties.txt</filename> used to capture this
+        functionality are:</para>
+
+        <informaltable frame="all" id="export_vars">
+          <tgroup rowsep="1" colsep="1" cols="3">
+            <colspec colnum="1" colname="col1" align="left"/>
+            <colspec colnum="2" colname="col2" align="left"/>
+            <colspec colnum="3" colname="col3" align="center"/>
+            <thead>
+              <row>
+                <entry align="center">Variable name</entry>
+                <entry align="center">Description</entry>
+                <entry align="center">Default</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><varname>export.src.dir</varname></entry>
+                <entry>Directory from where to take the files to export</entry>
+                <entry>Current directory</entry>
+              </row>
+              <row>
+                <entry><varname>export.dst.dir</varname></entry>
+                <entry>Directory where to copy the exported resources</entry>
+                <entry>Value of <varname>export.src.dir</varname></entry>
+              </row>
+              <row>
+                <entry><varname>export.files</varname></entry>
+                <entry>
+                  Space or comma separated list of file names (with no path)
+                  of the resources to export
+                </entry>
+                <entry></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+
+        <para>There are two typical scenarios when it comes to using these
+        variables.</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>A directory in which resources are simply created and
+            prepared to export, but without a destination in mind. This is the
+            case of material that is suitable to be re-used in multiple
+            locations. In this case, only the variable
+            <varname>export.files</varname> is defined to contain those
+            resources to export. The other two variables are left with their
+            default values.</para>
+
+            <para>With this definition, any other directory that needs these
+            resources could export them to a given location (see <xref
+            linkend="subrecursive_processing"/> for more details).</para>
+          </listitem>
+          <listitem>
+            <para>A directory in which resources are always exported to the
+            same location. This is usually the case of a directory that is
+            already close to the final destination of the material and is in
+            charge of combining resources and place them in their final
+            location. In such scenario, the variables
+            <varname>export.files</varname> and
+            <varname>export.dst.dir</varname> contain respectively the set of
+            resources to place and the directory where they have to be
+            copied.</para>
+          </listitem>
+        </itemizedlist>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="exportcontrol">
+      <question>
+        <para>Is it possible to consider a directory for building only under
+        some special conditions?</para>
+
+        <para>I have some directories that, although present in my project, I
+        would like to control its presence in the final version easily. For
+        example, suppose I would like to control the presence of a special
+        page in my final site, that is, go from a version in which that page
+        nor any link to it are present in the site, to a version in which both
+        the link and the page are present.</para>
+      </question>
+      <answer>
+        <para>This functionality is considered in ADA and provided through a
+        combination of multiple mechanisms. The presence or not of a set of
+        resources in the final version of a site is achieved by either
+        executing or not the exporting rules (see <xref
+        linkend="export_processing"/> for the details). The following
+        variables are provided to create a <emphasis>condition</emphasis> such
+        that if satisfied, resource export is executed, but if not satisfied,
+        no resource is exported:</para>
+
+	<xi:include href="VarTables/ExportControl_vars.xml"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+        <para>Given these variables, the export rule is executed if
+        <emphasis>all the following conditions are satisfied</emphasis>:</para>
+
+        <informaltable frame="all" id="exportcontrol_condition">
+          <tgroup rowsep="1" colsep="1" cols="1">
+            <colspec colnum="1" colname="col1" align="left"/>
+            <tbody>
+              <row>
+                <entry>
+                  <itemizedlist>
+                    <listitem>
+                      <para><varname>exportcontrol.open</varname> is
+                      true</para>
+                    </listitem>
+                    <listitem>
+                      <para><varname>exportcontrol.begin</varname> is empty or
+                      its value is before
+                      <varname>exportcontrol.now</varname></para>
+                    </listitem>
+                    <listitem>
+                      <para><varname>exportcontrol.end</varname> is empty or
+                      its value is after
+                      <varname>exportcontrol.now</varname></para>
+                    </listitem>
+                    <listitem>
+                      <para><varname>exportcontrol.profile.revision</varname>
+                      is empty or
+                      <varname>exportcontrol.profile.revision.value</varname>
+                      is empty or the former is contained in the
+                      latter.</para>
+                    </listitem>
+                  </itemizedlist>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+                   
+        <para>Clear uh? The condition is so complicated because it combines
+        several control mechanisms. The most common situation is to use only one
+        of them. The condition is easily understood if broken into the following
+        possible scenarios of use (in increasing level of complexity):</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>Allow/skip the export rule in a directory by changing only
+            one definition in <filename>Properties.txt</filename>. This is
+            achieved by simply using the definition:</para>
+
+            <programlisting>exportcontrol.open=true</programlisting>
+
+            <para>If the value of this variable is different from
+            <quote>true</quote> the export rule is not executed.</para>
+          </listitem>
+
+          <listitem>
+            <para>A directory should only be exported during a certain time
+            window. Define the time interval with the variables
+            <varname>exportcontrol.begin</varname> and
+            <varname>exportcontrol.end</varname>. For example:</para>
+            
+              <programlisting>exportcontrol.begin=2008-06-25T19:00:00
+portcontrol.end=2018-06-25T19:00:00</programlisting>
+          </listitem>
+
+          <listitem>
+            <para>Keep a list of directories allowed to export. This is
+            achieved using the two variables
+            <varname>exportcontrol.profile.revision</varname> and
+            <varname>exportcontrol.profile.revision.value</varname>. You
+            should first choose a keyword assigned to each directory you want
+            to control. Assign that keyword to the
+            <varname>exportcontrol.profile.revision.value</varname>variable as
+            shown in the example:</para>
+
+              <programlisting>exportcontrol.profile.revision.value=keyword</programlisting>
+
+            <para>Set the value of
+            <varname>exportcontrol.profile.revision</varname> with the
+            semi-colon separated list of keywords of those modules you want to
+            activate. This definition should be included in a file common for
+            the entire project (see <xref linkend="global_rule"/>.)</para>
+          </listitem>
+        </itemizedlist>
+
+        <para>ADA allows you use more than one of these conditions
+        together. The export is actually execute if <emphasis>all of
+        them</emphasis> are satisfied.</para>
+      </answer>
+    </qandaentry>
+  </qandaset>
+</section>

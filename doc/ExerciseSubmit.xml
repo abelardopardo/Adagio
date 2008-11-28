@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+-->
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                    EXERCISES TO SUBMIT                       -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="Exercises_to_submit"
+         xreflabel="Top of the Section">
+  <title>Typesetting Exercises to be Submitted</title>
+
+<!--
+
+  EXERCISE:
+    ExerciseSubmit.xsl
+    ExerciseSubmit.xml
+
+    SolutionSection.xsl
+    PguideSection.xsl
+
+    CountDown.xsl
+
+    AsapAuthorBox.xsl
+    Submit.xsl
+    SubmitIgnore.xsl
+
+
+-->
+  <qandaset>
+    <qandaentry id="exercise_submit"
+		xreflabel="How to create a document with answers to sumit">
+      <question>
+	<para>How to create a document with answers to be submitted?</para>
+      </question>
+
+      <answer>
+	<para>Creating a HTML document with one or several exercises can be
+	easily done with the rules presented in the previous sections (see <xref
+	linkend="docbook_processing"/>, for example). But in some cases, certain
+	activities require more than one document and more importantly, the
+	possibility of interfacing the documents with other platforms.</para>
+
+	<para>ADA offers the possibility of preparing a set of files around the
+	concept of <quote>exercise</quote>. The scenario that is assumed is the
+	following:</para>
+
+	<itemizedlist>
+	  <listitem>
+	    <para>The exercise needs one or more documents given to the students
+	    describing the steps to obtain the required answers. This document
+	    will be referred to as the <quote>hand out</quote> (see <xref
+	    linkend="exercise_handout"/> for more details).
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>A second document, similar to the previous one but including
+	    these solutions. It could be used for publication at a later stage,
+	    for the teaching staff to have during class, etc. This document will
+	    be referred to as the <quote>solutions</quote> (see <xref
+	    linkend="exercise_solution"/> for more details).
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>A third document explicitly oriented only to the teaching
+	    staff including descriptions of the tasks to perform, comments,
+	    evaluation criteria, etc. This document is concieved such that it
+	    never is shown to the students and thus will be reffered as the
+	    <quote>professor guide</quote> (see <xref
+	    linkend="exercise_professorguide"/> for more details).
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>An additional HTML page to be able to submit the answers. This
+	    is simply an HTML form but the elements to submit are derived from
+	    the problems included in the hand out. The assumption is that when
+	    designing a problem, these parts can be written next to each other
+	    and through profiling, they are separated into different
+	    documents. This document will be referred to as the
+	    <quote>submission page</quote> (see <xref
+	    linkend="exercise_submission"/> for more details).</para>
+	  </listitem>
+	  <listitem>
+	    <para>Additional possibilities to include in these documents such as
+	    a typical set of fields in the submission page, a countdown in the
+	    hand-out and submission documents showing the remaining time until
+	    deadline, etc.</para>
+	  </listitem>
+	</itemizedlist>
+
+	<para>In the previously described scenario, the variables to be used in
+	the <filename>Properties.txt</filename> are the following:</para>
+
+	<xi:include href="VarTables/ExerciseSubmit_vars.xml"
+		    parse="xml"
+		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>If used, this rule creates the documents previously described,
+	that is: hand-out, solutions, professor guide and submission page. It is
+	for this reason that two stylesheet files are specified. The variable
+	<varname>exercisesubmit.style.file</varname> is used to produce the hand
+	out, solutions and professor guide document. The variable
+	<varname>exercisesubmit.submit.style.file</varname> is used to obtain
+	the submission page. Multilingual versions of all these documents can be
+	produced using the
+	<varname>exercisesubmit.multilingual.files</varname>.</para>
+      </answer>
+    </qandaentry>
+    
+    <qandaentry id="exercise_handout"
+		xreflabel="How to produce the hand-out document of an exercise">
+      <question>
+	<para>How to customize the hand-out document of an exercise
+	document?</para>
+      </question>
+      <answer>
+	<para></para>
+
+	<xi:include href="ParamTables/ExerciseSubmitParams_description.xml"
+		    parse="xml"
+		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="exercise_solution"
+		xreflabel="How to produce the solution of an exercise document">
+      <question>
+	<para>How to produce the solution of an exercise document?</para>
+      </question>
+      <answer>
+	<para></para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="exercise_professorguide"
+		xreflabel="How to produce the professor guide of an exercise
+			   document">
+      <question>
+	<para>How to produce the professor guide of an exercise document?</para>
+      </question>
+      <answer>
+	<para></para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="exercise_submission"
+		xreflabel="How to produce the submission page of an exercise document">
+      <question>
+	<para>How to produce the submission page of an exercise document?</para>
+      </question>
+      <answer>
+	<para></para>
+      </answer>
+    </qandaentry>
+  </qandaset>
+</section>

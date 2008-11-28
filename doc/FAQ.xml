@@ -1,10 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+-->
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
 
 <article id="ADA_FAQ">
   <title>ADA Frequently Asked Questions</title>
 
+  <articleinfo condition="dc.info">
+    <publisher>
+      <publishername>Carlos III University of Madrid</publishername>
+    </publisher>
+    <author>
+      <firstname>Abelardo</firstname><surname>Pardo</surname>
+    </author>
+    <abstract>
+      <para>Frequently Asked Questions of ADA</para>
+    </abstract>
+  </articleinfo>
+  
   <para>You may also access to the <ulink url="FAQ.pdf">PDF version of this
   document</ulink>.</para>
 
@@ -74,15 +107,6 @@
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                      STYLE PARAMETERS                        -->
-  <!--                                                              -->
-  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Style_Parameters.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <!--                                                              -->
   <!--                       STYLE FLASH SWF                        -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -90,58 +114,43 @@
               parse="xml"
               xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
-  <!-- 
-  Tentative sequence of questions
-
-  PDF manipulation:
-    PDFnup.xml
-    Ppt2PDF.xml
-    Ps2pdf.xml
-  
-  Exporting:
-    Export.xml
-    ExportControl.xml
-
-  Importing:
-    SubRecursive.xml
-
-  Copying:
-    Copyfiles.xml
-
-  Multilingual processing
-
-  EXERCISE:
-    CountDown.xsl
-    ExerciseSubmit.xsl
-    ExerciseSubmit.xml
-    Submit.xsl
-    SubmitIgnore.xsl
-    SolutionSection.xsl
-    PguideSection.xsl
-    AsapAuthorBox.xsl
-
-  LaTeX processing
-    Dvips.xml
-    Pdflatex.xml
-    Latex.xml
-
-  Docbook a Latex a PDF
-    Dblatex.xml
--->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                   TYPESETTING EXAMINATIONS                   -->
+  <!--                       MULTILINGUAL                           -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Typesetting_exams.xml"
+  <xi:include href="Processing_Multilingual.xml"
               parse="xml"
               xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
-<!--
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--               COPYFILES/SUBRECURSIVE/EXPORT                  -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xi:include href="Copyfiles.xml"
+              parse="xml"
+              xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
-  Slides with prosper:
-    Prosper.xsl
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                     LATEX PROCESSING                         -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xi:include href="Processing_Latex.xml"
+              parse="xml"
+              xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                   PDF FILE MANIPULATION                      -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xi:include href="Processing_PDF.xml"
+              parse="xml"
+              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <!-- 
   RSS:
     RssIgnore.xsl
     RssToHtml.xsl
@@ -155,794 +164,8 @@
 
   JAF?
     XhtmlAdaFilter.xsl
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  UNDOCUMMENTED:
-  RULES
-    Scp.xml
-  STYLES:
-    AsapBenchResults.xsl
-    AdaProfile.xsl
-  -->
 
-  <section id="rules">
-    <title>ADA Rules</title>
-
-    <qandaset>
-      <qandaentry id="profiling">
-        <question>
-          <para>How to obtain two files from a unique docbook mixing elements in
-          different languages?</para>
-        </question>
-        <answer>
-          <para>The docbook tool chain offers a powerful functionality called
-          <emphasis>profiling</emphasis> or <emphasis>conditional
-          text</emphasis>. (search for <quote>docbook profiling</quote> for more
-          detailed information). Each docbook element may include a fixed set of
-          attributes that are used to select or ignore portions of a
-          document. The exact definition for a generic attribute
-          <command>attr</command> is:</para>
-
-          
-          <informaltable frame="all" id="profile_definition">
-            <tgroup rowsep="1" colsep="1" cols="1">
-              <colspec colnum="1" colname="col1" align="left"/>
-              <tbody>
-                <row>
-                  <entry>
-                    <para>If a document contains elements with an attribute with
-                    name <command>attr</command> with value
-                    <command>val</command>, and the XSLT processor is given the
-                    option <command>profile.attr</command> with value
-                    <command>val</command>, then all elements that have the
-                    attribute <command>attr</command> with a value not
-                    containing <command>val</command> are suppressed as if they
-                    were not part of the document. To apply a concrete profiling
-                    attribute you need to replace <command>attr</command> by the
-                    name of your attribute and <command>val</command> by the
-                    proper value.</para>
-                  </entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-                    
-          <para>The list of attributes which can be used for profiling is fixed
-          by the stylesheets processing Docbook (there are actually more than
-          10). A profiling example is a document that is written in say two
-          languages. Let us just say for the sake of the example these languages
-          are English and Spanish. The docbook XML file needs to have one
-          version for each language, but there might be parts that need to be
-          present in both versions. The attribute to use for such profiling is
-          <command>lang</command>. A possible strategy is to label each
-          paragraph with the attribute <command>lang</command> to the value
-          <command>en</command> if it is in English or <command>es</command> if
-          it is in Spanish.</para>
-
-          <para>The placement of the <command>lang</command> attribute can be
-          chosen as to minimize the number of duplicated elements and maintain
-          the document as a valid Docbook document. The following example shows
-          a snippet of Docbook in which two versions in English and Spanish are
-          included in the same document with a figure that needs to be also
-          distinguished.</para>
-
-          <programlisting><![CDATA[    <para lang="es">
-      La estructura de esta tabla se puede ver en la siguiente figura:</para>
-
-    <para lang="en">
-      The structure of this table can be seen in the following figure:</para>
-
-    <informalfigure id="reversetable:fig:pagetable">
-      <mediaobject>
-        <imageobject lang="es">
-          <imagedata align="center" fileref="tablestruct_es.png" format="PNG" />
-        </imageobject>
-        <imageobject lang="en">
-          <imagedata align="center" fileref="tablestruct_en.png" format="PNG" />
-        </imageobject>
-      </mediaobject>
-    </informalfigure>]]></programlisting>
-          <para>Note that the placement of the <command>lang</command> attribute
-          is as deep in the hierarchy as possible to increase the number of
-          common elements maintaining the document as correct Docbook. A
-          <command>mediaobject</command> element accepts multiple
-          <command>imageobject</command> elements which itself does not accept
-          multiple <command>imagedata</command> elements.</para>
-
-          <para>ADA offers rules to do precisely this task, given a Docbook
-          containing elements in two languages, English and Spanish, generate
-          two separate files, one containing each version. Once you produced the
-          XML file, set the appropriate values to some of following variables in
-          <filename>Properties.txt</filename></para>
-
-          <informaltable frame="all" id="bilingualdb_vars">
-            <tgroup rowsep="1" colsep="1" cols="3">
-              <colspec colnum="1" colname="col1" align="left"/>
-              <colspec colnum="2" colname="col2" align="left"/>
-              <colspec colnum="3" colname="col3" align="center"/>
-              <thead>
-                <row>
-                  <entry align="center">Variable name</entry>
-                  <entry align="center">Description</entry>
-                  <entry align="center">Default</entry>
-                </row>
-              </thead>
-              <tbody>
-                <row>
-                  <entry><varname>bilingualdb.src.dir</varname></entry>
-                  <entry>Directory from where to take the Docbook files</entry>
-                  <entry>Current directory</entry>
-                </row>
-                <row>
-                  <entry><varname>bilingualdb.dst.dir</varname></entry>
-                  <entry>Directory where to leave the resulting files</entry>
-                  <entry>Value of <varname>bilingualdb.src.dir</varname></entry>
-                </row>
-                <row>
-                  <entry><varname>bilingualdb.output.format</varname></entry>
-                  <entry>
-                    Extension to replace the extension <command>.xml</command> in the
-                    file name. It needs to include the dot!
-                  </entry>
-                  <entry><filename>.html</filename></entry>
-                </row>
-                <row>
-                  <entry><varname>bilingualdb.files</varname></entry>
-                  <entry>
-                    Space or comma separated list of Docbook file names (with no
-                    path) to process
-                  </entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry><varname>bilingualdb.extra.args</varname></entry>
-                  <entry>
-                    Additional options to pass directly to <command>xsltproc</command>.
-                  </entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry><varname>bilingualdb.style.file</varname></entry>
-                  <entry>XSL file to use to translate the Docbook file</entry>
-                  <entry>Docbook Profile Style</entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-        </answer>
-
-      </qandaentry>
-
-      <qandaentry id="export_processing"
-                  xreflabel="How to declare which resources are exported">
-        <question>
-          <para>How to specify which resources should be exported?</para>
-        </question>
-        <answer>
-          <para>When creating resources in a directory, typically, only a subset
-          of files are supposed to be used in the outside. These files are what
-          we call the <emphasis>exported</emphasis> resources. The variables
-          inside the <filename>Properties.txt</filename> used to capture this
-          functionality are:</para>
-
-          <informaltable frame="all" id="export_vars">
-            <tgroup rowsep="1" colsep="1" cols="3">
-              <colspec colnum="1" colname="col1" align="left"/>
-              <colspec colnum="2" colname="col2" align="left"/>
-              <colspec colnum="3" colname="col3" align="center"/>
-              <thead>
-                <row>
-                  <entry align="center">Variable name</entry>
-                  <entry align="center">Description</entry>
-                  <entry align="center">Default</entry>
-                </row>
-              </thead>
-              <tbody>
-                <row>
-                  <entry><varname>export.src.dir</varname></entry>
-                  <entry>Directory from where to take the files to export</entry>
-                  <entry>Current directory</entry>
-                </row>
-                <row>
-                  <entry><varname>export.dst.dir</varname></entry>
-                  <entry>Directory where to copy the exported resources</entry>
-                  <entry>Value of <varname>export.src.dir</varname></entry>
-                </row>
-                <row>
-                  <entry><varname>export.files</varname></entry>
-                  <entry>
-                    Space or comma separated list of file names (with no path)
-                    of the resources to export
-                  </entry>
-                  <entry></entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-
-          <para>There are two typical scenarios when it comes to using these
-          variables.</para>
-
-          <itemizedlist>
-            <listitem>
-              <para>A directory in which resources are simply created and
-              prepared to export, but without a destination in mind. This is the
-              case of material that is suitable to be re-used in multiple
-              locations. In this case, only the variable
-              <varname>export.files</varname> is defined to contain those
-              resources to export. The other two variables are left with their
-              default values.</para>
-
-              <para>With this definition, any other directory that needs these
-              resources could export them to a given location (see <xref
-              linkend="subrecursive_processing"/> for more details).</para>
-            </listitem>
-            <listitem>
-              <para>A directory in which resources are always exported to the
-              same location. This is usually the case of a directory that is
-              already close to the final destination of the material and is in
-              charge of combining resources and place them in their final
-              location. In such scenario, the variables
-              <varname>export.files</varname> and
-              <varname>export.dst.dir</varname> contain respectively the set of
-              resources to place and the directory where they have to be
-              copied.</para>
-            </listitem>
-          </itemizedlist>
-        </answer>
-      </qandaentry>
-
-      <qandaentry id="subrecursive_processing"
-                  xreflabel="How to process other directories before this one">
-        <question>
-          <para>Can I specify some directories to be processed before doing
-          anything else?</para>
-          <para>I have a directory that processes a bunch of files, but before
-          that, it needs some other resources in other locations to be produced
-          by ADA and placed in this directory. Is it possible to simply specify
-          those directories?</para>
-        </question>
-        <answer>
-          <para>Yes. And this is one of the key features that ADA uses to allow
-          hierarchical resource building. The generic scenario considered is
-          such that to obtain the final version of a set of resources, some
-          other resources need to be created in different locations and
-          <emphasis>exported</emphasis> to obtain the final product.</para>
-
-          <para>Let us assume that all the remote directories contain the
-          <filename>Properties.txt</filename> file in which the export variables
-          containing the list of files to export have been defined (see <xref
-          linkend="export_processing"/> for the details). Two scenarios are
-          considered by this functionality depending on where is the location
-          where to export the resource is decided.</para>
-
-          <itemizedlist>
-            <listitem>
-              <para>A remote directory is pre-processed but the location to copy
-              the exported resources is passed as a parameter. This means that
-              if in the <filename>Properties.txt</filename> of the remote file
-              the variable <varname>export.dst.dir</varname> is defined, it is
-              <emphasis>overwritten</emphasis> by the value given in the
-              invoking directory.</para>
-            </listitem>
-            <listitem>
-              <para>A remote directory is pre-processed and the location to copy
-              the exported resources is taken from the
-              <filename>Properties.txt</filename> file in this remote
-              directory.</para>
-            </listitem>
-          </itemizedlist>
-
-          <para>ADA allows the definition of two sets of directories each of
-          them processed in each of the scenarios previously described. The
-          following variables control the execution of the production process in
-          a set of directories:</para>
-
-          <informaltable frame="all" id="subrecursive_vars">
-            <tgroup rowsep="1" colsep="1" cols="3">
-              <colspec colnum="1" colname="col1" align="left"/>
-              <colspec colnum="2" colname="col2" align="left"/>
-              <colspec colnum="3" colname="col3" align="center"/>
-              <thead>
-                <row>
-                  <entry align="center">Variable name</entry>
-                  <entry align="center">Description</entry>
-                  <entry align="center">Default</entry>
-                </row>
-              </thead>
-              <tbody>
-                <row>
-                  <entry><varname>subrecursive.dirs</varname></entry>
-                  <entry>
-                    Directories (with respect to the the current location) to be
-                    processed prior to any other. The value of
-                    <varname>export.dst.dir</varname> in these repositories is
-                    overwritten by the following value.
-                  </entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry><varname>subrecursive.dst.dir</varname></entry>
-                  <entry>
-                    Value used to pass to the directories specified in the
-                    previous variables to export their resources. It then
-                    overrides the variable <varname>export.dst.dir</varname> (if
-                    given) in the remote directory.
-                  </entry>
-                  <entry><emphasis>The current directory</emphasis></entry>
-                </row>
-                <row>
-                  <entry><varname>subrecursive.dirs.nodst</varname></entry>
-                  <entry>
-                    Directories (with respect to the the current location) to be
-                    processed prior to any other. The resources will be exported
-                    wherever is specified in the variable
-                    <varname>export.dst.dir</varname> in the remote directory.
-                  </entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry><varname>subrecursive.target</varname></entry>
-                  <entry>Rule to execute in those remote directories</entry>
-                  <entry>A regular <command>adado</command></entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-
-          <para>The values stored in these variables have a special effect when
-          combined with the variables used for exporting resources in the remote
-          repository (see <xref linkend="export_processing"/>.) For the
-          directories specified as to overwrite the export destination the
-          following figure shows the possible scenarios:</para>
-
-          <informalfigure>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/SubrecursiveExport.png" format="PNG"/>
-              </imageobject>
-              <textobject>
-                <phrase>Exporting recursively</phrase>
-              </textobject>
-            </mediaobject>
-          </informalfigure>
-
-          <para>The following figure shows the effect of the two types of
-          subrecursive processing with and without a destination for the
-          exported resources.</para>
-
-          <informalfigure>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="images/SubrecursiveExport2.png" format="PNG"/>
-              </imageobject>
-              <textobject>
-                <phrase>Exporting recursively in both scenarios</phrase>
-              </textobject>
-            </mediaobject>
-          </informalfigure>
-        </answer>
-      </qandaentry>
-
-      <qandaentry id="multiple_image_format"
-                  xreflabel="How to use alternative image formats in Docbook">
-        <question>
-          <para>How do I select the appropriate image format for Docbook?</para>
-        </question>
-        <answer>
-          <para>Vector graphics (like SVG, Postscript, PDF, etc.) are usually
-          preferred for graphics drawn with computer programs, because they
-          maintain quality when they have to be scaled. Fonts and lines are
-          smooth even when they are scaled to high resolutions, e.g. for
-          printing.</para>
-
-          <para>However, the only image formats that are guaranteed to be shown
-          on any browser are bitmap-based (JPEG, GIF and PNG).  HTML documents
-          should include only images in those formats to maintain
-          compatibility.</para>
-
-          <para>Because sometimes it is interesting to generate both an HTML and
-          a PDF version of a document, produced from the same Docbook sources,
-          Docbook allows the author to select different image formats for HTML
-          and PDF.  For computer-drawn illustrations, the PNG format is
-          preferred for HTML documents, whereas PDF format is preferred for PDF
-          output (because Ada uses internally <emphasis>dblatex</emphasis> and
-          <emphasis>pdflatex</emphasis> for producing PDF documents from Docbook
-          sources).</para>
-
-          <para>The following example shows how an author can specify
-          alternative image formats:</para>
-
-          <programlisting>&lt;mediaobject>
-  &lt;imageobject role="html">
-    &lt;imagedata fileref="drawing.png" format="PNG"/>
-  &lt;/imageobject>
-  &lt;imageobject role="dblatex">
-    &lt;imagedata fileref="drawing.pdf" format="PDF"/>
-  &lt;/imageobject>
-  &lt;textobject>
-    &lt;phrase>Example drawing&lt;/phrase>
-  &lt;/textobject>
-&lt;/mediaobject></programlisting>
-
-          <para>If the drawing is in SVG format, both the PNG and PDF versions
-          can be obtained with the <emphasis>Inkscape</emphasis> rule (see <xref
-          linkend="inkscape_processing"/>).  The following lines in
-          <code>Properties.txt</code> do that:</para>
-
-          <programlisting>inkscape.files=*.svg
-inkscape.output.format= pdf,png</programlisting>
-
-          <para>Back to <xref linkend="Processing_resources_with_ADA"/>.</para>
-        </answer>
-      </qandaentry>
-
-      <qandaentry id="include_flash_video_in_docbook"
-                  xreflabel="How to include Flash Video in Docbook">
-        <question>
-          <para>How to include a flash video in a Docbook document?</para>
-        </question>
-        <answer>
-          <para>Embedding a flash video in an HTML page can be done with flash
-          players that are downloaded by the browser and offer functionality
-          such as a start, stop and pause buttons, volume control, etc. ADA uses
-          the player available in <ulink
-          url="http://www.jeroenwijering.com/">www.jeroenwijering.com</ulink>.</para>
-
-          <para>From the point of view of the author, these details should be
-          hidden, and worry only about the basic data such as the video file,
-          height and width of the screen and that's it.</para>
-
-          <para>The stylesheets included in ADA to process Docbook allow you to
-          include a video player embedded in your page simply by providing a
-          special markup using the <command>&lt;para&gt;</command> element. The
-          following example shows the structure of this element:</para>
-
-          <programlisting><![CDATA[<para id="video_1" condition="ada.flv.player">
-  <phrase condition="width">320</phrase>
-  <phrase condition="height">200</phrase>
-  <phrase condition="file">player.flv</phrase>
-  <phrase condition="image">playerthumb.jpg</phrase>
-  <phrase condition="showstop">true</phrase>
-</para>]]>
-          </programlisting>
-           
-          <para>In order to maintain the Docbook file valid, the parameters are
-          passed as nested <command>&lt;code&gt;</command> elements with the
-          attribute <command>condition</command> equal to the name of the
-          parameter. The available names are:</para>
-
-          <informaltable frame="all" id="embed_flv_vars">
-            <tgroup rowsep="1" colsep="1" cols="3">
-              <colspec colnum="1" colname="col1" align="left"/>
-              <colspec colnum="2" colname="col2" align="left"/>
-              <colspec colnum="3" colname="col3" align="center"/>
-              <thead>
-                <row>
-                  <entry align="center">Variable name</entry>
-                  <entry align="center">Description</entry>
-                  <entry align="center">Default</entry>
-                </row>
-              </thead>
-              <tbody>
-                <row>
-                  <entry>backcolor</entry>
-                  <entry>Background color for the controls.</entry>
-                  <entry>0xFFFFFF</entry>
-                </row>
-                <row>
-                  <entry>file</entry>
-                  <entry>URL pointing at the video file to play</entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry>frontcolor</entry>
-                  <entry>Text and buttons color</entry>
-                  <entry>0x000000</entry>
-                </row>
-                <row>
-                  <entry>height</entry>
-                  <entry>Height of the viewing area</entry>
-                  <entry>320</entry>
-                </row>
-                <row>
-                  <entry>id</entry>
-                  <entry>Id of the viewing area</entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry>image</entry>
-                  <entry>
-                    Thumbnail image to place on the screen when the video is not
-                    being played.
-                  </entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry>lightcolor</entry>
-                  <entry>Rollover colors for the controls.</entry>
-                  <entry>0x000000</entry>
-                </row>
-                <row>
-                  <entry>screencolor</entry>
-                  <entry>Control of the viewing area</entry>
-                  <entry>0x000000</entry>
-                </row>
-                <row>
-                  <entry>showstop</entry>
-                  <entry>Boolean controlling if the stop button is shown</entry>
-                  <entry>false</entry>
-                </row>
-                <row>
-                  <entry>width</entry>
-                  <entry>Width of the viewing area</entry>
-                  <entry>260</entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-        </answer>
-      </qandaentry>
-
-      <qandaentry id="include_shockwave_video_in_docbook">
-        <question>
-          <para>How to include a Shockwave Flash (swf) document in a Docbook
-          document?</para>
-        </question>
-        <answer>
-          <para>Embedding a Shockwave file in an HTML page can be done by
-          including a special paragraph in Docbook with the values for certain
-          parameters. A special stylesheet in ADA will then produce the proper
-          element in HTML to view the Shockwave file. The idea is similar to
-          <xref linkend="include_flash_video_in_docbook"/> but requires less
-          information.</para>
-
-          <para>The special markup in docbook to include a a showkwave is shown
-          in the following example:</para>
-
-          <example>
-            <title>Markup to include a Shockwave file in Docbook</title>
-            <programlisting><![CDATA[<para condition="ada.swf.player">
-  <phrase condition="width">425</phrase>
-  <phrase condition="height">355</phrase>
-  <phrase condition="file">File.swf</phrase>
-  Additonal text and <ulink url="link.html">links</ulink> you might include.
-</para>]]></programlisting>
-          </example>
-           
-          <para>In order to maintain the Docbook file valid, the parameters are
-          passed as nested <code>&lt;phrase&gt;</code> elements with the
-          attribute <code>condition</code> equal to the name of the
-          parameter. The available names are:</para>
-
-          <informaltable frame="all" id="embed_swf_vars">
-            <tgroup rowsep="1" colsep="1" cols="3">
-              <colspec colnum="1" colname="col1" align="left"/>
-              <colspec colnum="2" colname="col2" align="left"/>
-              <colspec colnum="3" colname="col3" align="center"/>
-              <thead>
-                <row>
-                  <entry align="center">Variable name</entry>
-                  <entry align="center">Description</entry>
-                  <entry align="center">Default</entry>
-                </row>
-              </thead>
-              <tbody>
-                <row>
-                  <entry>file</entry>
-                  <entry>URL pointing at the shockwave file to use</entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry>height</entry>
-                  <entry>Height of the viewing area</entry>
-                  <entry>320</entry>
-                </row>
-                <row>
-                  <entry>id</entry>
-                  <entry>Id of the viewing area (optional)</entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry>width</entry>
-                  <entry>Width of the viewing area</entry>
-                  <entry>260</entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-        </answer>
-      </qandaentry>
-
-      <qandaentry id="exportcontrol">
-        <question>
-          <para>Is it possible to consider a directory for building only under
-          some special conditions?</para>
-
-          <para>I have some directories that, although present in my project, I
-          would like to control its presence in the final version easily. For
-          example, suppose I would like to control the presence of a special
-          page in my final site, that is, go from a version in which that page
-          nor any link to it are present in the site, to a version in which both
-          the link and the page are present.</para>
-        </question>
-        <answer>
-          <para>This functionality is considered in ADA and provided through a
-          combination of multiple mechanisms. The presence or not of a set of
-          resources in the final version of a site is achieved by either
-          executing or not the exporting rules (see <xref
-          linkend="export_processing"/> for the details). The following
-          variables are provided to create a <emphasis>condition</emphasis> such
-          that if satisfied, resource export is executed, but if not satisfied,
-          no resource is exported:</para>
-
-          <informaltable frame="all" id="exportcontrol_vars">
-            <tgroup rowsep="1" colsep="1" cols="3">
-              <colspec colnum="1" colname="col1" align="left"/>
-              <colspec colnum="2" colname="col2" align="left"/>
-              <colspec colnum="3" colname="col3" align="center"/>
-              <thead>
-                <row>
-                  <entry align="center">Variable name</entry>
-                  <entry align="center">Description</entry>
-                  <entry align="center">Default</entry>
-                </row>
-              </thead>
-              <tbody>
-                <row>
-                  <entry><varname>exportcontrol.begin</varname></entry>
-                  <entry>Date/time after which export is allowed</entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry><varname>exportcontrol.end</varname></entry>
-                  <entry>Date/time after which export is not allowed</entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry><varname>exportcontrol.now</varname></entry>
-                  <entry>
-                    Current date/time to consider. Used to reset a time and
-                    check if export is allowed.
-                  </entry>
-                  <entry>date/time at execution</entry>
-                </row>
-                <row>
-                  <entry><varname>exportcontrol.date.format</varname></entry>
-                  <entry>Format in which date/time need to be given</entry>
-                  <entry>yyyy-MM-dd'T'HH:mm:ss</entry>
-                </row>
-                <row>
-                  <entry><varname>exportcontrol.open</varname></entry>
-                  <entry>
-                    Condition to allow export. If different from
-                    <quote>true</quote>, export is never allowed.
-                  </entry>
-                  <entry>true</entry>
-                </row>
-                <row>
-                  <entry><varname>exportcontrol.profile.revision</varname></entry>
-                  <entry>
-                    A semicolon-separated list of strings to search for a given
-                    revision value.
-                  </entry>
-                  <entry></entry>
-                </row>
-                <row>
-                  <entry>
-                    <varname>exportcontrol.profile.revision.value</varname>
-                  </entry>
-                  <entry>
-                    Value that if not empty and contained in the previous
-                    variable (not empty either) allows the export.
-                  </entry>
-                  <entry></entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-
-          <para>Given these variables, when invoked, the export rule is truly
-          executed if all the following conditions are satisfied:</para>
-
-          <informaltable frame="all" id="exportcontrol_condition">
-            <tgroup rowsep="1" colsep="1" cols="1">
-              <colspec colnum="1" colname="col1" align="left"/>
-              <tbody>
-                <row>
-                  <entry>
-                    <itemizedlist>
-                      <listitem>
-                        <para><varname>exportcontrol.open</varname> is
-                        true</para>
-                      </listitem>
-                      <listitem>
-                        <para><varname>exportcontrol.begin</varname> is empty or
-                        its value is before
-                        <varname>exportcontrol.now</varname></para>
-                      </listitem>
-                      <listitem>
-                        <para><varname>exportcontrol.end</varname> is empty or
-                        its value is after
-                        <varname>exportcontrol.now</varname></para>
-                      </listitem>
-                      <listitem>
-                        <para><varname>exportcontrol.profile.revision</varname>
-                        is empty or
-                        <varname>exportcontrol.profile.revision.value</varname>
-                        is empty or the former is contained in the
-                        latter.</para>
-                      </listitem>
-                    </itemizedlist>
-                  </entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-                     
-          <para>Clear uh? The condition is so complicated because it combines
-          several control mechanisms into a single condition. A regular user
-          will likely use only one of these mechanisms. The condition is easily
-          understood if broken into the following possible scenarios of use (in
-          increasing level of complexity):</para>
-
-          <itemizedlist>
-            <listitem>
-              <para>Allow/skip the export rule in a directory by changing only
-              one definition in <filename>Properties.txt</filename>. This is
-              achieved by simply using the definition:</para>
-
-              <programlisting>exportcontrol.open=true</programlisting>
-
-              <para>If the value of this variable is different from
-              <quote>true</quote> the export rule is not executed.</para>
-            </listitem>
-
-            <listitem>
-              <para>A directory should only be exported during a certain time
-              window. Define the time interval with the variables
-              <varname>exportcontrol.begin</varname> and
-              <varname>exportcontrol.end</varname>.</para>
-              
-              <example>
-                <title>
-                  Limiting the export of a directory to a time
-                  window
-                </title>
-                <programlisting>exportcontrol.begin=2008-06-25T19:00:00
-exportcontrol.end=2018-06-25T19:00:00</programlisting>
-              </example>
-            </listitem>
-
-            <listitem>
-              <para>Keep a list of directories allowed to export. This is
-              achieved using the two variables
-              <varname>exportcontrol.profile.revision</varname> and
-              <varname>exportcontrol.profile.revision.value</varname>. You
-              should first choose a keyword assigned to each directory you want
-              to control. Assign that keyword to the
-              <varname>exportcontrol.profile.revision.value</varname>variable as
-              shown in the example:</para>
-
-              <example>
-                <title>Controlling export with a keyword</title>
-                <programlisting>exportcontrol.profile.revision.value=keyword</programlisting>
-              </example>
-
-              <para>Set the value of
-              <varname>exportcontrol.profile.revision</varname> with the
-              semi-colon separated list of keywords of those modules you want to
-              activate. This definition should be included in a file common for
-              the entire project (see <xref linkend="global_rule"/>.)</para>
-            </listitem>
-          </itemizedlist>
-
-          <para>ADA allows you use more than one of these conditions
-          together. The export is actually execute if <emphasis>all of
-          them</emphasis> are satisfied.</para>
-        </answer>
-      </qandaentry>
-    </qandaset>
-  </section>
+-->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
@@ -955,12 +178,40 @@ exportcontrol.end=2018-06-25T19:00:00</programlisting>
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                GIT FOR COURSE COORDINATOR                    -->
+  <!--                GIT FOR COURSE COORDINATORS                   -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <xi:include href="Git_for_course_coordinator.xml"
               parse="xml"
               xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                    EXERCISES TO SUBMIT                       -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xi:include href="ExerciseSubmit.xml"
+              parse="xml"
+              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                   TYPESETTING EXAMINATIONS                   -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xi:include href="Typesetting_exams.xml"
+              parse="xml"
+              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+<!--
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  UNDOCUMMENTED:
+  RULES
+    Scp.xml
+  STYLES:
+    AsapBenchResults.xsl
+    AdaProfile.xsl
+-->
 
 </article>
 

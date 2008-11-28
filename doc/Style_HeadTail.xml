@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+-->
 <!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
 
@@ -58,6 +79,58 @@
                     xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
 
+	<para>Through <ulink url="Samples/HeadTail/Params.xml">the definition of
+	some or all of these variables</ulink>, the obtained HTML document has
+	the structure shown in the following figure:</para>
+
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="Samples/HeadTail/HeadTailExplain.png" 
+			 format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase>Effect of the HeadTail style sheet</phrase>
+            </textobject>
+          </mediaobject>
+        </informalfigure>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+	<para>How to insert some extra links at the top of the page?</para>
+      </question>
+      <answer>
+	<para>ADA allows to include a set of links at the header of a
+	document. There are two ways to define these links:</para>
+
+	<orderedlist numeration="loweralpha">
+	  <listitem>
+	    <para>By assignining the style parameter
+	    <varname>ada.page.header.links</varname> the Docbook snippet to insert
+	    in the header.</para>
+	  </listitem>
+	  <listitem>
+	    <para>By including in the Docbook document a <code>note</code>
+	    element with the attribute <code>condition</code> equal to
+	    <code>AdminInfo</code> and a <code>para</code> element with the
+	    <code>condition</code> attribute equal to
+	    <code>ada.page.header.links</code> containing
+	    the Docbook snippet to process.
+	    </para>
+	  </listitem>
+	</orderedlist>
+
+	<para>For example, by creating <ulink
+	url="Samples/HeaderLinks/Style.xsl">a simple style sheet including
+	<filename>HeaderLinks.xsl</filename></ulink> and <ulink
+	url="Samples/HeaderLinks/index.xml">a Docbook file with the element
+	<code>&lt;note condition="AdminInfo"></code></ulink>, and the <ulink
+	url="Samples/HeaderLinks/Properties.txt"><filename>Properties.txt</filename></ulink>
+	file with the proper definitions, <ulink
+	url="Samples/HeaderLinks/index.html">the resulting document</ulink> has
+	in its header the given link.</para>
       </answer>
     </qandaentry>
   </qandaset>
