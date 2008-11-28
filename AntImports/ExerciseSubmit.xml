@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+-->
+
 <project name="Create documents for a lab" default="exercisesubmit.processing">
   <description>
     Invoke several times the Docbook to HTML functionality to generate a
@@ -22,14 +43,14 @@
     <!-- Property definition -->
     <property name="exercisesubmit.src.dir"       value="${basedir}"
 	      description="Directory where the sources are taken"/>
-    <property name="exercisesubmit.dst.dir"       value="${exercisesubmit.src.dir}"
+    <property name="exercisesubmit.dst.dir"       value="${basedir}"
 	      description="Directory where the produced files are created"/>
     <property name="exercisesubmit.style.file" 
 	      value="${ada.home}/ADA_Styles/ExerciseSubmit.xsl"
-	      description="Stylesheet to apply all documents except the submission form"/>
+	      description="Stylesheet to obtain hand-out, solutions and professor guide"/>
     <property name="exercisesubmit.submit.style.file" 
 	      value="${ada.home}/ADA_Styles/Submit.xsl"
-	      description="Stylesheet to apply to the submission form"/>
+	      description="Stylesheet to apply to the submission page"/>
     <property name="exercisesubmit.extra.args" value=""
 	      description="Extra options to pass to the XSLT processor"/>
     <property name="exercisesubmit.output.format"   value=".html"
