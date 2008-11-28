@@ -193,7 +193,7 @@
                           <img
                             style="vertical-align: bottom; border: 0;">
                             <xsl:if test="$ada.page.head.right.logo.alt">
-                              <xsl:attribute name="src"><xsl:value-of 
+                              <xsl:attribute name="alt"><xsl:value-of 
                               select="$ada.page.head.right.logo.alt"/></xsl:attribute>
                             </xsl:if>
                             <xsl:attribute name="src"><xsl:value-of
