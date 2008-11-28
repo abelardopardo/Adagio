@@ -21,7 +21,7 @@
     <!-- Public Property definition -->
     <property name="dblatex.src.dir"        value="${basedir}"
 	      description="Directory where the sources are taken"/>
-    <property name="dblatex.dst.dir"        value="${dblatex.src.dir}"
+    <property name="dblatex.dst.dir"        value="${basedir}"
 	      description="Directory where the produced files are created"/>
     <property name="dblatex.files"          value=""
 	      description="Source file names (no path, it is dblatex.src.dir)"/>
@@ -36,6 +36,18 @@ otherwise ada-flavored behavior (supress version page)"/>
       ADA.PREFIX="dblatex" ADA.SRC.DIR="${dblatex.src.dir}"
       ADA.DST.DIR="${dblatex.dst.dir}" ADA.FILES="${dblatex.files}"/>
 
+    <!-- Obtain the filelist with the produced files. -->
+    <pathconvert property="dblatex.target.filelist.property" pathsep=" ">
+      <fileset refid="dblatex.fileset"/>
+      <chainedmapper>
+	<mapper type="glob" from="${dblatex.abssrc.dir}/*" 
+		to="${dblatex.absdst.dir}/*"/>
+	<mapper type="glob" from="*.xml" to="*.pdf"/>
+      </chainedmapper>
+    </pathconvert>
+    <filelist id="dblatex.target.filelist"
+	      files="${dblatex.target.filelist.property}"/>
+    
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="dblatex.check">
       <!-- 
@@ -70,6 +82,41 @@ otherwise ada-flavored behavior (supress version page)"/>
 	<istrue value="${dblatex.compliant.mode}" />
       </not>
     </condition>
+
+    <pathconvert property="dblatex.source.dependency.property" pathsep=" ">
+      <fileset refid="dblatex.fileset"/>
+    </pathconvert>
+
+    <exec executable="bash"
+	  dir="${basedir}" failonerror="true"
+	  outputproperty="dblatex.dependency.files">
+      <arg value="${ada.home}${file.separator}bin${file.separator}getdependencies.sh"/>
+      <arg value="${dblatex.source.dependency.property}"/>
+    </exec>
+
+    <echo
+      level="${dblatex.debug.level}">dblatex.dependency.files=${dblatex.dependency.files}
+dblatex.source.dependency.property=${dblatex.source.dependency.property}</echo>
+
+    <!-- Force the dependency checking on changes on the style sheet -->
+    <dependset>
+      <srcfileset file="${ada.local.property.file}" />
+      <srcfileset dir="${ada.home}/ADA_Styles">
+	<include name="*.xsl" />
+      </srcfileset>
+      <srcfileset dir="${ada.course.home}">
+	<include name="AdaCourseParams.xml" />
+	<include name="Ada.properties" />
+      </srcfileset>
+      <!-- 
+	   Attention: This filelist is not legal because it has not dir, but all
+	   the paths are absolute, therefore, there is no need for it. If an
+	   empty dir attribute is inserted, the dependencies break. I left it
+	   like that on purpose.
+      -->
+      <srcfilelist files="${dblatex.dependency.files}"/>
+      <targetfilelist refid="dblatex.target.filelist" />
+    </dependset>
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
     <apply dir="${basedir}" parallel="false" dest="${dblatex.absdst.dir}" 
