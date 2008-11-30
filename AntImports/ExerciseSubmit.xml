@@ -61,6 +61,8 @@ extension is replaced &#10;# by this value"/>
     <property name="exercisesubmit.multilingual.files" value=""
 	      description="Source file names (no path) to process in 
 multilingual mode"/>
+    <property name="mergestyles.master.style"   value=""
+	      description="An additional stylesheet to combine with xsltproc.style.file"/>
     
     <!-- Private properties -->
     <property name="exercisesubmit.creating.files"  value=""/>
