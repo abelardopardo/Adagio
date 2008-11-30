@@ -27,37 +27,72 @@
   exclude-result-prefixes="exsl" version="1.0">
   
   <!-- Include professor guide text --> 
-  <xsl:param name="professorguide.include.guide" select="'no'"/>
+  <xsl:param name="professorguide.include.guide" select="'no'"
+    description="yes/no variable to show the professor guide info"/>
 
-  <!-- Background color for the professor guide box  --> 
-  <xsl:param name="exercisesubmit.pguide.background.color" select="'#CCD0D6'"/>
+  <!-- Conditionally process section TOC -->
+  <xsl:template match="section[@condition = 'professorguide']" mode="toc">
+    <xsl:param name="toc-context" select="."/>
+    <xsl:if test="$professorguide.include.guide = 'yes'">
+      
+      <xsl:call-template name="subtoc">
+        <xsl:with-param name="toc-context" select="$toc-context"/>
+        <xsl:with-param name="nodes" 
+          select="section|bridgehead[$bridgehead.in.toc != 0]"/>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+  
+  <!-- Conditionally process section when chunked -->
+  <xsl:template match="section[@condition = 'professorguide']">
+    <xsl:if test="$professorguide.include.guide = 'yes'">
+      <xsl:variable name="depth" select="count(ancestor::section)+1"/>
+      
+      <xsl:call-template name="id.warning"/>
+      
+      <div>
+        <xsl:apply-templates select="." mode="class.attribute"/>
+        <xsl:call-template name="dir">
+          <xsl:with-param name="inherit" select="1"/>
+        </xsl:call-template>
+        <xsl:call-template name="language.attribute"/>
+        <xsl:call-template name="section.titlepage"/>
+        
+        <xsl:variable name="toc.params">
+          <xsl:call-template name="find.path.params">
+            <xsl:with-param name="table" 
+              select="normalize-space($generate.toc)"/>
+          </xsl:call-template>
+        </xsl:variable>
+        
+        <xsl:if test="contains($toc.params, 'toc')
+                      and $depth &lt;= $generate.section.toc.level">
+          <xsl:call-template name="section.toc">
+            <xsl:with-param name="toc.title.p" 
+              select="contains($toc.params, 'title')"/>
+          </xsl:call-template>
+          <xsl:call-template name="section.toc.separator"/>
+        </xsl:if>
+        <xsl:apply-templates/>
+        <xsl:call-template name="process.chunk.footnotes"/>
+      </div>
+    </xsl:if>
+  </xsl:template>
 
-  <!-- Prevent this section from appearing in TOC -->
-  <xsl:template match="section[@condition='professorguide']" mode="toc" />
+
 
   <!-- Conditionally process the notes labeled with condition
        professorguide -->
-  <xsl:template match="section[@condition = 'professorguide'] |
-                       note[@condition = 'professorguide']">
+  <!-- Process the section labeled with condition=solution -->
+  <xsl:template match="note[@condition = 'professorguide']">
     <xsl:if test="$professorguide.include.guide = 'yes'">
-      <p>
-        <table class="ada_pguide_table" cellpadding="10">
-          <tr>
-            <td>
-              <xsl:choose>
-                <xsl:when test="$profile.lang='en'">
-                  <p><b>Professor Guide:</b></p>
-                </xsl:when>
-                <xsl:otherwise>
-                  <p><b>Guía del profesor</b></p>
-                </xsl:otherwise>
-              </xsl:choose>
-              <xsl:apply-templates select="node()"/>
-            </td>
-          </tr>
-        </table>
-      </p>
+      <table class="ada_pguide_table">
+        <tr>
+          <td><xsl:call-template name="nongraphical.admonition"/></td>
+        </tr>
+      </table>
     </xsl:if>
   </xsl:template>
+
   
 </xsl:stylesheet>
