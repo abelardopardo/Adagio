@@ -67,7 +67,8 @@
         <xsl:if test="contains($toc.params, 'toc')
                       and $depth &lt;= $generate.section.toc.level">
           <xsl:call-template name="section.toc">
-            <xsl:with-param name="toc.title.p" select="contains($toc.params, 'title')"/>
+            <xsl:with-param name="toc.title.p" 
+              select="contains($toc.params, 'title')"/>
           </xsl:call-template>
           <xsl:call-template name="section.toc.separator"/>
         </xsl:if>
