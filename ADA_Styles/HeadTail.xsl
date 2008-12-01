@@ -24,8 +24,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:exsl="http://exslt.org/common"
+  xmlns:str="http://exslt.org/strings"
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  version="1.0" exclude-result-prefixes="exsl xi">
+  version="1.0" exclude-result-prefixes="exsl xi str">
   
   <!-- Brings in all the default values -->
   <xsl:import href="Params.xsl"/>
@@ -64,21 +65,30 @@
   <xsl:param name="xref.with.number.and.title" select="'0'"/>
 
   <xsl:template name="body.attributes">
-    <!-- Stick the onload attribute in case the flash.player.javascript is given -->
-    <!-- No longer needed. A new version of mediaplayer uses js to take care of
-  these issues -->
-    <!--
-    <xsl:if test="$ada.flv.player.js.file">
-      <xsl:attribute name="onload">setupSeekBar();</xsl:attribute>
+    <xsl:variable name="default_status">
+      <xsl:apply-templates
+        select="/" mode="object.title.markup.textonly"/>
+    </xsl:variable>
+
+    <!-- Insert the onload attribute with the window.defaultStatus value -->
+    <xsl:if test="$default_status and $default_status != ''">
+      <xsl:attribute name="onload">window.defaultStatus='<xsl:value-of
+      select="$default_status"/>';</xsl:attribute>
     </xsl:if>
-    -->
+
+    <!-- Copy the id attribute from the root element -->
+    <xsl:if test="/*[@id] and /*[@id] != ''">
+      <xsl:attribute name="id"><xsl:value-of select="/*/@id"/></xsl:attribute>
+    </xsl:if>
   </xsl:template>
 
   <!-- User HEAD content -->
   <xsl:template name="user.head.content">
 
+    <!-- Insert Dublin Core Metadata -->
     <xsl:call-template name="ada.dc.insert.meta.elements"/>
 
+    <!-- FAVICON -->
     <xsl:if test="$ada.course.icon">
       <link rel="shortcut icon">
         <xsl:attribute name="href"><xsl:value-of
@@ -132,14 +142,21 @@
         select="$ada.page.refresh.rate"/></xsl:attribute>
       </meta>
     </xsl:if>
+
+    <!-- CSS styles -->
     <xsl:if test="$ada.page.cssstyle.url">
       <meta http-equiv="Content-Style-Type" content="text/css"/>
-      <link rel="stylesheet" type="text/css">
-        <xsl:attribute name="href"><xsl:value-of
-        select="$ada.course.home"/><xsl:value-of
-        select="$ada.page.cssstyle.url"/></xsl:attribute>
-      </link>
+      <xsl:for-each select="str:tokenize($ada.page.cssstyle.url, ',')">
+        <link rel="stylesheet" type="text/css">
+          <xsl:attribute name="href"><xsl:value-of
+          select="$ada.course.home"/><xsl:value-of
+          select="."/></xsl:attribute>
+        </link>
+      </xsl:for-each>
     </xsl:if>
+    <!-- FIXME: Instead of the link element, include code similar to:
+         <style type="text/css" media="MMMM">@import "blah.css";</style>
+         -->
 
     <!-- Insert the reference to the RSS channel if given -->
     <xsl:if test="$ada.rss.channel.url and ($ada.rss.channel.url != '')">
@@ -154,145 +171,166 @@
     <xsl:param name="node" select="."/>
     
     <xsl:comment> ######## Beginning of title ######## </xsl:comment>
-    <div id="titlebox">
-      <xsl:if test="$ada.page.head.left.logo or $ada.page.head.center.top.logo 
-                    or $ada.page.head.right.logo or $ada.page.head.center.bottom">
-        <table cellspacing="0" cellpadding="0"
-          style="border:0; width:100%">
-          <tr>
-            <td>
-              <table style="border:0" cellspacing="1" cellpadding="0">
-                <xsl:if test="$ada.page.head.left.logo or 
-                              $ada.page.head.center.top.logo or 
-                              $ada.page.head.right.logo">
-                  <tr style="background-color: #FFFFFF">
-                    <xsl:if test="$ada.page.head.left.logo">
-                      <td rowspan="2" style="border:1px solid black;">
-                        <a>
-                          <xsl:if test="$ada.page.head.left.logo.url">
-                            <xsl:attribute name="href"><xsl:value-of 
-                            select="$ada.page.head.left.logo.url"/></xsl:attribute>
-                          </xsl:if>
-                          <img
-                            style="vertical-align: bottom; border: 0;">
-                            <xsl:if test="$ada.page.head.left.logo.alt">
-                              <xsl:attribute name="alt"><xsl:value-of 
-                              select="$ada.page.head.left.logo.alt"/></xsl:attribute>
-                            </xsl:if>
-                            <xsl:attribute name="src"><xsl:value-of
-                              select="$ada.course.home"/><xsl:value-of 
-                            select="$ada.page.head.left.logo"/></xsl:attribute>
-                          </img>
-                        </a>
-                      </td>
-                    </xsl:if>
-                    <xsl:if test="$ada.page.head.center.top.logo">
-                      <td style="border:1px solid black; ">
-                        <div style="text-align: center;">
-                          <a>
-                            <xsl:if test="$ada.page.head.center.top.logo.url">
-                              <xsl:attribute name="href"><xsl:value-of 
-                              select="$ada.page.head.center.top.logo.url"/></xsl:attribute>
-                            </xsl:if>
-                            <img
-                              style="vertical-align: bottom; border: 0;">
-                              <xsl:if test="$ada.page.head.center.top.logo.alt">
-                                <xsl:attribute name="alt"><xsl:value-of 
-                                select="$ada.page.head.center.top.logo.alt"/></xsl:attribute>
-                              </xsl:if>
-                              <xsl:attribute name="src"><xsl:value-of
-                              select="$ada.course.home"/><xsl:value-of
-                              select="$ada.page.head.center.top.logo"/></xsl:attribute>
-                            </img>
-                          </a>
-                        </div>
-                      </td>
-                    </xsl:if>
-                    <xsl:if test="$ada.page.head.right.logo">
-                      <td rowspan="2" style="border:1px solid black;">
-                        <a>
-                          <xsl:if test="$ada.page.head.right.logo.url">
-                            <xsl:attribute name="href"><xsl:value-of 
-                            select="$ada.page.head.right.logo.url"/></xsl:attribute>
-                          </xsl:if>
-                          <img
-                            style="vertical-align: bottom; border: 0;">
-                            <xsl:if test="$ada.page.head.right.logo.alt">
-                              <xsl:attribute name="alt"><xsl:value-of 
-                              select="$ada.page.head.right.logo.alt"/></xsl:attribute>
-                            </xsl:if>
-                            <xsl:attribute name="src"><xsl:value-of
-                              select="$ada.course.home"/><xsl:value-of 
-                            select="$ada.page.head.right.logo"/></xsl:attribute>
-                          </img>
-                        </a>
-                      </td>
-                    </xsl:if>
-                  </tr>
-                </xsl:if>
-                <tr>
-                  <td style="border:1px solid black; background-color: #CCD0D6;
-                             height: 20px" 
-                    valign="middle">
-                    <div class="noprint" style="text-align: center">
-                      <xsl:if test="$ada.page.head.center.bottom and
-                                    $ada.page.head.center.bottom != ''">
-                        <xsl:copy-of
-                          select="exsl:node-set($ada.page.head.center.bottom)"/>
-                      </xsl:if>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </xsl:if>
-      <xsl:if test="$ada.page.head.bigtitle = 'yes'">
-        <table cellspacing="0" cellpadding="0"
-          style="border:0; margin-right: auto; margin-left: auto; width: 100%;">
-          <tr>
-            <td class="noprint" style="text-align: left; vertical-align: top;">
-              <xsl:call-template name="ggadgetlink"/>
-            </td>
-            <xsl:if test="$ada.course.name or ada.course.edition 
-                          or ada.course.image">
-              <td align="center">
-                <xsl:if test="$ada.course.name">
-                  <h1><xsl:value-of select="$ada.course.name"/></h1>
-                </xsl:if>
-                <xsl:if test="$ada.course.edition">
-                  <h4><xsl:value-of select="$ada.course.edition"/></h4>
-                </xsl:if>
-              </td>
-              <xsl:if test="$ada.course.image">
-                <td align="center">
-                  <xsl:element name="img">
-                    <xsl:if test="$ada.course.name">
-                      <xsl:attribute name="alt"><xsl:value-of 
-                      select="$ada.course.name"/></xsl:attribute>
-                    </xsl:if>
-                    <xsl:attribute name="style">border: 0;</xsl:attribute>
-                    <xsl:attribute name="src"><xsl:value-of
-                    select="$ada.course.home"/><xsl:value-of
-                    select="$ada.course.image"/></xsl:attribute>
-                  </xsl:element>
-                </td>
-              </xsl:if>
+    <xsl:if test="$ada.page.head.left.logo or $ada.page.head.center.top.logo 
+                  or $ada.page.head.right.logo or $ada.page.head.center.bottom">
+      <div id="ada_logo_headers">
+        <div id="ada_logo_headers_left">
+          <a>
+            <xsl:if test="$ada.page.head.left.logo.url">
+              <xsl:attribute name="href"><xsl:value-of 
+              select="$ada.page.head.left.logo.url"/></xsl:attribute>
             </xsl:if>
-          </tr>
-        </table>
-        <hr style="text-align:center;"/>
-      </xsl:if>
-    </div>
+            <img id="ada_logo_headers_left_image">
+              <xsl:if test="$ada.page.head.left.logo.alt">
+                <xsl:attribute name="alt"><xsl:value-of 
+                select="$ada.page.head.left.logo.alt"/></xsl:attribute>
+              </xsl:if>
+              <xsl:attribute name="src"><xsl:value-of
+              select="$ada.course.home"/><xsl:value-of 
+              select="$ada.page.head.left.logo"/></xsl:attribute>
+            </img>
+          </a>
+        </div>
+
+        <div id="ada_logo_headers_center_box">
+          <div id="ada_logo_headers_center_box_top">
+            <a>
+              <xsl:if test="$ada.page.head.center.top.logo.url">
+                <xsl:attribute name="href"><xsl:value-of 
+                select="$ada.page.head.center.top.logo.url"/></xsl:attribute>
+              </xsl:if>
+              <img id="ada_logo_headers_top_center_image">
+                <xsl:if test="$ada.page.head.center.top.logo.alt">
+                  <xsl:attribute name="alt"><xsl:value-of 
+                  select="$ada.page.head.center.top.logo.alt"/></xsl:attribute>
+                </xsl:if>
+                <xsl:attribute name="src"><xsl:value-of
+                select="$ada.course.home"/><xsl:value-of
+                select="$ada.page.head.center.top.logo"/></xsl:attribute>
+              </img>
+            </a>
+          </div>
+
+          <div id="ada_logo_headers_center_box_bottom">
+            <xsl:if test="$ada.page.head.center.bottom and
+                          $ada.page.head.center.bottom != ''">
+              <div id="ada_logo_headers_center_box_bottom_text">
+                <xsl:copy-of
+                  select="exsl:node-set($ada.page.head.center.bottom)"/>
+              </div>
+            </xsl:if>
+          </div>
+        </div>
+
+        <div id="ada_logo_headers_right">
+          <a>
+            <xsl:if test="$ada.page.head.right.logo.url">
+              <xsl:attribute name="href"><xsl:value-of 
+              select="$ada.page.head.right.logo.url"/></xsl:attribute>
+            </xsl:if>
+            <img id="ada_logo_headers_right_image">
+              <xsl:if test="$ada.page.head.right.logo.alt">
+                <xsl:attribute name="alt"><xsl:value-of 
+                select="$ada.page.head.right.logo.alt"/></xsl:attribute>
+              </xsl:if>
+              <xsl:attribute name="src"><xsl:value-of
+              select="$ada.course.home"/><xsl:value-of 
+              select="$ada.page.head.right.logo"/></xsl:attribute>
+            </img>
+          </a>
+        </div>
+
+      </div>
+    </xsl:if>
+    
+    <!-- Big title -->
+    <xsl:if test="$ada.page.head.bigtitle = 'yes'">
+      <div id="ada_page_head_bigtitle">
+        <div id="ada_ggadgetlink">
+          Google Gadget
+          <xsl:call-template name="ggadgetlink"/>
+        </div>
+        
+        <xsl:if test="$ada.course.name or ada.course.edition 
+                      or ada.course.image">
+          
+          <div id="ada_course_name_edition_image">
+            <xsl:if test="$ada.course.image">
+              <div id="ada_course_image">
+                <xsl:element name="img">
+                  <xsl:if test="$ada.course.name">
+                    <xsl:attribute name="alt"><xsl:value-of 
+                    select="$ada.course.name"/></xsl:attribute>
+                  </xsl:if>
+                  <xsl:attribute name="style">border: 0;</xsl:attribute>
+                  <xsl:attribute name="src"><xsl:value-of
+                  select="$ada.course.home"/><xsl:value-of
+                  select="$ada.course.image"/></xsl:attribute>
+                </xsl:element>
+              </div>
+            </xsl:if>
+            <div id="ada_course_name_edition">
+              <!-- Big title course name -->
+              <xsl:if test="$ada.course.name">
+                <h1><xsl:value-of select="$ada.course.name"/></h1>
+              </xsl:if>
+              <xsl:if test="$ada.course.edition">
+                <h4><xsl:value-of select="$ada.course.edition"/></h4>
+              </xsl:if>
+            </div>
+          </div>          
+        </xsl:if>
+      </div>
+    </xsl:if>
     <xsl:comment> ######## End of title ######## </xsl:comment>
   </xsl:template>
   
+  <!-- Template processing the root. Need to overwrite to include div elements -->
+  <xsl:template match="*" mode="process.root">
+    <xsl:variable name="doc" select="self::*"/>
+    
+    <xsl:call-template name="user.preroot"/>
+    <xsl:call-template name="root.messages"/>
+    
+    <html>
+      <xsl:call-template name="language.attribute"/>
+      <head>
+        <xsl:call-template name="system.head.content">
+          <xsl:with-param name="node" select="$doc"/>
+        </xsl:call-template>
+        <xsl:call-template name="head.content">
+          <xsl:with-param name="node" select="$doc"/>
+        </xsl:call-template>
+        <xsl:call-template name="user.head.content">
+          <xsl:with-param name="node" select="$doc"/>
+        </xsl:call-template>
+      </head>
+      <body>
+        <xsl:call-template name="body.attributes"/>
+        <div id="body_container">
+          <div id="user_header_content">
+            <xsl:call-template name="user.header.content">
+              <xsl:with-param name="node" select="$doc"/>
+            </xsl:call-template>
+          </div>
+          <div id="main_content">
+            <xsl:apply-templates select="."/>
+          </div>
+          <div id="user_footer_content">
+            <xsl:call-template name="user.footer.content">
+              <xsl:with-param name="node" select="$doc"/>
+            </xsl:call-template>
+          </div>
+        </div>
+      </body>
+    </html>
+    <xsl:value-of select="$html.append"/>
+  </xsl:template>
+
   <!-- Footer-->
   <xsl:template name="user.footer.content">
     <div id="tailbox">
       <xsl:comment> ######## Beginning of Tail ######## </xsl:comment>
-      <hr style="text-align: center"/>
       <table cellspacing="2" cellpadding="2"
         style="border: 0; margin-left: auto; margin-right: auto">
         <tr>
@@ -378,7 +416,6 @@
         pageTracker._trackPageview();
       </script>
     </xsl:if>
-
   </xsl:template>
 
   <xsl:template name="ggadgetlink">
