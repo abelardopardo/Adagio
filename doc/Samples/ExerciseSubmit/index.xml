@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                    "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<chapter id="exercise_sample">
+  <title>Exercise Document</title>
+
+  <para>
+    Solve the following exercises.
+  </para>
+  
+  <section id="first_one">
+    <title>The First</title>
+
+    <para>Do you know the anwser for this question? <phrase
+    condition="solution">YES</phrase></para>
+
+    <note condition="professorguide">
+      <title>Professor Guide</title>
+      <para>Guide the student during this exercise.</para>
+    </note>
+
+    <note condition="submit">
+      <para>
+	And your answer is:
+	<phrase condition="input">
+	  <phrase condition="type">text</phrase>
+	  <phrase condition="size">40</phrase>
+	  <phrase condition="accept">text/plain</phrase>
+	  <phrase condition="name">answer_first_one</phrase>
+	</phrase>
+      </para>
+    </note>
+  </section>
+
+  <section id="second_one">
+    <title>The Second</title>
+
+    <para>Text of the exercise.</para>
+
+    <note condition="solution">
+      <title>Solution</title>
+      <para>The solution is also left as an exercise to the reader</para>
+    </note>
+
+    <note condition="submit">
+      <para>
+	And your answer is:
+	<phrase condition="input">
+	  <phrase condition="type">text</phrase>
+	  <phrase condition="size">60</phrase>
+	  <phrase condition="accept">text/plain</phrase>
+	  <phrase condition="name">answer_second_one</phrase>
+	</phrase>
+      </para>
+    </note>
+  </section>
+
+  <section condition="solution">
+    <title>Solutions</title>
+
+    <para>Alternatively, an entire section could be used to include all the
+    solution information.</para>
+  </section>
+
+  <section condition="professorguide">
+    <title>Professor Guide</title>
+    <para>The professor guide could be included in a separated section.</para>
+  </section>
+
+</chapter>

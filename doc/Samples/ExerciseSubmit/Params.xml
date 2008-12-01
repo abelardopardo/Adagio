@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:exsl="http://exslt.org/common"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  version="1.0" exclude-result-prefixes="exsl xi">
+  
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--        Customization variables for General Parameters        -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xsl:param name="ada.institution.name">Your institution name</xsl:param>
+
+  <xsl:param name="ada.course.home.url" />
+
+  <xsl:param name="ada.course.icon">ada_course_icon.png</xsl:param>
+  <xsl:param name="ada.course.icon.type">image/png</xsl:param>
+
+  <xsl:param name="ada.course.degree"/>
+
+  <xsl:param name="ada.course.edition">Value of ada.course.edition</xsl:param>
+
+  <xsl:param name="ada.course.image">ada_course_image.png</xsl:param>
+  <xsl:param name="ada.course.name">Value of ada.course.name</xsl:param>
+  <xsl:param name="ada.course.short.edition">Value of ada.course.short.edition</xsl:param>
+  <xsl:param name="ada.course.short.name" />
+  <xsl:param name="ada.course.year" />
+
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--          Customization variables for Head and Tail           -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xsl:param name="ada.page.author">Value of ada.page.author parameter</xsl:param>
+  <xsl:param name="ada.page.cssstyle.url">../../style.css</xsl:param>
+  <xsl:param name="ada.page.google.analytics.account" />
+  <xsl:param name="ada.page.google.gadget.url" />
+  <xsl:param name="ada.page.head.bigtitle">yes</xsl:param>
+  <xsl:param name="ada.page.head.center.bottom">Value of ada.page.head.center.bottom</xsl:param>
+  <xsl:param name="ada.page.head.center.top.logo">ada_page_head_center_top_logo.png</xsl:param>
+  <xsl:param name="ada.page.head.center.top.logo.alt">Alt value in ada.page.head.center.top.logo</xsl:param>
+  <xsl:param name="ada.page.head.center.top.logo.url">index.html</xsl:param>
+  <xsl:param name="ada.page.head.left.logo">ada_page_head_left_logo.png</xsl:param>
+  <xsl:param name="ada.page.head.left.logo.alt">Alt value in ada.page.head.left.logo</xsl:param>
+  <xsl:param name="ada.page.head.left.logo.url">index.html</xsl:param>
+  <xsl:param name="ada.page.head.right.logo">ada_page_head_right_logo.png</xsl:param>
+  <xsl:param name="ada.page.head.right.logo.alt">Alt value in ada.page.head.right.logo</xsl:param>
+  <xsl:param name="ada.page.head.right.logo.url">index.html</xsl:param>
+  <xsl:param name="ada.page.refresh.rate" />
+  <xsl:param name="ada.page.license.institution">
+    Copy of variable <tt>ada.page.license.institution</tt>4 (HTML allowed)
+  </xsl:param>
+  <xsl:param name="ada.page.license">yes</xsl:param>
+  <xsl:param name="ada.page.license.name">Value of ada.page.license.name</xsl:param>
+  <xsl:param name="ada.page.license.logo">ada_page_license_logo.png</xsl:param>
+  <xsl:param name="ada.page.license.alt">Alt value in ada.page.license</xsl:param>
+  <xsl:param name="ada.page.license.url">index.html</xsl:param>
+  <xsl:param name="ada.page.show.lastmodified" select="'yes'"/>
+
+
+  <xsl:param name="exercisesubmit.include.toc">no</xsl:param>
+</xsl:stylesheet>

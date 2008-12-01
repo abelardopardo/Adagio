@@ -1,0 +1,3 @@
+mergestyles.master.style=Params.xml
+
+exercisesubmit.files=index.xml

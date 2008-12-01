@@ -101,7 +101,8 @@ table.ada_pguide_table, table.ada_solution_table {
   background-color: #DDDDDD;
 }
 
-table.ada_solution_table tbody tr td {
+table.ada_solution_table tbody tr td,
+table.ada_pguide_table tbody tr td {
   border-collapse: collapse; 
   border: 1px solid black;
 }

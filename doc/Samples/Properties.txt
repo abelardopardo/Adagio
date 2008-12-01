@@ -4,6 +4,7 @@ subrecursive.dirs= ApplyXSL \
                    Dvips \
                    Exam \
                    ExamBL \
+                   ExerciseSubmit \
 		   HeadTail \
 		   HeaderLinks \
 		   Inkscape \

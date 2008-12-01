@@ -18,8 +18,8 @@
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor
   Boston, MA  02110-1301, USA.
-
 -->
+
 <!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
 
@@ -61,7 +61,8 @@
 	easily done with the rules presented in the previous sections (see <xref
 	linkend="docbook_processing"/>, for example). But in some cases, certain
 	activities require more than one document and more importantly, the
-	possibility of interfacing the documents with other platforms.</para>
+	possibility of interfacing the documents with other platforms to submit
+	answers, automatic grading, etc.</para>
 
 	<para>ADA offers the possibility of preparing a set of files around the
 	concept of <quote>exercise</quote>. The scenario that is assumed is the
@@ -70,14 +71,14 @@
 	<itemizedlist>
 	  <listitem>
 	    <para>The exercise needs one or more documents given to the students
-	    describing the steps to obtain the required answers. This document
-	    will be referred to as the <quote>hand out</quote> (see <xref
+	    describing the steps to obtain the answers. This document will be
+	    referred to as the <quote>hand out</quote> (see <xref
 	    linkend="exercise_handout"/> for more details).
 	    </para>
 	  </listitem>
 	  <listitem>
 	    <para>A second document, similar to the previous one but including
-	    these solutions. It could be used for publication at a later stage,
+	    the solutions. It could be used for publication at a later stage,
 	    for the teaching staff to have during class, etc. This document will
 	    be referred to as the <quote>solutions</quote> (see <xref
 	    linkend="exercise_solution"/> for more details).
@@ -87,39 +88,40 @@
 	    <para>A third document explicitly oriented only to the teaching
 	    staff including descriptions of the tasks to perform, comments,
 	    evaluation criteria, etc. This document is concieved such that it
-	    never is shown to the students and thus will be reffered as the
+	    never is shown to the students and thus will be referred as the
 	    <quote>professor guide</quote> (see <xref
 	    linkend="exercise_professorguide"/> for more details).
 	    </para>
 	  </listitem>
 	  <listitem>
-	    <para>An additional HTML page to be able to submit the answers. This
-	    is simply an HTML form but the elements to submit are derived from
-	    the problems included in the hand out. The assumption is that when
-	    designing a problem, these parts can be written next to each other
-	    and through profiling, they are separated into different
-	    documents. This document will be referred to as the
-	    <quote>submission page</quote> (see <xref
+	    <para>An additional HTML page to submit the answers through a web
+	    form. The elements to submit are derived from the included
+	    exercises. The assumption is that the exercise, and the instructions
+	    of what to submit are kept together. When combining several
+	    exercises, the submission form contains the instructions (fields,
+	    labels, etc.) of the exercises. This document will be referred to as
+	    the <quote>submission page</quote> (see <xref
 	    linkend="exercise_submission"/> for more details).</para>
 	  </listitem>
 	  <listitem>
-	    <para>Additional possibilities to include in these documents such as
-	    a typical set of fields in the submission page, a countdown in the
-	    hand-out and submission documents showing the remaining time until
-	    deadline, etc.</para>
+	    <para>Additional functionality to include in the documents
+	    previously described such as a fixed set of fields in the submission
+	    page (name, id, email, etc), a countdown to the dealine in the
+	    hand-out and submission documents, a link to the evaluation
+	    criteria, etc.</para>
 	  </listitem>
 	</itemizedlist>
 
-	<para>In the previously described scenario, the variables to be used in
-	the <filename>Properties.txt</filename> are the following:</para>
+	<para>The variables used in the previously described scenario suitable
+	to be defined in the <filename>Properties.txt</filename> are:</para>
 
 	<xi:include href="VarTables/ExerciseSubmit_vars.xml"
 		    parse="xml"
 		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
-	<para>If used, this rule creates the documents previously described,
-	that is: hand-out, solutions, professor guide and submission page. It is
-	for this reason that two stylesheet files are specified. The variable
+	<para>When used, this rule creates the previously described documents:
+	hand-out, solutions, professor guide and submission page. Two stylesheet
+	files are specified. The variable
 	<varname>exercisesubmit.style.file</varname> is used to produce the hand
 	out, solutions and professor guide document. The variable
 	<varname>exercisesubmit.submit.style.file</varname> is used to obtain
@@ -136,12 +138,54 @@
 	document?</para>
       </question>
       <answer>
-	<para></para>
+	<para>The structure of the hand-out document is similar to the one
+	obtained when using the stylesheet <filename>HeadTail.xsl</filename>
+	(see <xref linkend="headtail_pararms"/> for more details). The additional
+	variables to control the the style are:</para>
 
 	<xi:include href="ParamTables/ExerciseSubmitParams_description.xml"
 		    parse="xml"
 		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
+	<para>For example, let us consider <ulink
+	url="Samples/ExerciseSubmit/index.xml">a XML file</ulink> that contains
+	two exercises. With the following definitions in the <ulink
+	url="Samples/ExerciseSubmit/Properties.txt"><filename>Properties.txt</filename>
+	file</ulink>:</para>
+
+        <programlisting><xi:include href="Samples/ExerciseSubmit/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	
+	<para>and some customization definitions in the <ulink
+	url="Samples/ExerciseSubmit/Params.xml"><filename>Params.xml</filename>
+	file</ulink>, the <ulink
+	url="Samples/ExerciseSubmit/index.html">resulting handout
+	document</ulink> has the appearance shown in the following
+	figure:</para>
+	
+	<informaltable frame="all" id="exercise_handout_capture">
+	  <tgroup rowsep="1" colsep="1" cols="1">
+	    <colspec colnum="1" colname="col1" align="left"></colspec>
+	    <tbody>
+	      <row>
+		<entry>
+		  <informalfigure>
+		    <mediaobject>
+		      <imageobject>
+			<imagedata fileref="Samples/ExerciseSubmit/Index.png"
+				   format="PNG"/> 
+		      </imageobject>
+		      <textobject>
+			<phrase>Exercise hand out document</phrase>
+		      </textobject>
+		    </mediaobject>
+		  </informalfigure>
+		</entry>
+	      </row>
+	    </tbody>
+	  </tgroup>
+	</informaltable>
       </answer>
     </qandaentry>
 
@@ -151,7 +195,83 @@
 	<para>How to produce the solution of an exercise document?</para>
       </question>
       <answer>
-	<para></para>
+	<para>The solution document is conceived as a document that has entirely
+	the same text as the hand out but extended with annotations containing
+	the solution to the posed questions. These annotations can be placed at
+	only three levels of the document: section, note and phrase.</para>
+
+	<para>To include the solution information inside a section, the
+	attribute <code>condition</code> must be present in this element with
+	the value <code>solution</code>. The section with this attribute is
+	ignored when processing the hand out document and considered when
+	processing the solution document.</para>
+
+	<para>The inclusion of the solution information in a <code>note</code>
+	element is similar to the previous one but this element is intended to
+	be included at a lower level within the document (for example, inside an
+	entry in a table, between two paragraphs, in a list, etc.) The presence
+	of the <code>condition</code> attribute with value <code>solution</code>
+	has the same effect than in the case of the <code>section</code> element
+	previously described.</para>
+
+	<para>The third method to include the solution information is to place
+	it in the middle of regular text. By using the <code>phrase</code>
+	element with the attribute <code>condition</code> equal to the value
+	<code>solution</code>, small text strings can be interspersed through in
+	the middle of a paragraph.</para>
+
+	<para>For example, let us consider <ulink
+	url="Samples/ExerciseSubmit/index.xml">a XML file</ulink> that contains
+	two exercises with the information about the solutions. With the
+	following definitions in the <ulink
+	url="Samples/ExerciseSubmit/Properties.txt"><filename>Properties.txt</filename>
+	file</ulink>:</para>
+
+        <programlisting><xi:include href="Samples/ExerciseSubmit/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	
+	<para>and some customization definitions in the <ulink
+	url="Samples/ExerciseSubmit/Params.xml"><filename>Params.xml</filename>
+	file</ulink>, the <ulink
+	url="Samples/ExerciseSubmit/index_solution.html">resulting solution
+	document</ulink> has the appearance shown in the following
+	figure:</para>
+	
+	<informaltable frame="all" id="exercise_handout_capture">
+	  <tgroup rowsep="1" colsep="1" cols="1">
+	    <colspec colnum="1" colname="col1" align="left"></colspec>
+	    <tbody>
+	      <row>
+		<entry>
+		  <informalfigure>
+		    <mediaobject>
+		      <imageobject>
+			<imagedata 
+			  fileref="Samples/ExerciseSubmit/Index_solution.png"
+			  format="PNG"/> 
+		      </imageobject>
+		      <textobject>
+			<phrase>Exercise document with solutions</phrase>
+		      </textobject>
+		    </mediaobject>
+		  </informalfigure>
+		</entry>
+	      </row>
+	    </tbody>
+	  </tgroup>
+	</informaltable>
+	
+	<para>The presence or absence of the solution information is controlled
+	by the following style parameter:</para>
+
+        <xi:include href="ParamTables/SolutionSection_description.xml"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>The rule to generate the solution document invokes the proper
+	style sheet changing the value of this variable to
+	<quote>yes</quote>.</para>
       </answer>
     </qandaentry>
 
@@ -162,7 +282,65 @@
 	<para>How to produce the professor guide of an exercise document?</para>
       </question>
       <answer>
-	<para></para>
+	<para>The document called the <quote>professor guide</quote> is intended
+	for the use of the teaching staff. It includes the solution information
+	and special annotations and remarks not to be seen by the students. Two
+	elements are prepared to encapsulate these comments: <code>note</code>
+	and <code>section</code>. In both cases, the <code>condition</code>
+	attribute must have the value <code>professorguide</code>.</para>
+
+	<para>For example, let us consider <ulink
+	url="Samples/ExerciseSubmit/index.xml">a XML file</ulink> that contains
+	two exercises with the information to include in the professor
+	guide. With the following definitions in the <ulink
+	url="Samples/ExerciseSubmit/Properties.txt"><filename>Properties.txt</filename>
+	file</ulink>:</para>
+
+        <programlisting><xi:include href="Samples/ExerciseSubmit/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	
+	<para>and some customization definitions in the <ulink
+	url="Samples/ExerciseSubmit/Params.xml"><filename>Params.xml</filename>
+	file</ulink>, the <ulink
+	url="Samples/ExerciseSubmit/index_pguide.html">resulting solution
+	document</ulink> has the appearance shown in the following
+	figure:</para>
+	
+	<informaltable frame="all" id="exercise_handout_capture">
+	  <tgroup rowsep="1" colsep="1" cols="1">
+	    <colspec colnum="1" colname="col1" align="left"></colspec>
+	    <tbody>
+	      <row>
+		<entry>
+		  <informalfigure>
+		    <mediaobject>
+		      <imageobject>
+			<imagedata 
+			  fileref="Samples/ExerciseSubmit/Index_pguide.png"
+			  format="PNG"/> 
+		      </imageobject>
+		      <textobject>
+			<phrase>Exercise document with the professor guide</phrase>
+		      </textobject>
+		    </mediaobject>
+		  </informalfigure>
+		</entry>
+	      </row>
+	    </tbody>
+	  </tgroup>
+	</informaltable>
+	
+	<para>The presence or absence of the professor guide information is
+	controlled by the following style parameter:</para>
+
+        <xi:include href="ParamTables/PguideSection_description.xml"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>The rule to generate the professor guide document invokes the
+	proper style sheet changing the value of this variable to
+	<quote>yes</quote>.</para>
       </answer>
     </qandaentry>
 

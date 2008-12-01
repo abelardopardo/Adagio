@@ -9,7 +9,9 @@ xsltproc.files=\
  	GGadgetParams.xsl \
  	HeadTailParams.xsl \
  	Params.xsl \
+ 	PguideSection.xsl \
  	RssParams.xsl \
+ 	SolutionSection.xsl \
  	SubmitParams.xsl \
  	TestQuestionsParams.xsl
 
