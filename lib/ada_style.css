@@ -1,0 +1,65 @@
+/* 
+ * Generic style file for Course Web Pages 
+ * ADA: Agile Distributed Authoring. A set of rules to produce/combine resources
+ * Copyright (C) 2008 Abelardo Pardo, Carlos III University of Madrid
+
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor
+ * Boston, MA  02110-1301, USA.
+ * 
+ * Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
+ *
+ */
+
+body {
+}
+
+.ada_hidden_elements {
+                   background: transparent none repeat scroll 0 0;
+                   border: medium none;
+                   display: block;
+                   height: 1px;
+                   margin: -1px 0 0 -1px;
+                   overflow: hidden; 
+                   padding: 0;
+                   width: 1px; 
+                   }
+
+/* -------------------- HEADER -------------------- */
+
+#ada_page_header { 
+                   border-top: 0.1em solid black;
+                   }
+
+#ada_page_header_top {
+                       border-bottom: 0.1em solid black;
+                       }
+
+#ada_page_header_navigation { 
+                   border-bottom: 0.1em solid black;
+                              }
+
+/* -------------------- CONTENT -------------------- */
+
+#ada_page_content { 
+                    }
+
+/* -------------------- FOOTER -------------------- */
+
+#ada_page_footer { 
+                   border-top: 0.1em solid black;
+                   border-bottom: 0.1em solid black;
+                   }
+
+

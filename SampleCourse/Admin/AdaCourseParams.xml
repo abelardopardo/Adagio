@@ -16,14 +16,16 @@
   <xsl:param name="ada.rss.item.url.prefix"><xsl:value-of
   select="$ada.publish.host"/><xsl:value-of select="$ada.publish.dir" /></xsl:param>
 
-  <xsl:param name="ada.page.head.bigtitle">1</xsl:param>
   <xsl:param name="ada.course.name">MI CURSO</xsl:param>
-  <xsl:param name="ada.course.edition">MI EDICION</xsl:param>
   <xsl:param name="ada.page.author">The author of this page</xsl:param>
   <xsl:param name="ada.course.icon">images/ao.16x16.ico</xsl:param>
   <xsl:param name="ada.course.image">images/ao.120x120.png</xsl:param>
   <xsl:param name="ada.page.cssstyle.url">style.css</xsl:param>
+  <xsl:param name="ada.course.edition">MI EDICION</xsl:param>
+  <xsl:param name="ada.page.countdown.js">lib/countdown.js</xsl:param>
 
+  <!-- 
+  <xsl:param name="ada.page.head.bigtitle">1</xsl:param>
   <xsl:param name="ada.page.head.center.bottom">Mensaje en el center bottom</xsl:param>
   <xsl:param name="ada.page.head.left.logo">images/LogoUC3M_55x55.png</xsl:param>
   <xsl:param name="ada.page.head.left.logo.alt">UC3M</xsl:param>
@@ -36,7 +38,7 @@
   <xsl:param name="ada.page.head.center.top.logo">images/titular3.gif</xsl:param>
   <xsl:param name="ada.page.head.center.top.logo.alt">Universidad Carlos III de Madrid. Dept. de Ingeniería Telemática</xsl:param>
   <xsl:param name="ada.page.head.center.top.logo.url">http://www.it.uc3m.es</xsl:param>
-  <xsl:param name="ada.page.countdown.js">lib/countdown.js</xsl:param>
+  -->
 
   <!-- Prosper parameters -->
   <xsl:param name="ada.prosper.style">uc3m</xsl:param>
@@ -46,5 +48,40 @@
   <xsl:param name="ada.prosper.logo.width">2.5cm</xsl:param>
   <xsl:param name="ada.prosper.logo.pos">(0,-1.25)</xsl:param>
 
+  <xsl:param name="ada.page.header.navigation"
+    description="HTML with navigation links">
+    <!-- Value of ADA_PAGE_HEADER_NAVIGATION -->
+    <ul>
+      <li><a href="./test.html">Nav 1</a></li>
+      <li><a href="./test.html">Nav 2</a></li>
+      <li><a href="./test.html">Nav 3</a></li>
+      <li><a href="./test.html">Nav 4</a></li>
+      <li><a href="./test.html">Nav 5</a></li>
+      <li><a href="./test.html">Nav 6</a></li>
+      <li><a href="./test.html">Nav 7</a></li>
+    </ul>
+  </xsl:param>
+  <xsl:param name="ada.page.footer"
+    description="Footer HTML snippet">
 
+    <div id="footer_linksA">
+      <ul id="footer_linksA_list">
+	<li><a href="./test.html">LinkA 1</a></li>
+	<li><a href="./test.html">LinkA 2</a></li>
+	<li><a href="./test.html">LinkA 3</a></li>
+      </ul>
+    </div>
+    
+    <p class="discreet">asdf asdf asdf asdf</p>
+    
+    <div id="footer_linksB">
+      
+      <ul id="footer_linksB_list">
+	<li><a href="./test.html">LinkB 1</a></li>
+	<li><a href="./test.html">LinkB 2</a></li>
+	<li><a href="./test.html">LinkB 3</a></li>
+      </ul>
+    </div>
+  </xsl:param>
+  
 </xsl:stylesheet>

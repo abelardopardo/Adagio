@@ -37,7 +37,9 @@
   <xsl:param name="ada.page.google.gadget.url" 
     description="Link pointing to a Google Gadget to be included in the upper
                  left corner of the page"/>
-  <xsl:param name="ada.page.head.bigtitle" 
+
+  <!--
+       <xsl:param name="ada.page.head.bigtitle" 
     description="yes/no to enable a big title on top of the page">no</xsl:param>
   <xsl:param name="ada.page.head.center.bottom" 
     description="Text to insert at the bottom row of the Header table"/>
@@ -59,9 +61,13 @@
   <xsl:param name="ada.page.head.right.logo.alt" 
     description="Alt attribute for the previous image"/>
   <xsl:param name="ada.page.head.right.logo.url" 
-    description="URL to make the image a link"/>
+    description="URL to make the image a link"/> 
+  -->
+
   <xsl:param name="ada.page.refresh.rate" 
     description="Include a refresh rate in the page header"/>
+
+  <!-- 
   <xsl:param name="ada.page.license.institution" select="'&#169; Carlos III University of Madrid, Spain'"/>
   <xsl:param name="ada.page.license" 
     description="Yes/no to include license information at the bottom of the
@@ -77,4 +83,14 @@
   <xsl:param name="ada.page.show.lastmodified" 
     description="yes/no controlling if the last modified info is shown at
                  bottom">no</xsl:param>
+  -->
+  
+  <xsl:param name="ada.page.header.navigation"
+    description="HTML with navigation links" />
+  <xsl:param name="ada.page.footer"
+    description="Footer HTML snippet" />
+  <xsl:param name="ada.pageheader.navigation.navigation.accesskey"
+    description="Access key to assign to the skip to navigation link">1</xsl:param>
+  <xsl:param name="ada.pageheader.navigation.content.accesskey"
+    description="Access key to assign to the skip to content link">2</xsl:param>
 </xsl:stylesheet>

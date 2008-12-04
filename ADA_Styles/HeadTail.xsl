@@ -64,6 +64,51 @@
   <!-- This one for sure is needed in all documents -->
   <xsl:param name="xref.with.number.and.title" select="'0'"/>
 
+  <!-- Template processing the root. Need to overwrite to include div elements -->
+  <xsl:template match="*" mode="process.root">
+    <xsl:variable name="doc" select="self::*"/>
+    
+    <xsl:call-template name="user.preroot"/>
+    <xsl:call-template name="root.messages"/>
+    
+    <html>
+      <xsl:call-template name="language.attribute"/>
+      <head>
+        <xsl:call-template name="system.head.content">
+          <xsl:with-param name="node" select="$doc"/>
+        </xsl:call-template>
+        <xsl:call-template name="head.content">
+          <xsl:with-param name="node" select="$doc"/>
+        </xsl:call-template>
+        <xsl:call-template name="user.head.content">
+          <xsl:with-param name="node" select="$doc"/>
+        </xsl:call-template>
+      </head>
+      <body>
+        <xsl:call-template name="body.attributes"/>
+        <div id="ada_body_container">
+          <div id="ada_page_header">
+            <xsl:call-template name="user.header.content">
+              <xsl:with-param name="node" select="$doc"/>
+            </xsl:call-template>
+          </div>
+
+          <div id="ada_page_content">
+            <a name="content"/>
+            <xsl:apply-templates select="."/>
+          </div>
+
+          <div id="ada_page_footer">
+            <xsl:call-template name="user.footer.content">
+              <xsl:with-param name="node" select="$doc"/>
+            </xsl:call-template>
+          </div>
+        </div>
+      </body>
+    </html>
+    <xsl:value-of select="$html.append"/>
+  </xsl:template>
+
   <xsl:template name="body.attributes">
     <xsl:variable name="default_status">
       <xsl:apply-templates
@@ -154,6 +199,7 @@
         </link>
       </xsl:for-each>
     </xsl:if>
+
     <!-- FIXME: Instead of the link element, include code similar to:
          <style type="text/css" media="MMMM">@import "blah.css";</style>
          -->
@@ -169,241 +215,79 @@
   
   <xsl:template name="user.header.content">
     <xsl:param name="node" select="."/>
-    
-    <xsl:comment> ######## Beginning of title ######## </xsl:comment>
-    <xsl:if test="$ada.page.head.left.logo or $ada.page.head.center.top.logo 
-                  or $ada.page.head.right.logo or $ada.page.head.center.bottom">
-      <div id="ada_logo_headers">
-        <div id="ada_logo_headers_left">
-          <a>
-            <xsl:if test="$ada.page.head.left.logo.url">
-              <xsl:attribute name="href"><xsl:value-of 
-              select="$ada.page.head.left.logo.url"/></xsl:attribute>
-            </xsl:if>
-            <img id="ada_logo_headers_left_image">
-              <xsl:if test="$ada.page.head.left.logo.alt">
-                <xsl:attribute name="alt"><xsl:value-of 
-                select="$ada.page.head.left.logo.alt"/></xsl:attribute>
-              </xsl:if>
-              <xsl:attribute name="src"><xsl:value-of
-              select="$ada.course.home"/><xsl:value-of 
-              select="$ada.page.head.left.logo"/></xsl:attribute>
-            </img>
-          </a>
-        </div>
 
-        <div id="ada_logo_headers_center_box">
-          <div id="ada_logo_headers_center_box_top">
-            <a>
-              <xsl:if test="$ada.page.head.center.top.logo.url">
-                <xsl:attribute name="href"><xsl:value-of 
-                select="$ada.page.head.center.top.logo.url"/></xsl:attribute>
-              </xsl:if>
-              <img id="ada_logo_headers_top_center_image">
-                <xsl:if test="$ada.page.head.center.top.logo.alt">
-                  <xsl:attribute name="alt"><xsl:value-of 
-                  select="$ada.page.head.center.top.logo.alt"/></xsl:attribute>
-                </xsl:if>
-                <xsl:attribute name="src"><xsl:value-of
-                select="$ada.course.home"/><xsl:value-of
-                select="$ada.page.head.center.top.logo"/></xsl:attribute>
-              </img>
+    <div id="ada_page_header_top">
+
+      <!-- HIDDEN ELEMENTS -->
+      <div class="ada_hidden_elements" id="skip_links">
+        <ul>
+          <xsl:if test="$ada.page.header.navigation and
+                        $ada.page.header.navigation != ''">
+            <li>
+              <a href="#ada_navigation" accesskey="1">
+                <xsl:choose>
+                  <xsl:when test="$profile.lang='es'">Ir a navegación</xsl:when>
+                  <xsl:otherwise>Skip to navigation</xsl:otherwise>
+                </xsl:choose>
+              </a>
+            </li>
+          </xsl:if>
+          <li>
+            <a href="#ada_content" accesskey="2">
+              <xsl:choose>
+                <xsl:when test="$profile.lang='es'">Ir a contenido</xsl:when>
+                <xsl:otherwise>Skip to content</xsl:otherwise>
+              </xsl:choose>
             </a>
-          </div>
+          </li>
+        </ul>
+      </div> <!-- End of ada_hidden_elements -->
 
-          <div id="ada_logo_headers_center_box_bottom">
-            <xsl:if test="$ada.page.head.center.bottom and
-                          $ada.page.head.center.bottom != ''">
-              <div id="ada_logo_headers_center_box_bottom_text">
-                <xsl:copy-of
-                  select="exsl:node-set($ada.page.head.center.bottom)"/>
-              </div>
-            </xsl:if>
-          </div>
+      <!-- ADA_INSTITUTION_NAME -->
+      <xsl:if test="$ada.institution.name and $ada.institution.name != ''">
+        <div id="ada_page_header_top_level1">
+          <h1 id="ada_institution_name">
+            <xsl:copy-of select="$ada.institution.name"/>
+          </h1>
         </div>
+      </xsl:if>
 
-        <div id="ada_logo_headers_right">
-          <a>
-            <xsl:if test="$ada.page.head.right.logo.url">
-              <xsl:attribute name="href"><xsl:value-of 
-              select="$ada.page.head.right.logo.url"/></xsl:attribute>
-            </xsl:if>
-            <img id="ada_logo_headers_right_image">
-              <xsl:if test="$ada.page.head.right.logo.alt">
-                <xsl:attribute name="alt"><xsl:value-of 
-                select="$ada.page.head.right.logo.alt"/></xsl:attribute>
-              </xsl:if>
-              <xsl:attribute name="src"><xsl:value-of
-              select="$ada.course.home"/><xsl:value-of 
-              select="$ada.page.head.right.logo"/></xsl:attribute>
-            </img>
-          </a>
+      <!-- ADA_COURSE_DEGREE -->
+      <xsl:if test="$ada.course.degree and $ada.course.degree != ''">
+        <div id="ada_page_header_top_level2">
+          <h2 id="ada_course.degree">
+            <xsl:copy-of select="$ada.course.degree"/>
+          </h2>
         </div>
+      </xsl:if>
 
-      </div>
+      <!-- ADA_COURSE_NAME -->
+      <xsl:if test="$ada.course.name and $ada.course.name != ''">
+        <div id="ada_page_header_top_level3">
+          <h3 id="ada_course.name">
+            <xsl:copy-of select="$ada.course.name"/>
+          </h3>
+        </div>
+      </xsl:if>
+
+    </div> <!-- End of ada_page_header_top -->
+
+    <!-- ADA.PAGE.HEADER.NAVIGATION -->
+    <xsl:if test="$ada.page.header.navigation and 
+                  $ada.page.header.navigation != ''">
+      <div id="ada_page_header_navigation">
+        <a name="ada_navigation"/>
+        <xsl:copy-of select="$ada.page.header.navigation"/>
+      </div> <!-- End of ada.page.header.navigation -->
     </xsl:if>
-    
-    <!-- Big title -->
-    <xsl:if test="$ada.page.head.bigtitle = 'yes'">
-      <div id="ada_page_head_bigtitle">
-        <div id="ada_ggadgetlink">
-          Google Gadget
-          <xsl:call-template name="ggadgetlink"/>
-        </div>
-        
-        <xsl:if test="$ada.course.name or ada.course.edition 
-                      or ada.course.image">
-          
-          <div id="ada_course_name_edition_image">
-            <xsl:if test="$ada.course.image">
-              <div id="ada_course_image">
-                <xsl:element name="img">
-                  <xsl:if test="$ada.course.name">
-                    <xsl:attribute name="alt"><xsl:value-of 
-                    select="$ada.course.name"/></xsl:attribute>
-                  </xsl:if>
-                  <xsl:attribute name="style">border: 0;</xsl:attribute>
-                  <xsl:attribute name="src"><xsl:value-of
-                  select="$ada.course.home"/><xsl:value-of
-                  select="$ada.course.image"/></xsl:attribute>
-                </xsl:element>
-              </div>
-            </xsl:if>
-            <div id="ada_course_name_edition">
-              <!-- Big title course name -->
-              <xsl:if test="$ada.course.name">
-                <h1><xsl:value-of select="$ada.course.name"/></h1>
-              </xsl:if>
-              <xsl:if test="$ada.course.edition">
-                <h4><xsl:value-of select="$ada.course.edition"/></h4>
-              </xsl:if>
-            </div>
-          </div>          
-        </xsl:if>
-      </div>
-    </xsl:if>
-    <xsl:comment> ######## End of title ######## </xsl:comment>
+
   </xsl:template>
   
-  <!-- Template processing the root. Need to overwrite to include div elements -->
-  <xsl:template match="*" mode="process.root">
-    <xsl:variable name="doc" select="self::*"/>
-    
-    <xsl:call-template name="user.preroot"/>
-    <xsl:call-template name="root.messages"/>
-    
-    <html>
-      <xsl:call-template name="language.attribute"/>
-      <head>
-        <xsl:call-template name="system.head.content">
-          <xsl:with-param name="node" select="$doc"/>
-        </xsl:call-template>
-        <xsl:call-template name="head.content">
-          <xsl:with-param name="node" select="$doc"/>
-        </xsl:call-template>
-        <xsl:call-template name="user.head.content">
-          <xsl:with-param name="node" select="$doc"/>
-        </xsl:call-template>
-      </head>
-      <body>
-        <xsl:call-template name="body.attributes"/>
-        <div id="body_container">
-          <div id="user_header_content">
-            <xsl:call-template name="user.header.content">
-              <xsl:with-param name="node" select="$doc"/>
-            </xsl:call-template>
-          </div>
-          <div id="main_content">
-            <xsl:apply-templates select="."/>
-          </div>
-          <div id="user_footer_content">
-            <xsl:call-template name="user.footer.content">
-              <xsl:with-param name="node" select="$doc"/>
-            </xsl:call-template>
-          </div>
-        </div>
-      </body>
-    </html>
-    <xsl:value-of select="$html.append"/>
-  </xsl:template>
-
   <!-- Footer-->
   <xsl:template name="user.footer.content">
-    <div id="tailbox">
-      <xsl:comment> ######## Beginning of Tail ######## </xsl:comment>
-      <table cellspacing="2" cellpadding="2"
-        style="border: 0; margin-left: auto; margin-right: auto">
-        <tr>
-          <td align="center">
-            <small>
-              <xsl:copy-of select="$ada.page.license.institution"/>
-            </small>
-          </td>
-          <xsl:if test="$ada.page.license = 'yes'">
-            <td align="center" valign="middle" rowspan="2">
-              <a>
-                <xsl:if test="$ada.page.license.url">
-                  <xsl:attribute name="href"><xsl:value-of 
-                  select="$ada.page.license.url"/></xsl:attribute>
-                </xsl:if>
-                <xsl:element name="img">
-                  <xsl:attribute name="alt"><xsl:value-of 
-                  select="$ada.page.license.alt"/></xsl:attribute>
-                  <xsl:attribute name="style">border:0;</xsl:attribute>
-                  <xsl:attribute name="src"><xsl:value-of
-                  select="$ada.course.home"/><xsl:value-of 
-                  select="$ada.page.license.logo"/></xsl:attribute>
-                </xsl:element>
-              </a>
-            </td>
-          </xsl:if>
-        </tr>
-        <xsl:if test="($ada.page.license = 'yes') and
-                      $ada.page.license.name">
-          <tr>
-            <td align="center">
-              <small>
-                <xsl:choose>
-                  <xsl:when test="$profile.lang='es'">
-                    Material con licencia
-                  </xsl:when>
-                  <xsl:otherwise>
-                    Work licensed under 
-                  </xsl:otherwise>
-                </xsl:choose>
-                <xsl:text> </xsl:text>
-                <a rel="license">
-                  <xsl:if test="$ada.page.license.url">
-                    <xsl:attribute name="href"><xsl:value-of 
-                    select="$ada.page.license.url"/></xsl:attribute>
-                  </xsl:if>
-                  <xsl:copy-of select="$ada.page.license.name"/>
-                </a>
-              </small>
-            </td>
-          </tr>
-        </xsl:if>
-      </table>
-      
-      <!-- Show the last modified attribute -->
-      <xsl:if test="$ada.page.show.lastmodified = 'yes'">
-        <p style="text-align: center; font-size: small; font-style: italic;">
-          <xsl:choose>
-            <xsl:when test="$profile.lang='es'">Última modificación:</xsl:when>
-            <xsl:otherwise>Last Revision:</xsl:otherwise>
-          </xsl:choose>
-          <xsl:element name="script">
-            <xsl:attribute name="type">text/javascript</xsl:attribute>
-            <xsl:text>
-              testdate = new Date(document.lastModified);
-              testdate = testdate.toLocaleString();
-              document.write(testdate)
-            </xsl:text>
-          </xsl:element>
-        </p>
-      </xsl:if>
-      <xsl:comment> ######## End of Tail ######## </xsl:comment>
-    </div>
+    <xsl:if test="$ada.page.footer and $ada.page.footer != ''">
+      <xsl:copy-of select="$ada.page.footer" />
+    </xsl:if>
 
     <!-- Insert Google Analytics snippet -->
     <xsl:if test="$ada.page.google.analytics.account">
