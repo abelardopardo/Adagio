@@ -52,6 +52,7 @@
   <xsl:param name="html.longdesc">0</xsl:param>
   <xsl:param name="ulink.target" />
   <xsl:param name="use.viewport">0</xsl:param>
+  <xsl:param name="generate.id.attributes">1</xsl:param>
 
   <!-- This one for sure is needed in all documents -->
   <xsl:param name="xref.with.number.and.title" select="'0'"/>
