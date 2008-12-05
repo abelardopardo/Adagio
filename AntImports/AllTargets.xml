@@ -235,6 +235,15 @@
 
   <target name="report">
 
+    <!-- Load the general properties from ada.home directory -->
+    <property 
+      file="${ada.home}${file.separator}bin${file.separator}ada_general_definitions.txt"/>
+
+    <echo>
+ADA: Agile Distributed Authoring Toolkit (Version ${ada_version})
+Copyright (C) 2008 Carlos III University of Madrid
+    </echo>
+
     <ant antfile="${ada.home}/AntImports/InitialCheck.xml" 
 	 target="ada.properties.init.dump">
       <property name="ada.debug.level" value="warning"/>
