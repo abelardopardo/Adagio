@@ -36,6 +36,9 @@
   <xsl:param name="ada.institution.name"
     description="Your institution name">Your institution name</xsl:param>
 
+  <xsl:param name="ada.institution.url"
+    description="Your institution URL"/>
+
   <xsl:param name="ada.course.home.url" 
     description="URL pointing to the course"/>
 
@@ -48,8 +51,14 @@
   <xsl:param name="ada.course.degree" 
     description="Degree to which this course belongs"/>
 
+  <xsl:param name="ada.course.degree.url" 
+    description="URL pointing to a page for the degree to which this course belongs"/>
+
   <xsl:param name="ada.course.edition" 
     description="Something such as Fall 20?? or Spring 20??"/>
+
+  <xsl:param name="ada.course.edition.url" 
+    description="URL pointing to this edition course"/>
 
   <xsl:param name="ada.course.image" 
     description="URL pointing to a larger image of the course"/>

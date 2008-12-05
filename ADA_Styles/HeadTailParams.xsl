@@ -27,6 +27,8 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi">
   
+  <xsl:import href="GeneralParams.xsl"/>
+
   <!-- Customization variables for Head and Tail -->
   <xsl:param name="ada.page.author" 
     description="Author to include in the meta element in HTML head"/>
@@ -85,12 +87,92 @@
                  bottom">no</xsl:param>
   -->
   
-  <xsl:param name="ada.page.header.navigation"
+  <xsl:param name="ada_page_header_level1">
+    <h1 id="ada_institution_name">
+      <xsl:choose>
+        <xsl:when test="$ada.institution.url and $ada.institution.url != ''">
+          <a>
+            <xsl:attribute name="href"><xsl:value-of
+            select="$ada.institution.url"/></xsl:attribute>
+            <xsl:attribute name="title"><xsl:value-of
+            select="$ada.institution.name"/></xsl:attribute>
+            <xsl:value-of select="$ada.institution.name"/>
+          </a>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$ada.institution.name"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </h1>
+  </xsl:param>
+
+  <xsl:param name="ada_page_header_level2">
+    <h2 id="ada_degree_name">
+      <xsl:choose>
+        <xsl:when test="$ada.course.degree.url and $ada.course.degree.url != ''">
+          <a>
+            <xsl:attribute name="href"><xsl:value-of
+            select="$ada.course.degree.url"/></xsl:attribute>
+            <xsl:attribute name="title"><xsl:value-of
+            select="$ada.course.degree"/></xsl:attribute>
+            <xsl:value-of select="$ada.course.degree"/>
+          </a>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$ada.course.degree"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </h2>
+  </xsl:param>
+
+  <xsl:param name="ada_page_header_level3">
+    <h3 id="ada_course_name">
+      <xsl:choose>
+        <xsl:when test="$ada.course.home.url and $ada.course.home.url != ''">
+          <a>
+            <xsl:attribute name="href"><xsl:value-of
+            select="$ada.course.home.url"/></xsl:attribute>
+            <xsl:attribute name="title"><xsl:value-of
+            select="$ada.course.name"/></xsl:attribute>
+            <xsl:value-of select="$ada.course.name"/>
+          </a>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$ada.course.name"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </h3>
+  </xsl:param>
+
+  <xsl:param name="ada_page_header_level4">
+    <h4 id="ada_course_edition">
+      <xsl:choose>
+        <xsl:when test="$ada.course.edition.url and $ada.course.edition.url != ''">
+          <a>
+            <xsl:attribute name="href"><xsl:value-of
+            select="$ada.course.edition.url"/></xsl:attribute>
+            <xsl:attribute name="title"><xsl:value-of
+            select="$ada.course.edition.name"/></xsl:attribute>
+            <xsl:value-of select="$ada.course.edition"/>
+          </a>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$ada.course.edition"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </h4>
+  </xsl:param>
+
+  <xsl:param name="ada.page.navigation"
     description="HTML with navigation links" />
+
   <xsl:param name="ada.page.footer"
     description="Footer HTML snippet" />
-  <xsl:param name="ada.pageheader.navigation.navigation.accesskey"
-    description="Access key to assign to the skip to navigation link">1</xsl:param>
-  <xsl:param name="ada.pageheader.navigation.content.accesskey"
-    description="Access key to assign to the skip to content link">2</xsl:param>
+
+  <xsl:param name="ada.page.navigation.navigation.accesskey"
+    description="Access key to assign to the skip to navigation link">0</xsl:param>
+
+  <xsl:param name="ada.page.navigation.content.accesskey"
+    description="Access key to assign to the skip to content link">1</xsl:param>
+
 </xsl:stylesheet>
