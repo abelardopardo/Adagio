@@ -87,13 +87,18 @@ fi
 # If ADA_HOME is empty, bomb out with msg
 ada_check_home
 
+# Slurp some additional functions
+source $ADA_HOME/bin/functions.bash
+ada_version
+
 # Make sure catalog exists
 ada_check_catalog
 XML_CATALOG_FILES="file://$ADA_HOME/DTDs/catalog"
 
 # Invoke ant
 rm -f adado.log
-echo "XML_CATALOG_FILES is $XML_CATALOG_FILES" >adado.log
+echo "ada_version=$ada_version" > adado.log
+echo "XML_CATALOG_FILES is $XML_CATALOG_FILES" >> adado.log
 ant -q -Dada.home="$ADA_HOME" \
     -Dbasedir="$basedir" \
     -f "$AllTargets" $* 2>> adado.log
