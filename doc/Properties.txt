@@ -33,7 +33,8 @@ xsltproc.style.file=QandaentryTable.xsl
 xsltproc.extra.args=--stringparam chapter.autolabel 0 \
                    --stringparam section.autolabel 1 \
 		   --stringparam section.toc.depth 0 \
-		   --stringparam html.stylesheet style.css
+		   --stringparam html.stylesheet style.css \
+		   --stringparam ada.version ${ada.version}
 
 copyfiles.src.dir=../AntImports
 copyfiles.files=Properties_sample.txt

@@ -24,7 +24,7 @@
 "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
 
 <article id="ADA_FAQ">
-  <title>ADA Frequently Asked Questions</title>
+  <title>ADA Frequently Asked Questions <phrase condition="ada_version"/></title>
 
   <articleinfo condition="dc.info">
     <publisher>

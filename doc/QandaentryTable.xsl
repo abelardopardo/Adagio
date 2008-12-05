@@ -37,6 +37,14 @@
   <!-- Include DC descriptor -->
   <xsl:param name="ada.dc.include.descriptors">yes</xsl:param>
 
+  <!-- Include DC descriptor -->
+  <xsl:param name="ada.version" />
+
+  <!-- Replace title placeholder by version number -->
+  <xsl:template match="phrase[@condition = 'ada_version']">
+    (Version <xsl:value-of select="$ada.version"/>)
+  </xsl:template>
+
   <xsl:template match="qandaentry">
     <tr>
       <td>

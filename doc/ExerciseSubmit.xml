@@ -238,7 +238,7 @@
 	document</ulink> has the appearance shown in the following
 	figure:</para>
 	
-	<informaltable frame="all" id="exercise_handout_capture">
+	<informaltable frame="all" id="exercise_solution_capture">
 	  <tgroup rowsep="1" colsep="1" cols="1">
 	    <colspec colnum="1" colname="col1" align="left"></colspec>
 	    <tbody>
@@ -307,7 +307,7 @@
 	document</ulink> has the appearance shown in the following
 	figure:</para>
 	
-	<informaltable frame="all" id="exercise_handout_capture">
+	<informaltable frame="all" id="exercise_pguide_capture">
 	  <tgroup rowsep="1" colsep="1" cols="1">
 	    <colspec colnum="1" colname="col1" align="left"></colspec>
 	    <tbody>

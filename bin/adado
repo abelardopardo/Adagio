@@ -100,6 +100,7 @@ rm -f adado.log
 echo "ada_version=$ada_version" > adado.log
 echo "XML_CATALOG_FILES is $XML_CATALOG_FILES" >> adado.log
 ant -q -Dada.home="$ADA_HOME" \
+    -q -Dada.version="$ada_version" \
     -Dbasedir="$basedir" \
     -f "$AllTargets" $* 2>> adado.log
 
