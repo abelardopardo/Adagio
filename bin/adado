@@ -41,6 +41,10 @@ function ada_check_home() {
 }
 
 function ada_check_catalog() {
+    if [ ! -w $ADA_HOME/DTDs ]; then
+        echo "Permission error. Need to have rw access to $ADA_HOME/DTDs"
+        exit
+    fi
     if [ ! -f $ADA_HOME/DTDs/catalog ]; then
 	sed -e "s:@ADA_HOME_DTD@:$ADA_HOME/DTDs:" $ADA_HOME/DTDs/catalog.template \
 	    > $ADA_HOME/DTDs/catalog
