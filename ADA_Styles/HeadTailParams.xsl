@@ -170,9 +170,9 @@
     description="Footer HTML snippet" />
 
   <xsl:param name="ada.page.navigation.navigation.accesskey"
-    description="Access key to assign to the skip to navigation link">0</xsl:param>
+    description="Access key to assign to the skip to navigation link">3</xsl:param>
 
   <xsl:param name="ada.page.navigation.content.accesskey"
-    description="Access key to assign to the skip to content link">1</xsl:param>
+    description="Access key to assign to the skip to content link">2</xsl:param>
 
 </xsl:stylesheet>
