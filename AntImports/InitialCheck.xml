@@ -228,6 +228,9 @@ exportcontrol"/>
       <available file="${xml.catalog.file}" />
     </condition>
     
+    <condition property="ada.xsltproc.net.option" value="--nonet" else="">
+      <available file="${xml.catalog.file}" />
+    </condition>
 
     <!-- Check if the ada.home property is set to a meaningful value -->
     <condition property="ada.check.home.property">
