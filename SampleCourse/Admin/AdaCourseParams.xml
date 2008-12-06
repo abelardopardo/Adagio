@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns="http://www.w3.org/1999/xhtml"
+  version="1.0">
   
   <!-- This param is directly for docbook stylesheets -->
   <xsl:param name="chapter.autolabel" select="0"/>
@@ -11,6 +13,8 @@
 
   <xsl:param name="ada.rss.channel.url"><xsl:value-of
   select="$ada.publish.host"/><xsl:value-of select="$ada.publish.dir" />/rss.xml</xsl:param>
+
+  <xsl:param name="ada.institution.url">./index.html</xsl:param>
 
   <!-- Prefix of the type http://......./a/b/c to use for material links -->
   <xsl:param name="ada.rss.item.url.prefix"><xsl:value-of
@@ -49,9 +53,9 @@
   <xsl:param name="ada.prosper.logo.pos">(0,-1.25)</xsl:param>
 
 
-  <xsl:param name="ada.page.header.navigation"
+  <xsl:param name="ada.page.navigation"
     description="HTML with navigation links">
-    <!-- Value of ADA_PAGE_HEADER_NAVIGATION -->
+    <!-- Value of ADA_PAGE_NAVIGATION -->
     <ul>
       <li><a href="./test.html">Nav 1</a></li>
       <li><a href="./test.html">Nav 2</a></li>
@@ -78,11 +82,11 @@
     <div id="footer_linksB">
       
       <ul id="footer_linksB_list">
-	<li><a href="./test.html">LinkB 1</a></li>
-	<li><a href="./test.html">LinkB 2</a></li>
+	<li><a href="http://validator.w3.org/check?uri=referer">XHTML 1.0</a></li>
+	<li><a href="http://jigsaw.w3.org/css-validator/">CSS 2.1</a></li>
 	<li><a href="./test.html">LinkB 3</a></li>
       </ul>
     </div>
   </xsl:param>
-  
+
 </xsl:stylesheet>

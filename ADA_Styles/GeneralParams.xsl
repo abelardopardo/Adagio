@@ -36,11 +36,9 @@
   <xsl:param name="ada.institution.name"
     description="Your institution name">Your institution name</xsl:param>
 
-  <xsl:param name="ada.institution.url"
-    description="Your institution URL"/>
+  <xsl:param name="ada.institution.url" description="Your institution URL"/>
 
-  <xsl:param name="ada.course.home.url" 
-    description="URL pointing to the course"/>
+  <xsl:param name="ada.course.home.url" description="URL pointing to the course"/>
 
   <xsl:param name="ada.course.icon" 
     description="Image representing the course icon (typically 16x16)"/>

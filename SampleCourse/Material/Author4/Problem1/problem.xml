@@ -39,8 +39,11 @@
   <informalfigure>
     <mediaobject>
       <imageobject>
-        <imagedata align="center" fileref="images/buscarstack.png"/>
+        <imagedata fileref="images/buscarstack.png"/>
       </imageobject>
+      <textobject>
+        <phrase>Pila de llamada para la función buscarstack</phrase>
+      </textobject>
     </mediaobject>
   </informalfigure>
   

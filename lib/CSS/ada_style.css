@@ -21,3 +21,38 @@
  * Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
  *
  */
+.ada_hidden_elements 
+{
+  background: transparent none repeat scroll 0 0;
+  border: medium none;
+  display: block;
+  height: 1px;
+  margin: -1px 0 0 -1px;
+  overflow: hidden; 
+  padding: 0;
+  width: 1px;
+}
+
+/* -------------------- HEADER -------------------- */
+#ada_page_header_level1,
+#ada_page_header_level2,
+#ada_page_header_level3,
+#ada_page_header_level4
+{
+  border-bottom: 0.1em solid black;
+  }
+
+#ada_page_navigation
+{ 
+  border-bottom: 0.1em solid black;
+  }
+
+/* -------------------- FOOTER -------------------- */
+
+#ada_page_footer
+{ 
+  border-top: 0.1em solid black;
+  border-bottom: 0.1em solid black;
+  }
+
+

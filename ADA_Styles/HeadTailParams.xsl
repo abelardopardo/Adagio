@@ -87,80 +87,88 @@
                  bottom">no</xsl:param>
   -->
   
-  <xsl:param name="ada_page_header_level1">
-    <h1 id="ada_institution_name">
-      <xsl:choose>
-        <xsl:when test="$ada.institution.url and $ada.institution.url != ''">
-          <a>
-            <xsl:attribute name="href"><xsl:value-of
-            select="$ada.institution.url"/></xsl:attribute>
-            <xsl:attribute name="title"><xsl:value-of
-            select="$ada.institution.name"/></xsl:attribute>
+  <xsl:param name="ada.page.header.level1">
+    <xsl:if test="$ada.institution.name and $ada.institution.name != ''">
+      <h1 id="ada_institution_name">
+        <xsl:choose>
+          <xsl:when test="$ada.institution.url and $ada.institution.url != ''">
+            <a>
+              <xsl:attribute name="href"><xsl:value-of
+              select="$ada.institution.url"/></xsl:attribute>
+              <xsl:attribute name="title"><xsl:value-of
+              select="$ada.institution.name"/></xsl:attribute>
+              <xsl:value-of select="$ada.institution.name"/>
+            </a>
+          </xsl:when>
+          <xsl:otherwise>
             <xsl:value-of select="$ada.institution.name"/>
-          </a>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$ada.institution.name"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </h1>
+          </xsl:otherwise>
+        </xsl:choose>
+      </h1>
+    </xsl:if>
   </xsl:param>
 
-  <xsl:param name="ada_page_header_level2">
-    <h2 id="ada_degree_name">
-      <xsl:choose>
-        <xsl:when test="$ada.course.degree.url and $ada.course.degree.url != ''">
-          <a>
-            <xsl:attribute name="href"><xsl:value-of
-            select="$ada.course.degree.url"/></xsl:attribute>
-            <xsl:attribute name="title"><xsl:value-of
-            select="$ada.course.degree"/></xsl:attribute>
+  <xsl:param name="ada.page.header.level2">
+    <xsl:if test="$ada.course.degree and $ada.course.degree != ''">
+      <h2 id="ada_degree_name">
+        <xsl:choose>
+          <xsl:when test="$ada.course.degree.url and $ada.course.degree.url != ''">
+            <a>
+              <xsl:attribute name="href"><xsl:value-of
+              select="$ada.course.degree.url"/></xsl:attribute>
+              <xsl:attribute name="title"><xsl:value-of
+              select="$ada.course.degree"/></xsl:attribute>
+              <xsl:value-of select="$ada.course.degree"/>
+            </a>
+          </xsl:when>
+          <xsl:otherwise>
             <xsl:value-of select="$ada.course.degree"/>
-          </a>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$ada.course.degree"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </h2>
+          </xsl:otherwise>
+        </xsl:choose>
+      </h2>
+    </xsl:if>
   </xsl:param>
 
-  <xsl:param name="ada_page_header_level3">
-    <h3 id="ada_course_name">
-      <xsl:choose>
-        <xsl:when test="$ada.course.home.url and $ada.course.home.url != ''">
-          <a>
-            <xsl:attribute name="href"><xsl:value-of
-            select="$ada.course.home.url"/></xsl:attribute>
-            <xsl:attribute name="title"><xsl:value-of
-            select="$ada.course.name"/></xsl:attribute>
+  <xsl:param name="ada.page.header.level3">
+    <xsl:if test="$ada.course.name and $ada.course.name != ''">
+      <h3 id="ada_course_name">
+        <xsl:choose>
+          <xsl:when test="$ada.course.home.url and $ada.course.home.url != ''">
+            <a>
+              <xsl:attribute name="href"><xsl:value-of
+              select="$ada.course.home.url"/></xsl:attribute>
+              <xsl:attribute name="title"><xsl:value-of
+              select="$ada.course.name"/></xsl:attribute>
+              <xsl:value-of select="$ada.course.name"/>
+            </a>
+          </xsl:when>
+          <xsl:otherwise>
             <xsl:value-of select="$ada.course.name"/>
-          </a>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$ada.course.name"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </h3>
+          </xsl:otherwise>
+        </xsl:choose>
+      </h3>
+    </xsl:if>
   </xsl:param>
 
-  <xsl:param name="ada_page_header_level4">
-    <h4 id="ada_course_edition">
-      <xsl:choose>
-        <xsl:when test="$ada.course.edition.url and $ada.course.edition.url != ''">
-          <a>
-            <xsl:attribute name="href"><xsl:value-of
-            select="$ada.course.edition.url"/></xsl:attribute>
-            <xsl:attribute name="title"><xsl:value-of
-            select="$ada.course.edition.name"/></xsl:attribute>
+  <xsl:param name="ada.page.header.level4">
+    <xsl:if test="$ada.course.edition and $ada.course.edition != ''">
+      <h4 id="ada_course_edition">
+        <xsl:choose>
+          <xsl:when test="$ada.course.edition.url and $ada.course.edition.url != ''">
+            <a>
+              <xsl:attribute name="href"><xsl:value-of
+              select="$ada.course.edition.url"/></xsl:attribute>
+              <xsl:attribute name="title"><xsl:value-of
+              select="$ada.course.edition.name"/></xsl:attribute>
+              <xsl:value-of select="$ada.course.edition"/>
+            </a>
+          </xsl:when>
+          <xsl:otherwise>
             <xsl:value-of select="$ada.course.edition"/>
-          </a>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$ada.course.edition"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </h4>
+          </xsl:otherwise>
+        </xsl:choose>
+      </h4>
+    </xsl:if>
   </xsl:param>
 
   <xsl:param name="ada.page.navigation"

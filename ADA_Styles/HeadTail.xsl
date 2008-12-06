@@ -260,30 +260,30 @@
     </div> <!-- End of ada_hidden_elements -->
 
     <!-- ADA PAGE HEADER LEVEL1 -->
-    <xsl:if test="$ada.institution.name and $ada.institution.name != ''">
+    <xsl:if test="$ada.page.header.level1">
       <div id="ada_page_header_level1">
-        <xsl:copy-of select="$ada_page_header_level1"/>
+        <xsl:copy-of select="$ada.page.header.level1"/>
       </div>
     </xsl:if>
 
     <!-- ADA PAGE HEADER LEVEL2 -->
-    <xsl:if test="$ada.institution.name and $ada.institution.name != ''">
+    <xsl:if test="$ada.page.header.level2">
       <div id="ada_page_header_level2">
-        <xsl:copy-of select="$ada_page_header_level2"/>
+        <xsl:copy-of select="$ada.page.header.level2"/>
       </div>
     </xsl:if>
 
     <!-- ADA PAGE HEADER LEVEL3 -->
-    <xsl:if test="$ada.institution.name and $ada.institution.name != ''">
+    <xsl:if test="$ada.page.header.level3">
       <div id="ada_page_header_level3">
-        <xsl:copy-of select="$ada_page_header_level3"/>
+        <xsl:copy-of select="$ada.page.header.level3"/>
       </div>
     </xsl:if>
 
     <!-- ADA PAGE HEADER LEVEL4 -->
-    <xsl:if test="$ada.institution.name and $ada.institution.name != ''">
+    <xsl:if test="$ada.page.header.level4">
       <div id="ada_page_header_level4">
-        <xsl:copy-of select="$ada_page_header_level4"/>
+        <xsl:copy-of select="$ada.page.header.level4"/>
       </div>
     </xsl:if>
 
@@ -323,7 +323,7 @@
         <xsl:attribute
           name="href">http://fusion.google.com/add?moduleurl=<xsl:value-of 
         select="$ada.page.google.gadget.url"/></xsl:attribute>
-        <img style="border: 0"
+        <img 
           src="http://buttons.googlesyndication.com/fusion/add.gif">
           <xsl:attribute name="alt"><xsl:choose>
             <xsl:when 

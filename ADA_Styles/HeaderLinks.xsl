@@ -48,12 +48,11 @@
     </xsl:variable>
     
     <xsl:if test="$ada.page.header.links.var and $ada.page.header.links.var != ''">
-      <div class="noprint head-center">
+      <div class="noprint" id="header_links">
         <xsl:call-template name="ada.profile.subtree">
           <xsl:with-param name="subtree" 
             select="exsl:node-set($ada.page.header.links.var)"/>
         </xsl:call-template>
-        <hr class="head-center"/>
       </div>
     </xsl:if>
   </xsl:template>
