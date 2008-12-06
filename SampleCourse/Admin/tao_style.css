@@ -1,0 +1,210 @@
+body 
+{ 
+  color: Black;
+  background: #FFFFFF;
+  font-family: Verdana, Lucida, Helvetica, Arial, sans-serif;
+  font-size: 69%;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  }
+
+.discreet 
+{ 
+  font-size: 65%;
+  font-weight: normal;
+  line-height: 1.0em;
+  margin: 0.4em 0 0 0.4em;
+  }
+
+/* -------------------- HEADER -------------------- */
+#ada_page_header_level1,
+#ada_page_navigation 
+{ 
+  border-left: 0.5em solid white;
+  border-right: 0.5em solid white;
+  border-bottom: 0;
+  }
+
+#ada_page_header_level1 
+{
+  background-color: #FFFFFF;
+  background-image: url(HeadGradient.png); 
+  background-repeat: repeat-x;
+  height: 81px;
+  margin-top: 0.5em;
+  }
+
+#ada_page_header_level1 h1 
+{ 
+  display: block;
+  background: transparent url(LogosUC3M_IT.png) no-repeat scroll 0 5px;
+  margin-top: 0.25em;
+  margin-left: 0.25em;
+  padding: 0.5em 0 0 0.5em;
+  width: 460px;
+  height: 70px;
+  }
+
+#ada_page_header_level1 > h1 > a,
+#ada_page_header_level2,
+#ada_page_header_level3,
+#ada_page_header_level4
+{ 
+  display: none;
+  }
+
+#ada_page_navigation 
+{ 
+  background-color: #e6e6f5;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  text-align: right;
+  }
+
+#ada_page_navigation > ul 
+{ 
+  border-collapse: collapse;
+  display: inline;
+  list-style-image: none;
+  list-style-type: none;
+  padding: 0 1em 0 0;
+  text-decoration: none;
+  }
+
+#ada_page_navigation > ul > li 
+{
+  display: table-cell;
+  font-size: 85%;
+  padding: 0 1em 0 1em;
+  border-left: 0.1em solid black;
+  border-right: 0.1em solid black;
+  } 
+
+/* -------------------- CONTENT -------------------- */
+
+#ada_page_content 
+{ 
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  }
+
+/* -------------------- FOOTER -------------------- */
+#ada_page_footer 
+{ 
+  background-color: #e6e6f5;
+  text-align: center;
+  border-top: 0.3em solid #a7a7dc;
+  border-bottom: 0.3em solid #a7a7dc;
+  }
+
+#footer_linksA 
+{ 
+  display: table;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0.3em auto;
+  }
+
+#footer_linksA_list 
+{ 
+  display: table-row;
+  list-style-type: none;
+  list-style-image: none;
+  text-decoration: none;
+  }
+
+#footer_linksA_list li 
+{ 
+  display: table-cell;
+  font-size: 85%;
+  padding: 0 1em 0 1em;
+  border-left: 0.1em solid black;
+  border-right: 0.1em solid black;
+  }
+
+#footer_linksB 
+{
+  display: table;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0.3em auto 0.3em;
+  }
+
+#footer_linksB_list 
+{ 
+  display: table-row;
+  list-style-type: none;
+  list-style-image: none;
+  text-decoration: none;
+  }
+
+#footer_linksB_list li 
+{ 
+  display: table-cell;
+  font-size: 85%;
+  margin: 0.25em;
+  padding: 0.1em 0.5em;
+  }
+
+.toc 
+{
+  background-color: #EFF8F8;
+  border: thin dotted #70AAE5;
+  color: #000000;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.exercise_title { 
+  text-align: center;
+ }
+
+div#submission_date > h2 
+{ 
+  text-align: center;
+ }
+
+div#handin_link
+{ 
+  text-align: center;
+  border-bottom: 0.1em solid black;
+  }
+
+div#submission_date
+{ 
+  border-bottom: 0.1em solid black;
+}
+
+.informalfigure
+{ 
+  text-align: center;
+ }
+
+.informaltable
+{ 
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  }
+
+.informaltable > table
+{ 
+  border-collapse: collapse;
+ }
+
+div.section
+{ 
+  border-top: 0.1em solid black;
+  }
+
+/* Hide elements of class noprint when printing */
+@media print {
+    body { background:white; color:black; margin:0 }
+    .noprint { display: none; }
+}
