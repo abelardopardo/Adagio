@@ -134,7 +134,7 @@ dvips.execution.possible = ${dvips.execution.possible}</echo>
 
   <target name="dvips.report.NO" depends="dvips.init"
 	  unless="dvips.execution.possible">
-    <echo>Dvips             |            |     * (install ${dvips.exec})</echo>
+    <echo>Dvips              |           |     * (install ${dvips.exec})</echo>
   </target>
 
   <target name="dvips.report" depends="dvips.report.YES,
