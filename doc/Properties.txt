@@ -23,10 +23,11 @@
 # variables as well as an explanation.
 #
 subrecursive.dirs=images \
-                  Samples \
                   ../AntImports \
                   VarTables \
 		  ParamTables
+
+subrecursive.dirs.nodst=Samples
 
 xsltproc.files=FAQ.xml
 xsltproc.style.file=QandaentryTable.xsl

@@ -21,3 +21,5 @@ subrecursive.dirs= ApplyXSL \
 
 subrecursive.dst.dir=
 
+export.files=*/*
+export.dst.dir=../scratch/Samples
