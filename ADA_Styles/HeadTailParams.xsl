@@ -32,8 +32,11 @@
   <!-- Customization variables for Head and Tail -->
   <xsl:param name="ada.page.author" 
     description="Author to include in the meta element in HTML head"/>
+
   <xsl:param name="ada.page.cssstyle.url" 
-    description="URL pointing to a CSS file to include in the HTML head"/>
+    description="Comma separated list of CSS files to include in the HTML
+    head. Use file:media to specify media attribute"/>
+
   <xsl:param name="ada.page.google.analytics.account" 
     description="Account to include in the Google Analytics HTML snippet."/>
   <xsl:param name="ada.page.google.gadget.url" 

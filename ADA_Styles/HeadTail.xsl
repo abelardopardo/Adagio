@@ -26,8 +26,8 @@
   xmlns:exsl="http://exslt.org/common"
   xmlns:str="http://exslt.org/strings"
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  version="1.0" exclude-result-prefixes="exsl xi str">
-  
+  version="1.0" exclude-result-prefixes="exsl str xi">
+
   <!-- Brings in all the default values -->
   <xsl:import href="HeadTailParams.xsl"/>
 
@@ -206,10 +206,27 @@
     <xsl:if test="$ada.page.cssstyle.url">
       <meta http-equiv="Content-Style-Type" content="text/css"/>
       <xsl:for-each select="str:tokenize($ada.page.cssstyle.url, ',')">
+        <xsl:variable name="pair_url_media">
+          <tokens xmlns="">
+            <xsl:copy-of select="str:tokenize(., ':')"/>
+          </tokens>
+        </xsl:variable>
+          
+        <xsl:variable name="media_attribute_value">
+          <xsl:choose>
+            <xsl:when test="exsl:node-set($pair_url_media)/tokens/token[position() = 2]">
+              <xsl:value-of 
+                select="exsl:node-set($pair_url_media)/tokens/token[position() = 2]"/>
+            </xsl:when>
+            <xsl:otherwise>all</xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
         <link rel="stylesheet" type="text/css">
           <xsl:attribute name="href"><xsl:value-of
           select="$ada.course.home"/><xsl:value-of
-          select="normalize-space(.)"/></xsl:attribute>
+          select="normalize-space(exsl:node-set($pair_url_media)/tokens/token[position() = 1])"/></xsl:attribute>
+          <xsl:attribute name="media"><xsl:value-of
+          select="$media_attribute_value"/></xsl:attribute>
         </link>
       </xsl:for-each>
     </xsl:if>
