@@ -66,5 +66,5 @@
   <xsl:param name="ada.rss.date.rfc822"></xsl:param>
   <xsl:param name="ada.rss.self.atom.link"><xsl:value-of
   select="$ada.rss.channel.url"/></xsl:param>
-  <xsl:param name="ada.rss.debug"></xsl:param>
+  <xsl:param name="ada.rss.debug"/>
 </xsl:stylesheet>
