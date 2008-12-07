@@ -24,7 +24,8 @@
   <xsl:param name="ada.page.author">The author of this page</xsl:param>
   <xsl:param name="ada.course.icon">images/ao.16x16.ico</xsl:param>
   <xsl:param name="ada.course.image">images/ao.120x120.png</xsl:param>
-  <xsl:param name="ada.page.cssstyle.url">ada_style.css, tao_style.css</xsl:param>
+  <xsl:param name="ada.page.cssstyle.url">ada_style.css:all, tao_style.css:all, ada_handheld.css:handheld</xsl:param>
+  <xsl:param name="ada.page.cssstyle.alternate.url">ada_508.css:all:508</xsl:param>
   <xsl:param name="ada.course.edition">MI EDICION</xsl:param>
   <xsl:param name="ada.page.countdown.js">lib/countdown.js</xsl:param>
 

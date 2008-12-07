@@ -204,32 +204,17 @@
 
     <!-- CSS styles -->
     <xsl:if test="$ada.page.cssstyle.url">
-      <meta http-equiv="Content-Style-Type" content="text/css"/>
-      <xsl:for-each select="str:tokenize($ada.page.cssstyle.url, ',')">
-        <xsl:variable name="pair_url_media">
-          <tokens xmlns="">
-            <xsl:copy-of select="str:tokenize(., ':')"/>
-          </tokens>
-        </xsl:variable>
-          
-        <xsl:variable name="media_attribute_value">
-          <xsl:choose>
-            <xsl:when test="exsl:node-set($pair_url_media)/tokens/token[position() = 2]">
-              <xsl:value-of 
-                select="exsl:node-set($pair_url_media)/tokens/token[position() = 2]"/>
-            </xsl:when>
-            <xsl:otherwise>all</xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <link rel="stylesheet" type="text/css">
-          <xsl:attribute name="href"><xsl:value-of
-          select="$ada.course.home"/><xsl:value-of
-          select="normalize-space(exsl:node-set($pair_url_media)/tokens/token[position() = 1])"/></xsl:attribute>
-          <xsl:attribute name="media"><xsl:value-of
-          select="$media_attribute_value"/></xsl:attribute>
-        </link>
-      </xsl:for-each>
+      <xsl:call-template name="ada_link_rel_css">
+        <xsl:with-param name="node" select="$ada.page.cssstyle.url"/>
+      </xsl:call-template>
     </xsl:if>
+    <xsl:if test="$ada.page.cssstyle.alternate.url">
+      <xsl:call-template name="ada_link_rel_css">
+        <xsl:with-param name="node" select="$ada.page.cssstyle.alternate.url"/>
+        <xsl:with-param name="rel" select="'alternate stylesheet'"/>
+      </xsl:call-template>
+    </xsl:if>
+
 
     <!-- FIXME: Instead of the link element, include code similar to:
          <style type="text/css" media="MMMM">@import "blah.css";</style>
@@ -352,6 +337,58 @@
     </xsl:if>
   </xsl:template>
 
+  <!-- Template to generate the CSS stylesheet links -->
+  <xsl:template name="ada_link_rel_css">
+    <xsl:param name="node" select="."/>
+    <xsl:param name="rel"  select="'stylesheet'"/>
+    <xsl:if test="$node">
+      <xsl:for-each select="str:tokenize($node, ',')">
+        <xsl:variable name="tuple_url_attributes">
+          <tokens xmlns="">
+            <xsl:copy-of select="str:tokenize(., ':')"/>
+          </tokens>
+        </xsl:variable>
+          
+        <xsl:variable name="media_attribute_value">
+          <xsl:choose>
+            <xsl:when 
+              test="exsl:node-set($tuple_url_attributes)/tokens/token[position() = 2]">
+              <xsl:value-of 
+                select="exsl:node-set($tuple_url_attributes)/tokens/token[position() = 2]"/>
+            </xsl:when>
+            <xsl:otherwise>all</xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="title_attribute_value">
+          <xsl:choose>
+            <xsl:when 
+              test="exsl:node-set($tuple_url_attributes)/tokens/token[position() = 3]">
+              <xsl:value-of 
+                select="exsl:node-set($tuple_url_attributes)/tokens/token[position() = 3]"/>
+            </xsl:when>
+            <xsl:otherwise />
+          </xsl:choose>
+        </xsl:variable>
+
+        <link type="text/css">
+          <xsl:attribute name="rel"><xsl:value-of
+          select="$rel"/></xsl:attribute>
+          <xsl:attribute name="href"><xsl:value-of
+          select="$ada.course.home"/><xsl:value-of
+          select="normalize-space(exsl:node-set($tuple_url_attributes)/tokens/token[position() = 1])"/></xsl:attribute>
+          <xsl:attribute name="media"><xsl:value-of
+          select="$media_attribute_value"/></xsl:attribute>
+          <xsl:if test="$title_attribute_value and $title_attribute_value != ''">
+            <xsl:attribute name="title"><xsl:value-of
+            select="$title_attribute_value"/></xsl:attribute>
+          </xsl:if>
+        </link>
+      </xsl:for-each>
+    </xsl:if>
+  </xsl:template>
+    
+  <!-- Template taken from docbook-xsl to remove the type attribute in ols -->
   <xsl:template match="orderedlist">
     <xsl:variable name="start">
       <xsl:call-template name="orderedlist-starting-number"/>
