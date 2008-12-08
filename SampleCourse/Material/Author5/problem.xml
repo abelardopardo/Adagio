@@ -45,11 +45,15 @@
     <informalfigure id="reversetable_fig_pagetable">
       <mediaobject>
         <imageobject lang="es">
-          <imagedata align="center" fileref="tablestruct_es.png" format="PNG" />
+          <imagedata fileref="tablestruct_es.png" format="PNG" />
         </imageobject>
         <imageobject lang="en">
-          <imagedata align="center" fileref="tablestruct_en.png" format="PNG" />
+          <imagedata fileref="tablestruct_en.png" format="PNG" />
         </imageobject>
+        <textobject>
+	  <phrase lang="es">Estructura de la tabla de páginas inversa</phrase>
+          <phrase lang="en">Structure of the reverse page table</phrase>
+        </textobject>
       </mediaobject>
     </informalfigure>
 
@@ -321,11 +325,15 @@
     <informalfigure id="reversetable_fig_project">
       <mediaobject>
         <imageobject lang="es">
-          <imagedata align="center" fileref="project_es.png" format="PNG" />
+          <imagedata fileref="project_es.png" format="PNG" />
         </imageobject>
         <imageobject lang="en">
-          <imagedata align="center" fileref="project_en.png" format="PNG" />
+          <imagedata fileref="project_en.png" format="PNG" />
         </imageobject>
+        <textobject>
+	  <phrase lang="es">Estructura de la aplicación</phrase>
+          <phrase lang="en">Structure of the aplication</phrase>
+        </textobject>
       </mediaobject>
     </informalfigure>
 

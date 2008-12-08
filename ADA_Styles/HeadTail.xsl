@@ -118,10 +118,12 @@
     </xsl:variable>
 
     <!-- Insert the onload attribute with the window.defaultStatus value -->
+    <!-- www.webaim.org says this is a problem, so ignore it!
     <xsl:if test="$default_status and $default_status != ''">
       <xsl:attribute name="onload">window.defaultStatus='<xsl:value-of
       select="$default_status"/>';</xsl:attribute>
     </xsl:if>
+    -->
 
     <!-- Copy the id attribute from the root element -->
     <xsl:if test="/*[@id] and /*[@id] != ''">
