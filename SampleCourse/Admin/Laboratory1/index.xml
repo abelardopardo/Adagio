@@ -45,7 +45,7 @@
     <para condition="handindate">21 de mayo de 2008 a las 13:00</para>
     
     <!-- Date in deadline format -->
-    <para condition="deadline.format">L 21/05/18/13/00 13:00</para>
+<!--    <para condition="deadline.format">L 21/05/18/13/00 13:00</para> -->
     
     <!-- Absolute URL of the submission page -->
     <para condition="handinlink">../HwGroups/downloadsubmit.html</para>

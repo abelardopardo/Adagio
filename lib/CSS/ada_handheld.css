@@ -20,16 +20,24 @@
  * 
  * Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
  *
- */
-.ada_hidden_elements 
-{
-  background: transparent none repeat scroll 0 0;
-  border: medium none;
-  display: block;
-  height: 1px;
-  margin: -1px 0 0 -1px;
-  overflow: hidden; 
-  padding: 0;
-  width: 1px;
+body {
+  /* Set font size/height and family */
+  font:1em/1.2em sans-serif;
+}
+
+h1 { 
+  font-size: 1.4em; 
+}
+	
+h2 { 
+  font-size: 1.3em; 
+}
+	
+h3 {
+  font-size: 1.2em; 
+}
+
+h4 {
+  font-size: 1.1em; 
 }
 
