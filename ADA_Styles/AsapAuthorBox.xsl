@@ -262,8 +262,8 @@
             <td>
               <xsl:element name="input">
                 <xsl:attribute name="type">text</xsl:attribute>
-                <xsl:attribute name="size">50</xsl:attribute>
-                <xsl:attribute name="maxlength">50</xsl:attribute>
+                <xsl:attribute name="size">25</xsl:attribute>
+                <xsl:attribute name="maxlength">25</xsl:attribute>
                 <xsl:attribute name="name">asap:id_<xsl:value-of select="$i - 1"/></xsl:attribute>
               </xsl:element>
             </td>
@@ -296,8 +296,10 @@
             <td>
               <xsl:element name="input">
                 <xsl:attribute name="type">text</xsl:attribute>
-                <xsl:attribute name="size">25</xsl:attribute>
-                <xsl:attribute name="maxlength">25</xsl:attribute>
+                <xsl:attribute name="size"><xsl:value-of
+                select="$ada.asap.id.field.length"/></xsl:attribute> 
+                <xsl:attribute name="maxlength"><xsl:value-of
+                select="$ada.asap.id.field.length"/></xsl:attribute>
                 <xsl:attribute name="name">asap:id_<xsl:value-of select="$i - 1"/></xsl:attribute>
               </xsl:element>
             </td>

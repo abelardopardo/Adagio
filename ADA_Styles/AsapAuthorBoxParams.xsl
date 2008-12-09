@@ -29,9 +29,10 @@
   version="1.0" exclude-result-prefixes="exsl str xi">
 
   <xsl:param name="ada.asap.num.authors"       select="'2'"/>
-  <!-- nia, email, none -->
+  <!-- nia, email, custom, none -->
   <xsl:param name="ada.asap.include.id"        select="'email'"/> 
   <xsl:param name="ada.asap.id.text"           select="'ID'"/>
+  <xsl:param name="ada.asap.id.field.length"   select="9"/>
   <xsl:param name="ada.asap.include.fullname"  select="'no'"/>
   <!-- all, none, one -->
   <xsl:param name="ada.asap.include.password"  select="'one'"/> 
