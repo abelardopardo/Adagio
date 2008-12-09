@@ -42,13 +42,12 @@
           test="//*/note[@condition='AdminInfo']/para[@condition='ada.page.header.links']">
             <xsl:copy-of select="//*/note[@condition='AdminInfo']/para[@condition='ada.page.header.links']"/>
         </xsl:when>
-        <xsl:otherwise>
-          <xsl:copy-of select="exsl:node-set($ada.page.header.links)"/>
-        </xsl:otherwise>
+        <xsl:otherwise><xsl:copy-of
+        select="exsl:node-set($ada.page.header.links)"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     
-    <xsl:if test="$ada.page.header.links.var">
+    <xsl:if test="$ada.page.header.links.var and $ada.page.header.links.var != ''">
       <div class="noprint head-center">
         <xsl:call-template name="ada.profile.subtree">
           <xsl:with-param name="subtree" 

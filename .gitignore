@@ -1,7 +1,7 @@
 *~
-build.out
-.svn
-sandbox
-HAT
-SampleCourse/Admin/scratch
-adado.log
+/build.out
+/sandbox
+/HAT
+/SampleCourse/Admin/scratch
+/adado.log
+/AuxTools
