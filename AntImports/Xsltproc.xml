@@ -309,6 +309,17 @@ xsltproc.style.file"/>
       </sequential>
     </macrodef>
 
+    <!-- Bomb out if incorrect merge stylesheet -->
+    <fail message="File ${mergestyles.master.style} not found">
+      <condition>
+	<and>
+	  <!-- Non-empty merge style and not available -->
+	  <not><equals arg1="${mergestyles.master.style}" arg2="" trim="true"/></not>
+	  <not><available file="${mergestyles.master.style}"/></not>
+	</and>
+      </condition>
+    </fail>
+
     <!-- Condition to detect if the stylefile needs to be pre-processed with
 	 Mergestyles -->
     <condition property="xsltproc.mergestyles">
