@@ -141,8 +141,8 @@ xsltproc.style.file"/>
 	  <!-- Require a non-empty style file -->
 	  <not><equals arg1="${xsltproc.style.file}" arg2="" trim="true"/></not>
 	  <not><available file="${xsltproc.style.file}"/></not>
-	  <not><available 
-             file="${ada.home}/ADA_Styles/${xsltproc.style.file}"/></not>
+	  <not><available
+	  file="${ada.home}/ADA_Styles/${xsltproc.style.file}"/></not> 
 	</and>
       </condition>
     </fail>

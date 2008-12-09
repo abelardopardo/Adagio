@@ -39,20 +39,20 @@
   <xsl:template match="chapter">
     <!-- Title if present -->
     <xsl:if test="title/text() != ''">
-      <h3 style="text-align: center"><xsl:value-of select="title"/></h3>
+      <h2 style="text-align: center"><xsl:value-of select="title"/></h2>
     </xsl:if>
 
       <!-- Insert a header with the deadline if present in the document -->
     <xsl:if 
       test="note[@condition='AdminInfo']/para[@condition='handindate']/text() != ''">
-      <h2 class="head-center">
+      <h3 class="head-center">
         <xsl:choose>
           <xsl:when test="$profile.lang='en'">Deadline: </xsl:when>
           <xsl:otherwise>Fecha de entrega: </xsl:otherwise>
         </xsl:choose>
         <xsl:apply-templates 
           select="note[@condition='AdminInfo']/para[@condition='handindate']/node()"/>
-      </h2>
+      </h3>
     </xsl:if>
 
     <!-- Insert countdown here -->
@@ -215,6 +215,16 @@
         <xsl:if test="*[@condition='name']">
           <xsl:attribute name="name">
             <xsl:value-of select="*[@condition='name']/text()"/>
+          </xsl:attribute>
+        </xsl:if>
+        <xsl:if test="*[@condition='id']">
+          <xsl:attribute name="id">
+            <xsl:value-of select="*[@condition='id']/text()"/>
+          </xsl:attribute>
+        </xsl:if>
+        <xsl:if test="*[@condition='value']">
+          <xsl:attribute name="value">
+            <xsl:value-of select="*[@condition='value']/text()"/>
           </xsl:attribute>
         </xsl:if>
       </xsl:element>
