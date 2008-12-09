@@ -92,6 +92,7 @@
                 </td>
               </tr>
             </xsl:if>
+
             <xsl:if test="$ada.asap.include.groupname = 'yes'">
               <tr style="border: 1px solid black;">
                 <td style="text-align: right">
@@ -123,6 +124,7 @@
                 </td>
               </tr>
             </xsl:if>
+
             <xsl:if test="$ada.asap.confirmation.email = 'yes'">
               <tr style="border: 1px solid black;">
                 <td style="text-align: right">
@@ -135,11 +137,11 @@
                   <input type="text" name="asap:Email" size="40"/>
                 </td>
               </tr>
+              <tr style="border: 1px solid black;">
+                <td colspan="2" style="background-color: rgb(255, 255, 255);"/>
+              </tr>
             </xsl:if>
 
-            <tr style="border: 1px solid black;">
-              <td colspan="2" style="background-color: rgb(255, 255, 255);"/>
-            </tr>
             <xsl:variable name="submit.count" 
               select="count(//*/section[@condition='submit']) + 
                       count(//*/note[@condition='submit'])"/>
