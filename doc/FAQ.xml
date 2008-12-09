@@ -30,10 +30,15 @@
     <publisher>
       <publishername>Carlos III University of Madrid</publishername>
     </publisher>
-    <author>
-      <firstname>Abelardo</firstname><surname>Pardo</surname>
-      <firstname>Jesús</firstname><surname>Arias Fisteus</surname>
-    </author>
+    <authorgroup>
+      <author>
+        <firstname>Abelardo</firstname><surname>Pardo</surname>
+      </author>
+      <author>
+        <firstname>Abelardo</firstname><surname>Pardo</surname>
+        <firstname>Jesús</firstname><surname>Arias Fisteus</surname>
+      </author>
+    </authorgroup>
     <abstract>
       <para>Frequently Asked Questions of ADA</para>
     </abstract>
