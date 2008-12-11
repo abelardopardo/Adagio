@@ -47,53 +47,9 @@
     description="Link pointing to a Google Gadget to be included in the upper
                  left corner of the page"/>
 
-  <!--
-       <xsl:param name="ada.page.head.bigtitle" 
-    description="yes/no to enable a big title on top of the page">no</xsl:param>
-  <xsl:param name="ada.page.head.center.bottom" 
-    description="Text to insert at the bottom row of the Header table"/>
-  <xsl:param name="ada.page.head.center.top.logo" 
-    description="URL to the image to show in the top center of the table
-                 header"/>
-  <xsl:param name="ada.page.head.center.top.logo.alt" 
-    description="Alt attribute for the previous image"/>
-  <xsl:param name="ada.page.head.center.top.logo.url" 
-    description="URL to make the image a link"/>
-  <xsl:param name="ada.page.head.left.logo"
-    description="URL to the image to show in the left side of the table header"/>
-  <xsl:param name="ada.page.head.left.logo.alt" 
-    description="Alt attribute for the previous image"/>
-  <xsl:param name="ada.page.head.left.logo.url"
-    description="URL to make the image a link"/>
-  <xsl:param name="ada.page.head.right.logo"
-    description="URL to the image to show in the right side of the table header"/>
-  <xsl:param name="ada.page.head.right.logo.alt" 
-    description="Alt attribute for the previous image"/>
-  <xsl:param name="ada.page.head.right.logo.url" 
-    description="URL to make the image a link"/> 
-  -->
-
   <xsl:param name="ada.page.refresh.rate" 
     description="Include a refresh rate in the page header"/>
 
-  <!-- 
-  <xsl:param name="ada.page.license.institution" select="'&#169; Carlos III University of Madrid, Spain'"/>
-  <xsl:param name="ada.page.license" 
-    description="Yes/no to include license information at the bottom of the
-                 page">no</xsl:param>
-  <xsl:param name="ada.page.license.name"
-    description="Name of the license"/>
-  <xsl:param name="ada.page.license.logo"
-    description="URL to an image to accompany the license information"/>
-  <xsl:param name="ada.page.license.alt" 
-    description="Alt attribute for the previous image"/>
-  <xsl:param name="ada.page.license.url" 
-    description="URL to point when clicking in the license image"/>
-  <xsl:param name="ada.page.show.lastmodified" 
-    description="yes/no controlling if the last modified info is shown at
-                 bottom">no</xsl:param>
-  -->
-  
   <xsl:param name="ada.page.header.level1">
     <xsl:if test="$ada.institution.name and $ada.institution.name != ''">
       <h1 id="ada_institution_name">
@@ -184,10 +140,13 @@
   <xsl:param name="ada.page.footer"
     description="Footer HTML snippet" />
 
-  <xsl:param name="ada.page.navigation.navigation.accesskey"
-    description="Access key to assign to the skip to navigation link">3</xsl:param>
+  <xsl:param name="ada.page.navigation.home.accesskey"
+    description="Access key to go to the home page">1</xsl:param>
 
   <xsl:param name="ada.page.navigation.content.accesskey"
     description="Access key to assign to the skip to content link">2</xsl:param>
+
+  <xsl:param name="ada.page.navigation.navigation.accesskey"
+    description="Access key to assign to the skip to navigation link">3</xsl:param>
 
 </xsl:stylesheet>

@@ -47,7 +47,7 @@
     select="'image/x-icon'" />
 
   <xsl:param name="ada.course.degree" 
-    description="Degree to which this course belongs"/>
+    description="Degree to which this course belongs">Degree Name</xsl:param>
 
   <xsl:param name="ada.course.degree.url" 
     description="URL pointing to a page for the degree to which this course belongs"/>
@@ -60,12 +60,16 @@
 
   <xsl:param name="ada.course.image" 
     description="URL pointing to a larger image of the course"/>
+
   <xsl:param name="ada.course.name"
     description="Course name">ada.course.name</xsl:param>
+
   <xsl:param name="ada.course.short.edition" 
     description="Abbreviation of the course edition (e.g Fall??)"/>
+
   <xsl:param name="ada.course.short.name" 
     description="Abbreviation of the course name (e.g. CS4703)"/>
+
   <xsl:param name="ada.course.year" 
     description="Year where the course is taking place"/>
 

@@ -14,6 +14,8 @@
   <xsl:param name="ada.rss.channel.url"><xsl:value-of
   select="$ada.publish.host"/><xsl:value-of select="$ada.publish.dir" />/rss.xml</xsl:param>
 
+  <xsl:param name="ada.institution.name">Institution Name</xsl:param>
+
   <xsl:param name="ada.institution.url">./index.html</xsl:param>
 
   <!-- Prefix of the type http://......./a/b/c to use for material links -->
@@ -54,8 +56,7 @@
   <xsl:param name="ada.prosper.logo.pos">(0,-1.25)</xsl:param>
 
 
-  <xsl:param name="ada.page.navigation"
-    description="HTML with navigation links">
+  <xsl:param name="ada.page.navigation">
     <!-- Value of ADA_PAGE_NAVIGATION -->
     <ul>
       <li><a href="./test.html">Nav 1</a></li>
@@ -67,8 +68,7 @@
       <li><a href="./test.html">Nav 7</a></li>
     </ul>
   </xsl:param>
-  <xsl:param name="ada.page.footer"
-    description="Footer HTML snippet">
+  <xsl:param name="ada.page.footer">
 
     <div id="footer_linksA">
       <ul id="footer_linksA_list">

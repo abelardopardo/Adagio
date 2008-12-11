@@ -237,6 +237,28 @@
     <!-- HIDDEN ELEMENTS -->
     <div class="ada_hidden_elements" id="skip_links">
       <ul>
+        <li>
+          <a>
+            <xsl:attribute name="href"><xsl:value-of
+            select="normalize-space($ada.course.home)"/></xsl:attribute>
+            <xsl:attribute name="accesskey"><xsl:value-of
+            select="$ada.page.navigation.home.accesskey"/></xsl:attribute>
+            <xsl:choose>
+              <xsl:when test="$profile.lang='es'">Inicio</xsl:when>
+              <xsl:otherwise>Home</xsl:otherwise>
+            </xsl:choose>
+          </a>
+        </li>
+        <li>
+          <a href="#ada_page_content">
+            <xsl:attribute name="accesskey"><xsl:value-of
+            select="$ada.page.navigation.content.accesskey"/></xsl:attribute>
+            <xsl:choose>
+              <xsl:when test="$profile.lang='es'">Ir a contenido</xsl:when>
+              <xsl:otherwise>Skip to content</xsl:otherwise>
+            </xsl:choose>
+          </a>
+        </li>
         <xsl:if test="$ada.page.navigation and
                       $ada.page.navigation != ''">
           <li>
@@ -250,16 +272,6 @@
             </a>
           </li>
         </xsl:if>
-        <li>
-          <a href="#ada_page_content">
-              <xsl:attribute name="accesskey"><xsl:value-of
-              select="$ada.page.navigation.content.accesskey"/></xsl:attribute>
-            <xsl:choose>
-              <xsl:when test="$profile.lang='es'">Ir a contenido</xsl:when>
-              <xsl:otherwise>Skip to content</xsl:otherwise>
-            </xsl:choose>
-          </a>
-        </li>
       </ul>
     </div> <!-- End of ada_hidden_elements -->
 

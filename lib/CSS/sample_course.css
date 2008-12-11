@@ -185,7 +185,7 @@ div#submission_date > h2
 div#handin_link
 { 
   text-align: center;
-  /* border-bottom: 0.1em solid black; */
+  border-bottom: 0.1em solid black;
   }
 
 div#submission_date
@@ -212,7 +212,7 @@ div#submission_date
 
 div.section
 { 
-  border-bottom: 0.1em solid black;
+  border-top: 0.1em solid black;
   }
 
 /* Hide elements of class noprint when printing */
