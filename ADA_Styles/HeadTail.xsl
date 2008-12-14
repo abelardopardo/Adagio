@@ -54,6 +54,12 @@
   <xsl:param name="use.viewport">0</xsl:param>
   <xsl:param name="generate.id.attributes">1</xsl:param>
 
+  <!-- Propagate the role attribute as class element when allowed -->
+  <xsl:param name="emphasis.propagates.style">1</xsl:param>
+  <xsl:param name="entry.propagates.style">1</xsl:param>
+  <xsl:param name="para.propagates.style">1</xsl:param>
+  <xsl:param name="phrase.propagates.style">1</xsl:param>
+
   <!-- This one for sure is needed in all documents -->
   <xsl:param name="xref.with.number.and.title" select="'0'"/>
 
