@@ -33,13 +33,18 @@
 
   <xsl:template match="/">
     <xsl:apply-templates select="//*/xi:include[@href]"/>
+    <xsl:apply-templates select="//*/xsl:import[@href]"/>
     <xsl:apply-templates select="document/material/include"/>
     <xsl:apply-templates select="//*/html:rss[@file]"/>
   </xsl:template>
 
   <xsl:template match="xi:include"><xsl:value-of
-  select="@href"/><xsl:text>
-</xsl:text></xsl:template>
+      select="@href"/><xsl:text>
+    </xsl:text></xsl:template>
+
+  <xsl:template match="xsl:import"><xsl:value-of
+      select="@href"/><xsl:text>
+    </xsl:text></xsl:template>
 
   <!-- match dependencies in prosper driver files -->
   <xsl:template match="document/material/include"><xsl:value-of
