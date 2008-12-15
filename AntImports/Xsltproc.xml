@@ -219,6 +219,15 @@ xsltproc.style.file"/>
 	<fileset id="mergestyles.master.fileset" 
 		 file="${mergestyles.master.style}"/>
 
+	<!-- Calculate the possible dependencies on the sheet to merge -->
+	<exec executable="bash"
+	      dir="${basedir}"
+	      outputproperty="xsltproc.mergestyles.dependency.files">
+	  <arg value="${ada.home}${file.separator}bin${file.separator}getdependencies.sh"/>
+	  <arg value="${mergestyles.master.style}"/>
+	</exec>
+
+
 	<pathconvert property="mergestyles.output.prefix">
 	  <fileset refid="mergestyles.master.fileset"/>
 	  <chainedmapper>
@@ -246,6 +255,7 @@ xsltproc.style.file"/>
 	  <srcfileset dir="${ada.home}/ADA_Styles">
 	    <include name="*.xsl" />
 	  </srcfileset>
+	  <srcfilelist files="${xsltproc.mergestyles.dependency.files}"/>
 	  <targetfilelist 
 	    dir="@{MERGESTYLES.DST.DIR}"
 	    files="${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}"/>
