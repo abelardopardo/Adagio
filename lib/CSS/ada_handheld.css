@@ -19,10 +19,10 @@
  * Boston, MA  02110-1301, USA.
  * 
  * Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
- *
+ */
 body {
   /* Set font size/height and family */
-  font:1em/1.2em sans-serif;
+  /* font: 1em/1.2em sans-serif; */
 }
 
 h1 { 
