@@ -450,9 +450,6 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
       <mapper type="flatten"/>
     </pathconvert>
 
-    <echo>AAA ${xsltproc.style.file}</echo>
-    <echo>BBB ${xsltproc.output.suffix}</echo>
-
     <echo level="${xsltproc.debug.level}">xsltproc processed stylefile: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}</echo>
 
     <echo level="${xsltproc.debug.level}">Srcfileset: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}</echo>
