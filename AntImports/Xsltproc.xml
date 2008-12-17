@@ -142,7 +142,7 @@ xsltproc.style.file"/>
 	  <not><equals arg1="${xsltproc.style.file}" arg2="" trim="true"/></not>
 	  <not><available file="${xsltproc.style.file}"/></not>
 	  <not><available
-	  file="${ada.home}/ADA_Styles/${xsltproc.style.file}"/></not> 
+	  file="${ada.home}/ADA_Styles/${xsltproc.style.file}"/></not>
 	</and>
       </condition>
     </fail>
@@ -444,12 +444,14 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <!-- Merge stylesheets -->
     <mergestyles MERGESTYLES.FILE.TO.IMPORT="${xsltproc.style.file}"/>
 
-    <!-- Flatten the import fileset to get the suffix for the new style -->
-    <fileset id="xsltproc.import.fileset" file="${xsltproc.style.file}"/>
+    <!-- Flatten the import filelist to get the suffix for the new style -->
     <pathconvert property="xsltproc.output.suffix">
-      <fileset refid="xsltproc.import.fileset"/>
+      <filelist files="${xsltproc.style.file}"/>
       <mapper type="flatten"/>
     </pathconvert>
+
+    <echo>AAA ${xsltproc.style.file}</echo>
+    <echo>BBB ${xsltproc.output.suffix}</echo>
 
     <echo level="${xsltproc.debug.level}">xsltproc processed stylefile: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}</echo>
 
