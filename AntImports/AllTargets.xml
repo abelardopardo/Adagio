@@ -248,6 +248,7 @@ Copyright (C) 2008 Carlos III University of Madrid
 	 target="ada.properties.init.dump">
       <property name="ada.debug.level" value="warning"/>
     </ant>
+
     <echo/>
 
     <echo>Tool               | Installed |  Missing</echo>
