@@ -23,4 +23,94 @@
 # Script to simply invoke adado to check which tools are installed.
 #
 
+# Function use to make sure ADA_HOME is set, if not, suggest the steps to do
+# so. VERY important the message including the $ADA_REAL_USER_HOME variable. For
+# ant this variable points to C:\Documents and Settings\username, whereas for
+# cygwin $HOME points to some location within its internal tree (/home/...)
+function ada_check_home() {
+    if [ "$ADA_HOME" = "" ]; then
+	echo "ERROR: Unable to set variable ADA_HOME"
+	echo "Edit the file .ant.properties in $ADA_REAL_USER_HOME and"
+        echo "add a line such as:"
+	if [ "$cygwin" = "true" ]; then
+	    echo "ada.home="`cygpath --windows /`"\[path to your ADA installation]\ADA"
+	else
+	    echo "ada.home=[path to your ADA dir]"
+	fi
+	exit
+    fi
+}
+
+cygwin=false;
+case "`uname`" in
+    CYGWIN*) cygwin=true ;;
+esac
+
+ADA_HOME=`dirname $0`/..
+if [ $cygwin = "true" ]; then
+    # If within cygwin, pahts need to be manipulated for a correct ant
+    # invocation
+
+    # If ADA_HOME is empty, bomb out with msg
+    ada_check_home
+
+    ADA_HOME=`cygpath --windows $ADA_HOME`
+    ADA_HOME=${ADA_HOME//\\/\\\\}
+fi
+
+# Slurp some additional functions
+source $ADA_HOME/bin/functions.bash
+ada_version
+
+echo
+echo "ADA: Agile Distributed Authoring Toolkit (Version $ada_version)"
+echo "Copyright (C) 2008 Carlos III University of Madrid"
+echo
+
+echo "Checking if the Docbook DTDs are property installed."
+
+xsltproc \
+    --nonet \
+    --path \
+    ".:$ADA_HOME/ADA_Styles" \
+    "--xinclude" \
+    "--stringparam" \
+    "ada.home" \
+    "$ADA_HOME" \
+    "--stringparam" \
+    "basedir" \
+    "$ADA_HOME/doc" \
+    "--stringparam" \
+    "ada.course.home" \
+    "./" \
+    "--stringparam" \
+    "ada.current.datetime" \
+    "" \
+    "--stringparam" \
+    "profile.revision" \
+    "" \
+    "--stringparam" \
+    "chapter.autolabel" \
+    "0" \
+    "--stringparam" \
+    "section.autolabel" \
+    "1" \
+    "--stringparam" \
+    "section.toc.depth" \
+    "0" \
+    "--stringparam" \
+    "html.stylesheet" \
+    "style.css" \
+    "--stringparam" \
+    "ada.version" \
+    "8.12.4" \
+    "-o" \
+    "$ADA_HOME/doc/FAQ.html" \
+    "$ADA_HOME/doc/QandaentryTable.xsl" \
+    "$ADA_HOME/doc/FAQ.xml" 1>/dev/null 2>&1
+
+adaXsltprocStatus="$?"
+
+echo "STATUS = $adaXsltprocStatus"
+
 adado -Dada.property.file.ready=true report

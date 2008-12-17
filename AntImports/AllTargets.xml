@@ -251,6 +251,8 @@ Copyright (C) 2008 Carlos III University of Madrid
 
     <echo/>
 
+    <echo>              Summary of available functionality             </echo>
+    <echo>-------------------+-----------+-----------------------------</echo>
     <echo>Tool               | Installed |  Missing</echo>
     <echo>-------------------+-----------+-----------------------------</echo>
 
@@ -302,10 +304,8 @@ Copyright (C) 2008 Carlos III University of Madrid
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Msf2PDF.xml" 
-	 target="msf2pdf.report" inheritAll="false"/>
-
-    <echo>-------------------+-----------+-----------------------------</echo>
+<!--     <ant antfile="${ada.home}/AntImports/Msf2PDF.xml"  -->
+<!-- 	 target="msf2pdf.report" inheritAll="false"/> -->
 
     <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
 	 target="pdfnup.report" inheritAll="false"/>

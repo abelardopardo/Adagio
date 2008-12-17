@@ -60,10 +60,9 @@ esac
 basedir=$PWD
 
 # If within cygwin, pahts need to be manipulated for a correct ant invocation
+ADA_HOME=`dirname $0`/..
 if [ $cygwin = "true" ]; then
     
-    ADA_HOME=`dirname $0`/..
-
     # If ADA_HOME is empty, bomb out with msg
     ada_check_home
 
@@ -78,9 +77,6 @@ if [ $cygwin = "true" ]; then
     basedir=`cygpath --windows $basedir`
     basedir=${basedir//\\/\\\\}
 else
-    # Not in cygwin, directly fetch ADA_HOME from the path used to invoke the script
-    ADA_HOME=`dirname $0`/..
-
     AllTargets="$ADA_HOME/AntImports/AllTargets.xml"
 fi
 
