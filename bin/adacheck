@@ -110,8 +110,7 @@ xsltproc \
     "$ADA_HOME/doc/FAQ.xml" 1>/dev/null 2>&1
 
 adaXsltprocStatus="$?"
-# if [ $adaXsltprocStatus -ne 0 ]; then
-if [ $adaXsltprocStatus -eq 0 ]; then
+if [ $adaXsltprocStatus -ne 0 ]; then
     echo "*************** WARNING ***************"
     echo
     echo "Your system does not appear to have the DTD catalogs properly"
