@@ -59,9 +59,10 @@ esac
 # Get basic variables
 basedir=$PWD
 
-# If within cygwin, pahts need to be manipulated for a correct ant invocation
 ADA_HOME=`dirname $0`/..
 if [ $cygwin = "true" ]; then
+    # If within cygwin, pahts need to be manipulated for a correct ant
+    # invocation
     
     # If ADA_HOME is empty, bomb out with msg
     ada_check_home
