@@ -111,6 +111,7 @@ xsltproc \
 
 adaXsltprocStatus="$?"
 if [ $adaXsltprocStatus -ne 0 ]; then
+    echo
     echo "*************** WARNING ***************"
     echo
     echo "Your system does not appear to have the DTD catalogs properly"
@@ -125,6 +126,8 @@ if [ $adaXsltprocStatus -ne 0 ]; then
     echo "fetched from the net)."
     echo
     echo "****************************************"
+    echo
+    exit
 fi
 
 adado -Dada.property.file.ready=true report

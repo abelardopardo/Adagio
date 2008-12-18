@@ -275,11 +275,13 @@ Your system does not appear to have the file /etc/xml/catalog
 properly installed. This catalog file is used to find the DTDs
 and Schemas required to process Docbook documents. You either
 have this definitions inserted manually in the file
-${ada.home}/catalog,
+${ada.home}/DTDs/catalog.template,
 or the processing of the stylesheets will be extremelly slow
 (because all the imported style sheets are fetched from the net).
 
 ****************************************</echo>
+    <fail/>
+
   </target>
 
   <!-- Target to reset the build.out --> 
