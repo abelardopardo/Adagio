@@ -112,7 +112,7 @@ xsltproc \
 adaXsltprocStatus="$?"
 if [ $adaXsltprocStatus -ne 0 ]; then
     echo
-    echo "*************** WARNING ***************"
+    echo "************************* WARNING *************************"
     echo
     echo "Your system does not appear to have the DTD catalogs properly"
     echo "installed. These catalogs prevent Xsltproc from fetching all the"
@@ -125,7 +125,7 @@ if [ $adaXsltprocStatus -ne 0 ]; then
     echo "will be extremely slow (because all the imported style sheets are"
     echo "fetched from the net)."
     echo
-    echo "****************************************"
+    echo "************************************************************"
     echo
     exit
 fi
