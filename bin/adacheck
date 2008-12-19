@@ -121,8 +121,9 @@ if [ $adaXsltprocStatus -ne 0 ]; then
     echo "URLs) and instead use local copies. The catalog file is usually in"
     echo "/etc/xml/catalog and managed automatically by package"
     echo "installers. However, if this file is not available you need to have"
-    echo "this definitions inserted manually in the file $ADA_HOME/catalog. If"
-    echo "these catalog files are not properly installed stylesheet processing"
+    echo "this definitions inserted manually in the file "
+    echo  "$ADA_HOME/catalog."
+    echo "If these catalog files are not properly installed, stylesheet processing"
     echo "will be extremely slow (because all the imported style sheets are"
     echo "fetched from the net)."
     echo
