@@ -67,7 +67,7 @@ echo "ADA: Agile Distributed Authoring Toolkit (Version $ada_version)"
 echo "Copyright (C) 2008 Carlos III University of Madrid"
 echo
 
-echo "Checking if the Docbook DTDs are property installed."
+echo -n "Checking if the Docbook DTDs are property installed... "
 
 xsltproc \
     --nonet \
@@ -112,6 +112,7 @@ xsltproc \
 adaXsltprocStatus="$?"
 if [ $adaXsltprocStatus -ne 0 ]; then
     echo
+    echo
     echo "************************* WARNING *************************"
     echo
     echo "Your system does not appear to have the DTD catalogs properly"
@@ -120,7 +121,7 @@ if [ $adaXsltprocStatus -ne 0 ]; then
     echo "URLs) and instead use local copies. The catalog file is usually in"
     echo "/etc/xml/catalog and managed automatically by package"
     echo "installers. However, if this file is not available you need to have"
-    echo "this definitions inserted manually in the file $ada.home/catalog. If"
+    echo "this definitions inserted manually in the file $ADA_HOME/catalog. If"
     echo "these catalog files are not properly installed stylesheet processing"
     echo "will be extremely slow (because all the imported style sheets are"
     echo "fetched from the net)."
@@ -128,6 +129,9 @@ if [ $adaXsltprocStatus -ne 0 ]; then
     echo "************************************************************"
     echo
     exit
+else
+    echo "OK"
+    echo
 fi
 
 adado -Dada.property.file.ready=true report
