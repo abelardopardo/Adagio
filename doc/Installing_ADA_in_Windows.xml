@@ -364,6 +364,40 @@
       </answer>
     </qandaentry>
 
+    <qandaentry id="no_catalogs">
+      <question>
+	<para>
+	  ADA takes a huge amount of time to process Docbook documents, why?
+	</para>
+      </question>
+
+      <answer>
+	<para>
+	  The symptoms for this problem is an unusually large amount of time for
+	  the toolkit to process a Docbook file. The process eventually
+	  finishes, but it takes for ever (in the order of minutes to process
+	  one or two files).
+	</para>
+
+	<para>
+	  The stylesheets in ADA import a set of default stylesheets to process
+	  most of the Docbook constructs. The location of these styleheets may
+	  vary from machine to machine. The way to solve this problem is using
+	  XML Catalogs. A catalog is a file specific for a single machine that
+	  specifies the location where certain files are installed. If this
+	  catalog is not properly deployed, <command>xsltproc</command> (the
+	  XSLT processor used by ADA) obtaines them all from the web. The number
+	  of stylesheets is high and therefore, processing time goes through the
+	  roof.
+	</para>
+
+	<para>
+	  Te solution for this problem is to make sure the packages specified in
+	  <xref linend="howtoinstallcygwin"/> are properly installed.
+	</para>
+      </answer>
+    </qandaentry>
+
     <qandaentry id="new_version_upgrade">
       <question>
         <para>

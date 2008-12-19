@@ -56,7 +56,7 @@
     <qandaentry>
       <question>
         <para>
-          Once I installed all the required packages, how How do I install
+          Once I installed all the required packages, How do I install
           ADA?
         </para>
       </question>
@@ -82,9 +82,14 @@
 
     <xi:include 
       href="Installing_ADA_in_Windows.xml"
+      xpointer="xpointer(//*[@id='no_catalogs'])"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+    <xi:include
+      href="Installing_ADA_in_Windows.xml"
       xpointer="xpointer(//*[@id='new_version_upgrade'])"
       parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-    
+
   </qandaset>
 </section>
 
