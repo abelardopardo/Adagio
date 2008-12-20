@@ -9,45 +9,40 @@
     <phrase lang="en">Reverse Page Table</phrase>
   </title>
 
-  <para lang="es">
-    En las estructuras de datos internas de un sistema operativo dado, cada
-    proceso contiene una tabla de páginas con la correspondencia entre las
-    páginas del espacio lógico de direcciones, y los marcos del espacio físico.
-    Debido a esta estrategia, en este sistema no existe una estructura de datos
-    global con la correspondencia de todos los marcos del espacio físico con
-    todas las páginas en el espacio lógico de todos los procesos. El objetivo de
-    esta práctica es precisamente extender la funcionalidad de este sistema
-    mediante la implementación de una estructura de datos global que contenga la
-    información de los marcos físicos de todos los procesos en una única tabla.
-  </para>
+  <para lang="es">En las estructuras de datos internas de un sistema operativo
+  dado, cada proceso contiene una tabla de páginas con la correspondencia entre
+  las páginas del espacio lógico de direcciones, y los marcos del espacio
+  físico.  Debido a esta estrategia, en este sistema no existe una estructura de
+  datos global con la correspondencia de todos los marcos del espacio físico con
+  todas las páginas en el espacio lógico de todos los procesos. El objetivo de
+  esta práctica es precisamente extender la funcionalidad de este sistema
+  mediante la implementación de una estructura de datos global que contenga la
+  información de los marcos físicos de todos los procesos en una única
+  tabla.</para>
 
-  <para lang="en">
-    In the internal data structure of a given operating system, each process
-    contains a page table with the correspondence between the pages in the
-    logical addresses space and the frames in the physical space. Due to this
-    strategy, in this system there is no global data structure containing the
-    correspondence between all the frames in physical space and the logical
-    pages of all the processes. The goal of this lab is precisely to extend the
-    functionality of the system by implementing a global data structure
-    containing all the information about the frames in physical space of all the
-    processes in a single table.
-  </para>
+  <para lang="en">In the internal data structure of a given operating system,
+  each process contains a page table with the correspondence between the pages
+  in the logical addresses space and the frames in the physical space. Due to
+  this strategy, in this system there is no global data structure containing the
+  correspondence between all the frames in physical space and the logical pages
+  of all the processes. The goal of this lab is precisely to extend the
+  functionality of the system by implementing a global data structure containing
+  all the information about the frames in physical space of all the processes in
+  a single table.</para>
 
-  <section id="reversetable:sec:tablaglobal">
+  <section id="reversetable_sec_tablaglobal">
     <title>
       <phrase lang="es">Tabla global de páginas</phrase>
       <phrase lang="en">Global Page Table</phrase>
     </title>
 
-    <para lang="es">
-      La estructura de esta tabla se puede ver en la siguiente figura:
-    </para>
+    <para lang="es">La estructura de esta tabla se puede ver en la siguiente
+    figura:</para>
 
-    <para lang="en">
-      The structure of this table can be seen in the following figure:
-    </para>
+    <para lang="en">The structure of this table can be seen in the following
+    figure:</para>
 
-    <informalfigure id="reversetable:fig:pagetable">
+    <informalfigure id="reversetable_fig_pagetable">
       <mediaobject>
         <imageobject lang="es">
           <imagedata align="center" fileref="tablestruct.es.png" format="PNG" />
@@ -58,214 +53,272 @@
       </mediaobject>
     </informalfigure>
 
-    <para lang="es">
-      Esta estructura de datos recibe dos posibles operaciones:
-    </para>
+    <note condition="professorguide">
+      <title>
+	<phrase lang="es">Guía del profesor</phrase>
+	<phrase lang="en">Tutor guide</phrase>
+      </title>
+
+      <para lang="es">La estructura que se puede utilizar es simplemente un
+      array. No hay necesidad de utilizar memoria dinámica para una lista
+      encadenada pues la tabla inversa se llenará de datos en seguida. En la
+      solución de referenia se opta por añadir un único campo en el que se pone
+      una marca de tiempo para saber qué entrada es la más antigua.</para>
+
+      <para lang="en">The data structure to be used can simply be an
+      array. There is no need to use dynamic memory for a linked list because
+      the table will fill up with data very quickly. The reference solution
+      includes an extra field to store a time-stamp so that the oldest entry can
+      be located easily.</para>
+    </note>
+
+    <para lang="es">Esta estructura de datos recibe dos posibles
+    operaciones:</para>
 
     <para lang="en">This data structure receives two possible operations:</para>
 
     <itemizedlist>
       <listitem>
-        <para lang="es">
-          <code>int searchFrame(int pid, int page)</code>
-          : Dado un entero que representa el PID de un proceso y un número de
-          página, devuelve el número de frame asociado a este par. Si este par
-          (pid, page) no existe en la tabla se solicita un nuevo frame y se crea
-          una nueva entrada con estos datos.
-        </para>
-        <para lang="en">
-          <code>int searchFrame(int pid, int page)</code>
-          : Given an integer representing the PID of a process and a page
-          number, it returns the frame number associated to this pair. If the
-          pair (pid, page) does not exist in the table, a new frame is requested
-          and a new entry with this data is created.
-        </para>
-        <para lang="es">
-          El sistema utilizaría
-          <code>searchFrame</code>
-          para encontrar el espacio de memoria física (marco) asociado a un
-          cierto espacio de memoria lógica (página).
-        </para>
-        <para lang="en">
-          The system would use
-          <code>searchFrame</code>
-          to find the space in physical memory associated to a given space in
-          logic memory (a page).
-        </para>
+        <para lang="es"><code>int searchFrame(int pid, int page)</code>: Dado un
+        entero que representa el PID de un proceso y un número de página,
+        devuelve el número de frame asociado a este par. Si este par (pid, page)
+        no existe en la tabla se solicita un nuevo frame y se crea una nueva
+        entrada con estos datos.</para>
+
+        <para lang="en"><code>int searchFrame(int pid, int page)</code>: Given
+        an integer representing the PID of a process and a page number, it
+        returns the frame number associated to this pair. If the pair (pid,
+        page) does not exist in the table, a new frame is requested and a new
+        entry with this data is created.</para>
+
+	<para lang="es">El sistema utilizaría <code>searchFrame</code> para
+	encontrar el espacio de memoria física (marco) asociado a un cierto
+	espacio de memoria lógica (página).</para>
+
+        <para lang="en">The system would use <code>searchFrame</code> to find
+        the space in physical memory associated to a given space in logic memory
+        (a page).</para>
+
+	<note condition="solution">
+	  <title>
+	    <phrase lang="es">Solución</phrase>
+	    <phrase lang="en">Solution</phrase>
+	  </title>
+
+	  <para lang="es">La solución se puede ver en el siguiente
+	  listado:</para>
+	  <para lang="en">The solution is included in the following
+	  listing:</para>
+
+	  <programlisting id="reversetable_searchFrame"><xi:include
+	  href="searchFrame.c"
+	  parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	</note>
+
+	<note condition="professorguide">
+	  <title>
+	    <phrase lang="es">Guía del profesor</phrase>
+	    <phrase lang="en">Tutor guide</phrase>
+	  </title>
+
+	  <para lang="es">La funcionalidad a implementar no es más que un bucle
+	  en el que se busca una entrada en la tabla cuyos datos coincidan con
+	  el PID y el número de página dados. En caso de que se encuentre, se
+	  puede devolver el índice en el medio del bucle sin siquiera llegar a
+	  terminarlo. Esto seguro que tiene algo de impacto, aunque mínimo, en
+	  el rendimiento del programa.</para>
+
+	  <para lang="en">The functionality to implement is simply a loop in
+	  which a entry in the table with identical PID and page number is
+	  searched. If found, the table index is returned from the middle of the
+	  loop. Avoiding this loop termination might have an impacto in
+	  performance, although not very significant.</para>
+
+	  <para lang="es">La parte delicada viene cuando en el bucle no se
+	  encuentra lo que se busca. En ese caso hay dos posibles casos. En el
+	  primero de ellos, todavía quedan páginas libres. Esto implica que hay
+	  que llevar la cuenta de cuántas páginas están libres, y que esa
+	  variable debe ser estática. Se debe prestar atención a este tipo de
+	  información. Si hay páginas libres, simplemente se pide una
+	  nueva.</para>
+
+	  <para lang="en">The delicate part is when the loop does not found the
+	  page. There are two possible scenarios. The first one is when there
+	  are still some free pages. This means that an integer is required to
+	  keep track of the number of free pages. This variable should be
+	  global, but static. Review the solutions to make sure they include
+	  it. If there are free pages, simply request a new one and return the
+	  index.</para>
+
+	  <para lang="es">El segundo caso es cuando no hay páginas libres. En
+	  ese caso, el índice de la página a devolver debe ser elegido por una
+	  política a implementar 100% por los alumnos. En la actual solución se
+	  ha optado por una política en la que se devuelve el más antiguo. No es
+	  optima.</para>
+
+	  <para lang="en">The second case is when there are no free pages. In
+	  this case, the index of the page to return must be chosen with a
+	  policy to implement entirely by the students. The chosen solution is a
+	  policy that returns the oldest page. It is not optimal.</para>
+	</note>
+
       </listitem>
+
       <listitem>
-        <para lang="es">
-          <code>void removePages(int pid)</code>
-          : Borra todas las entradas en la tabla que corresponden al
-          identificador de proceso dado.
-        </para>
-        <para lang="en">
-          <code>void removePages(int pid)</code>
-          : Removes all the entries in the table corresponding to the given
-          process identifier.
-        </para>
-        <para lang="es">
-          El sistema utilizaría esta función cuando un proceso libera memoria,
-          al finalizar su ejecución. En este instante su espacio de memoria
-          lógica (página) ya no se necesita, por lo que su espacio físico
-          asociado (marco) se libera para que otro proceso pueda utilizarlo.
-        </para>
-        <para lang="en">
-          The system would use this function when a process frees all its
-          memory, for example, when finishing execution. At this point, the
-          memory in its logic space (pages) is no longer needed, and therefore,
-          its corresponding physical space (frame) is made available for other
-          process to use.
-        </para>
+        <para lang="es"><code>void removePages(int pid)</code>: Borra todas las
+        entradas en la tabla que corresponden al identificador de proceso
+        dado.</para>
+
+	<para lang="en"><code>void removePages(int pid)</code>: Removes all the
+	entries in the table corresponding to the given process
+	identifier.</para>
+
+        <para lang="es">El sistema utilizaría esta función cuando un proceso
+        libera memoria, al finalizar su ejecución. En este instante su espacio
+        de memoria lógica (página) ya no se necesita, por lo que su espacio
+        físico asociado (marco) se libera para que otro proceso pueda
+        utilizarlo.</para>
+
+        <para lang="en">The system would use this function when a process frees
+        all its memory, for example, when finishing execution. At this point,
+        the memory in its logic space (pages) is no longer needed, and
+        therefore, its corresponding physical space (frame) is made available
+        for other process to use.</para>
+
+	<note condition="solution">
+	  <title>
+	    <phrase lang="es">Solución</phrase>
+	    <phrase lang="en">Solution</phrase>
+	  </title>
+
+	  <para lang="es">La solución se puede ver en el siguiente
+	  listado:</para>
+	  <para lang="en">The solution is included in the following
+	  listing:</para>
+
+	  <programlisting id="reversetable_removePages"><xi:include xml:base="./"
+	  href="removePages.c"
+	  parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	</note>
+
+	<note condition="professorguide">
+	  <title>
+	    <phrase lang="es">Guía del profesor</phrase>
+	    <phrase lang="en">Tutor guide</phrase>
+	  </title>
+
+	  <para lang="es">En este ejercicio lo único que hay que hacer es un
+	  bucle en el que si la entrada de la tabla tiene un PID que coincide
+	  con el parámetro, se libera el marco y se actualiza el contador</para>
+
+	  <para lang="en">In this part of the lab, the only task to perform is
+	  to loop over the table and for those entries with PID identical to the
+	  given parameter, remove the frame and update the free counter.</para>
+
+	</note>
       </listitem>
     </itemizedlist>
 
-    <para lang="es">
-      El identificador de proceso es un número mayor que cero, mientras que el
-      número de página es mayor o igual que cero.
-    </para>
+    <para lang="es">El identificador de proceso es un número mayor que cero,
+    mientras que el número de página es mayor o igual que cero.</para>
 
-    <para lang="en">
-      The process identifier is a number greater than zero, while the page
-      number is greater than or equal to zero.
-    </para>
+    <para lang="en">The process identifier is a number greater than zero, while
+    the page number is greater than or equal to zero.</para>
   </section>
 
-  <section id="reversetable:sec:gestor">
+  <section id="reversetable_sec_gestor">
     <title>
       <phrase lang="es">Gestor de marcos</phrase>
       <phrase lang="en">Frame Manager</phrase>
     </title>
 
-    <para lang="es">
-      Las funciones
-      <code>searchFrame</code>
-      y
-      <code>removePages()</code>
-      que gestionan esta tabla de páginas inversa deben invocar las funciones
-      del gestor de marcos que es el encargado de registrar los marcos ocupados
-      y libres, así como el PID y la página lógica correspondiente. Este gestor
-      de marcos se da ya implementado en el fichero de código objeto con nombre
-      <ulink url="frames.o">
-        <filename>frames.o</filename>
-      </ulink>
-      y la declaración de los métodos que incluye se encuentran en el fichero
-      <ulink url="frames.h">
-        <filename>frames.h</filename>
-      </ulink>
-      . La funcionalidad de estos métodos es la siguiente:
-    </para>
+    <para lang="es">Las funciones <code>searchFrame</code> y
+    <code>removePages()</code> que gestionan esta tabla de páginas inversa deben
+    invocar las funciones del gestor de marcos que es el encargado de registrar
+    los marcos ocupados y libres, así como el PID y la página lógica
+    correspondiente. Este gestor de marcos se da ya implementado en el fichero
+    de código objeto con nombre <ulink
+    url="frames.o"><filename>frames.o</filename></ulink> y la declaración de los
+    métodos que incluye se encuentran en el fichero <ulink
+    url="frames.h"><filename>frames.h</filename></ulink>. La funcionalidad de
+    estos métodos es la siguiente:</para>
 
-    <para lang="en">
-      The functions
-      <code>searchFrame</code>
-      and
-      <code>removePages()</code>
-      to manipulate the reverse page table should invoke the routines of the
-      frame manager who is in charge of registering the occupied and free
-      frames, including for each frame information about the related PID and
-      logical page. This frame manager is already implemented in the object code
-      file named
-      <ulink url="frames.o">
-        <filename>frames.o</filename>
-      </ulink>
-      and the declaration of the included methods can be found in the file
-      <ulink url="frames.h">
-        <filename>frames.h</filename>
-      </ulink>
-      . The functionality of these methods is the following:
-    </para>
+    <para lang="en">The functions <code>searchFrame</code> and
+    <code>removePages()</code> to manipulate the reverse page table should
+    invoke the routines of the frame manager who is in charge of registering the
+    occupied and free frames, including for each frame information about the
+    related PID and logical page. This frame manager is already implemented in
+    the object code file named <ulink
+    url="frames.o"><filename>frames.o</filename></ulink> and the declaration of
+    the included methods can be found in the file <ulink
+    url="frames.h"><filename>frames.h</filename></ulink>. The functionality of
+    these methods is the following:</para>
 
     <itemizedlist>
       <listitem>
-        <para lang="es">
-          <code>int getFrame(int pid, int page)</code>
-          : Dado un par (pid, página) devuelve el índice de un marco que está
-          libre. Las aplicaciones externas se deben cerciorar de no invocar este
-          método cuando no queden marcos libres, pues produce un error y termina
-          la ejecución.
-        </para>
-        <para lang="en">
-          <code>int getFrame(int pid, int page)</code>
-          : Given a pair (pid, page), it assigns this information to a free
-          frame and returns its index. The external applications must make sure
-          of not invoking this method when there are no free frames, because in
-          this case it produces an error and finishes the execution.
-        </para>
+        <para lang="es"><code>int getFrame(int pid, int page)</code>: Dado un
+        par (pid, página) devuelve el índice de un marco que está libre. Las
+        aplicaciones externas se deben cerciorar de no invocar este método
+        cuando no queden marcos libres, pues produce un error y termina la
+        ejecución.</para>
+
+        <para lang="en"><code>int getFrame(int pid, int page)</code> : Given a
+        pair (pid, page), it assigns this information to a free frame and
+        returns its index. The external applications must make sure of not
+        invoking this method when there are no free frames, because in this case
+        it produces an error and finishes the execution.</para>
       </listitem>
+
       <listitem>
-        <para lang="es">
-          <code>void releaseFrame(int index)</code>
-          : Libera el marco cuyo índice se pasa como parámetro.
-        </para>
-        <para lang="en">
-          <code>void releaseFrame(int index)</code>
-          : Liberates the frame whose number is passed.
-        </para>
+        <para lang="es"><code>void releaseFrame(int index)</code>: Libera el
+        marco cuyo índice se pasa como parámetro.</para>
+
+        <para lang="en"><code>void releaseFrame(int index)</code>: Liberates
+	the frame whose number is passed.</para>
       </listitem>
+
       <listitem>
-        <para lang="es">
-          <code>int resetFrame(int pid, int page, int index)</code>
-          : Método que reasigna un marco a un nuevo proceso y página. Dado el
-          marco al que apunta el parámetro
-          <code>index</code>
-          , reemplaza su contenido con el pid y número de página dados como
-          primer y segundo parámetro respectivamente. Si el marco al que apunta
-          el parámetro
-          <code>index</code>
-          está libre, se produce un error de ejecución. Esta operación es útil
-          cuando la tabla global de páginas debe hacer un reemplazo.
-        </para>
-        <para lang="en">
-          <code>int resetFrame(int pid, int page, int index)</code>
-          : This method reassigns a frame to a new process and page. Given the
-          frame pointed to by the
-          <code>index</code>
-          parameter, it replaces its content with the pid and page number given
-          as first and second parameter respectively. If the frame pointed to by
-          the
-          <code>index</code>
-          parameter was free, it gives an error. This operation is useful when
-          the global page table has to do a replacement.
-        </para>
+        <para lang="es"><code>int resetFrame(int pid, int page, int
+        index)</code>: Método que reasigna un marco a un nuevo proceso y
+        página. Dado el marco al que apunta el parámetro <code>index</code> ,
+        reemplaza su contenido con el pid y número de página dados como primer y
+        segundo parámetro respectivamente. Si el marco al que apunta el
+        parámetro <code>index</code> está libre, se produce un error de
+        ejecución. Esta operación es útil cuando la tabla global de páginas debe
+        hacer un reemplazo.</para>
+
+        <para lang="en"><code>int resetFrame(int pid, int page, int
+        index)</code>: This method reassigns a frame to a new process and
+        page. Given the frame pointed to by the <code>index</code> parameter, it
+        replaces its content with the pid and page number given as first and
+        second parameter respectively. If the frame pointed to by the
+        <code>index</code> parameter was free, it gives an error. This operation
+        is useful when the global page table has to do a replacement.</para>
       </listitem>
     </itemizedlist>
 
-    <para lang="es">
-      La funcionalidad de estos métodos debe considerar que el número de frames
-      está definido por la constante
-      <code>NUM_FRAMES</code>
-      en el fichero
-      <filename>frames.h</filename>
-      .
-    </para>
-    <para lang="en">
-      The code in these functions must consider the number of frames as defined
-      by the constant
-      <code>NUM_FRAMES</code>
-      in file
-      <filename>frames.h</filename>
-      .
-    </para>
+    <para lang="es">La funcionalidad de estos métodos debe considerar que el
+    número de frames está definido por la constante <code>NUM_FRAMES</code> en
+    el fichero <filename>frames.h</filename>.</para>
+
+    <para lang="en">The code in these functions must consider the number of
+    frames as defined by the constant <code>NUM_FRAMES</code> in file
+    <filename>frames.h</filename>.</para>
   </section>
 
-  <section id="reversetable:sec:aplication">
+  <section id="reversetable_sec_aplication">
     <title>
       <phrase lang="es">Aplicación a desarrollar</phrase>
       <phrase lang="en">Application to develop</phrase>
     </title>
 
-    <para lang="es">
-      La estructura de la aplicación a desarrollar se ilustra en la siguiente
-      figura:
-    </para>
+    <para lang="es">La estructura de la aplicación a desarrollar se ilustra en
+    la siguiente figura:</para>
 
-    <para lang="en">
-      The structure of the application to develop is illustrated in the
-      following picture:
-    </para>
+    <para lang="en">The structure of the application to develop is illustrated
+    in the following picture:</para>
 
-    <informalfigure id="reversetable:fig:project">
+    <informalfigure id="reversetable_fig_project">
       <mediaobject>
         <imageobject lang="es">
           <imagedata align="center" fileref="project.es.png" format="PNG" />
@@ -276,193 +329,124 @@
       </mediaobject>
     </informalfigure>
 
-    <para lang="es">
-      Los ficheros auxiliares consideran el número de frames tal y como está
-      definido por la constante
-      <code>NUM_FRAMES</code>
-      en el fichero
-      <filename>frames.h</filename>
-      .
-    </para>
+    <para lang="es">Los ficheros auxiliares consideran el número de frames tal y
+    como está definido por la constante <code>NUM_FRAMES</code> en el fichero
+    <filename>frames.h</filename>.</para>
 
-    <para lang="en">
-      All auxiliary files consider the number of frames as defined by the
-      constant
-      <code>NUM_FRAMES</code>
-      in file
-      <filename>frames.h</filename>
-    </para>
+    <para lang="en">All auxiliary files consider the number of frames as defined
+    by the constant <code>NUM_FRAMES</code> in file
+    <filename>frames.h</filename>.</para>
 
-    <para lang="es">
-      El fichero
-      <ulink url="main.c">
-        <filename>main.c</filename>
-      </ulink>
-      genera un conjunto de llamadas a los métodos
-      <code>searchFrame</code>
-      y
-      <code>removePages</code>
-      definidos en el fichero a entregar. A su vez, este fichero devuelve al
-      main, ya sea la información que tiene almacenada, o en caso de no ser así
-      obtiene la información necesaria a través de las llamadas
-      <code>getFrame</code>
-      ,
-      <code>releaseFrame</code>
-      y
-      <code>resetFrame</code>
-      .
-    </para>
+    <para lang="es">El fichero <ulink
+    url="main.c"><filename>main.c</filename></ulink> genera un conjunto de
+    llamadas a los métodos <code>searchFrame</code> y <code>removePages</code>
+    definidos en el fichero a entregar. A su vez, este fichero devuelve al main,
+    ya sea la información que tiene almacenada, o en caso de no ser así obtiene
+    la información necesaria a través de las llamadas <code>getFrame</code>,
+    <code>releaseFrame</code> y <code>resetFrame</code>.</para>
 
-    <para lang="en">
-      File
-      <ulink url="main.c">
-        <filename>main.c</filename>
-      </ulink>
-      generates a set of calls to the methods
-      <code>searchFrame</code>
-      and
-      <code>removePages</code>
-      defined in the file to be submitted. The reverse table returns to the main
-      the information stored, or if this is not the case, it obtains the
-      necessary information through calls to
-      <code>getFrame</code>
-      ,
-      <code>releaseFrame</code>
-      and
-      <code>resetFrame</code>
-      .
-    </para>
+    <para lang="en">File <ulink url="main.c"><filename>main.c</filename></ulink>
+    generates a set of calls to the methods <code>searchFrame</code> and
+    <code>removePages</code> defined in the file to be submitted. The reverse
+    table returns to the main the information stored, or if this is not the
+    case, it obtains the necessary information through calls to
+    <code>getFrame</code>, <code>releaseFrame</code> and
+    <code>resetFrame</code>.</para>
 
-    <para lang="es">
-      Los parámetros de ejecución del <code>main</code> son: número de procesos
-      que generan peticiones, número de páginas que pide cada proceso, número de
-      peticiones globales sobre las que iterar.
-    </para>
+    <para lang="es">Los parámetros de ejecución del <code>main</code> son:
+    número de procesos que generan peticiones, número de páginas que pide cada
+    proceso, número de peticiones globales sobre las que iterar.</para>
 
-    <para lang="en">
-      The execution parameters for the <code>main</code> are: number of
-      processes generating requests, number of pages being asked by each
-      process, number of global requests to iterate.
-    </para>
+    <para lang="en">The execution parameters for the <code>main</code> are:
+    number of processes generating requests, number of pages being asked by each
+    process, number of global requests to iterate.</para>
 
-    <para lang="es">
-      Por ejemplo, la ejecución: <command>pagetable 2 512 10000</command> genera
-      10000 accesos a páginas de 2 procesos, y cada uno de ellos accede
-      repetidamente a un conjunto de 512 páginas. Este conjunto va variando
-      conforme avanza la ejecución del main.
-    </para>
+    <para lang="es">Por ejemplo, la ejecución: <command>pagetable 2 512
+    10000</command> genera 10000 accesos a páginas de 2 procesos, y cada uno de
+    ellos accede repetidamente a un conjunto de 512 páginas. Este conjunto va
+    variando conforme avanza la ejecución del main.</para>
 
-    <para lang="en">
-      For example, the execution: <command>pagetable 2 512 10000</command>
-      generates 10000 accesses to pages from 2 processes, and each one of them
-      accesses repeatedly to a set of 512 pages. This set varies as the
-      execution of main advances.
-    </para>
+    <para lang="en">For example, the execution: <command>pagetable 2 512
+    10000</command> generates 10000 accesses to pages from 2 processes, and each
+    one of them accesses repeatedly to a set of 512 pages. This set varies as
+    the execution of main advances.</para>
 
-    <para lang="es">
-      La tabla de páginas globales representa aquellas páginas que el sistema
-      dispone en memoria física. Toda petición cuya información no esté
-      contenida en esta tabla modela un <emphasis>fallo de página</emphasis> .
-    </para>
+    <para lang="es">La tabla de páginas globales representa aquellas páginas que
+    el sistema dispone en memoria física. Toda petición cuya información no esté
+    contenida en esta tabla modela un <emphasis>fallo de página</emphasis>.</para>
 
-    <para lang="en">
-      The global page table represents those pages available in the physical
-      memory of the system. Each request whose information is not contained in
-      this table models a <emphasis>page fault</emphasis>.
-    </para>
+    <para lang="en">The global page table represents those pages available in
+    the physical memory of the system. Each request whose information is not
+    contained in this table models a <emphasis>page fault</emphasis>.</para>
 
-    <para lang="es">
-      La función <code>searchFrame</code> es la que contiene la funcionalidad
-      clave. Debe buscar en la tabla global la información a devolver a través
-      del PID y página dados. En caso de que esta información no se encuentre en
-      la tabla se debe obtener del gestor de marcos. Si la tabla global se
-      encuentra llena (nótese que hay exactamente <code>NUM_FRAMES</code> marcos
-      posibles), la función debe seleccionar una entrada y reemplazar su
-      contenido con los nuevos datos. Se deja a la elección del alumno el tipo
-      de algoritmo de reemplazo a implementar. Se sugiere revisar los apuntes de
-      clase sobre políticas de reemplazo de páginas en los sistemas operativos.
-    </para>
+    <para lang="es">La función <code>searchFrame</code> es la que contiene la
+    funcionalidad clave. Debe buscar en la tabla global la información a
+    devolver a través del PID y página dados. En caso de que esta información no
+    se encuentre en la tabla se debe obtener del gestor de marcos. Si la tabla
+    global se encuentra llena (nótese que hay exactamente
+    <code>NUM_FRAMES</code> marcos posibles), la función debe seleccionar una
+    entrada y reemplazar su contenido con los nuevos datos. Se deja a la
+    elección del alumno el tipo de algoritmo de reemplazo a implementar. Se
+    sugiere revisar los apuntes de clase sobre políticas de reemplazo de páginas
+    en los sistemas operativos.</para>
 
-    <para lang="en">
-      Function <code>searchFrame</code> is the one containing the key
-      functionality. It has to look in the global table for the information to
-      be returned using the given PID and page. In case that this information is
-      not found in the table, it has to be obtained from the frame manager. If
-      the global table is full, (note that there are exactly
-      <code>NUM_FRAMES</code> frames available), the function must select an
-      entry and replace its content with the new data. It is left up to the
-      student the selection of the type of replacement algorithm to
-      implement. It is suggested to revise the lecture notes on replacement
-      politics for operating systems.
-    </para>
+    <para lang="en">Function <code>searchFrame</code> is the one containing the
+    key functionality. It has to look in the global table for the information to
+    be returned using the given PID and page. In case that this information is
+    not found in the table, it has to be obtained from the frame manager. If the
+    global table is full, (note that there are exactly <code>NUM_FRAMES</code>
+    frames available), the function must select an entry and replace its content
+    with the new data. It is left up to the student the selection of the type of
+    replacement algorithm to implement. It is suggested to revise the lecture
+    notes on replacement politics for operating systems.</para>
 
-    <para lang="es">
-      El rendimiento del programa a diseñar se mide con respecto a la suma de
-      fallos de página que produce un conjunto de ejecuciones del main con
-      diferentes parámetros. Esta magnitud la imprime el programa tras haber
-      terminado la ejecución correctamente.
-    </para>
+    <para lang="es">El rendimiento del programa a diseñar se mide con respecto a
+    la suma de fallos de página que produce un conjunto de ejecuciones del main
+    con diferentes parámetros. Esta magnitud la imprime el programa tras haber
+    terminado la ejecución correctamente.</para>
 
-    <para lang="en">
-      The performance of the program to be designed is measured with respect to
-      the sum of page failures produced by a set of executions of the main
-      program with different parameters. This magnitude is printed by the
-      program after correctly finishing the execution.
-    </para>
+    <para lang="en">The performance of the program to be designed is measured
+    with respect to the sum of page failures produced by a set of executions of
+    the main program with different parameters. This magnitude is printed by the
+    program after correctly finishing the execution.</para>
 
-    <para lang="es">
-      La función <code>main</code> en todo momento comprueba que la información
-      devuelta por la tabla global es consistente con la almacenada en el gestor
-      de marcos. Si se detecta alguna inconsistencia a lo largo de la ejecución,
-      esta se detiene inmediatamente.
-    </para>
+    <para lang="es">La función <code>main</code> en todo momento comprueba que
+    la información devuelta por la tabla global es consistente con la almacenada
+    en el gestor de marcos. Si se detecta alguna inconsistencia a lo largo de la
+    ejecución, esta se detiene inmediatamente.</para>
 
-    <para lang="en">
-      The
-      <code>main</code>
-      function checks all the time if the information returned by the global
-      table is consistent with the one stored in the frame manager. If any
-      inconsistency is detected during the execution, it is immediately stopped.
-    </para>
+    <para lang="en">The <code>main</code> function checks all the time if the
+    information returned by the global table is consistent with the one stored
+    in the frame manager. If any inconsistency is detected during the execution,
+    it is immediately stopped.</para>
 
-    <para lang="es">
-      Para obtener el ejecutable tal y como se utiliza en los juegos de pruebas
-      hay que utilizar la siguiente línea de compilación:
-    </para>
+    <para lang="es">Para obtener el ejecutable tal y como se utiliza en los
+    juegos de pruebas hay que utilizar la siguiente línea de compilación:</para>
 
-    <para lang="en">
-      To obtain the executable as it is used in the testbenches, you have to use
-      the following compilation line:
-    </para>
+    <para lang="en">To obtain the executable as it is used in the testbenches,
+    you have to use the following compilation line:</para>
 
-    <programlisting id="reversetable:pl:compile">
+    <programlisting id="reversetable_pl_compile">
       gcc -Wall -g -o pagetable main.c frames.o reverseTable.c libao.a
     </programlisting>
 
-    <para lang="es">
-      Si quieres obtener una versión del ejecutable para depurar y por tanto que
-      no se limite el tiempo de ejecución, debes incluir la opción
-      <code>-DDEBUG</code> en el comando de compilación (también aparecerán
-      múltiples mensajes adicionales de depuración).
-    </para>
+    <para lang="es">Si quieres obtener una versión del ejecutable para depurar y
+    por tanto que no se limite el tiempo de ejecución, debes incluir la opción
+    <code>-DDEBUG</code> en el comando de compilación (también aparecerán
+    múltiples mensajes adicionales de depuración).</para>
 
-    <para lang="en">
-      If you want to obtain an executable for debugging purposes and therefore
-      with no CPU limitation, you may include the option <code>-DDEBUG</code> in
-      the compile command (the program will also produce several additional
-      debugging messages).
-    </para>
+    <para lang="en">If you want to obtain an executable for debugging purposes
+    and therefore with no CPU limitation, you may include the option
+    <code>-DDEBUG</code> in the compile command (the program will also produce
+    several additional debugging messages).</para>
 
-    <para lang="es">
-      Los juegos de pruebas se realizan ejecutando la siguiente secuencia de
-      comandos:
-    </para>
+    <para lang="es">Los juegos de pruebas se realizan ejecutando la siguiente
+    secuencia de comandos:</para>
 
-    <para lang="en">
-      The testbenches are done executing the following sequence of commands:
-    </para>
+    <para lang="en">The testbenches are done executing the following sequence of
+    commands:</para>
 
-    <programlisting id="refersepagetable:pl:tests">
+    <programlisting id="refersepagetable_pl_tests">
       pagetable 2 512 20000 
       pagetable 4 512 20000 
       pagetable 6 512 20000
@@ -472,23 +456,6 @@
       pagetable 4 8192 20000
     </programlisting>
 
-    <note condition="professorguide">
-      <para lang="es">
-        La solución se encuentra en el
-        <ulink url="reverseTable.c">
-          fichero
-          <filename>reverseTable.c</filename>
-        </ulink>
-        .
-      </para>
-      <para lang="en">
-        Solution can be found in the file
-        <ulink url="reverseTable.c">
-          <filename>reverseTable.c</filename>
-        </ulink>
-        .
-      </para>
-    </note>
   </section>
 
   <section condition="submit">
@@ -500,7 +467,7 @@
         <filename>reverseTable.c</filename>
         .
       </phrase>
-      <phrase id="reversetable:p:fileinput" condition="input">
+      <phrase id="reversetable_p_fileinput" condition="input">
         <phrase condition="type">file</phrase>
         <phrase condition="size">80</phrase>
         <phrase condition="accept">text/plain,text/html</phrase>
