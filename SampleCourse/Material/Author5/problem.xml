@@ -455,7 +455,6 @@
       pagetable 4 4096 20000
       pagetable 4 8192 20000
     </programlisting>
-
   </section>
 
   <section condition="submit">
