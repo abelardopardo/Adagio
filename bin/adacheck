@@ -71,7 +71,7 @@ echo "Copyright (C) 2008 Carlos III University of Madrid"
 echo
 
 # TEST 1: Docbook properly installed
-echo -n "Checking if the Docbook DTDs are properly installed... "
+echo -n "TEST  1: Docbook DTDs and XSLs are properly installed... "
 xsltproc \
     --nonet \
     --path \
@@ -135,16 +135,17 @@ if [ $adaXsltprocStatus -ne 0 ]; then
     exit
 else
     echo "OK"
-    echo
 fi
 
 # TEST 2: "matches" (included in ant-optional is available
 #
 # Execute SampleCourses/Admin/Laboratory2
 #
-echo -n "Checking if the package ant-optional is installed ... "
+echo -n "TEST  2: 'match' condition can be used ................. "
 ant -q -Dada.home="$ADA_HOME" \
-    -q -Dada.version="$ada_version" \
+    -Dada.version="$ada_version" \
+    -Dexportcontrol.files.given=true \
+    -Dexportcontrol.profile.revision="Lab1,Lab2,Lab3" \
     -Dbasedir="$ADA_HOME/SampleCourse/Admin/Laboratory2" \
     -f "$ADA_HOME/AntImports/ExportControl.xml" 1>/dev/null 2>&1
 
@@ -171,7 +172,7 @@ if [ $adaXsltprocStatus -ne 0 ]; then
     exit
 else
     echo "OK"
-    echo
 fi
 
+echo
 adado -Dada.property.file.ready=true report
