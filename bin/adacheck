@@ -155,19 +155,8 @@ if [ $adaXsltprocStatus -ne 0 ]; then
     echo
     echo "************************* WARNING *************************"
     echo
-    echo "Your system does not appear to have the DTD catalogs properly"
-    echo "installed. These catalogs prevent Xsltproc from fetching all the"
-    echo "required style and DTD files from their remote locations (through"
-    echo "URLs) and instead use local copies. The catalog file is usually in"
-    echo "/etc/xml/catalog and managed automatically by package"
-    echo "installers. However, if this file is not available you need to have"
-    echo "this definitions inserted manually in the file "
-    echo  "$ADA_HOME/catalog."
-    echo "If these catalog files are not properly installed, stylesheet processing"
-    echo "will be extremely slow (because all the imported style sheets are"
-    echo "fetched from the net)."
-    echo
-    echo "************************************************************"
+    echo "Your system does not appear to have the ant-optional library."
+    echo "Install it and re-run this test."
     echo
     exit
 else
