@@ -158,6 +158,8 @@ if [ $adaXsltprocStatus -ne 0 ]; then
     echo "Your system does not appear to have the ant-optional library."
     echo "Install it and re-run this test."
     echo
+    echo "************************************************************"
+    echo
     exit
 else
     echo "OK"
