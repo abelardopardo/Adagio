@@ -181,7 +181,7 @@ xsltproc.style.file"/>
 	<apply dir="@{DIR}" parallel="false" dest="@{XSLTPROC.ABSDST.DIR}" 
 	       append="yes" failonerror="true" executable="${xsltproc.exec}" 
 	       output="build.out">
-	  <!-- <arg value="${ada.xsltproc.net.option}"/> -->
+	  <arg value="--nonet"/>
 	  <arg value="--path"/>
 	  <arg value=".:${ada.home}/ADA_Styles"/>
 	  <arg value="--xinclude"/>
@@ -265,7 +265,7 @@ xsltproc.style.file"/>
 	<apply dir="${basedir}" parallel="false"
 	       dest="@{MERGESTYLES.DST.DIR}" append="yes" failonerror="true"
 	       executable="${xsltproc.exec}"  output="build.out">
-	  <!-- <arg value="${ada.xsltproc.net.option}"/> -->
+	  <arg value="--nonet"/>
 	  <arg value="--path"/>
 	  <arg value=".:${ada.home}/ADA_Styles"/>
 	  <arg value="--xinclude"/>

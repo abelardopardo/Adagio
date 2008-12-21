@@ -40,17 +40,6 @@ function ada_check_home() {
     fi
 }
 
-function ada_check_catalog() {
-    if [ ! -w $ADA_HOME/DTDs ]; then
-        echo "Permission error. Need to have rw access to $ADA_HOME/DTDs"
-        exit
-    fi
-    if [ ! -f $ADA_HOME/DTDs/catalog ]; then
-	sed -e "s:@ADA_HOME_DTD@:$ADA_HOME/DTDs:" $ADA_HOME/DTDs/catalog.template \
-	    > $ADA_HOME/DTDs/catalog
-    fi
-}
-
 cygwin=false;
 case "`uname`" in
     CYGWIN*) cygwin=true ;;
@@ -88,8 +77,13 @@ ada_check_home
 source $ADA_HOME/bin/functions.bash
 ada_version
 
-# Make sure catalog exists
-ada_check_catalog
+# Check of ADA catalog has been generated
+if [ ! -f $ADA_HOME/DTDs/catalog ]; then
+  echo "ERROR: Execute adacheck first to deploy ADA correctly"
+  exit
+fi
+
+# Set the dirs with the catalogs to be checked
 XML_CATALOG_FILES="file://$ADA_HOME/DTDs/catalog"
 
 # Invoke ant
