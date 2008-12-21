@@ -63,7 +63,7 @@ source $ADA_HOME/bin/functions.bash
 ada_version
 
 # Set the dirs with the catalogs to be checked
-XML_CATALOG_FILES="$ADA_HOME/DTDs/catalog"
+export XML_CATALOG_FILES="$ADA_HOME/DTDs/catalog"
 
 echo
 echo "ADA: Agile Distributed Authoring Toolkit (Version $ada_version)"
