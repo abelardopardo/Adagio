@@ -63,7 +63,7 @@ source $ADA_HOME/bin/functions.bash
 ada_version
 
 # Set the dirs with the catalogs to be checked
-XML_CATALOG_FILES="file://$ADA_HOME/DTDs/catalog"
+XML_CATALOG_FILES="$ADA_HOME/DTDs/catalog"
 
 echo
 echo "ADA: Agile Distributed Authoring Toolkit (Version $ada_version)"
@@ -71,7 +71,7 @@ echo "Copyright (C) 2008 Carlos III University of Madrid"
 echo
 
 # TEST 1: Docbook properly installed
-echo -n "Checking if the Docbook DTDs are property installed... "
+echo -n "Checking if the Docbook DTDs are properly installed... "
 xsltproc \
     --nonet \
     --path \
@@ -146,7 +146,8 @@ echo -n "Checking if the package ant-optional is installed ... "
 ant -q -Dada.home="$ADA_HOME" \
     -q -Dada.version="$ada_version" \
     -Dbasedir="$ADA_HOME/SampleCourse/Admin/Laboratory2" \
-    -f "$ADA_HOME/AntImports/ExportControl.xml"
+    -f "$ADA_HOME/AntImports/ExportControl.xml" 1>/dev/null 2>&1
+
 adaXsltprocStatus="$?"
 if [ $adaXsltprocStatus -ne 0 ]; then
     echo
