@@ -39,3 +39,5 @@ fi
 
 # Dump the value in the output to be caught by Ant.
 echo "$ada_course_home_prefix"
+
+exit 0

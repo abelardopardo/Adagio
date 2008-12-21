@@ -67,8 +67,8 @@ echo "ADA: Agile Distributed Authoring Toolkit (Version $ada_version)"
 echo "Copyright (C) 2008 Carlos III University of Madrid"
 echo
 
+# TEST 1: Docbook properly installed
 echo -n "Checking if the Docbook DTDs are property installed... "
-
 xsltproc \
     --nonet \
     --path \
@@ -109,6 +109,41 @@ xsltproc \
     "$ADA_HOME/doc/QandaentryTable.xsl" \
     "$ADA_HOME/doc/FAQ.xml" 1>/dev/null 2>&1
 
+adaXsltprocStatus="$?"
+if [ $adaXsltprocStatus -ne 0 ]; then
+    echo
+    echo
+    echo "************************* WARNING *************************"
+    echo
+    echo "Your system does not appear to have the DTD catalogs properly"
+    echo "installed. These catalogs prevent Xsltproc from fetching all the"
+    echo "required style and DTD files from their remote locations (through"
+    echo "URLs) and instead use local copies. The catalog file is usually in"
+    echo "/etc/xml/catalog and managed automatically by package"
+    echo "installers. However, if this file is not available you need to have"
+    echo "this definitions inserted manually in the file "
+    echo  "$ADA_HOME/catalog."
+    echo "If these catalog files are not properly installed, stylesheet processing"
+    echo "will be extremely slow (because all the imported style sheets are"
+    echo "fetched from the net)."
+    echo
+    echo "************************************************************"
+    echo
+    exit
+else
+    echo "OK"
+    echo
+fi
+
+# TEST 2: "matches" (included in ant-optional is available
+#
+# Execute SampleCourses/Admin/Laboratory2
+#
+echo -n "Checking if the package ant-optional is installed ... "
+ant -q -Dada.home="$ADA_HOME" \
+    -q -Dada.version="$ada_version" \
+    -Dbasedir="$ADA_HOME/SampleCourse/Admin/Laboratory2" \
+    -f "$ADA_HOME/AntImports/ExportControl.xml"
 adaXsltprocStatus="$?"
 if [ $adaXsltprocStatus -ne 0 ]; then
     echo
