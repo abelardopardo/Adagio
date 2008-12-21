@@ -84,7 +84,7 @@ if [ ! -f $ADA_HOME/DTDs/catalog ]; then
 fi
 
 # Set the dirs with the catalogs to be checked
-XML_CATALOG_FILES="file://$ADA_HOME/DTDs/catalog"
+XML_CATALOG_FILES="$ADA_HOME/DTDs/catalog"
 
 # Invoke ant
 rm -f adado.log
