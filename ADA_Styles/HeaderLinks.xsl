@@ -47,8 +47,18 @@
       </xsl:choose>
     </xsl:variable>
     
+    <xsl:variable name="ada.page.header.links.class">
+      <xsl:choose>
+        <xsl:when
+          test="//*/note[@condition='AdminInfo']/para[@condition='ada.page.header.links']/@role">noprint <xsl:value-of
+        select="//*/note[@condition='AdminInfo']/para[@condition='ada.page.header.links']/@role"/></xsl:when>
+          <xsl:otherwise>noprint</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:if test="$ada.page.header.links.var and $ada.page.header.links.var != ''">
       <div class="noprint" id="header_links">
+        <xsl:attribute name="class"><xsl:value-of
+        select="$ada.page.header.links.class"/></xsl:attribute>
         <xsl:call-template name="ada.profile.subtree">
           <xsl:with-param name="subtree" 
             select="exsl:node-set($ada.page.header.links.var)"/>
