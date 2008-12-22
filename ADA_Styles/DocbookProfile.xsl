@@ -47,4 +47,7 @@
   <!-- Allows the inclusion of Flash videos and MP3 -->
   <xsl:import href="SWFObj.xsl"/>
 
+  <!-- Do not include inline styles for admonitions -->
+  <xsl:param name="admon.style"/>
+
 </xsl:stylesheet>
