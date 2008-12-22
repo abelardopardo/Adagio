@@ -40,7 +40,6 @@
     <para>Text of the exercise.</para>
 
     <note condition="solution">
-      <title>Solution</title>
       <para>The solution is also left as an exercise to the reader</para>
     </note>
 
