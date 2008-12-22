@@ -26,9 +26,19 @@
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="exsl" version="1.0">
   
+  <!-- Do not force the title, it is controlled internally -->
+  <xsl:param name="admon.textlabel" select="0"/>
+
   <!-- Include professor guide text --> 
   <xsl:param name="professorguide.include.guide" select="'no'"
     description="yes/no variable to show the professor guide info"/>
+
+  <xsl:param name="professorguide.default.note.title">
+    <xsl:choose>
+      <xsl:when test="$profile.lang = 'es'">Guía del profesor</xsl:when>
+      <xsl:otherwise>Teaching Guide</xsl:otherwise>
+    </xsl:choose>
+  </xsl:param>
 
   <!-- Conditionally process section TOC -->
   <xsl:template match="section[@condition = 'professorguide']" mode="toc">
@@ -56,6 +66,7 @@
           <xsl:with-param name="inherit" select="1"/>
         </xsl:call-template>
         <xsl:call-template name="language.attribute"/>
+
         <xsl:call-template name="section.titlepage"/>
         
         <xsl:variable name="toc.params">
@@ -73,26 +84,41 @@
           </xsl:call-template>
           <xsl:call-template name="section.toc.separator"/>
         </xsl:if>
+
         <xsl:apply-templates/>
+
         <xsl:call-template name="process.chunk.footnotes"/>
       </div>
     </xsl:if>
   </xsl:template>
 
-
-
   <!-- Conditionally process the notes labeled with condition
        professorguide -->
-  <!-- Process the section labeled with condition=solution -->
   <xsl:template match="note[@condition = 'professorguide']">
     <xsl:if test="$professorguide.include.guide = 'yes'">
-      <table class="ada_pguide_table">
-        <tr>
-          <td><xsl:call-template name="nongraphical.admonition"/></td>
-        </tr>
-      </table>
+      <div>
+        <xsl:apply-templates select="." mode="class.attribute"/>
+        <xsl:if test="$admon.style">
+          <xsl:attribute name="style">
+            <xsl:value-of select="$admon.style"/>
+          </xsl:attribute>
+        </xsl:if>
+
+        <h3 class="title">
+          <xsl:call-template name="anchor"/>
+          <xsl:choose>
+            <xsl:when test="title or info/title">
+              <xsl:apply-templates select="." mode="object.title.markup"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="$professorguide.default.note.title"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </h3>
+
+        <xsl:apply-templates/>
+      </div>
     </xsl:if>
   </xsl:template>
 
-  
 </xsl:stylesheet>
