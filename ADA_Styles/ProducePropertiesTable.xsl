@@ -26,10 +26,16 @@
   xmlns:str="http://exslt.org/strings"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl str xi">
-  
+
   <xsl:output method="xml" indent="yes" encoding="UTF-8"
     doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
     doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"/>
+
+  <xsl:variable name="rep-node-set">
+    <replacements>
+      <replacement search="# "></replacement>
+    </replacements>
+  </xsl:variable>
 
   <xsl:template match="project">
     <informaltable frame="all">
@@ -54,7 +60,19 @@
                 </varname>
               </entry>
               <entry>
-                <xsl:value-of select="str:replace(@description, '# ', '')"/>
+                <xsl:choose>
+                  <xsl:when test="function-available('str:replace')">
+                    <xsl:value-of select="str:replace(@description, '# ', '')"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:call-template name="str:_replace">
+                      <xsl:with-param name="string"
+                          select="@description"/>
+                      <xsl:with-param name="replacements"
+                          select="exsl:node-set($rep-node-set)/replacements/replacement" />
+                    </xsl:call-template>
+                  </xsl:otherwise>
+                </xsl:choose>
               </entry>
               <entry>
                 <xsl:value-of select="@value"/>
