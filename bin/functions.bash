@@ -87,3 +87,11 @@ function ada_check_packages_macintosh() {
     done
 }
 
+function version_to_integer() {
+    if [ "$1" = "" ]; then
+	echo
+    else
+	minor=${1%.*}
+	echo `expr ${1%.*.*} \* 1000000 + ${minor#*.} \* 1000 + ${1#*.*.}`
+    fi
+}
