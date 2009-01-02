@@ -21,12 +21,12 @@
 
 -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  xmlns:exsl="http://exslt.org/common" 
-  xmlns="http://www.w3.org/1999/xhtml" 
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:exsl="http://exslt.org/common"
+  xmlns="http://www.w3.org/1999/xhtml"
   exclude-result-prefixes="exsl" version="1.0">
 
-  <xsl:import href="TestQuestionsParams.xsl"/> 
+  <xsl:import href="TestQuestionsParams.xsl"/>
 
   <!-- Number QandA with correlative integers within a section -->
   <xsl:template match="question" mode="label.markup">
@@ -41,26 +41,27 @@
       <xsl:number level="any" count="qandaentry" from="section"/>
     </xsl:variable>
     <xsl:variable name="qnumber" select="count(descendant::qandaentry)"/>
-    <!-- 
+    <!--
          FIX: Needs to check for the presence of some sort of
          blockinfo that instructs this table to have a
-         class="pageBreakBefore" attribute 
+         class="pageBreakBefore" attribute
     -->
 
     <!-- Table surrounding one qandadiv (might have several questions) -->
-    <table style="border: 1px solid black; border-collapse: collapse; 
-                  pageBreakInside: false" 
+    <table class="qandadiv"
+      style="border: 1px solid black; border-collapse: collapse;
+             pageBreakInside: false"
       width="100%" align="center" cellspacing="5" cellpadding="5">
-      <xsl:if 
+      <xsl:if
         test="($ada.testquestions.render.onequestionperpage = 'yes') or
               ((/section/sectioninfo/productnumber/remark[@condition =
-              ($beginnumber + 1)]) and 
+              ($beginnumber + 1)]) and
               ($ada.testquestions.insert.pagebreaks = 'yes'))">
         <xsl:attribute name="class">pageBreakBefore</xsl:attribute>
       </xsl:if>
       <tr>
         <td>
-          <p style="margin-top: 0pt">
+          <p class="qandadiv_numbering" style="margin-top: 0pt">
             <b>
               <xsl:choose>
                 <xsl:when test="$qnumber > 1">
@@ -101,10 +102,14 @@
           <!-- Recur through other DocBook elements -->
           <xsl:apply-templates/>
 
-          <!-- Needed to separate the True/False boxes from peceeding
+          <!-- Needed to separate the True/False boxes from preceeding
                text -->
           <br/>
-              
+
+          <!--
+               Choose between rendering a single question or multiple questions
+               common to the same preceeding text
+               -->
           <xsl:choose>
             <xsl:when test="count(qandaentry) = 1">
               <xsl:for-each select="qandaentry">
@@ -124,7 +129,9 @@
   <!-- Render one individual question -->
   <xsl:template match="qandaentry">
     <xsl:if test="not(boolean(ancestor::qandadiv))">
-      <table style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false" 
+      <table class="qandaentry"
+        style="border: 1px solid black; border-collapse: collapse;
+               pageBreakInside: false"
         width="100%" align="center" cellspacing="3" cellpadding="3">
         <tr>
           <td>
@@ -134,7 +141,7 @@
                 <xsl:otherwise>Pregunta</xsl:otherwise>
               </xsl:choose>
               <xsl:value-of
-                select="count(ancestor::section/preceding::qandaentry) + 1"/> 
+                select="count(ancestor::section/preceding::qandaentry) + 1"/>
               <xsl:if test="$ada.testquestions.include.id = 'yes'">
                 (id=<xsl:value-of select="@id"/>
                 <xsl:for-each select="blockinfo/printhistory/para">
@@ -147,11 +154,10 @@
           </td>
         </tr>
       </table>
-      
-      <!-- <br /> -->
+
     </xsl:if>
   </xsl:template>
-  
+
   <!-- Formats the question of the qandaentry. To be used, either when not in a
        qandadiv, or when it is the only one in a qandadiv -->
   <xsl:template name="singlequestion">
@@ -167,7 +173,7 @@
 
   <!-- One single TF question -->
   <xsl:template name="singleTFquestion">
-    <table style="border: 0; border-collapse: collapse;pageBreakInside: false" 
+    <table style="border: 0; border-collapse: collapse;pageBreakInside: false"
       width="95%" align="center" cellspacing="0" cellpadding="3">
       <tr>
         <th width="5%">
@@ -206,8 +212,8 @@
           </xsl:choose>
         </xsl:variable>
         <td align="center" height="20pt">
-          <table 
-            style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false" 
+          <table
+            style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false"
             align="center">
             <tr>
               <xsl:element name="td">
@@ -226,7 +232,7 @@
         <td />
         <td align="center" height="20pt">
           <table style="border: 1px solid black; border-collapse:
-                        collapse;pageBreakInside:false" 
+                        collapse;pageBreakInside:false"
             align="center">
             <tr>
               <xsl:element name="td">
@@ -256,13 +262,19 @@
       </xsl:if>
     </table>
   </xsl:template>
-  
+
   <!-- One single multiple choice question -->
   <xsl:template name="singleMCquestion">
-    <xsl:variable name="answerNumber" select="count(answer)"/>
-    <table 
-      style="border: 0; border-collapse: collapse;pageBreakInside: false" 
-      width="95%" align="center" cellspacing="0" cellpadding="3">
+    <table class="singlemcquestion" width="95%" align="center" cellspacing="0"
+      cellpadding="3">
+      <xsl:choose>
+        <xsl:when test="count(ancestor::qandaentry) = 1">
+          <xsl:attribute name="style">border: 0; border-collapse: collapse; pageBreakInside: false</xsl:attribute>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:attribute name="style">border: 1px solid black; border-collapse: collapse; pageBreakInside: false</xsl:attribute>
+        </xsl:otherwise>
+      </xsl:choose>
       <tr>
         <td class="qtext" colspan="3">
           <xsl:apply-templates select="question/node()"/>
@@ -289,8 +301,8 @@
             </xsl:choose>
           </xsl:variable>
           <td align="center" height="20pt">
-            <table 
-              style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false" 
+            <table
+              style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false"
               width="10pt" align="center">
               <tr>
                 <xsl:element name="td">
@@ -311,25 +323,34 @@
         </tr>
       </xsl:for-each>
     </table>
-    <table 
-      style="border: 0; border-collapse: collapse;pageBreakInside: false" 
-      width="95%" align="center" cellspacing="0" cellpadding="3">
-      <xsl:call-template name="dump-history" />
-    </table>
+    <xsl:if test="$ada.testquestions.include.history = 'yes'">
+      <table
+        style="border: 0; border-collapse: collapse;pageBreakInside: false"
+        width="95%" align="center" cellspacing="0" cellpadding="3">
+        <xsl:call-template name="dump-history" />
+      </table>
+    </xsl:if>
   </xsl:template>
-  
+
   <!-- multple question elements in the same quandaentry -->
   <xsl:template name="multiplequestion">
     <!-- There are three possible cases: All questions TF, all
          questions MC and mixed. Is it worth considering these three
-         cases? So far, only the TF template is invoked. -->
-    <xsl:call-template name="multipleTFquestion"/>
+         cases? So far, only the TF and MC templates are invoked. -->
+    <xsl:choose>
+      <xsl:when test="count(answer) = 1">
+        <xsl:call-template name="multipleTFquestion"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="multipleMCquestion"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- multple TF question elements in the same quandaentry -->
   <xsl:template name="multipleTFquestion">
-    <table 
-      style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false" 
+    <table
+      style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false"
       width="95%" align="center" cellspacing="0" cellpadding="3">
       <tr>
         <th style="border: 1px solid black;" width="60pt">
@@ -346,7 +367,7 @@
         </th>
         <th style="border: 1px solid black;" />
       </tr>
-      
+
       <xsl:for-each select="qandaentry">
         <tr>
           <xsl:variable name="trueBgnd">
@@ -368,8 +389,8 @@
             </xsl:choose>
           </xsl:variable>
           <td style="border: 1px solid black;" align="center" height="20pt">
-            <table 
-              style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false" 
+            <table
+              style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false"
               width="10pt" align="center">
               <tr>
                 <xsl:element name="td">
@@ -384,8 +405,8 @@
             </table>
           </td>
           <td style="border: 1px solid black;" align="center" height="20pt">
-            <table 
-              style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false" 
+            <table
+              style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false"
               width="10pt" align="center">
               <tr>
                 <xsl:element name="td">
@@ -413,94 +434,99 @@
       </xsl:for-each>
     </table>
   </xsl:template>
-  
-  <!-- Dump element containing history --> 
+
+  <!-- multple TF question elements in the same quandaentry -->
+  <xsl:template name="multipleMCquestion">
+    <xsl:for-each select="qandaentry">
+        <xsl:call-template name="singleMCquestion"/>
+    </xsl:for-each>
+  </xsl:template>
+
+  <!-- Dump element containing history -->
   <xsl:template name="dump-history">
     <xsl:param name="colspan" select="1"/>
-    <xsl:if test="$ada.testquestions.include.history = 'yes'">
-      <td style="text-align: center">
-        <xsl:attribute name="colspan"><xsl:value-of
-        select="$colspan"/></xsl:attribute>
-        
-        <p>
+    <td style="text-align: center">
+      <xsl:attribute name="colspan"><xsl:value-of
+      select="$colspan"/></xsl:attribute>
+
+      <p>
+        <xsl:choose>
+          <xsl:when test="$profile.lang='en'">Statistics</xsl:when>
+          <xsl:otherwise>Estadísticas</xsl:otherwise>
+        </xsl:choose>
+      </p>
+      <table style="border: 1px solid black; border-collapse: collapse;"
+        align="center" cellpadding="3">
+        <tr>
           <xsl:choose>
-            <xsl:when test="$profile.lang='en'">Statistics</xsl:when>
-            <xsl:otherwise>Estadísticas</xsl:otherwise>
-          </xsl:choose>
-        </p>
-        <table style="border: 1px solid black; border-collapse: collapse;" 
-          align="center" cellpadding="3">
-          <tr>
-            <xsl:choose>
-              <xsl:when test="$profile.lang='en'">
-                <th style="border: 1px solid black; border-collapse: collapse;">Edition</th>
-                <th style="border: 1px solid black; border-collapse: collapse;">Correct</th>
-                <th style="border: 1px solid black; border-collapse: collapse;">Inc.</th>
-                <th style="border: 1px solid black; border-collapse: collapse;">Blank</th>
-                <th style="border: 1px solid black; border-collapse: collapse;">Total</th>
-                <th style="border: 1px solid black; border-collapse: collapse;">Remarks</th>
-              </xsl:when>
-              <xsl:otherwise>
-                <th style="border: 1px solid black; border-collapse: collapse;">Edición</th>
-                <th style="border: 1px solid black; border-collapse: collapse;">Correctas</th>
-                <th style="border: 1px solid black; border-collapse: collapse;">Inc.</th>
-                <th style="border: 1px solid black; border-collapse: collapse;">Blanco</th>
-                <th style="border: 1px solid black; border-collapse: collapse;">Total</th>
-                <th style="border: 1px solid black; border-collapse: collapse;">Comentarios</th>
-              </xsl:otherwise>
-            </xsl:choose>
-          </tr>
-          <xsl:choose>
-            <xsl:when test="blockinfo/printhistory/para">
-              <xsl:for-each select="blockinfo/printhistory/para">
-                <tr>
-                  <td style="border: 1px solid black; border-collapse:
-                             collapse;" 
-                    align="center">
-                    <xsl:value-of
-                      select="@arch"/>/<xsl:value-of
-                    select="@revision"/>/<xsl:value-of
-                    select="@vendor"/>
-                  </td>
-                  <td style="border: 1px solid black; border-collapse: collapse;" 
-                    align="center">
-                    <xsl:value-of
-                      select="phrase[@condition='correct']/text()"/>
-                  </td>
-                  <td style="border: 1px solid black; border-collapse:
-                             collapse;" 
-                    align="center">
-                    <xsl:value-of select="phrase[@condition='incorrect']/text()"/>
-                  </td>
-                  <td style="border: 1px solid black; border-collapse:
-                             collapse;" 
-                    align="center">
-                    <xsl:value-of select="phrase[@condition='blank']/text()"/>
-                  </td>
-                  <td style="border: 1px solid black; border-collapse:
-                             collapse;" 
-                    align="center">
-                    <xsl:value-of select="phrase[@condition='total']/text()"/>
-                  </td>
-                  <td style="border: 1px solid black; border-collapse:
-                             collapse;" 
-                    align="center">
-                    <xsl:value-of select="phrase[@condition='remarks']/text()"/>
-                  </td>
-                </tr>
-              </xsl:for-each>
+            <xsl:when test="$profile.lang='en'">
+              <th style="border: 1px solid black; border-collapse: collapse;">Edition</th>
+              <th style="border: 1px solid black; border-collapse: collapse;">Correct</th>
+              <th style="border: 1px solid black; border-collapse: collapse;">Inc.</th>
+              <th style="border: 1px solid black; border-collapse: collapse;">Blank</th>
+              <th style="border: 1px solid black; border-collapse: collapse;">Total</th>
+              <th style="border: 1px solid black; border-collapse: collapse;">Remarks</th>
             </xsl:when>
             <xsl:otherwise>
-              <tr>
-                <td style="border: 1px solid black; border-collapse:
-                             collapse;" 
-                    colspan="6" align="center">No information available</td>
-              </tr>
+              <th style="border: 1px solid black; border-collapse: collapse;">Edición</th>
+              <th style="border: 1px solid black; border-collapse: collapse;">Correctas</th>
+              <th style="border: 1px solid black; border-collapse: collapse;">Inc.</th>
+              <th style="border: 1px solid black; border-collapse: collapse;">Blanco</th>
+              <th style="border: 1px solid black; border-collapse: collapse;">Total</th>
+              <th style="border: 1px solid black; border-collapse: collapse;">Comentarios</th>
             </xsl:otherwise>
           </xsl:choose>
-        </table>
-      </td>
-    </xsl:if>
+        </tr>
+        <xsl:choose>
+          <xsl:when test="blockinfo/printhistory/para">
+            <xsl:for-each select="blockinfo/printhistory/para">
+              <tr>
+                <td style="border: 1px solid black; border-collapse:
+                           collapse;"
+                  align="center">
+                  <xsl:value-of
+                    select="@arch"/>/<xsl:value-of
+                  select="@revision"/>/<xsl:value-of
+                  select="@vendor"/>
+                </td>
+                <td style="border: 1px solid black; border-collapse: collapse;"
+                  align="center">
+                  <xsl:value-of
+                    select="phrase[@condition='correct']/text()"/>
+                </td>
+                <td style="border: 1px solid black; border-collapse:
+                           collapse;"
+                  align="center">
+                  <xsl:value-of select="phrase[@condition='incorrect']/text()"/>
+                </td>
+                <td style="border: 1px solid black; border-collapse:
+                           collapse;"
+                  align="center">
+                  <xsl:value-of select="phrase[@condition='blank']/text()"/>
+                </td>
+                <td style="border: 1px solid black; border-collapse:
+                           collapse;"
+                  align="center">
+                  <xsl:value-of select="phrase[@condition='total']/text()"/>
+                </td>
+                <td style="border: 1px solid black; border-collapse:
+                           collapse;"
+                  align="center">
+                  <xsl:value-of select="phrase[@condition='remarks']/text()"/>
+                </td>
+              </tr>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:otherwise>
+            <tr>
+              <td style="border: 1px solid black; border-collapse:
+                         collapse;"
+                colspan="6" align="center">No information available</td>
+            </tr>
+          </xsl:otherwise>
+        </xsl:choose>
+      </table>
+    </td>
   </xsl:template>
 
   <!-- The blockinfo needs to be matched to avoid to appear in the output -->
