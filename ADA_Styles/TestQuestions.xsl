@@ -268,7 +268,7 @@
     <table class="singlemcquestion" width="95%" align="center" cellspacing="0"
       cellpadding="3">
       <xsl:choose>
-        <xsl:when test="count(ancestor::qandaentry) = 1">
+        <xsl:when test="count(../qandaentry) = 1">
           <xsl:attribute name="style">border: 0; border-collapse: collapse; pageBreakInside: false</xsl:attribute>
         </xsl:when>
         <xsl:otherwise>
