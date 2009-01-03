@@ -424,6 +424,19 @@
 
       .underline { text-decoration: underline; }
 
+      div.note {
+        display: table;
+        border: 1px solid black;
+        padding-left: 1em;
+        padding-right: 1em;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      div.note > h3.title {
+        border-bottom: 1px solid black;
+      }
+
       /* Add a class attribute with these values to force PDF page
       breaks */
       .pageBreakBefore {
