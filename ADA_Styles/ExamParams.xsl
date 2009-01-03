@@ -63,7 +63,6 @@
   <!-- Text to include in the bottom right (next to icon) -->
   <xsl:param name="ada.exam.topright.bottomtext"/>
 
-  <!-- Label to precede each exercise in a regular exam. The default is
-       "problem" or "problema" -->
-  <xsl:param name="ada.exam.exercise.name">EXERCISE LABEL</xsl:param>
+  <!-- Label to precede each exercise in a regular exam. -->
+  <xsl:param name="ada.exam.exercise.name">VALUE OF ada.exam.exercise.name</xsl:param>
 </xsl:stylesheet>
