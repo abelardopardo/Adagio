@@ -433,7 +433,7 @@
         margin-right: auto;
       }
 
-      div.note > h3.title {
+      div.note h3.title {
         border-bottom: 1px solid black;
       }
 
