@@ -89,11 +89,29 @@
       </link>
     </xsl:if>
 
-    <xsl:if test="$ada.page.author">
+    <!-- Author Meta Element -->
+    <xsl:variable name="author_string">
+      <xsl:choose>
+        <xsl:when test="/*/*/author">
+          <xsl:call-template name="person.name"/>
+        </xsl:when>
+        <xsl:when test="/*/*/authorgroup">
+          <xsl:call-template name="person.name.list">
+            <xsl:with-param name="person.list"
+              select="/*/*/authorgroup/author"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:when test="$ada.page.author">
+          <xsl:value-of select="$ada.page.author"/>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:if test="$author_string and $author_string != ''">
       <xsl:element name="meta">
         <xsl:attribute name="name">Author</xsl:attribute>
         <xsl:attribute name="content">
-          <xsl:value-of select="$ada.page.author"/>
+          <xsl:value-of select="string($author_string)"/>
         </xsl:attribute>
       </xsl:element>
     </xsl:if>
