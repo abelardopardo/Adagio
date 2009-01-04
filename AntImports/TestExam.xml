@@ -75,9 +75,31 @@ multilingual mode"/>
     <filelist id="testexam.filelist" dir="${testexam.abssrc.dir}"
 	      files="${testexam.file}"/>
 
+    <!-- Obtain a filelist with the newly produced files -->
+    <pathconvert property="testexam.raw.version1.filelist.property" pathsep=" ">
+      <filelist refid="testexam.filelist"/>
+      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_1.xml"/>
+    </pathconvert>
+    <pathconvert property="testexam.raw.version2.filelist.property" pathsep=" ">
+      <filelist refid="testexam.filelist"/>
+      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
+    </pathconvert>
+
     <!-- Multilingual source file to be processed by testexam -->
     <filelist id="testexam.multilingual.filelist" dir="${testexam.abssrc.dir}"
 	      files="${testexam.multilingual.file}"/>
+
+    <!-- Obtain a filelist with the newly produced files -->
+    <pathconvert property="testexam.multilingual.raw.version1.filelist.property"
+		 pathsep=" ">
+      <filelist refid="testexam.multilingual.filelist"/>
+      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_1.xml"/>
+    </pathconvert>
+    <pathconvert property="testexam.multilingual.raw.version2.filelist.property"
+		 pathsep=" ">
+      <filelist refid="testexam.multilingual.filelist"/>
+      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
+    </pathconvert>
 
     <!-- Obtain the filelist with the source file to see if it is empty -->
     <pathconvert property="testexam.source.filelist.property" pathsep=" ">
@@ -167,18 +189,6 @@ multilingual mode"/>
       <mapper type="glob" from="*_raw_2.xml" to="*_2.xml"/>
     </move>
 
-    <!-- Obtain a filelist with the newly produced files -->
-    <pathconvert property="testexam.multilingual.raw.version1.filelist.property"
-		 pathsep=" ">
-      <filelist refid="testexam.multilingual.filelist"/>
-      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_1.xml"/>
-    </pathconvert>
-    <pathconvert property="testexam.multilingual.raw.version2.filelist.property"
-		 pathsep=" ">
-      <filelist refid="testexam.multilingual.filelist"/>
-      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
-    </pathconvert>
-
     <echo>testexam.processing  (3a/5) CALL(xsltproc.processing)</echo>
 
     <!-- Call Multilingual processing of the exam -->
@@ -239,16 +249,6 @@ multilingual mode"/>
     </antcall>
 
     <echo>testexam.processing         END(xsltproc.processing ES)</echo>
-
-    <!-- Obtain a filelist with the newly produced files -->
-    <pathconvert property="testexam.raw.version1.filelist.property" pathsep=" ">
-      <filelist refid="testexam.filelist"/>
-      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_1.xml"/>
-    </pathconvert>
-    <pathconvert property="testexam.raw.version2.filelist.property" pathsep=" ">
-      <filelist refid="testexam.filelist"/>
-      <mapper type="glob" from="${testexam.absdst.dir}/*.xml" to="*_2.xml"/>
-    </pathconvert>
 
     <echo>testexam.processing  (3d/5) CALL(xsltproc.processing)</echo>
 
@@ -512,7 +512,9 @@ multilingual mode"/>
     <delete dir="${testexam.absdst.dir}"
 	    includes="__bogus__file__name
                       ${testexam.raw.version1.filelist.property}
-		      ${testexam.raw.version2.filelist.property}"/>
+		      ${testexam.raw.version2.filelist.property}
+                      ${testexam.multilingual.raw.version1.filelist.property}
+		      ${testexam.multilingual.raw.version2.filelist.property}"/>
 
     <echo>testexam.clean       (1/5)  CALL(xsltproc.clean)</echo>
 
