@@ -26,7 +26,7 @@
   xmlns="http://www.w3.org/1999/xhtml" 
   exclude-result-prefixes="exsl" version="1.0">
   
-  <xsl:import href="DocbookProfile.xsl"/> 
+  <xsl:import href="HeadTail.xsl"/>
 
   <xsl:include href="TestQuestions.xsl"/>
   <xsl:include href="SolutionSection.xsl"/>
@@ -40,10 +40,6 @@
   <xsl:include href="ExamParams.xsl"/>
 
 <!--   <xsl:include href="removespanquote.xsl"/> -->
-
-  <xsl:output method="xml" indent="yes" encoding="UTF-8"
-    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
-    doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"/>
 
   <xsl:template match="section">
     <!-- Fetch the customization elements that are present in the document -->
@@ -378,84 +374,5 @@
     </xsl:for-each>
   </xsl:template>
 
-  <!-- 
-       Style to be included in the header. It is included instead of inserting a
-       link to a css file to make the HTML self-contained and be visualized as close
-       as possible to its final appearance without requiring a net connection.
-  -->
-  <xsl:template name="user.head.content">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-    <xsl:if test="$ada.exam.author">
-      <xsl:element name="meta">
-        <xsl:attribute name="name">Author</xsl:attribute>
-        <xsl:attribute name="content">
-          <xsl:value-of select="$ada.exam.author"/>
-        </xsl:attribute>
-      </xsl:element>
-    </xsl:if>
-
-    <style type="text/css">
-      body { 
-        font-family: '<xsl:value-of select="$ada.exam.fontfamily"/>';
-        font-size: <xsl:value-of select="$ada.exam.fontsize"/>;
-        color: black; 
-        background: white;
-      }
-
-      table       { page-break-inside: avoid; 
-                    border-collapse: collapse; 
-                    margin-right: auto; 
-                    margin-left: auto; 
-                  }
-
-      hr                { height: 1px solid black; }
-
-      table.data        { border: 2px solid black; }
-
-      th.data           { border: 2px solid black; }
-
-      td.data           { border: 2px solid black; }
-
-      tr                { page-break-inside: avoid; }
-
-      div.informalfigure { text-align: center; }
-
-      td.qtext p { margin-top: 2pt; margin-bottom: 2pt; }
-
-      .underline { text-decoration: underline; }
-
-      div.note {
-        display: table;
-        border: 1px solid black;
-        padding-left: 1em;
-        padding-right: 1em;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      div.note h3.title {
-        border-bottom: 1px solid black;
-      }
-
-      pre.programlisting {
-        border: 1px solid black;
-        display: table;
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: 0.5em;
-        padding-right: 0.5em;
-      }
-
-      /* Add a class attribute with these values to force PDF page
-      breaks */
-      .pageBreakBefore {
-        margin-bottom: 0; page-break-before: always;
-      }
-      .pageBreakAfter {
-          margin-bottom: 0; page-break-after: always;
-      } 
-    </style>      
-  </xsl:template>
 </xsl:stylesheet>
 
