@@ -437,6 +437,15 @@
         border-bottom: 1px solid black;
       }
 
+      pre.programlisting {
+        border: 1px solid black;
+        display: table;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+      }
+
       /* Add a class attribute with these values to force PDF page
       breaks */
       .pageBreakBefore {
