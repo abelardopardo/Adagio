@@ -22,10 +22,10 @@
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:exsl="http://exslt.org/common" 
-  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:exsl="http://exslt.org/common"
+  xmlns="http://www.w3.org/1999/xhtml"
   exclude-result-prefixes="exsl" version="1.0">
-  
+
   <xsl:import href="HeadTail.xsl"/>
 
   <xsl:include href="TestQuestions.xsl"/>
@@ -52,299 +52,177 @@
     <xsl:variable name="note"     select="para[@condition='note']/node()"/>
     <xsl:variable name="name"     select="para[@condition='name']"/>
     <xsl:variable name="score"    select="para[@condition='score']"/>
-    
-    <!-- Table to show Logo, Degree, Dept and institution on the left and Course
-    and date on the right -->
-    <table width="100%" style="border:0">
-      <tr>
-        <!-- Include the logo if given in var ada.exam.topleft.image -->
-        <xsl:if test="$ada.exam.topleft.image">
-          <td width="10%" align="left" rowspan="3">
-            <img align="center">
-              <xsl:if test="$ada.exam.topleft.image.alt">
-                <xsl:attribute name="alt"><xsl:value-of                
-                select="$ada.exam.topleft.image.alt"/></xsl:attribute>
-              </xsl:if>
-              <xsl:attribute name="src"><xsl:value-of
-              select="$ada.course.home"/><xsl:value-of
-              select="$ada.exam.topleft.image"/></xsl:attribute>
-            </img>
-          </td>
-        </xsl:if>
-          
-        <!-- First row is completed with additinal text vars -->
-        <td width="50%" align="left">
-          <xsl:if test="$ada.exam.topleft.toptext">
-            <b><xsl:copy-of select="$ada.exam.topleft.toptext"/></b>
-          </xsl:if>
-        </td>
 
-        <td width="40%" align="right">
-          <xsl:if test="$ada.exam.topright.toptext">
-            <b><xsl:copy-of select="$ada.exam.topright.toptext"/></b>
-          </xsl:if>
-        </td>
-      </tr>
-
-      <tr>
-        <!-- Second row include department and date -->
-        <td>
-          <xsl:if test="$ada.exam.topleft.centertext">
-            <b><xsl:copy-of select="$ada.exam.topleft.centertext"/></b>
-          </xsl:if>
-        </td>
-
-        <td align="right">
-          <xsl:if test="$ada.exam.topright.centertext">
-            <b><xsl:copy-of select="$ada.exam.topright.centertext"/></b>
-          </xsl:if>
-        </td>
-      </tr>
-
-      <tr>
-        <!-- And final row include University on the left -->
-        <td>
-          <xsl:if test="$ada.exam.topleft.bottomtext">
-            <b><xsl:copy-of select="$ada.exam.topleft.bottomtext"/></b>
-          </xsl:if>
-        </td>
-        <td align="right">
-          <xsl:if test="$ada.exam.topright.bottomtext">
-            <b><xsl:copy-of select="$ada.exam.topright.bottomtext"/></b>
-          </xsl:if>
-        </td>
-      </tr>
-    </table>
-    
     <xsl:comment>Part heading</xsl:comment>
-    
-    <!-- If the exam has a "part" label, stick it right at the top of the page -->
-    <xsl:if test="$part">
-      <div style="text-align: center;">
-        <u><xsl:copy-of select="$part"/></u>
-        <xsl:if test="($ada.exam.include.id = 'yes') and (/section/@status)">
-          (<xsl:value-of select="/section/@status"/>)
-        </xsl:if>
-      </div>
-    </xsl:if>
-    
-    <!-- Include paragraph with duration, scoring, date and/or note -->
-    <xsl:if test="$duration or $scoring or $date or $note">
-      <p>
-        <table style="margin-left: 0%;">
+
+    <div id="ada_exam_heading">
+      <!-- If cover is to be rendered in a single page, insert the page break -->
+      <xsl:if test="$ada.exam.render.separate.cover = 'yes'">
+        <xsl:attribute name="class">pageBreakAfter</xsl:attribute>
+      </xsl:if>
+
+      <!-- If the exam has a "part" label, stick it right at the top of the page -->
+      <xsl:if test="$part">
+        <div id="ada_exam_part_label">
+          <xsl:copy-of select="$part"/>
+          <xsl:if test="($ada.exam.include.id = 'yes') and (/section/@status)">
+            (<xsl:value-of select="/section/@status"/>)
+          </xsl:if>
+        </div>
+      </xsl:if>
+
+      <!-- Include paragraph with duration, scoring, date and/or note -->
+      <xsl:if test="$duration or $scoring or $date or $note">
+        <xsl:comment>Duration/Score/Date</xsl:comment>
+        <div id="ada_exam_notes_block">
           <!-- Duration -->
           <xsl:if test="$duration">
-            <xsl:comment>Duration/Score/Date</xsl:comment>
-            <tr>
-              <td>
-                <b>
-                  <xsl:choose>
-                    <xsl:when test="$profile.lang='en'">
-                      Duration:
-                    </xsl:when>
-                    <xsl:otherwise>
-                      Duración:
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </b>
-              </td>
-              <td><xsl:apply-templates select="$duration"/></td>
-            </tr>
+            <div class="ada_exam_note_block">
+              <div class="ada_exam_note_title">
+                <xsl:choose>
+                  <xsl:when test="$profile.lang='en'">Duration: </xsl:when>
+                  <xsl:otherwise>Duración: </xsl:otherwise>
+                </xsl:choose>
+              </div>
+              <div class="ada_exam_note_data">
+                <xsl:apply-templates select="$duration"/>
+              </div>
+            </div>
           </xsl:if>
 
           <!-- Scoring -->
           <xsl:if test="$scoring">
-            <tr>
-              <td>
-                <b>
-                  <xsl:choose>
-                    <xsl:when test="$profile.lang='en'">
-                      Score:
-                    </xsl:when>
-                    <xsl:otherwise>
-                      Puntuación:
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </b>
-              </td>
-              <td><xsl:apply-templates select="$scoring"/></td>
-            </tr>
+            <div class="ada_exam_note_block">
+              <div class="ada_exam_note_title">
+                <xsl:choose>
+                  <xsl:when test="$profile.lang='en'">Score: </xsl:when>
+                  <xsl:otherwise>Puntuación: </xsl:otherwise>
+                </xsl:choose>
+              </div>
+              <div class="ada_exam_note_data">
+                <xsl:apply-templates select="$scoring"/>
+              </div>
+            </div>
           </xsl:if>
 
           <!-- Date -->
           <xsl:if test="$date">
-            <tr>
-              <td>
-                <b>
-                  <xsl:choose>
-                    <xsl:when test="$profile.lang='en'">
-                      Date:
-                    </xsl:when>
-                    <xsl:otherwise>
-                      Fecha:
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </b>
-              </td>
-              <td><xsl:apply-templates select="$date"/></td>
-            </tr>
+            <div class="ada_exam_note_block">
+              <div class="ada_exam_note_title">
+                <xsl:choose>
+                  <xsl:when test="$profile.lang='en'">Date: </xsl:when>
+                  <xsl:otherwise>Fecha: </xsl:otherwise>
+                </xsl:choose>
+              </div>
+              <div class="ada_exam_note_data">
+                <xsl:apply-templates select="$date"/>
+              </div>
+            </div>
           </xsl:if>
 
           <!-- Note -->
           <xsl:if test="$note">
-            <tr>
-              <td valign="top">
-                <b>
-                  <xsl:choose>
-                    <xsl:when test="$profile.lang='en'">
-                      Remarks:
-                    </xsl:when>
-                    <xsl:otherwise>
-                      Nota:
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </b>
-              </td>
-              <td><xsl:apply-templates select="$note"/></td>
-            </tr>
+            <div class="ada_exam_note_block">
+              <div class="ada_exam_note_title">
+                <xsl:choose>
+                  <xsl:when test="$profile.lang='en'">Remarks: </xsl:when>
+                  <xsl:otherwise>Nota: </xsl:otherwise>
+                </xsl:choose>
+              </div>
+              <div class="ada_exam_note_data">
+                <xsl:apply-templates select="$note"/>
+              </div>
+            </div>
           </xsl:if>
-        </table>
-      </p>
-      <hr width="100%" align="center"/>
-    </xsl:if>
-    
-    <!-- Include a box to write the student first/last/id -->
-    <xsl:if test="$name">
-      <table width="100%" 
-        style="border: 1px solid black; border-collapse: collapse;" 
-        cellpadding="10">
-        <!-- Last name -->
-        <tr>
-          <td style="border: 1px solid black; border-collapse: collapse;"
-              width="15%" align="left">
-            <xsl:choose>
-              <xsl:when test="$profile.lang='en'">
-                Last Name:
-              </xsl:when>
-              <xsl:otherwise>
-                Apellidos:
-              </xsl:otherwise>
-            </xsl:choose>
-          </td>
-          <td style="border: 1px solid black; border-collapse: collapse;"
-              width="85%" ></td>
-        </tr>
+        </div>
+      </xsl:if>
 
-        <!-- First name -->
-        <tr>
-          <td style="border: 1px solid black; border-collapse: collapse;"
-              align="left">
-            <xsl:choose>
-              <xsl:when test="$profile.lang='en'">
-                First Name:
-              </xsl:when>
-              <xsl:otherwise>
-                Nombre:
-              </xsl:otherwise>
-            </xsl:choose>
-          </td>
-          <td style="border: 1px solid black; border-collapse: collapse;"></td>
-        </tr>
+      <!-- Include a box to write the student first/last/id -->
+      <xsl:if test="$name">
+        <div id="ada_exam_name_surname">
+          <!-- Last name -->
+          <div class="ada_exam_name_block">
+            <div class="ada_exam_name_title">
+              <xsl:choose>
+                <xsl:when test="$profile.lang='en'">Last Name: </xsl:when>
+                <xsl:otherwise>Apellidos: </xsl:otherwise>
+              </xsl:choose>
+            </div>
+            <div class="ada_exam_name_data"/>
+          </div>
 
-        <!-- Student ID -->
-        <tr>
-          <td style="border: 1px solid black; border-collapse: collapse;"
-              align="left">
-            <xsl:choose>
-              <xsl:when test="$profile.lang='en'">
-                Student ID:
-              </xsl:when>
-              <xsl:otherwise>
-                NIA:
-              </xsl:otherwise>
-            </xsl:choose>
-          </td>
-          <td style="border: 1px solid black; border-collapse: collapse;"></td>
-        </tr>
-      </table>
-      <hr width="100%" align="center"/>
-    </xsl:if>
-    
-    <!-- 
-         Insert a box to fill with the scoring: Correct/Incorrect/Blank. Only
-         suitable for tests.
+          <!-- First name -->
+          <div class="ada_exam_name_block">
+            <div class="ada_exam_name_title">
+              <xsl:choose>
+                <xsl:when test="$profile.lang='en'">First Name: </xsl:when>
+                <xsl:otherwise>Nombre: </xsl:otherwise>
+              </xsl:choose>
+            </div>
+            <div class="ada_exam_name_data"/>
+          </div>
 
-         Possible improvement: provide several types of score boxes. Another one
-         in which a bunch of boxes are created (given by a parameter) and a
-         total box for the final score. All this controlled by a parameter.
-    -->
-    <xsl:if test="$score">
-      <table style="border: 1px solid black; border-collapse: collapse;" 
-             cellpadding="10">
-        <tr>
-          <th style="border: 1px solid black; border-collapse: collapse;">
-            <xsl:choose>
-              <xsl:when test="$profile.lang='en'">
-                Correct
-              </xsl:when>
-              <xsl:otherwise>
-                Correctas
-              </xsl:otherwise>
-            </xsl:choose>
-          </th>
-          <th style="border: 1px solid black; border-collapse: collapse;">
-            <xsl:choose>
-              <xsl:when test="$profile.lang='en'">
-                Incorrect
-              </xsl:when>
-              <xsl:otherwise>
-                Incorrectas
-              </xsl:otherwise>
-            </xsl:choose>
-          </th>
-          <th style="border: 1px solid black; border-collapse: collapse;">
-            <xsl:choose>
-              <xsl:when test="$profile.lang='en'">
-                No answer
-              </xsl:when>
-              <xsl:otherwise>
-                Sin respuesta
-              </xsl:otherwise>
-            </xsl:choose>
-          </th>
-          <th style="border: 1px solid black; border-collapse: collapse;">
-            <xsl:choose>
-              <xsl:when test="$profile.lang='en'">
-                Final Score
-              </xsl:when>
-              <xsl:otherwise>
-                Nota
-              </xsl:otherwise>
-            </xsl:choose>
-          </th>
-        </tr>
-        <tr>
-          <td style="border: 1px solid black; border-collapse: collapse;"
-              width="25%" height="50pt"/>
-          <td style="border: 1px solid black; border-collapse: collapse;"
-              width="25%" height="50pt"/>
-          <td style="border: 1px solid black; border-collapse: collapse;"
-              width="25%" height="50pt"/>
-          <td style="border: 1px solid black; border-collapse: collapse;"
-              width="25%" height="50pt"/>
-        </tr>
-      </table>
-      <hr width="100%" align="center"/>
-    </xsl:if>
-    
-    <!-- If cover is to be rendered in a single page, insert the page break -->
-    <xsl:if test="$ada.exam.render.separate.cover = 'yes'">
-      <br class="pageBreakBefore"/>
-    </xsl:if>
+          <!-- Student ID -->
+          <div class="ada_exam_name_block">
+            <div class="ada_exam_name_title">
+              <xsl:choose>
+                <xsl:when test="$profile.lang='en'">Student ID: </xsl:when>
+                <xsl:otherwise>NIA: </xsl:otherwise>
+              </xsl:choose>
+            </div>
+            <div class="ada_exam_name_data" />
+          </div>
+        </div>
+      </xsl:if>
+
+      <!-- Insert a box to fill with the scoring: Correct/Incorrect/Blank. Only
+           suitable for tests.
+
+           Possible improvement: provide several types of score boxes. Another one
+           in which a bunch of boxes are created (given by a parameter) and a
+           total box for the final score. All this controlled by a parameter.
+           -->
+      <xsl:if test="$score">
+        <div id="ada_exam_score">
+          <div class="ada_exam_score_title">
+            <div>
+              <xsl:choose>
+                <xsl:when test="$profile.lang='en'">Correct</xsl:when>
+                <xsl:otherwise>Correctas</xsl:otherwise>
+              </xsl:choose>
+            </div>
+            <div>
+              <xsl:choose>
+                <xsl:when test="$profile.lang='en'">Incorrect</xsl:when>
+                <xsl:otherwise>Incorrectas</xsl:otherwise>
+              </xsl:choose>
+            </div>
+            <div>
+              <xsl:choose>
+                <xsl:when test="$profile.lang='en'">No answer</xsl:when>
+                <xsl:otherwise>Sin respuesta</xsl:otherwise>
+              </xsl:choose>
+            </div>
+            <div>
+              <xsl:choose>
+                <xsl:when test="$profile.lang='en'">Score</xsl:when>
+                <xsl:otherwise>Nota</xsl:otherwise>
+              </xsl:choose>
+            </div>
+          </div>
+          <div class="ada_exam_score_data">
+            <div/>
+            <div/>
+            <div/>
+            <div/>
+          </div>
+        </div>
+      </xsl:if>
+    </div>
 
     <!-- Test questions within qandaset element -->
     <xsl:apply-templates select='qandaset/node()'/>
-    
+
     <!-- Problems within a section element -->
     <xsl:for-each select="section/section">
       <xsl:if test="$ada.exam.exercise.name">
