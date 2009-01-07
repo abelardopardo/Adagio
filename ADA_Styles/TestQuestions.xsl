@@ -146,12 +146,10 @@
             (id=<xsl:value-of select="@id"/>
             <xsl:for-each select="blockinfo/printhistory/para">
               , <xsl:value-of select="@arch"/>/<xsl:value-of select="@revision"/>/<xsl:value-of select="@vendor"/>
-          </xsl:for-each>)
-        </xsl:if>
-      </div>
-
-      <xsl:call-template name="singlequestion"/>
-
+            </xsl:for-each>)
+          </xsl:if>
+        </div>
+        <xsl:call-template name="singlequestion"/>
       </div>
     </xsl:if>
   </xsl:template>
@@ -172,69 +170,8 @@
   <!-- One single TF question -->
   <xsl:template name="singleTFquestion">
     <div class="ada_exam_singletfquestion">
-      <div class="ada_exam_singletfquestion_heading">
-        <div>
-          <xsl:choose>
-            <xsl:when test="$profile.lang='en'">True</xsl:when>
-            <xsl:otherwise>Verdadero</xsl:otherwise>
-          </xsl:choose>
-        </div>
-        <div>
-          <xsl:choose>
-            <xsl:when test="$profile.lang='en'">False</xsl:when>
-            <xsl:otherwise>Falso</xsl:otherwise>
-          </xsl:choose>
-        </div>
-      </div>
-      <div class="ada_exam_singletfquestion_statement">
-        <xsl:variable name="trueBgnd">
-          <xsl:choose>
-            <xsl:when test="($ada.testquestions.include.solutions = 'yes') and
-                            (contains(answer/@condition, 'Cierto') or
-                            contains(answer/@condition, 'Verdadero') or
-                            contains(answer/@condition, 'Correct') or
-                            contains(answer/@condition, 'True'))">background: black</xsl:when>
-            <xsl:otherwise>background: white</xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="falseBgnd">
-          <xsl:choose>
-            <xsl:when test="($ada.testquestions.include.solutions = 'yes') and
-                            (contains(answer/@condition, 'Falso') or
-                            contains(answer/@condition, 'False'))">background: black</xsl:when>
-            <xsl:otherwise>background: white</xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <div class="div.ada_exam_answer_square">
-          <div>
-            <xsl:if test="($ada.testquestions.include.solutions = 'yes') and
-                          (contains(answer/@condition, 'Cierto') or
-                          contains(answer/@condition, 'Verdadero') or
-                          contains(answer/@condition, 'Correct') or
-                          contains(answer/@condition, 'True'))">
-              <xsl:attribute name="class">solid_answer_square</xsl:attribute>
-            </xsl:if>
-          </div>
-        </div>
-        <div class="div.ada_exam_answer_square">
-          <div>
-            <xsl:if test="($ada.testquestions.include.solutions = 'yes') and
-                          (contains(answer/@condition, 'Falso') or
-                          contains(answer/@condition, 'False'))">
-              <xsl:attribute name="class">solid_answer_square</xsl:attribute>
-            </xsl:if>
-          </div>
-        </div>
-        <div class="ada_exam_singlemcquestion_answer_text">
-          <xsl:apply-templates select="question/node()"/>
-        </div>
-      </div>
-
-      <xsl:if test="$ada.testquestions.include.history = 'yes'">
-        <xsl:call-template name="dump-history">
-          <xsl:with-param name="colspan">5</xsl:with-param>
-        </xsl:call-template>
-      </xsl:if>
+      <xsl:call-template name="TFQuestion_Heading"/>
+      <xsl:call-template name="TFQuestion_Statement"/>
     </div>
   </xsl:template>
 
@@ -256,17 +193,7 @@
       <div class="ada_exam_singlemcquestion_answers">
         <xsl:for-each select="answer">
           <div class="ada_exam_singlemcquestion_answer">
-            <div class="ada_exam_answer_square">
-              <div>
-                <xsl:if test="($ada.testquestions.include.solutions = 'yes') and
-                              (contains(@condition, 'Cierto') or
-                              contains(@condition, 'Verdadero') or
-                              contains(@condition, 'Correct') or
-                              contains(@condition, 'True'))">
-                  <xsl:attribute name="class">solid_answer_square</xsl:attribute>
-                </xsl:if>
-              </div>
-            </div>
+            <xsl:call-template name="MC_answer_square"/>
             <div class="ada_exam_singlemcquestion_answer_text">
               <xsl:apply-templates />
             </div>
@@ -284,90 +211,10 @@
 
   <!-- multple TF question elements in the same quandaentry -->
   <xsl:template name="multipleTFquestion">
-    <table
-      style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false"
-      width="95%" align="center" cellspacing="0" cellpadding="3">
-      <tr>
-        <th style="border: 1px solid black;" width="60pt">
-          <xsl:choose>
-            <xsl:when test="$profile.lang='en'">True</xsl:when>
-            <xsl:otherwise>Verdadero</xsl:otherwise>
-          </xsl:choose>
-        </th>
-        <th style="border: 1px solid black;" width="60pt">
-          <xsl:choose>
-            <xsl:when test="$profile.lang='en'">False</xsl:when>
-            <xsl:otherwise>Falso</xsl:otherwise>
-          </xsl:choose>
-        </th>
-        <th style="border: 1px solid black;" />
-      </tr>
-
-      <xsl:for-each select="qandaentry">
-        <tr>
-          <xsl:variable name="trueBgnd">
-            <xsl:choose>
-              <xsl:when test="($ada.testquestions.include.solutions = 'yes') and
-                              (contains(answer/@condition, 'Cierto') or
-                              contains(answer/@condition, 'Verdadero') or
-                              contains(answer/@condition, 'Correct') or
-                              contains(answer/@condition, 'True'))">background: black</xsl:when>
-              <xsl:otherwise>background: white</xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
-          <xsl:variable name="falseBgnd">
-            <xsl:choose>
-              <xsl:when test="($ada.testquestions.include.solutions = 'yes') and
-                              (contains(answer/@condition, 'Falso') or
-                              contains(answer/@condition, 'False'))">background: black</xsl:when>
-              <xsl:otherwise>background: white</xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
-          <td style="border: 1px solid black;" align="center" height="20pt">
-            <table
-              style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false"
-              width="10pt" align="center">
-              <tr>
-                <xsl:element name="td">
-                  <xsl:attribute name="align">center</xsl:attribute>
-                  <xsl:attribute name="height">10pt</xsl:attribute>
-                  <xsl:attribute name="width">10pt</xsl:attribute>
-                  <xsl:attribute name="style">
-                    <xsl:value-of select="$trueBgnd"/>
-                  </xsl:attribute>
-                </xsl:element>
-              </tr>
-            </table>
-          </td>
-          <td style="border: 1px solid black;" align="center" height="20pt">
-            <table
-              style="border: 1px solid black; border-collapse: collapse;pageBreakInside: false"
-              width="10pt" align="center">
-              <tr>
-                <xsl:element name="td">
-                  <xsl:attribute name="align">center</xsl:attribute>
-                  <xsl:attribute name="height">10pt</xsl:attribute>
-                  <xsl:attribute name="width">10pt</xsl:attribute>
-                  <xsl:attribute name="style">
-                    <xsl:value-of select="$falseBgnd"/>
-                  </xsl:attribute>
-                </xsl:element>
-              </tr>
-            </table>
-          </td>
-          <td style="border: 1px solid black;" class="qtext">
-            <xsl:apply-templates select="question/node()"/>
-          </td>
-        </tr>
-        <xsl:if test="$ada.testquestions.include.history='yes'">
-          <tr>
-            <xsl:call-template name="dump-history">
-              <xsl:with-param name="colspan">4</xsl:with-param>
-            </xsl:call-template>
-          </tr>
-        </xsl:if>
-      </xsl:for-each>
-    </table>
+    <xsl:call-template name="TFQuestion_Heading"/>
+    <xsl:for-each select="qandaentry">
+      <xsl:call-template name="TFQuestion_Statement"/>
+    </xsl:for-each>
   </xsl:template>
 
   <!-- multple TF question elements in the same quandaentry -->
@@ -377,73 +224,144 @@
     </xsl:for-each>
   </xsl:template>
 
+  <xsl:template name="TFQuestion_Heading">
+    <div class="ada_exam_singletfquestion_heading">
+      <div>
+        <xsl:choose>
+          <xsl:when test="$profile.lang='en'">True</xsl:when>
+          <xsl:otherwise>Verdadero</xsl:otherwise>
+        </xsl:choose>
+      </div>
+      <div>
+        <xsl:choose>
+          <xsl:when test="$profile.lang='en'">False</xsl:when>
+          <xsl:otherwise>Falso</xsl:otherwise>
+        </xsl:choose>
+      </div>
+    </div>
+  </xsl:template>
+
+  <!-- Templates to draw answer squares -->
+  <xsl:template name="TF_answer_true_square">
+    <div class="ada_exam_answer_square">
+      <div>
+        <xsl:if test="($ada.testquestions.include.solutions = 'yes') and
+                      (contains(answer/@condition, 'Cierto') or
+                      contains(answer/@condition, 'Verdadero') or
+                      contains(answer/@condition, 'Correct') or
+                      contains(answer/@condition, 'True'))">
+          <xsl:attribute name="class">solid_answer_square</xsl:attribute>
+        </xsl:if>
+      </div>
+    </div>
+  </xsl:template>
+  <xsl:template name="TF_answer_false_square">
+    <div class="ada_exam_answer_square">
+      <div>
+        <xsl:if test="($ada.testquestions.include.solutions = 'yes') and
+                      (contains(answer/@condition, 'Falso') or
+                      contains(answer/@condition, 'False'))">
+          <xsl:attribute name="class">solid_answer_square</xsl:attribute>
+        </xsl:if>
+      </div>
+    </div>
+  </xsl:template>
+  <xsl:template name="MC_answer_square">
+    <div class="ada_exam_answer_square">
+      <div>
+        <xsl:if test="($ada.testquestions.include.solutions = 'yes') and
+                      (contains(@condition, 'Cierto') or
+                      contains(@condition, 'Verdadero') or
+                      contains(@condition, 'Correct') or
+                      contains(@condition, 'True'))">
+          <xsl:attribute name="class">solid_answer_square</xsl:attribute>
+        </xsl:if>
+      </div>
+    </div>
+  </xsl:template>
+
+  <!-- True/False squares + the statement in a row -->
+  <xsl:template name="TFQuestion_Statement">
+    <div class="ada_exam_tfquestion_statement">
+      <xsl:call-template name="TF_answer_true_square"/>
+      <xsl:call-template name="TF_answer_false_square"/>
+      <div class="ada_exam_singlemcquestion_answer_text">
+        <xsl:apply-templates select="question/node()"/>
+        <xsl:if test="$ada.testquestions.include.history = 'yes'">
+          <div class="ada_exam_question_history">
+            <xsl:call-template name="dump-history" />
+          </div>
+        </xsl:if>
+      </div>
+    </div> <!-- End of ada_exam_tfquestion_statement -->
+  </xsl:template>
+
   <!-- Dump element containing history -->
   <xsl:template name="dump-history">
-    <xsl:param name="colspan" select="1"/>
-      <p>
-        <xsl:choose>
-          <xsl:when test="$profile.lang='en'">Statistics</xsl:when>
-          <xsl:otherwise>Estadísticas</xsl:otherwise>
-        </xsl:choose>
-      </p>
+    <p>
+      <xsl:choose>
+        <xsl:when test="$profile.lang='en'">Statistics</xsl:when>
+        <xsl:otherwise>Estadísticas</xsl:otherwise>
+      </xsl:choose>
+    </p>
 
-      <table class="ada_exam_question_history_table">
-        <tr>
-          <xsl:choose>
-            <xsl:when test="$profile.lang='en'">
-              <th>Edition</th>
-              <th>Correct</th>
-              <th>Inc.</th>
-              <th>Blank</th>
-              <th>Total</th>
-              <th>Remarks</th>
-            </xsl:when>
-            <xsl:otherwise>
-              <th>Edición</th>
-              <th>Correctas</th>
-              <th>Inc.</th>
-              <th>Blanco</th>
-              <th>Total</th>
-              <th>Comentarios</th>
-            </xsl:otherwise>
-          </xsl:choose>
-        </tr>
+    <table class="ada_exam_question_history_table">
+      <tr>
         <xsl:choose>
-          <xsl:when test="blockinfo/printhistory/para">
-            <xsl:for-each select="blockinfo/printhistory/para">
-              <tr>
-                <td>
-                  <xsl:value-of
-                    select="@arch"/>/<xsl:value-of
-                  select="@revision"/>/<xsl:value-of
-                  select="@vendor"/>
-                </td>
-                <td>
-                  <xsl:value-of
-                    select="phrase[@condition='correct']/text()"/>
-                </td>
-                <td>
-                  <xsl:value-of select="phrase[@condition='incorrect']/text()"/>
-                </td>
-                <td>
-                  <xsl:value-of select="phrase[@condition='blank']/text()"/>
-                </td>
-                <td>
-                  <xsl:value-of select="phrase[@condition='total']/text()"/>
-                </td>
-                <td>
-                  <xsl:value-of select="phrase[@condition='remarks']/text()"/>
-                </td>
-              </tr>
-            </xsl:for-each>
+          <xsl:when test="$profile.lang='en'">
+            <th>Edition</th>
+            <th>Correct</th>
+            <th>Inc.</th>
+            <th>Blank</th>
+            <th>Total</th>
+            <th>Remarks</th>
           </xsl:when>
           <xsl:otherwise>
-            <tr>
-              <td colspan="6">No information available</td>
-            </tr>
+            <th>Edición</th>
+            <th>Correctas</th>
+            <th>Inc.</th>
+            <th>Blanco</th>
+            <th>Total</th>
+            <th>Comentarios</th>
           </xsl:otherwise>
         </xsl:choose>
-      </table>
+      </tr>
+      <xsl:choose>
+        <xsl:when test="blockinfo/printhistory/para">
+          <xsl:for-each select="blockinfo/printhistory/para">
+            <tr>
+              <td>
+                <xsl:value-of
+                  select="@arch"/>/<xsl:value-of
+                select="@revision"/>/<xsl:value-of
+                select="@vendor"/>
+              </td>
+              <td>
+                <xsl:value-of
+                  select="phrase[@condition='correct']/text()"/>
+              </td>
+              <td>
+                <xsl:value-of select="phrase[@condition='incorrect']/text()"/>
+              </td>
+              <td>
+                <xsl:value-of select="phrase[@condition='blank']/text()"/>
+              </td>
+              <td>
+                <xsl:value-of select="phrase[@condition='total']/text()"/>
+              </td>
+              <td>
+                <xsl:value-of select="phrase[@condition='remarks']/text()"/>
+              </td>
+            </tr>
+          </xsl:for-each>
+        </xsl:when>
+        <xsl:otherwise>
+          <tr>
+            <td colspan="6">No information available</td>
+          </tr>
+        </xsl:otherwise>
+      </xsl:choose>
+    </table>
   </xsl:template>
 
   <!-- The blockinfo needs to be matched to avoid to appear in the output -->
