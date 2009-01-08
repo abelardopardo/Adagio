@@ -67,36 +67,34 @@
                       ' /')"/>
           </tokens>
         </xsl:variable>
-        <p style="text-align: center">
-          <b>
-            <xsl:call-template name="ada.page.countdown.insert">
-              <xsl:with-param name="countdown.year">
-                <xsl:value-of
-                  select="exsl:node-set($deadlineparts)/tokens/token[position() =
-                          4]/text()"/>
-              </xsl:with-param>
-              <xsl:with-param name="countdown.month">
-                <xsl:value-of
-                  select="exsl:node-set($deadlineparts)/tokens/token[position() =
-                          3]/text()"/>
-              </xsl:with-param>
-              <xsl:with-param name="countdown.day">
-                <xsl:value-of
-                  select="exsl:node-set($deadlineparts)/tokens/token[position() =
-                          2]/text()"/>
-              </xsl:with-param>
-              <xsl:with-param name="countdown.hour">
-                <xsl:value-of
-                  select="exsl:node-set($deadlineparts)/tokens/token[position() =
-                          5]/text()"/>
-              </xsl:with-param>
-              <xsl:with-param name="countdown.minute">
-                <xsl:value-of
-                  select="exsl:node-set($deadlineparts)/tokens/token[position() =
-                          6]/text()"/>
-              </xsl:with-param>
-            </xsl:call-template>
-          </b>
+        <p class="ada_countdown">
+          <xsl:call-template name="ada.page.countdown.insert">
+            <xsl:with-param name="countdown.year">
+              <xsl:value-of
+                select="exsl:node-set($deadlineparts)/tokens/token[position() =
+                        4]/text()"/>
+            </xsl:with-param>
+            <xsl:with-param name="countdown.month">
+              <xsl:value-of
+                select="exsl:node-set($deadlineparts)/tokens/token[position() =
+                        3]/text()"/>
+            </xsl:with-param>
+            <xsl:with-param name="countdown.day">
+              <xsl:value-of
+                select="exsl:node-set($deadlineparts)/tokens/token[position() =
+                        2]/text()"/>
+            </xsl:with-param>
+            <xsl:with-param name="countdown.hour">
+              <xsl:value-of
+                select="exsl:node-set($deadlineparts)/tokens/token[position() =
+                        5]/text()"/>
+            </xsl:with-param>
+            <xsl:with-param name="countdown.minute">
+              <xsl:value-of
+                select="exsl:node-set($deadlineparts)/tokens/token[position() =
+                        6]/text()"/>
+            </xsl:with-param>
+          </xsl:call-template>
         </p>
       </xsl:if>
 
@@ -155,7 +153,7 @@
           </table>
         </xsl:if>
 
-        <p style="text-align: center">
+        <p class="ada_submit_button">
           <xsl:choose>
             <xsl:when test="$profile.lang='en'">
               <input value="Submit" type="submit"></input>
