@@ -260,6 +260,22 @@ xsltproc.style.file"/>
 	<!-- Create the dst directory -->
 	<mkdir dir="@{MERGESTYLES.DST.DIR}" />
 	
+	<exec executable="cygpath" osfamily="windows"
+	      outputproperty="xsltproc.style.file.new.value">
+	  <arg value="-u"/>
+	  <arg value="@{MERGESTYLES.FILE.TO.IMPORT}"/>
+	</exec>
+
+	<condition property="xsltproc.style.file.formatted"
+		   value="${xsltproc.style.file.new.value}">
+	  <os family="windows"/>
+	</condition>
+
+	<condition property="xsltproc.style.file.formatted"
+		   value="@{MERGESTYLES.FILE.TO.IMPORT}">
+	  <os family="unix"/>
+	</condition>
+
 	<!-- Force the dependency checking on changes on the style sheet -->
 	<dependset>
 	  <srcfileset file="${ada.local.property.file}" />
@@ -454,24 +470,8 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <echo>xsltproc.processing.prepr   RUN</echo>
     <echo level="${xsltproc.debug.level}">${basedir}</echo>
 
-    <exec executable="cygpath" osfamily="windows"
-	  outputproperty="xsltproc.style.file.new.value">
-      <arg value="-u"/>
-      <arg value="${xsltproc.style.file}"/>
-    </exec>
-
-    <condition property="xsltproc.style.file.formatted"
-	       value="${xsltproc.style.file.new.value}">
-      <os family="windows"/>
-    </condition>
-
-    <condition property="xsltproc.style.file.formatted"
-	       value="${xsltproc.style.file}">
-      <os family="unix"/>
-    </condition>
-
     <!-- Merge stylesheets -->
-    <mergestyles MERGESTYLES.FILE.TO.IMPORT="${xsltproc.style.file.formatted}"/>
+    <mergestyles MERGESTYLES.FILE.TO.IMPORT="${xsltproc.style.file}"/>
 
     <!-- Flatten the import filelist to get the suffix for the new style -->
     <pathconvert property="xsltproc.output.suffix">
