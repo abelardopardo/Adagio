@@ -102,6 +102,23 @@ xsltproc.style.file"/>
                else="">
       <not><equals arg1="${xsltproc.profile.lang}" arg2="" trim="true"/></not>
     </condition>
+
+    <!--
+	Set the value of several options to include entire option values
+	depending on the value of a variable. This is to avoid empty strings in
+	the command line because of the difference between windows and Unix with
+	java.exe
+    -->
+    <condition property="xsltproc.ada.current.datetime.option"
+               value="--stringparam ada.current.datetime ${ada.current.datetime}"
+               else="">
+      <not><equals arg1="${ada.current.datetime}" arg2="" trim="true"/></not>
+    </condition>
+    <condition property="xsltproc.ada.profile.revision.option"
+               value="--stringparam ada.profile.revision ${ada.profile.revision}"
+               else="">
+      <not><equals arg1="${ada.profile.revision}" arg2="" trim="true"/></not>
+    </condition>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths
@@ -194,12 +211,8 @@ xsltproc.style.file"/>
 	  <arg value="--stringparam"/>
 	  <arg value="ada.course.home"/>
 	  <arg value="${ada.course.home}"/>
-	  <arg value="--stringparam"/>
-	  <arg value="ada.current.datetime"/>
-	  <arg value="${ada.current.datetime}"/>
-	  <arg value="--stringparam"/>
-	  <arg value="profile.revision"/>
-	  <arg value="${ada.profile.revision}"/>
+	  <arg line="${xsltproc.ada.current.datetime.option}"/>
+	  <arg line="${xsltproc.ada.profile.revision.option}"/>
 	  <arg line="${xsltproc.profile.lang.option}"/>
 	  <arg line="@{XSLTPROC.EXTRA.ARGS}"/>
 	  <arg value="-o"/>

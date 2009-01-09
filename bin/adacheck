@@ -47,6 +47,7 @@ case "`uname`" in
 esac
 
 ADA_HOME=`dirname $0`/..
+ADA_HOME_UNIX=$ADA_HOME
 if [ $cygwin = "true" ]; then
     # If within cygwin, pahts need to be manipulated for a correct ant
     # invocation
@@ -59,11 +60,11 @@ if [ $cygwin = "true" ]; then
 fi
 
 # Slurp some additional functions
-source $ADA_HOME/bin/functions.bash
+source $ADA_HOME_UNIX/bin/functions.bash
 ada_version
 
 # Set the dirs with the catalogs to be checked
-export XML_CATALOG_FILES="$ADA_HOME/DTDs/catalog"
+export XML_CATALOG_FILES="$ADA_HOME_UNIX/DTDs/catalog"
 
 echo
 echo "ADA: Agile Distributed Authoring Toolkit (Version $ada_version)"
@@ -75,7 +76,7 @@ echo -n "TEST  1: Docbook DTDs and XSLs are properly installed... "
 xsltproc \
     --nonet \
     --path \
-    ".:$ADA_HOME/ADA_Styles" \
+    ".:$ADA_HOME_UNIX/ADA_Styles" \
     "--xinclude" \
     "--stringparam" \
     "ada.home" \
@@ -141,7 +142,7 @@ fi
 #
 # Execute SampleCourses/Admin/Laboratory2
 #
-echo -n "TEST  2: 'match' condition can be used ................. "
+echo -n "TEST  2: 'matches' condition can be used ............... "
 ant -q -Dada.home="$ADA_HOME" \
     -Dada.version="$ada_version" \
     -Dexportcontrol.files.given=true \

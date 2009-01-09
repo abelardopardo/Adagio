@@ -308,9 +308,10 @@
         </xsl:if>
         
         <!-- xml:base is eventually added to the root element -->
+        <!-- Removed because it is not backward compatible.
         <xsl:if test="not(../..) and $profile.baseuri.fixup">
           <xsl:call-template name="add-xml-base"/>
-        </xsl:if>
+        </xsl:if> -->
         
         <xsl:apply-templates select="node()" mode="profile"/>
       </xsl:copy>

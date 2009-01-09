@@ -49,6 +49,7 @@ esac
 basedir=$PWD
 
 ADA_HOME=`dirname $0`/..
+ADA_HOME_UNIX=$ADA_HOME
 if [ $cygwin = "true" ]; then
     # If within cygwin, pahts need to be manipulated for a correct ant
     # invocation
@@ -74,17 +75,17 @@ fi
 ada_check_home
 
 # Slurp some additional functions
-source $ADA_HOME/bin/functions.bash
+source $ADA_HOME_UNIX/bin/functions.bash
 ada_version
 
 # Check of ADA catalog has been generated
-if [ ! -f $ADA_HOME/DTDs/catalog ]; then
+if [ ! -f $ADA_HOME_UNIX/DTDs/catalog ]; then
   echo "ERROR: Execute adacheck first to deploy ADA correctly"
   exit
 fi
 
 # Set the dirs with the catalogs to be checked
-export XML_CATALOG_FILES="$ADA_HOME/DTDs/catalog"
+export XML_CATALOG_FILES="$ADA_HOME_UNIX/DTDs/catalog"
 
 # Invoke ant
 rm -f adado.log
