@@ -454,7 +454,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <echo>xsltproc.processing.prepr   RUN</echo>
     <echo level="${xsltproc.debug.level}">${basedir}</echo>
 
-    <exec executable="cygpath" os="windows"
+    <exec executable="cygpath" osfamily="windows"
 	  outputproperty="xsltproc.style.file.new.value">
       <arg value="-u"/>
       <arg value="${xsltproc.style.file}"/>

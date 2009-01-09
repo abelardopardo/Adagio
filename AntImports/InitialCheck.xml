@@ -214,7 +214,7 @@ exportcontrol"/>
       <os family="unix"/>
     </condition>
     
-    <exec executable="cygpath" os="windows" outputproperty="root.path.prefix">
+    <exec executable="cygpath" osfamily="windows" outputproperty="root.path.prefix">
       <arg value="-d"/>
       <arg value="/"/>
     </exec>
