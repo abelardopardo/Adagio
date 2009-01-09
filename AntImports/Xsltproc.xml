@@ -454,8 +454,24 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <echo>xsltproc.processing.prepr   RUN</echo>
     <echo level="${xsltproc.debug.level}">${basedir}</echo>
 
+    <exec executable="cygpath" os="windows"
+	  outputproperty="xsltproc.style.file.new.value">
+      <arg value="-u"/>
+      <arg value="${xsltproc.style.file}"/>
+    </exec>
+
+    <condition property="xsltproc.style.file.formatted"
+	       value="${xsltproc.style.file.new.value}">
+      <os family="windows"/>
+    </condition>
+
+    <condition property="xsltproc.style.file.formatted"
+	       value="${xsltproc.style.file}">
+      <os family="unix"/>
+    </condition>
+
     <!-- Merge stylesheets -->
-    <mergestyles MERGESTYLES.FILE.TO.IMPORT="${xsltproc.style.file}"/>
+    <mergestyles MERGESTYLES.FILE.TO.IMPORT="${xsltproc.style.file.formatted}"/>
 
     <!-- Flatten the import filelist to get the suffix for the new style -->
     <pathconvert property="xsltproc.output.suffix">
