@@ -261,17 +261,17 @@ xsltproc.style.file"/>
 	<mkdir dir="@{MERGESTYLES.DST.DIR}" />
 	
 	<exec executable="cygpath" osfamily="windows"
-	      outputproperty="xsltproc.style.file.new.value">
+	      outputproperty="mergestyle.file.to.import.new.value">
 	  <arg value="-u"/>
 	  <arg value="@{MERGESTYLES.FILE.TO.IMPORT}"/>
 	</exec>
 
-	<condition property="xsltproc.style.file.formatted"
-		   value="${xsltproc.style.file.new.value}">
+	<condition property="mergestyle.file.to.import.formatted"
+		   value="${mergestyle.file.to.import.new.value}">
 	  <os family="windows"/>
 	</condition>
 
-	<condition property="xsltproc.style.file.formatted"
+	<condition property="mergestyle.file.to.import.formatted"
 		   value="@{MERGESTYLES.FILE.TO.IMPORT}">
 	  <os family="unix"/>
 	</condition>
@@ -300,7 +300,7 @@ xsltproc.style.file"/>
 	  <arg value="--xinclude"/>
 	  <arg value="--stringparam"/>
 	  <arg value="mergesheets.file.to.fold"/>
-	  <arg value="@{MERGESTYLES.FILE.TO.IMPORT}"/>
+	  <arg value="${mergestyle.file.to.import.formatted}"/>
 	  <arg value="--stringparam"/>
 	  <arg value="ada.profile.suppress.profiling.attributes"/>
 	  <arg value="yes"/>
