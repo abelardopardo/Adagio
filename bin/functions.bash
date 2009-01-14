@@ -23,6 +23,63 @@
 #
 
 function ada_version() {
-    source $ADA_HOME/bin/ada_general_definitions.txt
+    source "$ADA_HOME/bin/ada_general_definitions.txt"
     export ada_version
 }
+
+function ada_check_packages() {
+    case "$ada_home" in
+	cygwin)
+	    ada_check_packages_cygwin
+	    ;;
+	linux)
+	    ada_check_packages_linux
+	    ;;
+	macintosh)
+	    ada_check_packages_macintosh
+	    ;;
+    esac
+}
+
+function ada_check_packages_cygwin() {
+    ada_package_list="coreutils docbook-xml412 \
+                      docbook-xml-42 docbook-xml-43 docbook-xml-44 \
+                      docbook-xsl file findutils gawk git grep libxml2 \
+                      libxslt openssh"
+    for pname in $ada_package_list; do
+	echo -n "    - Probing package $pname -- "
+	echo "??"
+    done
+}
+
+function ada_check_packages_linux() {
+    ada_package_list="coreutils docbook-xml \
+                      docbook-xsl file findutils gawk git grep libxml2 \
+                      xsltproc openssh-client"
+
+    # Detect which package management tool is being used
+    command=""
+    if [ `which dpkg` -a `dpkg -l | wc -l` -ne 0 ]; then
+	command="dpkg -s"
+    elif [ `which rpm` -a `rpm -l | wc -l` -ne 0 ]; then
+	command="rpm -q"
+    fi
+    for pname in $ada_package_list; do
+	echo -n "    - Probing package $pname -- "
+	$command $pname 1>/dev/null 2>&1
+	if [ $? -ne 0 ]; then
+	    echo "MISSING"
+	else
+	    echo "OK"
+	fi
+    done
+    echo "    (Used command $command)"
+}
+
+function ada_check_packages_macintosh() {
+    for pname in $ada_package_list; do
+	echo -n "    - Probing package $pname -- "
+	echo "??"
+    done
+}
+

@@ -152,23 +152,33 @@
         </para>
 
         <itemizedlist>
+	  <listitem>
+	    <para><command>bash</command>: The GNU Bourne Again Shell.</para>
+	  </listitem>
+	  <listitem>
+	    <para><command>coreutils</command>: GNU core utilities.</para>
+	  </listitem>
           <listitem>
-            <para>
-              <command>docbook-xml43</command> (or more recent): Docbook XML
-              DTD
-            </para>
+            <para><command>docbook-xml4*</command>: Docbook XML DTDs. Install
+	    all the packages with different versions to guarantee a wider
+	    compatibility scope.</para>
           </listitem>
           <listitem>
-            <para>
-              <command>docbook-xsl</command>: XSL stylesheets for the DocBook
-              XML DTD
-            </para>
+            <para><command>docbook-xsl</command>: XSL stylesheets to process
+            DocBook.</para>
           </listitem>
+	  <listitem>
+	    <para><command>libxslt</command>, <command>libxslt-devel</command>,
+	    <command>libxslt-doc</command>: The GNOME XSLT Library.</para>
+	  </listitem>
+	  <listitem>
+	    <para><command>libxml</command>, <command>libxml2</command>,
+	    <command>libxml2-devel</command>, <command>libxml2-doc</command>:
+	    XML C parser and toolkit.</para>
+	  </listitem>
           <listitem>
-            <para>
-              <command>git</command>: Fast version control system used to
-              download the latest ADA version.
-            </para>
+            <para><command>git</command>: Fast version control system used to
+            download the latest ADA version.</para>
           </listitem>
         </itemizedlist>
 

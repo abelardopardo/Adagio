@@ -29,50 +29,121 @@
 # cygwin $HOME points to some location within its internal tree (/home/...)
 function ada_check_home() {
     if [ "$ADA_HOME" = "" ]; then
-	echo "ERROR: Unable to set variable ADA_HOME"
+	echo
+	echo "                                  -- ERROR --"
+	echo "  Unable to set variable ADA_HOME"
+	echo
+	case "$ada_ostype" in
+	    cygwin)
+		ADA_REAL_USER_HOME=`cygpath --windows $HOME`
+		;;
+	    *)
+		ADA_REAL_USER_HOME="$HOME"
+		;;
+	esac
 	echo "Edit the file .ant.properties in $ADA_REAL_USER_HOME and"
         echo "add a line such as:"
-	if [ "$cygwin" = "true" ]; then
-	    echo "ada.home="`cygpath --windows /`"\[path to your ADA installation]\ADA"
-	else
-	    echo "ada.home=[path to your ADA dir]"
-	fi
+	echo "ada.home=[path to your ADA dir]"
+	exit
+    fi
+    # Add check to see if there are white spaces in ada_home.
+    if [ `expr index "$ADA_HOME" ' '` -ne 0 ]; then
+	echo
+	echo "                                  -- ERROR --"
+	echo "  ADA seems to be installed in a location where the absolute"
+	echo "  path contains spaces: $ADA_HOME"
+	echo "  Some of the tools used by ADA (xsltproc, for example) do not support"
+	echo "  the presence of white spaces in the paths."
+	echo
+	echo "  The solution is to move the directory where ADA is installed to a"
+	echo "  location where the absolute path has no white spaces."
+	echo
 	exit
     fi
 }
 
-cygwin=false;
-case "`uname`" in
-    CYGWIN*) cygwin=true ;;
+echo
+echo "ADA: Agile Distributed Authoring Toolkit"
+echo "Copyright (C) 2008 Carlos III University of Madrid"
+echo
+
+ada_ostype=`set | egrep OSTYPE`
+case "$ada_ostype" in
+    *cygwin*)
+	ada_ostype="cygwin"
+	;;
+    *linux*)
+	ada_ostype="linux"
+	;;
+    *darwin*)
+	ada_ostype="macintosh"
+	;;
+    *)
+	ada_ostype="unknown"
+	;;
 esac
 
-ADA_HOME=`dirname $0`/..
-ADA_HOME_UNIX=$ADA_HOME
-if [ $cygwin = "true" ]; then
+echo "  + Detected system of type $ada_ostype"
+
+# TEST: Dirname is installed
+echo -n "  + Command dirname is properly installed .................. "
+if [ ! `which dirname` ]; then
+    echo
+    echo "************************* ERROR *************************"
+    echo
+    echo "Program 'dirname' not found and is required by ADA."
+    case "$ada_ostype" in
+	cygwin)
+	    echo "  Make sure the 'coreutils' package is properly installed."
+	    echo "  If after installing this package the problem persists, send"
+	    echo "  the file 'adacheck.log' to your technical support."
+	    cygcheck -s -v -r 1>adacheck.log 2>&1
+	    ;;
+	linux)
+	    echo "  Make sure the 'coreutils' package is properly installed."
+	    ;;
+	*)
+	    echo "  Make sure the appropriate package is installed."
+	    ;;
+    esac
+    exit
+else
+    echo " OK"
+fi
+
+ADA_HOME=`dirname "$0"`/..
+ADA_HOME_UNIX="$ADA_HOME"
+if [ $ada_ostype = "cygwin" ]; then
     # If within cygwin, pahts need to be manipulated for a correct ant
     # invocation
-
-    # If ADA_HOME is empty, bomb out with msg
-    ada_check_home
 
     ADA_HOME=`cygpath --windows $ADA_HOME`
     ADA_HOME=${ADA_HOME//\\/\\\\}
 fi
 
+echo "  + Detected ADA_HOME=$ADA_HOME"
+echo "  + Detected ADA_HOME_UNIX=$ADA_HOME_UNIX"
+
+# If ADA_HOME is empty or contains white spaces, bomb out with msg
+ada_check_home
+
 # Slurp some additional functions
-source $ADA_HOME_UNIX/bin/functions.bash
+source "$ADA_HOME_UNIX/bin/functions.bash"
 ada_version
+echo "  + ADA Version $ada_version"
+
+echo "  + Check if the required packages are installed: "
+ada_check_packages
+ada_check_packages_linux
+exit
 
 # Set the dirs with the catalogs to be checked
 export XML_CATALOG_FILES="$ADA_HOME_UNIX/DTDs/catalog"
 
-echo
-echo "ADA: Agile Distributed Authoring Toolkit (Version $ada_version)"
-echo "Copyright (C) 2008 Carlos III University of Madrid"
-echo
+echo "  + Using catalog XML_CATALOG_FILES=$ADA_HOME_UNIX/DTDs/catalog"
 
-# TEST 1: Docbook properly installed
-echo -n "TEST  1: Docbook DTDs and XSLs are properly installed... "
+# Docbook properly installed
+echo -n "  + Docbook DTDs and XSLs are properly installed............. "
 xsltproc \
     --nonet \
     --path \
@@ -111,7 +182,8 @@ xsltproc \
     "-o" \
     "$ADA_HOME/doc/FAQ.html" \
     "$ADA_HOME/doc/QandaentryTable.xsl" \
-    "$ADA_HOME/doc/FAQ.xml" 1>/dev/null 2>&1
+    "$ADA_HOME/doc/FAQ.xml" \
+    1>/dev/null 2>&1
 
 adaXsltprocStatus="$?"
 if [ $adaXsltprocStatus -ne 0 ]; then
@@ -138,11 +210,11 @@ else
     echo "OK"
 fi
 
-# TEST 2: "matches" (included in ant-optional is available
+# TEST 4: "matches" (included in ant-optional is available
 #
 # Execute SampleCourses/Admin/Laboratory2
 #
-echo -n "TEST  2: 'matches' condition can be used ............... "
+echo -n "  + 'matches' condition can be used ......................... "
 ant -q -Dada.home="$ADA_HOME" \
     -Dada.version="$ada_version" \
     -Dexportcontrol.files.given=true \
