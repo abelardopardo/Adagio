@@ -208,7 +208,7 @@ else
     echo "OK"
 fi
 
-# TEST 4: "matches" (included in ant-optional is available
+# TEST: "matches" (included in ant-optional is available
 #
 # Execute SampleCourses/Admin/Laboratory2
 #

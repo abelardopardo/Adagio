@@ -167,14 +167,30 @@
             <para><command>docbook-xsl</command>: XSL stylesheets to process
             DocBook.</para>
           </listitem>
+          <listitem>
+            <para><command>file</command>: Determine file types using the magic
+	    number.</para>
+          </listitem>
+          <listitem>
+            <para><command>findutils</command>: Utilities for finding
+            files.</para>
+          </listitem>
+          <listitem>
+            <para><command>gawk</command>: A pattern scanning processing
+	    language.</para>
+          </listitem>
+          <listitem>
+            <para><command>grep</command>: Search and print textual input for
+	    lines matching a specific pattern.</para>
+          </listitem>
 	  <listitem>
-	    <para><command>libxslt</command>, <command>libxslt-devel</command>,
-	    <command>libxslt-doc</command>: The GNOME XSLT Library.</para>
+	    <para><command>libxslt</command>: The GNOME XSLT Library.</para>
 	  </listitem>
 	  <listitem>
-	    <para><command>libxml</command>, <command>libxml2</command>,
-	    <command>libxml2-devel</command>, <command>libxml2-doc</command>:
-	    XML C parser and toolkit.</para>
+	    <para><command>libxml2</command>: XML C parser and toolkit.</para>
+	  </listitem>
+	  <listitem>
+	    <para><command>openssh</command>: SSH client and server programs.</para>
 	  </listitem>
           <listitem>
             <para><command>git</command>: Fast version control system used to
