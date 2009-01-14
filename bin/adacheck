@@ -134,7 +134,6 @@ echo "  + ADA Version $ada_version"
 
 echo "  + Check if the required packages are installed: "
 ada_check_packages
-ada_check_packages_linux
 exit
 
 # Set the dirs with the catalogs to be checked

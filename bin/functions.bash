@@ -28,7 +28,7 @@ function ada_version() {
 }
 
 function ada_check_packages() {
-    case "$ada_home" in
+    case "$ada_ostype" in
 	cygwin)
 	    ada_check_packages_cygwin
 	    ;;
@@ -48,8 +48,13 @@ function ada_check_packages_cygwin() {
                       libxslt openssh"
     for pname in $ada_package_list; do
 	echo -n "    - Probing package $pname -- "
-	echo "??"
+	if [ `cygcheck -l $pname | wc -l` -eq 0 ]; then
+	    echo "MISSING"
+	else
+	    echo "OK"
+	fi
     done
+    echo "    (Used command cygcheck -l PKGNAME | wc -l)"
 }
 
 function ada_check_packages_linux() {
