@@ -155,6 +155,7 @@ Possible values are 'error', 'warning', 'info', 'verbose' and 'debug'"/>
       <arg value="${ada.minimum.version}"/>
       <arg value="${ada.maximum.version}"/>
     </exec>
+
     <fail message="Incorrect ADA version (${ada.version}). Check
       ada.exact.version, ada.maximum.version and ada.minimum.version">
       <condition>
