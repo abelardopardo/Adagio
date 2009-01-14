@@ -42,8 +42,7 @@ function ada_check_packages() {
 }
 
 function ada_check_packages_cygwin() {
-    ada_package_list="coreutils docbook-xml412 \
-                      docbook-xml-42 docbook-xml-43 docbook-xml-44 \
+    ada_package_list="coreutils docbook-xml42 docbook-xml43 docbook-xml44 \
                       docbook-xsl file findutils gawk git grep libxml2 \
                       libxslt openssh"
     for pname in $ada_package_list; do
