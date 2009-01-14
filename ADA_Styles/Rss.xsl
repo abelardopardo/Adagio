@@ -162,7 +162,7 @@
 	  select="exsl:node-set($episode.content)//sectioninfo[@condition='rss.info']
 	  | exsl:node-set($episode.content)//chapterinfo[@condition='rss.info']" />
 	<xsl:apply-templates
-	  select="exsl:node-set($rssitems)">
+	  select="exsl:node-set($rssitems)[position()>last()-$ada.rss.numitems.max]">
 	  <xsl:sort select="position()" order="descending" data-type="number"/>
 	  <xsl:with-param name="numitems"><xsl:value-of
 	      select="count(exsl:node-set($rssitems))" /></xsl:with-param>

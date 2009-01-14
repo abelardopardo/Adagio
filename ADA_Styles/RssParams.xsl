@@ -66,6 +66,7 @@
   <xsl:param name="ada.rss.date.rfc822"></xsl:param>
   <xsl:param name="ada.rss.self.atom.link"><xsl:value-of
   select="$ada.rss.channel.url"/></xsl:param>
+  <xsl:param name="ada.rss.numitems.max">1000000</xsl:param>
   <xsl:param name="ada.rss.autolink">false</xsl:param>
   <xsl:param name="ada.rss.autoguid">false</xsl:param>
 
