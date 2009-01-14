@@ -87,12 +87,16 @@ fi
 # Set the dirs with the catalogs to be checked
 export XML_CATALOG_FILES="$ADA_HOME_UNIX/DTDs/catalog"
 
+# Obtain the course home
+ada_course_home=$(cd `adafindcoursehome`; pwd)/
+
 # Invoke ant
 rm -f adado.log
 echo "ada_version=$ada_version" > adado.log
 echo "XML_CATALOG_FILES is $XML_CATALOG_FILES" >> adado.log
 ant -q -Dada.home="$ADA_HOME" \
     -q -Dada.version="$ada_version" \
+    -q -Dada.course.home="$ada_course_home" \
     -Dbasedir="$basedir" \
     -f "$AllTargets" $* 2>> adado.log
 

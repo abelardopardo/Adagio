@@ -21,11 +21,6 @@
 
 -->
 
-<!--
-Include here those definitions that are supposed to be shared among several Ant
-build templates
--->
-
 <project name="Initial Checks" default="initial.check">
   <description>
     Global ADA properties.
@@ -41,18 +36,6 @@ Possible values are 'error', 'warning', 'info', 'verbose' and 'debug'"/>
 
   <!-- Include the environment as a set of properties -->
   <property environment="env"/>
-
-  <!--
-       Script to detect where is the course home by checking for the presence of
-       AdaCourseParams.xml up to 10 levels up the current basedir. The script
-       needs to be executed the first thing in order to have ada.course.home
-       available to be used in the files that are about to be sourced.
-  -->
-  <exec executable="bash"
-	dir="${basedir}"
-	outputproperty="ada.course.home">
-    <arg value="${ada.home}${file.separator}bin${file.separator}adafindcoursehome"/>
-  </exec>
 
   <!-- Load the properties from the ada.course.home directory -->
   <property file="${ada.course.home}${file.separator}Ada.properties"/>
@@ -223,6 +206,7 @@ exportcontrol"/>
     </sequential>
   </macrodef>
 
+  <!-- Initialize all the properties -->
   <target name="ada.check.version" unless="ada.skip.check.for.correct.version">
     <!-- Compare the version numbers -->
     <exec executable="bash"
