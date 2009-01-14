@@ -134,7 +134,6 @@ echo "  + ADA Version $ada_version"
 
 echo "  + Check if the required packages are installed: "
 ada_check_packages
-exit
 
 # Set the dirs with the catalogs to be checked
 export XML_CATALOG_FILES="$ADA_HOME_UNIX/DTDs/catalog"
