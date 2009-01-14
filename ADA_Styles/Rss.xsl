@@ -157,22 +157,16 @@
         <xsl:variable name="episode.content"><xsl:apply-templates
         select="*/section|*/chapter" mode="profile"/></xsl:variable>
 
-        <!-- Loop over all section/chapter elements.  -->
-        <xsl:for-each
-          select="exsl:node-set($episode.content)/descendant::section|exsl:node-set($episode.content)/descendant::chapter">
-          <xsl:sort select="position()" order="descending"
-            data-type="number"/>
-          <xsl:if test="$ada.rss.debug != ''">
-            <debug><xsl:value-of select="$profile.lang"/></debug>
-            <debug><xsl:value-of select="title/text()"/></debug>
-            <debug><xsl:value-of select="count(sectioninfo)"/></debug>
-            <debug><xsl:value-of select="count(chapterinfo)"/></debug>
-          </xsl:if>
-
-          <xsl:apply-templates
-            select="sectioninfo|chapterinfo"/>
-
-        </xsl:for-each>
+	<!-- take the RSS items and apply templates to them -->
+	<xsl:variable name="rssitems"
+	  select="exsl:node-set($episode.content)//sectioninfo[@condition='rss.info']
+	  | exsl:node-set($episode.content)//chapterinfo[@condition='rss.info']" />
+	<xsl:apply-templates
+	  select="exsl:node-set($rssitems)">
+	  <xsl:sort select="position()" order="descending" data-type="number"/>
+	  <xsl:with-param name="numitems"><xsl:value-of
+	      select="count(exsl:node-set($rssitems))" /></xsl:with-param>
+	</xsl:apply-templates>
       </channel>
     </rss>
   </xsl:template>
@@ -185,6 +179,7 @@
   <xsl:template match="sectioninfo[contains(@condition, 'rss.info')]|
                        chapterinfo[contains(@condition, 'rss.info')]|
                        articleinfo[contains(@condition, 'rss.info')]">
+    <xsl:param name="numitems">0</xsl:param>
     <xsl:variable name="date.now">
       <xsl:choose>
         <xsl:when test="($ada.rss.force.date) and ($ada.rss.force.date != '')">
@@ -238,19 +233,37 @@
           <xsl:value-of
             select="normalize-space(title)"/>
         </title>
-        
-        <!-- Produce the link element from the modespec/olink -->
-        <xsl:if test="modespec/olink[@condition = 'link']">
-          <!-- Stick prefix for URL taken from the ancestor -->
-          <link><xsl:if test="ancestor::*/ulink[@condition = 'itemlinkbase']">
-                <xsl:value-of select="$ada.rss.item.url.prefix"/><xsl:value-of
-                select="ancestor::*/ulink[@condition =
-                'itemlinkbase']/@url"/>/</xsl:if><xsl:value-of
-                select="normalize-space(modespec/olink/text())"/></link>
-        </xsl:if>
-        
+
+        <link>
+	  <xsl:choose>
+	    <xsl:when test="$ada.rss.autolink='true'">
+	      <!-- Link auto-numbering -->
+	      <xsl:value-of
+		select="$ada.rss.autolink.urlprefix" />#item<xsl:number
+		value="$numitems - position() + 1" format="1"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <!-- Produce the link element from the modespec/olink -->
+	      <xsl:if test="modespec/olink[@condition = 'link']">
+		<!-- Stick prefix for URL taken from the ancestor -->
+		<xsl:if test="ancestor::*/ulink[@condition = 'itemlinkbase']">
+		  <xsl:value-of select="$ada.rss.item.url.prefix"/><xsl:value-of
+		    select="ancestor::*/ulink[@condition =
+		    'itemlinkbase']/@url"/>/</xsl:if><xsl:value-of
+		  select="normalize-space(modespec/olink/text())"/>
+	      </xsl:if>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</link>
+
         <guid>
           <xsl:choose>
+            <xsl:when test="$ada.rss.autoguid='true'">
+              <!-- GUID auto-numbering -->
+	      <xsl:value-of
+		select="$ada.rss.autoguid.guidprefix" />#item<xsl:number
+		value="$numitems - position() + 1" format="1"/>
+            </xsl:when>
             <xsl:when test="modespec/olink[@condition = 'guid']">
               <!-- Stick prefix for URL taken from the ancestor -->
               <xsl:if test="ancestor::*/ulink[@condition =
