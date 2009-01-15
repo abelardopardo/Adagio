@@ -87,17 +87,20 @@ fi
 # Set the dirs with the catalogs to be checked
 export XML_CATALOG_FILES="$ADA_HOME_UNIX/DTDs/catalog"
 
-# Obtain the course home
-ada_course_home=$(cd `adafindcoursehome`; pwd)/
+# Translate the root prefix if in cygwin
+ada_root_path_prefix=""
+if [ $cygwin = "true" ]; then
+    ada_root_path_prefix=-Droot.path.prefix=`cygpath -d /`
+fi
 
 # Invoke ant
 rm -f adado.log
 echo "ada_version=$ada_version" > adado.log
 echo "XML_CATALOG_FILES is $XML_CATALOG_FILES" >> adado.log
 ant -q -Dada.home="$ADA_HOME" \
-    -q -Dada.version="$ada_version" \
-    -q -Dada.course.home="$ada_course_home" \
+    -Dada.version="$ada_version" \
     -Dbasedir="$basedir" \
+    $ada_root_path_prefix \
     -f "$AllTargets" $* 2>> adado.log
 
 # Check for status: 0 = OK, 1 = Something went wrong!

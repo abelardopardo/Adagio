@@ -110,8 +110,9 @@
 
     <subant target="${subrecursive.target}" 
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
-	    inheritAll="false" inheritrefs="false">
+	    inheritall="false" inheritrefs="false">
       <property name="export.dst.dir" value="${subrecursive.dst.dir}" />
+      <property name="ada.course.home.candidate" value=""/>
       <filelist refid="subrecursive.dirlist"/>
     </subant>
   </target>
@@ -124,7 +125,8 @@
 
     <subant target="${subrecursive.target}" 
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
-	    inheritAll="false" inheritrefs="false">
+	    inheritall="false" inheritrefs="false">
+      <property name="ada.course.home.candidate" value=""/>
       <filelist refid="subrecursive.dirlist.nodst"/>
     </subant>
   </target>
@@ -143,8 +145,9 @@
     <!-- Call the subdirs with the clean target -->
     <subant target="clean" 
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
-	    inheritAll="false">
+	    inheritall="false">
       <property name="export.dst.dir" value="${subrecursive.dst.dir}" />
+      <property name="ada.course.home.candidate" value=""/>
       <filelist refid="subrecursive.dirlist"/>
     </subant>
   </target>
@@ -156,7 +159,8 @@
     <!-- Call the subdirs with the clean target -->
     <subant target="clean" 
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
-	    inheritAll="false">
+	    inheritall="false">
+      <property name="ada.course.home.candidate" value=""/>
       <filelist refid="subrecursive.dirlist.nodst"/>
     </subant>
   </target>

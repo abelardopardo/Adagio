@@ -398,6 +398,7 @@ xsltproc.style.file"/>
       <fileset dir="${ada.home}/AntImports" includes="Xsltproc-*.xml"/>
       <property name="xsltproc.files" value="${xsltproc.multilingual.files}"/>
       <property name="xsltproc.multilingual.files" value=""/>
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
     </subant>
   </target>
 

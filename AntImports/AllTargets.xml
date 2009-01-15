@@ -55,72 +55,114 @@
 
   <macrodef name="ada.apply.processing.rules">
     <sequential>
-      <ant antfile="${ada.home}/AntImports/Copyfiles.xml" 
-	   target="copyfiles.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
-	   target="extraant.processing.pretarget" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Xfig.xml" 
-	   target="xfig.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Inkscape.xml" 
-	   target="inkscape.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Gimp.xml" 
-	   target="gimp.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Convert.xml" 
-	   target="convert.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Xsltproc.xml" 
-	   target="xsltproc.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Xsltproc.xml" 
-	   target="xsltprocmultilingual.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/ExerciseSubmit.xml" 
-	   target="exercisesubmit.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Exam.xml" 
-	   target="exam.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/TestExam.xml" 
-	   target="testexam.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Rss.xml" 
-	   target="rss.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Latex.xml" 
-	   target="latex.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Dvips.xml" 
-	   target="dvips.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Ps2pdf.xml" 
-	   target="ps2pdf.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Pdflatex.xml" 
-	   target="pdflatex.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Dblatex.xml" 
-	   target="dblatex.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Msf2PDF.xml" 
-	   target="msf2pdf.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
-	   target="pdfnup.processing" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
-	   target="extraant.processing.posttarget" inheritAll="false"/>
-      
-      <ant antfile="${ada.home}/AntImports/Export.xml" 
-	   target="export.processing" inheritAll="false"/>
+      <ant antfile="${ada.home}/AntImports/Copyfiles.xml"
+	   target="copyfiles.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/ExtraAnt.xml"
+	   target="extraant.processing.pretarget" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Xfig.xml"
+	   target="xfig.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Inkscape.xml"
+	   target="inkscape.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Gimp.xml"
+	   target="gimp.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Convert.xml"
+	   target="convert.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Xsltproc.xml"
+	   target="xsltproc.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Xsltproc.xml"
+	   target="xsltprocmultilingual.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/ExerciseSubmit.xml"
+	   target="exercisesubmit.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Exam.xml"
+	   target="exam.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/TestExam.xml"
+	   target="testexam.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Rss.xml"
+	   target="rss.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Latex.xml"
+	   target="latex.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Dvips.xml"
+	   target="dvips.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Ps2pdf.xml"
+	   target="ps2pdf.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Pdflatex.xml"
+	   target="pdflatex.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Dblatex.xml"
+	   target="dblatex.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Msf2PDF.xml"
+	   target="msf2pdf.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/PDFnup.xml"
+	   target="pdfnup.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/ExtraAnt.xml"
+	   target="extraant.processing.posttarget" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
+      <ant antfile="${ada.home}/AntImports/Export.xml"
+	   target="export.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
     </sequential>
   </macrodef>
 
-  <target name="local.execute" 
+  <target name="local.execute"
 	  depends="ada.init, initial.delete.build.out">
 
     <echo>BEGIN ${basedir}</echo>
@@ -138,8 +180,10 @@
     <echo>BEGIN ${basedir}</echo>
     <echo file="${user.dir}/adado.log" append="true">ADA_BEGIN_EXE ${basedir}${line.separator}</echo>
 
-    <ant antfile="${ada.home}/AntImports/SubRecursive.xml" 
-	 target="subrecursive.processing" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/SubRecursive.xml"
+	 target="subrecursive.processing" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
     <ada.apply.processing.rules/>
 
@@ -151,84 +195,132 @@
 
     <echo>BEGIN CLEAN: ${basedir}</echo>
 
-    <ant antfile="${ada.home}/AntImports/Export.xml" 
-	 target="export.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Export.xml"
+	 target="export.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
-	 target="extraant.processing.posttarget.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/ExtraAnt.xml"
+	 target="extraant.processing.posttarget.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
-	 target="pdfnup.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/PDFnup.xml"
+	 target="pdfnup.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Msf2PDF.xml" 
-	 target="msf2pdf.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Msf2PDF.xml"
+	 target="msf2pdf.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Dblatex.xml" 
-	 target="dblatex.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Dblatex.xml"
+	 target="dblatex.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Pdflatex.xml" 
-	 target="pdflatex.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Pdflatex.xml"
+	 target="pdflatex.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Ps2pdf.xml" 
-	 target="ps2pdf.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Ps2pdf.xml"
+	 target="ps2pdf.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Dvips.xml" 
-	 target="dvips.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Dvips.xml"
+	 target="dvips.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Latex.xml" 
-	 target="latex.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Latex.xml"
+	 target="latex.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Rss.xml" 
-	 target="rss.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Rss.xml"
+	 target="rss.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/TestExam.xml" 
-	 target="testexam.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/TestExam.xml"
+	 target="testexam.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Exam.xml" 
-	 target="exam.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Exam.xml"
+	 target="exam.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/ExerciseSubmit.xml" 
-	 target="exercisesubmit.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/ExerciseSubmit.xml"
+	 target="exercisesubmit.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Xsltproc.xml" 
-	 target="xsltprocmultilingual.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Xsltproc.xml"
+	 target="xsltprocmultilingual.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Xsltproc.xml" 
-	 target="xsltproc.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Xsltproc.xml"
+	 target="xsltproc.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Convert.xml" 
-	 target="convert.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Convert.xml"
+	 target="convert.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Gimp.xml" 
-	 target="gimp.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Gimp.xml"
+	 target="gimp.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Inkscape.xml" 
-	 target="inkscape.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Inkscape.xml"
+	 target="inkscape.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Xfig.xml" 
-	 target="xfig.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Xfig.xml"
+	 target="xfig.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/ExtraAnt.xml" 
-	 target="extraant.processing.pretarget.clean" inheritAll="false"/>
- 
-    <ant antfile="${ada.home}/AntImports/Copyfiles.xml" 
-	 target="copyfiles.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/ExtraAnt.xml"
+	 target="extraant.processing.pretarget.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
+
+    <ant antfile="${ada.home}/AntImports/Copyfiles.xml"
+	 target="copyfiles.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
   </target>
-  
+
   <target name="redo" depends="clean, execute"/>
 
   <target name="clean" depends="local.clean">
 
-    <ant antfile="${ada.home}/AntImports/SubRecursive.xml" 
-	 target="subrecursive.clean" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/SubRecursive.xml"
+	 target="subrecursive.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
-    <ant antfile="${ada.home}/AntImports/Export.xml" 
-	 target="export.garbage.clean" inheritAll="false"/>
-    
-    <ant antfile="${ada.home}/AntImports/Cleaning.xml" 
-	 target="clean.clean" inheritAll="false"/>
-    
+    <ant antfile="${ada.home}/AntImports/Export.xml"
+	 target="export.garbage.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
+
+    <ant antfile="${ada.home}/AntImports/Cleaning.xml"
+	 target="clean.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
+
     <echo>END CLEAN: ${basedir}</echo>
 
   </target>
@@ -236,12 +328,13 @@
   <target name="report">
 
     <!-- Load the general properties from ada.home directory -->
-    <property 
+    <property
       file="${ada.home}${file.separator}bin${file.separator}ada_general_definitions.txt"/>
 
-    <ant antfile="${ada.home}/AntImports/InitialCheck.xml" 
+    <ant antfile="${ada.home}/AntImports/InitialCheck.xml"
 	 target="ada.properties.init.dump">
       <property name="ada.debug.level" value="warning"/>
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
     </ant>
 
     <echo/>
@@ -251,59 +344,80 @@
     <echo>Tool               | Installed |  Missing</echo>
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Xfig.xml" 
-	 target="xfig.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Xfig.xml"
+	 target="xfig.report" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Inkscape.xml" target="inkscape.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Inkscape.xml"
+	 target="inkscape.report" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Gimp.xml" 
-	 target="gimp.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Gimp.xml"
+	 target="gimp.report" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Convert.xml" 
-	 target="convert.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Convert.xml"
+	 target="convert.report" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Xsltproc.xml" 
-	 target="xsltproc.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Xsltproc.xml"
+	 target="xsltproc.report" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Latex.xml" 
-	 target="latex.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Latex.xml"
+	 target="latex.report" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Dvips.xml" 
-	 target="dvips.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Dvips.xml"
+	 target="dvips.report" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Ps2pdf.xml" 
-	 target="ps2pdf.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Ps2pdf.xml"
+	 target="ps2pdf.report" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Pdflatex.xml" target="pdflatex.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Pdflatex.xml"
+	 target="pdflatex.report" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-    <ant antfile="${ada.home}/AntImports/Dblatex.xml" 
-	 target="dblatex.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/Dblatex.xml"
+	 target="dblatex.report" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 
-<!--     <ant antfile="${ada.home}/AntImports/Msf2PDF.xml"  -->
-<!-- 	 target="msf2pdf.report" inheritAll="false"/> -->
-
-    <ant antfile="${ada.home}/AntImports/PDFnup.xml" 
-	 target="pdfnup.report" inheritAll="false"/>
+    <ant antfile="${ada.home}/AntImports/PDFnup.xml"
+	 target="pdfnup.report" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
 
     <echo>-------------------+-----------+-----------------------------</echo>
 

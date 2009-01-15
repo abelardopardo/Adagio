@@ -111,7 +111,7 @@ except copyfiles.clean and subrecursive.clean."/>
 	<ant antfile="${extraant.file}" dir="${extraant.abssrc.dir}" 
 	     target="@{EXTRAANT.EXECUTE.TARGET}" inheritall="false">
 	  <property name="ada.home"        value="${ada.home}"/>
-	  <property name="ada.course.home" value="${ada.course.home}"/>
+	  <property name="ada.course.home.candidate" value="${ada.course.home}"/>
 	</ant>
       </sequential>
     </macrodef>
