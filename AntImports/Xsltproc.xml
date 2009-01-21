@@ -200,7 +200,7 @@ xsltproc.style.file"/>
 	       output="build.out">
 	  <arg value="--nonet"/>
 	  <arg value="--path"/>
-	  <arg value=".:${ada.home}/ADA_Styles"/>
+	  <arg value=".:${ada.home.unix}/ADA_Styles"/>
 	  <arg value="--xinclude"/>
 	  <arg value="--stringparam"/>
 	  <arg value="ada.home"/>
@@ -296,7 +296,7 @@ xsltproc.style.file"/>
 	       executable="${xsltproc.exec}"  output="build.out">
 	  <arg value="--nonet"/>
 	  <arg value="--path"/>
-	  <arg value=".:${ada.home}/ADA_Styles"/>
+	  <arg value=".:${ada.home.unix}/ADA_Styles"/>
 	  <arg value="--xinclude"/>
 	  <arg value="--stringparam"/>
 	  <arg value="mergesheets.file.to.fold"/>
@@ -524,7 +524,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <xsltproc.execute DIR="${xsltproc.abssrc.dir}"
 		  XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
 		  XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
-		  XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}">
+		  XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}${file.separator}${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}">
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
       <compositemapper>

@@ -60,6 +60,8 @@ if [ $cygwin = "true" ]; then
     ADA_HOME=`cygpath --windows $ADA_HOME`
     ADA_HOME=${ADA_HOME//\\/\\\\}
     
+    ADA_HOME_UNIX=`cygpath $ADA_HOME`
+
     # Set path to Alltargets also in windows syntax with double fwdslash
     AllTargets=`cygpath --windows $ADA_HOME/AntImports/AllTargets.xml`
     AllTargets=${AllTargets//\\/\\\\}
@@ -98,7 +100,8 @@ rm -f adado.log
 echo "ada_version=$ada_version" > adado.log
 echo "XML_CATALOG_FILES is $XML_CATALOG_FILES" >> adado.log
 ant -q -Dada.home="$ADA_HOME" \
-    -Dada.version="$ada_version" \
+    -q -Dada.home.unix="$ADA_HOME_UNIX" \
+    -q -Dada.version="$ada_version" \
     -Dbasedir="$basedir" \
     $ada_root_path_prefix \
     -f "$AllTargets" $* 2>> adado.log
