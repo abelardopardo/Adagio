@@ -178,9 +178,9 @@ xsltproc \
     "ada.version" \
     "$ada_version" \
     "-o" \
-    "$ADA_HOME/doc/FAQ.html" \
+    "$ADA_HOME/bin/XML_Test.html" \
     "$ADA_HOME/doc/QandaentryTable.xsl" \
-    "$ADA_HOME/doc/FAQ.xml" \
+    "$ADA_HOME/doc/XML_Test.xml" \
     1>/dev/null 2>&1
 
 adaXsltprocStatus="$?"
@@ -238,3 +238,5 @@ fi
 
 echo
 adado -Dada.property.file.ready=true report
+
+rm -rf $ADA_HOME/bin/XML_Test.html
