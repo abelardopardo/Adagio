@@ -38,9 +38,20 @@
     <xsl:apply-templates select="//*/html:rss[@file]"/>
   </xsl:template>
 
-  <xsl:template match="xi:include"><xsl:value-of
-      select="@href"/><xsl:text>
-    </xsl:text></xsl:template>
+  <xsl:template match="xi:include">
+    <xsl:choose>
+      <xsl:when test="@xml:base"><xsl:value-of
+	  select="@xml:base"/><xsl:value-of
+	  select="@href"/><xsl:text>
+</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of
+	  select="@href"/><xsl:text>
+</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
   <xsl:template match="xsl:import"><xsl:value-of
       select="@href"/><xsl:text>
