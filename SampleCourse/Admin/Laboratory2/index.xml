@@ -4,6 +4,7 @@
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 
 <chapter>
+  <!--
   <chapterinfo condition="rss.info">
     <title lang="es">Práctica 2</title>
     <title lang="en">Lab 2</title>
@@ -31,8 +32,11 @@
       <keyword condition="category">Education</keyword>
     </keywordset>
   </chapterinfo>
-  <title lang="es">Práctica 2</title>
-  <title lang="en">Lab 2</title>
+  -->
+  <title>
+    <phrase lang="es">Práctica 2</phrase>
+    <phrase lang="en">Lab 2</phrase>
+  </title>
   
   <!-- Special mark in docbook including administrative information -->
   <note condition="AdminInfo">
