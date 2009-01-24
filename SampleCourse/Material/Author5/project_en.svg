@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="382.80807"
+   height="145.16805"
+   id="svg2174"
+   sodipodi:version="0.32"
+   inkscape:version="0.45.1"
+   version="1.0"
+   sodipodi:docbase="/home/abel/Courses/TAO/Labs/MemoryManagement/ReversePageTable"
+   sodipodi:docname="project.en.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs2176">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible">
+      <path
+         id="path5348"
+         d="M 0,0 L 5,-5 L -12.5,0 L 5,5 L 0,0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path5345"
+         d="M 0,0 L 5,-5 L -12.5,0 L 5,5 L 0,0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(0.8,0,0,0.8,10,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4.7804634"
+     inkscape:cx="191.40404"
+     inkscape:cy="72.584023"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1920"
+     inkscape:window-height="1176"
+     inkscape:window-x="0"
+     inkscape:window-y="0" />
+  <metadata
+     id="metadata2179">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-183.59596,-459.77817)">
+    <rect
+       ry="8.3744411"
+       id="rect4425"
+       style="font-size:187.34959412px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#ffdd55;stroke:#000000;stroke-width:0.60905027;stroke-linecap:butt;stroke-linejoin:miter;font-family:Verdana"
+       rx="8.3744411"
+       height="25.123323"
+       width="64.711594"
+       y="524.49384"
+       x="183.90048" />
+    <text
+       style="font-size:14.26316547px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.00190328in;font-family:Verdana"
+       id="text4427"
+       font-size="177"
+       font-weight="normal"
+       font-style="normal"
+       y="542.16736"
+       x="215.81055"
+       xml:space="preserve"
+       sodipodi:linespacing="125%">main.c</text>
+    <rect
+       ry="8.3744411"
+       id="rect4433"
+       style="font-size:187.34959412px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#d4ff2a;stroke:#000000;stroke-width:0.60905027;stroke-linecap:butt;stroke-linejoin:miter;font-family:Verdana"
+       rx="8.3744411"
+       height="39.512135"
+       width="71.867935"
+       y="517.29944"
+       x="494.23157" />
+    <text
+       style="font-size:14.26316547px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.00190328in;font-family:Verdana"
+       id="text4435"
+       font-size="177"
+       font-weight="normal"
+       font-style="normal"
+       y="542.4007"
+       x="530.30133"
+       xml:space="preserve"
+       sodipodi:linespacing="125%">frames.o</text>
+    <rect
+       id="rect4429"
+       style="font-size:187.34959412px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#ffccaa;stroke:#000000;stroke-width:0.60905027;stroke-linecap:butt;stroke-linejoin:miter;font-family:Verdana"
+       rx="8.3744411"
+       height="50.322781"
+       width="115.03437"
+       y="511.8941"
+       x="313.24173"
+       ry="8.3744411" />
+    <text
+       style="font-size:14.26316547px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.00190328in;font-family:Verdana"
+       id="text4431"
+       font-size="177"
+       font-weight="normal"
+       font-style="normal"
+       y="542.36591"
+       x="370.31323"
+       xml:space="preserve"
+       sodipodi:linespacing="125%">reverseTable.c</text>
+    <text
+       style="font-size:14.26316547px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:0.00190328in;font-family:Verdana"
+       id="text4463"
+       font-size="177"
+       font-weight="normal"
+       font-style="normal"
+       y="601.91461"
+       x="370.75546"
+       xml:space="preserve"
+       sodipodi:linespacing="125%">given</text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.01879752;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 250.49497,537.0555 L 311.52899,537.0555"
+       id="path4371" />
+    <path
+       id="path5542"
+       d="M 430.94309,537.0555 L 491.9771,537.0555"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.01879752;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-size:14.26316547px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana"
+       x="370.37592"
+       y="470.61484"
+       id="text5569"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan5571"
+         x="370.37592"
+         y="470.61484">to implement</tspan></text>
+    <path
+       id="path6551"
+       d="M 370.75892,510.51991 L 370.75892,473.71998"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.01879752;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.01879752;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 214.40148,550.42524 L 214.40148,596.49994 L 348.13779,596.49994"
+       id="path6553" />
+    <path
+       id="path7524"
+       d="M 530.68031,557.30652 L 530.68031,596.49994 L 392.4562,596.49994"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.01879752;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       sodipodi:nodetypes="ccc" />
+  </g>
+</svg>
