@@ -45,10 +45,10 @@
     <informalfigure id="reversetable_fig_pagetable">
       <mediaobject>
         <imageobject lang="es">
-          <imagedata align="center" fileref="tablestruct.es.png" format="PNG" />
+          <imagedata align="center" fileref="tablestruct_es.png" format="PNG" />
         </imageobject>
         <imageobject lang="en">
-          <imagedata align="center" fileref="tablestruct.en.png" format="PNG" />
+          <imagedata align="center" fileref="tablestruct_en.png" format="PNG" />
         </imageobject>
       </mediaobject>
     </informalfigure>
@@ -321,10 +321,10 @@
     <informalfigure id="reversetable_fig_project">
       <mediaobject>
         <imageobject lang="es">
-          <imagedata align="center" fileref="project.es.png" format="PNG" />
+          <imagedata align="center" fileref="project_es.png" format="PNG" />
         </imageobject>
         <imageobject lang="en">
-          <imagedata align="center" fileref="project.en.png" format="PNG" />
+          <imagedata align="center" fileref="project_en.png" format="PNG" />
         </imageobject>
       </mediaobject>
     </informalfigure>
