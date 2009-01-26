@@ -58,13 +58,17 @@
     <xsl:if test="$professorguide.include.guide = 'yes'">
       <xsl:variable name="depth" select="count(ancestor::section)+1"/>
       
-      <xsl:call-template name="id.warning"/>
-      
-      <div>
+      <!-- Removed to preserve backward compatibility with 1.69
+        <xsl:call-template name="id.warning"/>
+      -->
+
+      <div class="{name(.)}_pguide">
+        <!-- Removed to preserve compatibility with 1.69 stylesheets.
         <xsl:apply-templates select="." mode="class.attribute"/>
         <xsl:call-template name="dir">
           <xsl:with-param name="inherit" select="1"/>
         </xsl:call-template>
+        -->
         <xsl:call-template name="language.attribute"/>
 
         <xsl:call-template name="section.titlepage"/>
