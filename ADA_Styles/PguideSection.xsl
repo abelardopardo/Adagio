@@ -52,9 +52,9 @@
         <xsl:call-template name="id.warning"/>
       -->
 
-      <div>
-        <xsl:apply-templates select="." mode="class.attribute"/>
+      <div class="{name(.)}_pguide">
         <!-- Removed to preserve compatibility with 1.69 stylesheets.
+        <xsl:apply-templates select="." mode="class.attribute"/>
         <xsl:call-template name="dir">
           <xsl:with-param name="inherit" select="1"/>
         </xsl:call-template>
