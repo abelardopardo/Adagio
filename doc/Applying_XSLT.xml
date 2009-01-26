@@ -56,7 +56,7 @@
         <varname>xsltproc.multilingual.files</varname>. The variable
         <varname>mergestyles.master.style</varname> is used primarily to merge
         an external stylesheet with the given one and apply both of them (see
-        <xref linken="modified_stylesheet"/>).</para>
+        <xref linkend="modified_stylesheet"/>).</para>
 
         <para>For example, let us consider <ulink
         url="Samples/ApplyXSL/index.xml">a simple XML file</ulink> that needs to

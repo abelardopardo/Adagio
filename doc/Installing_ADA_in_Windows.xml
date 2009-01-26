@@ -342,7 +342,7 @@
           command:
         </para>
 
-        <programlisting id="git_install_command">$ <command>git clone <xi:include
+        <programlisting id="git_install_command_windows">$ <command>git clone <xi:include
           href="Params.xml"
           xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='ADA_DOWNLOAD_URL']/text())"
           parse="xml"
@@ -419,7 +419,7 @@
 
 	<para>
 	  Te solution for this problem is to make sure the packages specified in
-	  <xref linend="howtoinstallcygwin"/> are properly installed.
+	  <xref linkend="howtoinstallcygwin"/> are properly installed.
 	</para>
       </answer>
     </qandaentry>

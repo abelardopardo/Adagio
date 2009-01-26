@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
 <article id="ADA_FAQ">
   <title>ADA Frequently Asked Questions <phrase condition="ada_version"/></title>
 
@@ -551,7 +555,7 @@
           command:
         </para>
 
-        <programlisting id="git_install_command" format="linespecific">$ <command moreinfo="none">git clone http://flautin.it.uc3m.es/abel/ADA</command></programlisting>
+        <programlisting id="git_install_command_windows" format="linespecific">$ <command moreinfo="none">git clone http://flautin.it.uc3m.es/abel/ADA</command></programlisting>
 
         <para>
           A list of messages appear on the screen. After a while (depending on
@@ -623,7 +627,7 @@
 
         <para>
           Te solution for this problem is to make sure the packages specified in
-          <xref linend="howtoinstallcygwin"/> are properly installed.
+          <xref linkend="howtoinstallcygwin"/> are properly installed.
         </para>
       </answer>
     </qandaentry>
@@ -761,7 +765,9 @@
           tool. Open a terminal and type the command:
         </para>
 
-        <programlisting id="git_install_command" format="linespecific">$ <command moreinfo="none">git clone http://flautin.it.uc3m.es/abel/ADA</command></programlisting>
+        <programlisting format="linespecific">
+          $ <command moreinfo="none">git clone http://flautin.it.uc3m.es/abel/ADA</command>
+        </programlisting>
 
         <para>
           A new directory with name <filename moreinfo="none">ADA</filename> will be
@@ -772,7 +778,8 @@
       </answer>
     </qandaentry>
 
-    <qandaentry id="no_catalogs">
+    <qandaentry>
+
       <question>
         <para>
           ADA takes a huge amount of time to process Docbook documents, why?
@@ -801,12 +808,14 @@
 
         <para>
           Te solution for this problem is to make sure the packages specified in
-          <xref linend="howtoinstallcygwin"/> are properly installed.
+          <xref linkend="howtoinstallcygwin"/> are properly installed.
         </para>
       </answer>
+
     </qandaentry>
 
-    <qandaentry id="new_version_upgrade">
+    <qandaentry>
+
       <question>
         <para>
           A new version of ADA has been published, how do I upgrade?
@@ -844,6 +853,7 @@
           you know how to solve merge conflicts.
         </para>
       </answer>
+
     </qandaentry>
 
   </qandaset>
@@ -1266,7 +1276,7 @@ export.dst.dir=${ada.course.home}scratch</programlisting>
         <para>The following variables can be defined to apply a XSL stylesheet
         to one or several XML files:</para>
 
-        <informaltable frame="all" id="xsltproc_vars" xml:base="VarTables/Xsltproc_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/Xsltproc_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -1366,7 +1376,7 @@ by this value</entry>
         <varname>xsltproc.multilingual.files</varname>. The variable
         <varname>mergestyles.master.style</varname> is used primarily to merge
         an external stylesheet with the given one and apply both of them (see
-        <xref linken="modified_stylesheet"/>).</para>
+        <xref linkend="modified_stylesheet"/>).</para>
 
         <para>For example, let us consider <ulink url="Samples/ApplyXSL/index.xml">a simple XML file</ulink> that needs to
         be processed by the stylesheet <filename moreinfo="none">Dump.xsl</filename> (included
@@ -1422,7 +1432,7 @@ xsltproc.output.format=_Dump.xml
         executable to be properly installed in the system. The variables to use
         in the <filename moreinfo="none">Properties.txt</filename> file are:</para>
 
-        <informaltable frame="all" id="dblatex_vars" xml:base="VarTables/Dblatex_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/Dblatex_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -1559,7 +1569,7 @@ xsltproc.files=index.xml</programlisting>
 
 
   <qandaset>
-    <qandaentry id="general_params">
+    <qandaentry id="general_params" xreflabel="Which are the global style variables in ADA">
       <question>
         <para>Which general style variables are defined by ADA?</para>
       </question>
@@ -1570,7 +1580,7 @@ xsltproc.files=index.xml</programlisting>
         overwritten by definitions that apply to each project in particular (see
         <xref linkend="modified_stylesheet"/> for details.</para>
 
-        <informaltable frame="all" id="_vars" xml:base="ParamTables/GeneralParams_description.xml">
+        <informaltable frame="all" xml:base="ParamTables/GeneralParams_description.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -1688,7 +1698,7 @@ xsltproc.files=index.xml</programlisting>
       </answer>
     </qandaentry>
 
-    <qandaentry id="headtail_pararms">
+    <qandaentry id="headtail_pararms" xreflabel="How to inserta Header and Tail in a HTML File">
       <question>
         <para>How can I use the default ADA style to insert a Header and a Tail
         in a HTML file?</para>
@@ -1699,7 +1709,7 @@ xsltproc.files=index.xml</programlisting>
         the customazation of a HTML document by defining the following
         parameters:</para>
 
-        <informaltable frame="all" id="_vars" xml:base="ParamTables/HeadTailParams_description.xml">
+        <informaltable frame="all" xml:base="ParamTables/HeadTailParams_description.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -1944,7 +1954,7 @@ xsltproc.files=index.xml</programlisting>
         <filename moreinfo="none">Properties.txt</filename> (if not created, see <xref linkend="how_to_run_ada"/>) and set the following variables to suit your
         needs:</para>
 
-        <informaltable frame="all" id="xfig_vars" xml:base="VarTables/Xfig_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/Xfig_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -2046,7 +2056,7 @@ xsltproc.files=index.xml</programlisting>
         <filename moreinfo="none">Properties.txt</filename> (if not created, see <xref linkend="how_to_run_ada"/>) and set the approriate value for some of the
         following variables:</para>
 
-        <informaltable frame="all" id="inkscape_vars" xml:base="VarTables/Inkscape_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/Inkscape_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -2612,7 +2622,7 @@ xsltproc.multilingual.files=index.xml
         in the <filename moreinfo="none">Properties.txt</filename> to control this procedure
         are:</para>
 
-        <informaltable frame="all" id="copyfiles_vars" xml:base="VarTables/Copyfiles_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/Copyfiles_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -2722,7 +2732,7 @@ copyfiles.files=style.css
         following variables control the execution of the production process in
         a set of directories:</para>
 
-        <informaltable frame="all" id="subrecursive_vars" xml:base="VarTables/SubRecursive_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/SubRecursive_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -2907,7 +2917,7 @@ copyfiles.files=style.css
         that if satisfied, resource export is executed, but if not satisfied,
         no resource is exported:</para>
 
-        <informaltable frame="all" id="exportcontrol_vars" xml:base="VarTables/ExportControl_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/ExportControl_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -3092,7 +3102,7 @@ portcontrol.end=2018-06-25T19:00:00</programlisting>
         processed. The variables to define in the
         <filename moreinfo="none">Properties.tex</filename> file are:</para>
 
-        <informaltable frame="all" id="latex_vars" xml:base="VarTables/Latex_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/Latex_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -3176,7 +3186,7 @@ portcontrol.end=2018-06-25T19:00:00</programlisting>
         variables used in the <filename moreinfo="none">Properties.txt</filename> file are:
         </para>
 
-        <informaltable frame="all" id="dvips_vars" xml:base="VarTables/Dvips_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/Dvips_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -3241,8 +3251,10 @@ dvips.files=*.dvi
     </qandaentry>
 
     <qandaentry id="prosper_slides">
-      <question>How to create PDF slides using the LaTeX package
-      Prosper?</question>
+      <question>
+        <para>How to create PDF slides using the LaTeX package
+        Prosper?</para>
+      </question>
       <answer>
         <para>Yet to be written.</para>
       </answer>
@@ -3272,7 +3284,7 @@ dvips.files=*.dvi
         properly installed in the system. The set of variables to include in the
         <filename moreinfo="none">Properties.txt</filename> file are:</para>
 
-        <informaltable frame="all" id="pdfnup_vars" xml:base="VarTables/PDFnup_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/PDFnup_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -3358,7 +3370,7 @@ pdfnup.nup.option=2x1
         being available in a properly installed OpenOffice instance. The
         variables to control this rule are:</para>
 
-        <informaltable frame="all" id="msf2pdf_vars" xml:base="VarTables/Msf2PDF_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/Msf2PDF_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -3412,7 +3424,7 @@ pdfnup.nup.option=2x1
         to PDF. The variables to include in the
         <filename moreinfo="none">Properties.txt</filename> file are:</para>
 
-        <informaltable frame="all" id="ps2pdf_vars" xml:base="VarTables/Ps2pdf_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/Ps2pdf_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -3468,8 +3480,8 @@ pdfnup.nup.option=2x1
         the <ulink url="Samples/Ps2pdf/Properties.txt"><filename moreinfo="none">Properties.txt</filename>
         file</ulink> should include the definitions:</para>
 
-        ps2pdf.files=Document.ps
-
+        <programlisting format="linespecific">ps2pdf.files=Document.ps
+</programlisting>
 
 
         <para>Note that the rule can only be applied if the proper translation
@@ -4650,7 +4662,7 @@ $ <command moreinfo="none">git merge mary</command></programlisting>
         <para>The variables used in the previously described scenario suitable
         to be defined in the <filename moreinfo="none">Properties.txt</filename> are:</para>
 
-        <informaltable frame="all" id="exercisesubmit.processing_vars" xml:base="VarTables/ExerciseSubmit_vars.xml">
+        <informaltable frame="all" xml:base="VarTables/ExerciseSubmit_vars.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -4731,7 +4743,7 @@ by this value</entry>
         <entry>
           <varname>mergestyles.master.style</varname>
         </entry>
-        <entry>An additional stylesheet to combine with xsltproc.style.file</entry>
+        <entry>An additional stylesheet to combine with exercisesubmit.style.file</entry>
         <entry/>
       </row>
     </tbody>
@@ -4761,7 +4773,7 @@ by this value</entry>
         (see <xref linkend="headtail_pararms"/> for more details). The additional
         variables to control the the style are:</para>
 
-        <informaltable frame="all" id="_vars" xml:base="ParamTables/ExerciseSubmitParams_description.xml">
+        <informaltable frame="all" xml:base="ParamTables/ExerciseSubmitParams_description.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -4812,7 +4824,7 @@ exercisesubmit.files=index.xml
             <tbody>
               <row>
                 <entry>
-                  <informalfigure float="0">
+                  <para><informalfigure float="0">
                     <mediaobject>
                       <imageobject>
                         <imagedata fileref="Samples/ExerciseSubmit/Index.png" format="PNG"/>
@@ -4821,7 +4833,7 @@ exercisesubmit.files=index.xml
                         <phrase>Exercise hand out document</phrase>
                       </textobject>
                     </mediaobject>
-                  </informalfigure>
+                  </informalfigure></para>
                 </entry>
               </row>
             </tbody>
@@ -4881,7 +4893,7 @@ exercisesubmit.files=index.xml
             <tbody>
               <row>
                 <entry>
-                  <informalfigure float="0">
+                  <para><informalfigure float="0">
                     <mediaobject>
                       <imageobject>
                         <imagedata fileref="Samples/ExerciseSubmit/Index_solution.png" format="PNG"/>
@@ -4890,7 +4902,7 @@ exercisesubmit.files=index.xml
                         <phrase>Exercise document with solutions</phrase>
                       </textobject>
                     </mediaobject>
-                  </informalfigure>
+                  </informalfigure></para>
                 </entry>
               </row>
             </tbody>
@@ -4900,7 +4912,7 @@ exercisesubmit.files=index.xml
         <para>The presence or absence of the solution information is controlled
         by the following style parameter:</para>
 
-        <informaltable frame="all" id="_vars" xml:base="ParamTables/SolutionSection_description.xml">
+        <informaltable frame="all" xml:base="ParamTables/SolutionSection_description.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -4963,7 +4975,7 @@ exercisesubmit.files=index.xml
             <tbody>
               <row>
                 <entry>
-                  <informalfigure float="0">
+                  <para><informalfigure float="0">
                     <mediaobject>
                       <imageobject>
                         <imagedata fileref="Samples/ExerciseSubmit/Index_pguide.png" format="PNG"/>
@@ -4972,7 +4984,7 @@ exercisesubmit.files=index.xml
                         <phrase>Exercise document with the professor guide</phrase>
                       </textobject>
                     </mediaobject>
-                  </informalfigure>
+                  </informalfigure></para>
                 </entry>
               </row>
             </tbody>
@@ -4982,7 +4994,7 @@ exercisesubmit.files=index.xml
         <para>The presence or absence of the professor guide information is
         controlled by the following style parameter:</para>
 
-        <informaltable frame="all" id="_vars" xml:base="ParamTables/PguideSection_description.xml">
+        <informaltable frame="all" xml:base="ParamTables/PguideSection_description.xml">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"/>
     <colspec colnum="2" colname="col2" align="left"/>
@@ -5017,7 +5029,7 @@ exercisesubmit.files=index.xml
         <para>How to produce the submission page of an exercise document?</para>
       </question>
       <answer>
-        <para/>
+        <para>Yet to be written.</para>
       </answer>
     </qandaentry>
   </qandaset>

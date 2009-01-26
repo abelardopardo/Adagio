@@ -37,57 +37,59 @@
       HeaderLinks.xsl (S)
   -->
   <qandaset>
-    <qandaentry id="general_params">
+    <qandaentry id="general_params"
+                xreflabel="Which are the global style variables in ADA">
       <question>
-	<para>Which general style variables are defined by ADA?</para>
+        <para>Which general style variables are defined by ADA?</para>
       </question>
       <answer>
 
-	<para>Ada keeps some definitions that are used in multiple locations in
-	the built-in style sheets. The purpose of these definitions are to be
-	overwritten by definitions that apply to each project in particular (see
-	<xref linkend="modified_stylesheet"/> for details.</para>
+        <para>Ada keeps some definitions that are used in multiple locations in
+        the built-in style sheets. The purpose of these definitions are to be
+        overwritten by definitions that apply to each project in particular (see
+        <xref linkend="modified_stylesheet"/> for details.</para>
 
         <xi:include href="ParamTables/GeneralParams_description.xml"
                     parse="xml"
                     xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
-	<para>The recommendation is to include these and other style parameters
-	with the appropriate values in a common file, name it
-	<filename>AdaCourseParams.xml</filename> and place it at the top of your
-	project to notify ADA the location of the
-	<varname>ada.course.home</varname> (see <xref
-	linkend="ada_course_home"/>). The stylesheets include the default values
-	of these parameters, therefore, only those with values different from
-	the default need to be included in the file.</para>
+        <para>The recommendation is to include these and other style parameters
+        with the appropriate values in a common file, name it
+        <filename>AdaCourseParams.xml</filename> and place it at the top of your
+        project to notify ADA the location of the
+        <varname>ada.course.home</varname> (see <xref
+        linkend="ada_course_home"/>). The stylesheets include the default values
+        of these parameters, therefore, only those with values different from
+        the default need to be included in the file.</para>
       </answer>
     </qandaentry>
 
-    <qandaentry id="headtail_pararms">
+    <qandaentry id="headtail_pararms"
+                xreflabel="How to inserta Header and Tail in a HTML File">
       <question>
-	<para>How can I use the default ADA style to insert a Header and a Tail
-	in a HTML file?</para>
+        <para>How can I use the default ADA style to insert a Header and a Tail
+        in a HTML file?</para>
       </question>
 
       <answer>
-	<para>The stylesheel with name <filename>HeadTail.xsl</filename> allows
-	the customazation of a HTML document by defining the following
-	parameters:</para>
+        <para>The stylesheel with name <filename>HeadTail.xsl</filename> allows
+        the customazation of a HTML document by defining the following
+        parameters:</para>
 
         <xi:include href="ParamTables/HeadTailParams_description.xml"
                     parse="xml"
                     xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
 
-	<para>Through <ulink url="Samples/HeadTail/Params.xml">the definition of
-	some or all of these variables</ulink>, the obtained HTML document has
-	the structure shown in the following figure:</para>
+        <para>Through <ulink url="Samples/HeadTail/Params.xml">the definition of
+        some or all of these variables</ulink>, the obtained HTML document has
+        the structure shown in the following figure:</para>
 
         <informalfigure>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="Samples/HeadTail/HeadTailExplain.png" 
-			 format="PNG"/>
+              <imagedata fileref="Samples/HeadTail/HeadTailExplain.png"
+                         format="PNG"/>
             </imageobject>
             <textobject>
               <phrase>Effect of the HeadTail style sheet</phrase>
@@ -99,38 +101,38 @@
 
     <qandaentry>
       <question>
-	<para>How to insert some extra links at the top of the page?</para>
+        <para>How to insert some extra links at the top of the page?</para>
       </question>
       <answer>
-	<para>ADA allows to include a set of links at the header of a
-	document. There are two ways to define these links:</para>
+        <para>ADA allows to include a set of links at the header of a
+        document. There are two ways to define these links:</para>
 
-	<orderedlist numeration="loweralpha">
-	  <listitem>
-	    <para>By assignining the style parameter
-	    <varname>ada.page.header.links</varname> the Docbook snippet to insert
-	    in the header.</para>
-	  </listitem>
-	  <listitem>
-	    <para>By including in the Docbook document a <code>note</code>
-	    element with the attribute <code>condition</code> equal to
-	    <code>AdminInfo</code> and a <code>para</code> element with the
-	    <code>condition</code> attribute equal to
-	    <code>ada.page.header.links</code> containing
-	    the Docbook snippet to process.
-	    </para>
-	  </listitem>
-	</orderedlist>
+        <orderedlist numeration="loweralpha">
+          <listitem>
+            <para>By assignining the style parameter
+            <varname>ada.page.header.links</varname> the Docbook snippet to insert
+            in the header.</para>
+          </listitem>
+          <listitem>
+            <para>By including in the Docbook document a <code>note</code>
+            element with the attribute <code>condition</code> equal to
+            <code>AdminInfo</code> and a <code>para</code> element with the
+            <code>condition</code> attribute equal to
+            <code>ada.page.header.links</code> containing
+            the Docbook snippet to process.
+            </para>
+          </listitem>
+        </orderedlist>
 
-	<para>For example, by creating <ulink
-	url="Samples/HeaderLinks/Style.xsl">a simple style sheet including
-	<filename>HeaderLinks.xsl</filename></ulink> and <ulink
-	url="Samples/HeaderLinks/index.xml">a Docbook file with the element
-	<code>&lt;note condition="AdminInfo"></code></ulink>, and the <ulink
-	url="Samples/HeaderLinks/Properties.txt"><filename>Properties.txt</filename></ulink>
-	file with the proper definitions, <ulink
-	url="Samples/HeaderLinks/index.html">the resulting document</ulink> has
-	in its header the given link.</para>
+        <para>For example, by creating <ulink
+        url="Samples/HeaderLinks/Style.xsl">a simple style sheet including
+        <filename>HeaderLinks.xsl</filename></ulink> and <ulink
+        url="Samples/HeaderLinks/index.xml">a Docbook file with the element
+        <code>&lt;note condition="AdminInfo"></code></ulink>, and the <ulink
+        url="Samples/HeaderLinks/Properties.txt"><filename>Properties.txt</filename></ulink>
+        file with the proper definitions, <ulink
+        url="Samples/HeaderLinks/index.html">the resulting document</ulink> has
+        in its header the given link.</para>
       </answer>
     </qandaentry>
   </qandaset>
