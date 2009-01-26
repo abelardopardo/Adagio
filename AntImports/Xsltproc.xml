@@ -115,7 +115,7 @@ xsltproc.style.file"/>
       <not><equals arg1="${ada.current.datetime}" arg2="" trim="true"/></not>
     </condition>
     <condition property="xsltproc.ada.profile.revision.option"
-               value="--stringparam ada.profile.revision ${ada.profile.revision}"
+               value="--stringparam profile.revision ${ada.profile.revision}"
                else="">
       <not><equals arg1="${ada.profile.revision}" arg2="" trim="true"/></not>
     </condition>
