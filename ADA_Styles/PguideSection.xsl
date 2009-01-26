@@ -48,9 +48,10 @@
     <xsl:if test="$professorguide.include.guide = 'yes'">
       <xsl:variable name="depth" select="count(ancestor::section)+1"/>
       
-      <!-- Removed to preserve backward compatibility -->
+      <!-- Removed to preserve backward compatibility
         <xsl:call-template name="id.warning"/>
-      
+      -->
+
       <div>
         <xsl:apply-templates select="." mode="class.attribute"/>
         <xsl:call-template name="dir">
