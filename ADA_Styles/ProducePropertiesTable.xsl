@@ -41,7 +41,6 @@
 
   <xsl:template match="project">
     <informaltable frame="all">
-      <xsl:attribute name="id"><xsl:value-of select="@default"/>_vars</xsl:attribute>
       <tgroup rowsep="1" colsep="1" cols="3">
         <colspec colnum="1" colname="col1" align="left"/>
         <colspec colnum="2" colname="col2" align="left"/>

@@ -44,16 +44,16 @@
         <command>ant-optional</command> package), a Java run-time environment
         (JRE) and <command>git</command>.</para>
 
-	<para>Additionally to these packages, the following list are highly
-	recommended:</para>
+        <para>Additionally to these packages, the following list are highly
+        recommended:</para>
 
-	<itemizedlist>
-	  <listitem>
-	    <para><command>bash</command>: The GNU Bourne Again Shell.</para>
-	  </listitem>
-	  <listitem>
-	    <para><command>coreutils</command>: GNU core utilities.</para>
-	  </listitem>
+        <itemizedlist>
+          <listitem>
+            <para><command>bash</command>: The GNU Bourne Again Shell.</para>
+          </listitem>
+          <listitem>
+            <para><command>coreutils</command>: GNU core utilities.</para>
+          </listitem>
           <listitem>
             <para><command>docbook-xml</command>: Docbook XML DTDs.</para>
           </listitem>
@@ -63,7 +63,7 @@
           </listitem>
           <listitem>
             <para><command>file</command>: Determine file types using the magic
-	    number.</para>
+            number.</para>
           </listitem>
           <listitem>
             <para><command>findutils</command>: Utilities for finding
@@ -71,25 +71,25 @@
           </listitem>
           <listitem>
             <para><command>gawk</command>: A pattern scanning processing
-	    language.</para>
+            language.</para>
           </listitem>
           <listitem>
             <para><command>grep</command>: Search and print textual input for
-	    lines matching a specific pattern.</para>
+            lines matching a specific pattern.</para>
           </listitem>
-	  <listitem>
-	    <para><command>libxslt</command>: The GNOME XSLT Library.</para>
-	  </listitem>
-	  <listitem>
-	    <para><command>xsltproc</command>: XSLT command line processor.</para>
-	  </listitem>
-	  <listitem>
-	    <para><command>libxml2</command>: XML C parser and toolkit.</para>
-	  </listitem>
-	  <listitem>
-	    <para><command>openssh-client</command>: SSH client program to
-	    connect to remote sites.</para>
-	  </listitem>
+          <listitem>
+            <para><command>libxslt</command>: The GNOME XSLT Library.</para>
+          </listitem>
+          <listitem>
+            <para><command>xsltproc</command>: XSLT command line processor.</para>
+          </listitem>
+          <listitem>
+            <para><command>libxml2</command>: XML C parser and toolkit.</para>
+          </listitem>
+          <listitem>
+            <para><command>openssh-client</command>: SSH client program to
+            connect to remote sites.</para>
+          </listitem>
           <listitem>
             <para><command>git</command>: Fast version control system used to
             download the latest ADA version.</para>
@@ -115,11 +115,13 @@
           tool. Open a terminal and type the command:
         </para>
 
-        <xi:include 
-	  href="Installing_ADA_in_Windows.xml"
-	  xpointer="xpointer(//*[@id='git_install_command'])"
-	  parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-        
+        <programlisting>
+          <xi:include
+            href="Installing_ADA_in_Windows.xml"
+            xpointer="xpointer(//*[@id='git_install_command_windows']/node())"
+            parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+        </programlisting>
+
         <para>
           A new directory with name <filename>ADA</filename> will be
           created. In order to make ADA available, you need to include the
@@ -129,15 +131,19 @@
       </answer>
     </qandaentry>
 
-    <xi:include 
-      href="Installing_ADA_in_Windows.xml"
-      xpointer="xpointer(//*[@id='no_catalogs'])"
-      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <qandaentry>
+      <xi:include
+        href="Installing_ADA_in_Windows.xml"
+        xpointer="xpointer(//*[@id='no_catalogs']/node())"
+        parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    </qandaentry>
 
-    <xi:include
-      href="Installing_ADA_in_Windows.xml"
-      xpointer="xpointer(//*[@id='new_version_upgrade'])"
-      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <qandaentry>
+      <xi:include
+        href="Installing_ADA_in_Windows.xml"
+        xpointer="xpointer(//*[@id='new_version_upgrade']/node())"
+        parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    </qandaentry>
 
   </qandaset>
 </section>

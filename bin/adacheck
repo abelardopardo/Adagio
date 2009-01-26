@@ -142,7 +142,7 @@ echo "  + Using catalog XML_CATALOG_FILES=$ADA_HOME_UNIX/DTDs/catalog"
 
 # Docbook properly installed
 echo -n "  + Docbook DTDs and XSLs are properly installed............. "
-xsltproc \
+xsltproc  \
     --nonet \
     --path \
     ".:$ADA_HOME_UNIX/ADA_Styles" \
@@ -180,7 +180,7 @@ xsltproc \
     "-o" \
     "$ADA_HOME/bin/XML_Test.html" \
     "$ADA_HOME/doc/QandaentryTable.xsl" \
-    "$ADA_HOME/doc/XML_Test.xml" \
+    "$ADA_HOME/bin/XML_Test.xml" \
     1>/dev/null 2>&1
 
 adaXsltprocStatus="$?"

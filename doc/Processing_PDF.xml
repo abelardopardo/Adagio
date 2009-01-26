@@ -108,9 +108,9 @@
 	url="Samples/Ps2pdf/Properties.txt"><filename>Properties.txt</filename>
 	file</ulink> should include the definitions:</para>
 
-	<xi:include href="Samples/Ps2pdf/Properties.txt"
+	<programlisting><xi:include href="Samples/Ps2pdf/Properties.txt"
 		    parse="text"
-		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+		    xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
 
 	
 	<para>Note that the rule can only be applied if the proper translation

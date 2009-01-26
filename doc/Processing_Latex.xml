@@ -94,8 +94,10 @@
     </qandaentry>
 
     <qandaentry id="prosper_slides">
-      <question>How to create PDF slides using the LaTeX package
-      Prosper?</question>
+      <question>
+        <para>How to create PDF slides using the LaTeX package
+        Prosper?</para>
+      </question>
       <answer>
 	<para>Yet to be written.</para>
       </answer>
