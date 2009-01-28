@@ -163,5 +163,5 @@ else
     rm -f adado.log
 fi
 
-exit
+exit $adaAntStatus
 
