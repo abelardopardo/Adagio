@@ -43,12 +43,11 @@ import es.uc3m.it.gol.XMLMgr;
 /**
  * 
  * Class to shuffle questions in an exam written in docbook. The procedure
- * shuffles all qandaset as well as all internal qandaentry (when there is more
+ * shuffles all qandadivs as well as all internal qandaentry (when there is more
  * than one).
  *
  * @author Abelardo Pardo (abel@it.uc3m.es)
  *
- * @version $Id: Shuffle.java,v 1.3 2005/09/16 14:05:35 abel Exp $
  */
 public class Shuffle {
     static Random rnd;
@@ -262,6 +261,9 @@ public class Shuffle {
 		if (point.getChildren("qandaentry").size() > 1) {
 		    shuffleDiv(point, permutations[i - 1], qandadivIndex);
 		} else {
+		    // Shuffle the internal answers
+		    shuffleAnswers(point.getChild("qandaentry"));
+
 		    permutations[i - 1].add(qandadivIndex.get(point));
 		}
 
@@ -358,6 +360,9 @@ public class Shuffle {
 	    // Effectively detach this from qandadiv
 	    point.detach();
 	    
+	    // Shuffle the internal answers
+	    shuffleAnswers(point);
+
 	    // Insert it in the element
 	    qandadiv.addContent(point);
 
@@ -365,4 +370,54 @@ public class Shuffle {
 	    permutation.add(qandadivIndex.get(point));
 	} // End of while
     } // End of ShuffleDiv
+
+    // Function that shuffles the answers inside a qandaentry. There must be
+    // more than two answers, and the last one is NEVER moved to allow the use
+    // of "None of the above" as last answer.
+    public static void shuffleAnswers(Element qandaentry) {
+	List entries;
+	Element point;
+	int numAnswers;
+
+	// Get a hold of the list of answers for some quick checking
+	entries = qandaentry.getChildren("answer");
+	numAnswers = entries.size();
+
+	// If there are less than 3 answers, no shufflling is done
+	if (numAnswers < 3) {
+	    return;
+	}
+
+	// Loop over each answer and store it in the entries list.
+	entries = new ArrayList();
+	for (ListIterator li = qandaentry.getChildren("answer").listIterator();
+	     li.hasNext();) {
+
+	    point = (Element)li.next();
+	    entries.add(point);
+	}
+
+	// Remove all answers from the qandaentry
+	qandaentry.removeChildren("answer");
+
+	// While there is more than one answer remaining in the list of answers
+	while (entries.size() > 1) {
+
+	    // Remove a random element avoiding the last one
+	    point = (Element)entries.remove(rnd.nextInt(entries.size() - 1));
+	    // Detach from qandaentry
+	    point.detach();
+
+	    // And insert it again in the  qandaentry at the beginning of the
+	    // list that way, the last element is left untouched.
+	    qandaentry.addContent(point);
+	}
+
+	// Insert again the last answer in the qandaentry
+	point = (Element)entries.remove(0);
+	point.detach();
+	qandaentry.addContent(point);
+
+	return;
+    }
 } // End of class
