@@ -65,6 +65,11 @@
 	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
       </ant>
 
+      <ant antfile="${ada.home}/AntImports/Copytemplates.xml"
+	   target="copytemplates.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
       <ant antfile="${ada.home}/AntImports/Xfig.xml"
 	   target="xfig.processing" inheritAll="false">
 	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
@@ -287,6 +292,11 @@
 
     <ant antfile="${ada.home}/AntImports/Xfig.xml"
 	 target="xfig.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
+
+    <ant antfile="${ada.home}/AntImports/Copytemplates.xml"
+	 target="copytemplates.clean" inheritAll="false">
       <property name="ada.course.home.candidate" value="${ada.course.home}"/>
     </ant>
 

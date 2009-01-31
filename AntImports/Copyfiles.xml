@@ -23,7 +23,7 @@
 
 <project name="Copy files from SRC to DST" default="copyfiles">
   <description>
-    Copy copyfiles.files in copy.src.dir to copyfiles.dst.dir. The copy is
+    Copy copyfiles.files in copyfiles.src.dir to copyfiles.dst.dir. The copy is
     performed only if the two dirs are non empty.
   </description>
 
