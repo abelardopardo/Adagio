@@ -86,8 +86,8 @@
 	
 	<para>ADA allows to specify the source directory and a collection of
 	files and copy them to a destination directory. The variables to include
-	in the <filename>Properties.txt</filename> to control this procedure
-	are:</para>
+	in the <filename>Properties.txt</filename> file to control this
+	procedure are:</para>
 
 	<xi:include href="VarTables/Copyfiles_vars.xml"
                     parse="xml"

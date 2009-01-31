@@ -1,5 +1,6 @@
 subrecursive.dirs= ApplyXSL \
                    Copyfiles \
+                   Copytemplates \
                    Docbook \
                    Dvips \
                    Exam \

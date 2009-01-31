@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+-->
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                       TEMPLATES                              -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="Templates">
+  <title>Use templates to re-create similar files</title>
+
+  <qandaset>
+    <qandaentry id="use_templates" xreflabel="How to use templates">
+      <question>
+	<para>Is it possible to copy a text file but change only some of its
+	parts?</para>
+      </question>
+      <answer>
+	<para>Yes. The source file is called a template and there is a rule in
+	ADA that receives a set of template files, a text file with lines with
+	the structure <code>name=value</code> and copies each template replacing
+	every appearance of <code>@name@</code> by <code>value</code>.</para>
+
+	<para>The variables to include in the
+	<filename>Properties.txt</filename> file to control this rule
+	are:</para>
+
+	<xi:include href="VarTables/Copytemplates_vars.xml"
+		    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<para>The variables <varname>copytemplates.begintoken</varname> and
+	<varname>copytemplates.endtoken</varname> specify the characters that
+	are supposed to delimit the names to be replaced in the template
+	files. The text file called <quote>filter</quote> containing the lines
+	with the pairs <code>name=value</code> follows the same structure as the
+	<filename>Properties.txt</filename> file (see <xref linkend="adado"/>
+	for a detailed description of the format). The <code>name</code> is the
+	string searched in the template delimited by the specified tokens and
+	replaced by the value.</para>
+
+	<para>For example, suppose the following <ulink
+	url="Samples/Copytemplates/section.tmpl">template file used to create
+	the skeleton for a document containing a Docbook section</ulink>:</para>
+
+	<programlisting><xi:include href="Samples/Copytemplates/section.tmpl"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+	<para>The template is prepared to be instantiated with a specific
+	<code>id</code> attribute for the root node as well as the section
+	title</para>.
+
+	<para>A sample of <ulink url="Samples/Copytemplates/filter.txt">filter
+	file used to specify these values</ulink> is the following:</para>
+
+	<programlisting><xi:include href="Samples/Copytemplates/filter.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+	<para>The <ulink
+	url="Samples/Copyfiles/Properties.txt"><filename>Properties.txt</filename></ulink>
+	file to process this template and create the file with name
+	<filename>section.xml</filename> has the following content:</para>
+
+	<programlisting><xi:include href="Samples/Copytemplates/Properties.txt"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+	<para>The <ulink url="Samples/Copytemplates/section.xml">resulting
+	document containing a Docbook section</ulink> is:</para>
+
+	<programlisting><xi:include href="Samples/Copytemplates/section.xml"
+	parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="multiple_template_rules"
+		xreflabel="Use of multiple template filters">
+      <question>
+	<para>Can I use more than one filter for the same files?</para>
+      </question>
+      <answer>
+	<para>In the same directory, no. You may always apply each filter in a
+	different directory. This is a restriction in ADA to accommodate a
+	trade-off between simple rule description and processing power. Once you
+	use a rule to produce a resource, that same rule cannot be used for
+	another purpose in that directory. The possibility to pre-process any
+	required directory as a first step significantly reduces the effect of
+	this restriction.</para>
+      </answer>
+    </qandaentry>
+  </qandaset>
+</section>

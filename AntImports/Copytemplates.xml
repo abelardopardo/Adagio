@@ -45,9 +45,12 @@
 	      description="Source file names (no path, it is copytemplates.src.dir)"/>
     <property name="copytemplates.filter.file"  value=""
 	      description="Absolute path to a file containing var=value pairs to replace in source files."/>
-    <property name="copytemplates.output.format" value=""
-	      description="Output files have the same name as the sources but the
-extension is replaced &#10;# by this value"/>
+    <property name="copytemplates.filter.file"  value=""
+	      description="Absolute path to a file containing var=value pairs to replace in source files."/>
+    <property name="copytemplates.begintoken" value="@"
+	      description="Character to denote the beginning of a string to replace in the template"/>
+    <property name="copytemplates.endtoken" value="@"
+	      description="Character to denote the end of a string to replace in the template"/>
 
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths
@@ -72,12 +75,6 @@ extension is replaced &#10;# by this value"/>
 	<not>
 	  <equals arg1="${copytemplates.source.filelist.property}" arg2=""
 		  trim="true"/>
-	</not>
-
-	<!-- SRC and DST directories must be different -->
-	<not>
-	  <equals arg1="${copytemplates.absdst.dir}"
-		  arg2="${copytemplates.abssrc.dir}" trim="true"/>
 	</not>
 
 	<!-- The output format cannot be empty -->
@@ -113,9 +110,9 @@ extension is replaced &#10;# by this value"/>
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
     <copy todir="${copytemplates.absdst.dir}">
       <fileset refid="copytemplates.fileset"/>
-      <filterset filtersfile="${copytemplates.filter.file}"/>
-<!--       <mapper type="regexp" from="${copytemplates.abssrc.dir}/(.*)\.([^.]+)$$"  -->
-<!-- 	      to="${copytemplates.absdst.dir}/\1.${copytemplates.output.format}"/> -->
+      <filterset begintoken="${copytemplates.begintoken}"
+		 endtoken="${copytemplates.endtoken}"
+		 filtersfile="${copytemplates.filter.file}"/>
       <mapper type="regexp" from="(.*)\.([^.]+)$$"
 	      to="\1.${copytemplates.output.format}"/>
     </copy>
