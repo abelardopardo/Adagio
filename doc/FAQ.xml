@@ -146,10 +146,10 @@
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                        TEMPLATES                             -->
+  <!--                    COPYTEMPLATES                             -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Templates.xml"
+  <xi:include href="Copytemplates.xml"
               parse="xml"
               xmlns:xi="http://www.w3.org/2001/XInclude"/>
 

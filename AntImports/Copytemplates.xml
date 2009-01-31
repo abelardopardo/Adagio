@@ -45,8 +45,6 @@
 	      description="Source file names (no path, it is copytemplates.src.dir)"/>
     <property name="copytemplates.filter.file"  value=""
 	      description="Absolute path to a file containing var=value pairs to replace in source files."/>
-    <property name="copytemplates.filter.file"  value=""
-	      description="Absolute path to a file containing var=value pairs to replace in source files."/>
     <property name="copytemplates.begintoken" value="@"
 	      description="Character to denote the beginning of a string to replace in the template"/>
     <property name="copytemplates.endtoken" value="@"
