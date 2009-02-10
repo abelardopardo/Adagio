@@ -1,0 +1,51 @@
+div.ada_asap_author_box
+{
+  border: thin solid black;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  }
+
+/* div.ada_asap_author_box_row, */
+/* div.ada_asap_author_box_row_author, */
+/* div.ada_asap_author_box_row_author_id, */
+/* div.ada_asap_author_box_row_confirmation_email, */
+/* div.ada_asap_author_box_row_password, */
+/* div.ada_asap_author_box_row_payload */
+/* {  */
+/*   display: table-row; */
+/*   } */
+
+div.ada_asap_author_box_row_author_id
+{
+  border-bottom: thin solid black;
+  padding-bottom: 0.5em;
+ }
+
+div.ada_asap_author_box_data_a,
+div.ada_asap_author_box_data_b
+{
+  display: table-cell;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  }
+
+div.ada_asap_author_box_row_password,
+div.ada_asap_author_box_row_confirmation_email
+{
+  text-align: left;
+  border-bottom: thin solid black;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+ }
+
+.ada_asap_author_box_row_password .ada_asap_author_box_data_b
+{
+  margin-right: 10px;
+ }
+
+
+p.ada_submit_button
+{
+  text-align: center;
+  }

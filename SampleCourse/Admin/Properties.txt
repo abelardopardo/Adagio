@@ -6,7 +6,8 @@
 #
 
 # subrecursive.dirs=Guide3
-subrecursive.dirs.nodst=Laboratory1 \
+subrecursive.dirs.nodst=CSS \
+                        Laboratory1 \
                   	Laboratory2 \
                   	Laboratory3 \
    		  	Theory1 \

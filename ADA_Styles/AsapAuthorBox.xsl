@@ -37,137 +37,122 @@
   <!--                                                                     -->
   <!-- ******************************************************************* -->
   <xsl:template name="ada.asap.author.box">
-    <table>
-      <tr>
-        <td>
-          <table style="border: 1px solid black; 
-                        background-color: rgb(204, 204, 233)" 
-            cellpadding="4">
-            <!-- for ( i = I ; i OPERATOR TESTVALUE; i += INCREMENT ) -->
-            <!-- for ( i = 1 ; i &lt;= 4; i += 1 ) -->
-            <xsl:call-template name="author.loop">
-              <xsl:with-param name="i"         select="'1'"/>
-              <xsl:with-param name="increment" select="'1'"/>
-              <xsl:with-param name="operator"  select="'&lt;='"/>
-              <xsl:with-param name="testValue" select="$ada.asap.num.authors"/>
-            </xsl:call-template>
-            <tr>
-              <td colspan="2" style="background-color: rgb(255, 255, 255); 
-                                     border: 1px solid black"/></tr>
-            <xsl:if test="$ada.asap.include.password = 'one'">
-              <tr style="border: 1px solid black;">
-                <td style="text-align: right">
-                  <xsl:choose>
-                    <xsl:when test="$ada.asap.num.authors &gt; 1">
-                      <xsl:choose>
-                        <xsl:when test="$profile.lang='en'">
-                          Any author password
-                        </xsl:when>
-                        <xsl:otherwise>Clave de un autor</xsl:otherwise>
-                      </xsl:choose>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:choose>
-                        <xsl:when test="$profile.lang='en'">Password</xsl:when>
-                        <xsl:otherwise>Clave</xsl:otherwise>
-                      </xsl:choose>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </td>
-                <td>
-                  <input type="password" name="asap:password_0"
-                    size="20"/>
-                  <xsl:text> </xsl:text>
-                  <img alt="Info" style="border: 0; vertical-align: middle">
-                    <xsl:attribute name="src"><xsl:value-of
-                    select="$ada.course.home"/>/images/info.png</xsl:attribute>
-                    <xsl:attribute name="title">
-                      <xsl:choose>
-                        <xsl:when
-                          test="$profile.lang='en'">Password of any of the authors</xsl:when>
-                        <xsl:otherwise>Clave de cualquiera de los autores</xsl:otherwise>
-                      </xsl:choose>
-                    </xsl:attribute>
-                  </img>
-                </td>
-              </tr>
-            </xsl:if>
-
-            <xsl:if test="$ada.asap.include.groupname = 'yes'">
-              <tr style="border: 1px solid black;">
-                <td style="text-align: right">
-                  <xsl:choose>
-                    <xsl:when test="$profile.lang='en'">Group Nick</xsl:when>
-                    <xsl:otherwise>Nick de grupo</xsl:otherwise>
-                  </xsl:choose>
-                </td>
-                <td>
-                  <input type="text" name="__nick__" size="20">
-                    <xsl:if test="$ada.asap.groupname.default.value != ''">
-                      <xsl:attribute name="value">
-                        <xsl:value-of select="$ada.asap.groupname.default.value"/>
-                      </xsl:attribute>
-                    </xsl:if>
-                  </input>
-                  <xsl:text> </xsl:text>
-                  <img alt="Info" style="border: 0; vertical-align: middle">
-                    <xsl:attribute name="src"><xsl:value-of
-                    select="$ada.course.home"/>/images/info.png</xsl:attribute>
-                    <xsl:attribute name="title">
-                      <xsl:choose>
-                        <xsl:when
-                          test="$profile.lang='en'">Group name for the result table</xsl:when>
-                        <xsl:otherwise>Nombre del grupo para la tabla de resultados</xsl:otherwise>
-                      </xsl:choose>
-                    </xsl:attribute>
-                  </img>
-                </td>
-              </tr>
-            </xsl:if>
-
-            <xsl:if test="$ada.asap.confirmation.email = 'yes'">
-              <tr style="border: 1px solid black;">
-                <td style="text-align: right">
-                  <xsl:choose>
-                    <xsl:when test="$profile.lang='en'">Confirmation Email</xsl:when>
-                    <xsl:otherwise>Email de confirmación</xsl:otherwise>
-                  </xsl:choose><sup>*</sup>
-                </td>
-                <td>
-                  <input type="text" name="asap:Email" size="40"/>
-                </td>
-              </tr>
-              <tr style="border: 1px solid black;">
-                <td colspan="2" style="background-color: rgb(255, 255, 255);"/>
-              </tr>
-            </xsl:if>
-
-            <xsl:variable name="submit.count" 
-              select="count(//*/section[@condition='submit']) + 
-                      count(//*/note[@condition='submit'])"/>
-            <xsl:for-each select="//*/section[@condition='submit']|//*/note[@condition='submit']">
-              <tr>
+    <div class="ada_asap_author_box">
+      <!-- for ( i = I ; i OPERATOR TESTVALUE; i += INCREMENT ) -->
+      <!-- for ( i = 1 ; i &lt;= 4; i += 1 ) -->
+      <xsl:call-template name="author.loop">
+        <xsl:with-param name="i"         select="'1'"/>
+        <xsl:with-param name="increment" select="'1'"/>
+        <xsl:with-param name="operator"  select="'&lt;='"/>
+        <xsl:with-param name="testValue" select="$ada.asap.num.authors"/>
+      </xsl:call-template>
+      <xsl:if test="$ada.asap.include.password = 'one'">
+        <div class="ada_asap_author_box_row_password">
+          <div class="ada_asap_author_box_data_a">
+            <xsl:choose>
+              <xsl:when test="$ada.asap.num.authors &gt; 1">
                 <xsl:choose>
-                  <xsl:when test="$submit.count &gt; 1">
-                    <td align="center">
-                      <b><xsl:apply-templates select="../title/node()"/></b>
-                    </td>
-                    <td>
-                      <xsl:apply-templates/>
-                    </td>
+                  <xsl:when test="$profile.lang='en'">
+                    Any author password
                   </xsl:when>
-                  <xsl:otherwise>
-                    <td colspan="2">
-                      <xsl:apply-templates/>
-                    </td>
-                  </xsl:otherwise>
+                  <xsl:otherwise>Clave de un autor</xsl:otherwise>
                 </xsl:choose>
-              </tr>
-            </xsl:for-each>
-          </table>
-        </td>
-      </tr>      
-    </table>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:choose>
+                  <xsl:when test="$profile.lang='en'">Password</xsl:when>
+                  <xsl:otherwise>Clave</xsl:otherwise>
+                </xsl:choose>
+              </xsl:otherwise>
+            </xsl:choose>
+          </div>
+          <div class="ada_asap_author_box_data_b">
+            <input type="password" name="asap:password_0" size="20"/>
+            <xsl:text> </xsl:text>
+            <img alt="Info" style="border: 0; vertical-align: middle">
+              <xsl:attribute name="src"><xsl:value-of
+              select="$ada.course.home"/>/images/info.png</xsl:attribute>
+              <xsl:attribute name="title">
+                <xsl:choose>
+                  <xsl:when
+                    test="$profile.lang='en'">Password of any of the authors</xsl:when>
+                  <xsl:otherwise>Clave de cualquiera de los autores</xsl:otherwise>
+                </xsl:choose>
+              </xsl:attribute>
+            </img>
+          </div>
+        </div>
+      </xsl:if>
+
+      <xsl:if test="$ada.asap.include.groupname = 'yes'">
+        <div class="ada_asap_author_box_row_groupname">
+          <div class="ada_asap_author_box_data_a">
+            <xsl:choose>
+              <xsl:when test="$profile.lang='en'">Group Nick</xsl:when>
+              <xsl:otherwise>Nick de grupo</xsl:otherwise>
+            </xsl:choose>
+          </div>
+          <div class="ada_asap_author_box_data_b">
+            <input type="text" name="__nick__" size="20">
+              <xsl:if test="$ada.asap.groupname.default.value != ''">
+                <xsl:attribute name="value">
+                  <xsl:value-of select="$ada.asap.groupname.default.value"/>
+                </xsl:attribute>
+              </xsl:if>
+            </input>
+            <xsl:text> </xsl:text>
+            <img alt="Info" style="border: 0; vertical-align: middle">
+              <xsl:attribute name="src"><xsl:value-of
+              select="$ada.course.home"/>/images/info.png</xsl:attribute>
+              <xsl:attribute name="title">
+                <xsl:choose>
+                  <xsl:when
+                    test="$profile.lang='en'">Group name for the result table</xsl:when>
+                  <xsl:otherwise>Nombre del grupo para la tabla de resultados</xsl:otherwise>
+                </xsl:choose>
+              </xsl:attribute>
+            </img>
+          </div>
+        </div>
+      </xsl:if>
+
+      <xsl:if test="$ada.asap.confirmation.email = 'yes'">
+        <div class="ada_asap_author_box_row_confirmation_email">
+          <div class="ada_asap_author_box_data_a">
+            <xsl:choose>
+              <xsl:when test="$profile.lang='en'">Confirmation Email</xsl:when>
+              <xsl:otherwise>Email de confirmación</xsl:otherwise>
+            </xsl:choose><sup>*</sup>
+          </div>
+          <div class="ada_asap_author_box_data_b">
+            <input type="text" name="asap:Email" size="40"/>
+          </div>
+        </div>
+      </xsl:if>
+
+      <xsl:variable name="submit.count"
+        select="count(//*/section[@condition='submit']) +
+                count(//*/note[@condition='submit'])"/>
+      <xsl:for-each select="//*/section[@condition='submit']|//*/note[@condition='submit']">
+        <div class="ada_asap_author_box_row_payload">
+          <xsl:choose>
+            <xsl:when test="$submit.count &gt; 1">
+              <div class="ada_asap_author_box_data_a">
+                <b><xsl:apply-templates select="../title/node()"/></b>
+              </div>
+              <div class="ada_asap_author_box_data_b">
+                <xsl:apply-templates/>
+              </div>
+            </xsl:when>
+            <xsl:otherwise>
+              <div class="ada_asap_author_box_data">
+                <xsl:apply-templates/>
+              </div>
+            </xsl:otherwise>
+          </xsl:choose>
+        </div>
+      </xsl:for-each>
+    </div>
   </xsl:template>
 
   <!-- for ( i = I ; i OPERATOR TESTVALUE; i += INCREMENT ) -->
@@ -230,70 +215,64 @@
       <!-- Put your logic here, whatever it might be. For the purpose      -->
       <!-- of our example, we'll just write some text to the output stream. -->
       <xsl:if test="$ada.asap.num.authors &gt; 1">
-        <tr>
-          <td colspan="2" 
-            style="background-color: rgb(255, 255, 255); 
-                   text-align: center; border: 1px solid black">
+        <div class="ada_asap_author_box_row_author">
+          <div class="ada_asap_author_box_data_a">
             <xsl:choose>
               <xsl:when test="$profile.lang='en'">
                 Author <xsl:value-of select="$i" />
               </xsl:when>
               <xsl:otherwise>Autor <xsl:value-of select="$i"/></xsl:otherwise>
             </xsl:choose>
-          </td>
-        </tr>
+          </div>
+        </div>
       </xsl:if>
 
       <!-- We cannot push the choose to the inside because there is
            always the possibility of having the value "none" which means,
            there should be no box with full name info 
            -->
-      <xsl:choose>
-        <xsl:when test="$ada.asap.include.id = 'nia'">
-          <tr style="border: 1px solid black">
-            <td style="text-align: right">
+      <div class="ada_asap_author_box_row_author_id">
+        <xsl:choose>
+          <xsl:when test="$ada.asap.include.id = 'nia'">
+            <div class="ada_asap_author_box_data_a">
               <xsl:choose>
                 <xsl:when test="$profile.lang='en'">
                   Student ID (9 digits)
                 </xsl:when>
                 <xsl:otherwise>NIA (9 dígitos)</xsl:otherwise>
               </xsl:choose>
-            </td>
-            <td>
+            </div>
+            <div class="ada_asap_author_box_data_b">
               <xsl:element name="input">
                 <xsl:attribute name="type">text</xsl:attribute>
                 <xsl:attribute name="size">25</xsl:attribute>
                 <xsl:attribute name="maxlength">25</xsl:attribute>
                 <xsl:attribute name="name">asap:id_<xsl:value-of select="$i - 1"/></xsl:attribute>
               </xsl:element>
-            </td>
-          </tr>
-        </xsl:when>
-        <xsl:when test="$ada.asap.include.id = 'email'">
-          <tr>
-            <td style="text-align: right">
+            </div>
+          </xsl:when>
+          <xsl:when test="$ada.asap.include.id = 'email'">
+            <div class="ada_asap_author_box_data_a">
               <xsl:choose>
                 <xsl:when 
                   test="$profile.lang='en'">Student Email</xsl:when>
                 <xsl:otherwise>Correo de alumno</xsl:otherwise>
               </xsl:choose>
-            </td>
-            <td>
+            </div>
+            <div class="ada_asap_author_box_data_b">
               <xsl:element name="input">
                 <xsl:attribute name="type">text</xsl:attribute>
                 <xsl:attribute name="size">25</xsl:attribute>
                 <xsl:attribute name="maxlength">25</xsl:attribute>
                 <xsl:attribute name="name">asap:id_<xsl:value-of select="$i - 1"/></xsl:attribute>
               </xsl:element>
-            </td>
-          </tr>
-        </xsl:when>
-        <xsl:when test="$ada.asap.include.id = 'custom'">
-          <tr>
-            <td style="text-align: right">
+            </div>
+          </xsl:when>
+          <xsl:when test="$ada.asap.include.id = 'custom'">
+            <div class="ada_asap_author_box_data_a">
               <xsl:value-of select="$ada.asap.id.text"/>
-            </td>
-            <td>
+            </div>
+            <div class="ada_asap_author_box_data_b">
               <xsl:element name="input">
                 <xsl:attribute name="type">text</xsl:attribute>
                 <xsl:attribute name="size"><xsl:value-of
@@ -302,65 +281,61 @@
                 select="$ada.asap.id.field.length"/></xsl:attribute>
                 <xsl:attribute name="name">asap:id_<xsl:value-of select="$i - 1"/></xsl:attribute>
               </xsl:element>
-            </td>
-          </tr>
-        </xsl:when>
-      </xsl:choose>
+            </div>
+          </xsl:when>
+        </xsl:choose>
+      </div>
 
       <xsl:if test="$ada.asap.include.password = 'all'">
-        <tr>
-          <td style="text-align: right">
+        <div class="ada_asap_author_box_row_password">
+          <div class="ada_asap_author_box_data_a">
             <xsl:choose>
               <xsl:when test="$profile.lang='en'">Password</xsl:when>
               <xsl:otherwise>Clave</xsl:otherwise>
             </xsl:choose>
-          </td>
-          <td>
+          </div>
+          <div class="ada_asap_author_box_data_b">
             <xsl:element name="input">
               <xsl:attribute name="type">password</xsl:attribute>
               <xsl:attribute name="size">25</xsl:attribute>
               <xsl:attribute name="maxlength">25</xsl:attribute>
               <xsl:attribute name="name">asap:password_<xsl:value-of select="$i - 1"/></xsl:attribute>
             </xsl:element>
-          </td>
-        </tr>
+          </div>
+        </div>
       </xsl:if>
       <xsl:if test="$ada.asap.include.fullname = 'yes'">
-        <tr>
-          <xsl:choose>
-            <xsl:when test="$profile.lang='en'">
-              <td style="text-align: right">First Name</td>
-            </xsl:when>
-            <xsl:otherwise>
-              <td style="text-align: right">Nombre</td>
-            </xsl:otherwise>
-          </xsl:choose>
-          <td>
+        <div class="ada_asap_author_box_row ada_asap_author_box_fn">
+          <div class="ada_asap_author_box_data_a">
+            <xsl:choose>
+              <xsl:when test="$profile.lang='en'">First Name</xsl:when>
+              <xsl:otherwise>Nombre</xsl:otherwise>
+            </xsl:choose>
+          </div>
+          <div class="ada_asap_author_box_data_b">
             <xsl:element name="input">
               <xsl:attribute name="type">text</xsl:attribute>
               <xsl:attribute name="size">20</xsl:attribute>
               <xsl:attribute name="name">asap:firstName_<xsl:value-of select="$i - 1"/></xsl:attribute>
             </xsl:element>
-          </td>
-        </tr>
-        <tr>
-          <xsl:choose>
-            <xsl:when test="$profile.lang='en'">
-              <td style="text-align: right">Last Name</td>
-            </xsl:when>
-            <xsl:otherwise>
-              <td style="text-align: right">Apellidos</td>
-            </xsl:otherwise>
-          </xsl:choose>
-          <td>
+          </div>
+        </div>
+        <div class="ada_asap_author_box_row_ln">
+          <div class="ada_asap_author_box_data_a">
+            <xsl:choose>
+              <xsl:when test="$profile.lang='en'">Last Name</xsl:when>
+              <xsl:otherwise>Apellidos</xsl:otherwise>
+            </xsl:choose>
+          </div>
+          <div class="ada_asap_author_box_data_b">
             <xsl:element name="input">
               <xsl:attribute name="type">text</xsl:attribute>
               <xsl:attribute name="size">40</xsl:attribute>
               <xsl:attribute
                 name="name">asap:lastName_<xsl:value-of select="$i - 1"/></xsl:attribute>
             </xsl:element>
-          </td>
-        </tr>
+          </div>
+        </div>
       </xsl:if>
 
       <!-- Your logic should end here; don't change the rest of this        -->
