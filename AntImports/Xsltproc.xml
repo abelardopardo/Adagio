@@ -234,7 +234,7 @@ xsltproc.style.file"/>
 
 	<!-- Calculate the possible dependencies on the sheet to merge -->
 	<exec executable="bash" failonerror="true"
-	      dir="${basedir}" append="yes" error="build.out"
+	      dir="${basedir}" logError="yes"
 	      outputproperty="xsltproc.mergestyles.dependency.files">
 	  <arg value="${ada.home}${file.separator}bin${file.separator}getdependencies.sh"/>
 	  <arg value="${mergestyles.master.style}"/>
@@ -417,7 +417,7 @@ xsltproc.style.file"/>
     </pathconvert>
 
     <exec executable="bash" failonerror="true"
-	  dir="${basedir}" append="yes" error="build.out"
+	  dir="${basedir}" logError="yes"
 	  outputproperty="xsltproc.dependency.files">
       <arg value="${ada.home}${file.separator}bin${file.separator}getdependencies.sh"/>
       <arg value="${xsltproc.source.dependency.property}"/>
@@ -488,7 +488,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     </pathconvert>
 
     <exec executable="bash" failonerror="true"
-	  dir="${basedir}" append="yes" error="build.out"
+	  dir="${basedir}" logError="yes"
 	  outputproperty="xsltproc.dependency.files">
       <arg value="${ada.home}${file.separator}bin${file.separator}getdependencies.sh"/>
       <arg value="${xsltproc.source.dependency.property}"/>
