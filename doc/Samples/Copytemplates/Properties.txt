@@ -1,0 +1,3 @@
+copytemplates.files=section.tmpl
+copytemplates.filter.file=filter.txt
+copytemplates.output.format=xml
