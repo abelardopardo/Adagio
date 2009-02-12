@@ -69,17 +69,6 @@
           <div class="ada_asap_author_box_data_b">
             <input type="password" name="asap:password_0" size="20"/>
             <xsl:text> </xsl:text>
-            <img alt="Info" style="border: 0; vertical-align: middle">
-              <xsl:attribute name="src"><xsl:value-of
-              select="$ada.course.home"/>/images/info.png</xsl:attribute>
-              <xsl:attribute name="title">
-                <xsl:choose>
-                  <xsl:when
-                    test="$profile.lang='en'">Password of any of the authors</xsl:when>
-                  <xsl:otherwise>Clave de cualquiera de los autores</xsl:otherwise>
-                </xsl:choose>
-              </xsl:attribute>
-            </img>
           </div>
         </div>
       </xsl:if>
@@ -101,17 +90,6 @@
               </xsl:if>
             </input>
             <xsl:text> </xsl:text>
-            <img alt="Info" style="border: 0; vertical-align: middle">
-              <xsl:attribute name="src"><xsl:value-of
-              select="$ada.course.home"/>/images/info.png</xsl:attribute>
-              <xsl:attribute name="title">
-                <xsl:choose>
-                  <xsl:when
-                    test="$profile.lang='en'">Group name for the result table</xsl:when>
-                  <xsl:otherwise>Nombre del grupo para la tabla de resultados</xsl:otherwise>
-                </xsl:choose>
-              </xsl:attribute>
-            </img>
           </div>
         </div>
       </xsl:if>
