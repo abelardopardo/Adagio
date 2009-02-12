@@ -67,6 +67,8 @@
     <para>
       Fichero <filename>square.s</filename> (entregar tan sólo el fichero de
       texto con el programa, ni ficheros *.o ni el ejecutable).
+    </para>
+    <para>
       <phrase condition="input">
         <phrase condition="type">file</phrase>
         <phrase condition="size">80</phrase>

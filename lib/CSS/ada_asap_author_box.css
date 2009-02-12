@@ -1,33 +1,34 @@
 div.ada_asap_author_box
 {
   border: thin solid black;
+  border-collapse: collapse;
   display: table;
   margin-left: auto;
   margin-right: auto;
   }
 
-/* div.ada_asap_author_box_row, */
-/* div.ada_asap_author_box_row_author, */
-/* div.ada_asap_author_box_row_author_id, */
-/* div.ada_asap_author_box_row_confirmation_email, */
-/* div.ada_asap_author_box_row_password, */
-/* div.ada_asap_author_box_row_payload */
-/* {  */
-/*   display: table-row; */
-/*   } */
+div.ada_asap_author_box_row,
+div.ada_asap_author_box_row_author,
+div.ada_asap_author_box_row_author_id,
+div.ada_asap_author_box_row_confirmation_email,
+div.ada_asap_author_box_row_password,
+div.ada_asap_author_box_row_payload
+{
+  display: table-row;
+  }
 
-div.ada_asap_author_box_row_author_id
+div.ada_asap_author_box_row_author_id,
+div.ada_asap_author_box_row_payload
 {
   border-bottom: thin solid black;
-  padding-bottom: 0.5em;
  }
 
 div.ada_asap_author_box_data_a,
 div.ada_asap_author_box_data_b
 {
   display: table-cell;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  vertical-align: middle;
   }
 
 div.ada_asap_author_box_row_password,

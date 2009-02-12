@@ -163,23 +163,27 @@
       Fichero <filename>buscar.s</filename>, con el código de la subrutina
       (entregar tan sólo el fichero de texto con el programa, ni ficheros *.o
       ni el ejecutable).
-    <phrase condition="input">
-      <phrase condition="type">file</phrase>
-      <phrase condition="size">80</phrase>
-      <phrase condition="accept">text/plain,text/html</phrase>
-      <phrase condition="name">buscar.s</phrase>
-    </phrase>
+    </para>
+    <para>
+      <phrase condition="input">
+        <phrase condition="type">file</phrase>
+        <phrase condition="size">80</phrase>
+        <phrase condition="accept">text/plain,text/html</phrase>
+        <phrase condition="name">buscar.s</phrase>
+      </phrase>
     </para>
     <para>
       Fichero <filename>buscarmain.s</filename>, con el código de main (entregar
       tan sólo el fichero de texto con el programa, ni ficheros *.o ni el
       ejecutable).
-    <phrase condition="input">
-      <phrase condition="type">file</phrase>
-      <phrase condition="size">80</phrase>
-      <phrase condition="accept">text/plain,text/html</phrase>
-      <phrase condition="name">buscarmain.s</phrase>
-    </phrase>
+    </para>
+    <para>
+      <phrase condition="input">
+        <phrase condition="type">file</phrase>
+        <phrase condition="size">40</phrase>
+        <phrase condition="accept">text/plain,text/html</phrase>
+        <phrase condition="name">buscarmain.s</phrase>
+      </phrase>
     </para>
   </note>
 </section>
