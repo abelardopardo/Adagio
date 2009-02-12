@@ -1,1 +1,11 @@
 subrecursive.dirs=${ada.home}/lib/CSS
+
+export.files=ada_asap_author_box.css \
+             ada_handheld.css \
+             ada_html.css \
+             ada_layout.css \
+             ada_style.css \
+             HeadGradient.png \
+             LogosUC3M_IT.png \
+             sample_course.css \
+             tao_style.css
