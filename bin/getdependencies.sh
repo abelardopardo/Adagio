@@ -39,7 +39,7 @@ XML_CATALOG_FILES="file://$ADA_HOME/DTDs/catalog"
 
 if [ "$1" = "-cache" ]; then
     if [ "$#" -lt 3 ]; then
-	echo "ADA Internal error. Inconsisten use 1 of getdependencies" >&2
+	echo "ADA Internal error. Inconsisten use 1 of getdependencies" >>build.out
 	exit -1
     fi
     shift
@@ -47,7 +47,7 @@ if [ "$1" = "-cache" ]; then
     shift
     params="$*"
 elif [ "$#" -lt 1 ]; then
-    echo "ADA Internal error. Inconsisten use 2 of getdependencies" >&2
+    echo "ADA Internal error. Inconsisten use 2 of getdependencies" >>build.out
     exit -1
 else
     params="$*"
@@ -111,7 +111,7 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
     # If something went wrong, simply bomb out to catch the error in the proper
     # location
     if [ "$?" -ne 0 ]; then
-	echo "ADA detected the incorrect XML file: ${fileArray[$idx]}" >&2
+	echo "ADA detected the incorrect XML file: ${fileArray[$idx]}" >> build.out
 	exit -1
     else
 	# If build.out was not present, and now it is empty, nuke it
@@ -132,7 +132,7 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
 
 	# If the file does not exist, bomb out
 	if [ ! -e $fname ]; then
-	    echo "File $fname (included in ${fileArray[$idx]}), does not exist" >&2
+	    echo "File $fname (included in ${fileArray[$idx]}), does not exist" >>build.out
 	    exit -1
 	fi
 
