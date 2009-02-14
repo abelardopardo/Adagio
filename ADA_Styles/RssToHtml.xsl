@@ -66,15 +66,14 @@
   </xsl:template>
 
   <xsl:template match="channel">
-    <h2 style="text-align: center">Channel Info</h2>
+    <h2 id="rss_channel_info">Channel Info</h2>
     <div class="informaltable">
-      <table style="border:1px solid black; margin-left: auto; margin-right: auto;" 
-        cellspacing="5" cellpadding="5">
+      <table>
         <tr>
           <td colspan="2">Title</td>
           <td><xsl:value-of select="title"/></td>
           <td rowspan="22">
-            <h3 style="text-align: center">Episode Index</h3>
+            <h3 id="rss_episode_index">Episode Index</h3>
             <ol>
               <xsl:for-each select="item">
                 <xsl:sort select="position()" order="descending"
@@ -103,7 +102,7 @@
           <td>
             <xsl:value-of select="image/url"/>
             <xsl:text> </xsl:text>
-            <img style="vertical-align: middle">
+            <img>
               <xsl:attribute name="src">
                 <xsl:value-of select="image/url"/>
               </xsl:attribute>
@@ -235,9 +234,9 @@
 
   <xsl:template match="item">
     <a><xsl:attribute name="id"><xsl:value-of select="position()"/></xsl:attribute></a>
-    <table style="border:1px solid black" cellspacing="5" cellpadding="5">
+    <table>
       <tr>
-        <th style="background-color: #000000; color:#FFFFFF" colspan="3">
+        <th class="item_title">
           Episode <xsl:value-of
           select="count(following-sibling::item) + 1"/>
         </th>
