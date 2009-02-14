@@ -1,0 +1,37 @@
+#!/bin/bash
+
+searchDir="$1"
+if [ "$searchDir" = "" ]; then
+  searchDir="."
+fi
+
+currentDir=$PWD
+files=`find $searchDir -name 'doTest'`
+
+executed=0
+passed=0
+failed=0
+for name in $files; do
+  dname=`dirname $name`
+  echo -n "+ Processing test in $dname "
+  cd $dname
+
+  executed=`expr $executed + 1`
+
+  rm -f doTest*.log
+  bash doTest >& doTest.log
+
+  if [ "$?" -ne 0 ]; then
+    echo "  FAILED  "
+    failed=`expr $failed + 1`
+  else
+    echo "  OK"
+    passed=`expr $passed + 1`
+  fi
+
+  cd $currentDir
+done
+
+echo "Executed: $executed. Passed: $passed. Failed $failed"
+
+exit

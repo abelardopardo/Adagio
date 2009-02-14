@@ -1,0 +1,2 @@
+mergestyles.master.style=Params.xml
+xsltproc.files=origin.xml

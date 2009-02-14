@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+
+
+
+<section>
+    <title>
+      <phrase lang="en">Work in Lab</phrase>
+      <phrase lang="es">Trabajo en el laboratorio</phrase>
+    </title>
+    <remark condition="duration">90</remark>
+
+<!--
+    <note condition="professorguide">
+    <title>
+        <phrase lang="en">Tutor guide</phrase>
+        <phrase lang="es">Notas para el profesor</phrase>
+    </title>
+     </note>
+-->
+   <xi:include xml:base="../../exercises/"
+      href="passive-elements/index.xml"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+    <xi:include xml:base="../../exercises/"
+      href="basic-layout/index.xml"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+    <xi:include xml:base="../../exercises/"
+      href="events-management/index.xml"
+      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+      </section>
