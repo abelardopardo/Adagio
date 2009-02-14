@@ -1,0 +1,4 @@
+VALUE1=This is the value 1
+VALUE2=This is the value 2
+VALUE3=This is the value 3
+VALUE4=This is the value 4

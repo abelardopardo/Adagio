@@ -1,0 +1,141 @@
+#!/bin/bash
+
+files="t1.filtered t2.filtered"
+
+# Make sure the starting point is correct
+rm -f $files doTest*.log
+
+# Execute the target
+adado -v >> doTest1.log 2>&1
+
+# Files must exist
+for name in $files; do
+    if [ ! -e $name ]; then
+	echo
+	echo "  File $name not found in $PWD"
+	exit 1
+    fi
+done
+
+# Files must have the right content
+if [ `wc -l t1.filtered | awk '{print $1}'` -ne 2 ]; then
+    echo
+    echo "  File t1.filtered has incorrect content."
+    exit 1
+fi
+line=`egrep 'This is the value 1' t1.filtered`
+if [ "$line" == "" ]; then
+    echo
+    echo "Line 'This is the value 1' not found in t1.filtered"
+    exit 1
+fi
+line=`egrep 'This is the value 2' t1.filtered`
+if [ "$line" == "" ]; then
+    echo
+    echo "Line 'This is the value 2' not found in t1.filtered"
+    exit 1
+fi
+
+# Files must have the right content
+if [ `wc -l t2.filtered | awk '{print $1}'` -ne 2 ]; then
+    echo
+    echo "  File t2.filtered has incorrect content."
+    exit 1
+fi
+line=`egrep 'This is the value 3' t2.filtered`
+if [ "$line" == "" ]; then
+    echo
+    echo "Line 'This is the value 3' not found in t2.filtered"
+    exit 1
+fi
+line=`egrep 'This is the value 4' t2.filtered`
+if [ "$line" == "" ]; then
+    echo
+    echo "Line 'This is the value 4' not found in t2.filtered"
+    exit 1
+fi
+
+# Touch the filter to make sure the dependency mechanism is working. The sleep
+# is to bypass the course time granularity of ANT
+sleep 2
+touch filter.txt
+
+# Execute the target
+adado -v &> doTest2.log
+
+# Make sure the files have been updated
+egrep -q 'Replacing: @VALUE1@ -> This is the value 1' doTest2.log
+if [ "$?" -ne 0 ]; then
+    echo
+    echo "  '@VALUE1@ -> This is the value 1' not found in second execution."
+    exit 1
+fi
+egrep -q 'Replacing: @VALUE2@ -> This is the value 2' doTest2.log
+if [ "$?" -ne 0 ]; then
+    echo
+    echo "  '@VALUE2@ -> This is the value 2' not found in second execution."
+    exit 1
+fi
+egrep -q 'Replacing: @VALUE3@ -> This is the value 3' doTest2.log
+if [ "$?" -ne 0 ]; then
+    echo
+    echo "  '@VALUE3@ -> This is the value 3' not found in second execution."
+    exit 1
+fi
+egrep -q 'Replacing: @VALUE4@ -> This is the value 4' doTest2.log
+if [ "$?" -ne 0 ]; then
+    echo
+    echo "  '@VALUE4@ -> This is the value 4' not found in second execution."
+    exit 1
+fi
+
+#
+# Execute a second round with filter file not in current dir
+#
+adado -v \
+    -Dcopytemplates.filter.file=templatedir/filter.txt \
+    -Dcopytemplates.output.format=filtered2 \
+    &> doTest3.log
+
+# Make sure the generated files are identical
+for name in $names; do
+    diff -q $name ${name}2 &> /dev/null
+    if [ "$?" -ne 0 ]; then
+	echo
+	echo "  Files $name and ${name}2 differ."
+	exit 1
+    fi
+done
+
+# Clean the mess
+adado -v clean &> doTest4.log
+for name in $files; do
+    if [ -e $name ]; then
+	echo
+	echo "  File t1.filtered not deleted by clean target"
+	exit 1
+    fi
+done
+
+adado -v \
+    -Dcopytemplates.filter.file=templatedir/filter.txt \
+    -Dcopytemplates.output.format=filtered2 \
+    clean &> doTest5.log
+for name in $files; do
+    if [ -e ${name}2 ]; then
+	echo
+	echo "  File ${name}2 not deleted by clean target"
+	exit 1
+    fi
+done
+
+# Make sure the rest of files were not deleted
+for name in doTest  filter.txt  Properties.txt  templatedir; do
+    if [ ! -e $name ]; then
+	echo
+	echo "  ERROR: $name has been incorrectly deleted by clean target"
+	exit 1
+    fi
+done
+
+rm -f doTest*.log

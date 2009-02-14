@@ -1,0 +1,4 @@
+copytemplates.src.dir=templatedir
+copytemplates.files=t1.tmpl t2.tmpl
+copytemplates.filter.file=${basedir}/filter.txt
+copytemplates.output.format=filtered
