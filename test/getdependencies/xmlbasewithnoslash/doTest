@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Make sure we start with a clean page
+adado clean
+
+# Make sure the latest modification is in this file
+touch index.xml
+
+# Execute ADA
+adado -v >& doTest.log
+status="$?"
+
+egrep -q "getdependencies.sh: " doTest.log
+if [ "$?" -ne 1 ]; then
+  echo
+  echo "  Getdependencies has executed with an undetected error."
+  exit 1
+fi
+
+if [ "$status" -ne 0 ]; then
+  echo
+  echo "  adado terminated with non-zero status."
+  exit 1
+fi
+
+exit

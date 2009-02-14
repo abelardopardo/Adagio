@@ -129,8 +129,20 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
 
     # Process each file included to include them in the Array
     for fname in $files; do
+
+	# If the file does not exist, bomb out
+	if [ ! -e $fname ]; then
+	    echo "File $fname (included in ${fileArray[$idx]}), does not exist" >&2
+	    exit -1
+	fi
+
+	# Create the absolute name of the file
 	absName=$(cd "$(dirname "$fname")"; pwd)/$(basename $fname)
+
+	# Check if it is already in the result
 	echo ${fileArray[*]} | egrep -q "$absName"
+
+	# If not in the result, insert it
 	if [ "$?" -eq 1 ]; then
 	    fileArray=(${fileArray[*]} $absName)
 	fi

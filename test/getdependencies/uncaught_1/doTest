@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Make sure we start with a clean page
+adado clean
+
+# Make sure the latest modification is in this file
+touch index.xml
+
+# Execute ADA
+adado -v
+
+status="$?"
+if [ "$status" -ne 0 ]; then
+  echo
+  echo "  adado returned an error status is incorrect."
+  exit 1
+fi
+
+# Execute ADA AGAIN and this time no execution of xsltproc should happen
+adado -v >& doTest.log
+
+egrep -q "Executing \'xsltproc\' with arguments:" doTest.log
+if [ "$?" -ne 1 ]; then
+  echo
+  echo "  Execution of xsltproc has heppened and is not correct."
+  exit 1
+fi
+
+exit

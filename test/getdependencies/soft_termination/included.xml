@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+    "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section id="Origin">
+  <title>Included file</title>
+
+  <para id="p1">File that contains a malformed included file to detect glitch
+  in getdependencies.sh</para>
+
+  <para id="p2"><phase> Wrong beginning of element.</phrase></para>
+
+</section>

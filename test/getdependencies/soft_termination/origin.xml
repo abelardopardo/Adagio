@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+    "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<section id="Origin">
+  <title>Origin file</title>
+
+  <xi:include
+    href="included.xml"
+    xpointer="xpointer(//*[@id='p1'])"
+    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <xi:fallback>
+      <para>Missing Included file</para>
+    </xi:fallback>
+  </xi:include>
+
+</section>

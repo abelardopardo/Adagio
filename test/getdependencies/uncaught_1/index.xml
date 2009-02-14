@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+                    "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<article>
+<title>
+    <phrase lang="es">Ejercicios sobre interfaces gráficas</phrase>
+    <phrase lang="en">Graphical interfaces exercises</phrase>
+</title>
+    <section>
+    <!-- Tareas de clase   -->
+    <!-- Se incluye el título y la duración    -->
+    <xi:include href="./lab.xml"
+                    xpointer="xpointer(/section/title)"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="./lab.xml"
+                    xpointer="xpointer(/section/remark[@condition='duration'])"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+
+    <!-- Se incluyen los xi:include   -->
+    <xi:include href="./lab.xml"
+                    xpointer="xpointer(/section/section)"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    </section>
+    <section>
+    <!-- Tareas para casa   -->
+    <!-- Se incluye el título y la duración    -->
+    <xi:include href="./homework.xml"
+                    xpointer="xpointer(/section/title)"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <xi:include href="./homework.xml"
+                    xpointer="xpointer(/section/remark[@condition='duration'])"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+
+    <!-- Se incluyen los xi:include   -->
+    <xi:include href="./homework.xml"
+                    xpointer="xpointer(/section/section)"
+                    parse="xml"
+                    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    </section>
+
+</article>
+

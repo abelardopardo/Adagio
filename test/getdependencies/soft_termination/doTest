@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Make sure the latest modification is in this file
+touch included.xml
+
+# Execute ADA
+adado -v
+
+status="$?"
+if [ "$status" -eq 0 ]; then
+  echo
+  echo "  adado returned status OK and is incorrect."
+  exit 1
+fi
+
+egrep -q 'ADA detected the incorrect XML file:' doTest.log
+if [ "$?" -ne 0 ]; then
+  echo
+  echo "  String 'ADA detected the incorrect XML file:' not present in build.out"
+  exit 1
+fi
+
+adado clean
+
+exit
