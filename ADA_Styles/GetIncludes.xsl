@@ -41,8 +41,9 @@
   <xsl:template match="xi:include">
     <xsl:choose>
       <xsl:when test="@xml:base"><xsl:value-of
-	  select="@xml:base"/><xsl:value-of
-	  select="@href"/><xsl:text>
+      select="@xml:base"/><xsl:if test="not(substring(@xml:base,
+      string-length(@xml:base)) = '/')">/</xsl:if><xsl:value-of
+      select="@href"/><xsl:text>
 </xsl:text>
       </xsl:when>
       <xsl:otherwise>
