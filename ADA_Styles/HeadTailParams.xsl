@@ -33,14 +33,6 @@
   <xsl:param name="ada.page.author" 
     description="Author to include in the meta element in HTML head"/>
 
-  <xsl:param name="ada.page.cssstyle.url" 
-    description="Comma separated list of CSS files to include in the HTML
-    head. Use file:media:title to specify media and title attribute"/>
-
-  <xsl:param name="ada.page.cssstyle.alternate.url" 
-    description="Comma separated list of alternate CSS files to include in the HTML
-    head. Use file:media:title to specify media and title attribute"/>
-
   <xsl:param name="ada.page.google.analytics.account" 
     description="Account to include in the Google Analytics HTML snippet."/>
   <xsl:param name="ada.page.google.gadget.url" 

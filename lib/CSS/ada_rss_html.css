@@ -1,0 +1,17 @@
+#rss_channel_info,
+#rss_episode_info
+{
+  text-align: center;
+}
+
+#rss_channel_info_table
+{
+  margin-right: auto;
+  margin-left: auto;
+ }
+
+.item_title
+{
+  background-color: #000000;
+  color: #FFFFFF;
+ }

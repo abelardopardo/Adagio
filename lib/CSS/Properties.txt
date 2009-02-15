@@ -4,5 +4,6 @@ export.files= ada_asap_author_box.css \
               ada_handheld.css \
               ada_html.css \
               ada_layout.css \
+              ada_rss_html.css \
               ada_style.css \
               sample_course.css

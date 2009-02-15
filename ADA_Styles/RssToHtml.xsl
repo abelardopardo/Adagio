@@ -35,6 +35,9 @@
        and should not be published to the open public
        -->
 
+  <!-- Template to manipulate CSSs -->
+  <xsl:import href="CSSLinks.xsl"/>
+
   <xsl:param name="profile.lang"/>
 
   <xsl:output method="xml" indent="yes" encoding="UTF-8"
@@ -52,11 +55,15 @@
         <meta http-equiv="Content-Style-Type" content="text/css"/>
 
         <xsl:if test="$ada.page.cssstyle.url">
-          <link rel="stylesheet" type="text/css">
-            <xsl:attribute name="href"><xsl:value-of
-            select="$ada.course.home"/><xsl:value-of
-            select="$ada.page.cssstyle.url"/></xsl:attribute>
-          </link>
+          <xsl:call-template name="ada_link_rel_css">
+            <xsl:with-param name="node" select="$ada.page.cssstyle.url"/>
+          </xsl:call-template>
+        </xsl:if>
+        <xsl:if test="$ada.page.cssstyle.alternate.url">
+          <xsl:call-template name="ada_link_rel_css">
+            <xsl:with-param name="node" select="$ada.page.cssstyle.alternate.url"/>
+            <xsl:with-param name="rel" select="'alternate stylesheet'"/>
+          </xsl:call-template>
         </xsl:if>
       </head>
       <body>
@@ -68,7 +75,7 @@
   <xsl:template match="channel">
     <h2 id="rss_channel_info">Channel Info</h2>
     <div class="informaltable">
-      <table>
+      <table id="rss_channel_info_table">
         <tr>
           <td colspan="2">Title</td>
           <td><xsl:value-of select="title"/></td>
@@ -236,7 +243,7 @@
     <a><xsl:attribute name="id"><xsl:value-of select="position()"/></xsl:attribute></a>
     <table>
       <tr>
-        <th class="item_title">
+        <th class="item_title" colspan="3">
           Episode <xsl:value-of
           select="count(following-sibling::item) + 1"/>
         </th>
