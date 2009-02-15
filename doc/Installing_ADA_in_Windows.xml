@@ -290,8 +290,8 @@
           Panel</quote>, then select the <quote>System</quote> link. A new
           window opens with several panes. Select the pane with name
           <quote>Advanced</quote> and then click on the button with name
-          <quote>Environment Variables</quote>. It is recommended to insert
-          these definitions as part of the System Variables.
+          <quote>Environment Variables</quote>. These definitions must be
+	  inserted as part of the System Variables.
         </para>
 
         <para>
