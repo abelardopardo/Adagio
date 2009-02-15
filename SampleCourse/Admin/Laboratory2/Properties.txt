@@ -21,6 +21,8 @@ mergestyles.master.style=../AdaCourseParams.xml
 
 exercisesubmit.multilingual.files=index.xml
 
+dblatex.multilingual.files=index.xml
+
 export.dst.dir=../scratch/Lab2
 export.files=index_e?.html \
 	     index_submit_e?.html \  

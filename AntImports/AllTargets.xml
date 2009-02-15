@@ -145,6 +145,11 @@
 	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
       </ant>
 
+      <ant antfile="${ada.home}/AntImports/Dblatex.xml"
+	   target="dblatexmultilingual.processing" inheritAll="false">
+	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
+      </ant>
+
       <ant antfile="${ada.home}/AntImports/Msf2PDF.xml"
 	   target="msf2pdf.processing" inheritAll="false">
 	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
@@ -217,6 +222,11 @@
 
     <ant antfile="${ada.home}/AntImports/Msf2PDF.xml"
 	 target="msf2pdf.clean" inheritAll="false">
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </ant>
+
+    <ant antfile="${ada.home}/AntImports/Dblatex.xml"
+	 target="dblatexmultilingual.clean" inheritAll="false">
       <property name="ada.course.home.candidate" value="${ada.course.home}"/>
     </ant>
 

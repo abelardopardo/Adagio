@@ -27,17 +27,17 @@
     LaTeX
   </description>
 
-  <import file="InitialCheck.xml"/>
+  <import file="Xsltproc.xml"/>
 
   <property name="dblatex.exec"           value="dblatex"
 	    description="Name of the Docbook to PDF processor executable"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${dblatex.exec}"/>
-  
+
   <!-- Private properties -->
   <property name="dblatex.debug.level"    value="${ada.debug.level}"
 	    description="Debug level to apply to these rules (see ada.debug.level)"/>
-  
+
   <target name="dblatex.init" depends="ada.init" if="dblatex.execution.possible">
     <!-- Public Property definition -->
     <property name="dblatex.src.dir"        value="${basedir}"
@@ -46,42 +46,85 @@
 	      description="Directory where the produced files are created"/>
     <property name="dblatex.files"          value=""
 	      description="Source file names (no path, it is dblatex.src.dir)"/>
+    <property name="dblatex.multilingual.files" value=""
+	      description="Source file names (no path) to process in
+multilingual mode"/>
     <property name="dblatex.extra.args"      value=""
 	      description="Extra arguments to pass to the LaTeX processor"/>
+    <property name="dblatex.extra.xsltproc.args"      value=""
+	      description="Extra arguments to pass to xsltproc"/>
     <property name="dblatex.compliant.mode" value=""
 	      description="If true, default dblatex behavior, &#10;#
 otherwise ada-flavored behavior (supress version page)"/>
-    
+    <property name="dblatex.profile.lang"        value=""
+	      description="Defaul language to consider when processing documents"/>
+    <condition property="dblatex.profile.lang.suffix"
+               value="_${dblatex.profile.lang}"
+	       else="">
+      <not><equals arg1="${dblatex.profile.lang}" arg2="" trim="true"/></not>
+    </condition>
+
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths
       ADA.PREFIX="dblatex" ADA.SRC.DIR="${dblatex.src.dir}"
       ADA.DST.DIR="${dblatex.dst.dir}" ADA.FILES="${dblatex.files}"/>
 
+    <!-- Multilingual source files to be processed (fileset to allow wildcards) -->
+    <fileset id="dblatex.multilingual.fileset" dir="${dblatex.abssrc.dir}"
+	     includes="___bogus___file__name ${dblatex.multilingual.files}"/>
+
+    <!-- Obtain the filelist with the source files to see if it is empty -->
+    <pathconvert property="dblatexmultilingual.source.filelist.property" pathsep=" ">
+      <fileset refid="dblatex.multilingual.fileset"/>
+    </pathconvert>
+
+    <!-- Obtain the filelist with the modified source files. -->
+    <pathconvert property="dblatex.modified.fileset.property" pathsep=" ">
+      <fileset refid="dblatex.fileset"/>
+      <mapper type="glob" from="${dblatex.abssrc.dir}${file.separator}*.xml"
+	      to="*${dblatex.profile.lang.suffix}.xml"/>
+    </pathconvert>
+    <fileset id="dblatex.modified.fileset"
+	     dir="${dblatex.abssrc.dir}"
+	     includes="${dblatex.modified.fileset.property}"/>
+
     <!-- Obtain the filelist with the produced files. -->
     <pathconvert property="dblatex.target.filelist.property" pathsep=" ">
-      <fileset refid="dblatex.fileset"/>
+      <fileset refid="dblatex.modified.fileset"/>
       <chainedmapper>
-	<mapper type="glob" from="${dblatex.abssrc.dir}/*" 
+	<mapper type="glob" from="${dblatex.abssrc.dir}/*"
 		to="${dblatex.absdst.dir}/*"/>
 	<mapper type="glob" from="*.xml" to="*.pdf"/>
       </chainedmapper>
     </pathconvert>
     <filelist id="dblatex.target.filelist"
 	      files="${dblatex.target.filelist.property}"/>
-    
+
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="dblatex.check">
-      <!-- 
-	   There must be some files in the fileset (after regexp expansion) 
+      <!--
+	   There must be some files in the fileset (after regexp expansion)
       -->
       <not>
 	<equals arg1="${dblatex.source.filelist.property}" arg2="" trim="true"/>
       </not>
     </condition>
 
+    <!-- Condition to enable/disable multilingual the execution -->
+    <condition property="dblatexmultilingual.check">
+      <!--
+	   There must be some files in the fileset (after regexp expansion)
+      -->
+      <not>
+	<equals arg1="${dblatexmultilingual.source.filelist.property}"
+		arg2="" trim="true"/>
+      </not>
+    </condition>
+
     <!-- Dump the value of the properties just computed. -->
     <echo level="${dblatex.debug.level}">    dblatex.check          = "${dblatex.check}"
-  dblatex.execution.possible = ${dblatex.execution.possible}</echo>
+    dblatexmultilingual.check  = "${dblatexmultilingual.check}"
+    dblatex.execution.possible = ${dblatex.execution.possible}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true -->
@@ -129,7 +172,7 @@ dblatex.source.dependency.property=${dblatex.source.dependency.property}</echo>
 	<include name="AdaCourseParams.xml" />
 	<include name="Ada.properties" />
       </srcfileset>
-      <!-- 
+      <!--
 	   Attention: This filelist is not legal because it has not dir, but all
 	   the paths are absolute, therefore, there is no need for it. If an
 	   empty dir attribute is inserted, the dependencies break. I left it
@@ -140,17 +183,42 @@ dblatex.source.dependency.property=${dblatex.source.dependency.property}</echo>
     </dependset>
 
     <!-- Execute the command. Watch out for src.dir and dst.dir -->
-    <apply dir="${basedir}" parallel="false" dest="${dblatex.absdst.dir}" 
-	   append="yes" failonerror="true" executable="${dblatex.exec}" 
+    <apply dir="${basedir}" parallel="false" dest="${dblatex.absdst.dir}"
+	   append="yes" failonerror="true" executable="${dblatex.exec}"
 	   output="build.out">
       <arg value="-o"/>
       <targetfile/>
       <arg line="${dblatex.extra.args.internal}"/>
       <arg line="${dblatex.extra.args}"/>
-      <fileset refid="dblatex.fileset"/>
+      <fileset refid="dblatex.modified.fileset"/>
       <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.xml" to="*.pdf"/>
-    </apply>    
+      <mapper type="glob" from="*${dblatex.profile.lang.suffix}.xml"
+	      to="*${dblatex.profile.lang.suffix}.pdf"/>
+    </apply>
+  </target>
+
+  <!-- Multilingual processing instructions -->
+  <target name="dblatexmultilingual.processing"
+	  depends="dblatex.init" if="dblatexmultilingual.check">
+
+    <!-- Call xsltproc with no extra options -->
+    <antcall target="xsltprocmultilingual.processing" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${dblatex.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${dblatex.dst.dir}"/>
+      <param name="xsltproc.style.file"
+	     value="${ada.home}${file.separator}ADA_Styles${file.separator}Dump.xsl"/>
+      <param name="xsltproc.output.format" value=".xml"/>
+      <param name="xsltproc.multilingual.files"
+	     value="${dblatex.multilingual.files}"/>
+      <param name="xsltproc.extra.args" value="${dblatex.extra.xsltproc.args}"/>
+    </antcall>
+
+    <subant target="dblatex.processing">
+      <fileset dir="${ada.home}/AntImports" includes="Dblatex-*.xml"/>
+      <property name="dblatex.files" value="${dblatex.multilingual.files}"/>
+      <property name="dblatex.multilingual.files" value=""/>
+      <property name="ada.course.home.candidate" value="${ada.course.home}"/>
+    </subant>
   </target>
 
   <!-- Clean files produced by dblatex -->
@@ -162,11 +230,12 @@ dblatex.source.dependency.property=${dblatex.source.dependency.property}</echo>
 
     <!-- Obtain a property with the produced files. -->
     <pathconvert property="dblatex.target.filelist.property" pathsep=" ">
-      <fileset refid="dblatex.fileset"/>
+      <fileset refid="dblatex.modified.fileset"/>
       <chainedmapper>
-	<mapper type="glob" from="${dblatex.abssrc.dir}/*" 
+	<mapper type="glob" from="${dblatex.abssrc.dir}/*"
 		to="${dblatex.absdst.dir}/*"/>
-	<mapper type="glob" from="*.xml" to="*.pdf"/>
+	<mapper type="glob" from="*${dblatex.profile.lang.suffix}.xml"
+		to="*${dblatex.profile.lang.suffix}.pdf"/>
       </chainedmapper>
     </pathconvert>
 
@@ -179,6 +248,29 @@ dblatex.source.dependency.property=${dblatex.source.dependency.property}</echo>
     <delete failonerror="false" includeemptydirs="true">
       <files includes="${dblatex.target.filelist.property}"/>
     </delete>
+  </target>
+
+  <!-- Clean Multilingual files -->
+  <target name="dblatexmultilingual.clean"
+	  depends="dblatex.init" if="dblatexmultilingual.check">
+
+    <subant target="dblatex.clean" inheritall="false">
+      <fileset dir="${ada.home}/AntImports" includes="Dblatex-*.xml"/>
+      <property name="dblatex.files" value="${dblatex.multilingual.files}"/>
+    </subant>
+
+    <!-- Call xsltproc with no extra options -->
+    <antcall target="xsltprocmultilingual.clean" inheritAll="false">
+      <param name="xsltproc.src.dir"       value="${dblatex.src.dir}"/>
+      <param name="xsltproc.dst.dir"       value="${dblatex.dst.dir}"/>
+      <param name="xsltproc.style.file"
+	     value="${ada.home}${file.separator}ADA_Styles${file.separator}Dump.xsl"/>
+      <param name="xsltproc.output.format" value=".xml"/>
+      <param name="xsltproc.multilingual.files"
+	     value="${dblatex.multilingual.files}"/>
+      <param name="xsltproc.extra.args" value="${dblatex.extra.xsltproc.args}"/>
+    </antcall>
+
   </target>
 
   <!-- Dump the properties defined in this script -->
