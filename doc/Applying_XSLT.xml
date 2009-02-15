@@ -103,7 +103,7 @@
       </answer>
     </qandaentry>
 
-    <qandaentry id="docbook_to_pdf">
+    <qandaentry id="docbook_to_pdf" xreflabel="How to translate Docbook to PDF">
       <question>
         <para>How to translate Docbook files to PDF?</para>
       </question>
@@ -130,6 +130,11 @@
 	parse="text"
 	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
 
+	<para>The variable <code>dblatex.multilingual.files</code> allows the
+	inclusion of a Docbook file with multilingual content and the proper
+	PDFs are separatedly generated. For a more detailed explanation on how
+	to work with multilingual files, see <xref
+	linkend="Processing_multilingual"/>.</para>
       </answer>
     </qandaentry>
 	

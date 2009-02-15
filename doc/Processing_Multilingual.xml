@@ -28,7 +28,7 @@
 <!--                       MULTILINGUAL                           -->
 <!--                                                              -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<section id="Processing_multilingual">
+<section id="Processing_multilingual" xreflabel="Processing Multilingual files">
   <title>Creating and processing multingual Docbook files</title>
 
   <qandaset>
@@ -155,6 +155,21 @@
 
       </answer>
 
+      <question>
+        <para>How to produce multilingual PDF files from Docbook?</para>
+      </question>
+      <answer>
+	<para>The production of a PDF file from a multilingual Docbook relies on
+	the application of two sets of rules together. The variable
+	<code>dblatex.multilingual.file</code> (see <xref
+	linkend="docbook_to_pdf"/> for a more detailed description) may include
+	a set of Docbook files to be processed by <code>dblatex</code>. The
+	internal rule first uses <code>xsltproc</code> and the profiling
+	mechanism to obtain temporary Docbook files where the content for the
+	proper language is selected. These newly produced temporary files are
+	then processed by the rules translating Docbook to PDF and as a result,
+	from a multilingual Docbook file, a set of PDF files is obtained.</para>
+      </answer>
     </qandaentry>
 
   </qandaset>
