@@ -146,7 +146,7 @@
       </ant>
 
       <ant antfile="${ada.home}/AntImports/Dblatex.xml"
-	   target="dblatexmultilingual.processing" inheritAll="false">
+	   target="dblatex.multilingual.processing" inheritAll="false">
 	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
       </ant>
 
@@ -226,7 +226,7 @@
     </ant>
 
     <ant antfile="${ada.home}/AntImports/Dblatex.xml"
-	 target="dblatexmultilingual.clean" inheritAll="false">
+	 target="dblatex.multilingual.clean" inheritAll="false">
       <property name="ada.course.home.candidate" value="${ada.course.home}"/>
     </ant>
 

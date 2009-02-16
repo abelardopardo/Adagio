@@ -74,7 +74,7 @@ otherwise ada-flavored behavior (supress version page)"/>
 	     includes="___bogus___file__name ${dblatex.multilingual.files}"/>
 
     <!-- Obtain the filelist with the source files to see if it is empty -->
-    <pathconvert property="dblatexmultilingual.source.filelist.property" pathsep=" ">
+    <pathconvert property="dblatex.multilingual.source.filelist.property" pathsep=" ">
       <fileset refid="dblatex.multilingual.fileset"/>
     </pathconvert>
 
@@ -111,19 +111,19 @@ otherwise ada-flavored behavior (supress version page)"/>
     </condition>
 
     <!-- Condition to enable/disable multilingual the execution -->
-    <condition property="dblatexmultilingual.check">
+    <condition property="dblatex.multilingual.check">
       <!--
 	   There must be some files in the fileset (after regexp expansion)
       -->
       <not>
-	<equals arg1="${dblatexmultilingual.source.filelist.property}"
+	<equals arg1="${dblatex.multilingual.source.filelist.property}"
 		arg2="" trim="true"/>
       </not>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
     <echo level="${dblatex.debug.level}">    dblatex.check          = "${dblatex.check}"
-    dblatexmultilingual.check  = "${dblatexmultilingual.check}"
+    dblatex.multilingual.check  = "${dblatex.multilingual.check}"
     dblatex.execution.possible = ${dblatex.execution.possible}</echo>
   </target>
 
@@ -198,8 +198,8 @@ dblatex.source.dependency.property=${dblatex.source.dependency.property}</echo>
   </target>
 
   <!-- Multilingual processing instructions -->
-  <target name="dblatexmultilingual.processing"
-	  depends="dblatex.init" if="dblatexmultilingual.check">
+  <target name="dblatex.multilingual.processing"
+	  depends="dblatex.init" if="dblatex.multilingual.check">
 
     <!-- Call xsltproc with no extra options -->
     <antcall target="xsltproc.multilingual.processing" inheritAll="false">
@@ -251,8 +251,8 @@ dblatex.source.dependency.property=${dblatex.source.dependency.property}</echo>
   </target>
 
   <!-- Clean Multilingual files -->
-  <target name="dblatexmultilingual.clean"
-	  depends="dblatex.init" if="dblatexmultilingual.check">
+  <target name="dblatex.multilingual.clean"
+	  depends="dblatex.init" if="dblatex.multilingual.check">
 
     <subant target="dblatex.clean" inheritall="false">
       <fileset dir="${ada.home}/AntImports" includes="Dblatex-*.xml"/>
