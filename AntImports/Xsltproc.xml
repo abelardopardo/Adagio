@@ -613,5 +613,5 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
   <!-- If entering through this target, build.out is deleted -->
   <target name="xsltproc" depends="xsltproc.init, initial.delete.build.out, xsltproc.processing"/>
 
-  <target name="xsltproc.multilingual" depends="xsltproc.init, initial.delete.build.out, xsltproc.processing.multilingual"/>
+  <target name="xsltproc.multilingual" depends="xsltproc.init, initial.delete.build.out, xsltproc.multilingual.processing"/>
 </project>
