@@ -96,7 +96,7 @@
       </ant>
 
       <ant antfile="${ada.home}/AntImports/Xsltproc.xml"
-	   target="xsltprocmultilingual.processing" inheritAll="false">
+	   target="xsltproc.multilingual.processing" inheritAll="false">
 	<property name="ada.course.home.candidate" value="${ada.course.home}"/>
       </ant>
 
@@ -276,7 +276,7 @@
     </ant>
 
     <ant antfile="${ada.home}/AntImports/Xsltproc.xml"
-	 target="xsltprocmultilingual.clean" inheritAll="false">
+	 target="xsltproc.multilingual.clean" inheritAll="false">
       <property name="ada.course.home.candidate" value="${ada.course.home}"/>
     </ant>
 

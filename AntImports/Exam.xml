@@ -107,7 +107,7 @@ multilingual mode"/>
     <echo>exam.processing (Step 1a/4) CALL(xsltproc.processing)</echo>
 
     <!-- Call multilingual file production -->
-    <antcall target="xsltprocmultilingual.processing" inheritAll="false">
+    <antcall target="xsltproc.multilingual.processing" inheritAll="false">
       <param name="xsltproc.src.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/ADA_Styles/Exam.xsl"/>
@@ -123,7 +123,7 @@ multilingual mode"/>
     <echo>exam.processing (Step 1b/4) CALL(xsltproc.processing)</echo>
 
     <!-- Call multilingual solution production -->
-    <antcall target="xsltprocmultilingual.processing" inheritAll="false">
+    <antcall target="xsltproc.multilingual.processing" inheritAll="false">
       <param name="xsltproc.src.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/ADA_Styles/Exam.xsl"/>
@@ -143,7 +143,7 @@ multilingual mode"/>
     <echo>exam.processing (Step 1c/4) CALL(xsltproc.processing)</echo>
 
     <!-- Call multilingual professor guide production -->
-    <antcall target="xsltprocmultilingual.processing" inheritAll="false">
+    <antcall target="xsltproc.multilingual.processing" inheritAll="false">
       <param name="xsltproc.src.dir" value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir" value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file"    
@@ -334,7 +334,7 @@ multilingual mode"/>
     </antcall>
 
     <!-- Call Multilingual Cleaning for professor guide  -->
-    <antcall target="xsltprocmultilingual.clean" inheritAll="false">
+    <antcall target="xsltproc.multilingual.clean" inheritAll="false">
       <param name="xsltproc.src.dir" value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir" value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/ADA_Styles/Exam.xsl"/>
@@ -353,7 +353,7 @@ multilingual mode"/>
     </antcall>
 
     <!-- Call Multilingual Cleaning for the solution -->
-    <antcall target="xsltprocmultilingual.clean" inheritAll="false">
+    <antcall target="xsltproc.multilingual.clean" inheritAll="false">
       <param name="xsltproc.src.dir" value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir" value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/ADA_Styles/Exam.xsl"/>
@@ -369,7 +369,7 @@ multilingual mode"/>
     </antcall>
 
     <!-- Call Multilingual Clearning -->
-    <antcall target="xsltprocmultilingual.clean" inheritAll="false">
+    <antcall target="xsltproc.multilingual.clean" inheritAll="false">
       <param name="xsltproc.src.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.dst.dir"    value="${exam.dst.dir}"/>
       <param name="xsltproc.style.file" value="${ada.home}/ADA_Styles/Exam.xsl"/>

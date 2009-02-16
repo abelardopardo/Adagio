@@ -127,7 +127,7 @@ multilingual mode"/>
       <param name="exercisesubmit.creating.multilingual.files" 
 	     value="${exercisesubmit.multilingual.files}"/>
       <param name="exercisesubmit.manipulate.target" 
-	     value="xsltprocmultilingual.processing"/>
+	     value="xsltproc.multilingual.processing"/>
     </antcall>
 
     <echo>exercisesubmit.processing   END(xsltproc.processing 3 versions)</echo>
@@ -144,7 +144,7 @@ multilingual mode"/>
       <param name="exercisesubmit.creating.multilingual.files" 
 	     value="${exercisesubmit.multilingual.files}"/>
       <param name="exercisesubmit.manipulate.target" 
-	     value="xsltprocmultilingual.clean"/>
+	     value="xsltproc.multilingual.clean"/>
     </antcall>
 
     <!-- Delete all the language neutral files -->

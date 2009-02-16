@@ -22,7 +22,7 @@
 -->
 
 <project name="Apply xsltproc profiling with a set of given languages"
-	 default="xsltprocmultilingual">
+	 default="xsltproc.processing">
 
   <property name="xsltproc.profile.lang" value="es"/>
 

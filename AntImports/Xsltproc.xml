@@ -130,7 +130,7 @@ xsltproc.style.file"/>
 	     includes="___bogus___file__name ${xsltproc.multilingual.files}"/>
     
     <!-- Obtain the filelist with the source files to see if it is empty -->
-    <pathconvert property="xsltprocmultilingual.source.filelist.property" pathsep=" ">
+    <pathconvert property="xsltproc.multilingual.source.filelist.property" pathsep=" ">
       <fileset refid="xsltproc.multilingual.fileset"/>
     </pathconvert>
 
@@ -177,12 +177,12 @@ xsltproc.style.file"/>
     </condition>
 
     <!-- Condition to enable/disable multilingual the execution -->
-    <condition property="xsltprocmultilingual.check">
+    <condition property="xsltproc.multilingual.check">
       <!-- 
 	   There must be some files in the fileset (after regexp expansion) 
       -->
       <not>
-	<equals arg1="${xsltprocmultilingual.source.filelist.property}"
+	<equals arg1="${xsltproc.multilingual.source.filelist.property}"
 		arg2="" trim="true"/>
       </not>
     </condition>
@@ -381,7 +381,7 @@ xsltproc.style.file"/>
     <!-- Dump the value of the properties just computed. -->
     <echo level="${xsltproc.debug.level}">  xsltproc.check          = "${xsltproc.check}"
   xsltproc.execution.possible = ${xsltproc.execution.possible}
-  xsltprocmultilingual.check = ${xsltprocmultilingual.check}</echo>
+  xsltproc.multilingual.check = ${xsltproc.multilingual.check}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true -->
@@ -392,8 +392,8 @@ xsltproc.style.file"/>
 	  description="Apply a style to an XML file"/>
 
   <!-- Multilingual processing instructions -->
-  <target name="xsltprocmultilingual.processing"
-	  depends="xsltproc.init" if="xsltprocmultilingual.check">
+  <target name="xsltproc.multilingual.processing"
+	  depends="xsltproc.init" if="xsltproc.multilingual.check">
     <subant target="xsltproc.processing">
       <fileset dir="${ada.home}/AntImports" includes="Xsltproc-*.xml"/>
       <property name="xsltproc.files" value="${xsltproc.multilingual.files}"/>
@@ -571,8 +571,8 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
   </target>
 
   <!-- Multilingual processing instructions -->
-  <target name="xsltprocmultilingual.clean"
-	  depends="xsltproc.init" if="xsltprocmultilingual.check">
+  <target name="xsltproc.multilingual.clean"
+	  depends="xsltproc.init" if="xsltproc.multilingual.check">
     <subant target="xsltproc.clean" inheritall="false">
       <fileset dir="${ada.home}/AntImports" includes="Xsltproc-*.xml"/>
       <property name="xsltproc.files" value="${xsltproc.multilingual.files}"/>

@@ -202,7 +202,7 @@ dblatex.source.dependency.property=${dblatex.source.dependency.property}</echo>
 	  depends="dblatex.init" if="dblatexmultilingual.check">
 
     <!-- Call xsltproc with no extra options -->
-    <antcall target="xsltprocmultilingual.processing" inheritAll="false">
+    <antcall target="xsltproc.multilingual.processing" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${dblatex.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${dblatex.dst.dir}"/>
       <param name="xsltproc.style.file"
@@ -260,7 +260,7 @@ dblatex.source.dependency.property=${dblatex.source.dependency.property}</echo>
     </subant>
 
     <!-- Call xsltproc with no extra options -->
-    <antcall target="xsltprocmultilingual.clean" inheritAll="false">
+    <antcall target="xsltproc.multilingual.clean" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${dblatex.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${dblatex.dst.dir}"/>
       <param name="xsltproc.style.file"

@@ -150,7 +150,7 @@ multilingual mode"
     <echo>rss.processing.multilingual CALL(xsltproc.processing)</echo>
 
     <!-- Call xsltproc -->
-    <antcall target="xsltprocmultilingual.processing" inheritAll="false">
+    <antcall target="xsltproc.multilingual.processing" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${rss.style.file}"/>
@@ -218,7 +218,7 @@ multilingual mode"
     </antcall>
 
     <!-- Call Multilingual clean -->
-    <antcall target="xsltprocmultilingual.clean" inheritAll="false">
+    <antcall target="xsltproc.multilingual.clean" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${rss.src.dir}"/>
       <param name="xsltproc.dst.dir"       value="${rss.dst.dir}"/>
       <param name="xsltproc.style.file"    value="${rss.style.file}"/>
