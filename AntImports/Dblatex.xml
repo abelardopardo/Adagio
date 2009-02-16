@@ -298,4 +298,6 @@ dblatex.source.dependency.property=${dblatex.source.dependency.property}</echo>
 
   <!-- If entering through this target, build.out is deleted -->
   <target name="dblatex" depends="dblatex.init, initial.delete.build.out, dblatex.processing"/>
+
+  <target name="dblatex.multilingual" depends="dblatex.init, initial.delete.build.out, dblatex.multilingual.processing"/>
 </project>
