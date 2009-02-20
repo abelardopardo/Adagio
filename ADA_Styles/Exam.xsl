@@ -35,6 +35,7 @@
 
   <!-- This one for sure is needed in all documents -->
   <xsl:param name="xref.with.number.and.title" select="'0'"/>
+  <xsl:param name="ada.exam.author"/>
 
   <xsl:include href="ExamParams.xsl"/>
 
