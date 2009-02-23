@@ -28,6 +28,8 @@
 
   <xsl:import href="TestQuestionsParams.xsl"/>
 
+  <xsl:param name="ada.test.questions.debug" select="0"/>
+
   <!-- Number QandA with correlative integers within a section -->
   <xsl:template match="question" mode="label.markup">
     <xsl:number level="any" count="qandaentry" from="section" format="1"/>
@@ -35,12 +37,13 @@
 
   <!-- Only those qandadiv with condition TestQuestion or TestMCQuestion
        are processed by this stylesheet -->
-  <xsl:template match="qandadiv[@condition='TestQuestion'] |
-                       qandadiv[@condition='TestMCQuestion']">
+  <xsl:template match="qandadiv[@condition='ADA_Test_Question']|
+                       qandaentry[@condition='ADA_Test_Question']">
     <xsl:variable name="beginnumber">
       <xsl:number level="any" count="qandaentry" from="section"/>
     </xsl:variable>
     <xsl:variable name="qnumber" select="count(descendant::qandaentry)"/>
+
     <!--
          FIX: Needs to check for the presence of some sort of
          blockinfo that instructs this table to have a
@@ -49,6 +52,11 @@
 
     <!-- Table surrounding one qandadiv (might have several questions) -->
     <div>
+      <!-- Set ID attribute to ID of the qandadiv -->
+      <xsl:if test="@id">
+        <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+      </xsl:if>
+      <!-- Set class attribute -->
       <xsl:choose>
         <xsl:when test="($ada.testquestions.render.onequestionperpage = 'yes') or
               ((/section/sectioninfo/productnumber/remark[@condition =
@@ -61,6 +69,7 @@
         </xsl:otherwise>
       </xsl:choose>
 
+      <!-- Question number and labels -->
       <p class="qandadiv_numbering">
         <xsl:choose>
           <xsl:when test="$qnumber > 1">
@@ -92,140 +101,112 @@
             <xsl:value-of select="blockinfo/author/personname/surname/text()"/>
           </xsl:if>
           <xsl:for-each select="blockinfo/printhistory/para">
-            <xsl:text>, </xsl:text><xsl:value-of select="@arch"/>/<xsl:value-of select="@revision"/>/<xsl:value-of select="@vendor"/>
+            <xsl:text>, </xsl:text><xsl:value-of select="@revision"/>
           </xsl:for-each>)
         </xsl:if>
       </p>
 
-      <!-- Recur through other DocBook elements -->
-      <div class="ada_exam_qandadiv_prelude_text">
-        <xsl:apply-templates/>
-      </div>
-
-      <!--
-           Choose between rendering a single question or multiple questions
-           common to the same preceeding text
-           -->
+      <!-- If processing a qandadiv, recur through the elements previous to the
+           qandaentries -->
       <xsl:choose>
-        <xsl:when test="count(qandaentry) = 1">
-          <xsl:for-each select="qandaentry">
-            <xsl:call-template name="singlequestion"/>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:otherwise>
-          <div class="ada_exam_multiplequestions">
-            <!-- There are three possible cases: All questions TF, all
-                 questions MC and mixed. Is it worth considering these three
-                 cases? So far, only the TF and MC templates are invoked. -->
-            <xsl:choose>
-              <xsl:when test="count(qandaentry[position() = 1]/answer) = 1">
-                <xsl:call-template name="multipleTFquestion"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:call-template name="multipleMCquestion"/>
-              </xsl:otherwise>
-            </xsl:choose>
+        <xsl:when test="name() = 'qandadiv'">
+
+          <xsl:if test="$ada.test.questions.debug != 0">
+            <xsl:message>Processing <xsl:value-of select="@id"/></xsl:message>
+            <xsl:message># TF Questions: <xsl:value-of
+            select="count(qandaentry[count(answer) = 1])"/></xsl:message>
+            <xsl:message># MC Questions: <xsl:value-of
+            select="count(qandaentry[count(answer) &gt; 1])"/></xsl:message>
+          </xsl:if>
+
+          <div class="ada_exam_qandadiv_prelude_text">
+            <xsl:apply-templates
+              select="qandaentry[position() = 1]/preceding-sibling::*"/>
           </div>
+
+          <!--
+               Choose between rendering a single question or multiple questions
+               common to the same preceeding text
+               -->
+          <xsl:variable name="class_prefix">
+            <xsl:if test="count(qandaentry) &gt; 1">_multiple</xsl:if>
+          </xsl:variable>
+
+          <div>
+            <xsl:attribute name="class">ada_exam_qandaentry_table<xsl:value-of
+            select="$class_prefix"/></xsl:attribute>
+
+            <xsl:for-each select="qandaentry">
+              <xsl:variable name="qandaentry_position"><xsl:value-of
+              select="position()"/></xsl:variable>
+
+              <xsl:if test="$ada.test.questions.debug != 0">
+                <xsl:message>  Qandaentry <xsl:value-of
+                select="position()"/></xsl:message>
+              </xsl:if>
+
+              <!-- Call render template but anticipating if TF heading needs to be
+                   included -->
+              <xsl:call-template name="render_qandaentry" select=".">
+                <xsl:with-param name="qandaentry_position"><xsl:value-of
+                select="position()"/></xsl:with-param>
+                <xsl:with-param name="put_tf_heading"
+                  select="(count(answer) = 1) and
+                          ((position() = 1) or
+                          (count(preceding-sibling::qandaentry[position() =
+                          ($qandaentry_position - 1)]/answer) != 1))"/>
+              </xsl:call-template>
+
+            </xsl:for-each>
+          </div>
+        </xsl:when>
+
+        <!-- A single qandaentry, with no surrounding DIV -->
+        <xsl:otherwise>
+          <xsl:call-template name="render_qandaentry" select="."/>
         </xsl:otherwise>
       </xsl:choose>
+
     </div>
   </xsl:template>
 
-  <!-- Render one individual question -->
-  <xsl:template match="qandaentry">
-    <xsl:if test="not(boolean(ancestor::qandadiv))">
-      <div class="qandaentry">
-        <div class="qandaentry_numbering">
-          <xsl:choose>
-            <xsl:when test="$profile.lang = 'en'">Question</xsl:when>
-            <xsl:otherwise>Pregunta</xsl:otherwise>
-          </xsl:choose>
-          <xsl:value-of
-            select="count(ancestor::section/preceding::qandaentry) + 1"/>
-          <xsl:if test="$ada.testquestions.include.id = 'yes'">
-            (id=<xsl:value-of select="@id"/>
-            <xsl:for-each select="blockinfo/printhistory/para">
-              , <xsl:value-of select="@arch"/>/<xsl:value-of select="@revision"/>/<xsl:value-of select="@vendor"/>
-            </xsl:for-each>)
-          </xsl:if>
-        </div>
-        <xsl:call-template name="singlequestion"/>
-      </div>
-    </xsl:if>
-  </xsl:template>
+  <!-- Template to process any qandaentry in the document -->
+  <xsl:template name="render_qandaentry">
+    <xsl:param name="qandaentry_position" select="1"/>
+    <xsl:param name="put_tf_heading" select="false"/>
 
-  <!-- Formats the question of the qandaentry. To be used, either when not in a
-       qandadiv, or when it is the only one in a qandadiv -->
-  <xsl:template name="singlequestion">
+    <xsl:if test="$ada.test.questions.debug != 0">
+      <xsl:message>    TF Heading: <xsl:value-of
+      select="$put_tf_heading"/></xsl:message>
+      <xsl:message>    Name: <xsl:value-of select="name()"/></xsl:message>
+      <xsl:message>    Prefix: <xsl:value-of select="$class_prefix"/></xsl:message>
+    </xsl:if>
+
+    <!-- Choose between MC and TF -->
     <xsl:choose>
       <xsl:when test="count(answer) = 1">
-        <xsl:call-template name="singleTFquestion"/>
+        <!-- TF Question -->
+        <xsl:if test="$put_tf_heading">
+          <xsl:call-template name="TFQuestion_Heading"/>
+        </xsl:if>
+        <xsl:call-template name="TFQuestion_Statement"/>
       </xsl:when>
+
+      <xsl:when test="count(answer) &gt; 1">
+        <!-- MC Question -->
+        <xsl:call-template name="MCquestion"/>
+      </xsl:when>
+
       <xsl:otherwise>
-        <xsl:call-template name="singleMCquestion"/>
+        <p>Unknown question type (based on number of answers)</p>
       </xsl:otherwise>
+
     </xsl:choose>
   </xsl:template>
 
-  <!-- One single TF question -->
-  <xsl:template name="singleTFquestion">
-    <div class="ada_exam_singletfquestion">
-      <xsl:call-template name="TFQuestion_Heading"/>
-      <xsl:call-template name="TFQuestion_Statement"/>
-    </div>
-  </xsl:template>
-
-  <!-- One single multiple choice question -->
-  <xsl:template name="singleMCquestion">
-    <div>
-      <xsl:choose>
-        <xsl:when test="count(../qandaentry) = 1">
-          <xsl:attribute name="class">ada_exam_singlemcquestion_nosiblings</xsl:attribute>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:attribute name="class">ada_exam_singlemcquestion</xsl:attribute>
-        </xsl:otherwise>
-      </xsl:choose>
-      <div class="ada_exam_qandaentry_question_text">
-        <xsl:apply-templates select="question/node()"/>
-      </div>
-
-      <div class="ada_exam_singlemcquestion_answers">
-        <xsl:for-each select="answer">
-          <div class="ada_exam_singlemcquestion_answer">
-            <xsl:call-template name="MC_answer_square"/>
-            <div class="ada_exam_singlemcquestion_answer_text">
-              <xsl:apply-templates />
-            </div>
-          </div>
-        </xsl:for-each>
-      </div>
-
-      <xsl:if test="$ada.testquestions.include.history = 'yes'">
-        <div class="ada_exam_question_history">
-          <xsl:call-template name="dump-history" />
-        </div>
-      </xsl:if>
-    </div>
-  </xsl:template>
-
-  <!-- multple TF question elements in the same quandaentry -->
-  <xsl:template name="multipleTFquestion">
-    <xsl:call-template name="TFQuestion_Heading"/>
-    <xsl:for-each select="qandaentry">
-      <xsl:call-template name="TFQuestion_Statement"/>
-    </xsl:for-each>
-  </xsl:template>
-
-  <!-- multple TF question elements in the same quandaentry -->
-  <xsl:template name="multipleMCquestion">
-    <xsl:for-each select="qandaentry">
-        <xsl:call-template name="singleMCquestion"/>
-    </xsl:for-each>
-  </xsl:template>
-
+  <!-- Heading for the TF Questions. It simply dumps a true / false table -->
   <xsl:template name="TFQuestion_Heading">
-    <div class="ada_exam_singletfquestion_heading">
+    <div class="ada_exam_tfquestion_heading">
       <div>
         <xsl:choose>
           <xsl:when test="$profile.lang='en'">True</xsl:when>
@@ -282,10 +263,10 @@
 
   <!-- True/False squares + the statement in a row -->
   <xsl:template name="TFQuestion_Statement">
-    <div class="ada_exam_tfquestion_statement">
+    <div class="ada_exam_question_statement">
       <xsl:call-template name="TF_answer_true_square"/>
       <xsl:call-template name="TF_answer_false_square"/>
-      <div class="ada_exam_singlemcquestion_answer_text">
+      <div class="ada_exam_question_answer_text">
         <xsl:apply-templates select="question/node()"/>
         <xsl:if test="$ada.testquestions.include.history = 'yes'">
           <div class="ada_exam_question_history">
@@ -294,6 +275,39 @@
         </xsl:if>
       </div>
     </div> <!-- End of ada_exam_tfquestion_statement -->
+  </xsl:template>
+
+  <xsl:template name="MCquestion">
+    <div>
+      <xsl:choose>
+        <xsl:when test="count(../qandaentry) = 1">
+          <xsl:attribute name="class">ada_exam_question_nosiblings</xsl:attribute>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:attribute name="class">ada_exam_question</xsl:attribute>
+        </xsl:otherwise>
+      </xsl:choose>
+      <div class="ada_exam_qandaentry_question_text">
+        <xsl:apply-templates select="question/node()"/>
+      </div>
+
+      <div class="ada_exam_question_answers">
+        <xsl:for-each select="answer">
+          <div class="ada_exam_question_answer">
+            <xsl:call-template name="MC_answer_square"/>
+            <div class="ada_exam_question_answer_text">
+              <xsl:apply-templates />
+            </div>
+          </div>
+        </xsl:for-each>
+      </div>
+
+      <xsl:if test="$ada.testquestions.include.history = 'yes'">
+        <div class="ada_exam_question_history">
+          <xsl:call-template name="dump-history" />
+        </div>
+      </xsl:if>
+    </div>
   </xsl:template>
 
   <!-- Dump element containing history -->
