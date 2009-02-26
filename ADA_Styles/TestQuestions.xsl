@@ -94,11 +94,13 @@
         </xsl:choose>
         <xsl:if test="$ada.testquestions.include.id = 'yes'">
           (id = <xsl:value-of select="@id"/>
-          <xsl:if test="blockinfo/author">
+          <xsl:if test="ancestor-or-self::blockinfo/author">
             <xsl:text>, </xsl:text>
-            <xsl:value-of select="blockinfo/author/personname/firstname/text()"/>
+            <xsl:value-of
+              select="ancestor-or-self::blockinfo/author/personname/firstname/text()"/>
             <xsl:text> </xsl:text>
-            <xsl:value-of select="blockinfo/author/personname/surname/text()"/>
+            <xsl:value-of
+              select="ancestor-or-self::blockinfo/author/personname/surname/text()"/>
           </xsl:if>
           <xsl:for-each select="blockinfo/printhistory/para">
             <xsl:text>, </xsl:text><xsl:value-of select="@revision"/>
