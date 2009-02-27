@@ -44,12 +44,6 @@
     </xsl:variable>
     <xsl:variable name="qnumber" select="count(descendant::qandaentry)"/>
 
-    <!--
-         FIX: Needs to check for the presence of some sort of
-         blockinfo that instructs this table to have a
-         class="pageBreakBefore" attribute
-    -->
-
     <!-- Table surrounding one qandadiv (might have several questions) -->
     <div>
       <!-- Set ID attribute to ID of the qandadiv -->
@@ -93,18 +87,7 @@
           </xsl:otherwise>
         </xsl:choose>
         <xsl:if test="$ada.testquestions.include.id = 'yes'">
-          (id = <xsl:value-of select="@id"/>
-          <xsl:if test="ancestor-or-self::blockinfo/author">
-            <xsl:text>, </xsl:text>
-            <xsl:value-of
-              select="ancestor-or-self::blockinfo/author/personname/firstname/text()"/>
-            <xsl:text> </xsl:text>
-            <xsl:value-of
-              select="ancestor-or-self::blockinfo/author/personname/surname/text()"/>
-          </xsl:if>
-          <xsl:for-each select="blockinfo/printhistory/para">
-            <xsl:text>, </xsl:text><xsl:value-of select="@revision"/>
-          </xsl:for-each>)
+          (id = <xsl:value-of select="@id"/>)
         </xsl:if>
       </p>
 
@@ -121,10 +104,12 @@
             select="count(qandaentry[count(answer) &gt; 1])"/></xsl:message>
           </xsl:if>
 
-          <div class="ada_exam_qandadiv_prelude_text">
-            <xsl:apply-templates
-              select="qandaentry[position() = 1]/preceding-sibling::*"/>
-          </div>
+          <xsl:if test="qandaentry[position() = 1]/preceding-sibling::*">
+            <div class="ada_exam_qandadiv_prelude_text">
+              <xsl:apply-templates
+                select="qandaentry[position() = 1]/preceding-sibling::*"/>
+            </div>
+          </xsl:if>
 
           <!--
                Choose between rendering a single question or multiple questions
@@ -156,6 +141,7 @@
 
                 <!-- Call render template -->
                 <div class="ada_exam_question">
+
                   <xsl:call-template name="render_qandaentry" select=".">
                     <xsl:with-param name="qandaentry_position"><xsl:value-of
                     select="position()"/></xsl:with-param>
@@ -260,8 +246,14 @@
       <xsl:call-template name="TF_answer_false_square"/>
       <div class="ada_exam_question_tf_answer_text">
         <xsl:apply-templates select="question/node()"/>
-        <xsl:if test="$ada.testquestions.include.history = 'yes'">
-          <div class="ada_exam_question_history">
+
+        <xsl:if test="($ada.testquestions.include.id = 'yes') or
+                      ($ada.testquestions.include.history = 'yes')">
+          <div class="ada_exam_question_metadata">
+            <!-- If requested, include the metadata info -->
+            <xsl:call-template name="dump-metadata" select="."/>
+
+            <!-- If requested, include the history info -->
             <xsl:call-template name="dump-history" />
           </div>
         </xsl:if>
@@ -286,8 +278,13 @@
       </xsl:for-each>
     </div>
 
-    <xsl:if test="$ada.testquestions.include.history = 'yes'">
-      <div class="ada_exam_question_history">
+    <xsl:if test="($ada.testquestions.include.id = 'yes') or
+                  ($ada.testquestions.include.history = 'yes')">
+      <div class="ada_exam_question_metadata">
+        <!-- If requested, include the metadata info -->
+        <xsl:call-template name="dump-metadata" select="."/>
+
+        <!-- If requested, include the history info -->
         <xsl:call-template name="dump-history" />
       </div>
     </xsl:if>
@@ -332,72 +329,113 @@
     </div>
   </xsl:template>
 
+  <!-- Dump element containing metadata -->
+  <xsl:template name="dump-metadata">
+    <!-- If requested, include the metadata info -->
+    <xsl:if test="$ada.testquestions.include.id = 'yes'">
+      <div class="ada_exam_question_author">
+        <xsl:if test="ancestor-or-self::*/blockinfo/author">
+          <p>
+            <xsl:choose>
+              <xsl:when test="$profile.lang='es'">Autor: </xsl:when>
+              <xsl:otherwise>Author: </xsl:otherwise>
+            </xsl:choose>
+          </p>
+          <p>
+            <xsl:value-of
+              select="ancestor-or-self::*/blockinfo/author/personname/firstname/text()"/>
+            <xsl:text> </xsl:text>
+            <xsl:value-of
+              select="ancestor-or-self::*/blockinfo/author/personname/surname/text()"/>
+          </p>
+        </xsl:if>
+      </div>
+      <!--
+      <div class="ada_exam_question_editions">
+        <p>
+          <xsl:choose>
+            <xsl:when test="$profile.lang='es'">Ediciones: </xsl:when>
+            <xsl:otherwise>Editions: </xsl:otherwise>
+          </xsl:choose>
+        </p>
+        <xsl:for-each select="ancestor-or-self::*/blockinfo/printhistory/para">
+          <p><xsl:value-of select="@revision"/></p>
+        </xsl:for-each>
+      </div>
+      -->
+    </xsl:if>
+  </xsl:template>
+
   <!-- Dump element containing history -->
   <xsl:template name="dump-history">
-    <p>
-      <xsl:choose>
-        <xsl:when test="$profile.lang='es'">Estadísticas</xsl:when>
-        <xsl:otherwise>Statistics</xsl:otherwise>
-      </xsl:choose>
-    </p>
+    <xsl:if test="$ada.testquestions.include.history = 'yes'">
+      <div class="ada_exam_question_history">
+        <p>
+          <xsl:choose>
+            <xsl:when test="$profile.lang='es'">Estadísticas</xsl:when>
+            <xsl:otherwise>Statistics</xsl:otherwise>
+          </xsl:choose>
+        </p>
 
-    <table class="ada_exam_question_history_table">
-      <tr>
-        <xsl:choose>
-          <xsl:when test="$profile.lang='es'">
-            <th>Edición</th>
-            <th>Correctas</th>
-            <th>Inc.</th>
-            <th>Blanco</th>
-            <th>Total</th>
-            <th>Comentarios</th>
-          </xsl:when>
-          <xsl:otherwise>
-            <th>Edition</th>
-            <th>Correct</th>
-            <th>Inc.</th>
-            <th>Blank</th>
-            <th>Total</th>
-            <th>Remarks</th>
-          </xsl:otherwise>
-        </xsl:choose>
-      </tr>
-      <xsl:choose>
-        <xsl:when test="blockinfo/printhistory/para">
-          <xsl:for-each select="blockinfo/printhistory/para">
-            <tr>
-              <td>
-                <xsl:value-of
-                  select="@arch"/>/<xsl:value-of
-                select="@revision"/>/<xsl:value-of
-                select="@vendor"/>
-              </td>
-              <td>
-                <xsl:value-of
-                  select="phrase[@condition='correct']/text()"/>
-              </td>
-              <td>
-                <xsl:value-of select="phrase[@condition='incorrect']/text()"/>
-              </td>
-              <td>
-                <xsl:value-of select="phrase[@condition='blank']/text()"/>
-              </td>
-              <td>
-                <xsl:value-of select="phrase[@condition='total']/text()"/>
-              </td>
-              <td>
-                <xsl:value-of select="phrase[@condition='remarks']/text()"/>
-              </td>
-            </tr>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:otherwise>
+        <table class="ada_exam_question_history_table">
           <tr>
-            <td colspan="6">No information available</td>
+            <xsl:choose>
+              <xsl:when test="$profile.lang='es'">
+                <th>Edición</th>
+                <th>Correctas</th>
+                <th>Inc.</th>
+                <th>Blanco</th>
+                <th>Total</th>
+                <th>Comentarios</th>
+              </xsl:when>
+              <xsl:otherwise>
+                <th>Edition</th>
+                <th>Correct</th>
+                <th>Inc.</th>
+                <th>Blank</th>
+                <th>Total</th>
+                <th>Remarks</th>
+              </xsl:otherwise>
+            </xsl:choose>
           </tr>
-        </xsl:otherwise>
-      </xsl:choose>
-    </table>
+          <xsl:choose>
+            <xsl:when test="blockinfo/printhistory/para">
+              <xsl:for-each select="blockinfo/printhistory/para">
+                <tr>
+                  <td>
+                    <xsl:value-of
+                      select="@arch"/>/<xsl:value-of
+                    select="@revision"/>/<xsl:value-of
+                    select="@vendor"/>
+                  </td>
+                  <td>
+                    <xsl:value-of
+                      select="phrase[@condition='correct']/text()"/>
+                  </td>
+                  <td>
+                    <xsl:value-of select="phrase[@condition='incorrect']/text()"/>
+                  </td>
+                  <td>
+                    <xsl:value-of select="phrase[@condition='blank']/text()"/>
+                  </td>
+                  <td>
+                    <xsl:value-of select="phrase[@condition='total']/text()"/>
+                  </td>
+                  <td>
+                    <xsl:value-of select="phrase[@condition='remarks']/text()"/>
+                  </td>
+                </tr>
+              </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+              <tr>
+                <td colspan="6">No information available</td>
+              </tr>
+            </xsl:otherwise>
+          </xsl:choose>
+        </table>
+      </div>
+    </xsl:if>
   </xsl:template>
 
   <!-- The blockinfo needs to be matched to avoid to appear in the output -->

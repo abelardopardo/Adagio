@@ -105,7 +105,7 @@ div.ada_exam_qandadiv
   border-collapse: collapse;
   margin-top: 1.0em;
   margin-bottom: 1.0em;
-  padding-bottom: 1.0em;
+  padding-bottom: 0.5em;
   page-break-inside: avoid;
 }
 
@@ -114,7 +114,6 @@ p.ada_exam_qandadiv_numbering
   font-weight: bold;
   margin-top: 0.1em;
   margin-left: 0.5em;
-  margin-bottom: 0.1em;
  }
 
 div.ada_exam_qandadiv_prelude_text
@@ -129,7 +128,7 @@ div.ada_exam_qandaentry_table_multiple
   display: table;
   margin-left: 1em;
   margin-right: 1em;
-  width: 100%;
+  width: 98%
   }
 
 div.ada_exam_qandaentry_table_multiple div.ada_exam_question
@@ -167,13 +166,20 @@ div.ada_exam_question_mc_answers
   display: table;
  }
 
+div.ada_exam_question_mc_answers,
+div.ada_exam_question_tf_answer_text > *
+{
+  clear: left;
+  float: left;
+ }
+
 div.ada_exam_question_tf_answer_text
 {
   display: table-cell;
   padding-left: 0.5em;
   padding-right: 0.5em;
   vertical-align: middle;
-  width: 100%;
+  width: 98%;
  }
 
 div.ada_exam_question_tf_heading > div
@@ -214,23 +220,49 @@ div.ada_exam_answer_square div
   width: 10px;
   }
 
-table.ada_exam_question_history_table
+div.solid_answer_square
+{
+  background-color: black;
+ }
+
+table.ada_exam_question_history_table,
+table.ada_exam_question_history_table td,
+table.ada_exam_question_history_table th
 {
   border: thin solid black;
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
  }
 
-div.ada_exam_question_history
+div.ada_exam_question_metadata
 {
+  clear: none;
   display: table;
+  float: none;
+  margin-bottom: 0.5em;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 0.5em;
+ }
+
+div.ada_exam_question_author,
+div.ada_exam_question_editions,
+div.ada_exam_question_history
+{
+  display: table-row;
+  margin-right: auto;
+  margin-top: 0.5em;
+  margin-left: auto;
   margin-bottom: 0.5em;
 }
 
-div.ada_exam_question_history p
+div.ada_exam_question_history p,
+div.ada_exam_question_author p,
+div.ada_exam_question_editions p
 {
   text-align: center;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
  }
