@@ -38,7 +38,7 @@
   <!-- Only those qandadiv with condition TestQuestion or TestMCQuestion
        are processed by this stylesheet -->
   <xsl:template match="qandadiv[@condition='ADA_Test_Question']|
-                       qandaentry[@condition='ADA_Test_Question']">
+                       qandaentry">
     <xsl:variable name="beginnumber">
       <xsl:number level="any" count="qandaentry" from="section"/>
     </xsl:variable>
@@ -91,13 +91,18 @@
         </xsl:if>
       </p>
 
+      <xsl:if test="$ada.test.questions.debug != 0">
+        <xsl:message>Processing <xsl:value-of select="@id"/></xsl:message>
+        <xsl:message>  BeginNumber: <xsl:value-of select="$beginnumber"/></xsl:message>
+        <xsl:message>  QNumber: <xsl:value-of select="$qnumber"/></xsl:message>
+      </xsl:if>
+
       <!-- If processing a qandadiv, recur through the elements previous to the
            qandaentries -->
       <xsl:choose>
         <xsl:when test="name() = 'qandadiv'">
 
           <xsl:if test="$ada.test.questions.debug != 0">
-            <xsl:message>Processing <xsl:value-of select="@id"/></xsl:message>
             <xsl:message># TF Questions: <xsl:value-of
             select="count(qandaentry[count(answer) = 1])"/></xsl:message>
             <xsl:message># MC Questions: <xsl:value-of
@@ -140,13 +145,10 @@
                 </xsl:if>
 
                 <!-- Call render template -->
-                <div class="ada_exam_question">
-
-                  <xsl:call-template name="render_qandaentry" select=".">
-                    <xsl:with-param name="qandaentry_position"><xsl:value-of
-                    select="position()"/></xsl:with-param>
-                  </xsl:call-template>
-                </div>
+                <xsl:call-template name="render_qandaentry" select=".">
+                  <xsl:with-param name="qandaentry_position"><xsl:value-of
+                  select="position()"/></xsl:with-param>
+                </xsl:call-template>
               </xsl:for-each>
             </div>
           </xsl:if>
@@ -168,17 +170,10 @@
 
                 <!-- Call render template but anticipating if TF heading needs to be
                      included -->
-                <div class="ada_exam_question">
-                  <xsl:call-template name="render_qandaentry" select=".">
-                    <xsl:with-param name="qandaentry_position"><xsl:value-of
-                    select="position()"/></xsl:with-param>
-                    <xsl:with-param name="put_tf_heading"
-                      select="(count(answer) = 1) and
-                              ((position() = 1) or
-                              (count(preceding-sibling::qandaentry[position() =
-                              ($qandaentry_position - 1)]/answer) != 1))"/>
-                  </xsl:call-template>
-                </div>
+                <xsl:call-template name="render_qandaentry" select=".">
+                  <xsl:with-param name="qandaentry_position"><xsl:value-of
+                  select="position()"/></xsl:with-param>
+                </xsl:call-template>
               </xsl:for-each>
             </div>
           </xsl:if>
@@ -186,6 +181,9 @@
 
         <!-- A single qandaentry, with no surrounding DIV -->
         <xsl:otherwise>
+          <xsl:if test="qandaentry[count(answer) = 1]">
+            <xsl:call-template name="TFQuestion_Heading"/>
+          </xsl:if>
           <xsl:call-template name="render_qandaentry" select="."/>
         </xsl:otherwise>
       </xsl:choose>
@@ -202,23 +200,25 @@
       <xsl:message>    Prefix: <xsl:value-of select="$class_prefix"/></xsl:message>
     </xsl:if>
 
-    <!-- Choose between MC and TF -->
-    <xsl:choose>
-      <xsl:when test="count(answer) = 1">
-        <!-- TF Question -->
-        <xsl:call-template name="TFQuestion_Answer"/>
-      </xsl:when>
+    <div class="ada_exam_question">
+      <!-- Choose between MC and TF -->
+      <xsl:choose>
+        <xsl:when test="count(answer) = 1">
+          <!-- TF Question -->
+          <xsl:call-template name="TFQuestion_Answer"/>
+        </xsl:when>
 
-      <xsl:when test="count(answer) &gt; 1">
-        <!-- MC Question -->
-        <xsl:call-template name="MCquestion"/>
-      </xsl:when>
+        <xsl:when test="count(answer) &gt; 1">
+          <!-- MC Question -->
+          <xsl:call-template name="MCquestion"/>
+        </xsl:when>
 
-      <xsl:otherwise>
-        <p>Unknown question type (based on number of answers)</p>
-      </xsl:otherwise>
+        <xsl:otherwise>
+          <p>Unknown question type (based on number of answers)</p>
+        </xsl:otherwise>
 
-    </xsl:choose>
+      </xsl:choose>
+    </div>
   </xsl:template>
 
   <!-- Heading for the TF Questions. It simply dumps a true / false table -->
