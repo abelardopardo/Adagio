@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Make sure we start with a clean page
+adado clean
+rm -f doTest.log
+
+# Execute ADA
+adado -v >& doTest.log
+
+if [ `egrep "\[exec\] '/home/abel/Courses/ADA/bin/\.\./bin/adafindcoursehome'" \
+      doTest.log | wc -l` != "1" ]; then
+  echo
+  echo "  Detected the execution of adafindcoursehome more than once."
+  exit 1
+fi
+
+exit
