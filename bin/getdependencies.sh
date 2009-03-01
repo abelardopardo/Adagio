@@ -33,13 +33,13 @@
 
 # See where is ADA_HOME
 ADA_HOME=`dirname $0`/..
- 
+
 # Redirect catalog enquiries to ADA to avoid going out for DTDs
 XML_CATALOG_FILES="file://$ADA_HOME/DTDs/catalog"
 
 if [ "$1" = "-cache" ]; then
     if [ "$#" -lt 3 ]; then
-	echo "ADA Internal error. Inconsisten use 1 of getdependencies" >>build.out
+	echo "ADA Internal error. Inconsisten use 1 of getdependencies" >>$originDir/build.out
 	exit -1
     fi
     shift
@@ -47,33 +47,41 @@ if [ "$1" = "-cache" ]; then
     shift
     params="$*"
 elif [ "$#" -lt 1 ]; then
-    echo "ADA Internal error. Inconsisten use 2 of getdependencies" >>build.out
+    echo "ADA Internal error. Inconsisten use 2 of getdependencies" >>$originDir/build.out
     exit -1
 else
     params="$*"
 fi
 
+# Remember the
+originDir=`pwd`
+
 idx=0
 fileArray=($params)
+
 # Translate each file to absolute path
 while [ "$idx" -ne ${#fileArray[*]} ]; do
-    fileArray[$idx]=$(cd "$(dirname "${fileArray[$idx]}")"; pwd)/$(basename ${fileArray[$idx]})
+    if [ -e "${fileArray[$idx]}" ]; then
+	# If it exists in the current dir, transform to absolute path
+	fileArray[$idx]=$(cd "$(dirname "${fileArray[$idx]}")"; pwd)/$(basename ${fileArray[$idx]})
+    elif [ -e "$ADA_HOME/ADA_Styles/${fileArray[$idx]}" ]; then
+	# If not in current dir, check ADA_Styles (used by default) and
+	# translate again to absolute path
+	fileArray[$idx]="$ADA_HOME/ADA_Styles/${fileArray[$idx]}"
+    else
+	# It not in current dir nor in the ADA_Styles, bomb out
+	echo "File ${fileArray[$idx]} (given as argument to getdependencies) does not exist." >>$originDir/build.out
+	exit -1
+    fi
     idx=`expr $idx + 1`
 done
 
 idx=0
-originDir=`pwd`
-# Loop over all the files in fileArray
+# Loop over all the names in fileArray
 while [ "$idx" -ne ${#fileArray[*]} ]; do
-    
-    # Make sure the original directory is restored
-    cd $originDir
 
-    # If the file does not exit keep looping
-    if [ ! -e ${fileArray[$idx]} ]; then
-	idx=`expr $idx + 1`
-	continue
-    fi
+    # Restore the dir where the script started
+    cd $originDir
 
     # If the value is not a file, keep looping
     if [ ! -f "${fileArray[$idx]}" ]; then
@@ -82,7 +90,6 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
     fi
 
     # If the file is not an XML file keep looping
-#     if [ `file ${fileArray[$idx]} | awk '{ print $2 }'` != "XML" ]; then
     ftest=`file ${fileArray[$idx]}`
     if [ "${ftest/*: XML*/XML}" != "XML" ]; then
 	idx=`expr $idx + 1`
@@ -99,24 +106,24 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
     set -o pipefail
 
     # Remember if build.out is present before executing this command
-    test -f build.out
+    test -f $originDir/build.out
     buildNotPresent=$?
 
     # Execute the stylesheet to fetch the xi:include[@href] elements. Filter out
     # a potential #xpointer suffix in the href attribute. Also, since the
     # relation between included files is not a tree but a DAG, repeated files
     # need to be filtered (thus the invocation to sort -u)
-    files=`xsltproc --path .:$ADA_HOME/ADA_Styles --nonet $ADA_HOME/ADA_Styles/GetIncludes.xsl ${fileArray[$idx]} 2>> build.out | sed -e 's/#xpointer.*$//g' | sort -u ` 
+    files=`xsltproc --path .:$ADA_HOME/ADA_Styles --nonet $ADA_HOME/ADA_Styles/GetIncludes.xsl ${fileArray[$idx]} 2>> $originDir/build.out | sed -e 's/#xpointer.*$//g' | sort -u `
 
     # If something went wrong, simply bomb out to catch the error in the proper
     # location
     if [ "$?" -ne 0 ]; then
-	echo "ADA detected the incorrect XML file: ${fileArray[$idx]}" >> build.out
+	echo "ADA detected the incorrect XML file: ${fileArray[$idx]}" >> $originDir/build.out
 	exit -1
     else
 	# If build.out was not present, and now it is empty, nuke it
-	if [ "$buildNotPresent" = "1" -a ! -s build.out ]; then
-	    rm -f build.out
+	if [ "$buildNotPresent" = "1" -a ! -s $originDir/build.out ]; then
+	    rm -f $originDir/build.out
 	fi
     fi
 
@@ -130,21 +137,26 @@ while [ "$idx" -ne ${#fileArray[*]} ]; do
     # Process each file included to include them in the Array
     for fname in $files; do
 
-	# If the file does not exist, bomb out
-	if [ ! -e $fname ]; then
-	    echo "File $fname (included in ${fileArray[$idx]}), does not exist" >>build.out
+	# If the file does not exist in current dir nor ADA_Styles, bomb out
+	if [ ! -e $fname -a ! -e $ADA_HOME/ADA_Styles/$fname ]; then
+	    echo "File $fname (included in ${fileArray[$idx]}), does not exist" >>$originDir/build.out
 	    exit -1
 	fi
 
-	# Create the absolute name of the file
-	absName=$(cd "$(dirname "$fname")"; pwd)/$(basename $fname)
+	# Process the file depending if it is in ADA_Styles
+	if [ -e $ADA_HOME/ADA_Styles/$fname ]; then
+	    absName="$ADA_HOME/ADA_Styles/$fname"
+	else
+	    # Create the absolute name of the file
+	    absName=$(cd "$(dirname "$fname")"; pwd)/$(basename $fname)
+	fi
 
 	# Check if it is already in the result
 	echo ${fileArray[*]} | egrep -q "$absName"
 
-	# If not in the result, insert it
+        # If not in the result, insert it
 	if [ "$?" -eq 1 ]; then
-	    fileArray=(${fileArray[*]} $absName)
+		fileArray=(${fileArray[*]} $absName)
 	fi
     done
 
