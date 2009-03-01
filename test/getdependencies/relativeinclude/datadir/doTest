@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Make sure we start with a clean page
+adado clean
+rm -f doTest.log
+
+# Execute ADA
+adado -v
+
+status="$?"
+if [ "$status" -ne 0 ]; then
+  echo
+  echo "  adado returned an error status and is incorrect."
+  exit 1
+fi
+
+# Touch the imported style sheet
+touch ../Imported.xsl
+
+# Execute ADA AGAIN and this time the execution of xsltproc should happen
+adado -v >& doTest.log
+
+egrep -q "Executing 'xsltproc' with arguments:" doTest.log
+if [ "$?" -ne 0 ]; then
+  echo
+  echo "  Execution of xsltproc has NOT happened."
+  exit 1
+fi
+
+exit

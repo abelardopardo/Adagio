@@ -232,15 +232,6 @@ xsltproc.style.file"/>
 	<fileset id="mergestyles.master.fileset" 
 		 file="${mergestyles.master.style}"/>
 
-	<!-- Calculate the possible dependencies on the sheet to merge -->
-	<exec executable="bash" failonerror="true"
-	      dir="${basedir}" logError="yes"
-	      outputproperty="xsltproc.mergestyles.dependency.files">
-	  <arg value="${ada.home}${file.separator}bin${file.separator}getdependencies.sh"/>
-	  <arg value="${mergestyles.master.style}"/>
-	</exec>
-
-
 	<pathconvert property="mergestyles.output.prefix">
 	  <fileset refid="mergestyles.master.fileset"/>
 	  <chainedmapper>
@@ -281,10 +272,6 @@ xsltproc.style.file"/>
 	  <srcfileset file="${ada.local.property.file}" />
 	  <srcfileset file="${xsltproc.mergestyles.style.file}" />
 	  <srcfileset file="@{MERGESTYLES.FILE.TO.IMPORT}" />
-	  <srcfileset dir="${ada.home}/ADA_Styles">
-	    <include name="*.xsl" />
-	  </srcfileset>
-	  <srcfilelist files="${xsltproc.mergestyles.dependency.files}"/>
 	  <targetfilelist 
 	    dir="@{MERGESTYLES.DST.DIR}"
 	    files="${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}"/>
@@ -422,6 +409,7 @@ xsltproc.style.file"/>
 	  outputproperty="xsltproc.dependency.files">
       <arg value="${ada.home}${file.separator}bin${file.separator}getdependencies.sh"/>
       <arg value="${xsltproc.source.dependency.property}"/>
+      <arg value="${xsltproc.style.file}"/>
     </exec>
 
     <echo
@@ -432,15 +420,12 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <dependset>
       <srcfileset file="${ada.local.property.file}" />
       <srcfileset file="${xsltproc.style.file}" />
-      <srcfileset dir="${ada.home}/ADA_Styles">
-	<include name="*.xsl" />
-      </srcfileset>
       <srcfileset dir="${ada.course.home}">
 	<include name="AdaCourseParams.xml" />
 	<include name="Ada.properties" />
       </srcfileset>
       <!-- 
-	   Attention: This filelist is not legal because it has not dir, but all
+	   Attention: This filelist is not legal because it has no dir, but all
 	   the paths are absolute, therefore, there is no need for it. If an
 	   empty dir attribute is inserted, the dependencies break. I left it
 	   like that on purpose.
@@ -493,6 +478,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 	  outputproperty="xsltproc.dependency.files">
       <arg value="${ada.home}${file.separator}bin${file.separator}getdependencies.sh"/>
       <arg value="${xsltproc.source.dependency.property}"/>
+      <arg value="${xsltproc.absdst.dir}${file.separator}${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}"/>
     </exec>
 
     <echo
@@ -502,10 +488,8 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <!-- Force the dependency checking on changes on the style sheet -->
     <dependset>
       <srcfileset file="${ada.local.property.file}" />
-      <srcfileset file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}"/>
-      <srcfileset dir="${ada.home}/ADA_Styles">
-	<include name="*.xsl" />
-      </srcfileset>
+      <srcfileset
+	file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}"/>
       <srcfileset dir="${ada.course.home}">
 	<include name="AdaCourseParams.xml" />
 	<include name="Ada.properties" />
