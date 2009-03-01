@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<chapter role="computer">
+  <title>Fake Title</title>
+
+  <section>
+    <title>Intro</title>
+
+    <para lang="en">
+      The problem in this first lab is to be solved with a data structure
+      already created. Before trying to solve this problem, it is highly
+    </para>
+
+    <para lang="en">
+      Explains how to handle a linked list. For the
+      submission, a single file needs to be produced containing the two
+      functions described in the exercise section. Function
+      <code>sumList</code> must include the improvement proposed in
+    </para>
+  </section>
+
+</chapter>
+
+<!--  Local Variables:  -->
+<!--  compile-command: "adado" -->
+<!--  End:  -->

@@ -1,0 +1,5 @@
+
+mergestyles.master.style=../UpperParams.xml
+
+xsltproc.files=index.xml
+xsltproc.style.file=Dump.xsl
