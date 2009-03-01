@@ -19,10 +19,10 @@ fi
 # Execute ADA AGAIN and this time no execution of xsltproc should happen
 adado -v >& doTest.log
 
-egrep -q "Executing \'xsltproc\' with arguments:" doTest.log
+egrep -q "Executing 'xsltproc' with arguments:" doTest.log
 if [ "$?" -ne 1 ]; then
   echo
-  echo "  Execution of xsltproc has heppened and is not correct."
+  echo "  Execution of xsltproc has happened and is not correct."
   exit 1
 fi
 
