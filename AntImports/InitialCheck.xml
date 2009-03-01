@@ -40,8 +40,8 @@ Possible values are 'error', 'warning', 'info', 'verbose' and 'debug'"/>
   <condition property="ada.course.home.valid.candidate">
     <and>
       <isset property="ada.course.home.candidate"/>
-      <not><equals arg1="${ada.course.home.candidate}" arg2="" trim="true"/></not>
-      <available file="${ada.course.home.candidate}"/>
+<!--       <not><equals arg1="${ada.course.home.candidate}" arg2="" trim="true"/></not> -->
+<!--       <available file="${ada.course.home.candidate}"/> -->
     </and>
   </condition>
 
