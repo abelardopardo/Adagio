@@ -24,7 +24,7 @@
  * correspondence between the questions of the generated shuffled files.
  *
  * @author Abelardo Pardo (abel@it.uc3m.es)
- * 
+ *
  * @version $Id$
  *
  * Copyright: This file was created at the Carlos III University of Madrid.
@@ -41,7 +41,7 @@ import org.jdom.output.Format;
 import es.uc3m.it.gol.XMLMgr;
 
 /**
- * 
+ *
  * Class to shuffle questions in an exam written in docbook. The procedure
  * shuffles all qandadivs as well as all internal qandaentry (when there is more
  * than one).
@@ -55,390 +55,389 @@ public class Shuffle {
     public Shuffle() {}
 
     public static void main(String[] args) throws Exception {
-	XMLMgr docMgr;      // Handle the XML document
-	File in;
-	Element root;
-	Element qandaset;
-	Element sectionInfo;
-	List seedList;
-	Vector[] permutations;
-	Hashtable qandadivIndex;
-	String rootID;
-	int versions;
-	int index;
-	int stepCount;
+        XMLMgr docMgr;      // Handle the XML document
+        File in;
+        Element root;
+        Element qandaset;
+        Element sectionInfo;
+        List seedList;
+        Vector[] permutations;
+        Hashtable qandadivIndex;
+        String rootID;
+        int versions;
+        int index;
+        int stepCount;
 
-	stepCount = 1;
+        stepCount = 1;
 
-	// Check that the number of arguments is correct
-	if (args.length != 1) {
-	    System.out.println("Incorrect parameter number. A file is required.");
-	    System.out.println("File must be in DocBook with QandADivs and QandAEntries.");
-	    return;
-	}
+        // Check that the number of arguments is correct
+        if (args.length != 1) {
+            System.out.println("Incorrect parameter number. A file is required.");
+            System.out.println("File must be in DocBook with QandADivs and QandAEntries.");
+            return;
+        }
 
-	System.out.println("Step " + stepCount++ + 
-			   ": Open the file and check permissions");
+        System.out.println("Step " + stepCount++
+			   + ": Open the file and check permissions");
 
-	// Open the file and make sure it exists and can be read
-	in = new File(args[0]);
-	if (!in.exists() || !in.canRead()) {
-	    System.out.println("Unable to open/read file " + args[0] + ".");
-	    return;
-	}
+        // Open the file and make sure it exists and can be read
+        in = new File(args[0]);
+        if (!in.exists() || !in.canRead()) {
+            System.out.println("Unable to open/read file " + args[0] + ".");
+            return;
+        }
 
-	System.out.println("Step " + stepCount++ + 
-			   ": Create the XML document manager");
+        System.out.println("Step " + stepCount++ +
+                           ": Create the XML document manager");
 
-	// Create the document manager
-	docMgr = new XMLMgr();
-	try {
-	    docMgr.parseFile(args[0]);
-	} catch (Exception e) {
-	    System.out.println("Error while parsing file.");
-	    return;
-	}
-	
-	System.out.println("Step " + stepCount++ + 
-			   ": Fetch and check root element.");
+        // Create the document manager
+        docMgr = new XMLMgr();
+        try {
+            docMgr.parseFile(args[0]);
+        } catch (Exception e) {
+            System.out.println("Error while parsing file.");
+            return;
+        }
 
-	// Fetch the root element
-	root = docMgr.getRootElement();
-	if (root == null) {
-	    System.out.println("Null root element after parse.");
-	    return;
-	}
+        System.out.println("Step " + stepCount++ +
+                           ": Fetch and check root element.");
 
-	// Store the "id" in the root element or create a new one
-	rootID = root.getAttributeValue("id");
-	if (rootID == null) {
-	    root.setAttribute(new Attribute("id", "AdaShuffle"));
-	}
+        // Fetch the root element
+        root = docMgr.getRootElement();
+        if (root == null) {
+            System.out.println("Null root element after parse.");
+            return;
+        }
 
-	System.out.println("Step " + stepCount++ + 
-			   ": Check the presence of 'status' attribute.");
+        // Store the "id" in the root element or create a new one
+        rootID = root.getAttributeValue("id");
+        if (rootID == null) {
+            root.setAttribute(new Attribute("id", "AdaShuffle"));
+        }
 
-	// Check if there is a seed attribute stored as "status"
-	if (root.getAttribute("status") != null) {
-	    System.out.println("File contains seed attribute as status. Ignoring.");
-	    return;
-	}
+        System.out.println("Step " + stepCount++ +
+                           ": Check the presence of 'status' attribute.");
 
-	System.out.println("Step " + stepCount++ + 
-			   ": Fetch the sectioninfo element or create one");
+        // Check if there is a seed attribute stored as "status"
+        if (root.getAttribute("status") != null) {
+            System.out.println("File contains seed attribute as status. Ignoring.");
+            return;
+        }
 
-	// Fetch the sectioninfo element or create one
-	seedList = new LinkedList();
-	sectionInfo = root.getChild("sectioninfo");
-	if (sectionInfo != null) {
-	    List pnumbers;
-	    pnumbers = sectionInfo.getChildren("productnumber");
-	    if (pnumbers != null) {
-		// Create a list of productnumber elements - seeds for rnd
-		for (ListIterator li = pnumbers.listIterator(); li.hasNext();) {
-		    seedList.add(((Element)li.next()).clone());
-		} // End of foreach productnumber element
-	    } // End if productnumber is not empty
-	    System.out.println("Step " + stepCount++ + ": Read " +
-			       pnumbers.size() + " seeds in document.");
+        System.out.println("Step " + stepCount++ +
+                           ": Fetch the sectioninfo element or create one");
 
-	} // If sectionInfo is not null
+        // Fetch the sectioninfo element or create one
+        seedList = new LinkedList();
+        sectionInfo = root.getChild("sectioninfo");
+        if (sectionInfo != null) {
+            List pnumbers;
+            pnumbers = sectionInfo.getChildren("productnumber");
+            if (pnumbers != null) {
+                // Create a list of productnumber elements - seeds for rnd
+                for (ListIterator li = pnumbers.listIterator(); li.hasNext();) {
+                    seedList.add(((Element)li.next()).clone());
+                } // End of foreach productnumber element
+            } // End if productnumber is not empty
+            System.out.println("Step " + stepCount++ + ": Read " +
+                               pnumbers.size() + " seeds in document.");
 
-	System.out.println("Step " + stepCount++ + 
-			   ": Fetch the qandadiv elements to shuffle");
+        } // If sectionInfo is not null
 
-	// If no info has been given to produce a seed, create one within its
-	// corresponding productnumber element
-	if (seedList.size() == 0) {
-	    Element toAdd;
+        System.out.println("Step " + stepCount++ +
+                           ": Fetch the qandadiv elements to shuffle");
 
-	    toAdd = new Element("productnumber");
-	    toAdd = 
-		toAdd.setText((new Long(System.currentTimeMillis())).toString());
-	    seedList.add(toAdd);
-	} 
+        // If no info has been given to produce a seed, create one within its
+        // corresponding productnumber element
+        if (seedList.size() == 0) {
+            Element toAdd;
 
-	// fetch the quandaset element that contains the elements to be shuffled
-	qandaset = root.getChild("qandaset");
-	if (qandaset == null) {
-	    System.out.println("No element qandaset found under root.");
-	    return;
-	}
-	root.removeChild("qandaset");
+            toAdd = new Element("productnumber");
+            toAdd = toAdd.setText((new Long(System.currentTimeMillis())).toString());
+            seedList.add(toAdd);
+        }
 
-	if (qandaset.getChildren("qandadiv") == null) {
-	    System.out.println("No qandadiv elements found. Nothing to shuffle.");
-	    return;
-	}
-	
-	System.out.println("Step " + stepCount++ + ": Creating hash for " + 
-			   qandaset.getChildren("qandadiv").size() + " qandadivs");
+        // fetch the quandaset element that contains the elements to be shuffled
+        qandaset = root.getChild("qandaset");
+        if (qandaset == null) {
+            System.out.println("No element qandaset found under root.");
+            return;
+        }
+        root.removeChild("qandaset");
 
-	// Create the qandadiv/qandaentry -> index hash
-	qandadivIndex = new Hashtable();
-	index = 1;
-	System.out.print("IDs: ");
-	for (ListIterator li = qandaset.getChildren("qandadiv").listIterator();
-	     li.hasNext();) {
-	    Element qandadiv;
+        if (qandaset.getChildren("qandadiv") == null) {
+            System.out.println("No qandadiv elements found. Nothing to shuffle.");
+            return;
+        }
 
-	    qandadiv = (Element)li.next();
-	    
-	    if (qandadiv.getChildren("qandaentry").size() > 1) {
-		int entryIdx;
+        System.out.println("Step " + stepCount++ + ": Creating hash for " +
+                           qandaset.getChildren("qandadiv").size() + " qandadivs");
 
-		entryIdx = 1;
-		for (ListIterator li2 = 
-			 qandadiv.getChildren("qandaentry").listIterator(); 
-		     li2.hasNext();) {
-		    Element qandaentry;
-		    
-		    qandaentry = (Element)li2.next();
-		    qandadivIndex.put(qandaentry, new Integer(index++));
-		    System.out.print(qandadiv.getAttributeValue("id") + "," +
-				     entryIdx + ";");
-		    entryIdx++;
-		}
-	    } else {
-		qandadivIndex.put(qandadiv, new Integer(index++));
-		System.out.print(qandadiv.getAttributeValue("id") + ";");
-	    }
-	}
-	System.out.println();
-	
-	
-	System.out.println("Step " + stepCount++ + 
-			   ": Hash with " + (index - 1) + " elements.");
-	System.out.println("Step " + stepCount++ + 
-			   ": Create the permutation vectors.");
+        // Create the qandadiv/qandaentry -> index hash
+        qandadivIndex = new Hashtable();
+        index = 1;
+        System.out.print("IDs: ");
+        for (ListIterator li = qandaset.getChildren("qandadiv").listIterator();
+             li.hasNext();) {
+            Element qandadiv;
 
-	// Create the space for permutations
-	permutations = new Vector[seedList.size()];
-	for (int i = 0; i < seedList.size(); i++) {
-	    permutations[i] = new Vector();
-	}
+            qandadiv = (Element)li.next();
 
-	System.out.println("Step " + stepCount++ + ": Shuffle elements.");
+            if (qandadiv.getChildren("qandaentry").size() > 1) {
+                int entryIdx;
 
-	// Loop over versions
-	for (int i = 1; i <= seedList.size(); i++) {
-	    Vector sectionChild;
-	    List entries;
-	    long seed;
+                entryIdx = 1;
+                for (ListIterator li2 =
+                         qandadiv.getChildren("qandaentry").listIterator();
+                     li2.hasNext();) {
+                    Element qandaentry;
 
-	    // Obtain and set the seed
-	    try {
-		seed = Long.decode(((Element)seedList.get(i - 1)).getTextTrim()).longValue();
-	    } catch (NumberFormatException e) {
-		System.out.println("Value " + 
-				   ((Element)seedList.get(i - 1)).getTextTrim() +
-				   " not valid as seed number.");
-		return;
-	    }
-	    rnd = new Random(seed);
+                    qandaentry = (Element)li2.next();
+                    qandadivIndex.put(qandaentry, new Integer(index++));
+                    System.out.print(qandadiv.getAttributeValue("id") + "," +
+                                     entryIdx + ";");
+                    entryIdx++;
+                }
+            } else {
+                qandadivIndex.put(qandadiv, new Integer(index++));
+                System.out.print(qandadiv.getAttributeValue("id") + ";");
+            }
+        }
+        System.out.println();
 
-	    // Add the seed value as status attribute of the root element
-	    root.setAttribute(new Attribute("status", String.valueOf(seed)));
 
-	    // Add the sectioninfo with the productnumber element
-	    root.removeContent(sectionInfo);
-	    sectionInfo = new Element("sectioninfo");
-	    sectionInfo = sectionInfo.addContent((Element)seedList.get(i - 1));
-	    sectionChild = new Vector();
-	    sectionChild.add(sectionInfo);
-	    root.addContent(0, sectionChild);
+        System.out.println("Step " + stepCount++ +
+                           ": Hash with " + (index - 1) + " elements.");
+        System.out.println("Step " + stepCount++ +
+                           ": Create the permutation vectors.");
 
-	    // Remove the qandaset from the document
-	    qandaset.detach();
-	    entries = new ArrayList();
+        // Create the space for permutations
+        permutations = new Vector[seedList.size()];
+        for (int i = 0; i < seedList.size(); i++) {
+            permutations[i] = new Vector();
+        }
 
-	    // Transfer qandadiv to another list
-	    for (ListIterator li = 
-		     qandaset.getChildren("qandadiv").listIterator(); 
-		 li.hasNext();) {
-		Element point;
+        System.out.println("Step " + stepCount++ + ": Shuffle elements.");
 
-		point = (Element)li.next();
-		entries.add(point);
-	    }
-	    // Remove qandadivs
-	    qandaset.removeChildren("qandadiv");
+        // Loop over versions
+        for (int i = 1; i <= seedList.size(); i++) {
+            Vector sectionChild;
+            List entries;
+            long seed;
 
-	    // Here is where the shuffling is done
-	    while (entries.size() > 0) {
-		Element point; 
-		
-		// Remove a random element
-		point = (Element)entries.remove(rnd.nextInt(entries.size()));
+            // Obtain and set the seed
+            try {
+                seed = Long.decode(((Element)seedList.get(i - 1)).getTextTrim()).longValue();
+            } catch (NumberFormatException e) {
+                System.out.println("Value " +
+                                   ((Element)seedList.get(i - 1)).getTextTrim() +
+                                   " not valid as seed number.");
+                return;
+            }
+            rnd = new Random(seed);
 
-		// Effectively detach this from quandaset
-		point.detach();
-		
-		// If it is a qandadiv with more than one qandaentry, then
-		// shuffle the internal qandaentries
-		if (point.getChildren("qandaentry").size() > 1) {
-		    shuffleDiv(point, permutations[i - 1], qandadivIndex);
-		} else {
-		    // Shuffle the internal answers
-		    shuffleAnswers(point.getChild("qandaentry"));
+            // Add the seed value as status attribute of the root element
+            root.setAttribute(new Attribute("status", String.valueOf(seed)));
 
-		    permutations[i - 1].add(qandadivIndex.get(point));
-		}
+            // Add the sectioninfo with the productnumber element
+            root.removeContent(sectionInfo);
+            sectionInfo = new Element("sectioninfo");
+            sectionInfo = sectionInfo.addContent((Element)seedList.get(i - 1));
+            sectionChild = new Vector();
+            sectionChild.add(sectionInfo);
+            root.addContent(0, sectionChild);
 
-		// Insert it in the new list
-		qandaset.addContent(point);
-	    } // End of while
+            // Remove the qandaset from the document
+            qandaset.detach();
+            entries = new ArrayList();
 
-	    root.addContent(qandaset);
+            // Transfer qandadiv to another list
+            for (ListIterator li =
+                     qandaset.getChildren("qandadiv").listIterator();
+                 li.hasNext();) {
+                Element point;
 
-	    // Manipulate the root @id attribute
-	    root.setAttribute(new Attribute("id", rootID + "_" + i));
+                point = (Element)li.next();
+                entries.add(point);
+            }
+            // Remove qandadivs
+            qandaset.removeChildren("qandadiv");
 
-	    // Dump the result 
-	    docMgr.writeFile(args[0].replaceAll(".xml$", "_" + i + ".xml"),
-			     Format.getRawFormat());
-	} // End of for i = 1 to number of versions to produce
+            // Here is where the shuffling is done
+            while (entries.size() > 0) {
+                Element point;
 
-	System.out.println("Step " + stepCount++ + ": Dumping all permutations");
-	System.out.println();
+                // Remove a random element
+                point = (Element)entries.remove(rnd.nextInt(entries.size()));
 
-	// Loop over all the permutations
-	for (int i = 0; i < permutations.length; i++) {
-	    for (int j = 0; j < i + 1; j++) {
-		dumpPermutation(permutations, j - 1, i);
-	    }
-	}
+                // Effectively detach this from quandaset
+                point.detach();
+
+                // If it is a qandadiv with more than one qandaentry, then
+                // shuffle the internal qandaentries
+                if (point.getChildren("qandaentry").size() > 1) {
+                    shuffleDiv(point, permutations[i - 1], qandadivIndex);
+                } else {
+                    // Shuffle the internal answers
+                    shuffleAnswers(point.getChild("qandaentry"));
+
+                    permutations[i - 1].add(qandadivIndex.get(point));
+                }
+
+                // Insert it in the new list
+                qandaset.addContent(point);
+            } // End of while
+
+            root.addContent(qandaset);
+
+            // Manipulate the root @id attribute
+            root.setAttribute(new Attribute("id", rootID + "_" + i));
+
+            // Dump the result
+            docMgr.writeFile(args[0].replaceAll(".xml$", "_" + i + ".xml"),
+                             Format.getRawFormat());
+        } // End of for i = 1 to number of versions to produce
+
+        System.out.println("Step " + stepCount++ + ": Dumping all permutations");
+        System.out.println();
+
+        // Loop over all the permutations
+        for (int i = 0; i < permutations.length; i++) {
+            for (int j = 0; j < i + 1; j++) {
+                dumpPermutation(permutations, j - 1, i);
+            }
+        }
     } // End of main
 
     public static void dumpPermutation(Vector[] permutations, int idxA, int idxB) {
-	DecimalFormat dfmt;
-	
-	// if idxA, then first permutation is the identity.
+        DecimalFormat dfmt;
 
-	dfmt = new DecimalFormat("00");
+        // if idxA, then first permutation is the identity.
 
-	if (idxA == -1) {
-	    System.out.print("Src: ");
-	} else {
-	    System.out.print("V" + dfmt.format((long)idxA) + ": ");
-	}
+        dfmt = new DecimalFormat("00");
 
-	// Dump the succesive indeces
-	for (int j = 0; j < permutations[idxB].size(); j++) {
-	    System.out.print(dfmt.format((long)j + 1) + " ");
-	}
-	System.out.println();
-	
-	//  A->B
-	System.out.print("V" + dfmt.format((long)idxB) + ": ");
-	for (int j = 0; j < permutations[idxB].size(); j++) {
-	    if (idxA == -1) { 
-		// This line is buggy. Needs a fix, but I don't know how to do
-		// it.a
-		System.out.print(dfmt.format(permutations[idxB].elementAt(j)) + " ");
-	    } else {
-		System.out.print(dfmt.format((long)permutations[idxB].indexOf(permutations[idxA].elementAt(j)) + 1) + " ");
-	    }
-	}
-	System.out.println();
-	
-	//  B->A
-	System.out.print("Rev: ");
-	for (int j = 0; j < permutations[idxB].size(); j++) {
-	    if (idxA == -1) {
-		System.out.print(dfmt.format((long)permutations[idxB].indexOf(new Integer(j + 1)) + 1) + " ");
-	    } else {
-		System.out.print(dfmt.format((long)permutations[idxA].indexOf(permutations[idxB].elementAt(j)) + 1) + " ");
-	    }
-	}
-	System.out.println();
-	
-	
-	System.out.println();
+        if (idxA == -1) {
+            System.out.print("Src: ");
+        } else {
+            System.out.print("V" + dfmt.format((long)idxA) + ": ");
+        }
+
+        // Dump the succesive indeces
+        for (int j = 0; j < permutations[idxB].size(); j++) {
+            System.out.print(dfmt.format((long)j + 1) + " ");
+        }
+        System.out.println();
+
+        //  A->B
+        System.out.print("V" + dfmt.format((long)idxB) + ": ");
+        for (int j = 0; j < permutations[idxB].size(); j++) {
+            if (idxA == -1) {
+                // This line is buggy. Needs a fix, but I don't know how to do
+                // it.a
+                System.out.print(dfmt.format(permutations[idxB].elementAt(j)) + " ");
+            } else {
+                System.out.print(dfmt.format((long)permutations[idxB].indexOf(permutations[idxA].elementAt(j)) + 1) + " ");
+            }
+        }
+        System.out.println();
+
+        //  B->A
+        System.out.print("Rev: ");
+        for (int j = 0; j < permutations[idxB].size(); j++) {
+            if (idxA == -1) {
+                System.out.print(dfmt.format((long)permutations[idxB].indexOf(new Integer(j + 1)) + 1) + " ");
+            } else {
+                System.out.print(dfmt.format((long)permutations[idxA].indexOf(permutations[idxB].elementAt(j)) + 1) + " ");
+            }
+        }
+        System.out.println();
+
+
+        System.out.println();
     }
 
     public static void shuffleDiv(Element qandadiv, Vector permutation,
-				  Hashtable qandadivIndex) {
-	List entries;
+                                  Hashtable qandadivIndex) {
+        List entries;
 
-	entries = new ArrayList();
-	for (ListIterator li = qandadiv.getChildren("qandaentry").listIterator(); 
-	     li.hasNext();) {
-	    Element point;
-	    
-	    point = (Element)li.next();
-	    entries.add(point);
-	}
-	// Remove quandaentries
-	qandadiv.removeChildren("qandaentry");
+        entries = new ArrayList();
+        for (ListIterator li = qandadiv.getChildren("qandaentry").listIterator();
+             li.hasNext();) {
+            Element point;
 
-	// Here is where the shuffling is done
-	while (entries.size() > 0) {
-	    Element point; 
-	    
-	    // Remove a random element
-	    point = (Element)entries.remove(rnd.nextInt(entries.size()));
-	    // Effectively detach this from qandadiv
-	    point.detach();
-	    
-	    // Shuffle the internal answers
-	    shuffleAnswers(point);
+            point = (Element)li.next();
+            entries.add(point);
+        }
+        // Remove quandaentries
+        qandadiv.removeChildren("qandaentry");
 
-	    // Insert it in the element
-	    qandadiv.addContent(point);
+        // Here is where the shuffling is done
+        while (entries.size() > 0) {
+            Element point;
 
-	    // Upate the permutation vector
-	    permutation.add(qandadivIndex.get(point));
-	} // End of while
+            // Remove a random element
+            point = (Element)entries.remove(rnd.nextInt(entries.size()));
+            // Effectively detach this from qandadiv
+            point.detach();
+
+            // Shuffle the internal answers
+            shuffleAnswers(point);
+
+            // Insert it in the element
+            qandadiv.addContent(point);
+
+            // Upate the permutation vector
+            permutation.add(qandadivIndex.get(point));
+        } // End of while
     } // End of ShuffleDiv
 
     // Function that shuffles the answers inside a qandaentry. There must be
     // more than two answers, and the last one is NEVER moved to allow the use
     // of "None of the above" as last answer.
     public static void shuffleAnswers(Element qandaentry) {
-	List entries;
-	Element point;
-	int numAnswers;
+        List entries;
+        Element point;
+        int numAnswers;
 
-	// Get a hold of the list of answers for some quick checking
-	entries = qandaentry.getChildren("answer");
-	numAnswers = entries.size();
+        // Get a hold of the list of answers for some quick checking
+        entries = qandaentry.getChildren("answer");
+        numAnswers = entries.size();
 
-	// If there are less than 3 answers, no shufflling is done
-	if (numAnswers < 3) {
-	    return;
-	}
+        // If there are less than 3 answers, no shufflling is done
+        if (numAnswers < 3) {
+            return;
+        }
 
-	// Loop over each answer and store it in the entries list.
-	entries = new ArrayList();
-	for (ListIterator li = qandaentry.getChildren("answer").listIterator();
-	     li.hasNext();) {
+        // Loop over each answer and store it in the entries list.
+        entries = new ArrayList();
+        for (ListIterator li = qandaentry.getChildren("answer").listIterator();
+             li.hasNext();) {
 
-	    point = (Element)li.next();
-	    entries.add(point);
-	}
+            point = (Element)li.next();
+            entries.add(point);
+        }
 
-	// Remove all answers from the qandaentry
-	qandaentry.removeChildren("answer");
+        // Remove all answers from the qandaentry
+        qandaentry.removeChildren("answer");
 
-	// While there is more than one answer remaining in the list of answers
-	while (entries.size() > 1) {
+        // While there is more than one answer remaining in the list of answers
+        while (entries.size() > 1) {
 
-	    // Remove a random element avoiding the last one
-	    point = (Element)entries.remove(rnd.nextInt(entries.size() - 1));
-	    // Detach from qandaentry
-	    point.detach();
+            // Remove a random element avoiding the last one
+            point = (Element)entries.remove(rnd.nextInt(entries.size() - 1));
+            // Detach from qandaentry
+            point.detach();
 
-	    // And insert it again in the  qandaentry at the beginning of the
-	    // list that way, the last element is left untouched.
-	    qandaentry.addContent(point);
-	}
+            // And insert it again in the  qandaentry at the beginning of the
+            // list that way, the last element is left untouched.
+            qandaentry.addContent(point);
+        }
 
-	// Insert again the last answer in the qandaentry
-	point = (Element)entries.remove(0);
-	point.detach();
-	qandaentry.addContent(point);
+        // Insert again the last answer in the qandaentry
+        point = (Element)entries.remove(0);
+        point.detach();
+        qandaentry.addContent(point);
 
-	return;
+        return;
     }
 } // End of class
