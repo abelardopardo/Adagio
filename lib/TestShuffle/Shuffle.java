@@ -63,6 +63,7 @@ public class Shuffle {
 	List seedList;
 	Vector[] permutations;
 	Hashtable qandadivIndex;
+	String rootID;
 	int versions;
 	int index;
 	int stepCount;
@@ -76,7 +77,8 @@ public class Shuffle {
 	    return;
 	}
 
-	System.out.println("Step " + stepCount++ + ": Open the file and check permissions");
+	System.out.println("Step " + stepCount++ + 
+			   ": Open the file and check permissions");
 
 	// Open the file and make sure it exists and can be read
 	in = new File(args[0]);
@@ -85,7 +87,8 @@ public class Shuffle {
 	    return;
 	}
 
-	System.out.println("Step " + stepCount++ + ": Create the XML document manager");
+	System.out.println("Step " + stepCount++ + 
+			   ": Create the XML document manager");
 
 	// Create the document manager
 	docMgr = new XMLMgr();
@@ -96,7 +99,8 @@ public class Shuffle {
 	    return;
 	}
 	
-	System.out.println("Step " + stepCount++ + ": Fetch and check root element.");
+	System.out.println("Step " + stepCount++ + 
+			   ": Fetch and check root element.");
 
 	// Fetch the root element
 	root = docMgr.getRootElement();
@@ -105,7 +109,14 @@ public class Shuffle {
 	    return;
 	}
 
-	System.out.println("Step " + stepCount++ + ": Check the presence of 'status' attribute.");
+	// Store the "id" in the root element or create a new one
+	rootID = root.getAttributeValue("id");
+	if (rootID == null) {
+	    root.setAttribute(new Attribute("id", "AdaShuffle"));
+	}
+
+	System.out.println("Step " + stepCount++ + 
+			   ": Check the presence of 'status' attribute.");
 
 	// Check if there is a seed attribute stored as "status"
 	if (root.getAttribute("status") != null) {
@@ -113,7 +124,8 @@ public class Shuffle {
 	    return;
 	}
 
-	System.out.println("Step " + stepCount++ + ": Fetch the sectioninfo element or create one");
+	System.out.println("Step " + stepCount++ + 
+			   ": Fetch the sectioninfo element or create one");
 
 	// Fetch the sectioninfo element or create one
 	seedList = new LinkedList();
@@ -132,7 +144,8 @@ public class Shuffle {
 
 	} // If sectionInfo is not null
 
-	System.out.println("Step " + stepCount++ + ": Fetch the qandadiv elements to shuffle");
+	System.out.println("Step " + stepCount++ + 
+			   ": Fetch the qandadiv elements to shuffle");
 
 	// If no info has been given to produce a seed, create one within its
 	// corresponding productnumber element
@@ -140,7 +153,8 @@ public class Shuffle {
 	    Element toAdd;
 
 	    toAdd = new Element("productnumber");
-	    toAdd = toAdd.setText((new Long(System.currentTimeMillis())).toString());
+	    toAdd = 
+		toAdd.setText((new Long(System.currentTimeMillis())).toString());
 	    seedList.add(toAdd);
 	} 
 
@@ -174,7 +188,8 @@ public class Shuffle {
 		int entryIdx;
 
 		entryIdx = 1;
-		for (ListIterator li2 = qandadiv.getChildren("qandaentry").listIterator(); 
+		for (ListIterator li2 = 
+			 qandadiv.getChildren("qandaentry").listIterator(); 
 		     li2.hasNext();) {
 		    Element qandaentry;
 		    
@@ -192,8 +207,10 @@ public class Shuffle {
 	System.out.println();
 	
 	
-	System.out.println("Step " + stepCount++ + ": Hash with " + (index - 1) + " elements.");
-	System.out.println("Step " + stepCount++ + ": Create the permutation vectors.");
+	System.out.println("Step " + stepCount++ + 
+			   ": Hash with " + (index - 1) + " elements.");
+	System.out.println("Step " + stepCount++ + 
+			   ": Create the permutation vectors.");
 
 	// Create the space for permutations
 	permutations = new Vector[seedList.size()];
@@ -236,7 +253,8 @@ public class Shuffle {
 	    entries = new ArrayList();
 
 	    // Transfer qandadiv to another list
-	    for (ListIterator li = qandaset.getChildren("qandadiv").listIterator(); 
+	    for (ListIterator li = 
+		     qandaset.getChildren("qandadiv").listIterator(); 
 		 li.hasNext();) {
 		Element point;
 
@@ -272,6 +290,9 @@ public class Shuffle {
 	    } // End of while
 
 	    root.addContent(qandaset);
+
+	    // Manipulate the root @id attribute
+	    root.setAttribute(new Attribute("id", rootID + "_" + i));
 
 	    // Dump the result 
 	    docMgr.writeFile(args[0].replaceAll(".xml$", "_" + i + ".xml"),
