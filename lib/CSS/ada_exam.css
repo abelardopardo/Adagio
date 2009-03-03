@@ -199,6 +199,11 @@ div.ada_exam_qandaentry_table_multiple div.ada_exam_question_tf_answer > div
 div.ada_exam_question_mc_answer_text
 {
   display: table-cell;
+  }
+div.ada_exam_question_mc_answer_text *
+{
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 div.ada_exam_answer_square
