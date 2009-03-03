@@ -48,6 +48,11 @@
           </tokens>
         </xsl:variable>
 
+        <xsl:variable name="css_url_value">
+          <xsl:value-of
+            select="normalize-space(exsl:node-set($tuple_url_attributes)/tokens/token[position() = 1])"/>
+        </xsl:variable>
+
         <xsl:variable name="media_attribute_value">
           <xsl:choose>
             <xsl:when
@@ -73,9 +78,10 @@
         <link type="text/css">
           <xsl:attribute name="rel"><xsl:value-of
           select="$rel"/></xsl:attribute>
-          <xsl:attribute name="href"><xsl:value-of
-          select="$ada.course.home"/><xsl:value-of
-          select="normalize-space(exsl:node-set($tuple_url_attributes)/tokens/token[position() = 1])"/></xsl:attribute>
+          <xsl:attribute name="href"><xsl:if
+          test="not(starts-with($css_url_value, './'))"><xsl:value-of
+          select="$ada.course.home"/></xsl:if><xsl:value-of
+          select="$css_url_value"/></xsl:attribute>
           <xsl:attribute name="media"><xsl:value-of
           select="$media_attribute_value"/></xsl:attribute>
           <xsl:if test="$title_attribute_value and $title_attribute_value != ''">
