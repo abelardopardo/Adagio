@@ -38,7 +38,7 @@
   <!-- Only those qandadiv with condition TestQuestion or TestMCQuestion
        are processed by this stylesheet -->
   <xsl:template match="qandadiv[@condition='ADA_Test_Question']|
-                       qandaentry">
+                       qandaentry[@condition='ADA_Test_Question']">
     <xsl:variable name="beginnumber">
       <xsl:number level="any" count="qandaentry" from="section"/>
     </xsl:variable>
@@ -382,57 +382,36 @@
             <xsl:choose>
               <xsl:when test="$profile.lang='es'">
                 <th>Edición</th>
-                <th>Correctas</th>
-                <th>Inc.</th>
-                <th>Blanco</th>
-                <th>Total</th>
-                <th>Comentarios</th>
+                <th>Anotaciones</th>
               </xsl:when>
               <xsl:otherwise>
                 <th>Edition</th>
-                <th>Correct</th>
-                <th>Inc.</th>
-                <th>Blank</th>
-                <th>Total</th>
-                <th>Remarks</th>
+                <th>Annotations</th>
               </xsl:otherwise>
             </xsl:choose>
           </tr>
-          <xsl:choose>
-            <xsl:when test="blockinfo/printhistory/para">
-              <xsl:for-each select="blockinfo/printhistory/para">
-                <tr>
+          <tr>
+            <xsl:choose>
+              <xsl:when test="blockinfo/printhistory/para">
+                <xsl:for-each select="blockinfo/printhistory/para">
+                  <td><xsl:value-of select="@revision"/></td>
                   <td>
-                    <xsl:value-of
-                      select="@arch"/>/<xsl:value-of
-                    select="@revision"/>/<xsl:value-of
-                    select="@vendor"/>
+                    <xsl:for-each select="phrase">
+                      <xsl:if test="position() != 1">
+                        <xsl:text>, </xsl:text>
+                      </xsl:if>
+                      <xsl:value-of select="@condition"/>:
+                      <xsl:text> </xsl:text>
+                      <xsl:value-of select="text()"/>
+                    </xsl:for-each>
                   </td>
-                  <td>
-                    <xsl:value-of
-                      select="phrase[@condition='correct']/text()"/>
-                  </td>
-                  <td>
-                    <xsl:value-of select="phrase[@condition='incorrect']/text()"/>
-                  </td>
-                  <td>
-                    <xsl:value-of select="phrase[@condition='blank']/text()"/>
-                  </td>
-                  <td>
-                    <xsl:value-of select="phrase[@condition='total']/text()"/>
-                  </td>
-                  <td>
-                    <xsl:value-of select="phrase[@condition='remarks']/text()"/>
-                  </td>
-                </tr>
-              </xsl:for-each>
-            </xsl:when>
-            <xsl:otherwise>
-              <tr>
+                </xsl:for-each>
+              </xsl:when>
+              <xsl:otherwise>
                 <td colspan="6">No information available</td>
-              </tr>
-            </xsl:otherwise>
-          </xsl:choose>
+              </xsl:otherwise>
+            </xsl:choose>
+          </tr>
         </table>
       </div>
     </xsl:if>
