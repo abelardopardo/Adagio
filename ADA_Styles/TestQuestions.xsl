@@ -38,7 +38,7 @@
   <!-- Only those qandadiv with condition TestQuestion or TestMCQuestion
        are processed by this stylesheet -->
   <xsl:template match="qandadiv[@condition='ADA_Test_Question']|
-                       qandaentry[@condition='ADA_Test_Question']">
+                       qandaentry">
     <xsl:variable name="beginnumber">
       <xsl:number level="any" count="qandaentry" from="section"/>
     </xsl:variable>
