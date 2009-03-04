@@ -112,7 +112,6 @@
 	    genericantfile="${ada.home}/AntImports/AllTargets.xml"
 	    inheritall="false" inheritrefs="false">
       <property name="export.dst.dir" value="${subrecursive.dst.dir}" />
-      <property name="ada.course.home.candidate" value=""/>
       <filelist refid="subrecursive.dirlist"/>
     </subant>
   </target>

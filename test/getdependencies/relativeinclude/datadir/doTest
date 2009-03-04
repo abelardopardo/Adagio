@@ -14,8 +14,9 @@ if [ "$status" -ne 0 ]; then
   exit 1
 fi
 
-# Touch the imported style sheet
+# Touch the imported style sheet and wait to avoid time-shift errors.
 touch ../Imported.xsl
+sleep 2
 
 # Execute ADA AGAIN and this time the execution of xsltproc should happen
 adado -v >& doTest.log

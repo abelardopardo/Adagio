@@ -13,7 +13,7 @@ passed=0
 failed=0
 for name in $files; do
   dname=`dirname $name`
-  echo -n "+ Processing test in $dname "
+  echo -n "+ Running test in $dname "
   cd $dname
 
   executed=`expr $executed + 1`
@@ -32,6 +32,8 @@ for name in $files; do
   cd $currentDir
 done
 
-echo "Executed: $executed. Passed: $passed. Failed $failed"
+echo "Executed: $executed."
+echo "Passed:   $passed."
+echo "Failed:   $failed"
 
 exit
