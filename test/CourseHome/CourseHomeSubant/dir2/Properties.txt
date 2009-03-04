@@ -1,0 +1,3 @@
+copytemplates.files=t1.tmpl
+copytemplates.filter.file=${resources.home}/filter.txt
+copytemplates.output.format=filtered

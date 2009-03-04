@@ -1,0 +1,1 @@
+subrecursive.dirs=${resources.home}/dir2

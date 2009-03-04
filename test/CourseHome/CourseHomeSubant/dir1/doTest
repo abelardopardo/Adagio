@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Make sure we start with a clean page
+adado clean
+rm -f doTest.log
+
+# Execute ADA
+adado -v >& doTest.log
+
+status="$?"
+if [ "$status" -ne 0 ]; then
+  echo
+  echo "  adado returned an error status, and is incorrect."
+  exit 1
+fi
+
+exit
