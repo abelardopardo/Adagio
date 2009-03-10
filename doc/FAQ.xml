@@ -50,8 +50,8 @@
     </copyright>
   </articleinfo>
   
-  <para>You may also access to the <ulink url="FAQ.pdf">PDF version of this
-  document</ulink>.</para>
+<!--   <para>You may also access to the <ulink url="FAQ.pdf">PDF version of this -->
+<!--   document</ulink>.</para> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
@@ -132,6 +132,15 @@
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <xi:include href="Processing_Multilingual.xml"
+              parse="xml"
+              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!--                                                              -->
+  <!--                          CLEANING                            -->
+  <!--                                                              -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xi:include href="Cleaning.xml"
               parse="xml"
               xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
