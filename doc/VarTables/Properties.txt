@@ -15,6 +15,7 @@ xsltproc.files=InitialCheck.xml \
                ExportControl.xml \
                SubRecursive.xml \
                Copyfiles.xml \
+               Copytemplates.xml \
                ExerciseSubmit.xml \
                Pdflatex.xml \
                Latex.xml \
