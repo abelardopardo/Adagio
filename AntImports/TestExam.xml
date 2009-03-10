@@ -160,6 +160,8 @@ multilingual mode"/>
 
     <echo>testexam.processing         END(xsltproc.processing ES)</echo>
 
+    <echo>testexam.processing  (2/5)  RUN(Shuffling)</echo>
+
     <!-- Obtain the filelist with the _raw suffix  -->
     <pathconvert property="testexam.source.raw.filelist.property" pathsep=" ">
       <filelist refid="testexam.filelist"/>
@@ -167,23 +169,17 @@ multilingual mode"/>
       <mapper type="glob" from="*.xml" to="*_raw.xml"/>
     </pathconvert>
 
-    <echo>testexam.processing  (2/5)  RUN(Shuffling)</echo>
-
     <!-- Generating the shuffled versions -->
-    <java classname="Shuffle" jvm="/usr/bin/java" output="build.out"
-	  append="yes">
-      <classpath>
-	<pathelement
-	  location="${ada.home}/lib/TestShuffle/gol.jar"/>
-	<pathelement
-	  location="${ada.home}/lib/TestShuffle/xercesImpl.jar"/>
-	<pathelement
-	  location="${ada.home}/lib/TestShuffle/jdom.jar"/>
-	<pathelement
-	  location="${ada.home}/lib/TestShuffle"/>
-      </classpath>
-      <arg value="${testexam.source.raw.filelist.property}"/>
-    </java>
+    <apply dir="${testexam.src.dir}" parallel="false"
+	   dest="${testexam.dst.dir}" append="yes" failonerror="true"
+	   executable="java" output="build.out">
+      <arg value="-classpath"/>
+      <arg
+	value="${ada.home}/lib/TestShuffle:${ada.home}/lib/TestShuffle/gol.jar:${ada.home}/lib/TestShuffle/jdom.jar:${ada.home}/lib/TestShuffle/xercesImpl.jar"/>
+      <arg value="Shuffle"/>
+      <filelist files="${testexam.source.raw.filelist.property}"/>
+      <mapper type="regexp" from="^(.*)_raw\.xml" to="\1_1.xml"/>
+    </apply>
 
     <!-- Remove _raw from generated file names -->
     <move todir="${testexam.absdst.dir}" includeemptydirs="false">
