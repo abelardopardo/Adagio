@@ -41,10 +41,10 @@ xsltproc.extra.args=--stringparam chapter.autolabel 0 \
 copyfiles.src.dir=../AntImports
 copyfiles.files=Properties_sample.txt
 
-dblatex.files=FAQ.xml
+# dblatex.files=FAQ.xml
 
 export.dst.dir=scratch
-export.files=FAQ.html FAQ.pdf \
+export.files=FAQ.html \
              images/*.png \
              style.css \
 	     Properties_sample.txt
