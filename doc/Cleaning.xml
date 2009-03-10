@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (C) 2008 Carlos III University of Madrid
+  This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor
+  Boston, MA  02110-1301, USA.
+
+-->
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--                                                              -->
+<!--                          CLEANING                            -->
+<!--                                                              -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<section id="Cleaning_Files">
+  <title>Cleaning files produced by ADA</title>
+
+  <qandaset>
+    <qandaentry id="cleaning">
+      <question>
+        <para>How to clean the files produced by the ADA rules?</para>
+      </question>
+      <answer>
+        <para>The rules used by ADA to create resources are prepared to be
+	invoked to <emphasis>clear</emphasis> the produced files. This step is
+	useful to start from scratch in the production of resources, or simply
+	to reduce the content of a directory only to the source files.</para>
+
+	<para>Each rule used in ADA to produce a resource has its equivalent to
+	remove it. Thus, with no additional information in the
+	<filename>Properties.txt</filename> file, by simply executing the
+	command <code>adado clean</code>, all the production rules are invoked
+	again, although this time to remove the produced resources.</para>
+
+	<para>ADA performs this cleaning procedure by <quote>deducing</quote>
+	the file names of the produced resources through the given
+	definitions. If you plan to change these definitions, the recommended
+	procedure is first to <quote>clean</quote> the directory, change the
+	file names and then apply again the rules. If the names of the produced
+	files are changed and there are some of these old files in the
+	directory, the execution of the cleaning procedure with the new
+	properties will not remove them, the author will have to do it by
+	hand.</para>
+
+	<para>Although ADA knows exactly the files that creates, there are some
+	special cases in which the cleaning rule does not remove everything that
+	was created. The exception are the empty directories. If a production
+	rule creates new files in a directory, and eventually the directory
+	itself, when cleaning, the rule will only remove the files in that
+	directory, but not the directory. The consequence of this policy is that
+	there might be some remaining empty directories after cleaning all the
+	content produced by ADA.</para>
+
+	<para>To solve this issue, ADA offers one additional variable to be used
+	in the <filename>Properties.txt</filename> file and is described, along
+	with the rest of variables available, in the following table:</para>
+
+	<xi:include href="VarTables/Cleaning_vars.xml"
+		    parse="xml"
+		    xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+
+	<para>The variable <code>clean.files</code> is used to specify those
+	files or directories that are not properly removed by the implicit
+	cleaning rules. Due to the danger of inadvertently deleting important
+	files, this variable does not expand characters such as <quote>*</quote>
+	or <quote>?</quote>. If you want to use it to delete multiple files that
+	are not removed by the regular cleaning rules, you need to write all of
+	their complete file names in the variable.</para>
+      </answer>
+    </qandaentry>
+  </qandaset>
+</section>
