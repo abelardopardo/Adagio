@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Make sure we start with a clean page
+adado clean
+rm -f doTest.log
+rm -rf \${ext.publish\.dir} ../scratch
+
+# Execute ADA
+adado -v >& doTest.log
+
+status="$?"
+if [ "$status" -ne 0 ]; then
+  echo
+  echo "  adado returned an error status, and is incorrect."
+  exit 1
+fi
+
+if [ -e \${ext.publish\.dir} ]; then
+  echo
+  echo "  Directory \${ext.publish.dir} has been incorrectly created."
+  exit 1
+fi
+
+if [ ! -e ../scratch ]; then
+  echo
+  echo "  Directory ../scratch is not present
+fi
+
+exit
