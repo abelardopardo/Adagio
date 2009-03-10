@@ -169,7 +169,7 @@ Possible values are 'error', 'warning', 'info', 'verbose' and 'debug'"/>
 	  depends="set.ada.course.home.from.candidate,
                    set.ada.course.home.from.scratch">
     <!-- Load the properties from the ada.course.home directory -->
-    <property file="${ada.course.home}${file.separator}Ada.properties"/>
+    <property file="${ada.course.home}Ada.properties"/>
 
     <!-- Default file name to load the propertyes -->
     <property name="ada.local.property.file" value="Properties.txt"/>
