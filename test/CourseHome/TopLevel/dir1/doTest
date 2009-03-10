@@ -23,7 +23,7 @@ fi
 
 if [ ! -e ../scratch ]; then
   echo
-  echo "  Directory ../scratch is not present
+  echo "  Directory ../scratch is not present."
 fi
 
 exit
