@@ -109,62 +109,15 @@
         </xsl:element>
       </xsl:if>
 
-      <xsl:element name="form">
-        <xsl:attribute name="id">submit.form</xsl:attribute>
-        <xsl:attribute name="method">post</xsl:attribute>
-        <xsl:attribute name="action">
+      <xsl:call-template name="ada.asap.submission.form">
+        <xsl:with-param name="action">
           <xsl:value-of
-            select="note[@condition='AdminInfo']/para[@condition='processor']/text()"/>
-        </xsl:attribute>
-        <xsl:if test="$ada.submit.asap.verifyemail.js != ''">
-          <xsl:attribute name="onsubmit">return check_form(this)</xsl:attribute>
-        </xsl:if>
-        <xsl:attribute name="enctype">multipart/form-data</xsl:attribute>
+            select="note[@condition='AdminInfo']/para[@condition='processor']/text()"/></xsl:with-param>
+          <xsl:if test="$ada.submit.asap.verifyemail.js != ''">
+            <xsl:with-param name="onsubmit">return check_form(this)</xsl:with-param>
+      </xsl:if>
 
-        <!--
-             If there is a note with the condition text.before.author.box
-             render it
-             -->
-        <xsl:apply-templates
-          select="descendant::note[@condition='text.before.author.box']/node()"/>
-        
-        <xsl:call-template name="ada.asap.author.box"/>
-
-        <xsl:if test="$ada.submit.add.comment.textarea = 'yes'">
-          <hr/>
-
-          <table width="95%">
-            <tr>
-              <td align="center">
-                <xsl:choose>
-                  <xsl:when test="$profile.lang='es'">
-                    <h3>Comentarios</h3>
-                  </xsl:when>
-                  <xsl:when test="$profile.lang='en'">
-                    <h3>Remarks</h3>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <h3>Comentarios</h3>
-                  </xsl:otherwise>
-                </xsl:choose>
-                <textarea name="comentarios" cols="80" rows="5"/>
-              </td>
-            </tr>
-          </table>
-        </xsl:if>
-
-        <p class="ada_submit_button">
-          <xsl:choose>
-            <xsl:when test="$profile.lang='en'">
-              <input value="Submit" type="submit"></input>
-            </xsl:when>
-            <xsl:otherwise>
-              <input value="Enviar" type="submit"></input>
-            </xsl:otherwise>
-          </xsl:choose>
-        </p>
-      </xsl:element>
-
+        </xsl:call-template>
       <xsl:if test="$ada.asap.confirmation.email = 'yes'">
         <p>
           <sup>*</sup>
