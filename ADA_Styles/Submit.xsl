@@ -34,14 +34,27 @@
   <xsl:import href="AsapAuthorBox.xsl"/>
 
   <xsl:import href="SubmitParams.xsl"/>
+  <xsl:import href="SubmitForm.xsl"/>
 
-  <!-- The creation of the submission page is done from the source of the lab -->
-  <xsl:template match="chapter">
+  <!-- ============================================================ -->
+  <!--                                                              -->
+  <!--         Create a form to submit data through ASAP            -->
+  <!--                                                              -->
+  <!-- ============================================================ -->
+  <xsl:template match="chapter[@condition='ada.asap.submission.page']|
+                       section[@condition='ada.asap.submission.page']">
     <div>
       <xsl:apply-templates select="." mode="class.attribute"/>
 
       <!-- Title if present -->
-      <xsl:call-template name="chapter.titlepage"/>
+      <xsl:choose>
+        <xsl:when test="name()='section'">
+          <xsl:call-template name="section.titlepage"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="chapter.titlepage"/>
+        </xsl:otherwise>
+      </xsl:choose>
 
       <!-- Insert a header with the deadline if present in the document -->
       <xsl:if
@@ -113,25 +126,25 @@
         <xsl:with-param name="action">
           <xsl:value-of
             select="note[@condition='AdminInfo']/para[@condition='processor']/text()"/></xsl:with-param>
-          <xsl:if test="$ada.submit.asap.verifyemail.js != ''">
-            <xsl:with-param name="onsubmit">return check_form(this)</xsl:with-param>
-      </xsl:if>
-
+          <xsl:with-param name="onsubmit">
+            <xsl:if
+              test="$ada.submit.asap.verifyemail.js != ''">return check_form(this)</xsl:if>
+          </xsl:with-param>
         </xsl:call-template>
-      <xsl:if test="$ada.asap.confirmation.email = 'yes'">
-        <p>
-          <sup>*</sup>
-          <xsl:choose>
-            <xsl:when test="$profile.lang='en'">
-              Address to send an email with the submitted
-              data. Include only
-              <i>complete</i> and <i>comma separated</i>
-              email addresses.
-            </xsl:when>
-            <xsl:otherwise>
-              Dirección a la que se envía un correo con los
-              datos entregados. Las direcciones deben
-              ser <i>completas</i> y <i>separadas por comas</i>.
+        <xsl:if test="$ada.asap.confirmation.email = 'yes'">
+          <p>
+            <sup>*</sup>
+            <xsl:choose>
+              <xsl:when test="$profile.lang='en'">
+                Address to send an email with the submitted
+                data. Include only
+                <i>complete</i> and <i>comma separated</i>
+                email addresses.
+              </xsl:when>
+              <xsl:otherwise>
+                Dirección a la que se envía un correo con los
+                datos entregados. Las direcciones deben
+                ser <i>completas</i> y <i>separadas por comas</i>.
             </xsl:otherwise>
           </xsl:choose>
         </p>
@@ -139,6 +152,11 @@
     </div>
   </xsl:template>
 
+  <!-- ============================================================ -->
+  <!--                                                              -->
+  <!--                  Process INPUT note/para/phrase              -->
+  <!--                                                              -->
+  <!-- ============================================================ -->
   <xsl:template match="note[@condition='input']|
                        para[@condition='input']|
                        phrase[@condition='input']">
@@ -183,6 +201,11 @@
     </xsl:if>
   </xsl:template>
 
+  <!-- ============================================================ -->
+  <!--                                                              -->
+  <!--               Process TEXTAREA note/para/phrase              -->
+  <!--                                                              -->
+  <!-- ============================================================ -->
   <xsl:template match="note[@condition='textarea']|
                        para[@condition='textarea']|
                        phrase[@condition='textarea']">

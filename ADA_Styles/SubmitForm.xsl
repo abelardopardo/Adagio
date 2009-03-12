@@ -34,11 +34,13 @@
     <xsl:param name="id">submit.form</xsl:param>
     <xsl:param name="method">post</xsl:param>
     <xsl:param name="enctype">multipart/form-data</xsl:param>
-    <xsl:param name="action"/>
+    <xsl:param name="action"><xsl:value-of
+    select="$ada.form.default.action"/></xsl:param>
     <xsl:param name="onsubmit"/>
 
     <xsl:element name="form">
-      <xsl:attribute name="id"><xsl:value-of select="$submit.form"/></xsl:attribute>
+      <xsl:attribute name="id"><xsl:value-of
+      select="$ada.form.default.form.id"/></xsl:attribute>
       <xsl:attribute name="method"><xsl:value-of select="$method"/></xsl:attribute>
       <xsl:attribute name="action"><xsl:value-of select="$action"/></xsl:attribute>
       <xsl:if test="$onsubmit and ($onsubmit != '')">
@@ -67,11 +69,8 @@
                 <xsl:when test="$profile.lang='es'">
                   <h3>Comentarios</h3>
                 </xsl:when>
-                <xsl:when test="$profile.lang='en'">
-                  <h3>Remarks</h3>
-                </xsl:when>
                 <xsl:otherwise>
-                  <h3>Comentarios</h3>
+                  <h3>Remarks</h3>
                 </xsl:otherwise>
               </xsl:choose>
               <textarea name="comentarios" cols="80" rows="5"/>
@@ -221,4 +220,14 @@
       </xsl:element>
     </div>
   </xsl:template>
+
+  <xsl:template name="printHierarchy">
+      <xsl:for-each select="ancestor::section">
+          <xsl:if test="ancestor::*[position()=1 and local-name()='chapter']">
+               <xsl:value-of select="ancestor::*[position()=1 and local-name()='chapter']/title/phrase/text()" />
+          </xsl:if>
+          <xsl:text>--</xsl:text><xsl:value-of select="title/phrase/text()" />
+      </xsl:for-each>
+  </xsl:template>
+
 </xsl:stylesheet>
