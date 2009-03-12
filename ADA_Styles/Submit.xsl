@@ -34,7 +34,9 @@
   <xsl:import href="AsapAuthorBox.xsl"/>
 
   <xsl:import href="SubmitParams.xsl"/>
-  <xsl:import href="SubmitForm.xsl"/>
+
+  <!-- NUKE ONCE EVERYTHING HAS BEEN IMPLEMENTED -->
+  <xsl:variable name="ada.fancyheading.feedback.url"/>
 
   <!-- ============================================================ -->
   <!--                                                              -->
@@ -122,29 +124,76 @@
         </xsl:element>
       </xsl:if>
 
-      <xsl:call-template name="ada.asap.submission.form">
-        <xsl:with-param name="action">
+
+      <xsl:element name="form">
+        <xsl:attribute name="id">submit.form</xsl:attribute>
+        <xsl:attribute name="method">post</xsl:attribute>
+        <xsl:attribute name="action">
           <xsl:value-of
-            select="note[@condition='AdminInfo']/para[@condition='processor']/text()"/></xsl:with-param>
-          <xsl:with-param name="onsubmit">
-            <xsl:if
-              test="$ada.submit.asap.verifyemail.js != ''">return check_form(this)</xsl:if>
-          </xsl:with-param>
-        </xsl:call-template>
-        <xsl:if test="$ada.asap.confirmation.email = 'yes'">
-          <p>
-            <sup>*</sup>
-            <xsl:choose>
-              <xsl:when test="$profile.lang='en'">
-                Address to send an email with the submitted
-                data. Include only
-                <i>complete</i> and <i>comma separated</i>
-                email addresses.
-              </xsl:when>
-              <xsl:otherwise>
-                Dirección a la que se envía un correo con los
-                datos entregados. Las direcciones deben
-                ser <i>completas</i> y <i>separadas por comas</i>.
+            select="note[@condition='AdminInfo']/para[@condition='processor']/text()"/>
+        </xsl:attribute>
+        <xsl:if test="$ada.submit.asap.verifyemail.js != ''">
+          <xsl:attribute name="onsubmit">return check_form(this)</xsl:attribute>
+        </xsl:if>
+        <xsl:attribute name="enctype">multipart/form-data</xsl:attribute>
+
+        <!--
+             If there is a note with the condition text.before.author.box
+             render it
+             -->
+        <xsl:apply-templates
+          select="descendant::note[@condition='text.before.author.box']/node()"/>
+
+        <xsl:call-template name="ada.asap.author.box"/>
+
+        <xsl:if test="$ada.submit.add.comment.textarea = 'yes'">
+          <hr/>
+
+          <table width="95%">
+            <tr>
+              <td align="center">
+                <xsl:choose>
+                  <xsl:when test="$profile.lang='es'">
+                    <h3>Comentarios</h3>
+                  </xsl:when>
+                  <xsl:when test="$profile.lang='en'">
+                    <h3>Remarks</h3>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <h3>Comentarios</h3>
+                  </xsl:otherwise>
+                </xsl:choose>
+                <textarea name="comentarios" cols="80" rows="5"/>
+              </td>
+            </tr>
+          </table>
+        </xsl:if>
+
+        <p class="ada_submit_button">
+          <xsl:choose>
+            <xsl:when test="$profile.lang='en'">
+              <input value="Submit" type="submit"></input>
+            </xsl:when>
+            <xsl:otherwise>
+              <input value="Enviar" type="submit"></input>
+            </xsl:otherwise>
+          </xsl:choose>
+        </p>
+      </xsl:element>
+
+      <xsl:if test="$ada.asap.confirmation.email = 'yes'">
+        <p>
+          <sup>*</sup>
+          <xsl:choose>
+            <xsl:when test="$profile.lang='en'">
+              Address to send an email with the submitted
+              data. Include only
+              <i>complete</i> and <i>comma separated</i>
+              email addresses.
+            </xsl:when>
+            <xsl:otherwise>Dirección a la que se envía un correo con los
+              datos entregados. Las direcciones deben
+              ser <i>completas</i> y <i>separadas por comas</i>.
             </xsl:otherwise>
           </xsl:choose>
         </p>
@@ -229,6 +278,144 @@
         <xsl:copy-of select="text()"/>
       </xsl:element>
     </xsl:if>
+  </xsl:template>
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xsl:template match="remark[@condition='teacher-comments']">
+    <xsl:element name="form">
+      <xsl:attribute name="id">submitDurationForm</xsl:attribute>
+      <xsl:attribute name="method">post</xsl:attribute>
+      <xsl:attribute name="enctype">multipart/form-data</xsl:attribute>
+      <xsl:attribute name="action"><xsl:value-of
+      select="$ada.fancyheading.feedback.url"/><xsl:value-of
+      select="text()"/></xsl:attribute>
+
+      <textarea cols="100" rows="20" name="teacher-comments"></textarea>
+
+      <xsl:element name="input">
+        <xsl:attribute name="type">hidden</xsl:attribute>
+        <xsl:attribute name="name">teacher-comment-id</xsl:attribute>
+        <xsl:attribute name="value"><xsl:value-of
+        select="preceding::*[position()=1 and
+        @condition='teacher-comment-id']/text()"/></xsl:attribute>
+      </xsl:element>
+
+      <input type="submit" value="Send"
+      onclick="this.form.target='hiddeniFrame';this.form.style.display='none';"/>
+      <iframe name="hiddeniFrame" src="about:blank"
+        style="display:none; width:0px; height:0pxl"></iframe>
+    </xsl:element>
+
+  </xsl:template>
+
+
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xsl:template match="remark[@condition='duration-feedback']">
+    <div class="duration-feedback">
+      <xsl:element name="form">
+        <xsl:attribute name="class">submitDurationForm</xsl:attribute>
+        <xsl:attribute name="method">post</xsl:attribute>
+        <xsl:attribute name="enctype">multipart/form-data</xsl:attribute>
+        <xsl:attribute name="action"><xsl:value-of
+        select="$ada.fancyheading.feedback.url"/><xsl:value-of
+        select="text()"/></xsl:attribute>
+        <select name="duration-feedback" >
+          <xsl:element name="option">
+            <xsl:attribute name="value">&lt;&lt;<xsl:value-of
+            select="preceding::remark[@condition='duration' and
+            position()='1']/text()*0.5"/>
+            </xsl:attribute>
+            &lt;&lt;<xsl:value-of select="preceding::remark[@condition='duration'
+            and position()='1']/text()*0.5"/>
+          </xsl:element>
+          <xsl:element name="option">
+            <xsl:attribute name="value">
+              <xsl:value-of select="preceding::remark[@condition='duration' and
+                                    position()='1']/text()*0.5"/>
+            </xsl:attribute>
+            <xsl:value-of select="preceding::remark[@condition='duration' and
+                                  position()='1']/text()*0.5"/>
+          </xsl:element>
+          <xsl:element name="option">
+            <xsl:attribute name="value">
+              <xsl:value-of select="preceding::remark[@condition='duration' and
+                                    position()='1']/text()*0.75"/>
+            </xsl:attribute>
+            <xsl:value-of select="preceding::remark[@condition='duration' and
+                                  position()='1']/text()*0.75"/>
+          </xsl:element>
+          <xsl:element name="option">
+            <xsl:attribute name="selected">selected</xsl:attribute>
+            <xsl:attribute name="value">
+              <xsl:value-of select="preceding::remark[@condition='duration' and
+                                    position()='1']/text()"/>
+            </xsl:attribute>
+            <xsl:value-of select="preceding::remark[@condition='duration' and
+                                  position()='1']/text()"/>
+          </xsl:element>
+          <xsl:element name="option">
+            <xsl:attribute name="value">
+              <xsl:value-of select="preceding::remark[@condition='duration' and
+                                    position()='1']/text()*1.25"/>
+            </xsl:attribute>
+            <xsl:value-of select="preceding::remark[@condition='duration' and
+                                  position()='1']/text()*1.25"/>
+          </xsl:element>
+          <xsl:element name="option">
+            <xsl:attribute name="value">
+              <xsl:value-of select="preceding::remark[@condition='duration' and
+                                    position()='1']/text()*1.5"/>
+            </xsl:attribute>
+            <xsl:value-of select="preceding::remark[@condition='duration' and
+                                  position()='1']/text()*1.5"/>
+          </xsl:element>
+          <xsl:element name="option">
+            <xsl:attribute name="value">
+              &gt;&gt;<xsl:value-of
+              select="preceding::remark[@condition='duration' and
+              position()='1']/text()*1.5"/>
+            </xsl:attribute>
+            &gt;&gt;<xsl:value-of select="preceding::remark[@condition='duration'
+            and position()='1']/text()*1.5"/>
+          </xsl:element>
+        </select>
+        <xsl:element name="input">
+          <xsl:attribute name="type">hidden</xsl:attribute>
+          <xsl:attribute name="name">title-hierarchy</xsl:attribute>
+          <xsl:attribute name="value"><xsl:call-template
+          name="printHierarchy"/></xsl:attribute>
+        </xsl:element>
+
+        <xsl:element name="input">
+          <xsl:attribute name="type">hidden</xsl:attribute>
+          <xsl:attribute name="name">duration</xsl:attribute>
+          <xsl:attribute name="value">
+            <xsl:value-of select="preceding::remark[@condition='duration' and
+                                  position()='1']/text()"/>
+          </xsl:attribute>
+        </xsl:element>
+        <input type="submit" value="Send"
+          onclick="this.form.target='hiddeniFrame';this.form.style.display='none';"
+          />
+        <iframe name="hiddeniFrame" src="about:blank"
+          style="display:none; width:0px; height:0pxl"></iframe>
+      </xsl:element>
+    </div>
+  </xsl:template>
+
+  <xsl:template name="printHierarchy">
+      <xsl:for-each select="ancestor::section">
+          <xsl:if test="ancestor::*[position()=1 and local-name()='chapter']">
+               <xsl:value-of select="ancestor::*[position()=1 and local-name()='chapter']/title/phrase/text()" />
+          </xsl:if>
+          <xsl:text>--</xsl:text><xsl:value-of select="title/phrase/text()" />
+      </xsl:for-each>
   </xsl:template>
 
   <!-- The title of the section is to be ignored -->
