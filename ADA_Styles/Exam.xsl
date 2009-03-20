@@ -31,7 +31,7 @@
   <xsl:include href="TestQuestions.xsl"/>
   <xsl:include href="SolutionSection.xsl"/>
   <xsl:include href="PguideSection.xsl"/>
-  <xsl:include href="SubmitIgnore.xsl"/>
+  <xsl:include href="AsapSubmitIgnore.xsl"/>
 
   <!-- This one for sure is needed in all documents -->
   <xsl:param name="xref.with.number.and.title" select="'0'"/>
@@ -226,22 +226,21 @@
     <!-- Problems within a section element -->
     <xsl:for-each select="section/section">
       <xsl:if test="$ada.exam.exercise.name">
-        <b><xsl:copy-of select="$ada.exam.exercise.name"/>
-          <xsl:if test="count(preceding-sibling::section) +
-                        count(following-sibling::section) &gt;= 1">
-            <xsl:value-of select="count(preceding-sibling::section) + 1"/>.
-          </xsl:if>
-          <xsl:choose>
-            <xsl:when test="@condition">
-              <xsl:text> </xsl:text>
-              <xsl:value-of select="@condition"/>
-            </xsl:when>
-            <xsl:when test="sectioninfo/subtitle">
-              <xsl:text> </xsl:text>
-              <xsl:apply-templates select="sectioninfo/subtitle/node()"/>
-            </xsl:when>
-          </xsl:choose>
-        </b>
+        <xsl:copy-of select="$ada.exam.exercise.name"/>
+        <xsl:if test="count(preceding-sibling::section) +
+                      count(following-sibling::section) &gt;= 1">
+          <xsl:value-of select="count(preceding-sibling::section) + 1"/>.
+        </xsl:if>
+        <xsl:choose>
+          <xsl:when test="@condition">
+            <xsl:text> </xsl:text>
+            <xsl:value-of select="@condition"/>
+          </xsl:when>
+          <xsl:when test="sectioninfo/subtitle">
+            <xsl:text> </xsl:text>
+            <xsl:apply-templates select="sectioninfo/subtitle/node()"/>
+          </xsl:when>
+        </xsl:choose>
       </xsl:if>
 
       <xsl:apply-templates/>

@@ -28,7 +28,7 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl str xi">
 
-  <xsl:param name="ada.submit.add.comment.textarea" select="'no'"/>
+  <xsl:param name="ada.submit.add.textarea.comment" select="'no'"/>
   <xsl:param name="ada.submit.asap.verifyemail.js"/>
 
 </xsl:stylesheet>

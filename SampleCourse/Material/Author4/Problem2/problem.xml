@@ -62,19 +62,18 @@
         xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
   </note>
   
-  <note condition="submit">
-    <title/>
+  <note condition="ada_submit_info">
+    <xi:include xpointer="xpointer(/*/title)"
+		xmlns:xi="http://www.w3.org/2001/XInclude"/>
     <para>
       Fichero <filename>square.s</filename> (entregar tan sólo el fichero de
       texto con el programa, ni ficheros *.o ni el ejecutable).
     </para>
-    <para>
-      <phrase condition="input">
-        <phrase condition="type">file</phrase>
-        <phrase condition="size">80</phrase>
-        <phrase condition="accept">text/plain,text/html</phrase>
-        <phrase condition="name">square.s</phrase>
-      </phrase>
-    </para>
+    <remark condition="ada_submit_input">
+      <phrase condition="type">file</phrase>
+      <phrase condition="size">80</phrase>
+      <phrase condition="accept">text/plain,text/html</phrase>
+      <phrase condition="name">square.s</phrase>
+    </remark>
   </note>
 </section>

@@ -21,16 +21,13 @@
 
 -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  xmlns:exsl="http://exslt.org/common" 
-  xmlns="http://www.w3.org/1999/xhtml" 
-  exclude-result-prefixes="exsl" version="1.0">
-  
-  <!-- Ignore the sections/paragraphs labeled with condition submit -->
-  <xsl:template match="section[@condition = 'submit']" mode="toc" />
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:exsl="http://exslt.org/common"
+  xmlns:str="http://exslt.org/strings"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  version="1.0" exclude-result-prefixes="exsl str xi">
 
-  <xsl:template match="section[@condition = 'submit']|
-                       note[@condition='submit']|
-                       phrase[@condition='submit']"/>
+  <xsl:param name="ada.submit.action.prefix"/>
 
 </xsl:stylesheet>

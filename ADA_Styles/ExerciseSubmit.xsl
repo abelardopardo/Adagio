@@ -35,7 +35,7 @@
   <xsl:import href="HeaderLinks.xsl"/>
 
   <!-- Ignore the submit elements -->
-  <xsl:import href="SubmitIgnore.xsl"/>
+  <xsl:import href="AsapSubmitIgnore.xsl"/>
 
   <!-- Lab is supposed to be a chapter -->
   <xsl:template match="chapter">
@@ -140,14 +140,5 @@
       <xsl:apply-templates/>
     </div>
   </xsl:template>
-
-  <xsl:template match="note[@condition = 'AdminInfo']"/>
-
-  <!-- skip entirely processing of the submit sections -->
-  <xsl:template match="section[@condition='submit']|note[@condition='submit']"/>
-  <xsl:template match="note[@condition='text.before.author.box']"/>
-
-  <!-- Prevent these sections from appearing in TOC -->
-  <xsl:template match="section[@condition='submit']"         mode="toc" />
 
 </xsl:stylesheet>

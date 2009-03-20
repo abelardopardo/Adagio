@@ -193,6 +193,11 @@ div#submission_date
   border-bottom: 0.1em solid black;
 }
 
+div.chapter > div.section
+{
+  border-top: thin solid black;
+}
+
 .informalfigure
 { 
   text-align: center;
@@ -209,11 +214,6 @@ div#submission_date
 { 
   border-collapse: collapse;
  }
-
-div.section
-{ 
-  border-bottom: 0.1em solid black;
-  }
 
 /* Hide elements of class noprint when printing */
 @media print {

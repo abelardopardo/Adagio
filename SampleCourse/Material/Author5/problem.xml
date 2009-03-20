@@ -465,21 +465,17 @@
     </programlisting>
   </section>
 
-  <section condition="submit">
-    <title />
+  <note condition="ada_submit_info">
     <para>
-      <phrase>
-        <phrase lang="es">Fichero</phrase>
-        <phrase lang="en">File</phrase>
-        <filename>reverseTable.c</filename>
-        .
-      </phrase>
-      <phrase id="reversetable_p_fileinput" condition="input">
-        <phrase condition="type">file</phrase>
-        <phrase condition="size">80</phrase>
-        <phrase condition="accept">text/plain,text/html</phrase>
-        <phrase condition="name">reverseTable.c</phrase>
-      </phrase>
+      <phrase lang="es">Fichero</phrase>
+      <phrase lang="en">File</phrase>
+      <filename>reverseTable.c</filename>.
     </para>
-  </section>
+    <remark id="reversetable_p_fileinput" condition="ada_submit_input">
+      <phrase condition="type">file</phrase>
+      <phrase condition="size">80</phrase>
+      <phrase condition="accept">text/plain,text/html</phrase>
+      <phrase condition="name">reverseTable.c</phrase>
+    </remark>
+  </note>
 </section>

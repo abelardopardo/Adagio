@@ -5,7 +5,8 @@
 # variables as well as an explanation.
 #
 
-subrecursive.dirs=../../Material/Author4/Problem1 \
+subrecursive.dirs=../CSS \
+                   ../../Material/Author4/Problem1 \
                    ../../Material/Author4/Problem2 
 
 exercisesubmit.style.file=ExerciseSubmit.xsl

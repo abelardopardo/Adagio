@@ -3,7 +3,7 @@
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 
-<chapter>
+<chapter condition="ada.asap.submission.page">
   <!--
   <chapterinfo condition="rss.info">
     <title lang="es">Práctica 2</title>
@@ -53,6 +53,20 @@
     <para
       condition="processor">https://asap.it.uc3m.es/servlet/admit?keyCode=ttao-hw6&amp;debugLevel=3</para>
   </note>
+
+    <note condition="text.before.author.box">
+      <para>Formulario para registrarse como grupo de prácticas en la asignatura
+      de Arquitectura de los ordenadores, de la titulación de Ingeniería de
+      Telecomunicación. Todos los miembros del grupo debéis introducir vuestra
+      dirección de correo de alumno <emphasis>completa</emphasis> y vuestra
+      clave de CampusGlobal. El campo <quote>Nick</quote> con es el que
+      identificará al grupo en la página de resultados.</para>
+    </note>
+
+    <note condition="text.before.payload.box">
+      <para>This is a text distinguished in the regular document to be included
+      before the payload box</para>
+    </note>
 
   <!-- Include the first exercise -->
   <xi:include xml:base="./"

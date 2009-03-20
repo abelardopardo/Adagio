@@ -30,7 +30,7 @@
 
   <!-- Bring in all the parameters -->
   <xsl:import href="AsapAuthorBoxParams.xsl"/>
-  
+
   <!-- ******************************************************************* -->
   <!--                                                                     -->
   <!-- Template to produce author box                                      -->
@@ -107,29 +107,6 @@
           </div>
         </div>
       </xsl:if>
-
-      <xsl:variable name="submit.count"
-        select="count(//*/section[@condition='submit']) +
-                count(//*/note[@condition='submit'])"/>
-      <xsl:for-each select="//*/section[@condition='submit']|//*/note[@condition='submit']">
-        <div class="ada_asap_author_box_row_payload">
-          <xsl:choose>
-            <xsl:when test="$submit.count &gt; 1">
-              <div class="ada_asap_author_box_data_a">
-                <b><xsl:apply-templates select="../title/node()"/></b>
-              </div>
-              <div class="ada_asap_author_box_data_b">
-                <xsl:apply-templates/>
-              </div>
-            </xsl:when>
-            <xsl:otherwise>
-              <div class="ada_asap_author_box_data">
-                <xsl:apply-templates/>
-              </div>
-            </xsl:otherwise>
-          </xsl:choose>
-        </div>
-      </xsl:for-each>
     </div>
   </xsl:template>
 
@@ -189,25 +166,24 @@
       </xsl:choose>
     </xsl:variable>
 
+    <!-- Within a valid iteration -->
     <xsl:if test="$testPassed='true'">
-      <!-- Put your logic here, whatever it might be. For the purpose      -->
-      <!-- of our example, we'll just write some text to the output stream. -->
       <xsl:if test="$ada.asap.num.authors &gt; 1">
         <div class="ada_asap_author_box_row_author">
           <div class="ada_asap_author_box_data_a">
             <xsl:choose>
-              <xsl:when test="$profile.lang='en'">
-                Author <xsl:value-of select="$i" />
-              </xsl:when>
+              <xsl:when test="$profile.lang='en'">Author <xsl:value-of
+              select="$i" /></xsl:when>
               <xsl:otherwise>Autor <xsl:value-of select="$i"/></xsl:otherwise>
             </xsl:choose>
           </div>
+          <div class="ada_asap_author_box_data_b"/>
         </div>
       </xsl:if>
 
       <!-- We cannot push the choose to the inside because there is
            always the possibility of having the value "none" which means,
-           there should be no box with full name info 
+           there should be no box with full name info
            -->
       <div class="ada_asap_author_box_row_author_id">
         <xsl:choose>
@@ -232,7 +208,7 @@
           <xsl:when test="$ada.asap.include.id = 'email'">
             <div class="ada_asap_author_box_data_a">
               <xsl:choose>
-                <xsl:when 
+                <xsl:when
                   test="$profile.lang='en'">Student Email</xsl:when>
                 <xsl:otherwise>Correo de alumno</xsl:otherwise>
               </xsl:choose>
@@ -254,7 +230,7 @@
               <xsl:element name="input">
                 <xsl:attribute name="type">text</xsl:attribute>
                 <xsl:attribute name="size"><xsl:value-of
-                select="$ada.asap.id.field.length"/></xsl:attribute> 
+                select="$ada.asap.id.field.length"/></xsl:attribute>
                 <xsl:attribute name="maxlength"><xsl:value-of
                 select="$ada.asap.id.field.length"/></xsl:attribute>
                 <xsl:attribute name="name">asap:id_<xsl:value-of select="$i - 1"/></xsl:attribute>
@@ -329,6 +305,6 @@
         <xsl:with-param name="operator"  select="$operator"/>
         <xsl:with-param name="testValue" select="$testValue"/>
       </xsl:call-template>
-    </xsl:if> 
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>

@@ -1,11 +1,19 @@
-div.ada_asap_author_box
+div.ada_asap_author_box,
+div.ada_asap_payload_box
 {
   border: thin solid black;
   border-collapse: collapse;
   display: table;
   margin-left: auto;
   margin-right: auto;
+  max-width: 80em;
   }
+
+div.ada_asap_payload_box
+{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
 
 div.ada_asap_author_box_row,
 div.ada_asap_author_box_row_author,
@@ -23,6 +31,7 @@ div.ada_asap_author_box_row_payload
   border-bottom: thin solid black;
  }
 
+div.ada_asap_author_box_data,
 div.ada_asap_author_box_data_a,
 div.ada_asap_author_box_data_b
 {
@@ -46,7 +55,15 @@ div.ada_asap_author_box_row_confirmation_email
  }
 
 
-p.ada_submit_button
+div.ada_asap_submit_button,
+div.ada_asap_submit_confirmation_email
 {
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
   text-align: center;
   }
+
+h3.ada_asap_submit_deadline
+{
+  text-align: center;
+}

@@ -49,7 +49,7 @@
 	      value="${ada.home}/ADA_Styles/ExerciseSubmit.xsl"
 	      description="Stylesheet to obtain hand-out, solutions and professor guide"/>
     <property name="exercisesubmit.submit.style.file" 
-	      value="${ada.home}/ADA_Styles/Submit.xsl"
+	      value="${ada.home}/ADA_Styles/AsapSubmit.xsl"
 	      description="Stylesheet to apply to the submission page"/>
     <property name="exercisesubmit.extra.args" value=""
 	      description="Extra options to pass to the XSLT processor"/>

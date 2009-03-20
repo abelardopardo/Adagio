@@ -3,12 +3,12 @@
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
 
-<chapter lang="es">
+<chapter condition="ada.asap.submission.page">
   <chapterinfo condition="rss.info">
     <title>
-      <xi:include href="../AdaCourseParams.xml"
-		  xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(/xsl:stylesheet/xsl:param[@name = 'ada.page.author']/text())"
-		  parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+      <xi:include
+	xpointer="xpointer(/*/title/text())"
+	parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
     </title>
     <modespec>
       <olink condition="link">index.html?fromrss=1</olink>
@@ -16,37 +16,31 @@
     <abstract>
       <formalpara>
 	<title>
-	  <xi:include href="../AdaCourseParams.xml"
-		      xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(/xsl:stylesheet/xsl:param[@name = 'ada.page.author']/text())"
-		      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	  <xi:include
+	    xpointer="xpointer(/*/title/text())"
+	    parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 	</title>
-	<para>
-	  Párrafo para explicar exactamente qué se hace aquí.
-	</para>
+	<para>Paragraph to explain what is done here</para>
       </formalpara>
     </abstract>
     <pubdate></pubdate>
     <author>
-      <firstname>Abelardo</firstname><surname>Pardo</surname>
+      <firstname>Firstname</firstname><surname>Lastname</surname>
     </author>
     <keywordset>
       <keyword condition="category">Education</keyword>
     </keywordset>
   </chapterinfo>
-  <title>
-    <xi:include href="../AdaCourseParams.xml"
-      xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(/xsl:stylesheet/xsl:param[@name = 'ada.page.author']/text())"
-      parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-  </title>
-  
+  <title>Page Title</title>
+
   <!-- Special mark in docbook including administrative information -->
   <note condition="AdminInfo">
     <!-- Hand in date to print a header with the date -->
     <para condition="handindate">21 de mayo de 2008 a las 13:00</para>
-    
+
     <!-- Date in deadline format -->
 <!--    <para condition="deadline.format">L 21/05/18/13/00 13:00</para> -->
-    
+
     <!-- Absolute URL of the submission page -->
     <para condition="handinlink">../HwGroups/downloadsubmit.html</para>
 
@@ -55,13 +49,13 @@
   </note>
 
   <!-- Include the first exercise -->
-  <xi:include xml:base="./"
-    href="../../Material/Author4/Problem1/problem.xml" 
+  <xi:include
+    href="../../Material/Author4/Problem1/problem.xml"
     parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
   <!-- Include the second exercise -->
-  <xi:include xml:base="./"
-    href="../../Material/Author4/Problem2/problem.xml" 
+  <xi:include
+    href="../../Material/Author4/Problem2/problem.xml"
     parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
 </chapter>
