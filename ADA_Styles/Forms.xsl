@@ -36,10 +36,11 @@
   <!--                     Create Generic Form                      -->
   <!--                                                              -->
   <!-- ============================================================ -->
-  <xsl:template match="remark[@condition='ada_submit_textarea_form']|
-                       remark[@condition='ada_submit_form']|
+  <xsl:template match="section[@condition='ada_submit_form']|
                        para[@condition='ada_submit_form']|
                        remark[@condition='ada_submit_duration_form']">
+                       remark[@condition='ada_submit_textarea_form']|
+                       remark[@condition='ada_submit_form']|
     <xsl:param name="form-id">
       <xsl:choose>
         <xsl:when test="*[@condition='form-id']"><xsl:value-of
@@ -378,9 +379,11 @@
   </xsl:template>
 
   <!-- The title of the section is to be ignored -->
-  <xsl:template match="section[@condition='submit']/title"/>
+  <xsl:template match="section[@condition='ada_submit_form']/title"/>
 
   <xsl:template match="phrase[@condition='action-suffix']"/>
   <xsl:template match="phrase[@condition='submit']"/>
+
+  <xsl:template match="section[@condition = 'ada_submit_form']" mode="toc"/>
 
 </xsl:stylesheet>
