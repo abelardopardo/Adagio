@@ -30,11 +30,11 @@ if [ -f $ada_course_file_name ]; then
     exit
 fi
 
-ada_course_home_prefix=".."             # Initial prefix to apply
+ada_course_home_prefix="../"             # Initial prefix to apply
 index=0                                 # Initial step number
 max=10                                  # Maximum levels to explore
 
-while [ ! -f $ada_course_home_prefix/$ada_course_file_name -a \
+while [ ! -f $ada_course_home_prefix$ada_course_file_name -a \
           "$index" -le "$max" ]; do
   ada_course_home_prefix="$ada_course_home_prefix../"
   index=`expr $index + 1`
