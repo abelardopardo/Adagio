@@ -37,7 +37,6 @@ max=10                                  # Maximum levels to explore
 while [ ! -f $ada_course_home_prefix/$ada_course_file_name -a \
           "$index" -le "$max" ]; do
   ada_course_home_prefix="$ada_course_home_prefix../"
-  echo "AAA $ada_course_home_prefix"
   index=`expr $index + 1`
 done
 
