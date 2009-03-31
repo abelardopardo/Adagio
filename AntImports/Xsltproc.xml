@@ -48,7 +48,7 @@
 	    description="Name of the XSLT processor executable"/>
 
   <ada.set.execution.possible ADA.EXECUTABLE.NAME="${xsltproc.exec}"/>
-  
+
   <!-- Private properties -->
   <property name="xsltproc.debug.level"    value="${ada.debug.level}"
 	    description="Debug level to apply to these rules (see ada.debug.level)"/>
@@ -73,7 +73,7 @@ extension is replaced &#10;# by this value"/>
     <property name="xsltproc.multilingual.files" value=""
 	      description="Source file names (no path) to process in
 multilingual mode"/>
-    <property name="xsltproc.mergestyles.style.file"     
+    <property name="xsltproc.mergestyles.style.file"
 	      value="${ada.home}/ADA_Styles/Mergesheets.xsl"/>
     <property name="mergestyles.master.style"   value=""
 	      description="An additional stylesheet to combine with
@@ -87,7 +87,7 @@ xsltproc.style.file"/>
       <not><equals arg1="${xsltproc.profile.lang}" arg2="" trim="true"/></not>
     </condition>
 
-    <!-- 
+    <!--
 	 The paramater l10n.gentext.language takes its value from the presence of
 	 the attribute lang or xml:lang in any of the ancestors of a node. This
 	 does not work when processing a multi-language document in which that
@@ -119,7 +119,7 @@ xsltproc.style.file"/>
                else="">
       <not><equals arg1="${ada.profile.revision}" arg2="" trim="true"/></not>
     </condition>
-    
+
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths
       ADA.PREFIX="xsltproc" ADA.SRC.DIR="${xsltproc.src.dir}"
@@ -128,7 +128,7 @@ xsltproc.style.file"/>
     <!-- Multilingual source files to be processed (fileset to allow wildcards) -->
     <fileset id="xsltproc.multilingual.fileset" dir="${xsltproc.abssrc.dir}"
 	     includes="___bogus___file__name ${xsltproc.multilingual.files}"/>
-    
+
     <!-- Obtain the filelist with the source files to see if it is empty -->
     <pathconvert property="xsltproc.multilingual.source.filelist.property" pathsep=" ">
       <fileset refid="xsltproc.multilingual.fileset"/>
@@ -138,19 +138,19 @@ xsltproc.style.file"/>
     <pathconvert property="xsltproc.target.filelist.property" pathsep=" ">
       <fileset refid="xsltproc.fileset"/>
       <chainedmapper>
-	<mapper type="glob" from="${xsltproc.abssrc.dir}/*" 
+	<mapper type="glob" from="${xsltproc.abssrc.dir}/*"
 		to="${xsltproc.absdst.dir}/*"/>
 	<compositemapper>
-	  <mapper type="glob" from="*.xml" 
+	  <mapper type="glob" from="*.xml"
 		  to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
-	  <mapper type="glob" from="*.xsl" 
+	  <mapper type="glob" from="*.xsl"
 		  to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
 	</compositemapper>
       </chainedmapper>
     </pathconvert>
     <filelist id="xsltproc.target.filelist"
 	      files="${xsltproc.target.filelist.property}"/>
-    
+
     <!-- Bomb out if incorrect stylesheet -->
     <fail message="File ${xsltproc.style.file} not found">
       <condition>
@@ -167,8 +167,8 @@ xsltproc.style.file"/>
     <!-- Condition to enable/disable the rest of the execution -->
     <condition property="xsltproc.check">
       <and>
-	<!-- 
-	     There must be some files in the fileset (after regexp expansion) 
+	<!--
+	     There must be some files in the fileset (after regexp expansion)
 	-->
 	<not>
 	  <equals arg1="${xsltproc.source.filelist.property}" arg2="" trim="true"/>
@@ -178,8 +178,8 @@ xsltproc.style.file"/>
 
     <!-- Condition to enable/disable multilingual the execution -->
     <condition property="xsltproc.multilingual.check">
-      <!-- 
-	   There must be some files in the fileset (after regexp expansion) 
+      <!--
+	   There must be some files in the fileset (after regexp expansion)
       -->
       <not>
 	<equals arg1="${xsltproc.multilingual.source.filelist.property}"
@@ -195,8 +195,8 @@ xsltproc.style.file"/>
       <element name="fileset.and.mapper" implicit="yes"/>
       <sequential>
 	<!-- Execute the command. Watch out for src.dir and dst.dir -->
-	<apply dir="@{DIR}" parallel="false" dest="@{XSLTPROC.ABSDST.DIR}" 
-	       append="yes" failonerror="true" executable="${xsltproc.exec}" 
+	<apply dir="@{DIR}" parallel="false" dest="@{XSLTPROC.ABSDST.DIR}"
+	       append="yes" failonerror="true" executable="${xsltproc.exec}"
 	       output="build.out">
 	  <arg value="--nonet"/>
 	  <arg value="--path"/>
@@ -228,24 +228,16 @@ xsltproc.style.file"/>
       <attribute name="MERGESTYLES.FILE.TO.IMPORT"/>
       <sequential>
 
-	<!-- Turn mergestyles.master.file to a fileset -->
-	<fileset id="mergestyles.master.fileset" 
-		 file="${mergestyles.master.style}"/>
-
-	<pathconvert property="mergestyles.output.prefix">
-	  <fileset refid="mergestyles.master.fileset"/>
+	<!-- Calculate the OUTPUT file -->
+	<pathconvert property="mergestyles.output.file">
+	  <fileset file="@{MERGESTYLES.FILE.TO.IMPORT}"/>
 	  <chainedmapper>
 	    <compositemapper>
-	      <mapper type="glob" from="*.xml" to="*"/>
-	      <mapper type="glob" from="*.xsl" to="*"/>
+	      <mapper type="glob" from="*.xml" to="*_ADA_MERGED_STYLE.xsl"/>
+	      <mapper type="glob" from="*.xsl" to="*_ADA_MERGED_STYLE.xsl"/>
 	    </compositemapper>
 	    <mapper type="flatten"/>
 	  </chainedmapper>
-	</pathconvert>
-	<pathconvert property="mergestyles.output.suffix">
-	  <filelist id="mergestyles.import.filelist" 
-		    files="@{MERGESTYLES.FILE.TO.IMPORT}"/>
-	  <mapper type="flatten"/>
 	</pathconvert>
 
 	<!-- Create the dst directory -->
@@ -272,11 +264,11 @@ xsltproc.style.file"/>
 	  <srcfileset file="${ada.local.property.file}" />
 	  <srcfileset file="${xsltproc.mergestyles.style.file}" />
 	  <srcfileset file="@{MERGESTYLES.FILE.TO.IMPORT}" />
-	  <targetfilelist 
+	  <targetfilelist
 	    dir="@{MERGESTYLES.DST.DIR}"
-	    files="${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}"/>
+	    files="${mergestyles.output.file}"/>
 	</dependset>
-	
+
 	<!-- Execute the command. Watch out for src.dir and dst.dir -->
 	<apply dir="${basedir}" parallel="false"
 	       dest="@{MERGESTYLES.DST.DIR}" append="yes" failonerror="true"
@@ -289,20 +281,27 @@ xsltproc.style.file"/>
 	  <arg value="mergesheets.file.to.fold"/>
 	  <arg value="${mergestyle.file.to.import.formatted}"/>
 	  <arg value="--stringparam"/>
+	  <arg value="mergesheets.master.style"/>
+	  <arg value="${mergestyles.master.style}"/>
+	  <arg value="--stringparam"/>
 	  <arg value="ada.profile.suppress.profiling.attributes"/>
 	  <arg value="yes"/>
 	  <arg line="${xsltproc.profile.lang.option}"/>
 	  <arg value="-o"/>
 	  <targetfile/>
 	  <arg value="${xsltproc.mergestyles.style.file}"/>
-	  <fileset refid="mergestyles.master.fileset"/>
+	  <srcfile/>
+	  <filelist files="@{MERGESTYLES.FILE.TO.IMPORT}"/>
 	  <!-- Mapper from source files to produced files -->
-	  <compositemapper>
-	    <mapper type="glob" from="*.xsl" 
-		    to="*${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}"/>
-	    <mapper type="glob" from="*.xml" 
-		    to="*${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}"/>
-	  </compositemapper>
+	  <chainedmapper>
+	    <compositemapper>
+	      <mapper type="glob" from="*.xsl"
+		      to="*_ADA_MERGED_STYLE.xsl"/>
+	      <mapper type="glob" from="*.xml"
+		      to="*_ADA_MERGED_STYLE.xml"/>
+	    </compositemapper>
+	    <mapper type="flatten"/>
+	  </chainedmapper>
 	</apply>
       </sequential>
     </macrodef>
@@ -314,37 +313,25 @@ xsltproc.style.file"/>
 	<!-- Style to merge -->
 	<fileset id="mergestyles.master.fileset" file="${mergestyles.master.style}"/>
 
-	<pathconvert property="mergestyles.output.prefix">
-	  <fileset refid="mergestyles.master.fileset"/>
+	<!-- Calculate the OUTPUT file -->
+	<pathconvert property="mergestyles.output.file">
+	  <fileset file="@{MERGESTYLES.FILE.TO.IMPORT}"/>
 	  <chainedmapper>
-	    <mapper type="glob" from="*.xml" to="*"/>
+	    <compositemapper>
+	      <mapper type="glob" from="*.xml" to="*_ADA_MERGED_STYLE.xml"/>
+	      <mapper type="glob" from="*.xsl" to="*_ADA_MERGED_STYLE.xsl"/>
+	    </compositemapper>
 	    <mapper type="flatten"/>
 	  </chainedmapper>
 	</pathconvert>
-	<pathconvert property="mergestyles.output.suffix">
-	  <filelist id="mergestyles.import.filelist" 
-		    files="@{MERGESTYLES.FILE.TO.IMPORT}"/>
-	  <mapper type="flatten"/>
-	</pathconvert>
 
 	<!-- Dump explicitly the files to be deleted -->
-	<echo> deleted = ${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}</echo>
+	<echo> deleted = ${mergestyles.output.file}</echo>
 
 	<delete
-	  file="@{MERGESTYLES.DST.DIR}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${mergestyles.output.suffix}"/>
+	  file="@{MERGESTYLES.DST.DIR}/${mergestyles.output.file}"/>
       </sequential>
     </macrodef>
-
-    <!-- Bomb out if incorrect merge stylesheet -->
-    <fail message="File ${mergestyles.master.style} not found">
-      <condition>
-	<and>
-	  <!-- Non-empty merge style and not available -->
-	  <not><equals arg1="${mergestyles.master.style}" arg2="" trim="true"/></not>
-	  <not><available file="${mergestyles.master.style}"/></not>
-	</and>
-      </condition>
-    </fail>
 
     <!-- Condition to detect if the stylefile needs to be pre-processed with
 	 Mergestyles -->
@@ -352,10 +339,9 @@ xsltproc.style.file"/>
       <and>
 	<istrue value="${xsltproc.check}"/>
 	<not><equals arg1="${mergestyles.master.style}" arg2="" trim="true"/></not>
-	<available file="${mergestyles.master.style}"/>
       </and>
     </condition>
-    
+
     <!-- Condition to detect if the stylefile needs to only processed normally
 	 Mergestyles -->
     <condition property="xsltproc.nomergestyles">
@@ -364,7 +350,7 @@ xsltproc.style.file"/>
 	<equals arg1="${mergestyles.master.style}" arg2="" trim="true"/>
       </and>
     </condition>
-    
+
     <!-- Dump the value of the properties just computed. -->
     <echo level="${xsltproc.debug.level}">  xsltproc.check          = "${xsltproc.check}"
   xsltproc.execution.possible = ${xsltproc.execution.possible}
@@ -372,7 +358,7 @@ xsltproc.style.file"/>
   </target>
 
   <!-- Regular target. It is executed if the check property is true -->
-  <target name="xsltproc.processing" 
+  <target name="xsltproc.processing"
 	  depends="xsltproc.init, xsltproc.prepare.processing,
 		   xsltproc.execute.nopreprocessing.step,
 		   xsltproc.execute.preprocessing.step"
@@ -424,7 +410,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 	<include name="AdaCourseParams.xml" />
 	<include name="Ada.properties" />
       </srcfileset>
-      <!-- 
+      <!--
 	   Attention: This filelist is not legal because it has no dir, but all
 	   the paths are absolute, therefore, there is no need for it. If an
 	   empty dir attribute is inserted, the dependencies break. I left it
@@ -442,9 +428,9 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
       <compositemapper>
-	<mapper type="glob" from="*.xml" 
+	<mapper type="glob" from="*.xml"
 		to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
-	<mapper type="glob" from="*.xsl" 
+	<mapper type="glob" from="*.xsl"
 		to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
       </compositemapper>
     </xsltproc.execute>
@@ -465,9 +451,9 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
       <mapper type="flatten"/>
     </pathconvert>
 
-    <echo level="${xsltproc.debug.level}">xsltproc processed stylefile: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}</echo>
+    <echo level="${xsltproc.debug.level}">xsltproc processed stylefile: ${xsltproc.absdst.dir}/${mergestyles.output.file}</echo>
 
-    <echo level="${xsltproc.debug.level}">Srcfileset: ${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}</echo>
+    <echo level="${xsltproc.debug.level}">Srcfileset: ${xsltproc.absdst.dir}/${mergestyles.output.file}</echo>
 
     <pathconvert property="xsltproc.source.dependency.property" pathsep=" ">
       <fileset refid="xsltproc.fileset"/>
@@ -478,7 +464,7 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
 	  outputproperty="xsltproc.dependency.files">
       <arg value="${ada.home}${file.separator}bin${file.separator}getdependencies.sh"/>
       <arg value="${xsltproc.source.dependency.property}"/>
-      <arg value="${xsltproc.absdst.dir}${file.separator}${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}"/>
+      <arg value="${xsltproc.absdst.dir}${file.separator}${mergestyles.output.file}"/>
     </exec>
 
     <echo
@@ -489,12 +475,12 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <dependset>
       <srcfileset file="${ada.local.property.file}" />
       <srcfileset
-	file="${xsltproc.absdst.dir}/${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}"/>
+	file="${xsltproc.absdst.dir}/${mergestyles.output.file}"/>
       <srcfileset dir="${ada.course.home}">
 	<include name="AdaCourseParams.xml" />
 	<include name="Ada.properties" />
       </srcfileset>
-      <!-- 
+      <!--
 	   Attention: This filelist is not legal because it has not dir, but all
 	   the paths are absolute, therefore, there is no need for it. If an
 	   empty dir attribute is inserted, the dependencies break. I left it
@@ -508,13 +494,13 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
     <xsltproc.execute DIR="${xsltproc.abssrc.dir}"
 		  XSLTPROC.ABSDST.DIR="${xsltproc.absdst.dir}"
 		  XSLTPROC.EXTRA.ARGS="${xsltproc.extra.args}"
-		  XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}${file.separator}${mergestyles.output.prefix}${xsltproc.profile.lang.suffix}_${xsltproc.output.suffix}">
+		  XSLTPROC.STYLE.FILE="${xsltproc.absdst.dir}${file.separator}${mergestyles.output.file}">
       <fileset refid="xsltproc.fileset"/>
       <!-- Mapper from source files to produced files -->
       <compositemapper>
-	<mapper type="glob" from="*.xml" 
+	<mapper type="glob" from="*.xml"
 		to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
-	<mapper type="glob" from="*.xsl" 
+	<mapper type="glob" from="*.xsl"
 		to="*${xsltproc.profile.lang.suffix}${xsltproc.output.format}"/>
       </compositemapper>
     </xsltproc.execute>
@@ -522,8 +508,8 @@ xsltproc.source.dependency.property=${xsltproc.source.dependency.property}</echo
   </target>
 
   <!-- Clean files produced by xsltproc -->
-  <target name="xsltproc.clean" 
-	  depends="xsltproc.init, xsltproc.mergestyles.clean, 
+  <target name="xsltproc.clean"
+	  depends="xsltproc.init, xsltproc.mergestyles.clean,
 		   xsltproc.nomergestyles.clean"
 	  if="xsltproc.check" description="Remove files produced by xsltproc"/>
 

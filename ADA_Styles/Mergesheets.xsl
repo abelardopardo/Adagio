@@ -23,6 +23,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:exsl="http://exslt.org/common"
+  xmlns:str="http://exslt.org/strings"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi">
 
@@ -39,6 +40,14 @@
   <xsl:param name="ada.profile.suppress.profiling.attributes">yes</xsl:param>
 
   <xsl:template match="xsl:stylesheet">
+    <xsl:variable name="mergesheet_files">
+      <tokens xmlns="">
+        <xsl:copy-of
+          select="str:tokenize(normalize-space($mergesheets.master.style),
+                  ' ')"/>
+      </tokens>
+    </xsl:variable>
+
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       
@@ -47,11 +56,15 @@
           <xsl:value-of select="$mergesheets.file.to.fold"/>
         </xsl:attribute>
       </xsl:element>
-      
-      <!-- <xsl:copy-of select="node()"/> -->
-      
-      <xsl:apply-templates select="node()" mode="profile"/>
+
+      <xsl:for-each select="exsl:node-set($mergesheet_files)/tokens/token">
+        <xsl:element name="xsl:import">
+          <xsl:attribute name="href">
+            <xsl:value-of select="text()"/>
+          </xsl:attribute>
+        </xsl:element>
+      </xsl:for-each>
     </xsl:copy>
   </xsl:template>
-  
+
 </xsl:stylesheet>

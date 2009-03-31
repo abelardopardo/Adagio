@@ -54,9 +54,9 @@
         <para>The variables that need to be defined to activate this rule are
         either <varname>xsltproc.files</varname> or
         <varname>xsltproc.multilingual.files</varname>. The variable
-        <varname>mergestyles.master.style</varname> is used primarily to merge
-        an external stylesheet with the given one and apply both of them (see
-        <xref linkend="modified_stylesheet"/>).</para>
+        <varname>mergestyles.master.style</varname> contains a space separated
+        list of files to merge with the given one and apply them (see <xref
+        linkend="modified_stylesheet"/>).</para>
 
         <para>For example, let us consider <ulink
         url="Samples/ApplyXSL/index.xml">a simple XML file</ulink> that needs to
@@ -151,9 +151,9 @@
         of them?</para>
       </question>
       <answer>
-        <para>ADA offers this possibility by taking all your personal
-        definitions in an extra XML file and merging it with a conventional
-        style. This file is defined in the variable
+        <para>ADA offers this possibility by allowing a set of stylesheets to be
+        merged with the a given style file. These files are defined as a space
+        separated list in the variable
         <varname>mergestyles.master.style</varname>.</para>
         
         <para>Suppose you want to use the style file in
@@ -182,7 +182,7 @@ xsltproc.files=index.xml</programlisting>
         
         <para>The resulting applied style sheet is a file left in the current
         directory with name
-        <filename>MyPersonalValues_HeadTail.xsl</filename>.</para>
+        <filename>MyPersonalValues_ADA_MERGED_STYLE.xsl</filename>.</para>
       </answer>
     </qandaentry>
   </qandaset>
