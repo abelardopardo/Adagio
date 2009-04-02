@@ -70,10 +70,10 @@
   <!-- Template processing the root. Need to overwrite to include div elements -->
   <xsl:template match="*" mode="process.root">
     <xsl:variable name="doc" select="self::*"/>
-    
+
     <xsl:call-template name="user.preroot"/>
     <xsl:call-template name="root.messages"/>
-    
+
     <html>
       <xsl:call-template name="language.attribute"/>
       <head>
@@ -146,7 +146,14 @@
         <xsl:attribute name="href"><xsl:value-of
         select="$ada.course.home"/><xsl:value-of
         select="$ada.course.icon"/></xsl:attribute>
-        <xsl:attribute name="type"><xsl:value-of 
+        <xsl:attribute name="type"><xsl:value-of
+        select="$ada.course.icon.type"/></xsl:attribute>
+      </link>
+      <link rel="icon">
+        <xsl:attribute name="href"><xsl:value-of
+        select="$ada.course.home"/><xsl:value-of
+        select="$ada.course.icon"/></xsl:attribute>
+        <xsl:attribute name="type"><xsl:value-of
         select="$ada.course.icon.type"/></xsl:attribute>
       </link>
     </xsl:if>
@@ -202,7 +209,7 @@
     <!-- If refresh rate has been given, include it -->
     <xsl:if test="$ada.page.refresh.rate and ($ada.page.refresh.rate != '')">
       <meta http-equiv="refresh">
-        <xsl:attribute name="content"><xsl:value-of 
+        <xsl:attribute name="content"><xsl:value-of
         select="$ada.page.refresh.rate"/></xsl:attribute>
       </meta>
     </xsl:if>
@@ -233,7 +240,7 @@
       </link>
     </xsl:if>
   </xsl:template>
-  
+
   <xsl:template name="ada_page_header_content">
     <xsl:param name="node" select="."/>
 
@@ -307,7 +314,7 @@
     </xsl:if>
 
     <!-- ADA.PAGE.NAVIGATION -->
-    <xsl:if test="$ada.page.navigation and 
+    <xsl:if test="$ada.page.navigation and
                   $ada.page.navigation != ''">
       <div id="ada_page_navigation">
         <a name="ada_navigation"/>
@@ -316,7 +323,7 @@
     </xsl:if>
 
   </xsl:template>
-  
+
   <!-- Footer-->
   <xsl:template name="user.footer.content">
     <xsl:if test="$ada.page.footer and $ada.page.footer != ''">
@@ -340,12 +347,12 @@
     <xsl:if test="$ada.page.google.gadget.url">
       <a>
         <xsl:attribute
-          name="href">http://fusion.google.com/add?moduleurl=<xsl:value-of 
+          name="href">http://fusion.google.com/add?moduleurl=<xsl:value-of
         select="$ada.page.google.gadget.url"/></xsl:attribute>
-        <img 
+        <img
           src="http://buttons.googlesyndication.com/fusion/add.gif">
           <xsl:attribute name="alt"><xsl:choose>
-            <xsl:when 
+            <xsl:when
               test="$profile.lang = 'es'">Añade un gadget a tu página personal en Google</xsl:when>
             <xsl:otherwise>Add a gadget to your personal page in Google</xsl:otherwise>
           </xsl:choose></xsl:attribute>
@@ -359,11 +366,11 @@
     <xsl:variable name="start">
       <xsl:call-template name="orderedlist-starting-number"/>
     </xsl:variable>
-    
+
     <xsl:variable name="numeration">
       <xsl:call-template name="list.numeration"/>
     </xsl:variable>
-    
+
     <xsl:variable name="type">
       <xsl:choose>
         <xsl:when test="$numeration='arabic'">1</xsl:when>
@@ -381,18 +388,18 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    
+
     <div>
       <xsl:apply-templates select="." mode="class.attribute"/>
       <xsl:call-template name="anchor"/>
-      
+
       <xsl:if test="title">
         <xsl:call-template name="formal.object.heading"/>
       </xsl:if>
-      
+
       <!-- Preserve order of PIs and comments -->
       <xsl:apply-templates select="*[not(self::listitem                   or self::title                   or self::titleabbrev)]                 |comment()[not(preceding-sibling::listitem)]                 |processing-instruction()[not(preceding-sibling::listitem)]"/>
-      
+
       <ol>
         <xsl:if test="$start != '1'">
           <xsl:attribute name="start">
