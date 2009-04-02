@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# Copyright (C) 2008 Carlos III University of Madrid
+# This file is part of the ADA: Agile Distributed Authoring Toolkit
+
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor
+# Boston, MA  02110-1301, USA.
+
+#
+# Command used by Ant to combine several stylesheets into a single one importing
+# all of them. The script needs to receive the following parameters:
+#
+# <scriptname> <output file> <sheet 1> <sheet 2> [ <sheet 3> ... ]
+
+# If the number of arguments is less than 3, bomb out
+if [ "$#" -lt 3 ]; then
+   echo "$0: Incorrect number of arguments."
+   echo "  USAGE: $0 <output file> <sheet 1> <sheet 2> [<sheet 3> ...]"
+fi
+
+# Catch the output file name and shift arguments
+ada_output_sheet=$1
+shift
+
+# Dump the stylefile header
+echo '<?xml version="1.0" encoding="UTF-8"?>' > $ada_output_sheet
+echo '<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"' \
+     >> $ada_output_sheet
+echo '  xmlns="http://www.w3.org/1999/xhtml" ' \
+     >> $ada_output_sheet
+echo '  xmlns:xi="http://www.w3.org/2001/XInclude" version="1.0"' \
+     >> $ada_output_sheet
+echo '  exclude-result-prefixes="xi">' >> $ada_output_sheet
+
+# Loop over the given filenames
+for sheetname in $*; do
+    echo '  <xsl:import href="'$sheetname'"/>' >> $ada_output_sheet
+done
+echo '</xsl:stylesheet>' >> $ada_output_sheet
+exit

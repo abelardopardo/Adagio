@@ -230,7 +230,7 @@ xsltproc.style.file"/>
 
 	<!-- Calculate the OUTPUT file -->
 	<pathconvert property="mergestyles.output.file">
-	  <fileset file="@{MERGESTYLES.FILE.TO.IMPORT}"/>
+	  <filelist files="@{MERGESTYLES.FILE.TO.IMPORT}"/>
 	  <chainedmapper>
 	    <compositemapper>
 	      <mapper type="glob" from="*.xml" to="*_ADA_MERGED_STYLE.xsl"/>
@@ -272,36 +272,14 @@ xsltproc.style.file"/>
 	<!-- Execute the command. Watch out for src.dir and dst.dir -->
 	<apply dir="${basedir}" parallel="false"
 	       dest="@{MERGESTYLES.DST.DIR}" append="yes" failonerror="true"
-	       executable="${xsltproc.exec}"  output="build.out">
-	  <arg value="--nonet"/>
-	  <arg value="--path"/>
-	  <arg value=".:${ada.home.unix}/ADA_Styles"/>
-	  <arg value="--xinclude"/>
-	  <arg value="--stringparam"/>
-	  <arg value="mergesheets.file.to.fold"/>
-	  <arg value="${mergestyle.file.to.import.formatted}"/>
-	  <arg value="--stringparam"/>
-	  <arg value="mergesheets.master.style"/>
-	  <arg value="${mergestyles.master.style}"/>
-	  <arg value="--stringparam"/>
-	  <arg value="ada.profile.suppress.profiling.attributes"/>
-	  <arg value="yes"/>
-	  <arg line="${xsltproc.profile.lang.option}"/>
-	  <arg value="-o"/>
-	  <targetfile/>
-	  <arg value="${xsltproc.mergestyles.style.file}"/>
+	       executable="bash"  output="build.out">
 	  <srcfile/>
-	  <filelist files="@{MERGESTYLES.FILE.TO.IMPORT}"/>
+	  <targetfile/>
+	  <arg value="${mergestyle.file.to.import.formatted}"/>
+	  <arg value="${mergestyles.master.style}"/>
+	  <fileset file="${ada.home}/bin/adacombinesheets"/>
 	  <!-- Mapper from source files to produced files -->
-	  <chainedmapper>
-	    <compositemapper>
-	      <mapper type="glob" from="*.xsl"
-		      to="*_ADA_MERGED_STYLE.xsl"/>
-	      <mapper type="glob" from="*.xml"
-		      to="*_ADA_MERGED_STYLE.xml"/>
-	    </compositemapper>
-	    <mapper type="flatten"/>
-	  </chainedmapper>
+	  <mapper type="glob" from="adacombinesheets" to="${mergestyles.output.file}"/>
 	</apply>
       </sequential>
     </macrodef>
