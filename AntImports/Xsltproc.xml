@@ -262,8 +262,6 @@ xsltproc.style.file"/>
 	<!-- Force the dependency checking on changes on the style sheet -->
 	<dependset>
 	  <srcfileset file="${ada.local.property.file}" />
-	  <srcfileset file="${xsltproc.mergestyles.style.file}" />
-	  <srcfileset file="@{MERGESTYLES.FILE.TO.IMPORT}" />
 	  <targetfilelist
 	    dir="@{MERGESTYLES.DST.DIR}"
 	    files="${mergestyles.output.file}"/>
