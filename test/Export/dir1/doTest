@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# Make sure the starting point is correct
+rm -f ../dir2/*1
+
+# Execute the target with no modification
+adado
+
+if [ `ls ../dir2 | wc -l` -ne 2 ]; then
+   echo
+   echo "  Incorrect number of files exported to dir2"
+   exit 1
+fi
+
+if [ ! -e ../dir2/file1.txt -o ! -e ../dir2/file2.txt ]; then
+   echo
+   echo "  Dir2 does not contain file1.txt and file2.txt"
+   exit 1
+fi
+
+# Make sure the starting point is correct
+rm -f ../dir2/*
+
+# Execute the target with no modification
+adado -Dexportcontrol.profile.revision=bogus
+
+if [ `ls ../dir2 | wc -l` -ne 1 ]; then
+   echo
+   echo "  Incorrect number of files exported to dir2"
+   exit 1
+fi
+
+if [ ! -e ../dir2/file2.txt ]; then
+   echo
+   echo "  Dir2 does not contain file1.txt and file2.txt"
+   exit 1
+fi
+
+# Make sure the starting point is correct
+rm -f ../dir2/*
+
+# Execute the target with no modification
+adado -Dexportcontrol.now=2018-06-25T18:59:59
+
+if [ `ls ../dir2 | wc -l` -ne 2 ]; then
+   echo
+   echo "  Incorrect number of files exported to dir2"
+   exit 1
+fi
+
+if [ ! -e ../dir2/file1.txt -o ! -e ../dir2/file2.txt ]; then
+   echo
+   echo "  Dir2 does not contain file1.txt and file2.txt"
+   exit 1
+fi
+
+# Clean everything up
+rm -f ../dir2/*
+
+rm -f doTest*.log

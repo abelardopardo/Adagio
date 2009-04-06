@@ -51,7 +51,9 @@
     <property name="export.dst.dir" value="${basedir}" 
 	      description="Directory where the produced files are created"/>
     <property name="export.files"   value=""
-	      description="Source file names (no path, it is export.src.dir)"/>
+	      description="File names (no path) to export if exportcontrol.check"/>
+    <property name="export.files.always"   value=""
+	      description="File names (no path) to export regardless exportcontrol"/>
     
     <!-- Define two properties containing the absolute src and dst paths -->
     <ada.expand.srcdst.paths
@@ -76,11 +78,24 @@
 
     <!-- Dump the value of the properties just computed. -->
     <echo level="${export.debug.level}">export.check          = "${export.check}"</echo>
+  </target>
 
+  <!-- Target to export files regardless of exportcheck -->
+  <target name="export.always" depends="export.init">
+    <echo>export.always               CALL(copyfiles.processing)</echo>
+
+    <!-- Execute the command. Watch out for src.dir and dst.dir -->
+    <antcall target="copyfiles.processing" inheritAll="false">
+      <param name="copyfiles.src.dir"      value="${export.src.dir}" />
+      <param name="copyfiles.dst.dir"      value="${export.dst.dir}" />
+      <param name="copyfiles.files"        value="${export.files.always}"/>
+    </antcall>
+
+    <echo>export.processing           END(copyfiles.processing)</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true -->
-  <target name="export.processing" depends="export.init, exportcontrol"
+  <target name="export.processing" depends="export.init, export.always, exportcontrol"
 	  if="exportcontrol.check" description="It only invokes copyfiles">
     
     <echo>export.processing           CALL(copyfiles.processing)</echo>

@@ -244,6 +244,16 @@
                 </entry>
                 <entry></entry>
               </row>
+              <row>
+                <entry><varname>export.files.always</varname></entry>
+                <entry>
+                  Space or comma separated list of file names (with no path) of
+                  the resources to export in any case regardless of the value
+                  calculated by exportcontrol (see <xref
+                  linkend="exportcontrol"/> for more details).
+                </entry>
+                <entry></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -280,7 +290,8 @@
       </answer>
     </qandaentry>
 
-    <qandaentry id="exportcontrol">
+    <qandaentry id="exportcontrol"
+		xreflabel="How to build a directory under some conditions">
       <question>
         <para>Is it possible to consider a directory for building only under
         some special conditions?</para>
@@ -343,7 +354,7 @@
             </tbody>
           </tgroup>
         </informaltable>
-                   
+
         <para>Clear uh? The condition is so complicated because it combines
         several control mechanisms. The most common situation is to use only one
         of them. The condition is easily understood if broken into the following
@@ -366,7 +377,7 @@
             window. Define the time interval with the variables
             <varname>exportcontrol.begin</varname> and
             <varname>exportcontrol.end</varname>. For example:</para>
-            
+
               <programlisting>exportcontrol.begin=2008-06-25T19:00:00
 portcontrol.end=2018-06-25T19:00:00</programlisting>
           </listitem>
