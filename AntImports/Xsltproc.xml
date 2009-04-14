@@ -291,7 +291,8 @@ xsltproc.style.file"/>
 
 	<!-- Calculate the OUTPUT file -->
 	<pathconvert property="mergestyles.output.file">
-	  <fileset file="@{MERGESTYLES.FILE.TO.IMPORT}"/>
+	  <filelist dir="@{MERGESTYLES.DST.DIR}"
+		    files="@{MERGESTYLES.FILE.TO.IMPORT}"/>
 	  <chainedmapper>
 	    <compositemapper>
 	      <mapper type="glob" from="*.xml" to="*_ADA_MERGED_STYLE.xml"/>
