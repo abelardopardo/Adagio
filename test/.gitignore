@@ -1,3 +1,4 @@
 build.out
-doTest.log
+doTest*.log
 adado.log
+*_ADA_MERGED_STYLE.xsl
