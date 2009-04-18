@@ -35,6 +35,9 @@
 
   <xsl:import href="es-modify.xsl"/>
 
+  <!-- Needed for backward compatibility with Docbook stylesheets -->
+  <xsl:param name="html.append"/>
+
   <!-- 
        Allows the inclusion in the audience attribute a date/time range in which
        the element is visible 
