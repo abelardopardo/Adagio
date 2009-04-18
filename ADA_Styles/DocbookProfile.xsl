@@ -35,9 +35,6 @@
 
   <xsl:import href="es-modify.xsl"/>
 
-  <!-- Needed for backward compatibility with Docbook stylesheets -->
-  <xsl:param name="html.append"/>
-
   <!-- 
        Allows the inclusion in the audience attribute a date/time range in which
        the element is visible 
@@ -49,6 +46,9 @@
 
   <!-- Allows the inclusion of Flash videos and MP3 -->
   <xsl:import href="SWFObj.xsl"/>
+
+  <!-- Needed for backward compatibility with Docbook stylesheets -->
+  <xsl:param name="html.append"/>
 
   <!-- Do not include inline styles for admonitions -->
   <xsl:param name="admon.style"/>
