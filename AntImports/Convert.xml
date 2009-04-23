@@ -33,7 +33,8 @@
       convert.dst.dir: Directory where the files are stored
       convert.geometry: Geometry for the images
       convert.crop: Geometry to obtain after crop
-      convert.format: Format to process the file
+      convert.input.format: Format to process the input file
+      convert.output.format: Format to process the output file
       convert.files: files to be processed
 
       Process the files in convert.files with convert. This script is mainly
@@ -63,8 +64,10 @@
 	      description="Suffix to add to the produced file"/>
     <property name="convert.crop"     value=""
 	      description="Crop option -crop widthxheight+x+y"/>
-    <property name="convert.format"   value="png"
-	      description="Format to translate the image"/>
+    <property name="convert.input.format"   value="png"
+	      description="Output Format to translate the image"/>
+    <property name="convert.input.format"   value="png"
+	      description="Format for the input images"/>
     <property name="convert.files"    value=""
 	      description="Source file names (no path, it is convert.src.dir)"/>
     
@@ -113,8 +116,8 @@
       <targetfile />
       <fileset refid="convert.fileset"/>
       <!-- Mapper from source files to produced files -->
-      <mapper type="glob" from="*.png" 
-        to="*_${convert.suffix}.${convert.format}"/>
+      <mapper type="glob" from="*.${convert.input.format}"
+        to="*_${convert.suffix}.${convert.output.format}"/>
     </apply>
   </target>
 
@@ -131,8 +134,8 @@
       <chainedmapper>
 	<mapper type="glob" from="${convert.abssrc.dir}/*"
 		to="${convert.absdst.dir}/*"/>
-        <mapper type="glob" from="*.png"
-                to="*_${convert.suffix}.${convert.format}"/>
+        <mapper type="glob" from="*.${convert.input.format}"
+                to="*_${convert.suffix}.${convert.output.format}"/>
       </chainedmapper>
     </pathconvert>
 
@@ -150,14 +153,14 @@
   <!-- Dump the properties defined in this script -->
   <target name="convert.dump.properties" depends="convert.init">
     <echo level="${convert.debug.level}"> ------ Convert properties ----
-    convert.exec       ="${convert.exec}"
-    convert.abssrc.dir ="${convert.abssrc.dir}"
-    convert.absdst.dir ="${convert.absdst.dir}"
-    convert.geometry   ="${convert.geometry}"
-    convert.suffix     ="${convert.suffix}"
-    convert.crop       ="${convert.crop}"
-    convert.format     ="${convert.format}"
-    convert.files      ="${convert.files}"</echo>
+    convert.exec         ="${convert.exec}"
+    convert.abssrc.dir   ="${convert.abssrc.dir}"
+    convert.absdst.dir   ="${convert.absdst.dir}"
+    convert.geometry     ="${convert.geometry}"
+    convert.suffix       ="${convert.suffix}"
+    convert.crop         ="${convert.crop}"
+    convert.output.format="${convert.output.format}"
+    convert.files        ="${convert.files}"</echo>
   </target>
 
   <target name="convert.report.YES" depends="convert.init"
