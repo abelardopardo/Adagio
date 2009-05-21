@@ -229,10 +229,7 @@
       </xsl:if>
 
       <item>
-        <title>
-          <xsl:value-of
-            select="normalize-space(title)"/>
-        </title>
+        <title><xsl:value-of select="normalize-space(/*/title/text())"/></title>
 
         <link>
 	  <xsl:choose>
@@ -286,11 +283,11 @@
         
         <xsl:variable name="description.body">
           <xsl:choose>
-            <xsl:when test="abstract/formalpara/para">
-              <xsl:apply-templates select="abstract/formalpara/para" />
+            <xsl:when test="abstract/para">
+              <xsl:apply-templates select="abstract/para" />
             </xsl:when>
-            <xsl:when test="not(abstract/formalpara)">
-              <!-- Skip the elements before the title  -->
+            <xsl:when test="not(abstract/para)">
+              <!-- Skip the elements before the title (ABEL: What is this?) -->
               <xsl:apply-templates select="../title/following-sibling::*" />
             </xsl:when>
           </xsl:choose>
@@ -344,13 +341,13 @@
           <xsl:copy-of select="normalize-space(author/surname/text())"/></itunes:author>
         </xsl:if>
         
-        <xsl:if test="abstract/formalpara/title">
-          <itunes:subtitle><xsl:copy-of select="normalize-space(abstract/formalpara/title/text())"/></itunes:subtitle>
+        <xsl:if test="/*/title">
+          <itunes:subtitle><xsl:copy-of select="normalize-space(/*/title/text())"/></itunes:subtitle>
         </xsl:if>
         
-        <xsl:if test="abstract/formalpara/para">
+        <xsl:if test="abstract/para">
           <itunes:summary><xsl:copy-of
-          select="normalize-space(abstract/formalpara/para/text())"/></itunes:summary>
+          select="normalize-space(abstract/para/text())"/></itunes:summary>
         </xsl:if>
         
         <xsl:if test="pagenums">
