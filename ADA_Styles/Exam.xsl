@@ -39,8 +39,6 @@
 
   <xsl:include href="ExamParams.xsl"/>
 
-<!--   <xsl:include href="removespanquote.xsl"/> -->
-
   <xsl:template match="section">
     <!-- Fetch the customization elements that are present in the document -->
     <xsl:variable name="part">
@@ -148,7 +146,12 @@
                 <xsl:otherwise>Apellidos: </xsl:otherwise>
               </xsl:choose>
             </div>
-            <div class="ada_exam_name_data"/>
+            <div class="ada_exam_name_data">
+              <xsl:if test="$ada.exam.student.lastname and
+                            ($ada.exam.student.lastname != '')">
+                <xsl:value-of select="$ada.exam.student.lastname"/>
+              </xsl:if>
+            </div>
           </div>
 
           <!-- First name -->
@@ -159,7 +162,12 @@
                 <xsl:otherwise>Nombre: </xsl:otherwise>
               </xsl:choose>
             </div>
-            <div class="ada_exam_name_data"/>
+            <div class="ada_exam_name_data">
+              <xsl:if test="$ada.exam.student.name and
+                            ($ada.exam.student.name != '')">
+                <xsl:value-of select="$ada.exam.student.name"/>
+              </xsl:if>
+            </div>
           </div>
 
           <!-- Student ID -->
@@ -170,7 +178,12 @@
                 <xsl:otherwise>NIA: </xsl:otherwise>
               </xsl:choose>
             </div>
-            <div class="ada_exam_name_data" />
+            <div class="ada_exam_name_data">
+              <xsl:if test="$ada.exam.student.id and
+                            ($ada.exam.student.id != '')">
+                <xsl:value-of select="$ada.exam.student.id"/>
+              </xsl:if>
+            </div>
           </div>
         </div>
       </xsl:if>

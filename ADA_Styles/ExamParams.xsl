@@ -62,4 +62,14 @@
 
   <!-- Label to precede each exercise in a regular exam. -->
   <xsl:param name="ada.exam.exercise.name">VALUE OF ada.exam.exercise.name</xsl:param>
+
+  <!-- Student name to insert in the name box data -->
+  <xsl:param name="ada.exam.student.name" value=""/>
+
+  <!-- Student lastnname to insert in the name box data -->
+  <xsl:param name="ada.exam.student.lastname" value=""/>
+
+  <!-- Student id to insert in the name box data -->
+  <xsl:param name="ada.exam.student.id" value=""/>
+
 </xsl:stylesheet>
