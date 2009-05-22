@@ -37,11 +37,10 @@
   <!-- Ignore the submit elements -->
   <xsl:import href="AsapSubmitIgnore.xsl"/>
 
-  <!-- Lab is supposed to be a chapter -->
-  <xsl:template match="chapter">
+  <!-- Math the top level -->
+  <xsl:template match="chapter" name="exercise_top_element">
     <div>
       <xsl:apply-templates select="." mode="class.attribute"/>
-
       <!-- Title if present -->
       <xsl:call-template name="chapter.titlepage"/>
 
