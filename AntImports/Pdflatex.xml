@@ -64,7 +64,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${pdflatex.debug.level}">    pdflatex.check          = "${pdflatex.check}"
+    <echo level="${pdflatex.debug.level}">  pdflatex.check          = "${pdflatex.check}"
   pdflatex.execution.possible = ${pdflatex.execution.possible}</echo>
 
   </target>

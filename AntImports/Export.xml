@@ -77,7 +77,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${export.debug.level}">export.check          = "${export.check}"</echo>
+    <echo level="${export.debug.level}">  export.check          = "${export.check}"</echo>
   </target>
 
   <!-- Target to export files regardless of exportcheck -->

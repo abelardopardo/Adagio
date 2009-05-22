@@ -128,6 +128,7 @@ xsltproc.style.file"/>
     <!-- Multilingual source files to be processed (fileset to allow wildcards) -->
     <fileset id="xsltproc.multilingual.fileset" dir="${xsltproc.abssrc.dir}"
 	     includes="___bogus___file__name ${xsltproc.multilingual.files}"/>
+    <echo>AAAAAAAA ${xsltproc.multilingual.files} AAAAAAAA</echo>
 
     <!-- Obtain the filelist with the source files to see if it is empty -->
     <pathconvert property="xsltproc.multilingual.source.filelist.property" pathsep=" ">
@@ -148,6 +149,7 @@ xsltproc.style.file"/>
 	</compositemapper>
       </chainedmapper>
     </pathconvert>
+
     <filelist id="xsltproc.target.filelist"
 	      files="${xsltproc.target.filelist.property}"/>
 

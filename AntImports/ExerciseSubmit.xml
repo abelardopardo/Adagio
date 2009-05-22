@@ -105,7 +105,7 @@ multilingual mode"/>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${exercisesubmit.debug.level}">    exercisesubmit.check          = "${exercisesubmit.check}"</echo>
+    <echo level="${exercisesubmit.debug.level}">  exercisesubmit.check          = "${exercisesubmit.check}"</echo>
   </target>
 
   <!-- Invoke xsltprocessing -->

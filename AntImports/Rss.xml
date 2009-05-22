@@ -124,7 +124,7 @@ multilingual mode"
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${rss.debug.level}">rss.check          = "${rss.check}"</echo>
+    <echo level="${rss.debug.level}">  rss.check          = "${rss.check}"</echo>
   </target>
 
   <!-- Invoke xsltprocessing -->

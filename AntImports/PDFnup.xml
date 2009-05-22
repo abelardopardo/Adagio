@@ -74,7 +74,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${pdfnup.debug.level}">    pdfnup.check          = "${pdfnup.check}"
+    <echo level="${pdfnup.debug.level}">  pdfnup.check          = "${pdfnup.check}"
   pdfnup.execution.possible = ${pdfnup.execution.possible}</echo>
   </target>
 

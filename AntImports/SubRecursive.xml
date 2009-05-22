@@ -86,12 +86,12 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${subrecursive.debug.level}">    subrecursive.check         = "${subrecursive.check}"
-    subrecursive.check.withdst = "${subrecursive.check.withdst}"
-    subrecursive.check.nodst   = "${subrecursive.check.nodst}"
-    subrecursive.dirs          = "${subrecursive.dirs}"
-    subrecursive.absdst.dir    = "${subrecursive.absdst.dir}"
-    subrecursive.dirs.nodst    = "${subrecursive.dirs.nodst}"</echo>
+    <echo level="${subrecursive.debug.level}">  subrecursive.check         = "${subrecursive.check}"
+  subrecursive.check.withdst = "${subrecursive.check.withdst}"
+  subrecursive.check.nodst   = "${subrecursive.check.nodst}"
+  subrecursive.dirs          = "${subrecursive.dirs}"
+  subrecursive.absdst.dir    = "${subrecursive.absdst.dir}"
+  subrecursive.dirs.nodst    = "${subrecursive.dirs.nodst}"</echo>
   </target>
 
   <!-- Regular target. Invokes the check and then both sub-targets -->

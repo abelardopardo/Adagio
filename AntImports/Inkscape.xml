@@ -79,8 +79,8 @@
     </condition>
     
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${inkscape.debug.level}">inkscape.check          = "${inkscape.check}"
-inkscape.execution.possible = ${inkscape.execution.possible}</echo>
+    <echo level="${inkscape.debug.level}">  inkscape.check          = "${inkscape.check}"
+  inkscape.execution.possible = ${inkscape.execution.possible}</echo>
 
   </target>
 

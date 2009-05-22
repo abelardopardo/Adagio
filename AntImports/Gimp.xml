@@ -89,9 +89,9 @@
 	      files="${gimp.target.filelist.property}"/>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${gimp.debug.level}">gimp.check          = "${gimp.check}"
-gimp.target.filelist     = "${gimp.target.filelist.property}"
-gimp.execution.possible = ${gimp.execution.possible}</echo>
+    <echo level="${gimp.debug.level}">  gimp.check          = "${gimp.check}"
+  gimp.target.filelist     = "${gimp.target.filelist.property}"
+  gimp.execution.possible = ${gimp.execution.possible}</echo>
 
   </target>
 

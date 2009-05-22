@@ -62,8 +62,8 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${dvips.debug.level}">dvips.check              = "${dvips.check}"
-dvips.execution.possible = ${dvips.execution.possible}</echo>
+    <echo level="${dvips.debug.level}">  dvips.check              = "${dvips.check}"
+  dvips.execution.possible = ${dvips.execution.possible}</echo>
 
   </target>
 

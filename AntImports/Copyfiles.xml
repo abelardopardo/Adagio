@@ -64,7 +64,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${copyfiles.debug.level}">copyfiles.check          = "${copyfiles.check}"</echo>
+    <echo level="${copyfiles.debug.level}">  copyfiles.check          = "${copyfiles.check}"</echo>
 
   </target>
 

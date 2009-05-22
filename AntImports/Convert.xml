@@ -85,7 +85,7 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${convert.debug.level}">convert.check          = "${convert.check}"
+    <echo level="${convert.debug.level}">  convert.check          = "${convert.check}"
   convert.execution.possible = ${convert.execution.possible}</echo>
   </target>
 

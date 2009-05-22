@@ -116,14 +116,14 @@
                    exportcontrol.check.begin, 
                    exportcontrol.check.end">
 
-    <echo level="${exportcontrol.debug.level}">exportcontrol.now=${exportcontrol.now}
-exportcontrol.begin                 =${exportcontrol.begin}
-exportcontrol.begin.uptodate        =${exportcontrol.begin.uptodate}
-exportcontrol.end                   =${exportcontrol.end}
-exportcontrol.end.uptodate          =${exportcontrol.end.uptodate}
-exportcontrol.open                  =${exportcontrol.open}
-exportcontrol.profile.revision      =${exportcontrol.profile.revision}
-exportcontrol.profile.revision.value=${exportcontrol.profile.revision.value}</echo>
+    <echo level="${exportcontrol.debug.level}">  exportcontrol.now=${exportcontrol.now}
+  exportcontrol.begin                 =${exportcontrol.begin}
+  exportcontrol.begin.uptodate        =${exportcontrol.begin.uptodate}
+  exportcontrol.end                   =${exportcontrol.end}
+  exportcontrol.end.uptodate          =${exportcontrol.end.uptodate}
+  exportcontrol.open                  =${exportcontrol.open}
+  exportcontrol.profile.revision      =${exportcontrol.profile.revision}
+  exportcontrol.profile.revision.value=${exportcontrol.profile.revision.value}</echo>
 
     <!-- Condition
 	 Some files were given to export (export.files.given = true)
@@ -180,7 +180,7 @@ exportcontrol.profile.revision.value=${exportcontrol.profile.revision.value}</ec
     </condition>
 
     <delete file="${exportcontrol.now.filename}"/>
-    <echo level="${exportcontrol.debug.level}">exportcontrol.check = ${exportcontrol.check}</echo>
+    <echo level="${exportcontrol.debug.level}">  exportcontrol.check = ${exportcontrol.check}</echo>
   </target>
 
   <!-- 

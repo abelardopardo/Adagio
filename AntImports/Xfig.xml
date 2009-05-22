@@ -87,9 +87,8 @@
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${xfig.debug.level}">xfig.check              = "${xfig.check}"
-xfig.execution.possible = ${xfig.execution.possible}</echo>
-
+    <echo level="${xfig.debug.level}">  xfig.check              = "${xfig.check}"
+  xfig.execution.possible = ${xfig.execution.possible}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true -->

@@ -122,9 +122,9 @@ otherwise ada-flavored behavior (supress version page)"/>
     </condition>
 
     <!-- Dump the value of the properties just computed. -->
-    <echo level="${dblatex.debug.level}">    dblatex.check          = "${dblatex.check}"
-    dblatex.multilingual.check  = "${dblatex.multilingual.check}"
-    dblatex.execution.possible = ${dblatex.execution.possible}</echo>
+    <echo level="${dblatex.debug.level}">  dblatex.check          = "${dblatex.check}"
+  dblatex.multilingual.check  = "${dblatex.multilingual.check}"
+  dblatex.execution.possible = ${dblatex.execution.possible}</echo>
   </target>
 
   <!-- Regular target. It is executed if the check property is true -->
