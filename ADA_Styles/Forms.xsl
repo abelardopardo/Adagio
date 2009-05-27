@@ -100,9 +100,9 @@
                 name="onclick">this.form.target='ada_submit_form_hidden_iframe';this.form.style.display='none';</xsl:attribute>
             </xsl:if>
             <xsl:choose>
-              <xsl:when test="phrase[@condition='submit']">
+              <xsl:when test="*[@condition='submit']">
                 <xsl:attribute name="value"><xsl:value-of
-                select="phrase[@condition = 'submit']"/></xsl:attribute>
+                select="*[@condition = 'submit']"/></xsl:attribute>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:choose>
@@ -181,7 +181,7 @@
 
   <!-- ============================================================ -->
   <!--                                                              -->
-  <!--                  Process INPUT/RADIO note/para/remark        -->
+  <!--    Process INPUT/RADIO note/para/remark in its own table     -->
   <!--                                                              -->
   <!-- ============================================================ -->
   <xsl:template match="note[@condition='ada_submit_scale']|
@@ -222,14 +222,10 @@
           <tr>
             <xsl:for-each select="phrase[@condition = 'value']">
               <td>
-                <input class="ada_submit_form_scale" type="radio">
-                  <xsl:attribute name="name">
-                    <xsl:value-of select="$scale-name"/>
-                  </xsl:attribute>
-                  <xsl:attribute name="value">
-                    <xsl:apply-templates/>
-                  </xsl:attribute>
-                </input>
+                <xsl:call-template name="ada_render_scale_elements">
+                  <xsl:with-param name="scale-name"><xsl:value-of
+                  select="$scale-name"/></xsl:with-param>
+                </xsl:call-template>
               </td>
             </xsl:for-each>
           </tr>
@@ -238,6 +234,31 @@
     </div>
   </xsl:template>
 
+  <!-- ============================================================ -->
+  <!--                                                              -->
+  <!--               Process INPUT/RADIO basic element              -->
+  <!--                                                              -->
+  <!-- ============================================================ -->
+  <xsl:template match="para[@condition='ada_submit_scale_element']|
+                       remark[@condition='ada_submit_scale_element']|
+                       phrase[@condition='ada_submit_scale_element']"
+    name="ada_render_scale_elements">
+    <!-- Name for the field -->
+    <xsl:param name="scale-name">
+      <xsl:choose>
+        <xsl:when test="*[@condition='name']"><xsl:value-of
+        select="*[@condition='name']/text()"/></xsl:when>
+        <xsl:otherwise>ada_submit_scale_name</xsl:otherwise>
+      </xsl:choose>
+    </xsl:param>
+
+    <input class="ada_submit_form_scale" type="radio">
+      <xsl:attribute name="name"><xsl:value-of
+      select="$scale-name"/></xsl:attribute>
+      <xsl:attribute name="value"><xsl:apply-templates
+      select="*[@condition='value']"/></xsl:attribute>
+    </input>
+  </xsl:template>
   <!-- ============================================================ -->
   <!--                                                              -->
   <!--               Process TEXTAREA note/para/phrase              -->
@@ -283,6 +304,70 @@
       select="$textarea-name"/></xsl:attribute><xsl:copy-of
       select="text()"/></xsl:element>
     </div>
+  </xsl:template>
+
+  <!-- ============================================================ -->
+  <!--                                                              -->
+  <!--                  Process SELECT note/para                    -->
+  <!--                                                              -->
+  <!-- ============================================================ -->
+  <xsl:template match="note[@condition='ada_submit_select']|
+                       para[@condition='ada_submit_select']">
+
+    <!-- Name for the field -->
+    <xsl:param name="select-name">
+      <xsl:choose>
+        <xsl:when test="@id"><xsl:value-of select="@id"/></xsl:when>
+        <xsl:otherwise>ada_submit_select_input</xsl:otherwise>
+      </xsl:choose>
+    </xsl:param>
+
+    <div class="ada_submit_form_select">
+      <xsl:call-template name="ada_select_basic_processing">
+        <xsl:with-param name="select-name">
+          <xsl:value-of select="$select-name"/>
+        </xsl:with-param>
+      </xsl:call-template>
+    </div>
+  </xsl:template>
+
+  <!-- ============================================================ -->
+  <!--                                                              -->
+  <!--           Process SELECT remark or basic elements            -->
+  <!--                                                              -->
+  <!-- ============================================================ -->
+  <xsl:template name="ada_select_basic_processing"
+    match="remark[@condition='ada_submit_select']">
+    <!-- Name for the field -->
+    <xsl:param name="select-name">
+      <xsl:choose>
+        <xsl:when test="@id"><xsl:value-of select="@id"/></xsl:when>
+        <xsl:otherwise>ada_submit_select_input</xsl:otherwise>
+      </xsl:choose>
+    </xsl:param>
+
+    <select>
+      <xsl:attribute name="name">
+        <xsl:value-of select="$select-name"/>
+      </xsl:attribute>
+      <xsl:for-each select="*">
+        <xsl:element name="option">
+          <!-- If there is a condition attribute, turn it into value -->
+          <xsl:if test="@condition">
+            <xsl:attribute name="value"><xsl:value-of
+            select="@condition"/></xsl:attribute>
+          </xsl:if>
+          <!-- Check the value given in role attribute -->
+          <xsl:if test="contains(@role, 'selected')">
+            <xsl:attribute name="selected">selected</xsl:attribute>
+          </xsl:if>
+          <xsl:if test="contains(@role, 'disabled')">
+            <xsl:attribute name="disabled">disabled</xsl:attribute>
+          </xsl:if>
+          <xsl:apply-templates />
+        </xsl:element>
+      </xsl:for-each>
+    </select>
   </xsl:template>
 
   <!-- ============================================================ -->
@@ -381,8 +466,9 @@
   <!-- The title of the section is to be ignored -->
   <xsl:template match="section[@condition='ada_submit_form']/title"/>
 
-  <xsl:template match="phrase[@condition='action-suffix']"/>
-  <xsl:template match="phrase[@condition='submit']"/>
+  <xsl:template
+    match="phrase[@condition='action-suffix']|para[@condition='action-suffix']"/>
+  <xsl:template match="phrase[@condition='submit']|para[@condition='submit']"/>
 
   <xsl:template match="section[@condition = 'ada_submit_form']" mode="toc"/>
 
