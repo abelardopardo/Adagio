@@ -60,9 +60,9 @@
       
       <!-- Removed to preserve backward compatibility with 1.69
         <xsl:call-template name="id.warning"/>
-      -->
+        -->
 
-      <div class="{name(.)}_pguide">
+      <div class="{name(.)} professorguide">
         <!-- Removed to preserve compatibility with 1.69 stylesheets.
         <xsl:apply-templates select="." mode="class.attribute"/>
         <xsl:call-template name="dir">
@@ -122,6 +122,13 @@
 
         <xsl:apply-templates/>
       </div>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- Process the phrase labeled with condition=professorguide -->
+  <xsl:template match="phrase[@condition='professorguide']">
+    <xsl:if test="$professorguide.include.guide = 'yes'">
+      <xsl:apply-templates />
     </xsl:if>
   </xsl:template>
 
