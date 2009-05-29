@@ -34,6 +34,7 @@
   <xsl:template match="section[@condition='ada_submit_info']|
                        note[@condition='ada_submit_info']"/>
 
+  <!-- this is in Forms, no longer in AsapSubmit
   <xsl:template match="note[@condition='ada_submit_input']|
                        para[@condition='ada_submit_input']|
                        remark[@condition='ada_submit_input']"/>
@@ -41,7 +42,7 @@
   <xsl:template match="remark[@condition='ada_submit_textarea_form']|
                        remark[@condition='ada_submit_form']|
                        remark[@condition='ada_submit_duration_form']"/>
-
+  -->
   <xsl:template match="note[@condition = 'AdminInfo']"/>
 
   <!-- skip entirely processing of the submit sections -->
