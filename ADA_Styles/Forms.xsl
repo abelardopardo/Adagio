@@ -30,6 +30,7 @@
 
   <xsl:import href="HeadTail.xsl"/>
   <xsl:import href="FormsParams.xsl"/>
+  <xsl:import href="Duration.xsl"/>
 
   <!-- ============================================================ -->
   <!--                                                              -->
@@ -38,9 +39,8 @@
   <!-- ============================================================ -->
   <xsl:template match="section[@condition='ada_submit_form']|
                        para[@condition='ada_submit_form']|
-                       remark[@condition='ada_submit_duration_form']">
                        remark[@condition='ada_submit_textarea_form']|
-                       remark[@condition='ada_submit_form']|
+                       remark[@condition='ada_submit_form']">
     <xsl:param name="form-id">
       <xsl:choose>
         <xsl:when test="*[@condition='form-id']"><xsl:value-of
@@ -83,9 +83,6 @@
         <xsl:choose>
           <xsl:when test="@condition='ada_submit_textarea_form'">
             <xsl:call-template name="ada.submit.textarea.input"/>
-          </xsl:when>
-          <xsl:when test="@condition='ada_submit_duration_form'">
-            <xsl:call-template name="ada.submit.duration.input"/>
           </xsl:when>
           <xsl:when test="@condition='ada_submit_form'">
             <xsl:apply-templates />
@@ -368,99 +365,6 @@
         </xsl:element>
       </xsl:for-each>
     </select>
-  </xsl:template>
-
-  <!-- ============================================================ -->
-  <!--                                                              -->
-  <!--                     Process Duration element                 -->
-  <!--                                                              -->
-  <!-- ============================================================ -->
-  <xsl:template name="ada.submit.duration.input"
-    match="remark[@condition='ada_submit_duration']">
-    <!-- Duration value -->
-    <xsl:param name="duration-value">
-      <xsl:choose>
-        <xsl:when test="*[@condition='duration']"><xsl:value-of
-        select="*[@condition='duration']/text()"/></xsl:when>
-        <xsl:otherwise>30</xsl:otherwise>
-      </xsl:choose>
-    </xsl:param>
-    <!-- Name for the field -->
-    <xsl:param name="duration-name">
-      <xsl:choose>
-        <xsl:when test="*[@condition='name']"><xsl:value-of
-        select="*[@condition='name']/text()"/></xsl:when>
-        <xsl:otherwise>ada_submit_duration_input</xsl:otherwise>
-      </xsl:choose>
-    </xsl:param>
-
-    <div class="ada_submit_form_duration_select">
-      <select>
-        <xsl:attribute name="name">
-          <xsl:value-of select="$duration-name"/>
-        </xsl:attribute>
-
-        <!-- Less than haf of value -->
-        <xsl:element name="option">
-          <xsl:attribute name="value">&lt;&lt;<xsl:value-of
-          select="$duration-value * 0.5"/></xsl:attribute>
-          &lt;&lt;<xsl:value-of select="$duration-value * 0.5"/>
-        </xsl:element>
-
-        <!-- Half the given value -->
-        <xsl:element name="option">
-          <xsl:attribute name="value"><xsl:value-of select="$duration-value *
-          0.5"/></xsl:attribute>
-          <xsl:value-of select="$duration-value * 0.5"/>
-        </xsl:element>
-
-        <!-- 3/4 of given value -->
-        <xsl:element name="option">
-          <xsl:attribute name="value"><xsl:value-of select="$duration-value *
-          0.75"/></xsl:attribute>
-          <xsl:value-of select="$duration-value * 0.75"/>
-        </xsl:element>
-
-        <!-- Exact given value -->
-        <xsl:element name="option">
-          <xsl:attribute name="selected">selected</xsl:attribute>
-          <xsl:attribute name="value"><xsl:value-of
-          select="$duration-value"/></xsl:attribute>
-          <xsl:attribute name ="selected">selected</xsl:attribute>
-            <xsl:value-of select="$duration-value"/>
-          </xsl:element>
-
-          <!-- 1.25 times the given value -->
-          <xsl:element name="option">
-            <xsl:attribute name="value"><xsl:value-of select="$duration-value *
-            1.25"/></xsl:attribute>
-            <xsl:value-of select="$duration-value * 1.25"/>
-          </xsl:element>
-
-          <!-- 1.5 times the given value -->
-          <xsl:element name="option">
-            <xsl:attribute name="value"><xsl:value-of select="$duration-value *
-            1.5"/></xsl:attribute>
-            <xsl:value-of select="$duration-value * 1.5"/>
-          </xsl:element>
-
-          <!-- Greater than 1.5 times the given value -->
-          <xsl:element name="option">
-            <xsl:attribute name="value">&gt;&gt;<xsl:value-of select="$duration-value *
-            1.5"/></xsl:attribute>
-            &gt;&gt;<xsl:value-of select="$duration-value * 1.5"/>
-          </xsl:element>
-        </select>
-      </div>
-  </xsl:template>
-
-  <xsl:template name="printHierarchy">
-      <xsl:for-each select="ancestor::section">
-          <xsl:if test="ancestor::*[position()=1 and local-name()='chapter']">
-               <xsl:value-of select="ancestor::*[position()=1 and local-name()='chapter']/title/phrase/text()" />
-          </xsl:if>
-          <xsl:text>--</xsl:text><xsl:value-of select="title/phrase/text()" />
-      </xsl:for-each>
   </xsl:template>
 
   <!-- The title of the section is to be ignored -->
