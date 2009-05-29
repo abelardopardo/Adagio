@@ -131,7 +131,7 @@
     </xsl:if>
   </xsl:template>
 
-  <!-- Process the section labeled with condition=solution -->
+  <!-- Process the phrase labeled with condition=solution -->
   <xsl:template match="phrase[@condition='solution']">
     <xsl:if test="$solutions.include.guide = 'yes'">
       <span class="solution">
