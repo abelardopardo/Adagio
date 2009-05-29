@@ -30,9 +30,9 @@
   
   <xsl:import href="ExerciseSubmitParams.xsl"/>
 
-  <xsl:import href="HeadTail.xsl"/>
   <xsl:import href="CountDown.xsl"/>
   <xsl:import href="HeaderLinks.xsl"/>
+  <xsl:import href="Forms.xsl"/>
 
   <!-- Ignore the submit elements -->
   <xsl:import href="AsapSubmitIgnore.xsl"/>
@@ -41,6 +41,7 @@
   <xsl:template match="chapter" name="exercise_top_element">
     <div>
       <xsl:apply-templates select="." mode="class.attribute"/>
+
       <!-- Title if present -->
       <xsl:call-template name="chapter.titlepage"/>
 
@@ -129,7 +130,9 @@
         </xsl:if>
       </div> <!-- End of coutdown -->
 
-      <xsl:if test="$exercisesubmit.include.toc = 'yes'">
+      <!-- Render the TOC if allowed AND top-level document -->
+      <xsl:if test="$exercisesubmit.include.toc = 'yes' and
+                    (count(ancestor::*) = 0)">
         <xsl:call-template name="section.toc" mode="toc"/>
       </xsl:if>
       
