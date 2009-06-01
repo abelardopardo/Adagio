@@ -133,9 +133,12 @@
   </xsl:template>
 
   <!-- Process the phrase labeled with condition=professorguide -->
-  <xsl:template match="subtitle[@condition='professorguide']">
+  <xsl:template match="subtitle[@condition='professorguide']" mode="titlepage.mode">
     <xsl:if test="$professorguide.include.guide = 'yes'">
-      <xsl:apply-templates />
+      <h2>
+        <xsl:apply-templates select="." mode="class.attribute"/>
+        <xsl:apply-templates mode="titlepage.mode"/>
+      </h2>
     </xsl:if>
   </xsl:template>
 
