@@ -132,4 +132,11 @@
     </xsl:if>
   </xsl:template>
 
+  <!-- Process the phrase labeled with condition=professorguide -->
+  <xsl:template match="subtitle[@condition='professorguide']">
+    <xsl:if test="$professorguide.include.guide = 'yes'">
+      <xsl:apply-templates />
+    </xsl:if>
+  </xsl:template>
+
 </xsl:stylesheet>
