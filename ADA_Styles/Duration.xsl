@@ -82,9 +82,13 @@
 
           <!-- Less than haf of value -->
           <xsl:element name="option">
-            <xsl:attribute name="value">&lt;<xsl:value-of
+            <xsl:attribute name="value">LT-<xsl:value-of
             select="$duration-value * 0.5"/></xsl:attribute>
-            &lt;<xsl:value-of select="$duration-value * 0.5"/>
+            <xsl:choose>
+              <xsl:when test="profile.lang = 'es'">Menos de </xsl:when>
+              <xsl:otherwise>Less than </xsl:otherwise>
+            </xsl:choose>
+            <xsl:value-of select="$duration-value * 0.5"/>
           </xsl:element>
 
           <!-- Half the given value -->
@@ -125,9 +129,13 @@
 
           <!-- Greater than 1.5 times the given value -->
           <xsl:element name="option">
-            <xsl:attribute name="value">&gt;<xsl:value-of select="$duration-value *
+            <xsl:attribute name="value">GT-<xsl:value-of select="$duration-value *
             1.5"/></xsl:attribute>
-            &gt;<xsl:value-of select="$duration-value * 1.5"/>
+            <xsl:choose>
+              <xsl:when test="profile.lang = 'es'">Más de </xsl:when>
+              <xsl:otherwise>More than </xsl:otherwise>
+            </xsl:choose>
+            <xsl:value-of select="$duration-value * 1.5"/>
           </xsl:element>
         </select> mins.
 
