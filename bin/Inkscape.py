@@ -74,8 +74,6 @@ def run(currentDir):
     global output_format
     global expanded_files
 
-    logging.debug('Inkscape: looping over ' + str(expanded_files))
-
     # Check first if the executable is available. If not, send warning
     if not AdaRule.isProgramAvailable(executable):
         Ada.infoMessage('WARNING: Inkscape files to process, but no executable found')
@@ -107,9 +105,17 @@ def run(currentDir):
         if retcode != 0:
             raise TypeError, 'Error processing ' + srcFile + ' with inkscape'
 
-def clean():
-    logging.debug('Inkscape clean command not implemented')
-    pass
+def clean(currentDir):
+    global expanded_files
+    global output_format
+
+    filesToDelete = [re.sub('(.*)\.svg', '\\1.' + output_format, fName) \
+                         for fName in expanded_files]
+
+    logging.debug('Inkscape cleanin: ' + str(filesToDelete))
+
+#     for name in filesToDelete:
+#         os.remove(name)
 
 def dump(currentDir):
     global executable

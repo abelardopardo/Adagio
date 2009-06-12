@@ -69,7 +69,6 @@ def executeRuleChain(dirList, executionContext, commands):
         for cmdName in commands:
 
             # Sequence of rules to apply
-
             Inkscape.process(executionContext[dirName], cmdName)
 
 
