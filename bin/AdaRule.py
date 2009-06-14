@@ -28,6 +28,19 @@ def isProgramAvailable(executable):
 
     return None
 
+def locateSheet(sheetName):
+    """Search an stylesheet in the dirs in local ADA dirs"""
+
+    # If it exists in the current dir, return
+    if os.path.exists(sheetName):
+        return os.path.abspath(sheetName)
+
+    localAdaStyle = os.path.join(Ada.ada_home, 'ADA_Styles', sheetName)
+
+    if os.path.exists(localAdaStyle):
+        return localAdaStyle
+    return None
+
 def expandFiles(dir, files):
     """Function that given a (possible empty) directory and a set of space separated
     list of file patterns, it returns a list of elements each of them is an
@@ -69,7 +82,27 @@ def executeRuleChain(dirList, executionContext, commands):
         for cmdName in commands:
 
             # Sequence of rules to apply
+#             Copyfiles.process(executionContext[dirName], cmdName)
+#             ExtraAnt.process(executionContext[dirName], cmdName)
+#             Copytemplates.process(executionContext[dirName], cmdName)
+#             Xfig.process(executionContext[dirName], cmdName)
             Inkscape.process(executionContext[dirName], cmdName)
+#             Gimp.process(executionContext[dirName], cmdName)
+#             Convert.process(executionContext[dirName], cmdName)
+#             Xsltproc.process(executionContext[dirName], cmdName)
+#             ExerciseSubmit.process(executionContext[dirName], cmdName)
+#             Exam.process(executionContext[dirName], cmdName)
+#             TestExam.process(executionContext[dirName], cmdName)
+#             Rss.process(executionContext[dirName], cmdName)
+#             Latex.process(executionContext[dirName], cmdName)
+#             Dvips.process(executionContext[dirName], cmdName)
+#             Ps2pdf.process(executionContext[dirName], cmdName)
+#             Pdflatex.process(executionContext[dirName], cmdName)
+#             Dblatex.process(executionContext[dirName], cmdName)
+#             Msf2PDF.process(executionContext[dirName], cmdName)
+#             PDFnup.process(executionContext[dirName], cmdName)
+#             ExtraAnt.process(executionContext[dirName], cmdName)
+#             Export.process(executionContext[dirName], cmdName)
 
 
         Ada.infoMessage('EN ' + dirName)

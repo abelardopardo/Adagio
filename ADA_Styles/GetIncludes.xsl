@@ -57,7 +57,7 @@
   <xsl:template match="xsl:import"><xsl:if
   test="not(starts-with(@href, 'http'))"><xsl:value-of
       select="@href"/><xsl:text>
-    </xsl:text></xsl:if></xsl:template>
+</xsl:text></xsl:if></xsl:template>
 
   <!-- match dependencies in prosper driver files -->
   <xsl:template match="document/material/include"><xsl:value-of

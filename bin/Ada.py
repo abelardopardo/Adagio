@@ -8,6 +8,8 @@
 import os, logging, sys, getopt, datetime
 import Directory, Properties, AdaRule
 
+ada_home = ''
+
 def main():
     """
     The script accepts the following options:
@@ -36,9 +38,9 @@ def main():
         'debug']
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:],
-                                   "d:",
-                                   [])
+        opts, commands = getopt.getopt(sys.argv[1:],
+                                       "d:",
+                                       [])
     except getopt.GetoptError, e:
         print e.msg
         print AdaProcessor.__doc__
@@ -50,15 +52,13 @@ def main():
             Directory.globalVariables['ada.debug.level'] = value
             logging.basicConfig(level=int(value))
 
-        else:
-            # No option detected, this is a command
-            commands.append(value)
+
     #######################################################################
     #
     # MAIN PROCESSING
     #
     #######################################################################
-    logging.info('Start ADA processing')
+    logging.info('Start ADA processing ' + str(commands))
 
     # Remember the initial directory
     initialDir = os.getcwd()
@@ -160,6 +160,9 @@ def initialize():
     # Initialization
     #
     #######################################################################
+
+    global ada_home
+
     # Nuke the adado.log file
     logFile = os.path.join(os.getcwd(), 'adado.log')
     if os.path.exists(logFile):
@@ -168,7 +171,7 @@ def initialize():
     # Set the logging format
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s %(levelname)s %(message)s',
-                        datefmt='%y%m%d %H:%M:%S',
+#                         datefmt='%y%m%d %H:%M:%S',
                         filename=logFile,
                         filemode='w')
 

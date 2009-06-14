@@ -17,7 +17,7 @@ output_format = 'png'
 expanded_files = []
 
 def process(currentDir, command = 'run'):
-    """Function that executes a specific rule within the module"""
+    """Function that executes a specific command within the rule"""
 
     global debug
     global src_dir
@@ -78,7 +78,7 @@ def run(currentDir):
     if not AdaRule.isProgramAvailable(executable):
         Ada.infoMessage('WARNING: Inkscape files to process, but no executable found')
         Ada.infoMessage('         Review variable inkscape.files or install inkscape')
-        return
+        raise TypeError
 
     # Create the destination directory
     if (dst_dir != '') and (not os.path.exists(dst_dir)):
@@ -112,10 +112,11 @@ def clean(currentDir):
     filesToDelete = [re.sub('(.*)\.svg', '\\1.' + output_format, fName) \
                          for fName in expanded_files]
 
-    logging.debug('Inkscape cleanin: ' + str(filesToDelete))
+    Ada.infoMessage('Inkscape clean: ' + str(filesToDelete))
 
-#     for name in filesToDelete:
-#         os.remove(name)
+    for name in filesToDelete:
+        if os.path.exists(name):
+            os.remove(name)
 
 def dump(currentDir):
     global executable
@@ -131,7 +132,6 @@ def dump(currentDir):
     print '  dst_dir = ' + dst_dir
     print '  output_format = ' + output_format
     print '  files = ' + currentDir['inkscape.files']
-    pass
 
 ################################################################################
 
