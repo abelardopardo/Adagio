@@ -158,6 +158,11 @@ def run(currentDir):
         logging.debug('Xsltproc: Checking dep. for ' + styleStamp +
                       ' ' + fileName + ' ' + outputFileName)
 
+        outputStamp = Dependency.getMtime(outputFileName)
+        if outputStamp > Dependency.getMtime(fileName) and \
+                outputStamp > styleStemp:
+            continue
+
     # Loop over all the multilingual filenames
     for fileName in expanded_multilingual_files:
         pass
@@ -200,10 +205,10 @@ def mergeStyleSheets(mainFile, filesToMerge):
     newName = os.path.abspath(newName)
 
     # Pass the main File by the catalog filter
-    absMainFile = AdaRule.locateSheet(mainFile)
+    absMainFile = AdaRule.locateXMLFile(mainFile)
 
     # Pass the rest of files by the same filter
-    filesToMerge = map(AdaRule.locateSheet, filesToMerge)
+    filesToMerge = map(AdaRule.locateXMLFile, filesToMerge)
 
     # If the style file does not exist, or Properties.txt was modified, refresh
     if (not os.path.exists(newName)) or \

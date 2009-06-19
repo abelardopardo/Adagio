@@ -1,12 +1,11 @@
 #!/usr/bin/python
-# -*- coding: UTF-8 -*-#
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 #
 #
 import os, logging, sys, datetime, subprocess, re, time
-import Ada
+import Ada, AdaRule
 
 #
 # node info:
@@ -127,9 +126,10 @@ def getIncludes(fName):
         # Remove the xpointer suffix
         line = re.sub('#xpointer.*$', '', line)
 
+        # Locate the file in case is not in the usual places
+        fullPath = AdaRule.locateXMLFile(line[:-1])
+
         # Accumulate the result
-        fullPath = os.path.abspath(os.path.join(os.path.dirname(fName),
-                                                line[:-1]))
         if includes.count(fullPath) == 0:
             includes.append(fullPath)
 

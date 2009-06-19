@@ -28,14 +28,14 @@ def isProgramAvailable(executable):
 
     return None
 
-def locateSheet(sheetName):
+def locateXMLFile(fileName):
     """Search an stylesheet in the dirs in local ADA dirs"""
 
     # If it exists in the current dir, return
-    if os.path.exists(sheetName):
-        return os.path.abspath(sheetName)
+    if os.path.exists(fileName):
+        return os.path.abspath(fileName)
 
-    localAdaStyle = os.path.join(Ada.ada_home, 'ADA_Styles', sheetName)
+    localAdaStyle = os.path.join(Ada.ada_home, 'ADA_Styles', fileName)
 
     if os.path.exists(localAdaStyle):
         return localAdaStyle
