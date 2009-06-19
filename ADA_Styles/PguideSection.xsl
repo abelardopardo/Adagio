@@ -63,16 +63,15 @@
         -->
 
       <div>
-        <!-- Removed to preserve compatibility with 1.69 stylesheets.
+        <xsl:call-template name="language.attribute"/>
+
         <xsl:apply-templates select="." mode="class.attribute"/>
+
+        <!-- Removed to preserve compatibility with 1.69 stylesheets.
         <xsl:call-template name="dir">
           <xsl:with-param name="inherit" select="1"/>
         </xsl:call-template>
         -->
-
-        <xsl:apply-templates select="." mode="class.attribute"/>
-
-        <xsl:call-template name="language.attribute"/>
 
         <xsl:call-template name="section.titlepage"/>
         
