@@ -5,6 +5,8 @@
 #
 #
 import os, logging, sys, datetime, subprocess, re, time
+# import Ft.Xml.Domlette, Ft.Xml.XPath
+import xml.parsers.expat
 import Ada, AdaRule
 
 #
@@ -15,6 +17,7 @@ import Ada, AdaRule
 #  date: last modification date (might have propagated from fanout)
 
 graph = {}
+includeList = []
 
 def getMtime(item):
     """Return mtime stored in the graph, or fetch it from the system if not
@@ -92,7 +95,51 @@ def traverseXML(file):
         logging.debug('Dependency: ' + file + ' Done processing includes.')
     return maximum
 
+# GetIncludes based on Ft.Xml.Domlette infrastructure. Very problematic because
+# the package seems to be not properly ported to Python 2.6
+def getIncludesF(fName):
+    """Parse XML/XSL file and obtain import/include URLs as absolute paths"""
+
+    # Parse the file first
+    sourceDoc = \
+              Ft.Xml.Domlette.NonvalidatingReader.parseUri(Ft.Lib.Uri.OsPathToUri(fName))
+    fileContext = Ft.Xml.XPath.Context.Context(sourceDoc)
+    imports = Ft.Xml.XPath.Evaluate('//*/xi:import', fileContext)
+
+    print str(imports)
+    exit
+# GetIncludes based on Expat. This seems to be the optimal way of obtaining
+# these elements although some more thorough testing is required.
 def getIncludes(fName):
+    global includeList
+
+    def start_element(name, attrs):
+        global includeList
+        if (name == 'xsl:import') or (name == 'xsl:include') or \
+               (name == 'xi:include'):
+            includeList.append(attrs['href'])
+
+    includeList = []
+    p = xml.parsers.expat.ParserCreate()
+    p.StartElementHandler = start_element
+
+    p.ParseFile(open(sys.argv[1], 'r'))
+
+    # Loop over the output lines
+    for name in includeList:
+        # Locate the file in case is not in the usual places
+        fullPath = AdaRule.locateXMLFile(name)
+
+        # Accumulate the result
+        if includeList.count(fullPath) == 0:
+            includeList.append(fullPath)
+
+    return includeList
+
+# GetIncludes based on executing xsltproc as a sub-process. There seems to be a
+# bottleneck here but not clear if it is realted ot the process creation, or
+# inherent to the type of computation performed.
+def getIncludesX(fName):
     """Parse XML/XSL file and obtain import/include URLs as a list of absolute
     paths. WARNING: This invocation is the true CPU hog! Almost 95% of the
     execution time goes creating and waiting for the result of the Popen."""
@@ -176,9 +223,10 @@ if __name__ == "__main__":
     Ada.initialize()
     lap = time.time()
     l = getMtime(sys.argv[1])
-    print l
     print "Time: " + str(time.time() - lap)
+    print l
     lap = time.time()
     l = getMtime(sys.argv[1])
-    print l
     print "Time: " + str(time.time() - lap)
+    print l
+
