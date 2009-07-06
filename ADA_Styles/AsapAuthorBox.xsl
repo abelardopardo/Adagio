@@ -47,7 +47,7 @@
         <xsl:with-param name="testValue" select="$ada.asap.num.authors"/>
       </xsl:call-template>
       <xsl:if test="$ada.asap.include.password = 'one'">
-        <div class="ada_asap_author_box_row_password">
+        <div class="ada_asap_author_box_row_single_password">
           <div class="ada_asap_author_box_data_a">
             <xsl:choose>
               <xsl:when test="$ada.asap.num.authors &gt; 1">

@@ -20,12 +20,19 @@ div.ada_asap_author_box_row_author,
 div.ada_asap_author_box_row_author_id,
 div.ada_asap_author_box_row_confirmation_email,
 div.ada_asap_author_box_row_password,
+div.ada_asap_author_box_row_single_password,
 div.ada_asap_author_box_row_payload
 {
   display: table-row;
   }
 
-div.ada_asap_author_box_row_author_id,
+div.ada_asap_author_box_row_author,
+div.ada_asap_author_box_row_single_password
+{
+  border-top: thin solid black;
+}
+
+div.ada_asap_author_box_row_single_password,
 div.ada_asap_author_box_row_payload
 {
   border-bottom: thin solid black;
