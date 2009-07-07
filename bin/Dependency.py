@@ -118,12 +118,22 @@ def getIncludes(fName):
         if (name == 'xsl:import') or (name == 'xsl:include') or \
                (name == 'xi:include'):
             includeList.append(attrs['href'])
+        elif name == 'html:rss':
+            includeList.append(attrs['file'])
+
+    def end_element(name):
+        pass
 
     includeList = []
+    result = []
     p = xml.parsers.expat.ParserCreate()
     p.StartElementHandler = start_element
+    p.EndElementHandler = end_element
 
     p.ParseFile(open(sys.argv[1], 'r'))
+
+    # Remains to be implemented the detection of the text of the elemtns in
+    # document/material/include/text()
 
     # Loop over the output lines
     for name in includeList:
@@ -131,10 +141,10 @@ def getIncludes(fName):
         fullPath = AdaRule.locateXMLFile(name)
 
         # Accumulate the result
-        if includeList.count(fullPath) == 0:
-            includeList.append(fullPath)
+        if result.count(fullPath) == 0:
+            result.append(fullPath)
 
-    return includeList
+    return result
 
 # GetIncludes based on executing xsltproc as a sub-process. There seems to be a
 # bottleneck here but not clear if it is realted ot the process creation, or
