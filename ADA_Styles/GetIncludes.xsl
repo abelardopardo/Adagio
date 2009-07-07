@@ -32,10 +32,10 @@
   <xsl:output method="text" encoding="UTF-8"/>
 
   <xsl:template match="/">
-    <xsl:apply-templates select="//*/xi:include[@href]"/>
-    <xsl:apply-templates select="//*/xsl:import[@href]"/>
+    <xsl:apply-templates select="//xi:include[@href]"/>
+    <xsl:apply-templates select="//xsl:import[@href]"/>
     <xsl:apply-templates select="document/material/include"/>
-    <xsl:apply-templates select="//*/html:rss[@file]"/>
+    <xsl:apply-templates select="//html:rss[@file]"/>
   </xsl:template>
 
   <xsl:template match="xi:include">
@@ -58,11 +58,6 @@
   test="not(starts-with(@href, 'http'))"><xsl:value-of
       select="@href"/><xsl:text>
     </xsl:text></xsl:if></xsl:template>
-
-  <!-- match dependencies in prosper driver files -->
-  <xsl:template match="document/material/include"><xsl:value-of
-      select="normalize-space(text())"/><xsl:text>
-    </xsl:text></xsl:template>
 
   <!-- match dependencies in prosper driver files -->
   <xsl:template match="document/material/include"><xsl:value-of
