@@ -177,8 +177,6 @@ xsltproc  \
     "--stringparam" \
     "ada.version" \
     "$ada_version" \
-    "-o" \
-    "$ADA_HOME/bin/XML_Test.html" \
     "$ADA_HOME/doc/QandaentryTable.xsl" \
     "$ADA_HOME/bin/XML_Test.xml" \
     1>/dev/null 2>&1
