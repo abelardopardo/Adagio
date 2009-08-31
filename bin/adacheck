@@ -235,6 +235,6 @@ else
 fi
 
 echo
-adado -Dada.property.file.ready=true report
+$ADA_HOME/bin/adado -Dada.property.file.ready=true report
 
 rm -rf $ADA_HOME/bin/XML_Test.html
