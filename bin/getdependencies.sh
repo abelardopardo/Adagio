@@ -32,7 +32,7 @@
 #
 
 # See where is ADA_HOME
-ADA_HOME=`dirname $0`/..
+ADA_HOME=$(cd "$(dirname "$0")"; pwd)/..
 
 # Redirect catalog enquiries to ADA to avoid going out for DTDs
 XML_CATALOG_FILES="file://$ADA_HOME/DTDs/catalog"

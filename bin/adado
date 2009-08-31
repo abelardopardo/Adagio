@@ -48,7 +48,7 @@ esac
 # Get basic variables
 basedir=$PWD
 
-ADA_HOME=`dirname $0`/..
+ADA_HOME=$(cd "$(dirname "$0")"; pwd)/..
 ADA_HOME_UNIX=$ADA_HOME
 if [ $cygwin = "true" ]; then
     # If within cygwin, pahts need to be manipulated for a correct ant
