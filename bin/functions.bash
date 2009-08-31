@@ -58,7 +58,7 @@ function ada_check_packages_cygwin() {
 
 function ada_check_packages_linux() {
     ada_package_list="coreutils docbook-xml \
-                      docbook-xsl file findutils gawk git grep libxml2 \
+                      docbook-xsl file findutils gawk git-core grep libxml2 \
                       xsltproc openssh-client"
 
     # Detect which package management tool is being used
