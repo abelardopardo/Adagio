@@ -31,6 +31,9 @@
 # calls, it does not print any message.
 #
 
+# Remember the current dir
+originDir=`pwd`
+
 # See where is ADA_HOME
 ADA_HOME=$(cd "$(dirname "$0")"; pwd)/..
 
@@ -52,9 +55,6 @@ elif [ "$#" -lt 1 ]; then
 else
     params="$*"
 fi
-
-# Remember the
-originDir=`pwd`
 
 idx=0
 fileArray=($params)
