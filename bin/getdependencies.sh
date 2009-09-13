@@ -31,8 +31,11 @@
 # calls, it does not print any message.
 #
 
+# Remember the current dir
+originDir=`pwd`
+
 # See where is ADA_HOME
-ADA_HOME=`dirname $0`/..
+ADA_HOME=$(cd "$(dirname "$0")"; pwd)/..
 
 # Redirect catalog enquiries to ADA to avoid going out for DTDs
 XML_CATALOG_FILES="file://$ADA_HOME/DTDs/catalog"
@@ -52,9 +55,6 @@ elif [ "$#" -lt 1 ]; then
 else
     params="$*"
 fi
-
-# Remember the
-originDir=`pwd`
 
 idx=0
 fileArray=($params)

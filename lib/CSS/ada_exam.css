@@ -41,6 +41,7 @@ div.ada_exam_score_data
 div#ada_exam_name_surname
 {
   width: 100%;
+  margin-left: 0.5em;
  }
 
 div.ada_exam_note_data,

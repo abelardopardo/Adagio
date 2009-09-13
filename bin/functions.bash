@@ -43,7 +43,7 @@ function ada_check_packages() {
 
 function ada_check_packages_cygwin() {
     ada_package_list="coreutils docbook-xml42 docbook-xml43 docbook-xml44 \
-                      docbook-xsl file findutils gawk git grep libxml2 \
+                      docbook-xsl file findutils gawk git-core grep libxml2 \
                       libxslt openssh"
     for pname in $ada_package_list; do
 	echo -n "    - Probing package $pname -- "
@@ -58,7 +58,7 @@ function ada_check_packages_cygwin() {
 
 function ada_check_packages_linux() {
     ada_package_list="coreutils docbook-xml \
-                      docbook-xsl file findutils gawk git grep libxml2 \
+                      docbook-xsl file findutils gawk git-core grep libxml2 \
                       xsltproc openssh-client"
 
     # Detect which package management tool is being used
