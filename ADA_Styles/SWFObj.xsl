@@ -76,6 +76,16 @@
             <xsl:attribute name="value"><xsl:value-of
             select="phrase[@condition = 'file']/text()"/></xsl:attribute>
           </param>
+	  <xsl:if test="phrase[@condition = 'allowFullScreen']">
+	    <param><xsl:attribute name="name">allowFullScreen</xsl:attribute>
+	    <xsl:attribute name="value"><xsl:value-of select="phrase[@condition
+	    = 'allowFullScreen']/text()"/></xsl:attribute></param>
+	  </xsl:if>
+	  <xsl:if test="phrase[@condition = 'allowscriptaccess']">
+	    <param><xsl:attribute name="name">allowscriptaccess</xsl:attribute>
+	    <xsl:attribute name="value"><xsl:value-of select="phrase[@condition
+	    = 'allowscriptaccess']/text()"/></xsl:attribute></param>
+	  </xsl:if>
           <embed type="application/x-shockwave-flash">
             <xsl:attribute name="src"><xsl:value-of
             select="phrase[@condition = 'file']/text()"/></xsl:attribute>
@@ -83,6 +93,14 @@
             select="$shockwave.height"/></xsl:attribute>
             <xsl:attribute name="width"><xsl:value-of
             select="$shockwave.width"/></xsl:attribute>
+	    <xsl:if test="phrase[@condition = 'allowFullScreen']">
+	      <xsl:attribute name="allowfullscreen"><xsl:value-of
+	      select="phrase[@condition = 'allowFullScreen']/text()"/></xsl:attribute>
+	  </xsl:if>
+	  <xsl:if test="phrase[@condition = 'allowscriptaccess']">
+	    <xsl:attribute name="allowscriptaccess"><xsl:value-of select="phrase[@condition
+	    = 'allowscriptaccess']/text()"/></xsl:attribute>
+	  </xsl:if>
           </embed>
         </object>
 
@@ -90,7 +108,9 @@
         <xsl:apply-templates
           select="*[not(@condition='file') and
                   not(@condition='height') and
-                  not(@condition='width')]"/>
+                  not(@condition='width') and
+                  not(@condition='allowFullScreen') and
+                  not(@condition='allowscriptaccess')]"/>
       </div>
     </xsl:if>
   </xsl:template>
