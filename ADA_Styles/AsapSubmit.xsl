@@ -163,7 +163,7 @@
 
           <div class="ada_asap_payload_box">
             <xsl:for-each select="//section[@condition='ada_submit_info']|
-                                  //*/note[@condition='ada_submit_info']">
+                                  //note[@condition='ada_submit_info']">
               <div class="ada_asap_author_box_row_payload">
                 <xsl:choose>
                   <xsl:when test="$submit.count &gt; 1">
