@@ -39,6 +39,9 @@
     description="Link pointing to a Google Gadget to be included in the upper
                  left corner of the page"/>
 
+  <xsl:param name="ada.head.javascripts"
+	     description="Javascripts to include in the document head"/>
+
   <xsl:param name="ada.page.refresh.rate" 
     description="Include a refresh rate in the page header"/>
 

@@ -140,6 +140,11 @@
     <!-- Insert Dublin Core Metadata -->
     <xsl:call-template name="ada.dc.insert.meta.elements"/>
 
+    <!-- Javascripts -->
+    <xsl:if test="$ada.head.javascripts">
+      <xsl:copy-of select="$ada.head.javascripts"/>
+    </xsl:if>
+
     <!-- FAVICON -->
     <xsl:if test="$ada.course.icon">
       <link rel="shortcut icon">

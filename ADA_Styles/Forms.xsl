@@ -291,6 +291,17 @@
       </xsl:choose>
     </xsl:param>
 
+    <!-- On key up -->
+    <xsl:param name="onKeyUp">
+      <xsl:if test="*[@condition='onkeyup']"><xsl:value-of
+      select="*[@condition='onkeyup']/text()"/></xsl:if>
+    </xsl:param>
+    <!-- On key down -->
+    <xsl:param name="onKeyDown">
+      <xsl:if test="*[@condition='onkeydown']"><xsl:value-of
+      select="*[@condition='onkeydown']/text()"/></xsl:if>
+    </xsl:param>
+
     <div class="ada_submit_form_textarea">
       <!-- Dump the element -->
       <xsl:element name="textarea"><xsl:attribute name="rows"><xsl:value-of
@@ -298,7 +309,13 @@
       name="cols"><xsl:value-of
       select="$textarea-cols"/></xsl:attribute><xsl:attribute
       name="name"><xsl:value-of
-      select="$textarea-name"/></xsl:attribute><xsl:copy-of
+      select="$textarea-name"/></xsl:attribute><xsl:if
+      test="not(normalize-space($onKeyUp) = '')"><xsl:attribute
+      name="onKeyUp"><xsl:value-of
+      select="$onKeyUp"/></xsl:attribute></xsl:if><xsl:if
+      test="not(normalize-space($onKeyDown) = '')"><xsl:attribute
+      name="onKeyDown"><xsl:value-of
+      select="$onKeyDown"/></xsl:attribute></xsl:if><xsl:copy-of
       select="text()"/></xsl:element>
     </div>
   </xsl:template>

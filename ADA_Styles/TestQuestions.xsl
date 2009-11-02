@@ -154,12 +154,12 @@
           </xsl:if>
 
           <!-- Recur through the MC questions -->
-          <xsl:if test="qandaentry[count(answer) &gt; 1]">
+          <xsl:if test="not(qandaentry[count(answer) = 1])">
             <div>
               <xsl:attribute name="class">ada_exam_qandaentry_table<xsl:value-of
               select="$class_prefix"/></xsl:attribute>
 
-              <xsl:for-each select="qandaentry[count(answer) &gt; 1]">
+              <xsl:for-each select="qandaentry[count(answer) != 1]">
                 <xsl:variable name="qandaentry_position"><xsl:value-of
                 select="position()"/></xsl:variable>
 
@@ -200,7 +200,10 @@
       <xsl:message>    Prefix: <xsl:value-of select="$class_prefix"/></xsl:message>
     </xsl:if>
 
-    <div class="ada_exam_question">
+    <div>
+      <xsl:attribute name="class">ada_exam_question <xsl:value-of
+      select="ancestor::qandadiv/@id"/>_<xsl:value-of
+      select="count(preceding-sibling::qandaentry) + 1"/></xsl:attribute>
       <!-- Choose between MC and TF -->
       <xsl:choose>
         <xsl:when test="count(answer) = 1">
@@ -208,7 +211,7 @@
           <xsl:call-template name="TFQuestion_Answer"/>
         </xsl:when>
 
-        <xsl:when test="count(answer) &gt; 1">
+        <xsl:when test="count(answer) != 1">
           <!-- MC Question -->
           <xsl:call-template name="MCquestion"/>
         </xsl:when>
@@ -268,14 +271,26 @@
     </div>
 
     <div class="ada_exam_question_mc_answers">
-      <xsl:for-each select="answer">
-        <div class="ada_exam_question_mc_answer">
-          <xsl:call-template name="MC_answer_square"/>
-          <div class="ada_exam_question_mc_answer_text">
-            <xsl:apply-templates />
-          </div>
-        </div>
-      </xsl:for-each>
+      <xsl:choose>
+	<xsl:when test="count(answer) &gt; 0">
+	  <xsl:for-each select="answer">
+	    <div class="ada_exam_question_mc_answer">
+	      <xsl:call-template name="MC_answer_square"/>
+	      <div class="ada_exam_question_mc_answer_text">
+		<xsl:apply-templates />
+	      </div>
+	    </div>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <div>
+	    <xsl:if test="question/@role">
+	      <xsl:attribute name="style">height: <xsl:value-of
+	      select="question/@role"/></xsl:attribute>
+	    </xsl:if>
+	  </div>
+	</xsl:otherwise>
+      </xsl:choose>
     </div>
 
     <xsl:if test="($ada.testquestions.include.id = 'yes') or
@@ -334,7 +349,7 @@
     <!-- If requested, include the metadata info -->
     <xsl:if test="$ada.testquestions.include.id = 'yes'">
       <div class="ada_exam_question_author">
-        <xsl:if test="ancestor-or-self::*/blockinfo/author">
+        <xsl:if test="ancestor-or-self::*/blockinfo/descendant-or-self::author">
           <p>
             <xsl:choose>
               <xsl:when test="$profile.lang='es'">Autor: </xsl:when>
@@ -342,11 +357,17 @@
             </xsl:choose>
           </p>
           <p>
-            <xsl:value-of
-              select="ancestor-or-self::*/blockinfo/author/personname/firstname/text()"/>
-            <xsl:text> </xsl:text>
-            <xsl:value-of
-              select="ancestor-or-self::*/blockinfo/author/personname/surname/text()"/>
+	    <xsl:for-each
+	      select="ancestor-or-self::*/blockinfo/descendant-or-self::author">
+	      <xsl:value-of
+		select="personname/firstname/text()"/>
+	      <xsl:text> </xsl:text>
+	      <xsl:value-of
+		select="personname/surname/text()"/>
+	      <xsl:if test="count(following-sibling::author) &gt; 0">
+		<xsl:text>/</xsl:text>
+	      </xsl:if>
+	    </xsl:for-each>
           </p>
         </xsl:if>
       </div>
