@@ -127,56 +127,83 @@
             </xsl:choose>
           </xsl:variable>
 
-          <!-- Recur through the TF questions, if any -->
-          <xsl:if test="qandaentry[count(answer) = 1]">
-            <div>
-              <xsl:attribute name="class">ada_exam_qandaentry_table<xsl:value-of
-              select="$class_prefix"/></xsl:attribute>
+	  <xsl:choose>
+	    <!-- Recur through the OPEN questions, if any -->
+	    <xsl:when test="qandaentry[count(answer[@condition = 'open']) = 1]">
+	      <div>
+		<xsl:attribute name="class">ada_exam_qandaentry_table<xsl:value-of
+		select="$class_prefix"/></xsl:attribute>
 
-              <xsl:call-template name="TFQuestion_Heading"/>
+		<xsl:for-each
+		  select="qandaentry[count(answer[@condition = 'open']) = 1]">
+		  <xsl:variable name="qandaentry_position"><xsl:value-of
+		  select="position()"/></xsl:variable>
 
-              <xsl:for-each select="qandaentry[count(answer) = 1]">
-                <xsl:variable name="qandaentry_position"><xsl:value-of
-                select="position()"/></xsl:variable>
+		  <xsl:if test="$ada.test.questions.debug != 0">
+		    <xsl:message>  OPEN Qandaentry <xsl:value-of
+		    select="position()"/></xsl:message>
+		  </xsl:if>
 
-                <xsl:if test="$ada.test.questions.debug != 0">
-                  <xsl:message>  TF Qandaentry <xsl:value-of
-                  select="position()"/></xsl:message>
-                </xsl:if>
-
-                <!-- Call render template -->
-                <xsl:call-template name="render_qandaentry" select=".">
-                  <xsl:with-param name="qandaentry_position"><xsl:value-of
-                  select="position()"/></xsl:with-param>
+		  <!-- Call render template -->
+		  <xsl:call-template name="render_qandaentry" select=".">
+		    <xsl:with-param name="qandaentry_position"><xsl:value-of
+		    select="position()"/></xsl:with-param>
                 </xsl:call-template>
-              </xsl:for-each>
-            </div>
-          </xsl:if>
+		</xsl:for-each>
+	      </div>
+	    </xsl:when>
 
-          <!-- Recur through the MC questions -->
-          <xsl:if test="not(qandaentry[count(answer) = 1])">
-            <div>
-              <xsl:attribute name="class">ada_exam_qandaentry_table<xsl:value-of
-              select="$class_prefix"/></xsl:attribute>
+	    <!-- Recur through the TF questions, if any -->
+	    <xsl:when test="qandaentry[count(answer) = 1]">
+	      <div>
+		<xsl:attribute name="class">ada_exam_qandaentry_table<xsl:value-of
+		select="$class_prefix"/></xsl:attribute>
 
-              <xsl:for-each select="qandaentry[count(answer) != 1]">
-                <xsl:variable name="qandaentry_position"><xsl:value-of
-                select="position()"/></xsl:variable>
+		<xsl:call-template name="TFQuestion_Heading"/>
 
-                <xsl:if test="$ada.test.questions.debug != 0">
-                  <xsl:message>  MC Qandaentry <xsl:value-of
-                  select="position()"/></xsl:message>
-                </xsl:if>
+		<xsl:for-each select="qandaentry[count(answer) = 1]">
+		  <xsl:variable name="qandaentry_position"><xsl:value-of
+		  select="position()"/></xsl:variable>
 
-                <!-- Call render template but anticipating if TF heading needs to be
-                     included -->
-                <xsl:call-template name="render_qandaentry" select=".">
-                  <xsl:with-param name="qandaentry_position"><xsl:value-of
-                  select="position()"/></xsl:with-param>
+		  <xsl:if test="$ada.test.questions.debug != 0">
+		    <xsl:message>  TF Qandaentry <xsl:value-of
+		    select="position()"/></xsl:message>
+		  </xsl:if>
+
+		  <!-- Call render template -->
+		  <xsl:call-template name="render_qandaentry" select=".">
+		    <xsl:with-param name="qandaentry_position"><xsl:value-of
+		    select="position()"/></xsl:with-param>
                 </xsl:call-template>
-              </xsl:for-each>
-            </div>
-          </xsl:if>
+		</xsl:for-each>
+	      </div>
+	    </xsl:when>
+
+	    <!-- Recur through the MC questions -->
+	    <xsl:when test="not(qandaentry[count(answer) = 1])">
+	      <div>
+		<xsl:attribute name="class">ada_exam_qandaentry_table<xsl:value-of
+		select="$class_prefix"/></xsl:attribute>
+
+		<xsl:for-each select="qandaentry[count(answer) != 1]">
+		  <xsl:variable name="qandaentry_position"><xsl:value-of
+		  select="position()"/></xsl:variable>
+
+		  <xsl:if test="$ada.test.questions.debug != 0">
+		    <xsl:message>  MC Qandaentry <xsl:value-of
+		    select="position()"/></xsl:message>
+		  </xsl:if>
+
+		  <!-- Call render template but anticipating if TF heading needs to be
+		       included -->
+		  <xsl:call-template name="render_qandaentry" select=".">
+		    <xsl:with-param name="qandaentry_position"><xsl:value-of
+		    select="position()"/></xsl:with-param>
+		  </xsl:call-template>
+		</xsl:for-each>
+	      </div>
+	    </xsl:when>
+	  </xsl:choose>
         </xsl:when>
 
         <!-- A single qandaentry, with no surrounding DIV -->
@@ -206,19 +233,20 @@
       select="count(preceding-sibling::qandaentry) + 1"/></xsl:attribute>
       <!-- Choose between MC and TF -->
       <xsl:choose>
+	<xsl:when test="answer[@condition = 'open']">
+          <!-- Open Question -->
+          <xsl:call-template name="OPENquestion"/>
+	</xsl:when>
+
         <xsl:when test="count(answer) = 1">
           <!-- TF Question -->
           <xsl:call-template name="TFQuestion_Answer"/>
         </xsl:when>
 
-        <xsl:when test="count(answer) != 1">
+        <xsl:when test="count(answer) &gt; 1">
           <!-- MC Question -->
           <xsl:call-template name="MCquestion"/>
         </xsl:when>
-
-        <xsl:otherwise>
-          <p>Unknown question type (based on number of answers)</p>
-        </xsl:otherwise>
 
       </xsl:choose>
     </div>
@@ -291,6 +319,34 @@
 	  </div>
 	</xsl:otherwise>
       </xsl:choose>
+    </div>
+
+    <xsl:if test="($ada.testquestions.include.id = 'yes') or
+                  ($ada.testquestions.include.history = 'yes')">
+      <div class="ada_exam_question_metadata">
+        <!-- If requested, include the metadata info -->
+        <xsl:call-template name="dump-metadata" select="."/>
+
+        <!-- If requested, include the history info -->
+        <xsl:call-template name="dump-history" />
+      </div>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- Open Question rendering -->
+  <xsl:template name="OPENquestion">
+    <div class="ada_exam_question_open_text">
+      <xsl:apply-templates select="question/node()"/>
+    </div>
+
+    <div class="ada_exam_question_open_answer">
+      <div>
+	<xsl:if test="answer/@role">
+	  <xsl:attribute name="style">height: <xsl:value-of
+	  select="answer/@role"/></xsl:attribute>
+	</xsl:if>
+	<xsl:apply-templates select="answer/node()"/>
+      </div>
     </div>
 
     <xsl:if test="($ada.testquestions.include.id = 'yes') or
