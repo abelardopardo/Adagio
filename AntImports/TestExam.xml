@@ -240,6 +240,7 @@ multilingual mode"/>
       <param name="xsltproc.extra.args"
 	     value="--stringparam ada.testquestions.include.solutions yes
 		    --stringparam ada.testquestions.include.id yes
+		    --stringparam solutions.include.guide yes
 		    --stringparam passivetex.extensions 1
 		    --stringparam tex.math.in.alt latex
 		    ${testexam.extra.args}"/>
@@ -260,6 +261,7 @@ multilingual mode"/>
       <param name="xsltproc.extra.args"
 	     value="--stringparam ada.testquestions.include.solutions yes
 		    --stringparam ada.testquestions.include.history yes
+		    --stringparam solutions.include.guide yes
 		    --stringparam ada.testquestions.include.id yes
 		    --stringparam passivetex.extensions 1
 		    --stringparam tex.math.in.alt latex
@@ -302,6 +304,7 @@ multilingual mode"/>
       <param name="xsltproc.extra.args"
 	     value="--stringparam ada.testquestions.include.solutions yes
 		    --stringparam ada.testquestions.include.id yes
+		    --stringparam solutions.include.guide yes
 		    --stringparam passivetex.extensions 1
 		    --stringparam tex.math.in.alt latex
 		    ${testexam.extra.args}"/>
@@ -324,6 +327,7 @@ multilingual mode"/>
       <param name="xsltproc.extra.args"
 	     value="--stringparam ada.testquestions.include.solutions yes
 		    --stringparam ada.testquestions.include.history yes
+		    --stringparam solutions.include.guide yes
 		    --stringparam ada.testquestions.include.id yes
 		    --stringparam passivetex.extensions 1
 		    --stringparam tex.math.in.alt latex
@@ -433,6 +437,7 @@ multilingual mode"/>
       <param name="xsltproc.extra.args"
 	     value="--stringparam ada.testquestions.include.solutions yes
 		    --stringparam ada.testquestions.include.history yes
+		    --stringparam solutions.include.guide yes
 		    --stringparam ada.testquestions.include.id yes
 		    --stringparam passivetex.extensions 1
 		    --stringparam tex.math.in.alt latex
@@ -456,6 +461,7 @@ multilingual mode"/>
       <param name="xsltproc.extra.args"
 	     value="--stringparam ada.testquestions.include.solutions yes
 		    --stringparam ada.testquestions.include.id yes
+		    --stringparam solutions.include.guide yes
 		    --stringparam passivetex.extensions 1
 		    --stringparam tex.math.in.alt latex
 		    ${testexam.extra.args}"/>
@@ -495,6 +501,7 @@ multilingual mode"/>
       <param name="xsltproc.extra.args"
 	     value="--stringparam ada.testquestions.include.solutions yes
 		    --stringparam ada.testquestions.include.history yes
+		    --stringparam solutions.include.guide yes
 		    --stringparam ada.testquestions.include.id yes
 		    --stringparam passivetex.extensions 1
 		    --stringparam tex.math.in.alt latex
@@ -516,6 +523,7 @@ multilingual mode"/>
       <param name="xsltproc.extra.args"
 	     value="--stringparam ada.testquestions.include.solutions yes
 		    --stringparam ada.testquestions.include.id yes
+		    --stringparam solutions.include.guide yes
 		    --stringparam passivetex.extensions 1
 		    --stringparam tex.math.in.alt latex
 		    ${testexam.extra.args}"/>
