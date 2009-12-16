@@ -99,7 +99,11 @@
             <xsl:choose>
               <xsl:when test="*[@condition='submit']">
                 <xsl:attribute name="value"><xsl:value-of
-                select="*[@condition = 'submit']"/></xsl:attribute>
+                select="*[@condition =
+		'submit']"/></xsl:attribute><xsl:attribute
+		name="name"><xsl:choose><xsl:when test="*[@condition =
+		'submit']/@id"><xsl:value-of select="*[@condition =
+		'submit']/@id"/></xsl:when><xsl:otherwise>submit</xsl:otherwise></xsl:choose></xsl:attribute>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:choose>
@@ -253,7 +257,9 @@
       <xsl:attribute name="name"><xsl:value-of
       select="$scale-name"/></xsl:attribute>
       <xsl:attribute name="value"><xsl:apply-templates
-      select="*[@condition='value']"/></xsl:attribute>
+      select="*[@condition='value']"/></xsl:attribute><xsl:if
+      test="@id"><xsl:attribute name="id"><xsl:value-of
+      select="@id"/></xsl:attribute></xsl:if>
     </input>
   </xsl:template>
   <!-- ============================================================ -->
