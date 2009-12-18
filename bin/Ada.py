@@ -6,6 +6,7 @@
 #
 #
 import os, logging, sys, getopt, datetime
+
 import Directory, Properties, AdaRule
 
 ada_home = ''
