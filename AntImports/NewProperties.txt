@@ -1,0 +1,195 @@
+[ada]
+	debuglevel = info
+	currentDatetime =
+	profileRevision =
+
+[xslt]
+	exec = xsltproc
+	debuglevel = ${ada.debug.level}
+	srcdir = ${basedir}
+	dstdir = ${basedir}
+	stylefile = ${ada.home}/ADA_Styles/DocbookProfile.xsl
+	outputformat = .html
+	extraargs =
+	files =
+	mergestyle =
+	profilelang =
+
+[xsltmultilingual]
+	files =
+	mergestyle =
+
+[xfig]
+	# xfig.exec=fig2dev
+	# xfig.debug.level=${ada.debug.level}
+	# xfig.src.dir=${basedir}
+	# xfig.dst.dir=${basedir}
+	# xfig.output.format=png
+	# xfig.border=2
+	# xfig.smooth=4
+	# xfig.extra.args=
+	# xfig.files=
+[inkscape]
+	# inkscape.exec=inkscape
+	# inkscape.debug.level=${ada.debug.level}
+	# inkscape.src.dir=${basedir}
+	# inkscape.dst.dir=${basedir}
+	# inkscape.output.format=png
+	# inkscape.files=
+[convert]
+	# convert.exec=convert
+	# convert.debug.level=${ada.debug.level}
+	# convert.src.dir=${basedir}
+	# convert.dst.dir=${convert.src.dir}
+	# convert.geometry=
+	# convert.suffix=${convert.geometry}
+	# convert.crop=
+	# convert.format=png
+	# convert.files=
+[gimp]
+	# gimp.exec=gimp
+[gimp]
+	# gimp.debug.level=${ada.debug.level}
+[gimp]
+	# gimp.src.dir=${basedir}
+[gimp]
+	# gimp.script.file=${ada.home}${file.separator}AntImports${file.separator}xcftopng.scm
+[gimp]
+	# gimp.files=
+[pdfnup]
+	# exec=pdfnup
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# dst.dir=${pdfnup.src.dir}
+	# nup.option=1x2
+	# files=
+[ps2pdf]
+	# exec=ps2pdf
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# dst.dir=${ps2pdf.src.dir}
+	# files=
+
+[msf2pdf]
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# files=
+
+[export]
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# dst.dir=${basedir}
+	# files=
+	# files.always=
+
+[exportcontrol]
+	# debug.level=${ada.debug.level}
+	# begin=
+	# end=
+	# now=${ada.current.datetime}
+	# date.format=yyyy-MM-dd'T'HH:mm:ss
+	# open=true
+	# profile.revision=${ada.profile.revision}
+	# profile.revision.value=
+
+[subrecursive]
+	# debug.level=${ada.debug.level}
+	# dirs=
+	# dst.dir=${basedir}
+	# dirs.nodst=
+	# target=
+
+[copy]
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# dst.dir=${basedir}
+	# files=
+[exercisesubmit]
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# dst.dir=${basedir}
+	# style.file=${ada.home}/ADA_Styles/ExerciseSubmit.xsl
+	# submit.style.file=${ada.home}/ADA_Styles/AsapSubmit.xsl
+	# extra.args=
+	# output.format=.html
+	# files=
+	# multilingual.files=
+	# master.style=
+[pdflatex]
+	# exec=pdflatex
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# dst.dir=${pdflatex.src.dir}
+	# files=
+	# extra.args=
+[latex]
+	# exec=latex
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# dst.dir=${latex.src.dir}
+	# files=
+	# extra.args=
+
+[dvips]
+	# exec=dvips
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# dst.dir=${basedir}
+	# files=
+
+[dblatex]
+	# exec=dblatex
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# dst.dir=${basedir}
+	# files=
+	# multilingual.files=
+	# extra.args=
+	# extra.xsltproc.args=
+	# compliant.mode=
+	# profile.lang=
+
+[exam]
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# dst.dir=${exam.src.dir}
+	# equation.dir=equations
+	# output.format=.html
+	# extra.args=
+	# file=
+	# multilingual.file=
+	# style.file=${ada.home}/ADA_Styles/Exam.xsl
+
+[testexam]
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# dst.dir=${testexam.src.dir}
+	# equation.dir=equations
+	# output.format=.html
+	# extra.args=
+	# file=
+	# multilingual.file=
+	# style.file=${ada.home}/ADA_Styles/Exam.xsl
+[rss]
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# dst.dir=${rss.src.dir}
+	# output.format=_rss.xml
+	# extra.args=
+	# files=
+	# multilingual.files=
+	# style.file=${ada.home}/ADA_Styles/Rss.xsl
+	# style.file.tohtml=${ada.home}/ADA_Styles/RssToHtml.xsl
+
+[extraant]
+	# debug.level=${ada.debug.level}
+	# src.dir=${basedir}
+	# file=build.xml
+	# pretarget=
+	# posttarget=
+	# pretarget.clean=
+	# posttarget.clean=
+
+[clean]
+	# debug.level=${ada.debug.level}
+	# files=
