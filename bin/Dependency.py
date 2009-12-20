@@ -4,239 +4,252 @@
 #
 #
 #
+
 import os, logging, sys, datetime, subprocess, re, time
-# import Ft.Xml.Domlette, Ft.Xml.XPath
-import xml.parsers.expat
+
+# Import conditionally either regular xml support or lxml if present
+try:
+    from lxml import etree
+except ImportError:
+    import xml.etree.ElementTree as etree
+
 import Ada, AdaRule
 
+# The graph is stored as three data structures:
 #
-# node info:
+# __FileNameToNodeIDX: Dictionary with (fileName -> nodeIndex) pairs
+# __NodeDate: Inverse mapping of the previous dictionary
+# __NodeDate: Array storing index -> date pairs
+# __NodeOutEdges: Array of sets with the outgoing edges
 #
-#  key: filename
-#  fanout: list of files that depend on this one
-#  date: last modification date (might have propagated from fanout)
+__FileNameToNodeIDX = {}
+__IDXToName = []
+__NodeDate = []
+__NodeOutEdges = []
 
-graph = {}
-includeList = []
+__includeList = []
 
-def getMtime(item):
-    """Return mtime stored in the graph, or fetch it from the system if not
-    present. If file does not exist, return zero"""
+def addNode(fileName, traverse = False):
+    """
+    Given a fileName it created (if needed) the node in the graph. It simply
+    adds a new entry to the FileNameToIDX dictionary and appends its st_mtime
+    date to the date list and an empty list to the adjancency lists.
+    """
+    global __FileNameToNodeIDX
+    global __IDXToName
+    global __NodeDate
+    global __NodeOutEdges
 
-    global graph
+    # Make fileName absolute
+    fileName = os.path.abspath(fileName)
 
-    logging.debug('Dependency: Getting ' + item)
+    # Search first to see if it is there
+    nodeIdx = __FileNameToNodeIDX.get(fileName)
 
-    fileDate = 0
-    try:
-        (fanout, fileDate) = graph[item]
-    except KeyError, e:
-        # If the file exist, traverse its chain and return the maximum stamp
-        logging.debug('Dependency: ' + item + ' not found.')
+    # If node does not exist create it
+    if nodeIdx == None:
+        nodeIdx = len(__FileNameToNodeIDX)
+        __FileNameToNodeIDX[fileName] = nodeIdx
+        __IDXToName.append(fileName)
+        __NodeOutEdges.append(set({}))
+        __NodeDate.append(os.path.getmtime(fileName))
 
-        if os.path.exists(item):
-            fileDate = traverseXML(item)
+        # If the extension is xml or xsl, traverse the includes/imports
+        ext = os.path.splitext(fileName)[1]
+        if ext == '.xml' or ext == '.xsl':
+            # This function already inserts the node in the graph
+            traverseXML(fileName)
+
+    return nodeIdx
+
+def update(dst, srcSet = set([])):
+    """
+    Modifies the graph to reflect the addition of an edge from each of the
+    elements in srcSet to dst. If srcSet is empty it only updates the date of
+    dst with the st_mtime value and propagates the result.
+
+    Returns the index of the destination node
+    """
+    global __FileNameToNodeIDX
+    global __IDXToName
+    global __NodeDate
+    global __NodeOutEdges
+
+    # If a string is given, translate to index
+    if type(dst) == str:
+        dstIDX = addNode(dst, True)
+    else:
+        dstIDX = dst
+
+    # Initialize the mark to the index and date of the destination
+    moreRecentIDX = dstIDX
+
+    # If the srcSet is empty, update dst with mtime
+    if srcSet == set([]):
+        moreRecentDate = os.path.getmtime(__IDXToName[dstIDX])
+    else:
+        moreRecentDate = __NodeDate[dstIDX]
+
+    for node in srcSet:
+        if type(node) == str:
+            srcIDX = addNode(node, True)
         else:
-            logging.debug('Dependency: ' + item + ' does not exist.')
+            srcIDX = node
 
-    return fileDate
+        # Add the edge to the adjacency set
+        __NodeOutEdges[srcIDX].add(dstIDX)
 
-def getListMtime(list):
-    """Return most recent mtime calculated with the previous method"""
+        # If the new date is more recent, update point
+        if __NodeDate[srcIDX] > moreRecentDate:
+            moreRecentIDX = srcIDX
+            moreRecentDate = __NodeDate[srcIDX]
 
-    return max(map(getMtime, list))
+    # If the modification needs to propagate go ahead
+    if moreRecentDate > __NodeDate[moreRecentIDX]:
+        __NodeDate[moreRecentIDX] = moreRecentDate
+        for fanoutIDX in __NodeOutEdges[srcIDX]:
+            update(fanoutIDX, [dstIDX])
 
-def traverseXML(file):
+    return dstIDX
+
+def traverseXML(fileName):
     """Given an XML file, detects import, include files and traverses
     recursively"""
+    global __FileNameToNodeIDX
+    global __IDXToName
+    global __NodeDate
+    global __NodeOutEdges
 
-    global graph
+    # Make fileName absolute
+    fileName = os.path.abspath(fileName)
 
-    logging.debug('Dependency: Traversing ' + file)
+    # If the file does not exist, return
+    if not os.path.exists(fileName):
+        print 'Dependency: ' + fileName + ' does not exist'
+        return
 
-    try:
-        (fanout, fileDate) = graph[file]
-        logging.debug('Dependency: ' + file + ' HIT.')
-        return fileDate
+    # Search first to see if it is there
+    nodeIdx = __FileNameToNodeIDX.get(fileName)
 
-    except KeyError, e:
-        # The file is not part of the graph
+    # If node is already in the graph, return
+#     if nodeIdx != None:
+#         print 'Dependency: ' + fileName + ' HIT.'
+#         return
 
-        # If the file does not exist, return
-        if not os.path.exists(file):
-            logging.debug('Dependency: ' + file + ' does not exist (tr).')
-            return 0
+    # Get the set of included files
+    includes = getIncludes(fileName)
 
-        logging.debug('Dependency: ' + file + ' New node.')
+    # Update the graph with respect to these data
+    update(nodeIdx, includes)
 
-        # Insert empty element
-        stamp = os.stat(file).st_mtime
-        graph[file] = ([], stamp)
+    return
 
-        # Get the list of included files
-        logging.debug('Dependency: ' + file + ' Getting includes.')
-        includes = getIncludes(file)
-        maximum = stamp
-        # Loop over all the files included and set the dependencies
-        for fName in includes:
-            # Traverse recursively
-            includeStamp = traverseXML(fName)
-
-            # Keep the maximum
-            maximum = max(includeStamp, maximum)
-
-            # Insert the dependency in the graph
-            insertDependency(fName, file)
-
-        # If the fanin has a larger stamp, refresh
-        if maximum > stamp:
-            graph[file] = ([], maximum)
-
-        logging.debug('Dependency: ' + file + ' Done processing includes.')
-    return maximum
-
-# GetIncludes based on Ft.Xml.Domlette infrastructure. Very problematic because
-# the package seems to be not properly ported to Python 2.6
-def getIncludesF(fName):
-    """Parse XML/XSL file and obtain import/include URLs as absolute paths"""
-
-    # Parse the file first
-    sourceDoc = \
-              Ft.Xml.Domlette.NonvalidatingReader.parseUri(Ft.Lib.Uri.OsPathToUri(fName))
-    fileContext = Ft.Xml.XPath.Context.Context(sourceDoc)
-    imports = Ft.Xml.XPath.Evaluate('//*/xi:import', fileContext)
-
-    print str(imports)
-    exit
-# GetIncludes based on Expat. This seems to be the optimal way of obtaining
-# these elements although some more thorough testing is required.
 def getIncludes(fName):
-    global includeList
+    """
+    Get the xsl:import, xsl:include and xi:include in a file
 
-    def start_element(name, attrs):
-        global includeList
-        if (name == 'xsl:import') or (name == 'xsl:include') or \
-               (name == 'xi:include'):
-            includeList.append(attrs['href'])
-        elif name == 'html:rss':
-            includeList.append(attrs['file'])
+    returns the set of absolute files that are included
+    """
 
-    def end_element(name):
-        pass
+    # Turn the name into absolute path and get the directory part
+    fName = os.path.abspath(fName)
+    fDir = os.path.dirname(fName)
 
-    includeList = []
-    result = []
-    p = xml.parsers.expat.ParserCreate()
-    p.StartElementHandler = start_element
-    p.EndElementHandler = end_element
+    # Parse the document and initialize the result to the empty set
+    root = etree.parse(fName)
+    result = set([])
 
-    p.ParseFile(open(sys.argv[1], 'r'))
+    allIncludes = \
+         set(root.findall('//{http://www.w3.org/1999/XSL/Transform}import')) | \
+         set(root.findall('//{http://www.w3.org/1999/XSL/Transform}include')) | \
+         set(root.findall('//{http://www.w3.org/2001/XInclude}include'))
 
-    # Remains to be implemented the detection of the text of the elemtns in
-    # document/material/include/text()
+# This is the equivalent xpath expression, but if included, the package is only
+# compatible if lxml is installed.
 
-    # Loop over the output lines
-    for name in includeList:
-        # Locate the file in case is not in the usual places
-        fullPath = AdaRule.locateXMLFile(name)
+#     root.xpath('/descendant::*[self::xi:include or self::xsl:import or \
+#                                self::xsl:include]',
+#                namespaces={'xi' : 'http://www.w3.org/2001/XInclude',
+#                            'xsl' : 'http://www.w3.org/1999/XSL/Transform'})
 
-        # Accumulate the result
-        if result.count(fullPath) == 0:
-            result.append(fullPath)
+    # Loop over all the includes, and imports of XML and XSL
+    for element in allIncludes:
+        if 'href' in element.attrib:
+            hrefValue = element.attrib['href']
+            hrefAbs = os.path.abspath(os.path.join(fDir, hrefValue))
+            if not os.path.exists(hrefAbs):
+                hrefAbs = os.path.abspath(os.path.join(Ada.ada_home, \
+                                                       'ADA_Styles', \
+                                                       hrefValue))
+            if os.path.exists(hrefAbs):
+                result.add(hrefAbs)
+            else:
+                print 'Warning file ' + hrefAbs + ' not found.'
 
+    allRSS = set(root.findall('//{http://www.w3.org/1999/xhtml}rss'))
+
+#     root.xpath('/descendant::html:rss',
+#                namespaces={'html' : \
+#                            'http://www.w3.org/1999/xhtml'})
+
+    # Loop over all the rss elements in the HTML namespace
+    for element in allRSS:
+        if 'file' in element.attrib:
+            result.add(os.path.abspath(os.path.join(fDir,
+                                                    element.attrib['file'])))
+
+    # Return the result set
     return result
 
-# GetIncludes based on executing xsltproc as a sub-process. There seems to be a
-# bottleneck here but not clear if it is realted ot the process creation, or
-# inherent to the type of computation performed.
-def getIncludesX(fName):
-    """Parse XML/XSL file and obtain import/include URLs as a list of absolute
-    paths. WARNING: This invocation is the true CPU hog! Almost 95% of the
-    execution time goes creating and waiting for the result of the Popen."""
+def isUpToDate(fileName, src = set([])):
+    """
+    Returns true if the st_mtime of a file is more recent than the date in the
+    graph
+    """
+    global __FileNameToNodeIDX
+    global __NodeDate
 
-    includes = []
+    # If the file is not present, it is definetively, not up to date
+    if not os.path.exists(fileName):
+        return False
 
-    # If file does not exist, return
-    if not os.path.exists(fName):
-        return includes
+    idx = __FileNameToNodeIDX.get(fileName)
 
-    # Execute the command
-    cmd = subprocess.Popen(['xsltproc', '--path',
-                            '.:' +
-                            os.path.join(Ada.ada_home, 'ADA_Styles'),
-                            '--nonet',
-                            os.path.join(Ada.ada_home, 'ADA_Styles',
-                                         'GetIncludes.xsl'),
-                            fName],
-                           stdout=subprocess.PIPE,
-                           stderr=open('build.out', 'a'))
-    # Wait for xsltproc to terminate
-    cmd.wait()
+    # File not in the graph, update graph
+    if idx == None:
+        update(fileName, src)
+        idx = __FileNameToNodeIDX.get(fileName)
 
-    # Check if there has been any problem
-    if cmd.returncode != 0:
-        logging.info('Dependency: Error while processing ' + fName)
-        raise TypeError, 'Dependency: Error while processing ' + fName
+    return (os.path.getmtime(fileName) >= __NodeDate[idx])
 
-    # Loop over the output lines
-    for line in cmd.stdout.readlines():
-        # Remove the xpointer suffix
-        line = re.sub('#xpointer.*$', '', line)
+def dumpGraph():
+    global __FileNameToNodeIDX
+    global __IDXToName
+    global __NodeDate
+    global __NodeOutEdges
 
-        # Locate the file in case is not in the usual places
-        fullPath = AdaRule.locateXMLFile(line[:-1])
+    for n in range(0, len(__IDXToName)):
+        print '[' + str(n) + ']' +  __IDXToName[n] + ' ' + str(__NodeDate[n])
+        print '  ' + ' '.join([str(m) for m in __NodeOutEdges[n]])
 
-        # Accumulate the result
-        if includes.count(fullPath) == 0:
-            includes.append(fullPath)
+################################################################################
 
-    return includes
-
-def updateMtime(item, stamp):
-    """Given the item, checks if the actual mtime is more recent than the stamp in
-    the graph. If so, propagates the value through the fanout. If not in the
-    graph, then there is no operation needed."""
-
-    global graph
-
-    try:
-        itemInfo = graph[item]
-        if stamp > itemInfo[1]:
-            graph[item] = (itemInfo[0], stamp)
-
-        # Iterate over the fanin
-        for fanin in itemInfo[0]:
-            updateMtime(fanin, stamp)
-
-    except KeyError, e:
-        # File is not in the graph, nothing to do
-        return
-
-# Dependencies are only needed if the stamps are refreshed at any time
-def insertDependency(itemFrom, itemTo):
-    """Function that introduces an edge stating that itemFrom depends on item
-    itemTo"""
-
-    global graph
-
-    # Get the info for the two nodes
-    fromInfo = graph[itemFrom]
-
-    if fromInfo[0].count(itemTo) != 0:
-        return
-
-    # Insert destination file in fanout of source file
-    fromInfo[0].append(itemTo)
-    graph[itemFrom] = (fromInfo[0], fromInfo[1])
 
 if __name__ == "__main__":
-    Ada.initialize()
-    lap = time.time()
-    l = getMtime(sys.argv[1])
-    print "Time: " + str(time.time() - lap)
-    print l
-    lap = time.time()
-    l = getMtime(sys.argv[1])
-    print "Time: " + str(time.time() - lap)
-    print l
 
+    Ada.initialize()
+
+    if len(sys.argv) > 2:
+        otherFiles = set(sys.argv[2:])
+    else:
+        otherFiles = set({})
+
+    lap = time.time()
+    l = isUpToDate(sys.argv[1], otherFiles)
+    print "Time: " + str(time.time() - lap)
+    print l
+    lap = time.time()
+    l = isUpToDate(sys.argv[1], otherFiles)
+    print "Time: " + str(time.time() - lap)
+    print l
+    # dumpGraph()
