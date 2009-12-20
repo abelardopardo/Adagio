@@ -15,10 +15,12 @@ except ImportError:
 
 import Ada, AdaRule
 
-# The graph is stored as three data structures:
+# The graph is stored with the following data structures:
+#
+# Node indeces are integers.
 #
 # __FileNameToNodeIDX: Dictionary with (fileName -> nodeIndex) pairs
-# __NodeDate: Inverse mapping of the previous dictionary
+# __IDXToName: Inverse mapping of the previous dictionary
 # __NodeDate: Array storing index -> date pairs
 # __NodeOutEdges: Array of sets with the outgoing edges
 #
@@ -27,13 +29,14 @@ __IDXToName = []
 __NodeDate = []
 __NodeOutEdges = []
 
-__includeList = []
-
-def addNode(fileName, traverse = False):
+def addNode(fileName):
     """
-    Given a fileName it created (if needed) the node in the graph. It simply
-    adds a new entry to the FileNameToIDX dictionary and appends its st_mtime
-    date to the date list and an empty list to the adjancency lists.
+    Given a fileName creates (if needed) the node in the graph. It adds a new
+    entry to the FileNameToIDX dictionary, the reverse info in IDXToName,
+    appends its st_mtime to NodeDate and an empty set to the adjancency
+    lists.
+
+    Returns the node index of the given file
     """
     global __FileNameToNodeIDX
     global __IDXToName
@@ -57,14 +60,14 @@ def addNode(fileName, traverse = False):
         # If the extension is xml or xsl, traverse the includes/imports
         ext = os.path.splitext(fileName)[1]
         if ext == '.xml' or ext == '.xsl':
-            # This function already inserts the node in the graph
-            traverseXML(fileName)
+            update(nodeIdx, getIncludes(fileName))
 
+    # Return the index associated with the given file
     return nodeIdx
 
 def update(dst, srcSet = set([])):
     """
-    Modifies the graph to reflect the addition of an edge from each of the
+    Modifies the graph to reflect the addition of edges from each of the
     elements in srcSet to dst. If srcSet is empty it only updates the date of
     dst with the st_mtime value and propagates the result.
 
@@ -77,7 +80,7 @@ def update(dst, srcSet = set([])):
 
     # If a string is given, translate to index
     if type(dst) == str:
-        dstIDX = addNode(dst, True)
+        dstIDX = addNode(dst)
     else:
         dstIDX = dst
 
@@ -90,9 +93,10 @@ def update(dst, srcSet = set([])):
     else:
         moreRecentDate = __NodeDate[dstIDX]
 
+    # Loop over the nodes in the source set
     for node in srcSet:
         if type(node) == str:
-            srcIDX = addNode(node, True)
+            srcIDX = addNode(node)
         else:
             srcIDX = node
 
@@ -105,50 +109,18 @@ def update(dst, srcSet = set([])):
             moreRecentDate = __NodeDate[srcIDX]
 
     # If the modification needs to propagate go ahead
-    if moreRecentDate > __NodeDate[moreRecentIDX]:
-        __NodeDate[moreRecentIDX] = moreRecentDate
+    if moreRecentDate > __NodeDate[dstIDX]:
+        __NodeDate[dstIDX] = moreRecentDate
         for fanoutIDX in __NodeOutEdges[srcIDX]:
-            update(fanoutIDX, [dstIDX])
+            update(fanoutIDX, set([dstIDX]))
 
     return dstIDX
 
-def traverseXML(fileName):
-    """Given an XML file, detects import, include files and traverses
-    recursively"""
-    global __FileNameToNodeIDX
-    global __IDXToName
-    global __NodeDate
-    global __NodeOutEdges
-
-    # Make fileName absolute
-    fileName = os.path.abspath(fileName)
-
-    # If the file does not exist, return
-    if not os.path.exists(fileName):
-        print 'Dependency: ' + fileName + ' does not exist'
-        return
-
-    # Search first to see if it is there
-    nodeIdx = __FileNameToNodeIDX.get(fileName)
-
-    # If node is already in the graph, return
-#     if nodeIdx != None:
-#         print 'Dependency: ' + fileName + ' HIT.'
-#         return
-
-    # Get the set of included files
-    includes = getIncludes(fileName)
-
-    # Update the graph with respect to these data
-    update(nodeIdx, includes)
-
-    return
-
 def getIncludes(fName):
     """
-    Get the xsl:import, xsl:include and xi:include in a file
+    Get the xsl:import, xsl:include and xi:include in an XML file
 
-    returns the set of absolute files that are included
+    returns the set of absolute files that are included/imported
     """
 
     # Turn the name into absolute path and get the directory part
@@ -164,7 +136,7 @@ def getIncludes(fName):
          set(root.findall('//{http://www.w3.org/1999/XSL/Transform}include')) | \
          set(root.findall('//{http://www.w3.org/2001/XInclude}include'))
 
-# This is the equivalent xpath expression, but if included, the package is only
+# This is the equivalent xpath expression, but if used, the package is only
 # compatible if lxml is installed.
 
 #     root.xpath('/descendant::*[self::xi:include or self::xsl:import or \
@@ -173,18 +145,11 @@ def getIncludes(fName):
 #                            'xsl' : 'http://www.w3.org/1999/XSL/Transform'})
 
     # Loop over all the includes, and imports of XML and XSL
-    for element in allIncludes:
-        if 'href' in element.attrib:
-            hrefValue = element.attrib['href']
-            hrefAbs = os.path.abspath(os.path.join(fDir, hrefValue))
-            if not os.path.exists(hrefAbs):
-                hrefAbs = os.path.abspath(os.path.join(Ada.ada_home, \
-                                                       'ADA_Styles', \
-                                                       hrefValue))
-            if os.path.exists(hrefAbs):
-                result.add(hrefAbs)
-            else:
-                print 'Warning file ' + hrefAbs + ' not found.'
+    for element in [e for e in allIncludes if 'href' in e.attrib]:
+        hrefValue = AdaRule.locateFile(element.attrib['href'], fDir)
+
+        if hrefValue != None:
+            result.add(hrefValue)
 
     allRSS = set(root.findall('//{http://www.w3.org/1999/xhtml}rss'))
 
@@ -193,15 +158,14 @@ def getIncludes(fName):
 #                            'http://www.w3.org/1999/xhtml'})
 
     # Loop over all the rss elements in the HTML namespace
-    for element in allRSS:
-        if 'file' in element.attrib:
-            result.add(os.path.abspath(os.path.join(fDir,
-                                                    element.attrib['file'])))
+    for element in [e for e in allRSS if 'file' in e.attrib]:
+        result.add(os.path.abspath(os.path.join(fDir,
+                                                element.attrib['file'])))
 
     # Return the result set
     return result
 
-def isUpToDate(fileName, src = set([])):
+def isUpToDate(fileName):
     """
     Returns true if the st_mtime of a file is more recent than the date in the
     graph
@@ -213,14 +177,7 @@ def isUpToDate(fileName, src = set([])):
     if not os.path.exists(fileName):
         return False
 
-    idx = __FileNameToNodeIDX.get(fileName)
-
-    # File not in the graph, update graph
-    if idx == None:
-        update(fileName, src)
-        idx = __FileNameToNodeIDX.get(fileName)
-
-    return (os.path.getmtime(fileName) >= __NodeDate[idx])
+    return (os.path.getmtime(fileName) >= __NodeDate[addNode(fileName)])
 
 def dumpGraph():
     global __FileNameToNodeIDX
@@ -228,28 +185,27 @@ def dumpGraph():
     global __NodeDate
     global __NodeOutEdges
 
+    pref = os.path.commonprefix(__IDXToName)
+
     for n in range(0, len(__IDXToName)):
-        print '[' + str(n) + ']' +  __IDXToName[n] + ' ' + str(__NodeDate[n])
+        print '[' + str(n) + ']' + ' ' + str(__NodeDate[n])
         print '  ' + ' '.join([str(m) for m in __NodeOutEdges[n]])
 
 ################################################################################
-
 
 if __name__ == "__main__":
 
     Ada.initialize()
 
-    if len(sys.argv) > 2:
-        otherFiles = set(sys.argv[2:])
-    else:
-        otherFiles = set({})
+    for n in sys.argv[1:]:
+        lap = time.time()
+        l = isUpToDate(sys.argv[1])
+        print n + ' ' + str(time.time() - lap) + ', ' + str(l)
 
-    lap = time.time()
-    l = isUpToDate(sys.argv[1], otherFiles)
-    print "Time: " + str(time.time() - lap)
-    print l
-    lap = time.time()
-    l = isUpToDate(sys.argv[1], otherFiles)
-    print "Time: " + str(time.time() - lap)
-    print l
-    # dumpGraph()
+#         print '\n\n'
+
+#         print '\n'.join([__IDXToName[f] \
+#                          for f in range(0, len(__NodeDate)) \
+#                          if __NodeDate[f] > os.path.getmtime(sys.argv[1])])
+    dumpGraph()
+

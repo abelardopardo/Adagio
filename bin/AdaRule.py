@@ -28,23 +28,26 @@ def isProgramAvailable(executable):
 
     return None
 
-def locateXMLFile(fileName):
+def locateFile(fileName, dirPrefix = os.getcwd()):
     """Search an stylesheet in the dirs in local ADA dirs"""
 
-    # If it exists in the current dir, return
-    if os.path.exists(fileName):
-        return os.path.abspath(fileName)
+    absName = os.path.abspath(os.path.join(dirPrefix, fileName))
+
+    # If it exists in the given dir, return
+    if os.path.exists(absName):
+        return absName
 
     localAdaStyle = os.path.join(Ada.ada_home, 'ADA_Styles', fileName)
 
     if os.path.exists(localAdaStyle):
-        return localAdaStyle
+        return os.path.abspath(localAdaStyle)
+
     return None
 
 def expandFiles(dir, files):
-    """Function that given a (possible empty) directory and a set of space separated
-    list of file patterns, it returns a list of elements each of them is an
-    absolute path to a file referred to by the given expressions"""
+    """Function that given a (possible empty) directory and a set of space
+    separated list of file patterns, it returns a list of elements each of them
+    is an absolute path to a file referred to by the given expressions"""
 
     # Trivial cases first, if files are empty, return
     if files == '':
@@ -58,9 +61,10 @@ def expandFiles(dir, files):
     return [os.path.join(dir, srcFile) for srcFile in  files.split()]
 
 def expandExistingFiles(dir, files):
-    """Function that given a (possible empty) directory and a set of space separated
-    list of file patterns, it returns a list of elements each of them is an
-    absolute path to an EXISTING file referred to by the given expressions"""
+    """Function that given a (possible empty) directory and a set of space
+    separated list of file patterns, it returns a list of elements each of them
+    is an absolute path to an EXISTING file referred to by the given expressions
+    """
 
     result = []
     for fPattern in expandFiles(dir, files):
