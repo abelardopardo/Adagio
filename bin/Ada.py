@@ -7,9 +7,7 @@
 #
 import os, logging, sys, getopt, datetime
 
-import Directory, Properties, AdaRule
-
-ada_home = ''
+import Directory, Properties, AdaRule, I18n
 
 def main():
     """
@@ -162,8 +160,6 @@ def initialize():
     #
     #######################################################################
 
-    global ada_home
-
     # Nuke the adado.log file
     logFile = os.path.join(os.getcwd(), 'adado.log')
     if os.path.exists(logFile):
@@ -181,7 +177,7 @@ def initialize():
     # Get the ADA_HOME from the execution environment
     ada_home = os.path.dirname(os.path.abspath(sys.argv[0]))
     ada_home = os.path.abspath(os.path.join(ada_home, '..'))
-    Directory.globalVariables['ada.home'] = ada_home
+    Directory.fixed_definitions['ada.home'] = ada_home
     if ada_home == '':
         logging.error('ERROR: Unable to set variable ADA_HOME')
         raise TypeError, 'Unable to set variable ADA_HOME'

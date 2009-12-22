@@ -19,7 +19,7 @@ sectionLineRE = re.compile('^\[' + sectionFullNameEXP + '\]$')
 varNameEXP = '(?P<varname>[a-zA-Z][a-zA-Z0-9_\-]*)'
 fullVarNameRE = re.compile(sectionFullNameEXP + '\.' + varNameEXP)
 
-valueEXP = '([ \t]*=?[ \t]*(?P<value>.+))?'
+valueEXP = '(\s*=\s*(?P<value>.+))?$'
 assignmentRE = re.compile(varNameEXP + valueEXP, re.DOTALL | re.MULTILINE)
 
 class SectionNameMatch():

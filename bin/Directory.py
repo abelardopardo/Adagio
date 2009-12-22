@@ -6,172 +6,196 @@
 #
 #
 import os, re
-import Properties
 
-# Dictionary with global definitions. All variables suitable to be modified from
-# the Properties.txt file need to be included either here (to guarantee a
-# default value) or in the Directory object.
-globalVariables = Properties.Properties()
+import Ada, Config, Properties, I18n
 
-#######################################################################
-#
-# Initial values
-#
-#######################################################################
-globalVariables['ada.debug.level'] = '0'
-globalVariables['ada.exact.version'] = ''
-globalVariables['ada.minimum.version'] = ''
-globalVariables['ada.maximum.version'] = ''
+class Directory:
+    """Class to represent a directory where ADA executes some rules."""
 
-# Ignored variables when migrating from ANT
-# ada.course.home.valid.candidate
+    # Expression to manipulate a variable reference
+    varReference = re.compile('\${(?P<varname>[^}]+)}')
 
-class Directory(object):
-    """Class to produce objects that represent a directory where ADA needs to
-    perform some processing."""
+    # Table to store (path, list of targets): Directory Object to avoid
+    # creating two objects for the same directory (cache)
+    createdDirs = {}
 
-    def __init__(self,
-                 path=os.getcwd(),
-                 givenExportDst=''):
+    fixed_definitions = {
+        'ada.home': os.path.abspath('..'),
+        'ada.property_file': 'Properties.txt',
+        'file.separator': os.path.sep
+        }
 
-        # Initial values
-        self.path = path
-        self.properties = Properties.Properties()
+    # Objects of this class also have:
 
-        # Calculate ada.course.home from this directory
-        self.__setAdaCourseHome()
+    # previous_dir: dir before switching to the given one
+    # current_dir: dir represented by this object
+    # givenDict: dictionary given from outside this dir
+    # options: dictionary with the options read from the Properties.txt
+    # current_section: section being processed
+    # line_number: line for the section in Properties.txt being processed
 
-        # Parse the properties file
-        self.__parseProperties(os.path.join(self.path, 'Properties.txt'))
+    # Change to the given dir and initlialize fields
+    def __init__(self, path=os.getcwd(), targets = set([]), givenDict = {}):
+        self.previous_dir = os.getcwd()
+        self.current_dir = os.path.abspath(path)
+        os.chdir(self.current_dir)
+        self.givenDict = givenDict
+        self.options = {'ada.basedir': path }
+        self.current_section = None
+        self.line_number = 0
 
-        # Parse the Ada.properties file in the ada.course.home
-        self.__parseProperties(os.path.join(globalVariables['ada.course.home'],
-                                            'Ada.properties'))
+        # Store the created object only if the given dict is empty
+        if not givenDict:
+            Directory.createdDirs[(self.current_dir, \
+                                   ' '.join(sorted(targets)))] = self
 
-        # Store the givenExportDst
-        self.exportDestinations = [givenExportDst]
+        adaPropFile = self.get('ada.property_file')
 
-    def __parseProperties(self, fileName):
-
-        # Check if the fileName to parse exists, if not, terminate
-        if not os.path.exists(fileName):
+        # Check first if the Properties.txt is present
+        if not os.path.exists(adaPropFile):
             return
 
-        # Parse the properties file
-        self.properties.load(open(fileName))
+        (status, n) = Config.Parse(adaPropFile, None, self.SetOption)
 
-        # Loop over all keys and expand with respect to global vars
-        curlies = re.compile("\${.+?}")
-        for pKey in self.properties.propertyNames():
-            value = self.properties[pKey]
-            found = curlies.findall(value)
+        # If the parsing failed, terminate
+        if not self.checkParse(adaPropFile, status, n):
+            return
 
-            # If the value has references to expand
-            if found != []:
-                # Loop over the references
-                for f in found:
-                    srcKey = f[2:-1]
-                    if globalVariables.has_key(srcKey):
-                        value = value.replace(f, globalVariables[srcKey], 1)
+        return
 
-                self.properties[pKey] = value.strip()
-
-    def getProperty(self, key):
-        """ Return a property for the given key by looking up first in the local
-        dictionary and if not found, look up in the global one"""
-
-        if self.properties.has_key(key):
-            return self.properties.getProperty(key)
-        return globalVariables.getProperty(key)
-
-    def setProperty(self, key, value):
-        """ Set the property for the given key in the local dictionary"""
-
-        self.properties.setProperty(key, value)
-
-    def appendExportDst(self, exportDir):
-        """ Add a new export destination to the chain of exports """
-        self.exportDestinations.append(exportDir)
-
-    def __getitem__(self, name):
-        """ To support direct dictionary like access """
-
-        return self.getProperty(name)
-
-    def __setitem__(self, name, value):
-        """ To support direct dictionary like access """
-
-        self.setProperty(name, value)
-
-    def __getattr__(self, name):
-        """Look up keys"""
-
-        # Look up first in the local dictionary
-        if hasattr(self.properties._props, name):
-            return getattr(self.properties._props, name)
-
-        # Look up in the global dictionarya
-        if hasattr(globalVariables._props, name):
-            return getattr(globalVariables._props, name)
-
-
-    def __str__(self):
-        return '[' + self.path + ', ' + str(self.properties) + ', ' \
-            + str(self.exportDestinations) + ']'
-#         return '[' + self.path + ', ' \
-#             + str(self.exportDestinations) + ']'
-
-    def getSubrecursiveDirs(self):
-        # If the property is present return the tokenized list
-        if self.properties.has_key('subrecursive.dirs'):
-            return map(os.path.abspath,
-                       self.properties['subrecursive.dirs'].split())
-
-        # No definition, empty list
-        return []
-
-    def getSubrecursiveDirsNodst(self):
-        # If the property is present return the tokenized list
-        if self.properties.has_key('subrecursive.dirs.nodst'):
-            return map(os.path.abspath,
-                       self.properties['subrecursive.dirs.nodst'].split())
-
-        # No definition, empty list
-        return[]
-
-    def isCorrectVersion(self):
+    def __del__(self):
         """
-        Checks the values of ada.version against ada.exact.version,
-        ada.minimum.version or ada.maximum.version.
-
-        Return true if the version is allowed.
+        Object no longer needed, so change the directory again
         """
-        # TO BE IMPLEMENTED
-        pass
+        os.chdir(self.previous_dir)
+        return
 
-    def __setAdaCourseHome(self):
-        """
-        Sets the value of ada.course.home by searching for a given file 10
-        levels up in the hierarchy
-        """
-        # Go up to 10 levels searching for AdaCourseParams.xml
-        point = self.path;
-        depth = 0
-        max = 10
-        while depth < max:
-            if os.path.exists(os.path.join(point, 'AdaCourseParams.xml')):
-                self.properties['ada.course.home'] = \
-                    os.path.join(os.path.abspath(point), '')
-                return
-            depth = depth + 1
-            point = os.path.join(point, '..')
+    def SetOption(self, section, varname, value, lineNumber, oldValue = None,
+                  newSection = False, fileOut = None):
 
-        self.properties['ada.course.home'] = os.path.join('.', '')
+        # A new section appears
+        if section != self.current_section:
+            current_section = section
+            self.line_number = lineNumber
+            print 'New section ' + section
+
+        fullName = section + '.' + varname
+
+        if value != None:
+            value = self.expandVars(str(value))
+
+        self.options[fullName] = value
+
+        return True
+
+    def checkParse(self, file, status, lineNumber):
+        """
+        Print messages depending on the outcome of the parse function
+        """
+        if status == Config.Diagnostics.OK:
+            return True
+        elif status == Config.Diagnostics.ERROR_ALREADY_TREATED:
+            # No message here, it has been treated
+            return False
+        elif status == Config.Diagnostics.FILE_NOT_FOUND:
+            print I18n.get('file_not_found').format(file)
+            return False
+        elif status == Config.Diagnostics.CANNOT_OPEN_FILE:
+            print I18n.get('config_parse_cannot_open').format(file)
+            return False
+        elif status == Config.Diagnostics.LINE_IN_NO_SECTION:
+            print I18n.get('config_parse_line_nosection').format(pfile = file,
+                                                                 ln = lineNumber)
+            return False
+        elif status == Config.Diagnostics.INCORRECT_ASSIGNMENT:
+            print I18n.get('config_incorrect_assignment').format(pfile = file,
+                                                                 ln = lineNumber)
+            return False
+
+        print I18n.get('options_unchecked_parse_error').format(pfile = file,
+                                                               ln = lineNumber)
+    def get(self, keyValue):
+        """
+        Look up the given keyValue first into the fixed values, then into the
+        given dict and finally into the options dictionary.
+        """
+
+        m = Config.fullVarNameRE.match(keyValue)
+        if m == None:
+            # Not a valid key
+            raise NameError, 'Name ' + keyValue + ' not found in ' + \
+                  self.current_dir
+
+        # Look up first in the fixed definitions
+        result = Directory.fixed_definitions.get(keyValue)
+        if result != None:
+            return result
+
+        # Look up in the given Dict
+        result = self.givenDict.get(keyValue)
+        if result != None:
+            return result
+
+        # Look up in the options dict
+        result = self.options.get(keyValue)
+        if result != None:
+            return result
+
+        # Look up in the options dict again, but this time without the section
+        # name
+        if m.group('sectionsubname') == None and \
+               m.group('sectionsubname2') == None:
+            raise NameError, 'Name ' + keyValue + ' not found in ' + \
+                  self.current_dir
+
+        newKeyValue = m.group('sectionname')
+        result = self.options.get(newKeyValue)
+        if result != None:
+            return result
+
+        # Look now in the defaultOptions dictionary
+        result = Properties.defaultOptions.get(keyValue)
+        if result != None:
+            return result
+
+        result = Properties.defaultOptions.get(newKeyValue)
+        if result != None:
+            return result
+
+        raise NameError, 'Name ' + keyValue + ' not found in ' + \
+              self.current_dir
+
+    def expandVars(self, expression):
+        """
+        Given an expression with a reference to a variable ${sect.varname},
+        replace that reference by the value.
+        """
+        return re.sub(Directory.varReference, \
+                      lambda x: self.get(x.group('varname')), expression)
+
+    def dump(self):
+        """
+        Show the object content
+        """
+        print '### Created Dirs'
+        print '  ' + '\n  '.join([a for a, b in Directory.createdDirs.keys()])
+
+        for (a, b) in Directory.createdDirs.keys():
+            print '### Dir: ' + a
+            print '  Targets: ' + b
+            print '  Prev dir: ' + self.previous_dir
+            print '  Given dict: ' + str(self.givenDict)
+            print '  Options:\n    ' + '\n    '.join([' = '.join([a, b]) \
+                                                      for a, b in \
+                                                      sorted(self.options.items())])
+            print '  Current section: ' + str(self.current_section)
+            print '  Line number: ' + str(self.line_number)
+
+################################################################################
 
 if __name__=="__main__":
-    p = Directory(os.getcwd())
-    if p.has_key('testing'):
-        print 'Got Testing'
-    print "Key Testing = " + p['testing']
-    if p['testing'] == '':
-        print "No attribute for key testing"
+    p1 = Directory(os.getcwd())
+
+    p2 = Directory(os.getcwd())
+
+    p1.dump()

@@ -6,7 +6,7 @@
 #
 #
 import os, glob
-import Ada, Inkscape
+import Ada
 
 def isProgramAvailable(executable):
     def is_exe(fpath):
