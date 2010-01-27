@@ -7,11 +7,35 @@
 #
 import sys, os, re
 
-import Config
+import Config, Rule.py
 
 # Dictionary supplying the default values for a bunch of variables
 defaultOptions = {
     }
+
+# Load the dictionary with the default values by invoking every rule file and
+# upload the default options
+Rule.loadOptions(defaultOptions)
+
+def loadOptions(prefix, options):
+    """
+    Upload the variable definitions in the defaultOptions dictioo
+    """
+
+def isDefinitionLegal(name, value):
+    """
+    Function to check if the assignment name = value is legal. An assignment is
+    legal when:
+
+    - name has a correct variable name
+
+    - value is of the right type (if any enforced)
+
+    - It is in the defaultOptions dictionary.
+
+    The function returns a boolean
+    """
+    return True
 
 def main():
     __sectionList = []

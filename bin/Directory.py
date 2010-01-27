@@ -5,7 +5,7 @@
 #
 #
 #
-import os, re
+import os, re, logging, locale
 
 import Ada, Config, Properties, I18n
 
@@ -17,9 +17,12 @@ class Directory:
 
     # Table to store (path, list of targets): Directory Object to avoid
     # creating two objects for the same directory (cache)
-    createdDirs = {}
+    executedDirs = {}
 
+
+    (lang, enc) = locale.getdefaultlocale()
     fixed_definitions = {
+        'ada.locale' : lang[0:1],
         'ada.home': os.path.abspath('..'),
         'ada.property_file': 'Properties.txt',
         'file.separator': os.path.sep
@@ -35,31 +38,11 @@ class Directory:
     # line_number: line for the section in Properties.txt being processed
 
     # Change to the given dir and initlialize fields
-    def __init__(self, path=os.getcwd(), targets = set([]), givenDict = {}):
+    def __init__(self, path=os.getcwd()):
         self.previous_dir = os.getcwd()
         self.current_dir = os.path.abspath(path)
         os.chdir(self.current_dir)
-        self.givenDict = givenDict
         self.options = {'ada.basedir': path }
-        self.current_section = None
-        self.line_number = 0
-
-        # Store the created object only if the given dict is empty
-        if not givenDict:
-            Directory.createdDirs[(self.current_dir, \
-                                   ' '.join(sorted(targets)))] = self
-
-        adaPropFile = self.get('ada.property_file')
-
-        # Check first if the Properties.txt is present
-        if not os.path.exists(adaPropFile):
-            return
-
-        (status, n) = Config.Parse(adaPropFile, None, self.SetOption)
-
-        # If the parsing failed, terminate
-        if not self.checkParse(adaPropFile, status, n):
-            return
 
         return
 
@@ -70,14 +53,59 @@ class Directory:
         os.chdir(self.previous_dir)
         return
 
+    def Execute(self, targets = set([]), givenDict = {}):
+        """
+        Parse the configuration file and execute its targets. This is one of the
+        most important functions because it parses the file and invokes the
+        different rule execution scripts.
+        """
+
+        # Store the created object only if the given dict is empty
+        if not givenDict:
+            Directory.executedDirs[(self.current_dir, \
+                                   ' '.join(sorted(targets)))] = self
+
+        adaPropFile = self.get('ada.property_file')
+
+        # Check first if the Properties.txt is present
+        if not os.path.exists(adaPropFile):
+            logging.info('No ' + adaPropFile + ' found. Nothing to do.')
+            return
+
+        self.givenDict = givenDict
+        self.current_section = None
+        self.line_number = 0
+        self.section_list = []
+        (status, n) = Config.Parse(adaPropFile, None, self.SetOption)
+
+        # If the parsing failed, terminate
+        if not self.checkParse(adaPropFile, status, n):
+            return
+
+        # Dump a debug message showing the list of sections detected in the
+        # config file
+        logging.debug('Sections: ' + str(self.section_list))
+
+        return
+
     def SetOption(self, section, varname, value, lineNumber, oldValue = None,
                   newSection = False, fileOut = None):
 
         # A new section appears
         if section != self.current_section:
-            current_section = section
+            # If a section appears for second time, protest
+            if next((True for n in self.section_list if n == section), False):
+                print 'Section already present in file.'
+                print section + ', ' + str(self.current_section)
+                return False
+
+            self.current_section = section
             self.line_number = lineNumber
-            print 'New section ' + section
+
+            # Append new section to the list for further reference
+            self.section_list.append(section)
+
+            logging.debug('New section ' + section)
 
         fullName = section + '.' + varname
 
@@ -116,27 +144,41 @@ class Directory:
                                                                ln = lineNumber)
     def get(self, keyValue):
         """
-        Look up the given keyValue first into the fixed values, then into the
-        given dict and finally into the options dictionary.
+        Look up the given keyValue in a set of dictionaries and returns the
+        first one that contains it. The order in which these dictionaries are
+        checked are:
+
+        A) fixed_definitions (global to the class, cannot be touched)
+
+        B) dictionary given when the directory was created
+
+        C.1) dictionary obtained from the Properties.txt file
+
+        C.2) Same as 3 but removing the 'sectionname'
+
+        D.1) Default options dictionary with original key
+
+        D.2) Default options dictionary without 'sectionname'
         """
 
+        # The name has the right structure (no catalog check)
         m = Config.fullVarNameRE.match(keyValue)
         if m == None:
             # Not a valid key
             raise NameError, 'Name ' + keyValue + ' not found in ' + \
                   self.current_dir
 
-        # Look up first in the fixed definitions
+        # A) Look up first in the fixed definitions
         result = Directory.fixed_definitions.get(keyValue)
         if result != None:
             return result
 
-        # Look up in the given Dict
+        # B) Look up in the given Dict
         result = self.givenDict.get(keyValue)
         if result != None:
             return result
 
-        # Look up in the options dict
+        # C.1) Look up in the options dict
         result = self.options.get(keyValue)
         if result != None:
             return result
@@ -148,16 +190,18 @@ class Directory:
             raise NameError, 'Name ' + keyValue + ' not found in ' + \
                   self.current_dir
 
+        # C.2) Options dict with no section name
         newKeyValue = m.group('sectionname')
-        result = self.options.get(newKeyValue)
+        result = self.options.get(newKeyValue + ???)
         if result != None:
             return result
 
-        # Look now in the defaultOptions dictionary
+        # D.1) Look now in the defaultOptions dictionary
         result = Properties.defaultOptions.get(keyValue)
         if result != None:
             return result
 
+        # D.2) Again, lookup in default but with no section name
         result = Properties.defaultOptions.get(newKeyValue)
         if result != None:
             return result
@@ -177,10 +221,10 @@ class Directory:
         """
         Show the object content
         """
-        print '### Created Dirs'
-        print '  ' + '\n  '.join([a for a, b in Directory.createdDirs.keys()])
+        print '### Created Dir Objects'
+        print '  ' + '\n  '.join([a for a, b in Directory.executedDirs.keys()])
 
-        for (a, b) in Directory.createdDirs.keys():
+        for (a, b) in Directory.executedDirs.keys():
             print '### Dir: ' + a
             print '  Targets: ' + b
             print '  Prev dir: ' + self.previous_dir
@@ -188,14 +232,14 @@ class Directory:
             print '  Options:\n    ' + '\n    '.join([' = '.join([a, b]) \
                                                       for a, b in \
                                                       sorted(self.options.items())])
-            print '  Current section: ' + str(self.current_section)
-            print '  Line number: ' + str(self.line_number)
 
 ################################################################################
 
 if __name__=="__main__":
+    logging.basicConfig(level=10)
     p1 = Directory(os.getcwd())
+    p1.Execute()
 
     p2 = Directory(os.getcwd())
 
-    p1.dump()
+#     p1.dump()

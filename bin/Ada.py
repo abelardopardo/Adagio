@@ -11,20 +11,23 @@ import Directory, Properties, AdaRule, I18n
 
 def main():
     """
-    The script accepts the following options:
-
-      -d num: Debugging level. Used to set the severity level in a
-              logging object. Possible values are:
-
-              CRITICAL  	50
-              ERROR 	        40
-              WARNING 	        30
-              INFO 	        20
-              DEBUG 	        10
-              NOTSET 	         0
+    The manual page for this method is inside the localization package. Check
+    the proper [ĺang].py file.
     """
 
-    # Basic initialization
+    # Fix the output encoding when redirecting stdout
+    if sys.stdout.encoding is None:
+        (lang, enc) = locale.getdefaultlocale()
+        if enc is not None:
+            (e, d, sr, sw) = codecs.lookup(enc)
+            # sw will encode Unicode data to the locale-specific character set.
+            sys.stdout = sw(sys.stdout)
+
+    #######################################################################
+    #
+    # Initialization of all the required variables
+    #
+    #######################################################################
     initialize()
 
     #######################################################################
@@ -33,13 +36,11 @@ def main():
     #
     #######################################################################
     commands = []
-    optionVarNames = [
-        'debug']
+    givenDictionary = {}
 
+    # Swallow the options
     try:
-        opts, commands = getopt.getopt(sys.argv[1:],
-                                       "d:",
-                                       [])
+        opts, args = getopt.getopt(sys.argv[1:], "d:")
     except getopt.GetoptError, e:
         print e.msg
         print AdaProcessor.__doc__
@@ -47,10 +48,26 @@ def main():
 
     # Parse the options
     for optstr, value in opts:
+        # Debug option
         if optstr == "-d":
             Directory.globalVariables['ada.debug.level'] = value
             logging.basicConfig(level=int(value))
+        # Set a value in the environment
+        elif optstr == "-s":
+            # If not enough arguments, stop processing
+            if len(args) < 2:
+                print I18.get('not_enough_params').format('-s option')
+                print I18.get('__doc__')
+                sys.exit(2)
+            # This option is stored in level B of the dictionary
+            givenDictionary[pop(args)] = pop(args)
 
+    # Print Reamining arguments. If none, just stick the current dir
+    loggin.debug('Remaning args: ' + str(args))
+    if args == []:
+        dirsToProcess = [os.getcwd()]
+    else:
+        dirsToProcess = args
 
     #######################################################################
     #
@@ -63,7 +80,7 @@ def main():
     initialDir = os.getcwd()
 
     # Create the initial list of directories to process
-    dirsToProcess = [ (initialDir, '') ]
+    dirsToProcess = map(lambda x: (x, ''), args)
     executionChain = {}
     index = 0
     while index < len(dirsToProcess):
@@ -154,11 +171,10 @@ def isCorrectAdaVersion():
     return False
 
 def initialize():
-    #######################################################################
-    #
-    # Initialization
-    #
-    #######################################################################
+    """
+    Function that initializes all the required variables before doing anything
+    else. This function is executed even before the options are parsed.
+    """
 
     # Nuke the adado.log file
     logFile = os.path.join(os.getcwd(), 'adado.log')
@@ -166,18 +182,19 @@ def initialize():
         os.remove(logFile)
 
     # Set the logging format
-    logging.basicConfig(level=logging.DEBUG,
-                        format='%(asctime)s %(levelname)s %(message)s',
-#                         datefmt='%y%m%d %H:%M:%S',
+    logging.basicConfig(level=logging.INFO,
+                        format='%(levelname)s %(message)s',
                         filename=logFile,
                         filemode='w')
 
-    logging.info('Initialization starts')
+    logging.debug('Initialization starts')
+
+    # Load all the default options
+    Properties.loadDefaultOptions()
 
     # Get the ADA_HOME from the execution environment
     ada_home = os.path.dirname(os.path.abspath(sys.argv[0]))
     ada_home = os.path.abspath(os.path.join(ada_home, '..'))
-    Directory.fixed_definitions['ada.home'] = ada_home
     if ada_home == '':
         logging.error('ERROR: Unable to set variable ADA_HOME')
         raise TypeError, 'Unable to set variable ADA_HOME'
@@ -187,12 +204,7 @@ def initialize():
         raise TypeError, 'ADA_HOME is not a directory'
 
     logging.debug('ADA_HOME = ' + ada_home)
-
-    Directory.globalVariables.load(\
-        open(os.path.join(ada_home, 'bin',
-                          'ada_general_definitions.txt')))
-
-    logging.debug('Global Vars: ' + str(Directory.globalVariables))
+    Directory.fixed_definitions['ada.home'] = ada_home
 
     # Check if the catalogs are in place
     if not (os.path.exists(os.path.join(ada_home, 'DTDs', 'catalog'))):

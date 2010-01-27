@@ -57,7 +57,7 @@ def get(msg):
     try:
         result = dictionary[msg]
     except KeyError:
-        return 'No I18n for ' + msg
+        return '<<<No I18n for ' + msg + '>>>'
 
     return result
 
