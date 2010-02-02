@@ -7,20 +7,34 @@
 #
 import sys, os, re
 
-import Config, Rule.py
+import Config, Rule
 
 # Dictionary supplying the default values for a bunch of variables
 defaultOptions = {
+    'ada.current_datetime': (str(datetime.datetime.now()),
+                             I18n.get('ada_current_datetime')), # Current date/time
+    'ada.profile_revision': (None,
+                             I18n.get('ada_profile_revision')), # Profile
+    'ada.minimum_version': (None,
+                            I18n.get('ada_minimum_version')), # Minimum version required
+    'ada.maximum_version': (None,
+                            I18n.get('ada_maximum_version')), # Maximum version required
+    'ada.exact_version': (None,
+                          I18n.get('ada_exact_version')), # Exact version
     }
 
-# Load the dictionary with the default values by invoking every rule file and
-# upload the default options
-Rule.loadOptions(defaultOptions)
+# Load up all the options in the rule files
+loadOptions('xslt', Xsltproc.options)
 
 def loadOptions(prefix, options):
     """
-    Upload the variable definitions in the defaultOptions dictioo
+    Upload the variable definitions in the defaultOptions dictionary
     """
+
+    # Loop over all the triples. Insert key, and value = (default, help message)
+    for (name, value, helpstr) in options:
+        Properties.defaultOptions[prefix + '.' + name] = (value, htlpstr)
+
 
 def isDefinitionLegal(name, value):
     """
