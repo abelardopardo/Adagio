@@ -22,10 +22,16 @@ class Directory:
 
     (lang, enc) = locale.getdefaultlocale()
     fixed_definitions = {
-        'ada.locale' : lang[0:1],
-        'ada.home': os.path.abspath('..'),
-        'ada.property_file': 'Properties.txt',
-        'file.separator': os.path.sep
+        'ada.version': '9.09.1', # Official ADA version
+
+        'ada.locale' : lang[0:1],  # Locale for the entire execution
+
+        'ada.home': os.path.abspath('..'), # ada home directory
+
+        'ada.property_file': 'Properties.txt', # Property file to read
+
+        'file.separator': os.path.sep # System path separator
+
         }
 
     # Objects of this class also have:
