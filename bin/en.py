@@ -54,5 +54,15 @@ msgs = {
     'xslt_profile_lang': 'Language to use to profile the source documents',
     'xslt_multilingual':
     'True/False if the documents to process are multilingual.\n\
-      Incompatible with profile_lang'
+      Incompatible with profile_lang',
+    'xslt_net_option': 'Network option to pass to the xslt processor',
+    'ada_current_datetime': 'The Current date/time to be considered',
+    'ada_profile_revision':
+    'Value of the revision attribute to profile Docbook files',
+    'ada_minimum_version':
+    'The minimum ada version that is required to execute this directory',
+    'ada_maximum_version':
+    'The maximum ada version that is required to execute this directory',
+    'ada_exact_version':
+    'The exact ada version that is required to execute this directory',
     }
