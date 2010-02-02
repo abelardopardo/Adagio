@@ -129,37 +129,38 @@ def main():
     AdaRule.executeRuleChain(dirsToProcess, executionChain, commands)
 
 def isCorrectAdaVersion():
-    """ Method to check if the curren ada version is within the potentially limited
-    values specified in variables ada.minimum.version, ada.maximum.version and
-    ada.exact.version"""
+    """ Method to check if the curren ada version is within the potentially
+    limited values specified in variables ada.minimum.version,
+    ada.maximum.version and ada.exact.version"""
 
-    minVersion = Directory.globalVariables['ada.minimum.version']
-    maxVersion = Directory.globalVariables['ada.maximum.version']
-    exactVersion = Directory.globalVariables['ada.exact.version']
+    # Get versions to allow execution depending on the version
+    minVersion = Directory.get('ada.minimum_version')
+    maxVersion = Directory.get('ada.maximum_version')
+    exactVersion = Directory.get('ada.exact_version')
 
     # If no value is given in any variable, avanti
-    if (minVersion == '') and (maxVersion == '') and (exactVersion == ''):
+    if (minVersion == None) and (maxVersion == None) and (exactVersion == None):
         return True
 
     # Translate current version to integer
     currentValue = 0
-    if (currentVersion != ''):
+    if (currentVersion != ''): ???? Error!
         list = currentVersion.split('.')
         currentValue = 1000000 * list[0] + 10000 * list[1] + list[2]
 
     # Translate all three variables to numbers
     minValue = currentValue
-    if (minVersion != ''):
+    if (minVersion != None):
         list = minVersion.split('.')
         minValue = 1000000 * list[0] + 10000 * list[1] + list[2]
 
     maxValue = currentValue
-    if (maxVersion != ''):
+    if (maxVersion != None):
         list = maxVersion.split('.')
         maxValue = 1000000 * list[0] + 10000 * list[1] + list[2]
 
     exactValue = currentValue
-    if (exactVersion != ''):
+    if (exactVersion != None):
         list = exactVersion.split('.')
         exactValue = 1000000 * list[0] + 10000 * list[1] + list[2]
 
@@ -189,9 +190,6 @@ def initialize():
 
     logging.debug('Initialization starts')
 
-    # Load all the default options
-    Properties.loadDefaultOptions()
-
     # Get the ADA_HOME from the execution environment
     ada_home = os.path.dirname(os.path.abspath(sys.argv[0]))
     ada_home = os.path.abspath(os.path.join(ada_home, '..'))
@@ -206,35 +204,11 @@ def initialize():
     logging.debug('ADA_HOME = ' + ada_home)
     Directory.fixed_definitions['ada.home'] = ada_home
 
-    # Check if the catalogs are in place
-    if not (os.path.exists(os.path.join(ada_home, 'DTDs', 'catalog'))):
-        logging.error('WARNING: ' +
-                      os.path.join(ada_home, 'DTDs', 'catalog') +
-                      ' does not exist')
-        print """*************** WARNING ***************
-Your system does not appear to have the file /etc/xml/catalog
-properly installed. This catalog file is used to find the DTDs
-and Schemas required to process Docbook documents. You either
-have this definitions inserted manually in the file
-${ada.home}/DTDs/catalog.template,
-or the processing of the stylesheets will be extremelly slow
-(because all the imported style sheets are fetched from the net).
-
-****************************************"""
-        Directory.globalVariables['ada.xsltproc.net.option'] = ''
-    else:
-        Directory.globalVariables['ada.xsltproc.net.option'] = '--nonet'
-
     # Insert the definition of catalogs in the environment
     os.environ["XML_CATALOG_FILES"] = os.path.join(ada_home, 'DTDs',
                                                    'catalog')
-
-    # Store the current date/time
-    Directory.globalVariables['ada.current.datetime'] = \
-        str(datetime.datetime.now())
-
-    # Store the profile default
-    Directory.globalVariables['ada.profile.revision'] = ''
+    # Load the rest of all the default options
+    Properties.loadOptions()
 
     # Compare ADA versions to see if execution is allowed
     if not isCorrectAdaVersion():
