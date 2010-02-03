@@ -29,17 +29,23 @@ msgs = {
               DEBUG 	        10
               NOTSET 	         0
 
-      -s name value: Executes the application by first storing in the
-       environment the assignment name = value. This means that, unless
-       overwritten by definitions in the properties file, this assignment will
-       be visible to all the rules executed.
+      -s 'name value': Executes the application by first storing in the
+                       environment the assignment name = value. This means that,
+                       unless overwritten by definitions in the properties file,
+                       this assignment will be visible to all the rules
+                       executed.
+
+      -t target: Specific target in the Properties.txt file to execute. If none
+                 is given, all of them are executed.
+
     """,
     'file_not_found': 'File {0} not found',
     'cannot_open_fiel': 'Cannot open file {0}',
     'line_in_no_section': 'Line {ln} of {pfile} is outside a section',
     'incorrect_assignment': 'Incorrect assignment in line {ln} of {pfile}',
     'severe_parse_error': 'Severe error while parsing line {ln} of {pfile}',
-    'not_enouth_params': 'Not enough params for {0}',
+    'not_enough_params': 'Not enough params for {0}',
+    'incorrect_arg_num': 'Incorrect arguments for {0}',
     'name_of_executable': 'Name of the executable to use in this rule',
     'rule_debug_level': 'Level of debug message',
     'rule_src_dir': 'Directory containing the source files.',
