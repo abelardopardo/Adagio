@@ -35,15 +35,17 @@ def main():
     # OPTIONS
     #
     #######################################################################
-    commands = []
+    targets = []
+    directories = []
     givenDictionary = {}
 
     # Swallow the options
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "d:")
+        opts, args = getopt.getopt(sys.argv[1:], "d:s:t:",
+                                   ["dir="])
     except getopt.GetoptError, e:
         print e.msg
-        print AdaProcessor.__doc__
+        print I18n.get('__doc__')
         sys.exit(2)
 
     # Parse the options
@@ -52,40 +54,47 @@ def main():
         if optstr == "-d":
             Directory.globalVariables['ada.debug.level'] = value
             logging.basicConfig(level=int(value))
+
         # Set a value in the environment
         elif optstr == "-s":
+            name_value = value.split()
             # If not enough arguments, stop processing
-            if len(args) < 2:
-                print I18.get('not_enough_params').format('-s option')
-                print I18.get('__doc__')
+            if len(name_value) != 2:
+                print I18n.get('incorrect_arg_num').format('-s option')
+                print I18n.get('__doc__')
                 sys.exit(2)
             # This option is stored in level B of the dictionary
-            givenDictionary[pop(args)] = pop(args)
+            givenDictionary[name_value[0]] = name_value[1]
+
+        # Set the targets
+        elif optstr == "-t":
+            # Extend the list of targets to process
+            targets.extend(value.split())
 
     # Print Reamining arguments. If none, just stick the current dir
     loggin.debug('Remaning args: ' + str(args))
     if args == []:
-        dirsToProcess = [os.getcwd()]
+        directories = [os.getcwd()]
     else:
-        dirsToProcess = args
+        directories = args
 
     #######################################################################
     #
     # MAIN PROCESSING
     #
     #######################################################################
-    logging.info('Start ADA processing ' + str(commands))
+    logging.info('Start ADA processing ' + str(targets))
 
     # Remember the initial directory
     initialDir = os.getcwd()
 
     # Create the initial list of directories to process
-    dirsToProcess = map(lambda x: (x, ''), args)
+    directories = map(lambda x: (x, ''), directories)
     executionChain = {}
     index = 0
-    while index < len(dirsToProcess):
+    while index < len(directories):
         # Get the first dir in the list to process
-        currentDir, exportDst = dirsToProcess[index]
+        currentDir, exportDst = directories[index]
 
         # Move to the next element
         index = index + 1;
@@ -110,23 +119,23 @@ def main():
             logging.info('INFO: Obtaining recursive dirs')
             recursiveDirs = currentDirInfo.getSubrecursiveDirs()
 
-            # Append dirs to dirsToProcess
-            dirsToProcess.extend([ (dirName, currentDir)
-                                   for dirName in recursiveDirs
-                                   if dirsToProcess.count((dirName, currentDir)) == 0])
+            # Append dirs to directories
+            directories.extend([ (dirName, currentDir)
+                                 for dirName in recursiveDirs
+                                 if directories.count((dirName, currentDir)) == 0])
 
             # Obtain dirs to recur with no dst
             recursiveDirsNodst = currentDirInfo.getSubrecursiveDirsNodst();
 
             # Loop over the non repeated ones to
-            # Append dirs to dirsToProcess
-            dirsToProcess.extend([(dirName, '') for dirName in recursiveDirsNodst
-                                  if dirsToProcess.count((dirName, '')) == 0])
+            # Append dirs to directories
+            directories.extend([(dirName, '') for dirName in recursiveDirsNodst
+                                if directories.count((dirName, '')) == 0])
 
-    # Reverse the dirsToProcess to have the right execution order
-    dirsToProcess.reverse()
+    # Reverse the directories to have the right execution order
+    directories.reverse()
 
-    AdaRule.executeRuleChain(dirsToProcess, executionChain, commands)
+    AdaRule.executeRuleChain(directories, executionChain, targets)
 
 def isCorrectAdaVersion():
     """ Method to check if the curren ada version is within the potentially
@@ -144,25 +153,24 @@ def isCorrectAdaVersion():
 
     # Translate current version to integer
     currentValue = 0
-    if (currentVersion != ''): ???? Error!
-        list = currentVersion.split('.')
-        currentValue = 1000000 * list[0] + 10000 * list[1] + list[2]
+    vParts = Directory.fixed_definitions['ada.version'].split('.')
+    currentValue = 1000000 * vParts[0] + 10000 * vParts[1] + vParts[2]
 
     # Translate all three variables to numbers
     minValue = currentValue
     if (minVersion != None):
-        list = minVersion.split('.')
-        minValue = 1000000 * list[0] + 10000 * list[1] + list[2]
+        vParts = minVersion.split('.')
+        minValue = 1000000 * vParts[0] + 10000 * vParts[1] + vParts[2]
 
     maxValue = currentValue
     if (maxVersion != None):
-        list = maxVersion.split('.')
-        maxValue = 1000000 * list[0] + 10000 * list[1] + list[2]
+        vParts = maxVersion.split('.')
+        maxValue = 1000000 * vParts[0] + 10000 * vParts[1] + vParts[2]
 
     exactValue = currentValue
     if (exactVersion != None):
-        list = exactVersion.split('.')
-        exactValue = 1000000 * list[0] + 10000 * list[1] + list[2]
+        vParts = exactVersion.split('.')
+        exactValue = 1000000 * vParts[0] + 10000 * vParts[1] + vParts[2]
 
         # Check if an exact version is required
     if (exactValue == currentValue) and (minValue <= currentValue) and \
