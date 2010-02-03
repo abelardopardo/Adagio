@@ -11,16 +11,21 @@ import Config, Rule
 
 # Dictionary supplying the default values for a bunch of variables
 defaultOptions = {
+    # Current date/time
     'ada.current_datetime': (str(datetime.datetime.now()),
-                             I18n.get('ada_current_datetime')), # Current date/time
+                             I18n.get('ada_current_datetime')),
+    # Profile revision passed to Docbook
     'ada.profile_revision': (None,
-                             I18n.get('ada_profile_revision')), # Profile
+                             I18n.get('ada_profile_revision')),
+    # Minimum version number required
     'ada.minimum_version': (None,
-                            I18n.get('ada_minimum_version')), # Minimum version required
+                            I18n.get('ada_minimum_version')),
+    # Maximum version number required
     'ada.maximum_version': (None,
-                            I18n.get('ada_maximum_version')), # Maximum version required
+                            I18n.get('ada_maximum_version')),
+    # Exact version required
     'ada.exact_version': (None,
-                          I18n.get('ada_exact_version')), # Exact version
+                          I18n.get('ada_exact_version')),
     }
 
 # Load up all the options in the rule files
