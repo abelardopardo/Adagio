@@ -114,6 +114,7 @@
                     <xsl:attribute name="value">Submit</xsl:attribute>
                   </xsl:otherwise>
                 </xsl:choose>
+		<xsl:attribute name="name">submit</xsl:attribute>
               </xsl:otherwise>
             </xsl:choose>
           </input>

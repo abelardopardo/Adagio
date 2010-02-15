@@ -203,10 +203,10 @@
         <div class="ada_asap_submit_button">
           <xsl:choose>
             <xsl:when test="$profile.lang='es'">
-              <input value="Enviar" type="submit"></input>
+              <input value="Enviar" type="submit" name="submit"></input>
             </xsl:when>
             <xsl:otherwise>
-              <input value="Submit" type="submit"></input>
+              <input value="Submit" type="submit" name="submit"></input>
             </xsl:otherwise>
           </xsl:choose>
         </div>
