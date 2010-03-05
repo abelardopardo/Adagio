@@ -22,12 +22,12 @@ msgs = {
       -d num: Debugging level. Used to set the severity level in a
               logging object. Possible values are:
 
-              CRITICAL  	50
-              ERROR 	        40
-              WARNING 	        30
-              INFO 	        20
-              DEBUG 	        10
-              NOTSET 	         0
+              CRITICAL/FATAL = 50
+              ERROR =          40
+              WARNING =        30
+              INFO =           20
+              DEBUG =          10
+              NOTSET =          0
 
       -s 'name value': Executes the application by first storing in the
                        environment the assignment name = value. This means that,
@@ -71,4 +71,19 @@ msgs = {
     'The maximum ada version that is required to execute this directory',
     'ada_exact_version':
     'The exact ada version that is required to execute this directory',
+    'ada_debu_level':
+    'Level of messages to print on the screen: 0 None, 10, 20, 30, 40, 50 CRITICAL',
+    'circular_directory':
+    'Circular dependency to directory {0}.',
+    'circular_execute_directory':
+    'Circular execution dependency to directory {0}.',
+    'illegal_target_prefix': 'Illegal target name {0}.',
+    'ada_debug_level_option' : 'Debug level to use',
+    'ada_version_option' : 'Current ADA version',
+    'ada_locale_option' : 'Locale used while executing ADA',
+    'ada_home_option' : 'Directory where ADA is installed',
+    'ada_property_file_option' : 'File containing the definitions',
+    'ada_file_separator_option' : 'Character to separate filenames',
+    'option': 'Option',
+    'not_found': 'not found'
     }

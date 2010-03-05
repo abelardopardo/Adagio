@@ -34,7 +34,7 @@
 #
 #  - ada.basedir: The value of the current directory
 #  - ada.home: Directory where ADA is installed
-#  - file.separator: The string used by the system to concatenate paths
+#  - ada.file_separator: The string used by the system to concatenate paths
 #
 #
 # It follows a sample of a Properties.txt with all possible options. Those
@@ -58,11 +58,11 @@
         src_dir = ${ada.basedir} # Directory containing source files
         dst_dir = ${ada.basedir} # Directory to produce files
         style_file = ${ada.home}/ADA_Styles/DocbookProfile.xsl # Style to apply
-        outputformat = html # Extension of the result file
+        output_format = html # Extension of the result file
 
-        extraargs = --stringparam somename somevalue # To be passed to exec
+        extra_arguments = --stringparam somename somevalue # To be passed to exec
         files = file1 file2 # Space separated list of source files
-        mergestyles = file1 file2 file3 # Styles to combine with style_file
+        merge_styles = file1 file2 file3 # Styles to combine with style_file
         profile_lang = en # Language to pass to exec
         multilingual = False # True/False denoting if doc is
                                # multilingual. Incompatible with profile_lang.
@@ -104,7 +104,7 @@
         exec = gimp # Executable to use
         debug = ${ada.debug_level} # Debug level inherited from ada section
         src_dir = ${ada.basedir} # Directory containing source files
-        script_file = ${ada.home}${file.separator}AntImports${file.separator}xcftopng.scm
+        script_file = ${ada.home}${ada.file_separator}AntImports${ada.file_separator}xcftopng.scm
 
         files = file1 file2 # Space separated list of source files
 

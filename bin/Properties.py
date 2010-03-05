@@ -5,41 +5,9 @@
 #
 #
 #
-import sys, os, re
+import sys, os, re, datetime
 
-import Config, Rule
-
-# Dictionary supplying the default values for a bunch of variables
-defaultOptions = {
-    # Current date/time
-    'ada.current_datetime': (str(datetime.datetime.now()),
-                             I18n.get('ada_current_datetime')),
-    # Profile revision passed to Docbook
-    'ada.profile_revision': (None,
-                             I18n.get('ada_profile_revision')),
-    # Minimum version number required
-    'ada.minimum_version': (None,
-                            I18n.get('ada_minimum_version')),
-    # Maximum version number required
-    'ada.maximum_version': (None,
-                            I18n.get('ada_maximum_version')),
-    # Exact version required
-    'ada.exact_version': (None,
-                          I18n.get('ada_exact_version')),
-    }
-
-# Load up all the options in the rule files
-loadOptions('xslt', Xsltproc.options)
-
-def loadOptions(prefix, options):
-    """
-    Upload the variable definitions in the defaultOptions dictionary
-    """
-
-    # Loop over all the triples. Insert key, and value = (default, help message)
-    for (name, value, helpstr) in options:
-        Properties.defaultOptions[prefix + '.' + name] = (value, htlpstr)
-
+import Ada, I18n, Xsltproc
 
 def isDefinitionLegal(name, value):
     """
@@ -50,17 +18,46 @@ def isDefinitionLegal(name, value):
 
     - value is of the right type (if any enforced)
 
-    - It is in the defaultOptions dictionary.
+    - It is in the options dictionary.
 
     The function returns a boolean
     """
     return True
 
+def Execute(target, dirLocation):
+    """
+    Given a target and a directory, it checks which rule needs to be invoked and
+    performs the invokation.
+    """
+
+    # Obtain the name of the section and subsection if any
+    (sect, subsect, m) = getSectionNameFromPropertyName(target)
+
+    # Select the proper set of rules
+    if sect == Xsltproc.rule_prefix:
+        Xsltproc.Execute(target, dirLocation)
+    else:
+        print I18n.get('illegal_target_prefix').format(sect)
+
+# Function to ask for a value in the options a given option table
+def getOption(prefix, name, table = None):
+    """
+    Return the first value of the pair found after lookup. First check the given
+    table. If nothing given, traverse all the available dictionaries.
+    """
+    if table != None:
+        return table[name][0]
+
+    if prefix == Ada.rule_prefix:
+        return Ada.options[name][0]
+    elif prefix == Xsltproc.rule_prefix:
+        return Xsltproc.options[name][0]
+
+    raise NameError, I18n.get('option') + ' ' + prefix + '.' + name + \
+        ' ' + I18n.get('not_found') + '.'
+
+
 def main():
-    __sectionList = []
-    __options['basedir'] = os.getcwd()
-    __options['ada.home'] = os.getcwd()
-    __options['file.separator'] = os.path.sep
     (status, n) = Config.Parse(sys.argv[1], None, SetOption)
 
     print str(status) + ', ' + str(n)

@@ -5,36 +5,64 @@
 #
 #
 #
-import os, re, logging, locale
+import sys, os, re, logging
 
 import Ada, Config, Properties, I18n
 
+# Table to store tuples:
+#   path: Directory object
+#
+# to avoid executing twice the same directory (cache)
+createdDirs = {}
+
+def getDirectoryObject(path):
+    """
+    Function that given a path checks if it exists in the createdDirs hash. If
+    so, returns the object. If not, a new object is created.
+    """
+    dirObj = createdDirs.get(os.path.abspath(path), None)
+    # Hit in the cache, return
+    if dirObj != None:
+        return dirObj
+
+    # Create new object
+    return Directory.Directory(path)
+
+def dump(self):
+    """
+    Show the object content
+    """
+    print '### Created Dir Objects'
+    print '  ' + '\n  '.join(createdDirs.keys())
+
+    for a in createdDirs.keys():
+        print '### Dir: ' + a
+        print '  Targets: ' + a.executed_targets
+        print '  Prev dir: ' + a.previous_dir
+        print '  Given dict: ' + str(a.givenDict)
+        print '  Options:\n    ' + '\n    '.join([' = '.join([a, b]) \
+                                                  for a, b in \
+                                                  sorted(self.options.items())])
+
 class Directory:
-    """Class to represent a directory where ADA executes some rules."""
+    """
+    Class to represent a directory where ADA executes some rules.
+
+    TODO:
+
+    * Insert a mark in the object that is true when it is being processed and
+    false when done. With this mechanism, it is very easy to detect a circular
+    dependency where a directory is visited when it is being processed. The
+    stack of directories should be shown at that point.
+
+    * Speaking of which. Is there a stack of directories being processed so far?
+
+    """
 
     # Expression to manipulate a variable reference
     varReference = re.compile('\${(?P<varname>[^}]+)}')
 
-    # Table to store (path, list of targets): Directory Object to avoid
-    # creating two objects for the same directory (cache)
-    executedDirs = {}
-
-
-    (lang, enc) = locale.getdefaultlocale()
-    fixed_definitions = {
-        'ada.version': '9.09.1', # Official ADA version
-
-        'ada.locale' : lang[0:1],  # Locale for the entire execution
-
-        'ada.home': os.path.abspath('..'), # ada home directory
-
-        'ada.property_file': 'Properties.txt', # Property file to read
-
-        'file.separator': os.path.sep # System path separator
-
-        }
-
-    # Objects of this class also have:
+    # Objects of this class have:
 
     # previous_dir: dir before switching to the given one
     # current_dir: dir represented by this object
@@ -42,46 +70,47 @@ class Directory:
     # options: dictionary with the options read from the Properties.txt
     # current_section: section being processed
     # line_number: line for the section in Properties.txt being processed
+    # executing: true if in the middle of the "Execute" method
+    # dir_targets: targets in the Properties.txt file
+    # executed_targets: set of targets executed with empty given directory
 
     # Change to the given dir and initlialize fields
     def __init__(self, path=os.getcwd()):
+        logging.info('Creating dir ' + path)
+
+        # Make sure a directory is not created twice
+        if os.path.abspath(path) in createdDirs:
+            print I18n.get('circular_directory').format(path)
+            sys.exit(2)
+
+        # Assign
         self.previous_dir = os.getcwd()
         self.current_dir = os.path.abspath(path)
+        self.givenDict = None
+        self.options = { 'ada.basedir': self.current_dir }
+        self.current_section = None
+        self.line_number = -1
+        self.section_list = []
+        # Boolean to detect if a directory has been visited twice
+        self.executing = False
+        self.executed_targets = set([])
+
         os.chdir(self.current_dir)
-        self.options = {'ada.basedir': path }
 
-        return
-
-    def __del__(self):
-        """
-        Object no longer needed, so change the directory again
-        """
-        os.chdir(self.previous_dir)
-        return
-
-    def Execute(self, targets = set([]), givenDict = {}):
-        """
-        Parse the configuration file and execute its targets. This is one of the
-        most important functions because it parses the file and invokes the
-        different rule execution scripts.
-        """
-
-        # Store the created object only if the given dict is empty
-        if not givenDict:
-            Directory.executedDirs[(self.current_dir, \
-                                   ' '.join(sorted(targets)))] = self
-
-        adaPropFile = self.get('ada.property_file')
+        # Insert the directory in the cache, no targets have been processed
+        createdDirs[self.current_dir] = self
 
         # Check first if the Properties.txt is present
+        adaPropFile = Ada.options['property_file'][0]
         if not os.path.exists(adaPropFile):
             logging.info('No ' + adaPropFile + ' found. Nothing to do.')
             return
 
-        self.givenDict = givenDict
+        # Parse the file
         self.current_section = None
         self.line_number = 0
         self.section_list = []
+
         (status, n) = Config.Parse(adaPropFile, None, self.SetOption)
 
         # If the parsing failed, terminate
@@ -92,6 +121,47 @@ class Directory:
         # config file
         logging.debug('Sections: ' + str(self.section_list))
 
+        return
+
+    def __del__(self):
+        """
+        Object no longer needed, so change the directory again
+        """
+        os.chdir(self.previous_dir)
+        return
+
+    def Execute(self, targets = set([]), givenDict = None):
+        """
+        Execute the directory targets. This is one of the most important
+        functions because it parses the file and invokes the different rule
+        execution scripts.
+        """
+
+        # Make sure no circular execution is produced
+        if self.executing:
+            print I18n.get('circular_execute_directory').format(self.current_dir)
+            sys.exit(2)
+        self.executing = True
+
+        # If no targets are given, choose all of them or some specific subset
+        if targets == set([]):
+            targets = self.executed
+
+        # Loop over all the targets to execute
+        for target_name in targets:
+
+            # Check the cache to see if target has already been executed
+            if target_name in self.executed_targets:
+                logging.info('HIT: ' + self.current_dir + ': ' + target_name)
+                continue
+
+            Properties.Execute(target_name, self)
+
+            # Insert executed target in cache only if the given dict is empty
+            if not givenDict:
+                self.executed_targets.add(target_name)
+
+        self.executing = False
         return
 
     def SetOption(self, section, varname, value, lineNumber, oldValue = None,
@@ -113,10 +183,37 @@ class Directory:
 
             logging.debug('New section ' + section)
 
+
+        # Check if the option given is legal, if not, the getOption method bombs
+        # out
         fullName = section + '.' + varname
+        (a, b, c) = Config.splitVarName(fullName)
+
+        try:
+            Properties.getOption(a, c)
+        except NameError, e:
+            file = Ada.options['property_file'][0]
+            print I18n.get('severe_parse_error').format(ln=lineNumber,
+                                                        pfile = file)
+            print e
+            sys.exit(2)
+        except KeyError, e:
+            file = Ada.options['property_file'][0]
+            print I18n.get('severe_parse_error').format(ln=lineNumber,
+                                                        pfile = file)
+            print I18n.get('option') + ' ' + fullName + \
+                ' ' + I18n.get('not_found') + '.'
+            sys.exit(2)
 
         if value != None:
-            value = self.expandVars(str(value))
+            try:
+                value = self.expandVars(str(value))
+            except NameError, e:
+                file = Ada.options['property_file'][0]
+                print I18n.get('severe_parse_error').format(ln=lineNumber,
+                                                            pfile = file)
+                print e
+                sys.exit(2)
 
         self.options[fullName] = value
 
@@ -148,72 +245,75 @@ class Directory:
 
         print I18n.get('options_unchecked_parse_error').format(pfile = file,
                                                                ln = lineNumber)
-    def get(self, keyValue):
+    def get(self, keyValue, otherDict = None):
         """
-        Look up the given keyValue in a set of dictionaries and returns the
-        first one that contains it. The order in which these dictionaries are
-        checked are:
+        Split a property name in section, subsection and name and call a function
+        """
+        (sect, subsect, name) = Config.splitVarName(keyValue)
 
-        A) fixed_definitions (global to the class, cannot be touched)
+        # If the name is malformed, raise exception
+        if sect == None:
+            raise NameError, I18n.get('option') + ' ' + keyValue + \
+                ' ' + I18n.get('not_found') + '.'
 
-        B) dictionary given when the directory was created
+        return self.getSplit(keyValue, sect, subsect, name, otherDict)
 
-        C.1) dictionary obtained from the Properties.txt file
 
-        C.2) Same as 3 but removing the 'sectionname'
+    def getSplit(self, fullName, sect, subsect, name, otherDict = None):
+        """
+        Look up the given fullName in a set of dictionaries and return the
+        first one that contains it.
 
-        D.1) Default options dictionary with original key
+        It should be noted that fullName = sect + '.' + subsect + '.' name
 
-        D.2) Default options dictionary without 'sectionname'
+        The order in which these dictionaries are checked are:
+
+        A.1) Given dictionary of the directory (fullName)
+
+        A.2) Given dictionary of the directory (sect.name)
+
+        B.1) options dictionary in the directory (fullName)
+
+        B.2) options dictionary in the directory (sect.name)
+
+        If otherDict is given: Check name otherDict
+
+        else: Check fullName with Properties.get
         """
 
-        # The name has the right structure (no catalog check)
-        m = Config.fullVarNameRE.match(keyValue)
-        if m == None:
-            # Not a valid key
-            raise NameError, 'Name ' + keyValue + ' not found in ' + \
-                  self.current_dir
+        # Prepare result and property name without the subsection part
+        result = None
+        shortname = sect + '.' + name
 
-        # A) Look up first in the fixed definitions
-        result = Directory.fixed_definitions.get(keyValue)
+        # A) If there is a given dict and has the key, return it
+        if self.givenDict != None:
+            # A.1) Check with the full name
+            result = self.givenDict.get(fullName)
+            if result != None:
+                return result
+            # A.2) Check with the simplified name
+            result = self.givenDict.get(shortname)
+            if result != None:
+                return result
+
+        # B.1) If fullName is in options, return it
+        result = self.options.get(fullName)
         if result != None:
             return result
 
-        # B) Look up in the given Dict
-        result = self.givenDict.get(keyValue)
+        # B.2) If sect.name is in options, return it
+        result = self.options.get(shortname)
         if result != None:
             return result
 
-        # C.1) Look up in the options dict
-        result = self.options.get(keyValue)
-        if result != None:
-            return result
+        # If nothing worked so far, check all the dictionaries for the sect.name
+        return Properties.getOption(sect, name, otherDict)
 
-        # Look up in the options dict again, but this time without the section
-        # name
-        if m.group('sectionsubname') == None and \
-               m.group('sectionsubname2') == None:
-            raise NameError, 'Name ' + keyValue + ' not found in ' + \
-                  self.current_dir
-
-        # C.2) Options dict with no section name
-        newKeyValue = m.group('sectionname')
-        result = self.options.get(newKeyValue + ???)
-        if result != None:
-            return result
-
-        # D.1) Look now in the defaultOptions dictionary
-        result = Properties.defaultOptions.get(keyValue)
-        if result != None:
-            return result
-
-        # D.2) Again, lookup in default but with no section name
-        result = Properties.defaultOptions.get(newKeyValue)
-        if result != None:
-            return result
-
-        raise NameError, 'Name ' + keyValue + ' not found in ' + \
-              self.current_dir
+    def set(self, keyName, value):
+        """
+        Set the pair (keyName, value) in the options dictionary
+        """
+        self.options[keyName] = value
 
     def expandVars(self, expression):
         """
@@ -222,22 +322,6 @@ class Directory:
         """
         return re.sub(Directory.varReference, \
                       lambda x: self.get(x.group('varname')), expression)
-
-    def dump(self):
-        """
-        Show the object content
-        """
-        print '### Created Dir Objects'
-        print '  ' + '\n  '.join([a for a, b in Directory.executedDirs.keys()])
-
-        for (a, b) in Directory.executedDirs.keys():
-            print '### Dir: ' + a
-            print '  Targets: ' + b
-            print '  Prev dir: ' + self.previous_dir
-            print '  Given dict: ' + str(self.givenDict)
-            print '  Options:\n    ' + '\n    '.join([' = '.join([a, b]) \
-                                                      for a, b in \
-                                                      sorted(self.options.items())])
 
 ################################################################################
 

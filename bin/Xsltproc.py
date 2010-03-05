@@ -7,33 +7,38 @@
 #
 import os, logging, I18n
 
-import Directory
+import Ada, Directory
 
 # Prefix to use for the options
 rule_prefix = 'xslt'
 
-# List of triplets (varname, default value (if any), description)
-options = [
-    ('exec', 'xsltproc', I18n.get('name_of_executable')),
-    ('debug_level', '${ada.debug_level}', I18n.get('rule_debug_level')),
-    ('src_dir', '${ada.basedir}', I18n.get('rule_src_dir')),
-    ('dst_dir', '${ada.basedir}', I18n.get('rule_dst_dir')),
-    ('style_file', '${ada.home}/ADA_Styles/DocbookProfile.xsl',
-     I18n.get('xslt_style_file')),
-    ('output_format', 'html', I18n.get('output_format')),
-    ('extra_arguments', None, I18n.get('xslt_extra_arguments')),
-    ('files', None, I18n.get('files_to_process')),
-    ('merge_styles', None, I18n.get('xslt_merge_styles')),
-    ('profile_lang', '${ada.locale}', I18n.get('xslt_profile_lang')),
-    ('multilingual', False, I18n.get('xslt_multilingual'))
-    ]
+# Dictionary {varname: (default value (if any), description) }
+options = {
+    'exec': ('xsltproc', I18n.get('name_of_executable')),
+    'debug_level': ('${ada.debug_level}', I18n.get('rule_debug_level')),
+    'src_dir': ('${ada.basedir}', I18n.get('rule_src_dir')),
+    'dst_dir': ('${ada.basedir}', I18n.get('rule_dst_dir')),
+    'style_file': ('${ada.home}/ADA_Styles/DocbookProfile.xsl',
+                   I18n.get('xslt_style_file')),
+    'output_format': ('html', I18n.get('output_format')),
+    'extra_arguments': (None, I18n.get('xslt_extra_arguments')),
+    'files': (None, I18n.get('files_to_process')),
+    'merge_styles': (None, I18n.get('xslt_merge_styles')),
+    'profile_lang': ('${ada.locale}', I18n.get('xslt_profile_lang')),
+    'multilingual': (False, I18n.get('xslt_multilingual'))
+    }
 
-# Check if the catalogs are in place
-if not (os.path.exists(os.path.join(ada_home, 'DTDs', 'catalog'))):
-    logging.error('WARNING: ' +
-                  os.path.join(ada_home, 'DTDs', 'catalog') +
-                  ' does not exist')
-    print """*************** WARNING ***************
+def checkCatalogs():
+    """
+    Check if the catalogs are in place and add the proper net option for xsltproc
+    """
+
+    if not (os.path.exists(os.path.join(Ada.options.get('home')[0], 'DTDs',
+                                        'catalog'))):
+        logging.error('WARNING: ' +
+                      os.path.join(ada_home, 'DTDs', 'catalog') +
+                      ' does not exist')
+        print """*************** WARNING ***************
 
     Your system does not appear to have the file /etc/xml/catalog properly
     installed. This catalog file is used to find the DTDs and Schemas required
@@ -43,16 +48,17 @@ if not (os.path.exists(os.path.join(ada_home, 'DTDs', 'catalog'))):
     sheets are fetched from the net).
 
     ****************************************"""
-    options.append(('net_option', '', I18n.get('xslt_net_option'))
-else:
-    options.append(('net_option', '--nonet', I18n.get('xslt_net_option'))
+        options['net_option'] = ('', I18n.get('xslt_net_option'))
+    else:
+        options['net_option'] = ('--nonet', I18n.get('xslt_net_option'))
 
 def showOptions(directory):
     """
     Show the documentation about the different values in the properties
     """
-    for (a, b, c) in options:
-        print '* ' + a + ' (Value: ' + directory.get(a) + ')'
+
+    for (a, (b, c)) in options.items():
+        print '* ' + a + ' (Value: ' + str(directory.get(rule_prefix + '.' + a)) + ')'
         print '  ' + str(c)
 
 def execute():

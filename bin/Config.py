@@ -7,6 +7,8 @@
 #
 import os, re, sys, StringIO
 
+import Properties
+
 idChars = '[a-zA-Z][a-zA-Z0-9_\-]*'
 sectionMainNameEXP = '(?P<sectionname>' + idChars + ')'
 subsectionNameEXP = '("(?P<sectionsubname>[^"]+)"' + \
@@ -39,6 +41,70 @@ class Diagnostics():
     MALFORMED_LINE = 8
     SECTION_NOT_FOUND = 9
 
+def getSectionNameFromSectionDefinition(text):
+    """
+    Given a text containing a section definition with any of the formats:
+
+    [section "subsection"]
+    [section.subsection]
+    [section subsection]
+
+    returns a tuple (section, subsection, match_object)
+    """
+    return getSectionName(text, sectionLineRE)
+
+def getSectionNameFromPropertyName(text):
+    """
+    Given a text containing a property name with format:
+
+    section.subsection.name
+
+    returns a tuple (section, subsection, match_object)
+    """
+    return getSectionName(text, sectionNameRE)
+
+def getSectionName(fullText, regularExpression):
+    """
+    Function receives a text and a regular expression and obtains the section
+    name, subsection name and a match object for further processing.
+
+    Returns a tuple (section, subsect, match object).
+    """
+
+    # Match
+    section = None
+    subSection = None
+    m = regularExpression.match(fullText)
+
+    if m != None:
+        # There is a match
+        section = m.group('sectionname')
+        subSection = m.group('sectionsubname')
+        if subSection == None:
+            subSection = m.group('sectionsubname2')
+
+    return (section, subSection, m)
+
+def splitVarName(value):
+    """
+    Given a value of a property of the forms:
+
+    section.name
+    section.subsection.name
+
+    returns the triple (section, subsection, name)
+    """
+    section = None
+    subsection = None
+    name = None
+
+    m = fullVarNameRE.match(value)
+    if m != None:
+        section = m.group('sectionname')
+        subsection = m.group('sectionsubname2')
+        name = m.group('varname')
+
+    return (section, subsection, name)
 
 def Parse(parseFile, memoryFile, lineProcessFunc = None):
     """
@@ -91,11 +157,13 @@ def Parse(parseFile, memoryFile, lineProcessFunc = None):
             continue
 
         # Check if it is a section line
-        (newSection, m) = regularSectionName(line)
-
-        if newSection != None:
+        (sec, subsec, m) = getSectionNameFromSectionDefinition(line)
+        if sec != None:
             # If section line remember it
-            section = newSection
+            if subsec != None:
+                section = sec + '.' + subsec
+            else:
+                section = sec
         else:
             # Variable assignment line
 
@@ -149,8 +217,8 @@ def Set(fileIn, fileOut, propFullName, propValue, lineProcessFunc = None):
     relevant linenumber information is obtained.
     """
     # See if the given propFullName is correct
-    (section, m) = regularSectionName(propFullName, SectionNameMatch.FullVarName)
-    if m == None:
+    (sec, subsec, m) = getSectionNameFromPropertyName(propFullName)
+    if sec == None:
         return (Diagnostics.INCORRECT_PROPERTY, 0)
 
     propName = m.group('varname')
@@ -191,8 +259,8 @@ def Set(fileIn, fileOut, propFullName, propValue, lineProcessFunc = None):
             continue
 
         # Detected section line
-        (newSection, m) = regularSectionName(auxline)
-        if newSection != None:
+        (sec, subsec, m) = getSectionNameFromSectionDefinition(auxline)
+        if sec != None:
             # If at the end of the section where the given prop belongs, process
             if currentSection == section and not processed:
 
@@ -203,7 +271,7 @@ def Set(fileIn, fileOut, propFullName, propValue, lineProcessFunc = None):
                         return (Diagnostics.ERROR_ALREADY_TREATED, linenumber)
                 processed = True
 
-            currentSection = newSection
+            currentSection = sec + '.' + subsec
             fileOut.write(line)
         else:
             # Regular assignment line
@@ -238,21 +306,16 @@ def Set(fileIn, fileOut, propFullName, propValue, lineProcessFunc = None):
 
     return (Diagnostics.OK, 0)
 
-def DeleteSection(fileIn, fileOut, section, lineProcessFunc = None):
+def DeleteSection(fileIn, fileOut, section):
     """
     fileIn: StringIO file containing the stored config file
     fileOut: File where the new version has to be stored
     section: Section to be deleted/renamed
-
-    lineProcessFunc()
-      section: section name
-      oldLine: full raw line for the given property
-      fileOut: file where the output is stored
     """
 
     # See if the given section name is correct
     (section, m) = regularSectionName(section, SectionNameMatch.Name)
-    if m == None:
+    if sectionNameRE.match(section) != None:
         return (Diagnostics.MALFORMED_SECTION, 0)
 
     # Make sure the fileIn is prepared
@@ -292,9 +355,9 @@ def DeleteSection(fileIn, fileOut, section, lineProcessFunc = None):
             continue
 
         # Detected section line
-        (lineSection, m) = regularSectionName(auxline)
-        if lineSection != None:
-            if lineSection == section:
+        (sec, subsect, m) = getSectionNameFromSectionDefinition(auxline)
+        if sec != None:
+            if (sec + '.' + subsect) == section:
                 # Invoke a function
                 skip = True
                 processed = True
@@ -314,26 +377,6 @@ def DeleteSection(fileIn, fileOut, section, lineProcessFunc = None):
         return (Diagnostics.SECTION_NOT_FOUND, 0)
 
     return (Diagnostics.OK, 0)
-
-def regularSectionName(fullText, select = SectionNameMatch.Line):
-    # Match either a full line with [] or simply the section name
-    if select == SectionNameMatch.Line:
-        m = sectionLineRE.match(fullText)
-    elif select == SectionNameMatch.Name:
-        m = sectionNameRE.match(fullText)
-    else:
-        m = fullVarNameRE.match(fullText)
-
-    if m == None:
-        return (None, m)
-
-    section = m.group('sectionname')
-    if m.group('sectionsubname') != None:
-        section = section + '.' + m.group('sectionsubname')
-    elif m.group('sectionsubname2') != None:
-        section = section + '.' + m.group('sectionsubname2')
-
-    return (section, m)
 
 def comment_remover(text):
     """
