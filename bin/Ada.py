@@ -9,7 +9,7 @@ import os, logging, sys, getopt, datetime, locale
 
 import Directory, I18n, Xsltproc
 
-# Get language and locale for fixed definitions
+# Get language and locale for locale option
 (lang, enc) = locale.getdefaultlocale()
 
 # Prefix to use for the options
@@ -52,10 +52,6 @@ options = {
     }
 
 Xsltproc.checkCatalogs()
-
-# Function to set a value in the options table
-def set(name, value):
-    options[name] = value
 
 def main():
     """
@@ -100,7 +96,7 @@ def main():
     for optstr, value in opts:
         # Debug option
         if optstr == "-d":
-            Properties.options['ada.debug_level'] = value
+            options['debug_level'] = (value, options['debug_level'][1])
 
         # Set a value in the environment
         elif optstr == "-s":
@@ -121,7 +117,7 @@ def main():
             targets.extend(value.split())
 
     # Set the proper debug level
-    logging.basicConfig(level=int(Properties.options['ada.debug_level']))
+    logging.basicConfig(level=int(options['debug_level'][0]))
 
     # Turn targets into a set
     targets = set(targets)
@@ -151,15 +147,7 @@ def main():
         os.chdir(currentDir)
 
         # Check if the cache already contains this directory
-        (dirObject, doneTargets) = \
-                    Directory.Directory.executedDirs.get(currentDir,
-                                                        (None, None))
-
-        # If it is the first time the directory is hit, create it
-        if dirObject == None:
-            dirObject = Directory.Directory(currentDir)
-        else:
-            logging.debug('HIT. Directory ' + currentDir + ' already processed')
+        dirObject = Directory.getDirectoryObject(currentDir)
 
         dirObject.Execute(targets, givenDictionary)
 
@@ -169,9 +157,9 @@ def isCorrectAdaVersion():
     ada.maximum.version and ada.exact.version"""
 
     # Get versions to allow execution depending on the version
-    minVersion = Properties.options['ada.minimum_version'][0]
-    maxVersion = Properties.options['ada.maximum_version'][0]
-    exactVersion = Properties.options['ada.exact_version'][0]
+    minVersion = options['minimum_version'][0]
+    maxVersion = options['maximum_version'][0]
+    exactVersion = options['exact_version'][0]
 
     # If no value is given in any variable, avanti
     if (minVersion == None) and (maxVersion == None) and (exactVersion == None):
@@ -179,7 +167,7 @@ def isCorrectAdaVersion():
 
     # Translate current version to integer
     currentValue = 0
-    vParts = Directory.Directory.fixed_definitions['ada.version'].split('.')
+    vParts = options['version'][0].split('.')
     currentValue = 1000000 * vParts[0] + 10000 * vParts[1] + vParts[2]
 
     # Translate all three variables to numbers
@@ -238,7 +226,7 @@ def initialize():
         raise TypeError, 'ADA_HOME is not a directory'
 
     logging.debug('ADA_HOME = ' + ada_home)
-    Directory.Directory.fixed_definitions['ada.home'] = ada_home
+    options['home'] = (ada_home, options['home'][1])
 
     # Insert the definition of catalogs in the environment
     os.environ["XML_CATALOG_FILES"] = os.path.join(ada_home, 'DTDs',

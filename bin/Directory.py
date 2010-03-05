@@ -23,10 +23,12 @@ def getDirectoryObject(path):
     dirObj = createdDirs.get(os.path.abspath(path), None)
     # Hit in the cache, return
     if dirObj != None:
+        logging.debug('HIT. Directory ' + path + ' already processed')
         return dirObj
 
+
     # Create new object
-    return Directory.Directory(path)
+    return Directory(path)
 
 def dump(self):
     """
