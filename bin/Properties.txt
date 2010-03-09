@@ -44,8 +44,7 @@
 # ADA General section. Typically written at the top of the file
 #
 [ada]
-        debug_level = info # Possible values are debug, info, warning, error,
-                           # critical
+        debug_level = 40 # Integer. The higher, the less messages shown
         minimum_version = 2.1.10 # Minimum version required
         maximum_version = 3.1.10 # Maximum version allowed
         exact_version = 2.2.1 # Exact version required
@@ -63,9 +62,7 @@
         extra_arguments = --stringparam somename somevalue # To be passed to exec
         files = file1 file2 # Space separated list of source files
         merge_styles = file1 file2 file3 # Styles to combine with style_file
-        profile_lang = en # Language to pass to exec
-        multilingual = False # True/False denoting if doc is
-                               # multilingual. Incompatible with profile_lang.
+        languages = en # Space separated list of Languages to consider
 
 [xfig]
         exec = fig2dev # Executable to use

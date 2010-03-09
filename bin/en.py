@@ -57,7 +57,7 @@ msgs = {
     'files_to_process': 'Space separated list of files to process.',
     'xslt_merge_styles':
     'Space separated list of styles to combine with the given style',
-    'xslt_profile_lang': 'Language to use to profile the source documents',
+    'xslt_languages': 'Space separated list of languages to consider',
     'xslt_multilingual':
     'True/False if the documents to process are multilingual.\n\
       Incompatible with profile_lang',
@@ -79,11 +79,13 @@ msgs = {
     'Circular execution dependency to directory {0}.',
     'illegal_target_prefix': 'Illegal target name {0}.',
     'ada_debug_level_option' : 'Debug level to use',
+    'incorrect_debug_option' : 'Option -d requires an integer as parameter',
     'ada_version_option' : 'Current ADA version',
     'ada_locale_option' : 'Locale used while executing ADA',
     'ada_home_option' : 'Directory where ADA is installed',
     'ada_property_file_option' : 'File containing the definitions',
     'ada_file_separator_option' : 'Character to separate filenames',
     'option': 'Option',
+    'options': 'Options',
     'not_found': 'not found'
     }

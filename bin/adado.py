@@ -9,6 +9,10 @@ import os, logging, sys, getopt, datetime, locale
 
 import Ada, Directory, I18n, Xsltproc
 
+# Global settings for logger
+logging.basicConfig(level=logging.ERROR)
+logger = logging.getLogger('ada')
+
 def main():
     """
     The manual page for this method is inside the localization package. Check
@@ -52,6 +56,13 @@ def main():
     for optstr, value in opts:
         # Debug option
         if optstr == "-d":
+            # An integer is required
+            try:
+                numValue = int(value)
+            except ValueError, e:
+                logger.error(I18n.get('incorrect_debug_option'))
+                sys.exit(-1)
+
             Ada.options['debug_level'] = (value, Ada.options['debug_level'][1])
 
         # Set a value in the environment
@@ -72,14 +83,14 @@ def main():
             # Extend the list of targets to process
             targets.extend(value.split())
 
-    # Set the proper debug level
-    logging.basicConfig(level=int(Ada.options['debug_level'][0]))
+    # Set the root logger
 
-    # Turn targets into a set
-    targets = set(targets)
+    logger.setLevel(int(Ada.options['debug_level'][0]))
 
     # Print Reamining arguments. If none, just stick the current dir
-    logging.debug('Remaning args: ' + str(args))
+    logger.debug('Dirs: ' + str(args))
+    logger.debug('Targets: ' + ' '.join(targets))
+
     if args == []:
         directories = [os.getcwd()]
     else:
@@ -90,7 +101,6 @@ def main():
     # MAIN PROCESSING
     #
     #######################################################################
-    logging.info('ADA targets: ' + ' '.join(targets))
 
     # Remember the initial directory
     initialDir = os.getcwd()
@@ -99,7 +109,7 @@ def main():
     for currentDir in directories:
 
         # Move to the actual dir
-        logging.info('INFO: Switching to ' + currentDir)
+        logger.debug('CHDIR ' + currentDir)
         os.chdir(currentDir)
 
         # Check if the cache already contains this directory

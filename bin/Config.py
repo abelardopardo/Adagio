@@ -18,7 +18,7 @@ sectionFullNameEXP = sectionMainNameEXP + '(( |\.)' + \
 sectionNameRE = re.compile(sectionFullNameEXP)
 sectionLineRE = re.compile('^\[' + sectionFullNameEXP + '\]$')
 
-varNameEXP = '(?P<varname>[a-zA-Z][a-zA-Z0-9_\-]*)'
+varNameEXP = '(?P<varname>[a-zA-Z_][a-zA-Z0-9_\-]*)'
 fullVarNameRE = re.compile(sectionFullNameEXP + '\.' + varNameEXP)
 
 valueEXP = '(\s*=\s*(?P<value>.+))?$'

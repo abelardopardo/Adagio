@@ -7,7 +7,7 @@
 #
 import sys, os, re, datetime
 
-import Ada, I18n, Xsltproc
+import Ada, I18n, Xsltproc, Config
 
 def isDefinitionLegal(name, value):
     """
@@ -31,11 +31,13 @@ def Execute(target, dirLocation):
     """
 
     # Obtain the name of the section and subsection if any
-    (sect, subsect, m) = getSectionNameFromPropertyName(target)
+    (sect, subsect, m) =Config.getSectionNameFromPropertyName(target)
 
     # Select the proper set of rules
     if sect == Xsltproc.rule_prefix:
         Xsltproc.Execute(target, dirLocation)
+    elif sect == Ada.rule_prefix:
+        Ada.Execute(target, dirLocation)
     else:
         print I18n.get('illegal_target_prefix').format(sect)
 
@@ -56,6 +58,37 @@ def getOption(prefix, name, table = None):
     raise NameError, I18n.get('option') + ' ' + prefix + '.' + name + \
         ' ' + I18n.get('not_found') + '.'
 
+def setOption(prefix, name, value, table = None):
+    pass
+
+def fixedTargets(target, directory, rule_prefix, optionDict):
+    """
+    Given a target, a directory and a dictionary with options, checks if it is a
+    reserved target and performs the appropriate task. If so, True is
+    returned. If not, False is returned and nothing is done.
+    """
+
+    (a, b, c) = Config.splitVarName(target)
+    targetSuffix = c
+    targetPrefix = a
+    if b != None:
+        targetPrefix = targetPrefix + '.' + b
+
+    if targetSuffix == '_show_options':
+        print '---- ' + rule_prefix + ': ' + I18n.get('options') + ' ----'
+        for a in sorted(optionDict.keys()):
+            print '* ' + a + ': ' + str(directory.get(targetPrefix + '.' + a))
+        print '----'
+        return True
+    elif targetSuffix == '_help_options':
+        print '---- ' + rule_prefix + ': ' + I18n.get('options') + ' ----'
+        for (a, (b, c)) in sorted(optionDict.items()):
+            print '* ' + a + ' (Value: ' + str(directory.get(targetPrefix + '.' + a)) + ')'
+            print '  ' + str(c)
+        print '----'
+        return True
+
+    return False
 
 def main():
     (status, n) = Config.Parse(sys.argv[1], None, SetOption)

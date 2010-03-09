@@ -9,6 +9,10 @@ import sys, os, re, logging
 
 import Ada, Config, Properties, I18n
 
+# Set the logger for this module
+logging.basicConfig(level=logging.ERROR)
+logger = logging.getLogger('ada.directory')
+
 # Table to store tuples:
 #   path: Directory object
 #
@@ -23,7 +27,7 @@ def getDirectoryObject(path):
     dirObj = createdDirs.get(os.path.abspath(path), None)
     # Hit in the cache, return
     if dirObj != None:
-        logging.debug('HIT. Directory ' + path + ' already processed')
+        logger.debug('HIT: ' + path)
         return dirObj
 
 
@@ -73,12 +77,12 @@ class Directory:
     # current_section: section being processed
     # line_number: line for the section in Properties.txt being processed
     # executing: true if in the middle of the "Execute" method
-    # dir_targets: targets in the Properties.txt file
+    # section_list: targets in the Properties.txt file
     # executed_targets: set of targets executed with empty given directory
 
     # Change to the given dir and initlialize fields
     def __init__(self, path=os.getcwd()):
-        logging.info('Creating dir ' + path)
+        logger.info('Create obj for ' + path)
 
         # Make sure a directory is not created twice
         if os.path.abspath(path) in createdDirs:
@@ -105,7 +109,7 @@ class Directory:
         # Check first if the Properties.txt is present
         adaPropFile = Ada.options['property_file'][0]
         if not os.path.exists(adaPropFile):
-            logging.info('No ' + adaPropFile + ' found. Nothing to do.')
+            logger.info('No ' + adaPropFile + ' found in ' + self.current_dir)
             return
 
         # Parse the file
@@ -121,7 +125,7 @@ class Directory:
 
         # Dump a debug message showing the list of sections detected in the
         # config file
-        logging.debug('Sections: ' + str(self.section_list))
+        logger.debug('Sections: ' + str(self.section_list))
 
         return
 
@@ -132,7 +136,7 @@ class Directory:
         os.chdir(self.previous_dir)
         return
 
-    def Execute(self, targets = set([]), givenDict = None):
+    def Execute(self, targets = [], givenDict = None):
         """
         Execute the directory targets. This is one of the most important
         functions because it parses the file and invokes the different rule
@@ -146,15 +150,15 @@ class Directory:
         self.executing = True
 
         # If no targets are given, choose all of them or some specific subset
-        if targets == set([]):
-            targets = self.executed
+        if targets == []:
+            targets = self.section_list
 
         # Loop over all the targets to execute
         for target_name in targets:
 
             # Check the cache to see if target has already been executed
             if target_name in self.executed_targets:
-                logging.info('HIT: ' + self.current_dir + ': ' + target_name)
+                logger.info('HIT: ' + self.current_dir + ': ' + target_name)
                 continue
 
             Properties.Execute(target_name, self)
@@ -183,7 +187,7 @@ class Directory:
             # Append new section to the list for further reference
             self.section_list.append(section)
 
-            logging.debug('New section ' + section)
+            logger.debug('Parsing section ' + section)
 
 
         # Check if the option given is legal, if not, the getOption method bombs
@@ -328,7 +332,7 @@ class Directory:
 ################################################################################
 
 if __name__=="__main__":
-    logging.basicConfig(level=10)
+    logger.setLevel(10)
     p1 = Directory(os.getcwd())
     p1.Execute()
 
