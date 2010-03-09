@@ -1,0 +1,20 @@
+[ada]
+        debug_level = 10  # Integer
+        minimum_version = 2.1.10 # Minimum version required
+        maximum_version = 3.1.10 # Maximum version allowed
+        exact_version = 2.2.1 # Exact version required
+        current_datetime = YYYY/MM/DD HH:MM:SS
+        profile_revision = rev1 # String to be passed to all xslt processing
+
+[xslt]
+        exec = xsltproc # Executable to use for processing
+        debug_level = ${ada.debug_level} # Debug level inherited from ada section
+        src_dir = ${ada.basedir} # Directory containing source files
+        dst_dir = ${ada.basedir} # Directory to produce files
+        style_file = ${ada.home}/ADA_Styles/DocbookProfile.xsl # Style to apply
+        output_format = html # Extension of the result file
+
+        extra_arguments = --stringparam somename somevalue # To be passed to exec
+        files = file1 file2 # Space separated list of source files
+        merge_styles = file1 file2 file3 # Styles to combine with style_file
+        languages = en # Space separated list of languages
