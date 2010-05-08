@@ -143,10 +143,10 @@ def Execute(target, directory):
     to perform here.
     """
 
-    logger.info('XSLT: ' + target + ' in ' + directory.current_dir)
+    logger.info('ADA: ' + target + ' in ' + directory.current_dir)
 
     # If the target is special, execute and terminate
-    if Properties.fixedTargets(target, directory, rule_prefix, options):
+    if Properties.reservedTargets(target, directory, rule_prefix, options):
         return
 
     return
