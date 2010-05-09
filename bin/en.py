@@ -79,6 +79,7 @@ msgs = {
     'circular_execute_directory':
     'Circular execution dependency to directory {0}.',
     'illegal_target_prefix': 'Illegal target name {0}.',
+    'illegal_target_name': 'The target {t} is not known in dir {dl}.',
     'ada_debug_level_option' : 'Debug level to use',
     'incorrect_debug_option' : 'Option -d requires an integer as parameter',
     'ada_version_option' : 'Current ADA version',

@@ -22,6 +22,24 @@ def isDefinitionLegal(name, value):
 
     The function returns a boolean
     """
+
+    # To be implemented
+
+    return True
+
+def isTargetLegal(targetName):
+    """
+    Function to check if a given target name is legal. A target name has the
+    structure <section>.name. For a target name to be legal, <section> must
+    correspond to one of the legal sections in the tool, and there must be some
+    definition with the name <section>.name.varname in the corresponding
+    dictionary of values.
+
+    The function returns a boolean with value True if the target is legal
+    """
+
+    # To be implemented
+
     return True
 
 def Execute(target, dirLocation):
@@ -33,6 +51,12 @@ def Execute(target, dirLocation):
     # Obtain the name of the section and subsection if any
     (sect, subsect, m) =Config.getSectionNameFromPropertyName(target)
 
+    # Make sure the target is legal.
+    if not isTargetLegal(target):
+        print I18n.get('illegal_target_name').format(t=target,
+                                                     dl=dirLocation.current_dir)
+        sys.exit(2)
+
     # Select the proper set of rules
     # Code to extend when a new set of rules is added (@EXTEND@)
     if sect == Xsltproc.rule_prefix:
@@ -42,23 +66,36 @@ def Execute(target, dirLocation):
     else:
         print I18n.get('illegal_target_prefix').format(sect)
 
-# Function to ask for an option name in a given option table
+def getSectionOptionTable(sectionName):
+    """
+    Function that given a section name, returns the table containing all the
+    options allowed in that section or None if the section is incorrect.
+    """
+
+    # Code to extend when a new set of rules is added (@EXTEND@)
+    if prefix == Ada.rule_prefix:
+        return Ada.options
+    elif prefix == Xsltproc.rule_prefix:
+        return Xsltproc.options
+
+    return None
+
 def getOption(prefix, name, table = None):
     """
-    Return the first value of the pair found after lookup. First check the given
-    table. If nothing given, traverse all the available dictionaries.
+    Function to ask for an option name in a given option table. Return the first
+    value of the pair found after lookup. First check the given table. If
+    nothing given, traverse all the available dictionaries.
     """
     if table != None:
         return table[name][0]
 
-    # Code to extend when a new set of rules is added (@EXTEND@)
-    if prefix == Ada.rule_prefix:
-        return Ada.options[name][0]
-    elif prefix == Xsltproc.rule_prefix:
-        return Xsltproc.options[name][0]
+    table = getSectionOptionTable(prefix)
 
-    raise NameError, I18n.get('option') + ' ' + prefix + '.' + name + \
-        ' ' + I18n.get('not_found') + '.'
+    if table == None:
+        raise NameError, I18n.get('option') + ' ' + prefix + '.' + name + \
+            ' ' + I18n.get('not_found') + '.'
+
+    return table[name][0]
 
 def setOption(prefix, name, value, table = None):
     # To be implemented
