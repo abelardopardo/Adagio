@@ -82,7 +82,7 @@ class Directory:
 
     # Change to the given dir and initlialize fields
     def __init__(self, path=os.getcwd()):
-        logger.info('Create obj for ' + path)
+        logger.info('New object in ' + path)
 
         # Make sure a directory is not created twice
         if os.path.abspath(path) in createdDirs:
@@ -117,6 +117,7 @@ class Directory:
         self.line_number = 0
         self.section_list = []
 
+        logger.debug('Parsing ' + adaPropFile + ' in ' + self.current_dir)
         (status, n) = Config.Parse(adaPropFile, None, self.SetOption)
 
         # If the parsing failed, terminate
@@ -143,6 +144,8 @@ class Directory:
         execution scripts.
         """
 
+        logger.info('Execute in ' + self.current_dir)
+
         # Make sure no circular execution is produced
         if self.executing:
             print I18n.get('circular_execute_directory').format(self.current_dir)
@@ -151,7 +154,10 @@ class Directory:
 
         # If no targets are given, choose all of them or some specific subset
         if targets == []:
-            targets = self.section_list
+            targets = [x for x in self.section_list if x != 'ada']
+
+        logger.debug('  Targets: ' + str(targets))
+        logger.debug('  GivenDict: ' + str(givenDict))
 
         # Loop over all the targets to execute
         for target_name in targets:
@@ -168,6 +174,9 @@ class Directory:
                 self.executed_targets.add(target_name)
 
         self.executing = False
+
+        logger.debug(' Executed Targets: ' + str(self.executed_targets))
+
         return
 
     def SetOption(self, section, varname, value, lineNumber, oldValue = None,

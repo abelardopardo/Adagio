@@ -86,7 +86,7 @@ def Execute(target, directory):
     Perform the computation with the given symbols
     """
 
-    logging.info('EXEC ' + target + ' in ' + directory.current_dir)
+    logger.info('XSLTPROC: ' + target + ' in ' + directory.current_dir)
 
     # If the target is special, execute and terminate
     if Properties.reservedTargets(target, directory, rule_prefix, options):

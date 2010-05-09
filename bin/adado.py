@@ -87,14 +87,14 @@ def main():
 
     logger.setLevel(int(Ada.options['debug_level'][0]))
 
-    # Print Reamining arguments. If none, just stick the current dir
-    logger.debug('Dirs: ' + str(args))
-    logger.debug('Targets: ' + ' '.join(targets))
-
     if args == []:
         directories = [os.getcwd()]
     else:
         directories = args
+
+    # Print Reamining arguments. If none, just stick the current dir
+    logger.debug('Dirs: ' + str(directories))
+    logger.debug('Targets: ' + ' '.join(targets))
 
     #######################################################################
     #
