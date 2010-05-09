@@ -28,14 +28,16 @@ msgs = {
               DEBUG =          10
               NOTSET =          0
 
+      -h or -x: Shows this message
+
       -s 'name value': Executes the application by first storing in the
                        environment the assignment name = value. This means that,
                        unless overwritten by definitions in the properties file,
                        this assignment will be visible to all the rules
                        executed.
 
-      -t target: Specific target in the Properties.txt file to execute. If none
-                 is given, all of them are executed.
+      -t target: Target in the Properties.txt file to execute. If none is given,
+                 all of them are executed.
 
     """,
     'file_not_found': 'File {0} not found',

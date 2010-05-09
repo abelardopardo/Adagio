@@ -45,7 +45,7 @@ def main():
 
     # Swallow the options
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "d:s:t:",
+        opts, args = getopt.getopt(sys.argv[1:], "d:s:t:hx",
                                    ["dir="])
     except getopt.GetoptError, e:
         print e.msg
@@ -64,6 +64,11 @@ def main():
                 sys.exit(-1)
 
             Ada.options['debug_level'] = (value, Ada.options['debug_level'][1])
+
+        # Dump the manual page
+        elif optstr == "-h" or optstr == "-x":
+            print I18n.get('__doc__')
+            sys.exit(0)
 
         # Set a value in the environment
         elif optstr == "-s":
