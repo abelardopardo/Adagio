@@ -89,7 +89,7 @@ def Execute(target, directory):
     logging.info('EXEC ' + target + ' in ' + directory.current_dir)
 
     # If the target is special, execute and terminate
-    if Properties.fixedTargets(target, directory, rule_prefix, options):
+    if Properties.reservedTargets(target, directory, rule_prefix, options):
         return
 
     return
@@ -98,4 +98,4 @@ def Execute(target, directory):
 if __name__ == "__main__":
     d = Directory.Directory()
 
-    Properties.fixedTargets(rule_prefix + '._show_options', d, options)
+    Properties.reservedTargets(rule_prefix + '._show_options', d, options)

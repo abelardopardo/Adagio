@@ -61,7 +61,7 @@ def getOption(prefix, name, table = None):
 def setOption(prefix, name, value, table = None):
     pass
 
-def fixedTargets(target, directory, rule_prefix, optionDict):
+def reservedTargets(target, directory, rule_prefix, optionDict):
     """
     Given a target, a directory and a dictionary with options, checks if it is a
     reserved target and performs the appropriate task. If so, True is
