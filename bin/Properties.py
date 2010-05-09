@@ -34,6 +34,7 @@ def Execute(target, dirLocation):
     (sect, subsect, m) =Config.getSectionNameFromPropertyName(target)
 
     # Select the proper set of rules
+    # Code to extend when a new set of rules is added (@EXTEND@)
     if sect == Xsltproc.rule_prefix:
         Xsltproc.Execute(target, dirLocation)
     elif sect == Ada.rule_prefix:
@@ -41,7 +42,7 @@ def Execute(target, dirLocation):
     else:
         print I18n.get('illegal_target_prefix').format(sect)
 
-# Function to ask for a value in the options a given option table
+# Function to ask for an option name in a given option table
 def getOption(prefix, name, table = None):
     """
     Return the first value of the pair found after lookup. First check the given
@@ -50,6 +51,7 @@ def getOption(prefix, name, table = None):
     if table != None:
         return table[name][0]
 
+    # Code to extend when a new set of rules is added (@EXTEND@)
     if prefix == Ada.rule_prefix:
         return Ada.options[name][0]
     elif prefix == Xsltproc.rule_prefix:
@@ -59,6 +61,7 @@ def getOption(prefix, name, table = None):
         ' ' + I18n.get('not_found') + '.'
 
 def setOption(prefix, name, value, table = None):
+    # To be implemented
     pass
 
 def reservedTargets(target, directory, rule_prefix, optionDict):
