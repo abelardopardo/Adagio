@@ -113,6 +113,11 @@ def main():
     # Create the initial list of directories to process
     for currentDir in directories:
 
+        # Check that a correct directory has been given
+        if not os.path.isdir(currentDir):
+            print 'Directory ' + currentDir + ' not found.'
+            sys.exit(-1)
+
         # Move to the actual dir
         logger.debug('CHDIR ' + currentDir)
         os.chdir(currentDir)
