@@ -13,11 +13,6 @@ import sys, locale, os, re
 # locale names.
 
 # Get the current locale
-# if 'LC_ALL' in os.environ:
-#     locale = locale.setlocale(locale.LC_ALL, os.environ.get('LC_ALL'))
-# else:
-#     # Default value
-#     locale = locale.setlocale(locale.LC_ALL, 'en_US.UTF8')
 locale = locale.getdefaultlocale()[0]
 
 # Get the locale prefix
