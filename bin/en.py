@@ -8,14 +8,13 @@
 
 msgs = {
     '__doc__': """
-    Script to execute the production rules in the current directory. The
-    invocation of the script must be:
+    Execute the production rules described in the Properties.txt file. The
+    invocation of this script must follow the structure:
 
     script [options] [dir dir ...]
 
-    The script executes the production rules in the given directories in the
-    order they appear in the command line. If no directory is given, then the
-    current directory is processed.
+    The script visits the given directories in the given order and executes the
+    production rules. If no directory is given, the current one is processed.
 
     The script accepts the following options:
 

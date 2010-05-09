@@ -9,7 +9,7 @@ import sys, locale, os, re
 
 # TODO: Get the locale name and derive the file name to import from
 # that. Knowing this rule allows new dictionaries to be included without
-# touchting the source code. Need to know if there is any convention about
+# touching the source code. Need to know if there is any convention about
 # locale names.
 
 # Get the current locale

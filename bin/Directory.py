@@ -152,7 +152,7 @@ class Directory:
             sys.exit(2)
         self.executing = True
 
-        # If no targets are given, choose all of them or some specific subset
+        # If no targets are given, choose all of them except ada
         if targets == []:
             targets = [x for x in self.section_list if x != 'ada']
 
@@ -167,6 +167,7 @@ class Directory:
                 logger.info('HIT: ' + self.current_dir + ': ' + target_name)
                 continue
 
+            # Execute the target
             Properties.Execute(target_name, self)
 
             # Insert executed target in cache only if the given dict is empty
