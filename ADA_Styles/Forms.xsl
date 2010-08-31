@@ -397,6 +397,7 @@
   <xsl:template
     match="phrase[@condition='action-suffix']|para[@condition='action-suffix']"/>
   <xsl:template match="phrase[@condition='submit']|para[@condition='submit']"/>
+  <xsl:template match="phrase[@condition='hide']|para[@condition='hide']"/>
 
   <xsl:template match="section[@condition = 'ada_submit_form']" mode="toc"/>
 
