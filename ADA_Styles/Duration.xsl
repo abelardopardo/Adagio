@@ -29,6 +29,7 @@
   version="1.0" exclude-result-prefixes="exsl str xi">
 
   <xsl:param name="ada.submit.duration.phrase"/>
+  <xsl:param name="ada.submit.duration.ignore">no</xsl:param>
 
   <!-- ============================================================ -->
   <!--                                                              -->
@@ -38,131 +39,136 @@
   <xsl:template name="ada.submit.duration.input"
     match="remark[@condition='ada_submit_duration']|
            section[@condition='ada_submit_duration']">
+
     <!-- Duration value -->
     <xsl:param name="duration-value">
       <xsl:choose>
-        <xsl:when test="*[@condition='duration']"><xsl:value-of
-        select="*[@condition='duration']/text()"/></xsl:when>
-        <xsl:otherwise>30</xsl:otherwise>
+	<xsl:when test="*[@condition='duration']"><xsl:value-of
+	select="*[@condition='duration']/text()"/></xsl:when>
+	<xsl:otherwise>30</xsl:otherwise>
       </xsl:choose>
     </xsl:param>
-
+    
     <xsl:param name="form-action"><xsl:value-of
     select="$ada.submit.action.prefix"/><xsl:value-of
     select="*[@condition='action-suffix']"/></xsl:param>
-
-    <!-- Name for the field -->
-    <xsl:variable name="hierarchy">
-      <xsl:call-template name="getHierarchy"/>
-    </xsl:variable>
-
-    <div class="ada_submit_form_duration_select">
-      <xsl:element name="form">
-        <xsl:attribute name="id"><xsl:value-of select="$hierarchy"/></xsl:attribute>
-        <xsl:attribute name="method">post</xsl:attribute>
-        <xsl:attribute name="enctype">multipart/form-data</xsl:attribute>
-        <xsl:attribute name="action"><xsl:value-of
-        select="$form-action"/></xsl:attribute>
-        <xsl:choose>
-          <xsl:when test="$ada.submit.duration.phrase and
-                          ($ada.submit.duration.phrase != '')">
-            <xsl:value-of select="$ada.submit.duration.phrase"/><xsl:text> </xsl:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:choose>
-              <xsl:when test="$profile.lang='es'">Dedicación: </xsl:when>
-              <xsl:otherwise>Dedication: </xsl:otherwise>
-            </xsl:choose>
-          </xsl:otherwise>
-        </xsl:choose>
-        <select>
-          <xsl:attribute name="name">
-            <xsl:value-of select="$hierarchy"/>
-          </xsl:attribute>
-
-          <!-- Less than haf of value -->
-          <xsl:element name="option">
-            <xsl:attribute name="value">LT-<xsl:value-of
-            select="$duration-value * 0.5"/></xsl:attribute>
-            <xsl:choose>
-              <xsl:when test="profile.lang = 'es'">Menos de </xsl:when>
-              <xsl:otherwise>Less than </xsl:otherwise>
-            </xsl:choose>
-            <xsl:value-of select="$duration-value * 0.5"/>
-          </xsl:element>
-
-          <!-- Half the given value -->
-          <xsl:element name="option">
-            <xsl:attribute name="value"><xsl:value-of select="$duration-value *
-            0.5"/></xsl:attribute>
-            <xsl:value-of select="$duration-value * 0.5"/>
-          </xsl:element>
-
-          <!-- 3/4 of given value -->
-          <xsl:element name="option">
-            <xsl:attribute name="value"><xsl:value-of select="$duration-value *
-            0.75"/></xsl:attribute>
-            <xsl:value-of select="$duration-value * 0.75"/>
-          </xsl:element>
-
-          <!-- Exact given value -->
-          <xsl:element name="option">
-            <xsl:attribute name="selected">selected</xsl:attribute>
-            <xsl:attribute name="value"><xsl:value-of select="$duration-value"/></xsl:attribute>
-            <xsl:attribute name ="selected">selected</xsl:attribute>
-            <xsl:value-of select="$duration-value"/>
-          </xsl:element>
-
-          <!-- 1.25 times the given value -->
-          <xsl:element name="option">
-            <xsl:attribute name="value"><xsl:value-of select="$duration-value *
-            1.25"/></xsl:attribute>
-            <xsl:value-of select="$duration-value * 1.25"/>
-          </xsl:element>
-
-          <!-- 1.5 times the given value -->
-          <xsl:element name="option">
-            <xsl:attribute name="value"><xsl:value-of select="$duration-value *
-            1.5"/></xsl:attribute>
-            <xsl:value-of select="$duration-value * 1.5"/>
-          </xsl:element>
-
-          <!-- Greater than 1.5 times the given value -->
-          <xsl:element name="option">
-            <xsl:attribute name="value">GT-<xsl:value-of select="$duration-value *
-            1.5"/></xsl:attribute>
-            <xsl:choose>
-              <xsl:when test="profile.lang = 'es'">Más de </xsl:when>
-              <xsl:otherwise>More than </xsl:otherwise>
-            </xsl:choose>
-            <xsl:value-of select="$duration-value * 1.5"/>
-          </xsl:element>
-        </select> mins.
-
-        <!-- Submit button -->
-        <input type="submit">
-          <xsl:if test="not(phrase[@condition='hide']) or
-                        (phrase[@condition='hide'] = 'yes')">
-            <xsl:attribute
-              name="onclick">this.form.target='ada_submit_form_hidden_iframe_<xsl:value-of
-            select="$hierarchy"/>';this.form.style.display='none';</xsl:attribute>
-          </xsl:if>
-          <xsl:attribute name="value">Ok</xsl:attribute>
-        </input>
-        <xsl:if test="not(phrase[@condition='hide']) or
-                        (phrase[@condition='hide'] = 'yes')">
-          <!--
-               Invisible frame to receive the answer from the submission. This
-               trick is to avoid the page content being disturbed by the answer
-               received from the server -->
-          <iframe src="about:blank"
-            style="display:none; width:0px; height:0px">
-            <xsl:attribute
-              name="name">ada_submit_form_hidden_iframe_<xsl:value-of select="$hierarchy"/></xsl:attribute>
-          </iframe>
-        </xsl:if>
-      </xsl:element>
-    </div>
+    
+    <!-- If the processing is enabled, proceed -->
+    <xsl:if test="$ada.submit.duration.ignore = 'no'">
+      <!-- Name for the field -->
+      <xsl:variable name="hierarchy">
+	<xsl:call-template name="getHierarchy"/>
+      </xsl:variable>
+      
+      <div class="ada_submit_form_duration_select">
+	<xsl:element name="form">
+	  <xsl:attribute name="id"><xsl:value-of
+	  select="$hierarchy"/></xsl:attribute>
+	  <xsl:attribute name="method">post</xsl:attribute>
+	  <xsl:attribute name="enctype">multipart/form-data</xsl:attribute>
+	  <xsl:attribute name="action"><xsl:value-of
+	  select="$form-action"/></xsl:attribute>
+	  <xsl:choose>
+	    <xsl:when test="$ada.submit.duration.phrase and
+			    ($ada.submit.duration.phrase != '')">
+	      <xsl:value-of select="$ada.submit.duration.phrase"/><xsl:text> </xsl:text>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:choose>
+		<xsl:when test="$profile.lang='es'">Dedicación: </xsl:when>
+		<xsl:otherwise>Dedication: </xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <select>
+	    <xsl:attribute name="name">
+	      <xsl:value-of select="$hierarchy"/>
+	    </xsl:attribute>
+	    
+	    <!-- Less than haf of value -->
+	    <xsl:element name="option">
+	      <xsl:attribute name="value">LT-<xsl:value-of
+	      select="$duration-value * 0.5"/></xsl:attribute>
+	      <xsl:choose>
+		<xsl:when test="profile.lang = 'es'">Menos de </xsl:when>
+		<xsl:otherwise>Less than </xsl:otherwise>
+	      </xsl:choose>
+	      <xsl:value-of select="$duration-value * 0.5"/>
+	    </xsl:element>
+	    
+	    <!-- Half the given value -->
+	    <xsl:element name="option">
+	      <xsl:attribute name="value"><xsl:value-of select="$duration-value *
+	      0.5"/></xsl:attribute>
+	      <xsl:value-of select="$duration-value * 0.5"/>
+	    </xsl:element>
+	    
+	    <!-- 3/4 of given value -->
+	    <xsl:element name="option">
+	      <xsl:attribute name="value"><xsl:value-of select="$duration-value *
+	      0.75"/></xsl:attribute>
+	      <xsl:value-of select="$duration-value * 0.75"/>
+	    </xsl:element>
+	    
+	    <!-- Exact given value -->
+	    <xsl:element name="option">
+	      <xsl:attribute name="selected">selected</xsl:attribute>
+	      <xsl:attribute name="value"><xsl:value-of select="$duration-value"/></xsl:attribute>
+	      <xsl:attribute name ="selected">selected</xsl:attribute>
+	      <xsl:value-of select="$duration-value"/>
+	    </xsl:element>
+	    
+	    <!-- 1.25 times the given value -->
+	    <xsl:element name="option">
+	      <xsl:attribute name="value"><xsl:value-of select="$duration-value *
+	      1.25"/></xsl:attribute>
+	      <xsl:value-of select="$duration-value * 1.25"/>
+	    </xsl:element>
+	    
+	    <!-- 1.5 times the given value -->
+	    <xsl:element name="option">
+	      <xsl:attribute name="value"><xsl:value-of select="$duration-value *
+	      1.5"/></xsl:attribute>
+	      <xsl:value-of select="$duration-value * 1.5"/>
+	    </xsl:element>
+	    
+	    <!-- Greater than 1.5 times the given value -->
+	    <xsl:element name="option">
+	      <xsl:attribute name="value">GT-<xsl:value-of select="$duration-value *
+	      1.5"/></xsl:attribute>
+	      <xsl:choose>
+		<xsl:when test="profile.lang = 'es'">Más de </xsl:when>
+		<xsl:otherwise>More than </xsl:otherwise>
+	      </xsl:choose>
+	      <xsl:value-of select="$duration-value * 1.5"/>
+	    </xsl:element>
+	  </select> mins.
+	    
+	  <!-- Submit button -->
+	  <input type="submit">
+	    <xsl:if test="not(phrase[@condition='hide']) or
+			  (phrase[@condition='hide'] = 'yes')">
+	      <xsl:attribute
+		name="onclick">this.form.target='ada_submit_form_hidden_iframe_<xsl:value-of
+		select="$hierarchy"/>';this.form.style.display='none';</xsl:attribute>
+	    </xsl:if>
+	    <xsl:attribute name="value">Ok</xsl:attribute>
+	  </input>
+	  <xsl:if test="not(phrase[@condition='hide']) or
+			(phrase[@condition='hide'] = 'yes')">
+	    <!--
+		Invisible frame to receive the answer from the submission. This
+		trick is to avoid the page content being disturbed by the answer
+		received from the server -->
+	    <iframe src="about:blank"
+		    style="display:none; width:0px; height:0px">
+	      <xsl:attribute
+		name="name">ada_submit_form_hidden_iframe_<xsl:value-of select="$hierarchy"/></xsl:attribute>
+	    </iframe>
+	  </xsl:if>
+	</xsl:element>
+      </div>
+    </xsl:if>
   </xsl:template>
 
   <!-- Get the path to the current node using @id if exists -->
