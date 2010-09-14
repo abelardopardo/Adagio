@@ -216,7 +216,7 @@ multilingual mode"/>
     <antcall target="xsltproc.multilingual.processing" inheritAll="false">
       <param name="xsltproc.src.dir"    value="${testexam.dst.dir}"/>
       <param name="xsltproc.dst.dir"    value="${testexam.dst.dir}"/>
-      <param name="xsltproc.style.file" value="${ada.home}/ADA_Styles/Exam.xsl"/>
+      <param name="xsltproc.style.file" value="${testexam.style.file}"/>
       <param name="xsltproc.multilingual.files"
 	     value="${testexam.multilingual.raw.versions.filelist.property}"/>
       <param name="xsltproc.extra.args"
@@ -233,7 +233,7 @@ multilingual mode"/>
     <antcall target="xsltproc.multilingual.processing" inheritAll="false">
       <param name="xsltproc.src.dir"    value="${testexam.dst.dir}"/>
       <param name="xsltproc.dst.dir"    value="${testexam.dst.dir}"/>
-      <param name="xsltproc.style.file" value="${ada.home}/ADA_Styles/Exam.xsl"/>
+      <param name="xsltproc.style.file" value="${testexam.style.file}"/>
       <param name="xsltproc.multilingual.files"
 	     value="${testexam.multilingual.raw.versions.filelist.property}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
@@ -254,7 +254,7 @@ multilingual mode"/>
     <antcall target="xsltproc.multilingual.processing" inheritAll="false">
       <param name="xsltproc.src.dir"    value="${testexam.dst.dir}"/>
       <param name="xsltproc.dst.dir"    value="${testexam.dst.dir}"/>
-      <param name="xsltproc.style.file" value="${ada.home}/ADA_Styles/Exam.xsl"/>
+      <param name="xsltproc.style.file" value="${testexam.style.file}"/>
       <param name="xsltproc.multilingual.files"
 	     value="${testexam.multilingual.raw.versions.filelist.property}"/>
       <param name="xsltproc.output.format" value="_stats.html"/>
@@ -276,7 +276,7 @@ multilingual mode"/>
     <antcall target="xsltproc.processing" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${testexam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${ada.home}/ADA_Styles/Exam.xsl"/>
+      <param name="xsltproc.style.file"    value="${testexam.style.file}"/>
       <param name="xsltproc.files"
 	     value="${testexam.raw.versions.filelist.property}
 		    ${testexam.file}
@@ -295,7 +295,7 @@ multilingual mode"/>
     <antcall target="xsltproc.processing" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${testexam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${ada.home}/ADA_Styles/Exam.xsl"/>
+      <param name="xsltproc.style.file"    value="${testexam.style.file}"/>
       <param name="xsltproc.files"
 	     value="${testexam.raw.versions.filelist.property}
 		    ${testexam.file}
@@ -318,7 +318,7 @@ multilingual mode"/>
     <antcall target="xsltproc.processing" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${testexam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${ada.home}/ADA_Styles/Exam.xsl"/>
+      <param name="xsltproc.style.file"    value="${testexam.style.file}"/>
       <param name="xsltproc.files"
 	     value="${testexam.raw.versions.filelist.property}
 		    ${testexam.file}
@@ -428,7 +428,7 @@ multilingual mode"/>
     <antcall target="xsltproc.clean" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${testexam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${ada.home}/ADA_Styles/Exam.xsl"/>
+      <param name="xsltproc.style.file"    value="${testexam.style.file}"/>
       <param name="xsltproc.files"
 	     value="${testexam.raw.versions.filelist.property}
 		    ${testexam.file}
@@ -452,7 +452,7 @@ multilingual mode"/>
     <antcall target="xsltproc.clean" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${testexam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${ada.home}/ADA_Styles/Exam.xsl"/>
+      <param name="xsltproc.style.file"    value="${testexam.style.file}"/>
       <param name="xsltproc.files"
 	     value="${testexam.raw.versions.filelist.property}
 		    ${testexam.file}
@@ -475,7 +475,7 @@ multilingual mode"/>
     <antcall target="xsltproc.clean" inheritAll="false">
       <param name="xsltproc.src.dir"       value="${testexam.dst.dir}"/>
       <param name="xsltproc.dst.dir"       value="${testexam.dst.dir}"/>
-      <param name="xsltproc.style.file"    value="${ada.home}/ADA_Styles/Exam.xsl"/>
+      <param name="xsltproc.style.file"    value="${testexam.style.file}"/>
       <param name="xsltproc.files"
 	     value="${testexam.raw.versions.filelist.property}
 		    ${testexam.file}
@@ -494,7 +494,7 @@ multilingual mode"/>
     <antcall target="xsltproc.multilingual.clean" inheritAll="false">
       <param name="xsltproc.src.dir"    value="${testexam.dst.dir}"/>
       <param name="xsltproc.dst.dir"    value="${testexam.dst.dir}"/>
-      <param name="xsltproc.style.file" value="${ada.home}/ADA_Styles/Exam.xsl"/>
+      <param name="xsltproc.style.file" value="${testexam.style.file}"/>
       <param name="xsltproc.multilingual.files"
 	     value="${testexam.multilingual.raw.versions.filelist.property}"/>
       <param name="xsltproc.output.format" value="_stats.html"/>
@@ -516,7 +516,7 @@ multilingual mode"/>
     <antcall target="xsltproc.multilingual.clean" inheritAll="false">
       <param name="xsltproc.src.dir"    value="${testexam.dst.dir}"/>
       <param name="xsltproc.dst.dir"    value="${testexam.dst.dir}"/>
-      <param name="xsltproc.style.file" value="${ada.home}/ADA_Styles/Exam.xsl"/>
+      <param name="xsltproc.style.file" value="${testexam.style.file}"/>
       <param name="xsltproc.multilingual.files"
 	     value="${testexam.multilingual.raw.versions.filelist.property}"/>
       <param name="xsltproc.output.format" value="_solution.html"/>
@@ -537,7 +537,7 @@ multilingual mode"/>
     <antcall target="xsltproc.multilingual.clean" inheritAll="false">
       <param name="xsltproc.src.dir"    value="${testexam.dst.dir}"/>
       <param name="xsltproc.dst.dir"    value="${testexam.dst.dir}"/>
-      <param name="xsltproc.style.file" value="${ada.home}/ADA_Styles/Exam.xsl"/>
+      <param name="xsltproc.style.file" value="${testexam.style.file}"/>
       <param name="xsltproc.multilingual.files"
 	     value="${testexam.multilingual.raw.versions.filelist.property}"/>
       <param name="xsltproc.extra.args"
