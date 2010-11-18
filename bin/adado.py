@@ -5,13 +5,14 @@
 #
 #
 #
-import os, logging, sys, getopt, datetime, locale
+import os, logging, sys, getopt, datetime, locale, ConfigParser
 
-import Ada, Directory, I18n, Xsltproc
+import Ada, I18n, Properties, Directory
+# import Ada, Directory, I18n, Xsltproc
 
 # Global settings for logger
 logging.basicConfig(level=logging.ERROR)
-logger = logging.getLogger('ada')
+logger = logging.getLogger('adado')
 
 def main():
     """
@@ -32,7 +33,8 @@ def main():
     # Initialization of all the required variables
     #
     #######################################################################
-    Ada.initialize()
+    if Ada.initialize():
+        sys.exit(1)
 
     #######################################################################
     #
@@ -41,7 +43,6 @@ def main():
     #######################################################################
     targets = []
     directories = []
-    givenDictionary = None
 
     # Swallow the options
     try:
@@ -61,42 +62,56 @@ def main():
                 numValue = int(value)
             except ValueError, e:
                 logger.error(I18n.get('incorrect_debug_option'))
-                sys.exit(-1)
+                sys.exit(3)
 
-            Ada.options['debug_level'] = (value, Ada.options['debug_level'][1])
+            Ada.options.set(Ada.module_prefix, 'debug_level', value)
 
         # Dump the manual page
         elif optstr == "-h" or optstr == "-x":
             print I18n.get('__doc__')
-            sys.exit(0)
+            sys.exit(3)
 
         # Set a value in the environment
         elif optstr == "-s":
-            name_value = value.split()
+            sname_value = value.split()
             # If incorrect number of arguments, stop processing
-            if len(name_value) != 2:
+            if len(sname_value) != 3:
                 print I18n.get('incorrect_arg_num').format('-s option')
                 print I18n.get('__doc__')
-                sys.exit(2)
+                sys.exit(3)
+                
+            # Check if the given option is correct
+            if not Ada.options.has_option(sname_value[0],
+                                          sname_value[1]):
+                optionName = sname_value[0] + '.' + sname_value[1]
+                print I18n.get('incorrect_option').format(value)
+                sys.exit(3)
+
             # This option is stored in level B of the dictionary
-            if not givenDictionary:
-                givenDictionary = {}
-            givenDictionary[name_value[0]] = name_value[1]
+            try:
+                Ada.options.add_section(sname_value[0])
+            except ConfigParser.DuplicateSectionError:
+                pass
+            Ada.options.set(sname_value[0], sname_value[1], sname_value[2])
 
         # Set the targets
         elif optstr == "-t":
             # Extend the list of targets to process
             targets.extend(value.split())
 
+    # Invoke a function that traverses the options and checks that they have the
+    # right type (integers, floats, date/time, et.
+    pass # TO BE IMPLEMENTED
+
     # Set the root logger
+    logger.setLevel(int(Ada.options.getint('ada', 'debug_level')))
 
-    logger.setLevel(int(Ada.options['debug_level'][0]))
-
+    # If no argument is given, process current directory
     if args == []:
         directories = [os.getcwd()]
     else:
         directories = args
-
+        
     # Print Reamining arguments. If none, just stick the current dir
     logger.debug('Dirs: ' + str(directories))
     logger.debug('Targets: ' + ' '.join(targets))
@@ -113,20 +128,27 @@ def main():
     # Create the initial list of directories to process
     for currentDir in directories:
 
+        # Move to the initial dir
+        logger.debug('CHDIR ' + initialDir)
+        os.chdir(initialDir)
+
         # Check that a correct directory has been given
         if not os.path.isdir(currentDir):
-            print 'Directory ' + currentDir + ' not found.'
-            sys.exit(-1)
+            print I18n.get('not_a_directory').format(nonDir)
+            sys.exit(4)
 
-        # Move to the actual dir
+        # Move to the  dir to process
         logger.debug('CHDIR ' + currentDir)
         os.chdir(currentDir)
 
         # Check if the cache already contains this directory
         dirObject = Directory.getDirectoryObject(currentDir)
+        Directory.dump(dirObject)
 
-        dirObject.Execute(targets, givenDictionary)
+        # dirObject.Execute(targets)
 
+    Properties.dump(Ada.options)
+        
 # Execution as script
 if __name__ == "__main__":
     main()

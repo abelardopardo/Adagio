@@ -52,7 +52,8 @@ def getSectionNameFromSectionDefinition(text):
     returns a tuple (section, subsection, match_object)
     """
 
-    ABEL This function returns TRUE even though the section name has a property value. It should not be like that
+    # ABEL This function returns TRUE even though the section name has a
+    # property value. It should not be like that
 
     return getSectionName(text, sectionLineRE)
 

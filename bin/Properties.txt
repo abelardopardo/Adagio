@@ -14,7 +14,7 @@
 #
 # A section contains a set of definitions of the form name = value. If only the
 # name is included, the value True is assumed. Any string may contain a
-# substring of the form ${name} which will be replaced by the value of the
+# substring of the form %(name) which will be replaced by the value of the
 # variable name previously defined.
 #
 # If a named section is included after its corresponding unnamed section, the
@@ -45,6 +45,11 @@
 #
 [ada]
         debug_level = 40 # Integer. The higher, the less messages shown
+	version = 10.03.1 # Version number
+        locale = en # Taken from execution environment
+        home = /home/abel/Courses/ADA # Taken from environment
+	property_file = Properties.txt # File to read in each dir
+	file_separator = / # Taken from environment
         minimum_version = 2.1.10 # Minimum version required
         maximum_version = 3.1.10 # Maximum version allowed
         exact_version = 2.2.1 # Exact version required
@@ -53,10 +58,10 @@
 
 [xslt]
         exec = xsltproc # Executable to use for processing
-        debug_level = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${ada.basedir} # Directory to produce files
-        style_file = ${ada.home}/ADA_Styles/DocbookProfile.xsl # Style to apply
+        debug_level = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(ada.basedir) # Directory to produce files
+        style_file = %(ada.home)/ADA_Styles/DocbookProfile.xsl # Style to apply
         output_format = html # Extension of the result file
 
         extra_arguments = --stringparam somename somevalue # To be passed to exec
@@ -66,9 +71,9 @@
 
 [xfig]
         exec = fig2dev # Executable to use
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${ada.basedir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(ada.basedir) # Directory to produce files
         output_format = png # Output extension
 
         border = 2 # Border to surround the figure when exporting
@@ -78,73 +83,73 @@
 
 [inkscape]
         exec = inkscape # Executable to use
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${ada.basedir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(ada.basedir) # Directory to produce files
         output_format = png  # Extension of the output file produced
 
         files = file1 file2 # Space separated list of source files
 
 [convert]
         exec = convert # Executable to use
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${convert.src_dir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(convert.src_dir) # Directory to produce files
         format = png # File estension to use
 
         geometry = 100x120 # Geometry to use when converting
-        suffix = ${convert.geometry} # Suffix to use when converting
+        suffix = %(convert.geometry) # Suffix to use when converting
         crop = 10x20+0+0 # Geometry to crop
         files = file1 file2 # Space separated list of source files
 
 [gimp]
         exec = gimp # Executable to use
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        script_file = ${ada.home}${ada.file_separator}AntImports${ada.file_separator}xcftopng.scm
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        script_file = %(ada.home)%(ada.file_separator)AntImports%(ada.file_separator)xcftopng.scm
 
         files = file1 file2 # Space separated list of source files
 
 [pdfnup]
         exec = pdfnup # Executable to use
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${pdfnup.src_dir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(pdfnup.src_dir) # Directory to produce files
         nup_option = 1x2 # Option to print n up
         files = file1 file2 # Space separated list of source files
 
 [ps2pdf]
         exec = ps2pdf # Executable to use
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${ps2pdf.src_dir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(ps2pdf.src_dir) # Directory to produce files
         files = file1 file2 # Space separated list of source files
 
 [msf2pdf]
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
         files = file1 file2 # Space separated list of source files
 
 [export]
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${ada.basedir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(ada.basedir) # Directory to produce files
         files = file1 file2 # Space separated list of source files
         files_always = file3 file4 # Files that are always exported
 
 [exportcontrol]
-        debug = ${ada.debug_level} # Debug level inherited from ada section
+        debug = %(ada.debug_level) # Debug level inherited from ada section
         date_format = yyyy/MM/dd HH:mm:ss
-        profile_revision = ${ada.profile_revision}
+        profile_revision = %(ada.profile_revision)
         begin = yyy/MM/dd HH:mm:ss # Start of enabled window
         end = yyy/MM/dd HH:mm:ss # End of enabled window
-        now = ${ada.current_datetime} # Current value for the time
+        now = %(ada.current_datetime) # Current value for the time
         open = True # It is considered for export (general enable)
         profile_revision_value = r1:r2 # Revisions to consider
 
 [subrecursive]
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        dst_dir = ${ada.basedir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        dst_dir = %(ada.basedir) # Directory to produce files
 
         dirs = d1 d2 # Space separated lists of directories to recur
                        # overwriting the export.dst_dir variable
@@ -153,18 +158,18 @@
         target = t1 t2 # List of rules to execute in the remote dir
 
 [copy]
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${ada.basedir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(ada.basedir) # Directory to produce files
 
         files = file1 file2 # Space separated list of source files
 
 [exercisesubmit]
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${ada.basedir} # Directory to produce files
-        style_file = ${ada.home}/ADA_Styles/ExerciseSubmit.xsl
-        submit_style_file = ${ada.home}/ADA_Styles/AsapSubmit.xsl
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(ada.basedir) # Directory to produce files
+        style_file = %(ada.home)/ADA_Styles/ExerciseSubmit.xsl
+        submit_style_file = %(ada.home)/ADA_Styles/AsapSubmit.xsl
         output_format = html
         extra_args = arg1 arg2 # Args passed directly to xslt
         files = file1 file2 # Space separated list of source files
@@ -173,32 +178,32 @@
 
 [pdflatex]
         exec = pdflatex # Executable to use
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${pdflatex.src_dir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(pdflatex.src_dir) # Directory to produce files
         files = file1 file2 # Space separated list of source files
         extra_args = opt1 opt2 # To be passed directly to the executable
 
 [latex]
         exec = latex # Executable to use
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${latex.src_dir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(latex.src_dir) # Directory to produce files
         files = file1 file2 # Space separated list of source files
         extra_args = opt1 opt2 # To be passed directly to the executable
 
 [dvips]
         exec = dvips # Executable to use
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${ada.basedir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(ada.basedir) # Directory to produce files
         files = file1 file2 # Space separated list of source files
 
 [dblatex]
         exec = dblatex # Executable to use
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${ada.basedir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(ada.basedir) # Directory to produce files
 
         files = file1 file2 # Space separated list of source files
         multilingual_files = f1 f2 # Space separated list of source files
@@ -208,36 +213,36 @@
         compliant_mode = ???
 
 [exam]
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${exam.src_dir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(exam.src_dir) # Directory to produce files
         equation_dir = equations # Directory to leave the equation files
         output_format = html # Extension for the result file
-        style_file = ${ada.home}/ADA_Styles/Exam.xsl # Style to use
+        style_file = %(ada.home)/ADA_Styles/Exam.xsl # Style to use
 
         extra_args = opt1 opt2 # Options to pass to xsltproc
         file = file1 # Exam file
         multilingual_file = file1 # Multilingual file
 
 [testexam]
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${testexam.src_dir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(testexam.src_dir) # Directory to produce files
         equation_dir = equations # Directory to leave the equations
         output_format = html # Extension of the result file
-        style_file = ${ada.home}/ADA_Styles/Exam.xsl # Style to use
+        style_file = %(ada.home)/ADA_Styles/Exam.xsl # Style to use
 
         extra_args = opt1 opt2 # Options to pass to xsltproc
         file = file1 # Exam file
         multilingual_file = file1 # Multilingual file
 
 [rss]
-        debug = ${ada.debug_level} # Debug level inherited from ada section
-        src_dir = ${ada.basedir} # Directory containing source files
-        dst_dir = ${rss.src_dir} # Directory to produce files
+        debug = %(ada.debug_level) # Debug level inherited from ada section
+        src_dir = %(ada.basedir) # Directory containing source files
+        dst_dir = %(rss.src_dir) # Directory to produce files
         output_format = _rss.xml
-        style_file = ${ada.home}/ADA_Styles/Rss.xsl
-        style_file_tohtml = ${ada.home}/ADA_Styles/RssToHtml.xsl
+        style_file = %(ada.home)/ADA_Styles/Rss.xsl
+        style_file_tohtml = %(ada.home)/ADA_Styles/RssToHtml.xsl
 
         extra_args = opt1 opt2 # Arguments to pass to xsltproc
         files = file1 file2 # Space separated list of source files
@@ -245,7 +250,7 @@
                                            # multilingual files
 
 [clean]
-        debug = ${ada.debug_level} # Debug level inherited from ada section
+        debug = %(ada.debug_level) # Debug level inherited from ada section
 
         files = file1 file2 # Space separated list of files to clean
 

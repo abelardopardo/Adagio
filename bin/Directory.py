@@ -5,13 +5,13 @@
 #
 #
 #
-import sys, os, re, logging
+import sys, os, re, logging, ConfigParser, ordereddict
 
 import Ada, Config, Properties, I18n
 
 # Set the logger for this module
 logging.basicConfig(level=logging.ERROR)
-logger = logging.getLogger('ada.directory')
+logger = logging.getLogger('directory')
 
 # Table to store tuples:
 #   path: Directory object
@@ -27,9 +27,8 @@ def getDirectoryObject(path):
     dirObj = createdDirs.get(os.path.abspath(path), None)
     # Hit in the cache, return
     if dirObj != None:
-        logger.debug('HIT: ' + path)
+        logger.debug('Directory HIT: ' + path)
         return dirObj
-
 
     # Create new object
     return Directory(path)
@@ -38,17 +37,19 @@ def dump(self):
     """
     Show the object content
     """
-    print '### Created Dir Objects'
-    print '  ' + '\n  '.join(createdDirs.keys())
 
-    for a in createdDirs.keys():
-        print '### Dir: ' + a
-        print '  Targets: ' + a.executed_targets
-        print '  Prev dir: ' + a.previous_dir
-        print '  Given dict: ' + str(a.givenDict)
-        print '  Options:\n    ' + '\n    '.join([' = '.join([a, b]) \
-                                                  for a, b in \
-                                                  sorted(self.options.items())])
+    global createdDirs
+
+    print '### Created Dir Objects'
+    print '  ', '\n  '.join(createdDirs.keys())
+
+    for a, d in createdDirs.items():
+        print '### Dir: ', a
+        print '  Targets: ', d.executed_targets
+        print '  Prev dir: ', d.previous_dir
+        print '  Given dict: ', str(d.givenDict)
+        print '  Options:\n    ', 
+        Properties.dump(self.options, '   ')
 
 class Directory:
     """
@@ -70,35 +71,35 @@ class Directory:
 
     # Objects of this class have:
 
-    # previous_dir: dir before switching to the given one
-    # current_dir: dir represented by this object
-    # givenDict: dictionary given from outside this dir
-    # options: dictionary with the options read from the Properties.txt
-    # current_section: section being processed
-    # line_number: line for the section in Properties.txt being processed
-    # executing: true if in the middle of the "Execute" method
-    # section_list: targets in the Properties.txt file
+    # previous_dir:     dir before switching to the given one
+    # current_dir:      dir represented by this object
+    # givenDict:        dictionary given from outside this dir
+    # options:          dictionary with the options read from the Properties.txt
+    # section_list:     targets in the Properties.txt file
+    # current_section:  section being processed
+    # executing:        true if in the middle of the "Execute" method
     # executed_targets: set of targets executed with empty given directory
 
     # Change to the given dir and initlialize fields
     def __init__(self, path=os.getcwd()):
-        logger.info('New object in ' + path)
+        global createdDirs
+
+        logger.info('New dir object in ' + path)
 
         # Make sure a directory is not created twice
         if os.path.abspath(path) in createdDirs:
             print I18n.get('circular_directory').format(path)
             sys.exit(2)
 
-        # Assign
-        self.previous_dir = os.getcwd()
-        self.current_dir = os.path.abspath(path)
-        self.givenDict = None
-        self.options = { 'ada.basedir': self.current_dir }
-        self.current_section = None
-        self.line_number = -1
-        self.section_list = []
+        # Initial values
+        self.previous_dir =     os.getcwd()
+        self.current_dir =      os.path.abspath(path)
+        self.givenDict =        None
+        self.options =          None
+        self.section_list =     []
+        self.current_section =  None
         # Boolean to detect if a directory has been visited twice
-        self.executing = False
+        self.executing =        False
         self.executed_targets = set([])
 
         os.chdir(self.current_dir)
@@ -107,26 +108,29 @@ class Directory:
         createdDirs[self.current_dir] = self
 
         # Check first if the Properties.txt is present
-        adaPropFile = Ada.options['property_file'][0]
+        adaPropFile = Ada.options.get('ada', 'property_file')
         if not os.path.exists(adaPropFile):
             logger.info('No ' + adaPropFile + ' found in ' + self.current_dir)
+            print I18n.get('cannot_find_properties').format(adaPropFile,
+                                                            self.current_dir)
             return
 
         # Parse the file
+        self.options = ConfigParser.SafeConfigParser({}, 
+                                                     ordereddict.OrderedDict)
+        propAbsFile = os.path.abspath(os.path.join(self.current_dir,
+                                      adaPropFile))
+        logger.debug('Parsing ' + propAbsFile)
+        if Properties.loadConfigFile(Ada.options, propAbsFile, self.options):
+            print I18n.get('severe_parse_error').format(propAbsFile)
+            sys.exit(1)
+
         self.current_section = None
-        self.line_number = 0
-        self.section_list = []
-
-        logger.debug('Parsing ' + adaPropFile + ' in ' + self.current_dir)
-        (status, n) = Config.Parse(adaPropFile, None, self.SetOption)
-
-        # If the parsing failed, terminate
-        if not self.checkParse(adaPropFile, status, n):
-            return
+        self.section_list = self.options.sections()
 
         # Dump a debug message showing the list of sections detected in the
         # config file
-        logger.debug('Sections: ' + str(self.section_list))
+        logger.debug('Sections: ' + ', '.join(self.section_list))
 
         return
 
@@ -180,87 +184,6 @@ class Directory:
 
         return
 
-    def SetOption(self, section, varname, value, lineNumber, oldValue = None,
-                  newSection = False, fileOut = None):
-
-        # A new section appears
-        if section != self.current_section:
-            # If a section appears for second time, protest
-            if next((True for n in self.section_list if n == section), False):
-                print 'Section already present in file.'
-                print section + ', ' + str(self.current_section)
-                return False
-
-            self.current_section = section
-            self.line_number = lineNumber
-
-            # Append new section to the list for further reference
-            self.section_list.append(section)
-
-            logger.debug('Parsing section ' + section)
-
-
-        # Check if the option given is legal, if not, the getOption method bombs
-        # out
-        fullName = section + '.' + varname
-        (a, b, c) = Config.splitVarName(fullName)
-
-        try:
-            Properties.getOption(a, c)
-        except NameError, e:
-            file = Ada.options['property_file'][0]
-            print I18n.get('severe_parse_error').format(ln=lineNumber,
-                                                        pfile = file)
-            print e
-            sys.exit(2)
-        except KeyError, e:
-            file = Ada.options['property_file'][0]
-            print I18n.get('severe_parse_error').format(ln=lineNumber,
-                                                        pfile = file)
-            print I18n.get('option') + ' ' + fullName + \
-                ' ' + I18n.get('not_found') + '.'
-            sys.exit(2)
-
-        if value != None:
-            try:
-                value = self.expandVars(str(value))
-            except NameError, e:
-                file = Ada.options['property_file'][0]
-                print I18n.get('severe_parse_error').format(ln=lineNumber,
-                                                            pfile = file)
-                print e
-                sys.exit(2)
-
-        self.options[fullName] = value
-
-        return True
-
-    def checkParse(self, file, status, lineNumber):
-        """
-        Print messages depending on the outcome of the parse function
-        """
-        if status == Config.Diagnostics.OK:
-            return True
-        elif status == Config.Diagnostics.ERROR_ALREADY_TREATED:
-            # No message here, it has been treated
-            return False
-        elif status == Config.Diagnostics.FILE_NOT_FOUND:
-            print I18n.get('file_not_found').format(file)
-            return False
-        elif status == Config.Diagnostics.CANNOT_OPEN_FILE:
-            print I18n.get('config_parse_cannot_open').format(file)
-            return False
-        elif status == Config.Diagnostics.LINE_IN_NO_SECTION:
-            print I18n.get('config_parse_line_nosection').format(pfile = file,
-                                                                 ln = lineNumber)
-            return False
-        elif status == Config.Diagnostics.INCORRECT_ASSIGNMENT:
-            print I18n.get('config_incorrect_assignment').format(pfile = file,
-                                                                 ln = lineNumber)
-            return False
-
-        print I18n.get('options_unchecked_parse_error').format(pfile = file,
-                                                               ln = lineNumber)
     def get(self, keyValue, otherDict = None):
         """
         Split a property name in section, subsection and name and call a function
@@ -330,14 +253,6 @@ class Directory:
         Set the pair (keyName, value) in the options dictionary
         """
         self.options[keyName] = value
-
-    def expandVars(self, expression):
-        """
-        Given an expression with a reference to a variable ${sect.varname},
-        replace that reference by the value.
-        """
-        return re.sub(Directory.varReference, \
-                      lambda x: self.get(x.group('varname')), expression)
 
 ################################################################################
 
