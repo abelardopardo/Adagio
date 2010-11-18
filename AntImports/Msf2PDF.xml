@@ -100,6 +100,7 @@
       <compositemapper>
 	<mapper type="glob" from="*.ppt" to="*.pdf"/>
 	<mapper type="glob" from="*.doc" to="*.pdf"/>
+	<mapper type="glob" from="*.odt" to="*.pdf"/>
       </compositemapper>
     </apply>    
   </target>
