@@ -10,7 +10,7 @@ import os, logging, I18n
 import Directory
 
 # Prefix to use for the options
-rule_prefix = 'xslt'
+module_prefix = 'xslt'
 
 # List of triplets (varname, default value (if any), description)
 options = [
