@@ -33,8 +33,7 @@ def main():
     # Initialization of all the required variables
     #
     #######################################################################
-    if Ada.initialize():
-        sys.exit(1)
+    Ada.initialize()
 
     #######################################################################
     #
@@ -43,6 +42,7 @@ def main():
     #######################################################################
     targets = []
     directories = []
+    optionsToSet = []
 
     # Swallow the options
     try:
@@ -63,8 +63,7 @@ def main():
             except ValueError, e:
                 logger.error(I18n.get('incorrect_debug_option'))
                 sys.exit(3)
-
-            Ada.options.set(Ada.module_prefix, 'debug_level', value)
+            Ada.config_defaults['debug_level'] = value
 
         # Dump the manual page
         elif optstr == "-h" or optstr == "-x":
@@ -79,21 +78,7 @@ def main():
                 print I18n.get('incorrect_arg_num').format('-s option')
                 print I18n.get('__doc__')
                 sys.exit(3)
-                
-            # Check if the given option is correct
-            if not Ada.options.has_option(sname_value[0],
-                                          sname_value[1]):
-                optionName = sname_value[0] + '.' + sname_value[1]
-                print I18n.get('incorrect_option').format(value)
-                sys.exit(3)
-
-            # This option is stored in level B of the dictionary
-            try:
-                Ada.options.add_section(sname_value[0])
-            except ConfigParser.DuplicateSectionError:
-                pass
-            Ada.options.set(sname_value[0], sname_value[1], sname_value[2])
-
+            optionsToSet.append(' '.join(sname_value))
         # Set the targets
         elif optstr == "-t":
             # Extend the list of targets to process
@@ -103,15 +88,12 @@ def main():
     # right type (integers, floats, date/time, et.
     pass # TO BE IMPLEMENTED
 
-    # Set the root logger
-    logger.setLevel(int(Ada.options.getint('ada', 'debug_level')))
-
     # If no argument is given, process current directory
     if args == []:
         directories = [os.getcwd()]
     else:
         directories = args
-        
+
     # Print Reamining arguments. If none, just stick the current dir
     logger.debug('Dirs: ' + str(directories))
     logger.debug('Targets: ' + ' '.join(targets))
@@ -134,21 +116,17 @@ def main():
 
         # Check that a correct directory has been given
         if not os.path.isdir(currentDir):
-            print I18n.get('not_a_directory').format(nonDir)
+            print I18n.get('not_a_directory').format(currentDir)
             sys.exit(4)
 
-        # Move to the  dir to process
-        logger.debug('CHDIR ' + currentDir)
-        os.chdir(currentDir)
+        # Create the directory
+        dirObject = Directory.getDirectoryObject(currentDir,
+                                                 sorted(optionsToSet))
+        # Execute its targets
+        dirObject.Execute(targets)
 
-        # Check if the cache already contains this directory
-        dirObject = Directory.getDirectoryObject(currentDir)
-        Directory.dump(dirObject)
+    # Properties.dump(Ada.options)
 
-        # dirObject.Execute(targets)
-
-    Properties.dump(Ada.options)
-        
 # Execution as script
 if __name__ == "__main__":
     main()

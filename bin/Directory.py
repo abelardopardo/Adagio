@@ -7,7 +7,7 @@
 #
 import sys, os, re, logging, ConfigParser, ordereddict
 
-import Ada, Config, Properties, I18n
+import Ada, Config, Properties, I18n, Xsltproc
 
 # Set the logger for this module
 logging.basicConfig(level=logging.ERROR)
@@ -17,38 +17,62 @@ logger = logging.getLogger('directory')
 #   path: Directory object
 #
 # to avoid executing twice the same directory (cache)
-createdDirs = {}
+_createdDirs = {}
 
-def getDirectoryObject(path):
+def getDirectoryObject(path, givenOptions):
     """
     Function that given a path checks if it exists in the createdDirs hash. If
     so, returns the object. If not, a new object is created.
     """
-    dirObj = createdDirs.get(os.path.abspath(path), None)
-    # Hit in the cache, return
+    global _createdDirs
+
+    # The key to access the hash is the concatenation of path and givenOptions
+    theKey = path + ''.join(givenOptions)
+    dirObj = _createdDirs.get(theKey)
     if dirObj != None:
-        logger.debug('Directory HIT: ' + path)
-        return dirObj
+        # Hit in the cache, return
+        if dirObj != None:
+            logger.debug('Directory HIT: ' + path)
+            return dirObj
 
     # Create new object
-    return Directory(path)
+    dirObj = Directory(path, givenOptions)
+    _createdDirs[theKey] = dirObj
+    return dirObj
+
+def versionToInteger(version):
+    """
+    Fucntion that given a ??.??.?? version (all digits), produces an integer.
+    """
+
+    match = re.match('^(?P<major>[0-9]+)\.(?P<minor>[0-9]+)\.(?P<pt>[0-9]+)$',
+                     version)
+    if not match:
+        print I18n.get('incorrect_version_format').version
+        sys.exit(3)
+
+    result = 0
+    result = 1000000 * int(match.group('major')) + \
+        10000 * int(match.group('minor')) + int(match.group('pt'))
+
+    return result
 
 def dump(self):
     """
     Show the object content
     """
 
-    global createdDirs
+    global _createdDirs
 
     print '### Created Dir Objects'
-    print '  ', '\n  '.join(createdDirs.keys())
+    print '  ', '\n  '.join(_createdDirs.keys())
 
-    for a, d in createdDirs.items():
+    for (a, go), d in _createdDirs.items():
         print '### Dir: ', a
         print '  Targets: ', d.executed_targets
         print '  Prev dir: ', d.previous_dir
-        print '  Given dict: ', str(d.givenDict)
-        print '  Options:\n    ', 
+        print '  Given dict: ', go
+        print '  Options:\n    ',
         Properties.dump(self.options, '   ')
 
 class Directory:
@@ -73,7 +97,7 @@ class Directory:
 
     # previous_dir:     dir before switching to the given one
     # current_dir:      dir represented by this object
-    # givenDict:        dictionary given from outside this dir
+    # givenOptions:     list of options given from outside this dir
     # options:          dictionary with the options read from the Properties.txt
     # section_list:     targets in the Properties.txt file
     # current_section:  section being processed
@@ -81,20 +105,14 @@ class Directory:
     # executed_targets: set of targets executed with empty given directory
 
     # Change to the given dir and initlialize fields
-    def __init__(self, path=os.getcwd()):
-        global createdDirs
+    def __init__(self, path=os.getcwd(), givenOptions = []):
 
         logger.info('New dir object in ' + path)
-
-        # Make sure a directory is not created twice
-        if os.path.abspath(path) in createdDirs:
-            print I18n.get('circular_directory').format(path)
-            sys.exit(2)
 
         # Initial values
         self.previous_dir =     os.getcwd()
         self.current_dir =      os.path.abspath(path)
-        self.givenDict =        None
+        self.givenOptions =     ''
         self.options =          None
         self.section_list =     []
         self.current_section =  None
@@ -102,32 +120,92 @@ class Directory:
         self.executing =        False
         self.executed_targets = set([])
 
+        # Change current directory to this directory
         os.chdir(self.current_dir)
 
-        # Insert the directory in the cache, no targets have been processed
-        createdDirs[self.current_dir] = self
+        # Nuke the adado.log file
+        logFile = os.path.join(os.getcwd(), 'adado.log')
+        if os.path.exists(logFile):
+            os.remove(logFile)
 
-        # Check first if the Properties.txt is present
-        adaPropFile = Ada.options.get('ada', 'property_file')
+        # Safe parser to store the options
+        self.options = ConfigParser.SafeConfigParser(Ada.config_defaults,
+                                                     ordereddict.OrderedDict)
+
+        #
+        # STEP 1: Set ada.home in global options
+        #
+        self.options.add_section(Ada.module_prefix)
+        self.options.set(Ada.module_prefix, 'home', Ada.home)
+        logger.debug('ada.home = ' + Ada.home)
+
+        #
+        # STEP 2: Load the default options from the Rule files
+        #
+        Properties.loadOptionsInConfig(self.options, Ada.module_prefix, Ada.options)
+        Properties.loadOptionsInConfig(self.options, Xsltproc.module_prefix,
+                                       Xsltproc.options)
+
+        #
+        # STEP 3: Load the $HOME/.adarc if any
+        #
+        userAdaConfig = os.path.join(os.environ.get('HOME'), '.adarc')
+        if os.path.isfile(userAdaConfig):
+            logger.debug('Sourcing ' + userAdaConfig)
+            # Swallow user file on top of global options, and if trouble, report
+            # up
+            if Properties.loadConfigFile(self.options, userAdaConfig):
+                sys.exit(1)
+
+        #
+        # STEP 4: Options given from outside the dir
+        #
+        for assignment in givenOptions:
+            # Chop assignment into its three parts
+            (sn, on, ov) = assignment.split()
+            # Check first if the option is legal
+            if not self.options.has_option(sn, on):
+                optionName = sn + '.' + on
+                print I18n.get('incorrect_option').format(value)
+                sys.exit(3)
+            # Insert in the options in the directory
+            try:
+                self.options.set(sn, on, ov)
+            except ConfigParser.NoSectionError:
+                sys.exit(3)
+        #
+        # STEP 5: Options given in the config file in the directory
+        #
+        adaPropFile = self.options.get('ada', 'property_file')
         if not os.path.exists(adaPropFile):
             logger.info('No ' + adaPropFile + ' found in ' + self.current_dir)
             print I18n.get('cannot_find_properties').format(adaPropFile,
                                                             self.current_dir)
-            return
-
-        # Parse the file
-        self.options = ConfigParser.SafeConfigParser({}, 
-                                                     ordereddict.OrderedDict)
+            sys.exit(3)
         propAbsFile = os.path.abspath(os.path.join(self.current_dir,
-                                      adaPropFile))
+                                                   adaPropFile))
         logger.debug('Parsing ' + propAbsFile)
-        if Properties.loadConfigFile(Ada.options, propAbsFile, self.options):
-            print I18n.get('severe_parse_error').format(propAbsFile)
-            sys.exit(1)
+        if Properties.loadConfigFile(self.options, propAbsFile):
+            sys.exit(3)
+
+        #
+        # STEP 6: Options given in the config file in the directory
+        #
+        adaProjFile = self.findProjectFile()
+        if adaProjFile != None:
+            logger.debug('Parsing ' + adaProjFile)
+            if Properties.loadConfigFile(self.options, adaProjFile):
+                sys.exit(3)
+
+        # Compare ADA versions to see if execution is allowed
+        if not self.isCorrectAdaVersion():
+            version = self.options.get(Ada.module_prefix, 'version')
+            logger.error('ERROR: Incorrect Ada Version (' + version + ')')
+            print I18n.get('incorrect_version').format(version)
+            sys.exit(3)
 
         self.current_section = None
         self.section_list = self.options.sections()
-
         # Dump a debug message showing the list of sections detected in the
         # config file
         logger.debug('Sections: ' + ', '.join(self.section_list))
@@ -141,11 +219,49 @@ class Directory:
         os.chdir(self.previous_dir)
         return
 
-    def Execute(self, targets = [], givenDict = None):
+    def isCorrectAdaVersion(self):
+        """ Method to check if the curren ada version is within the potentially
+        limited values specified in variables ada.minimum_version,
+        ada.maximum_version and ada.exact_version"""
+
+        global module_prefix
+
+        # Get versions to allow execution depending on the version
+        minVersion = self.options.get(Ada.module_prefix, 'minimum_version')
+        maxVersion = self.options.get(Ada.module_prefix, 'maximum_version')
+        exactVersion = self.options.get(Ada.module_prefix, 'exact_version')
+
+        # If no value is given in any variable, avanti
+        if (minVersion == '') and (maxVersion == '') and (exactVersion == ''):
+            return True
+
+        currentValue = versionToInteger(self.options.get(Ada.module_prefix,
+                                                         'version'))
+
+        # Translate all three variables to numbers
+        minValue = currentValue
+        if (minVersion != ''):
+            minValue = versionToInteger(minVersion)
+
+        maxValue = currentValue
+        if (maxVersion != ''):
+            maxValue = versionToInteger(maxVersion)
+
+        exactValue = currentValue
+        if (exactVersion != ''):
+            exactValue = versionToInteger(exactVersion)
+
+        # Check if an exact version is required
+        if (exactValue == currentValue) and (minValue <= currentValue) and \
+                (currentValue <= maxValue):
+            return True
+
+        return False
+
+    def Execute(self, targets = []):
         """
-        Execute the directory targets. This is one of the most important
-        functions because it parses the file and invokes the different rule
-        execution scripts.
+        Properties.txt has been parsed into a ConfigParse. Loop over the targets
+        and execute all of them.
         """
 
         logger.info('Execute in ' + self.current_dir)
@@ -156,12 +272,18 @@ class Directory:
             sys.exit(2)
         self.executing = True
 
-        # If no targets are given, choose all of them except ada
+        # If no targets are given, choose the default ones, that is, ignore:
+        # - ada
+        # - clean*
+        # - local*
+        #
         if targets == []:
-            targets = [x for x in self.section_list if x != 'ada']
+            targets = [x for x in self.section_list
+                       if not re.match('^ada$', x) and
+                          not re.match('^clean(\.?\S+)?$', x) and
+                          not re.match('^local(\.?\S+)?$', x)]
 
         logger.debug('  Targets: ' + str(targets))
-        logger.debug('  GivenDict: ' + str(givenDict))
 
         # Loop over all the targets to execute
         for target_name in targets:
@@ -174,85 +296,33 @@ class Directory:
             # Execute the target
             Properties.Execute(target_name, self)
 
-            # Insert executed target in cache only if the given dict is empty
-            if not givenDict:
-                self.executed_targets.add(target_name)
+            # Insert executed target in cache
+            self.executed_targets.add(target_name)
 
         self.executing = False
-
         logger.debug(' Executed Targets: ' + str(self.executed_targets))
-
         return
 
-    def get(self, keyValue, otherDict = None):
+    # Search for .sc all the way up the hierarchy (until the top)
+    def findProjectFile(self):
         """
-        Split a property name in section, subsection and name and call a function
-        """
-        (sect, subsect, name) = Config.splitVarName(keyValue)
-
-        # If the name is malformed, raise exception
-        if sect == None:
-            raise NameError, I18n.get('option') + ' ' + keyValue + \
-                ' ' + I18n.get('not_found') + '.'
-
-        return self.getSplit(keyValue, sect, subsect, name, otherDict)
-
-
-    def getSplit(self, fullName, sect, subsect, name, otherDict = None):
-        """
-        Look up the given fullName in a set of dictionaries and return the
-        first one that contains it.
-
-        It should be noted that fullName = sect + '.' + subsect + '.' name
-
-        The order in which these dictionaries are checked are:
-
-        A.1) Given dictionary of the directory (fullName)
-
-        A.2) Given dictionary of the directory (sect.name)
-
-        B.1) options dictionary in the directory (fullName)
-
-        B.2) options dictionary in the directory (sect.name)
-
-        If otherDict is given: Check name otherDict
-
-        else: Check fullName with Properties.get
+        Function that traverses the directories upward until the file name given
+        by the option ada.projectfile is found, None otherwise
         """
 
-        # Prepare result and property name without the subsection part
-        result = None
-        shortname = sect + '.' + name
+        pfile = self.options.get(Ada.module_prefix, 'project_file')
 
-        # A) If there is a given dict and has the key, return it
-        if self.givenDict != None:
-            # A.1) Check with the full name
-            result = self.givenDict.get(fullName)
-            if result != None:
-                return result
-            # A.2) Check with the simplified name
-            result = self.givenDict.get(shortname)
-            if result != None:
-                return result
+        currentDir = os.getcwd()
+        while (currentDir != '/') and \
+                (not os.path.exists(os.path.join(currentDir, pfile))):
+            currentDir = os.path.abspath(os.path.join(currentDir, ".."))
 
-        # B.1) If fullName is in options, return it
-        result = self.options.get(fullName)
-        if result != None:
-            return result
+        if currentDir == '/':
+            return None
 
-        # B.2) If sect.name is in options, return it
-        result = self.options.get(shortname)
-        if result != None:
-            return result
+        adminDir = os.path.join(currentDir, pfile)
 
-        # If nothing worked so far, check all the dictionaries for the sect.name
-        return Properties.getOption(sect, name, otherDict)
-
-    def set(self, keyName, value):
-        """
-        Set the pair (keyName, value) in the options dictionary
-        """
-        self.options[keyName] = value
+        return adminDir
 
 ################################################################################
 
@@ -262,5 +332,3 @@ if __name__=="__main__":
     p1.Execute()
 
     p2 = Directory(os.getcwd())
-
-#     p1.dump()
