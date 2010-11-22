@@ -55,12 +55,17 @@ def addNode(fileName):
         __FileNameToNodeIDX[fileName] = nodeIdx
         __IDXToName.append(fileName)
         __NodeOutEdges.append(set({}))
-        __NodeDate.append(os.path.getmtime(fileName))
+        # If the file exists, store the mtime, if not, zero.
+        if os.path.exists(fileName):
+            __NodeDate.append(os.path.getmtime(fileName))
+        else:
+            __NodeDate.append(0)
 
         # If the extension is xml or xsl, traverse the includes/imports
         ext = os.path.splitext(fileName)[1]
         if ext == '.xml' or ext == '.xsl':
-            update(nodeIdx, getIncludes(fileName))
+            x = getIncludes(fileName)
+            update(nodeIdx, x)
 
     # Return the index associated with the given file
     return nodeIdx
@@ -111,7 +116,7 @@ def update(dst, srcSet = set([])):
     # If the modification needs to propagate go ahead
     if moreRecentDate > __NodeDate[dstIDX]:
         __NodeDate[dstIDX] = moreRecentDate
-        for fanoutIDX in __NodeOutEdges[srcIDX]:
+        for fanoutIDX in __NodeOutEdges[dstIDX]:
             update(fanoutIDX, set([dstIDX]))
 
     return dstIDX
@@ -188,24 +193,19 @@ def dumpGraph():
     pref = os.path.commonprefix(__IDXToName)
 
     for n in range(0, len(__IDXToName)):
-        print '[' + str(n) + ']' + ' ' + str(__NodeDate[n])
+        print str(__NodeDate[n]), __IDXToName[n], '[' + str(n) + ']'
         print '  ' + ' '.join([str(m) for m in __NodeOutEdges[n]])
 
 ################################################################################
 
 if __name__ == "__main__":
 
-    Ada.initialize()
+    update(sys.argv[1], set(sys.argv[2:]))
+    
+    if isUpToDate(sys.argv[1]):
+        print sys.argv[1], 'is up to date'
+    else:
+        print sys.argv[1], 'is NOT up to date'
 
-    for n in sys.argv[1:]:
-        lap = time.time()
-        l = isUpToDate(sys.argv[1])
-        print n + ' ' + str(time.time() - lap) + ', ' + str(l)
-
-#         print '\n\n'
-
-#         print '\n'.join([__IDXToName[f] \
-#                          for f in range(0, len(__NodeDate)) \
-#                          if __NodeDate[f] > os.path.getmtime(sys.argv[1])])
     dumpGraph()
 

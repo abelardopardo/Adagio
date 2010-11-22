@@ -5,9 +5,9 @@
 #
 #
 #
-import os, logging, re
+import os, logging, re, sys
 
-import Ada, Directory, I18n
+import Ada, Directory, I18n, Dependency, AdaRule
 
 # Prefix to use for the options
 module_prefix = '@PREFIX@'
@@ -19,11 +19,7 @@ logger = logging.getLogger(module_prefix)
 # List of tuples (varname, default value, description string)
 options = [
     ('exec', 'xsltproc', I18n.get('name_of_executable')),
-    ('style_file', '%(home)s%(file_separator)sADA_Styles%(file_separator)sDocbookProfile.xsl',
-                   I18n.get('xslt_style_file')),
     ('output_format', 'html', I18n.get('output_format')),
-    ('extra_arguments', '', I18n.get('xslt_extra_arguments')),
-    ('merge_styles', '', I18n.get('xslt_merge_styles')),
     ('languages', '%(locale)s', I18n.get('xslt_languages'))
     ]
 
@@ -32,7 +28,7 @@ documentation = {
     @DESCRIBE HERE WHAT THIS RULE DOES@
     """}
 
-def Execute(target, directory):
+def Execute(target, directory, pad = ''):
     """
     Execute the rule in the given directory
     """
@@ -42,37 +38,30 @@ def Execute(target, directory):
 
     logger.info(module_prefix + ':' + target + ':' + directory.current_dir)
 
-    # If requesting var dump, do it and finish
-    if re.match('(.+\.)?dump', target):
-        dumpOptions(directory)
+    dirMsg = directory.current_dir[(len(pad) + 2 + len(target)) - 80:]
+    print pad + 'BB', target, dirMsg
+
+    # Check if the requested target is "special"
+    if AdaRule.processSpecialTargets(target, directory, documentation, 
+                                     module_prefix):
+        print pad + 'EE', target, dirMsg
         return
 
-    # If requesting help, dump msg and terminate
-    if re.match('(.+)?help', target):
-        msg = documentation[directory.options.get(Ada.module_prefix, 'locale')]
-        if msg != None:
-            print I18n.get('doc_preamble').format(module_prefix)
-            print msg
-        else:
-            print I18n.get('no_doc_for_rule').format(module_prefix)
+    # If requesting clean, remove files and terminate
+    if re.match('(.+)?clean', target):
+        clean(target, directory)
+        print pad + 'EE', target, dirMsg
         return
 
+
+    print pad + 'EE', target, dirMsg
     return
 
-def dumpOptions(directory):
+def clean(target, directory):
     """
-    Dump the value of the options affecting the computations
+    Clean the files produced by this rule
     """
-
-    global options
-    global module_prefix
-
-    print I18n.get('var_preamble').format(module_prefix)
-
-    for sn in directory.options.sections():
-        if sn.startswith(module_prefix):
-            for (on, ov) in sorted(directory.options.items(sn)):
-                print ' -', module_prefix + '.' + on, '=', ov
+    pass
 
 # Execution as script
 if __name__ == "__main__":

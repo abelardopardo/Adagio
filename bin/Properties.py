@@ -44,18 +44,18 @@ def loadConfigFile(config, filename):
     filename. Parses the file, makes sure all the new config options are present
     in the first config.
 
-    Returns boolean notifying if there has been errors
+    Returns the list of detected sections or None if problems
     """
 
     if not os.path.isfile(filename):
         I18n.get('cannot_open_file').format(filename)
-        return True
+        return None
 
     # Open the disk file
     configfile = open(filename, 'r')
     if configfile == None:
         I18n.get('cannot_open_file').format(filename)
-        return True
+        return None
 
     # Pass the file to a StringIO removing the leading spaces from the lines
     # containing an equal sign.
@@ -79,24 +79,31 @@ def loadConfigFile(config, filename):
         print I18n.get('severe_parse_error').format(filename)
         print msg
         memoryFile.close()
-        return True
+        return None
 
-
+    result = tmpconfig.sections()
     # Move all options to the given config but checking if they are legal
-    for sname in tmpconfig.sections():
+    for sname in result:
+        # Get the prefix to check if the option is legal
+        sprefix = sname.split('.')[0]
         for (oname, ovalue) in tmpconfig.items(sname):
-            if not config.has_option(sname, oname):
+            # If not present in the default options, terminate
+            if not config.has_option(sprefix, oname):
                 optionName = sname + '.' + oname
                 print I18n.get('incorrect_option_in_file').format(optionName,
                                                                   filename)
                 memoryFile.close()
-                return True
-            # Else, fold in the given one
+                return None
+            # If present in the default options, add its value
+            try:
+                config.add_section(sname)
+            except ConfigParser.DuplicateSectionError:
+                pass
             config.set(sname, oname, ovalue)
 
     # No longer needed
     memoryFile.close()
-    return False
+    return result
 
 def dump(options, pad = '', sections = None):
     """
@@ -127,11 +134,12 @@ def Execute(target, dirLocation):
         return
 
     # Detect help or dump targets
-    noSection = (target == 'dump') or (target == 'help')
+    noSection = (target == 'dump') or (target == 'help') or (target == 'clean')
 
     # Detect help or dump targets with/without section name
     specialTarget = re.match('(.+\.)?dump$', target) or \
-        re.match('(.+\.)?help$', target)
+        re.match('(.+\.)?help$', target) or \
+        re.match('(.+\.)?clean$', target)
 
     # Make sure the target is legal.
     if not specialTarget and not dirLocation.options.has_section(target):

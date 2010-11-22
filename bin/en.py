@@ -8,13 +8,13 @@
 
 msgs = {
     '__doc__': """
-    Execute the production rules described in the Properties.txt file. The
-    invocation of this script must follow the structure:
+    Execute the given targets from the production rules described in a local
+    file. The invocation of this script must follow the structure:
 
-    script [options] [dir dir ...]
+    script [options] [target target ...]
 
-    The script visits the given directories in the given order and executes the
-    production rules. If no directory is given, the current one is processed.
+    The script visits the current directory and executes the rules attached to
+    the given targets. If no target is given, all of them are processed
 
     The script accepts the following options:
 
@@ -36,12 +36,13 @@ msgs = {
                        this assignment will be visible to all the rules
                        executed.
 
-      -t target: Target in the Properties.txt file to execute. If none is given,
-                 all of them are executed.
-
     """,
     'file_not_found': 'File {0} not found',
     'not_a_directory': '{0} is not a directory',
+    'producing': 'Producing {0}',
+    'removing': 'Removing {0}',
+    'no_file_to_process' : 'No file given to process',
+    'no_style_file' : 'No style file given.',
     'no_doc_for_rule': 'No documentation for rule {0}',
     'doc_preamble' : '===== {0} Processing Rules =====',
     'var_preamble' : '===== {0} Variables        =====',
@@ -54,6 +55,9 @@ msgs = {
         'ada.maximum_version',
     'severe_parse_error': 'Error while parsing {0}',
     'severe_option_error': 'Error in configuration file',
+    'error_applying_xslt': 'Error while applying style in target {0}',
+    'error_extra_args': 'Incorrect arguments in variable {0}.extra-arguments',
+    'file_uptodate': 'File {0} is up to date. Bypassing execution.',
     'not_enough_params': 'Not enough params for {0}',
     'incorrect_arg_num': 'Incorrect arguments for {0}',
     'incorrect_option': 'Incorrect option {0}',

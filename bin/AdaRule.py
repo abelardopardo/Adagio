@@ -5,8 +5,15 @@
 #
 #
 #
-import os, glob
-import Ada
+import os, re
+
+# Import conditionally either regular xml support or lxml if present
+try:
+    from lxml import etree
+except ImportError:
+    import xml.etree.ElementTree as etree
+
+import Ada, I18n
 
 def isProgramAvailable(executable):
     def is_exe(fpath):
@@ -37,40 +44,104 @@ def locateFile(fileName, dirPrefix = os.getcwd()):
     if os.path.exists(absName):
         return absName
 
-    localAdaStyle = os.path.join(Ada.ada_home, 'ADA_Styles', fileName)
+    localAdaStyle = os.path.join(Ada.home, 'ADA_Styles', fileName)
 
     if os.path.exists(localAdaStyle):
         return os.path.abspath(localAdaStyle)
 
     return None
 
-def expandFiles(dir, files):
-    """Function that given a (possible empty) directory and a set of space
-    separated list of file patterns, it returns a list of elements each of them
-    is an absolute path to a file referred to by the given expressions"""
+def processSpecialTargets(target, directory, documentation, prefix):
+    """
+    Check if the requested target is special:
+    - dump
+    - help
 
-    # Trivial cases first, if files are empty, return
-    if files == '':
-        return []
-
-    # Set dir to proper value, and make it an absolute path
-    if dir == '':
-        dir = os.getcwd()
-    dir = os.path.abspath(dir)
-
-    return [os.path.join(dir, srcFile) for srcFile in  files.split()]
-
-def expandExistingFiles(dir, files):
-    """Function that given a (possible empty) directory and a set of space
-    separated list of file patterns, it returns a list of elements each of them
-    is an absolute path to an EXISTING file referred to by the given expressions
+    Return boolean stating if any of them has been executed
     """
 
-    result = []
-    for fPattern in expandFiles(dir, files):
-        result = result + glob.glob(fPattern)
+    # If requesting var dump, do it and finish
+    if re.match('(.+\.)?dump', target):
+        dumpOptions(target, directory, prefix)
+        return True
 
-    return result
+    # If requesting help, dump msg and terminate
+    if re.match('(.+)?help', target):
+        msg = documentation[directory.getWithDefault(Ada.module_prefix, 
+                                                     'locale')]
+        if msg != None:
+            print I18n.get('doc_preamble').format(prefix)
+            print msg
+        else:
+            print I18n.get('no_doc_for_rule').format(prefix)
+        return True
+
+    return False
+
+    
+def dumpOptions(target, directory, prefix):
+    """
+    Dump the value of the options affecting the computations
+    """
+
+    global options
+
+    print I18n.get('var_preamble').format(prefix)
+
+    # Remove the .dump from the end of the target to fish for options
+    target = re.sub('\.?dump$', '', target)
+    if target == '':
+        target = prefix
+
+    # Calculate default section if any
+    defSection = target.split('.')
+    if len(defSection) > 1:
+        defSection = defSection[0]
+    else:
+        defSection = target
+
+    for sn in directory.options.sections():
+        if sn.startswith(target) or sn == defSection:
+            for (on, ov) in sorted(directory.options.items(sn)):
+                print ' -', sn + '.' + on, '=', ov
+
+def getCleanTargets(target, directory, prefix):
+    """
+    Function that given a clean target, returns exactly the targets to execute
+    in the current directory.  
+    """
+    
+    # Remove the .clean from the end of the target
+    target = re.sub('\.?clean$', '', target)
+
+    # If the target was simply "clean", get all the targets starting with the
+    # module prefix from the section_list in the directory
+    if target == '':
+        targets = [x for x in directory.options.sections() 
+                   if x.startswith(prefix)]
+    else:
+        targets = [target]
+
+    return targets
+
+class StyleResolver(etree.Resolver):
+    """
+    Resolver to use with XSLT stylesheets and force the detection of stylesheets
+    in the ADA home directory
+    """
+    def __init__(self):
+        self.styleDir = 'file://' + os.path.join(Ada.home, 'ADA_Styles')
+
+    def resolve(self, url, pubid, context):
+        if url.startswith('file://'):
+            url = url[7:];
+            if not os.path.exists(url):
+                newURL = os.path.join(self.styleDir, os.path.basename(url))
+                return self.resolve_filename(newURL, context)
+
+################################################################################
+# OLD
+################################################################################
 
 def executeRuleChain(dirList, executionContext, commands):
 

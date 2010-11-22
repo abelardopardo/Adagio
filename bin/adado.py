@@ -41,7 +41,6 @@ def main():
     #
     #######################################################################
     targets = []
-    directories = []
     optionsToSet = []
 
     # Swallow the options
@@ -88,14 +87,10 @@ def main():
     # right type (integers, floats, date/time, et.
     pass # TO BE IMPLEMENTED
 
-    # If no argument is given, process current directory
-    if args == []:
-        directories = [os.getcwd()]
-    else:
-        directories = args
+    # The rest of the arguments are the targets
+    targets = args
 
     # Print Reamining arguments. If none, just stick the current dir
-    logger.debug('Dirs: ' + str(directories))
     logger.debug('Targets: ' + ' '.join(targets))
 
     #######################################################################
@@ -104,28 +99,12 @@ def main():
     #
     #######################################################################
 
-    # Remember the initial directory
-    initialDir = os.getcwd()
-
-    # Create the initial list of directories to process
-    for currentDir in directories:
-
-        # Move to the initial dir
-        logger.debug('CHDIR ' + initialDir)
-        os.chdir(initialDir)
-
-        # Check that a correct directory has been given
-        if not os.path.isdir(currentDir):
-            print I18n.get('not_a_directory').format(currentDir)
-            sys.exit(4)
-
-        # Create the directory
-        dirObject = Directory.getDirectoryObject(currentDir,
-                                                 sorted(optionsToSet))
-        # Execute its targets
-        dirObject.Execute(targets)
-
-    # Properties.dump(Ada.options)
+    # Create the directory
+    dirObject = Directory.getDirectoryObject(os.getcwd(),
+                                             sorted(optionsToSet))
+        
+    # Execute its targets
+    dirObject.Execute(targets)
 
 # Execution as script
 if __name__ == "__main__":

@@ -31,17 +31,20 @@ logger = logging.getLogger(module_prefix)
 # Xsltproc: apply xsltproc with options/style/xmlfile
 #
 ################################################################################
+_currentDir = os.path.abspath(os.getcwd())
 config_defaults = {
     'debug_level':      '40',
     'version':          '10.03.1',
     'locale':           lang[0:2],
-    'home':             os.path.abspath(os.getcwd()),
-    'basedir':          os.path.abspath(os.getcwd()),
-    'src_dir':          os.path.abspath(os.getcwd()),
-    'dst_dir':          os.path.abspath(os.getcwd()),
+    'encoding':         re.sub('^UTF', 'UTF-', enc),
+    'home':             _currentDir,
+    'project_home':     _currentDir,
+    'basedir':          _currentDir,
+    'src_dir':          _currentDir,
+    'dst_dir':          _currentDir,
     'files':            '',
     'property_file':    'Properties.txt',
-    'project_file':     'Ada.properties',
+    'project_file':     'Ada.project',
     'file_separator':   os.path.sep,
     'current_datetime': str(datetime.datetime.now()),
     'profile_revision': ''
@@ -71,6 +74,7 @@ if not os.path.isdir(home):
     logger.error('ERROR: ada.home is not a directory')
     print I18n.get('cannot_detect_ada_home')
     sys.exit(1)
+config_defaults['home'] = home
 
 def initialize():
     """
@@ -86,6 +90,22 @@ def initialize():
     # Insert the definition of catalogs in the environment
     os.environ["XML_CATALOG_FILES"] = os.path.join(home, 'DTDs',
                                                    'catalog')
+    if not (os.path.exists(os.path.join(home, 'DTDs', 'catalog'))):
+        logging.warning(os.path.join(home, 'DTDs', 'catalog') +
+                        ' does not exist')
+        print """*************** WARNING ***************
+
+    Your system does not appear to have the file /etc/xml/catalog properly
+    installed. This catalog file is used to find the DTDs and Schemas required
+    to process Docbook documents. You either have this definitions inserted
+    manually in the file %(home)s/DTDs/catalog.template, or the processing of
+    the stylesheets will be extremelly slow (because all the imported style
+    sheets are fetched from the net).
+
+    ****************************************"""
+        config_defaults['net_option'] = ''
+    else:
+        config_defaults['net_option'] = '--nonet'
 
 def Execute(target, directory):
     """
@@ -127,7 +147,6 @@ def dumpOptions(directory):
         if sn.startswith(module_prefix):
             for (on, ov) in sorted(directory.options.items(sn)):
                 print ' -', module_prefix + '.' + on, '=', ov
-
 
 # Execution as script
 if __name__ == "__main__":
