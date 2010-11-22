@@ -80,7 +80,7 @@
           select="$rel"/></xsl:attribute>
           <xsl:attribute name="href"><xsl:if
           test="not(starts-with($css_url_value, './'))"><xsl:value-of
-          select="$ada.course.home"/></xsl:if><xsl:value-of
+          select="$ada.project.home"/></xsl:if><xsl:value-of
           select="$css_url_value"/></xsl:attribute>
           <xsl:attribute name="media"><xsl:value-of
           select="$media_attribute_value"/></xsl:attribute>

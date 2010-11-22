@@ -79,7 +79,7 @@
 # The value ${basedir} refers to the same location where the Properties.txt 
 # file is.
 #
-# The variables ada.home and ada.course.home are defined respectively to the
+# The variables ada.home and ada.project.home are defined respectively to the
 # directory where ADA is installed, and the parent directory of the current
 # one where the file AdaCourseParams.xml has been found (if any).
 <xsl:apply-templates select="project"/>

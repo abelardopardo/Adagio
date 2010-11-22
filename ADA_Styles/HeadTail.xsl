@@ -146,20 +146,20 @@
     </xsl:if>
 
     <!-- FAVICON -->
-    <xsl:if test="$ada.course.icon">
+    <xsl:if test="$ada.project.icon">
       <link rel="shortcut icon">
         <xsl:attribute name="href"><xsl:value-of
-        select="$ada.course.home"/><xsl:value-of
-        select="$ada.course.icon"/></xsl:attribute>
+        select="$ada.project.home"/><xsl:value-of
+        select="$ada.project.icon"/></xsl:attribute>
         <xsl:attribute name="type"><xsl:value-of
-        select="$ada.course.icon.type"/></xsl:attribute>
+        select="$ada.project.icon.type"/></xsl:attribute>
       </link>
       <link rel="icon">
         <xsl:attribute name="href"><xsl:value-of
-        select="$ada.course.home"/><xsl:value-of
-        select="$ada.course.icon"/></xsl:attribute>
+        select="$ada.project.home"/><xsl:value-of
+        select="$ada.project.icon"/></xsl:attribute>
         <xsl:attribute name="type"><xsl:value-of
-        select="$ada.course.icon.type"/></xsl:attribute>
+        select="$ada.project.icon.type"/></xsl:attribute>
       </link>
     </xsl:if>
 
@@ -255,7 +255,7 @@
         <li>
           <a>
             <xsl:attribute name="href"><xsl:value-of
-            select="normalize-space($ada.course.home)"/></xsl:attribute>
+            select="normalize-space($ada.project.home)"/></xsl:attribute>
             <xsl:attribute name="accesskey"><xsl:value-of
             select="$ada.page.navigation.home.accesskey"/></xsl:attribute>
             <xsl:choose>

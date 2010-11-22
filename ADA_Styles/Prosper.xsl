@@ -68,7 +68,7 @@
 \newcommand{\todom}[1]{\green[#1]}
   <xsl:apply-templates select="title" />
 
-\subtitle{<xsl:value-of select="$ada.course.name"/> (<xsl:value-of select="$ada.course.edition"/>)}
+\subtitle{<xsl:value-of select="$ada.project.name"/> (<xsl:value-of select="$ada.project.edition"/>)}
 
   <xsl:apply-templates select="author" />
   <xsl:apply-templates select="institution" />

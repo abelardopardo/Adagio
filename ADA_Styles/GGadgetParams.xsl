@@ -31,12 +31,12 @@
   <xsl:import href="GeneralParams.xsl"/>
 
   <xsl:param name="ada.ggadget.title"><xsl:value-of
-  select="$ada.course.name"/></xsl:param>
+  select="$ada.project.name"/></xsl:param>
 
   <xsl:param name="ada.ggadget.thumb.url"/>
   <xsl:param name="ada.ggadget.height"/>
   <xsl:param name="ada.ggadget.screenshot.url"/>
   <xsl:param name="ada.ggadget.author"/> <!-- Not used! Check why -->
   <xsl:param name="ada.ggadget.google.analytics.gadgetpath"/>
-  <xsl:param name="ada.ggadget.site.url"><xsl:value-of select="$ada.course.home.url"/></xsl:param>
+  <xsl:param name="ada.ggadget.site.url"><xsl:value-of select="$ada.project.home.url"/></xsl:param>
 </xsl:stylesheet>
