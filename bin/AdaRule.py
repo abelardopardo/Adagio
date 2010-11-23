@@ -156,7 +156,7 @@ def executeRuleChain(dirList, executionContext, commands):
 
 # DONE        Inkscape.process(executionContext[dirName], cmdName)
 
-#             Gimp.process(executionContext[dirName], cmdName)
+# ????            Gimp.process(executionContext[dirName], cmdName)
 
 #             Convert.process(executionContext[dirName], cmdName)
 
