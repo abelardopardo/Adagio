@@ -5,7 +5,7 @@
 #
 #
 
-import os, logging, sys, datetime, subprocess, re, time
+import os, sys, datetime, subprocess, re, time
 
 # Import conditionally either regular xml support or lxml if present
 try:

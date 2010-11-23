@@ -5,14 +5,10 @@
 #
 #
 #
-import os, logging, sys, getopt, datetime, locale, ConfigParser
+import os, sys, getopt, datetime, locale, ConfigParser, codecs
 
 import Ada, I18n, Properties, Directory
 # import Ada, Directory, I18n, Xsltproc
-
-# Global settings for logger
-logging.basicConfig(level=logging.ERROR)
-logger = logging.getLogger('adado')
 
 def main():
     """
@@ -45,8 +41,7 @@ def main():
 
     # Swallow the options
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "d:s:t:hx",
-                                   ["dir="])
+        opts, args = getopt.getopt(sys.argv[1:], "c:d:s:hx", [])
     except getopt.GetoptError, e:
         print e.msg
         print I18n.get('__doc__')
@@ -55,12 +50,15 @@ def main():
     # Parse the options
     for optstr, value in opts:
         # Debug option
-        if optstr == "-d":
+        if optstr == "-c":
+            Ada.config_defaults['property_file'] = value
+
+        elif optstr == "-d":
             # An integer is required
             try:
                 numValue = int(value)
             except ValueError, e:
-                logger.error(I18n.get('incorrect_debug_option'))
+                print I18n.get('incorrect_debug_option')
                 sys.exit(3)
             Ada.config_defaults['debug_level'] = value
 
@@ -78,10 +76,6 @@ def main():
                 print I18n.get('__doc__')
                 sys.exit(3)
             optionsToSet.append(' '.join(sname_value))
-        # Set the targets
-        elif optstr == "-t":
-            # Extend the list of targets to process
-            targets.extend(value.split())
 
     # Invoke a function that traverses the options and checks that they have the
     # right type (integers, floats, date/time, et.
@@ -91,7 +85,7 @@ def main():
     targets = args
 
     # Print Reamining arguments. If none, just stick the current dir
-    logger.debug('Targets: ' + ' '.join(targets))
+    Ada.logDebug('main', None, 'Targets: ' + ' '.join(targets))
 
     #######################################################################
     #
@@ -105,6 +99,13 @@ def main():
         
     # Execute its targets
     dirObject.Execute(targets)
+
+    #######################################################################
+    #
+    # Termination
+    #
+    #######################################################################
+    Ada.finish()
 
 # Execution as script
 if __name__ == "__main__":

@@ -5,16 +5,12 @@
 #
 #
 #
-import sys, os, re, datetime, ConfigParser, StringIO, logging, ordereddict
+import sys, os, re, datetime, ConfigParser, StringIO, ordereddict
 
-import Ada, I18n, Xsltproc
+import Ada, I18n, Xsltproc, Inkscape, Gotodir
 
 # Prefix to use in the module
 module_prefix = 'properties'
-
-# Set the logger for this module
-logging.basicConfig(level=logging.ERROR)
-logger = logging.getLogger(module_prefix)
 
 def loadOptionsInConfig(config, sectionName, options):
     """
@@ -122,7 +118,17 @@ def dump(options, pad = '', sections = None):
         print e
         sys.exit(1)
 
-def Execute(target, dirLocation):
+def LoadDefaults(options):
+    """
+    Loads all the default options for all the rules in the given ConfigParser
+    """
+    # @EXTEND@
+    loadOptionsInConfig(options, Ada.module_prefix,      Ada.options)
+    loadOptionsInConfig(options, Xsltproc.module_prefix, Xsltproc.options)
+    loadOptionsInConfig(options, Inkscape.module_prefix, Inkscape.options)
+    loadOptionsInConfig(options, Gotodir.module_prefix,  Gotodir.options)
+    
+def Execute(target, dirLocation, pad = ''):
     """
     Given a target and a directory, it checks which rule needs to be invoked and
    performs the invokation.
@@ -130,8 +136,8 @@ def Execute(target, dirLocation):
 
     # Detect special 'helpdump' target
     if target.split('.')[-1] == 'helpdump':
-        Execute(re.sub('\.?helpdump$', '.dump', target), dirLocation)
-        Execute(re.sub('\.?helpdump$', '.help', target), dirLocation)
+        Execute(re.sub('\.?helpdump$', '.dump', target), dirLocation, pad)
+        Execute(re.sub('\.?helpdump$', '.help', target), dirLocation, pad)
         return
 
     # Detect help or dump targets
@@ -154,7 +160,14 @@ def Execute(target, dirLocation):
     # Select the proper set of rules
     # Code to extend when a new set of rules is added (@EXTEND@)
     if noSection or targetPrefix == Ada.module_prefix:
-        Ada.Execute(target, dirLocation)
+        Ada.Execute(target, dirLocation, pad)
 
     if noSection or targetPrefix == Xsltproc.module_prefix:
-        Xsltproc.Execute(target, dirLocation)
+        Xsltproc.Execute(target, dirLocation, pad)
+
+    if noSection or targetPrefix == Inkscape.module_prefix:
+        Inkscape.Execute(target, dirLocation, pad)
+
+    if noSection or targetPrefix == Gotodir.module_prefix:
+        Gotodir.Execute(target, dirLocation)
+

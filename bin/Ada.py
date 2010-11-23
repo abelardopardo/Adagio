@@ -5,19 +5,15 @@
 #
 #
 #
-import os, logging, sys, locale, ordereddict, re, datetime
+import os, sys, locale, ordereddict, re, datetime, time
 
-import Directory, Properties, I18n
+import Directory, Properties, I18n, AdaRule
 
 # Get language and locale for locale option
 (lang, enc) = locale.getdefaultlocale()
 
 # Prefix to use for the options
 module_prefix = 'ada'
-
-# Set the logger for this module
-logging.basicConfig(level=logging.ERROR)
-logger = logging.getLogger(module_prefix)
 
 ################################################################################
 #
@@ -33,18 +29,18 @@ logger = logging.getLogger(module_prefix)
 ################################################################################
 _currentDir = os.path.abspath(os.getcwd())
 config_defaults = {
-    'debug_level':      '40',
+    'debug_level':      '0',
     'version':          '10.03.1',
     'locale':           lang[0:2],
     'encoding':         re.sub('^UTF', 'UTF-', enc),
     'home':             _currentDir,
+    'project_file':     'Ada.project',
     'project_home':     _currentDir,
+    'property_file':    'Properties.txt',
     'basedir':          _currentDir,
     'src_dir':          _currentDir,
     'dst_dir':          _currentDir,
     'files':            '',
-    'property_file':    'Properties.txt',
-    'project_file':     'Ada.project',
     'file_separator':   os.path.sep,
     'current_datetime': str(datetime.datetime.now()),
     'profile_revision': ''
@@ -71,10 +67,11 @@ documentation = {
 home = os.path.dirname(os.path.abspath(sys.argv[0]))
 home = os.path.abspath(os.path.join(home, '..'))
 if not os.path.isdir(home):
-    logger.error('ERROR: ada.home is not a directory')
     print I18n.get('cannot_detect_ada_home')
     sys.exit(1)
 config_defaults['home'] = home
+
+userLog = None
 
 def initialize():
     """
@@ -86,13 +83,14 @@ def initialize():
     """
 
     global home
+    global userLog
 
     # Insert the definition of catalogs in the environment
     os.environ["XML_CATALOG_FILES"] = os.path.join(home, 'DTDs',
                                                    'catalog')
     if not (os.path.exists(os.path.join(home, 'DTDs', 'catalog'))):
-        logging.warning(os.path.join(home, 'DTDs', 'catalog') +
-                        ' does not exist')
+        logWarn(module_prefix, None, os.path.join(home, 'DTDs', 'catalog') +
+                ' does not exist')
         print """*************** WARNING ***************
 
     Your system does not appear to have the file /etc/xml/catalog properly
@@ -103,11 +101,108 @@ def initialize():
     sheets are fetched from the net).
 
     ****************************************"""
-        config_defaults['net_option'] = ''
-    else:
-        config_defaults['net_option'] = '--nonet'
 
-def Execute(target, directory):
+    userLog = open('adado.log', 'w')
+    userLog.write('Ada execution started at ' + time.asctime() + '\n')
+    userLog.flush()
+
+def finish():
+    """
+    Function to execute upon main script termination
+    """
+
+    global userLog
+
+    userLog.flush()
+    userLog.write('Ada finished at ' + time.asctime() + '\n')
+    userLog.close()
+
+def getConfigDefaults(path):
+    """
+    Return a dictionary with the default options. It needs to be re-computed
+    because some of these options are sensitive to the current directory.
+    """
+    
+    global config_defaults
+
+    result = {}
+    for (n, v) in config_defaults.items():
+        if n == 'basedir' or n == 'src_dir' or n == 'dst_dir':
+            v = path
+        elif n == 'current_datetime':
+            v = str(datetime.datetime.now())
+            
+        result[n] = v
+            
+    return result
+
+def logFatal(tprefix, directory, msg):
+    """
+    """
+    log(tprefix, directory, msg, sys._getframe().f_code.co_name)
+    
+
+def logError(tprefix, directory, msg):
+    """
+    """
+    log(tprefix, directory, msg, sys._getframe().f_code.co_name)
+    
+
+def logWarn(tprefix, directory, msg):
+    """
+    """
+    log(tprefix, directory, msg, sys._getframe().f_code.co_name)
+    
+
+def logInfo(tprefix, directory, msg):
+    """
+    """
+    log(tprefix, directory, msg, sys._getframe().f_code.co_name)
+    
+
+def logDebug(tprefix, directory, msg):
+    """
+    """
+    log(tprefix, directory, msg, sys._getframe().f_code.co_name)
+    
+
+def log(tprefix, directory, msg, fname = None):
+    """
+    Function that dumps a message on the userLog file or stdout depending on the
+    value of the option debug_value.
+    """
+    global module_prefix
+    global config_defaults
+    global userLog
+
+    # Select output the log file and if not present, stdout
+    output = userLog
+    if output == None:
+        output = sys.stdout
+
+    if fname == 'logFatal':
+        current = 5
+    elif fname == 'logError':
+        current = 4
+    elif fname == 'logWarn':
+        current = 3
+    elif fname == 'logInfo':
+        current = 2
+    elif fname == 'logDebug':
+        current = 1
+    else:
+        current = 0
+        
+    # Check for debug levels
+    threshold = config_defaults['debug_level']
+    if directory != None:
+        threshold = directory.getWithDefault(module_prefix, 'debug_level')
+    
+    if int(threshold) >= int(current):
+        output.write(tprefix + ':' + msg + '\n')
+        output.flush()
+
+def Execute(target, directory, pad = ''):
     """
     Execute the rule in the given directory
     """
@@ -115,20 +210,23 @@ def Execute(target, directory):
     global module_prefix
     global documentation
 
-    logger.info(module_prefix + ':' + target + ':' + directory.current_dir)
+    # If it is a generic target, add the prefix
+    target_prefix = target.split('.')[0]
+    if target_prefix != module_prefix:
+        target = module_prefix + '.' + target
+        target_prefix = module_prefix
 
-    # If requesting dump, bypass execution
-    if re.match('(.+)?dump', target):
-        dumpOptions(directory)
-        return
+    logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
 
-    if re.match('(.+)?help', target):
-        msg = documentation[directory.options.get(module_prefix, 'locale')]
-        if msg != None:
-            print I18n.get('doc_preamble').format(module_prefix)
-            print msg
-        else:
-            print I18n.get('no_doc_for_rule').format(module_prefix)
+    # Print msg when beginning to execute target in dir
+    dirMsg = target + ' ' + \
+        directory.current_dir[(len(pad) + 2 + len(target)) - 80:]
+    print pad + 'BB', dirMsg
+
+    # Detect and execute "special" targets
+    if AdaRule.processSpecialTargets(target, directory, documentation, 
+                                     module_prefix):
+        print pad + 'EE', dirMsg
         return
 
     return

@@ -71,8 +71,9 @@
         extra_args = option option # Anything here is passed to exec
 
 [inkscape]
-        exec = inkscape # Executable to use
-        output_format = png  # Extension of the output file produced
+        exec = inkscape            # Executable to use
+        output_format = png        # Extension of the output file produced
+        extra_args = option option # Anything here is passed to exec
 
 [convert]
         exec = convert # Executable to use
@@ -110,12 +111,10 @@
         open = True # It is considered for export (general enable)
         profile_revision_value = r1:r2 # Revisions to consider
 
-[subrecursive]
-        dirs = d1 d2 # Space separated lists of directories to recur
-                       # overwriting the export.dst_dir variable
-
-        dirs_nodst = d1 d2 # Space separated list of directories to recur
-        target = t1 t2 # List of rules to execute in the remote dir
+[gotodir]
+        files = d1 d2 # Space separated lists of directories to recur
+        export_to = Dir to overwrite export.dst_dir
+        targets = t1 t2 # List of rules to execute in the remote dir
 
 # [copy]
 

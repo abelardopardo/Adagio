@@ -10,18 +10,20 @@ import os, re, sys, glob
 import Ada, Directory, I18n, Dependency, AdaRule
 
 # Prefix to use for the options
-module_prefix = '@PREFIX@'
+module_prefix = 'gotodir'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('exec', 'xsltproc', I18n.get('name_of_executable')),
-    ('output_format', 'html', I18n.get('output_format')),
-    ('languages', '%(locale)s', I18n.get('xslt_languages'))
+    ('export_dst', '', I18n.get('export_dst')),
+    ('targets', '', I18n.get('export_targets'))
     ]
 
 documentation = {
     'en' : """
-    @DESCRIBE HERE WHAT THIS RULE DOES@
+    The execution of the "targets" is invoked in every directory in "files".
+
+    If the value "exports_dst" is given, it overrides the value of
+    export.dst_dir in the remote directory.
     """}
 
 def Execute(target, directory, pad = ''):
@@ -57,18 +59,34 @@ def Execute(target, directory, pad = ''):
         print pad + 'EE', dirMsg
         return
 
-    # Get the files to process
-    srcDir = directory.getWithDefault(target, 'src_dir')
+    # Get the directories to process
     toProcess = []
-    for srcFile in directory.getWithDefault(target, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(directory.current_dir, srcFile)))
+    for srcDir in directory.getWithDefault(target, 'files').split():
+        toProcess.extend(glob.glob(srcDir))
 
     # If no files given to process, terminate
     if toProcess == []:
-        print I18n.get('no_file_to_process')
+        print I18n.get('no_dir_to_process')
         print pad + 'EE', dirMsg
         return
 
+    # Get option to set in the remote directory
+    optionsToSet = []
+    newExportDir = directory.getWithDefault(target, 'export_dst')
+    if newExportDir != '':
+        optionsToSet = ['export dst_dir ' + newExportDir]
+    Ada.logInfo(target_prefix, directory, 'NEW export.dst_dir = ' + newExportDir)
+
+    # Targets to execute in the remote directory
+    remoteTargets = directory.getWithDefault(target, 'targets').split()
+
+    # Loop over each directory
+    for dirName in toProcess:
+
+        Ada.logInfo(target_prefix, directory, 'RECUR: ' + dirName)
+
+        dirObj = Directory.getDirectoryObject(dirName, optionsToSet)
+        dirObj.Execute(remoteTargets, pad + '  ')
 
     print pad + 'EE', dirMsg
     return

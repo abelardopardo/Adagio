@@ -158,13 +158,15 @@ def executeRuleChain(dirList, executionContext, commands):
             Ada.infoMessage('EN ' + dirName)
 
             # Sequence of rules to apply
+# DONE            Gotodir.process(executionContext[dirName], cmdName)
+
 #             Copyfiles.process(executionContext[dirName], cmdName)
 
-#             Copytemplates.process(executionContext[dirName], cmdName)
+# NONE            Copytemplates.process(executionContext[dirName], cmdName)
 
-#             Xfig.process(executionContext[dirName], cmdName)
+# NONE            Xfig.process(executionContext[dirName], cmdName)
 
-#             Inkscape.process(executionContext[dirName], cmdName)
+# DONE        Inkscape.process(executionContext[dirName], cmdName)
 
 #             Gimp.process(executionContext[dirName], cmdName)
 
@@ -176,28 +178,29 @@ def executeRuleChain(dirList, executionContext, commands):
 
 #             Exam.process(executionContext[dirName], cmdName)
 
-#             TestExam.process(executionContext[dirName], cmdName)
+# ???            TestExam.process(executionContext[dirName], cmdName)
 
-#             Rss.process(executionContext[dirName], cmdName)
+# NONE            Rss.process(executionContext[dirName], cmdName)
 
-#             Latex.process(executionContext[dirName], cmdName)
+# NONE            Latex.process(executionContext[dirName], cmdName)
 
-#             Dvips.process(executionContext[dirName], cmdName)
+# NONE            Dvips.process(executionContext[dirName], cmdName)
 
-#             Ps2pdf.process(executionContext[dirName], cmdName)
+# NONE            Ps2pdf.process(executionContext[dirName], cmdName)
 
-#             Pdflatex.process(executionContext[dirName], cmdName)
+# NONE            Pdflatex.process(executionContext[dirName], cmdName)
 
 #             Dblatex.process(executionContext[dirName], cmdName)
 
 #             Msf2PDF.process(executionContext[dirName], cmdName)
 
-#             PDFnup.process(executionContext[dirName], cmdName)
+# NONE            PDFnup.process(executionContext[dirName], cmdName)
 
 #             ExtraAnt.process(executionContext[dirName], cmdName)
 
 #             Export.process(executionContext[dirName], cmdName)
 
+#             WkHtmlToPDF ???
 
 # clean.files
 
@@ -209,6 +212,10 @@ def executeRuleChain(dirList, executionContext, commands):
 # copyfiles.files
 # copyfiles.src.dir
 
+# dblatex.compliant.mode
+# dblatex.extra.args
+# dblatex.files
+
 # exam.extra.args
 # exam.multilingual.file
 
@@ -219,6 +226,8 @@ def executeRuleChain(dirList, executionContext, commands):
 
 # export.dst.dir
 # export.files
+
+# exportcontrol.profile.revision.value
 
 # extraant.posttarget
 # extraant.posttarget.clean
@@ -239,8 +248,8 @@ def executeRuleChain(dirList, executionContext, commands):
 # rsync.destination
 # rsync.source
 
-# subrecursive.dirs
-# subrecursive.dirs.nodst
+# gotodir.dirs
+# gotodir.dirs.nodst
 
 # testexam.extra.args
 # testexam.file
@@ -254,6 +263,11 @@ def executeRuleChain(dirList, executionContext, commands):
 # xsltproc.multilingual.files
 # xsltproc.output.format
 # xsltproc.style.file
+
+# position
+# project
+# session
+# unit
 
     pass
 

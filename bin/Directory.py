@@ -5,13 +5,9 @@
 #
 #
 #
-import sys, os, re, logging, ConfigParser, ordereddict
+import sys, os, re, ConfigParser, ordereddict
 
 import Ada, Config, Properties, I18n, Xsltproc
-
-# Set the logger for this module
-logging.basicConfig(level=logging.ERROR)
-logger = logging.getLogger('directory')
 
 # Table to store tuples:
 #   path: Directory object
@@ -32,7 +28,7 @@ def getDirectoryObject(path, givenOptions):
     if dirObj != None:
         # Hit in the cache, return
         if dirObj != None:
-            logger.debug('Directory HIT: ' + path)
+            Ada.logDebug('Directory', None, 'Directory HIT: ' + path)
             return dirObj
 
     # Create new object
@@ -76,12 +72,11 @@ def dump(self):
         Properties.dump(self.options, '   ')
 
 # Search for .sc all the way up the hierarchy (until the top)
-def findProjectDir():
+def findProjectDir(pfile):
     """
     Function that traverses the directories upward until the file name given by
     the option ada.projectfile is found, None otherwise
     """
-    pfile = Ada.config_defaults['project_file']    
 
     currentDir = '.'
 
@@ -128,8 +123,6 @@ class Directory:
     # Change to the given dir and initlialize fields
     def __init__(self, path=os.getcwd(), givenOptions = []):
 
-        logger.info('New dir object in ' + path)
-
         # Initial values
         self.previous_dir =     os.getcwd()
         self.current_dir =      os.path.abspath(path)
@@ -142,16 +135,16 @@ class Directory:
         self.executed_targets = set([])
         self.option_files =     []
 
-        # Nuke the adado.log file
-        logFile = os.path.join(os.getcwd(), 'adado.log')
-        if os.path.exists(logFile):
-            os.remove(logFile)
-            
+        Ada.logInfo('Directory', None, 'New dir object in ' + self.current_dir)
+
+        configDefaults = Ada.getConfigDefaults(self.current_dir)
+
         # Compute the project home
-        Ada.config_defaults['project_home'] = findProjectDir()
+        configDefaults['project_home'] = \
+            findProjectDir(configDefaults['project_file'])
 
         # Safe parser to store the options, the defaults are loaded here
-        self.options = ConfigParser.SafeConfigParser(Ada.config_defaults,
+        self.options = ConfigParser.SafeConfigParser(configDefaults,
                                                      ordereddict.OrderedDict)
 
         #
@@ -159,21 +152,18 @@ class Directory:
         #
         self.options.add_section(Ada.module_prefix)
         self.options.set(Ada.module_prefix, 'home', Ada.home)
-        logger.debug('ada.home = ' + Ada.home)
 
         #
-        # STEP 2: Load the default options from the Rule files (@EXTEND@)
+        # STEP 2: Load the default options from the Rule files
         #
-        Properties.loadOptionsInConfig(self.options, Ada.module_prefix, Ada.options)
-        Properties.loadOptionsInConfig(self.options, Xsltproc.module_prefix,
-                                       Xsltproc.options)
+        Properties.LoadDefaults(self.options)
 
         #
         # STEP 3: Load the $HOME/.adarc if any
         #
         userAdaConfig = os.path.join(os.environ.get('HOME'), '.adarc')
         if os.path.isfile(userAdaConfig):
-            logger.debug('Sourcing ' + userAdaConfig)
+            Ada.logDebug('Directory', None, 'Parsing ' + userAdaConfig)
             # Swallow user file on top of global options, and if trouble, report
             # up
             if Properties.loadConfigFile(self.options, userAdaConfig) == None:
@@ -182,8 +172,42 @@ class Directory:
             self.option_files.append(userAdaConfig)
 
         #
-        # STEP 4: Options given from outside the dir
+        # STEP 4: Options given in the config file in the directory
         #
+        adaPropFile = self.options.get('ada', 'property_file')
+        if not os.path.exists(adaPropFile):
+            Ada.logInfo('Directory', None, 'No ' + adaPropFile + \
+                            ' found in ' + self.current_dir)
+            print I18n.get('cannot_find_properties').format(adaPropFile,
+                                                            self.current_dir)
+            sys.exit(3)
+        propAbsFile = os.path.abspath(os.path.join(self.current_dir,
+                                                   adaPropFile))
+        Ada.logDebug('Directory', None, 'Parsing ' + propAbsFile)
+        self.section_list = Properties.loadConfigFile(self.options, propAbsFile)
+        if self.section_list == None:
+            print I18n.get('severe_parse_error').format(propAbsFile)
+            sys.exit(3)
+        self.option_files.append(propAbsFile)
+
+        #
+        # STEP 5: Options given in the project file
+        #
+        adaProjFile = os.path.join(configDefaults['project_home'],
+                                   self.options.get(Ada.module_prefix,
+                                                    'project_file'))
+        if os.path.isfile(adaProjFile):
+            Ada.logDebug('Directory', None, 'Parsing ' + adaProjFile)
+            if Properties.loadConfigFile(self.options, adaProjFile) == None:
+                print I18n.get('severe_parse_error').format(adaProjFile)
+                sys.exit(3)
+            self.option_files.append(adaProjFile)
+
+
+        #
+        # STEP 6: Options given from outside the dir
+        #
+        # Compute the project home
         for assignment in givenOptions:
             # Chop assignment into its three parts
             (sn, on, ov) = assignment.split()
@@ -198,42 +222,11 @@ class Directory:
             except ConfigParser.NoSectionError:
                 sys.exit(3)
 
-        #
-        # STEP 5: Options given in the config file in the directory
-        #
-        adaPropFile = self.options.get('ada', 'property_file')
-        if not os.path.exists(adaPropFile):
-            logger.info('No ' + adaPropFile + ' found in ' + self.current_dir)
-            print I18n.get('cannot_find_properties').format(adaPropFile,
-                                                            self.current_dir)
-            sys.exit(3)
-        propAbsFile = os.path.abspath(os.path.join(self.current_dir,
-                                                   adaPropFile))
-        logger.debug('Parsing ' + propAbsFile)
-        self.section_list = Properties.loadConfigFile(self.options, propAbsFile)
-        if self.section_list == None:
-            print I18n.get('severe_parse_error').format(propAbsFile)
-            sys.exit(3)
-        self.option_files.append(propAbsFile)
-
-        #
-        # STEP 6: Options given in the project file
-        #
-        # Compute the project home
-        adaProjFile = os.path.join(Ada.config_defaults['project_home'], \
-                                       self.options.get(Ada.module_prefix,
-                                                        'project_file'))
-        if os.path.isfile(adaProjFile):
-            logger.debug('Parsing ' + adaProjFile)
-            if Properties.loadConfigFile(self.options, adaProjFile) == None:
-                print I18n.get('severe_parse_error').format(adaProjFile)
-                sys.exit(3)
-            self.option_files.append(adaProjFile)
-
         # Compare ADA versions to see if execution is allowed
         if not self.isCorrectAdaVersion():
             version = self.options.get(Ada.module_prefix, 'version')
-            logger.error('ERROR: Incorrect Ada Version (' + version + ')')
+            Ada.logError('Directory', None, \
+                             'ERROR: Incorrect Ada Version (' + version + ')')
             print I18n.get('incorrect_version').format(version)
             sys.exit(3)
 
@@ -241,7 +234,8 @@ class Directory:
 
         # Dump a debug message showing the list of sections detected in the
         # config file
-        logger.debug('Sections: ' + ', '.join(self.section_list))
+        Ada.logDebug('Directory', None, 
+                     'Sections: ' + ', '.join(self.section_list))
 
         return
 
@@ -290,13 +284,13 @@ class Directory:
 
         return False
 
-    def Execute(self, targets = []):
+    def Execute(self, targets = [], pad = ''):
         """
         Properties.txt has been parsed into a ConfigParse. Loop over the targets
         and execute all of them.
         """
 
-        logger.info('Execute in ' + self.current_dir)
+        Ada.logInfo('Directory', self, 'Execute in ' + self.current_dir)
 
         # Change directory to the current one
         os.chdir(self.current_dir)
@@ -318,24 +312,26 @@ class Directory:
                           not re.match('^clean(\.?\S+)?$', x) and
                           not re.match('^local(\.?\S+)?$', x)]
 
-        logger.debug('  Targets: ' + str(targets))
+        Ada.logDebug('Directory', self, '  Targets: ' + str(targets))
 
         # Loop over all the targets to execute
         for target_name in targets:
 
             # Check the cache to see if target has already been executed
             if target_name in self.executed_targets:
-                logger.info('HIT: ' + self.current_dir + ': ' + target_name)
+                Ada.logInfo('Directory', self, 
+                            'HIT: ' + self.current_dir + ': ' + target_name)
                 continue
 
             # Execute the target
-            Properties.Execute(target_name, self)
+            Properties.Execute(target_name, self, pad)
 
             # Insert executed target in cache
             self.executed_targets.add(target_name)
 
         self.executing = False
-        logger.debug(' Executed Targets: ' + str(self.executed_targets))
+        Ada.logDebug('Directory', self, 
+                     ' Executed Targets: ' + str(self.executed_targets))
         return
 
     def getWithDefault(self, section, option):
@@ -355,7 +351,6 @@ class Directory:
 ################################################################################
 
 if __name__=="__main__":
-    logger.setLevel(10)
     p1 = Directory(os.getcwd())
     p1.Execute()
 

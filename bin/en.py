@@ -18,15 +18,17 @@ msgs = {
 
     The script accepts the following options:
 
-      -d num: Debugging level. Used to set the severity level in a
-              logging object. Possible values are:
+      -c filename: File to read the configuration 
 
-              CRITICAL/FATAL = 50
-              ERROR =          40
-              WARNING =        30
-              INFO =           20
-              DEBUG =          10
-              NOTSET =          0
+      -d num: Debugging level. Used to control the amount of messages
+       dumped. Possible values are:
+
+              CRITICAL/FATAL = 5
+              ERROR =          4
+              WARNING =        3
+              INFO =           2
+              DEBUG =          1
+              NOTSET =         0
 
       -h or -x: Shows this message
 
@@ -42,6 +44,7 @@ msgs = {
     'producing': 'Producing {0}',
     'removing': 'Removing {0}',
     'no_file_to_process' : 'No file given to process',
+    'no_dir_to_process' : 'No directory given to process',
     'no_style_file' : 'No style file given.',
     'no_doc_for_rule': 'No documentation for rule {0}',
     'doc_preamble' : '===== {0} Processing Rules =====',
@@ -54,11 +57,14 @@ msgs = {
         'ada.exact_version, ada.minimum_version and ' + \
         'ada.maximum_version',
     'severe_parse_error': 'Error while parsing {0}',
+    'severe_exec_error': 'Error while executing {0}',
+    'exec_line': 'Invocation: {0}',
     'severe_option_error': 'Error in configuration file',
     'error_applying_xslt': 'Error while applying style in target {0}',
     'error_extra_args': 'Incorrect arguments in variable {0}.extra-arguments',
-    'file_uptodate': 'File {0} is up to date. Bypassing execution.',
+    'file_uptodate': '{0} up to date. Bypassing.',
     'not_enough_params': 'Not enough params for {0}',
+    'no_var_value': 'No value given in variable {0}',
     'incorrect_arg_num': 'Incorrect arguments for {0}',
     'incorrect_option': 'Incorrect option {0}',
     'incorrect_option_in_file': 'Incorrect option {0} in file {1}', 
@@ -71,6 +77,8 @@ msgs = {
     'rule_dst_dir': 'Directory where the new files will be created.',
     'xslt_style_file': 'Style to be applied to the given source files.',
     'output_format': 'Extension to use when creating the new files.',
+    'export_dst': 'Destination of the exports',
+    'export_targets': 'Targets to execute in the destination directories',
     'xslt_extra_arguments':
     'Extra arguments passed directly to the style processor.',
     'files_to_process': 'Space separated list of files to process.',
@@ -80,7 +88,6 @@ msgs = {
     'xslt_multilingual':
     'True/False if the documents to process are multilingual.\n\
       Incompatible with profile_lang',
-    'xslt_net_option': 'Network option to pass to the xslt processor',
     'ada_current_datetime': 'The Current date/time to be considered',
     'ada_profile_revision':
     'Value of the revision attribute to profile Docbook files',

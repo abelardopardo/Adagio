@@ -5,7 +5,7 @@
 #
 #
 #
-import os, logging, re, sys, StringIO, glob
+import os, re, sys, StringIO, glob
 
 # Import conditionally either regular xml support or lxml if present
 try:
@@ -17,10 +17,6 @@ import Ada, Directory, I18n, Dependency, AdaRule
 
 # Prefix to use for the options
 module_prefix = 'xslt'
-
-# Set the logger for this module
-logging.basicConfig(level=logging.ERROR)
-logger = logging.getLogger(module_prefix)
 
 # List of tuples (varname, default value, description string)
 options = [
@@ -62,10 +58,17 @@ def Execute(target, directory, pad = ''):
     global module_prefix
     global documentation
 
-    logger.info(module_prefix + ':' + target + ':' + directory.current_dir)
+    # If it is a generic target, add the prefix
+    target_prefix = target.split('.')[0]
+    if target_prefix != module_prefix:
+        target = module_prefix + '.' + target
+        target_prefix = module_prefix
+
+    Ada.logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
 
     # Print msg when beginning to execute target in dir
-    dirMsg = target + directory.current_dir[(len(pad) + 2 + len(target)) - 80:]
+    dirMsg = target + ' ' + \
+        directory.current_dir[(len(pad) + 2 + len(target)) - 80:]
     print pad + 'BB', dirMsg
 
     # Detect and execute "special" targets
@@ -74,7 +77,13 @@ def Execute(target, directory, pad = ''):
         print pad + 'EE', dirMsg
         return
 
-    # Get the XML files to process
+    # If requesting clean, remove files and terminate
+    if re.match('(.+)?clean', target):
+        clean(target, directory)
+        print pad + 'EE', dirMsg
+        return
+
+    # Get the files to process
     srcDir = directory.getWithDefault(target, 'src_dir')
     toProcess = []
     for srcFile in directory.getWithDefault(target, 'files').split():
@@ -83,14 +92,7 @@ def Execute(target, directory, pad = ''):
     # If no files given to process, terminate
     if toProcess == []:
         print I18n.get('no_file_to_process')
-        print pad + 'EE', target, dirMsg
-        return
-
-    # If requesting clean, remove files and terminate (target not meaninful if
-    # there are no files to process
-    if re.match('(.+)?clean', target):
-        clean(target, directory)
-        print pad + 'EE', target, dirMsg
+        print pad + 'EE', dirMsg
         return
 
     # Prepare style files (locate styles in ADA/ADA_Styles if needed
@@ -104,7 +106,7 @@ def Execute(target, directory, pad = ''):
     # If no style is given, terminate
     if styles == []:
         print I18n.get('no_style_file')
-        print pad + 'EE', target, dirMsg
+        print pad + 'EE', dirMsg
         return
 
     # If single, leave alone, if multiple, combine in a StringIO using imports
@@ -164,7 +166,7 @@ def Execute(target, directory, pad = ''):
 
     # Loop over all source files to process
     for datafile in toProcess:
-        logger.debug(target + ' EXEC ' + datafile)
+        Ada.logDebug(target_prefix, directory, ' EXEC ' + datafile)
         
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -236,7 +238,7 @@ def Execute(target, directory, pad = ''):
             # Update the dependencies of the newly created file
             Dependency.update(dstFile)
 
-    print pad + 'EE', target, dirMsg
+    print pad + 'EE', dirMsg
     return
 
 def clean(target, directory):
@@ -248,28 +250,27 @@ def clean(target, directory):
 
     # Loop over all the required targets
     for target in AdaRule.getCleanTargets(target, directory, module_prefix):
-        # Get the XML files to process
+        # Get the files to process
         srcDir = directory.getWithDefault(target, 'src_dir')
-        toProcess = directory.getWithDefault(target, 'files').split()
-        toProcess = map(lambda x: os.path.abspath(os.path.join(srcDir, x)), 
-                        toProcess)
+        toProcess = []
+        for srcFile in directory.getWithDefault(target, 'files').split():
+            toProcess.extend(glob.glob(os.path.join(directory.current_dir, srcFile)))
 
         # Split the languages and remember if the execution is multilingual
         languages = directory.getWithDefault(target, 'languages').split()
         multilingual = len(languages) > 1
 
 
-        # Loop over languages
-        for language in languages:
-            # If processing multilingual, create the appropriate suffix
-            if multilingual:
-                fileSuffix = '_' + language
-            else:
-                fileSuffix = ''
+        # Loop over all source files to process
+        for datafile in toProcess:
+            # Loop over languages
+            for language in languages:
+                # If processing multilingual, create the appropriate suffix
+                if multilingual:
+                    fileSuffix = '_' + language
+                else:
+                    fileSuffix = ''
 
-            # Loop over all source files to process
-            for datafile in toProcess:
-            
                 # Derive the destination file name
                 dstDir = directory.getWithDefault(target, 'dst_dir')
                 dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
