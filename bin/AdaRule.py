@@ -155,32 +155,106 @@ def executeRuleChain(dirList, executionContext, commands):
 
         # Loop over the list of commands to apply
         for cmdName in commands:
+            Ada.infoMessage('EN ' + dirName)
 
             # Sequence of rules to apply
 #             Copyfiles.process(executionContext[dirName], cmdName)
-#             ExtraAnt.process(executionContext[dirName], cmdName)
+
 #             Copytemplates.process(executionContext[dirName], cmdName)
+
 #             Xfig.process(executionContext[dirName], cmdName)
-            Inkscape.process(executionContext[dirName], cmdName)
+
+#             Inkscape.process(executionContext[dirName], cmdName)
+
 #             Gimp.process(executionContext[dirName], cmdName)
+
 #             Convert.process(executionContext[dirName], cmdName)
-#             Xsltproc.process(executionContext[dirName], cmdName)
+
+# DONE            Xsltproc.process(executionContext[dirName], cmdName)
+
 #             ExerciseSubmit.process(executionContext[dirName], cmdName)
+
 #             Exam.process(executionContext[dirName], cmdName)
+
 #             TestExam.process(executionContext[dirName], cmdName)
+
 #             Rss.process(executionContext[dirName], cmdName)
+
 #             Latex.process(executionContext[dirName], cmdName)
+
 #             Dvips.process(executionContext[dirName], cmdName)
+
 #             Ps2pdf.process(executionContext[dirName], cmdName)
+
 #             Pdflatex.process(executionContext[dirName], cmdName)
+
 #             Dblatex.process(executionContext[dirName], cmdName)
+
 #             Msf2PDF.process(executionContext[dirName], cmdName)
+
 #             PDFnup.process(executionContext[dirName], cmdName)
+
 #             ExtraAnt.process(executionContext[dirName], cmdName)
+
 #             Export.process(executionContext[dirName], cmdName)
 
 
-        Ada.infoMessage('EN ' + dirName)
+# clean.files
+
+# convert.dst.dir
+# convert.files
+# convert.geometry
+
+# copyfiles.dst.dir
+# copyfiles.files
+# copyfiles.src.dir
+
+# exam.extra.args
+# exam.multilingual.file
+
+# exercisesubmit.extra.args
+# exercisesubmit.files
+# exercisesubmit.multilingual.files
+# exercisesubmit.style.file
+
+# export.dst.dir
+# export.files
+
+# extraant.posttarget
+# extraant.posttarget.clean
+
+# file.prefix
+
+# gimp.files
+
+# inkscape.files
+# inkscape.output.format
+
+# mergestyles.master.style
+
+# msf2pdf.files
+
+# ppt2pdf.files
+
+# rsync.destination
+# rsync.source
+
+# subrecursive.dirs
+# subrecursive.dirs.nodst
+
+# testexam.extra.args
+# testexam.file
+# testexam.multilingual.file
+# testexam.style.file
+
+# xfig.files
+
+# xsltproc.extra.args
+# xsltproc.files
+# xsltproc.multilingual.files
+# xsltproc.output.format
+# xsltproc.style.file
+
     pass
 
 if __name__ == "__main__":
