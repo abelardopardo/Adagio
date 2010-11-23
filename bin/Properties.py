@@ -88,7 +88,8 @@ def loadConfigFile(config, filename):
         sprefix = sname.split('.')[0]
         for (oname, ovalue) in tmpconfig.items(sname):
             # If not present in the default options, terminate
-            if not config.has_option(sprefix, oname):
+            if not config.has_option(sprefix, oname) and \
+                    tmpconfig.defaults().get(oname) == None:
                 optionName = sname + '.' + oname
                 print I18n.get('incorrect_option_in_file').format(optionName,
                                                                   filename)
