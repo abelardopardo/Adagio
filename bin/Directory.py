@@ -295,7 +295,7 @@ class Directory:
         # Change directory to the current one
         os.chdir(self.current_dir)
 
-        print pad + '--' + self.current_dir[len(pad) + 2 - 80:]
+        print pad + '++' + self.current_dir[len(pad) + 2 - 80:]
 
         # Make sure no circular execution is produced
         if self.executing:
@@ -351,7 +351,7 @@ class Directory:
         Ada.logDebug('Directory', self, 
                      ' Executed Targets: ' + str(self.executed_targets))
 
-        print pad + '--'
+        print pad + '--' + self.current_dir[len(pad) + 2 - 80:]
         return
 
     def getWithDefault(self, section, option):
