@@ -55,8 +55,7 @@ def Execute(target, directory, pad = ''):
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target
 
-    # If requesting clean, remove files and terminate (target not meaninful if
-    # there are no files to process)
+    # If requesting clean, remove files and terminate
     if re.match('(.+)?clean', target):
         clean(target, directory)
         print pad + 'EE', target
@@ -123,6 +122,9 @@ def Execute(target, directory, pad = ''):
                 print I18n.get('severe_exec_error').format(executable)
                 print I18n.get('exec_line').format(' '.join(command))
                 sys.exit(1)
+
+            # Update the dependencies of the newly created file
+            Dependency.update(dstFile)
 
     print pad + 'EE', target
     return
