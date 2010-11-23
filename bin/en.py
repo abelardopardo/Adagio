@@ -77,6 +77,10 @@ msgs = {
     'rule_debug_level': 'Level of debug message',
     'rule_src_dir': 'Directory containing the source files.',
     'rule_dst_dir': 'Directory where the new files will be created.',
+    'convert_geometry': 'Geometry used to convert the files',
+    'convert_output_suffix': 
+    'Suffix to add to files when processed with "convert"',
+    'convert_crop_option': 'Crop option -crop widthxheight+x+y to convert',
     'xslt_style_file': 'Style to be applied to the given source files.',
     'output_format': 'Extension to use when creating the new files.',
     'export_dst': 'Destination of the exports',
