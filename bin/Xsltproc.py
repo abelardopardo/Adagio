@@ -24,7 +24,7 @@ options = [
     ('style_files', '%(home)s%(file_separator)sADA_Styles%(file_separator)sDocbookProfile.xsl',
                    I18n.get('xslt_style_file')),
     ('output_format', 'html', I18n.get('output_format')),
-    ('extra_arguments', '', I18n.get('xslt_extra_arguments')),
+    ('extra_arguments', '', I18n.get('extra_arguments').format('Xsltproc')),
     ('languages', '%(locale)s', I18n.get('xslt_languages'))
     ]
 
@@ -66,21 +66,18 @@ def Execute(target, directory, pad = ''):
 
     Ada.logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
 
-    # Print msg when beginning to execute target in dir
-    dirMsg = target + ' ' + \
-        directory.current_dir[(len(pad) + 2 + len(target)) - 80:]
-    print pad + 'BB', dirMsg
-
     # Detect and execute "special" targets
     if AdaRule.processSpecialTargets(target, directory, documentation, 
                                      module_prefix):
-        print pad + 'EE', dirMsg
         return
+
+    # Print msg when beginning to execute target in dir
+    print pad + 'BB', target
 
     # If requesting clean, remove files and terminate
     if re.match('(.+)?clean', target):
         clean(target, directory)
-        print pad + 'EE', dirMsg
+        print pad + 'EE', target
         return
 
     # Get the files to process
@@ -92,7 +89,7 @@ def Execute(target, directory, pad = ''):
     # If no files given to process, terminate
     if toProcess == []:
         print I18n.get('no_file_to_process')
-        print pad + 'EE', dirMsg
+        print pad + 'EE', target
         return
 
     # Prepare style files (locate styles in ADA/ADA_Styles if needed
@@ -106,7 +103,7 @@ def Execute(target, directory, pad = ''):
     # If no style is given, terminate
     if styles == []:
         print I18n.get('no_style_file')
-        print pad + 'EE', dirMsg
+        print pad + 'EE', target
         return
 
     # If single, leave alone, if multiple, combine in a StringIO using imports
@@ -238,7 +235,7 @@ def Execute(target, directory, pad = ''):
             # Update the dependencies of the newly created file
             Dependency.update(dstFile)
 
-    print pad + 'EE', dirMsg
+    print pad + 'EE', target
     return
 
 def clean(target, directory):
@@ -246,43 +243,44 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
     
-    global module_prefix
+    Ada.logInfo(target, directory, 'Cleaning')
 
-    # Loop over all the required targets
-    for target in AdaRule.getCleanTargets(target, directory, module_prefix):
-        # Get the files to process
-        srcDir = directory.getWithDefault(target, 'src_dir')
-        toProcess = []
-        for srcFile in directory.getWithDefault(target, 'files').split():
-            toProcess.extend(glob.glob(os.path.join(directory.current_dir, srcFile)))
+    # Remove the .clean suffix
+    target_prefix = re.sub('\.clean$', '', target)
 
-        # Split the languages and remember if the execution is multilingual
-        languages = directory.getWithDefault(target, 'languages').split()
-        multilingual = len(languages) > 1
+    # Get the files to process
+    srcDir = directory.getWithDefault(target_prefix, 'src_dir')
+    toProcess = []
+    for srcFile in directory.getWithDefault(target_prefix, 'files').split():
+        toProcess.extend(glob.glob(os.path.join(directory.current_dir, srcFile)))
+
+    # Split the languages and remember if the execution is multilingual
+    languages = directory.getWithDefault(target_prefix, 'languages').split()
+    multilingual = len(languages) > 1
 
 
-        # Loop over all source files to process
-        for datafile in toProcess:
-            # Loop over languages
-            for language in languages:
-                # If processing multilingual, create the appropriate suffix
-                if multilingual:
-                    fileSuffix = '_' + language
-                else:
-                    fileSuffix = ''
+    # Loop over all source files to process
+    for datafile in toProcess:
+        # Loop over languages
+        for language in languages:
+            # If processing multilingual, create the appropriate suffix
+            if multilingual:
+                fileSuffix = '_' + language
+            else:
+                fileSuffix = ''
 
-                # Derive the destination file name
-                dstDir = directory.getWithDefault(target, 'dst_dir')
-                dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-                    fileSuffix + '.' + \
-                    directory.getWithDefault(target, 'output_format')
-                dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
+            # Derive the destination file name
+            dstDir = directory.getWithDefault(target_prefix, 'dst_dir')
+            dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
+                fileSuffix + '.' + \
+                directory.getWithDefault(target_prefix, 'output_format')
+            dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
             
-                if not os.path.exists(dstFile):
-                    continue
+            if not os.path.exists(dstFile):
+                continue
             
-                print I18n.get('removing').format(os.path.basename(dstFile))
-                os.remove(dstFile)
+            print I18n.get('removing').format(os.path.basename(dstFile))
+            os.remove(dstFile)
             
 # Execution as script
 if __name__ == "__main__":

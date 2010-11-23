@@ -16,7 +16,7 @@ module_prefix = 'inkscape'
 options = [
     ('exec', 'inkscape', I18n.get('name_of_executable')),
     ('output_format', 'png', I18n.get('output_format')),
-    ('extra_arguments', '', I18n.get('xslt_extra_arguments'))
+    ('extra_arguments', '', I18n.get('extra_arguments').format('Inkscape'))
     ]
 
 documentation = {
@@ -47,31 +47,28 @@ def Execute(target, directory, pad = ''):
 
     Ada.logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
 
-    # Print msg when beginning to execute target in dir
-    dirMsg = target + ' ' + \
-        directory.current_dir[(len(pad) + 2 + len(target)) - 80:]
-    print pad + 'BB', dirMsg
-
     # Detect and execute "special" targets
-    if AdaRule.processSpecialTargets(target, directory, documentation, 
+    if AdaRule.processSpecialTargets(target, directory, documentation,
                                      module_prefix):
-        print pad + 'EE', dirMsg
         return
+
+    # Print msg when beginning to execute target in dir
+    print pad + 'BB', target
 
     # If requesting clean, remove files and terminate (target not meaninful if
     # there are no files to process)
     if re.match('(.+)?clean', target):
         clean(target, directory)
-        print pad + 'EE', dirMsg
+        print pad + 'EE', target
         return
 
     # Get formats and check if they are empty
     formats = directory.getWithDefault(target, 'output_format').split()
     if formats == []:
         print I18n.get('no_var_value').format('output_format')
-        print pad + 'EE', dirMsg
+        print pad + 'EE', target
         return
-        
+
     # Get the files to process
     srcDir = directory.getWithDefault(target, 'src_dir')
     toProcess = []
@@ -81,15 +78,15 @@ def Execute(target, directory, pad = ''):
     # If no files given to process, terminate
     if toProcess == []:
         print I18n.get('no_file_to_process')
-        print pad + 'EE', dirMsg
+        print pad + 'EE', target
         return
 
     # Loop over all source files to process
-    executable = directory.getWithDefault(target, 'exec') 
+    executable = directory.getWithDefault(target, 'exec')
     extraArgs = directory.getWithDefault(target, 'extra_arguments')
     for datafile in toProcess:
         Ada.logDebug(target_prefix, directory, ' EXEC ' + datafile)
-        
+
         # If file not found, terminate
         if not os.path.isfile(datafile):
             print I18n.get('file_not_found').format(datafile)
@@ -102,10 +99,10 @@ def Execute(target, directory, pad = ''):
             dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
                 '.' + format
             dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-                                                   
+
             # Check for dependencies!
             Dependency.update(dstFile, set([datafile] + directory.option_files))
-            
+
             # If the destination file is up to date, skip the execution
             if Dependency.isUpToDate(dstFile):
                 print I18n.get('file_uptodate').format(os.path.basename(dstFile))
@@ -127,58 +124,58 @@ def Execute(target, directory, pad = ''):
                 print I18n.get('exec_line').format(' '.join(command))
                 sys.exit(1)
 
-    print pad + 'EE', dirMsg
+    print pad + 'EE', target
     return
 
 def clean(target, directory):
     """
     Clean the files produced by this rule
     """
-    
-    global module_prefix
 
-    # Loop over all the required targets
-    for target in AdaRule.getCleanTargets(target, directory, module_prefix):
+    Ada.logInfo(target, directory, 'Cleaning')
 
-        # Get formats and check if they are empty
-        formats = directory.getWithDefault(target, 'output_format').split()
-        if formats == []:
-            print I18n.get('no_var_value').format('output_format')
-            return
-        
-        # Get the files to process
-        srcDir = directory.getWithDefault(target, 'src_dir')
-        toProcess = []
-        for srcFile in directory.getWithDefault(target, 'files').split():
-            toProcess.extend(glob.glob(os.path.join(directory.current_dir, 
-                                                    srcFile)))
+    # Remove the .clean suffix
+    target_prefix = re.sub('\.clean$', '', target)
 
-        # If no files given to process, terminate
-        if toProcess == []:
-            print I18n.get('no_file_to_process')
-            return
+    # Get formats and check if they are empty
+    formats = directory.getWithDefault(target_prefix, 'output_format').split()
+    if formats == []:
+        print I18n.get('no_var_value').format('output_format')
+        return
 
-        # Loop over all the source files
-        for datafile in toProcess:
+    # Get the files to process
+    srcDir = directory.getWithDefault(target_prefix, 'src_dir')
+    toProcess = []
+    for srcFile in directory.getWithDefault(target_prefix, 'files').split():
+        toProcess.extend(glob.glob(os.path.join(directory.current_dir,
+                                                srcFile)))
 
-            # If file not found, terminate
-            if not os.path.isfile(datafile):
-                print I18n.get('file_not_found').format(datafile)
-                sys.exit(1)
+    # If no files given to process, terminate
+    if toProcess == []:
+        print I18n.get('no_file_to_process')
+        return
 
-            # Loop over formats
-            for format in formats:
-                # Derive the destination file name
-                dstDir = directory.getWithDefault(target, 'dst_dir')
-                dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-                    '.' + format
-                dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
+    # Loop over all the source files
+    for datafile in toProcess:
 
-                if not os.path.exists(dstFile):
-                    continue
-                
-                print I18n.get('removing').format(os.path.basename(dstFile))
-                os.remove(dstFile)
+        # If file not found, terminate
+        if not os.path.isfile(datafile):
+            print I18n.get('file_not_found').format(datafile)
+            sys.exit(1)
+
+        # Loop over formats
+        for format in formats:
+            # Derive the destination file name
+            dstDir = directory.getWithDefault(target_prefix, 'dst_dir')
+            dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
+                '.' + format
+            dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
+
+            if not os.path.exists(dstFile):
+                continue
+
+            print I18n.get('removing').format(os.path.basename(dstFile))
+            os.remove(dstFile)
 
 # Execution as script
 if __name__ == "__main__":

@@ -39,12 +39,14 @@ msgs = {
                        executed.
 
     """,
+    'fatal_error': 'Fatal error encountered. Attach "adado.log" to notification.',
     'file_not_found': 'File {0} not found',
     'not_a_directory': '{0} is not a directory',
     'producing': 'Producing {0}',
     'removing': 'Removing {0}',
     'no_file_to_process' : 'No file given to process',
     'no_dir_to_process' : 'No directory given to process',
+    'no_targets_to_clean' : 'No targets to clean in {0}',
     'no_style_file' : 'No style file given.',
     'no_doc_for_rule': 'No documentation for rule {0}',
     'doc_preamble' : '===== {0} Processing Rules =====',
@@ -79,8 +81,9 @@ msgs = {
     'output_format': 'Extension to use when creating the new files.',
     'export_dst': 'Destination of the exports',
     'export_targets': 'Targets to execute in the destination directories',
-    'xslt_extra_arguments':
-    'Extra arguments passed directly to the style processor.',
+    'gimp_script': 'Script to process gimp files in batch mode',
+    'extra_arguments':
+    'Extra arguments passed directly to {0}.',
     'files_to_process': 'Space separated list of files to process.',
     'xslt_merge_styles':
     'Space separated list of styles to combine with the given style',

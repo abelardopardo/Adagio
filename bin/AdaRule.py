@@ -59,14 +59,16 @@ def processSpecialTargets(target, directory, documentation, prefix):
 
     Return boolean stating if any of them has been executed
     """
+    
+    # Detect if any of the special target has been detected
+    hit = False
 
-    # If requesting var dump, do it and finish
-    if re.match('(.+\.)?dump', target):
-        dumpOptions(target, directory, prefix)
-        return True
+    # Remember if it is one of the helpdump or dumphelp
+    doubleTarget = re.match('(.+\.)?helpdump$', target) or \
+        re.match('(.+\.)?dumphelp$', target)
 
     # If requesting help, dump msg and terminate
-    if re.match('(.+)?help', target):
+    if doubleTarget or re.match('(.+)?help$', target):
         msg = documentation[directory.getWithDefault(Ada.module_prefix, 
                                                      'locale')]
         if msg != None:
@@ -74,9 +76,14 @@ def processSpecialTargets(target, directory, documentation, prefix):
             print msg
         else:
             print I18n.get('no_doc_for_rule').format(prefix)
-        return True
+        hit = True
 
-    return False
+    # If requesting var dump, do it and finish
+    if doubleTarget or re.match('(.+\.)?dump$', target):
+        dumpOptions(target, directory, prefix)
+        hit =  True
+
+    return hit
 
     
 def dumpOptions(target, directory, prefix):
@@ -104,25 +111,6 @@ def dumpOptions(target, directory, prefix):
         if sn.startswith(target) or sn == defSection:
             for (on, ov) in sorted(directory.options.items(sn)):
                 print ' -', sn + '.' + on, '=', ov
-
-def getCleanTargets(target, directory, prefix):
-    """
-    Function that given a clean target, returns exactly the targets to execute
-    in the current directory.  
-    """
-    
-    # Remove the .clean from the end of the target
-    target = re.sub('\.?clean$', '', target)
-
-    # If the target was simply "clean", get all the targets starting with the
-    # module prefix from the section_list in the directory
-    if target == '':
-        targets = [x for x in directory.options.sections() 
-                   if x.startswith(prefix)]
-    else:
-        targets = [target]
-
-    return targets
 
 class StyleResolver(etree.Resolver):
     """

@@ -42,21 +42,18 @@ def Execute(target, directory, pad = ''):
 
     Ada.logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
 
-    # Print msg when beginning to execute target in dir
-    dirMsg = target + ' ' + \
-        directory.current_dir[(len(pad) + 2 + len(target)) - 80:]
-    print pad + 'BB', dirMsg
-
     # Detect and execute "special" targets
     if AdaRule.processSpecialTargets(target, directory, documentation, 
                                      module_prefix):
-        print pad + 'EE', dirMsg
         return
+
+    # Print msg when beginning to execute target in dir
+    print pad + 'BB', target
 
     # If requesting clean, remove files and terminate
     if re.match('(.+)?clean', target):
-        clean(target, directory)
-        print pad + 'EE', dirMsg
+        clean(target, directory, pad)
+        print pad + 'EE', target
         return
 
     # Get the directories to process
@@ -67,7 +64,7 @@ def Execute(target, directory, pad = ''):
     # If no files given to process, terminate
     if toProcess == []:
         print I18n.get('no_dir_to_process')
-        print pad + 'EE', dirMsg
+        print pad + 'EE', target
         return
 
     # Get option to set in the remote directory
@@ -88,18 +85,68 @@ def Execute(target, directory, pad = ''):
         dirObj = Directory.getDirectoryObject(dirName, optionsToSet)
         dirObj.Execute(remoteTargets, pad + '  ')
 
-    print pad + 'EE', dirMsg
+    print pad + 'EE', target
     return
 
-def clean(target, directory):
+def clean(target, directory, pad):
     """
     Clean the files produced by this rule
     """
     
     global module_prefix
 
-    pass
+    Ada.logInfo(target, directory, 'Cleaning')
 
+    # Remove the .clean suffix
+    target_prefix = re.sub('\.clean$', '', target)
+
+    # Get the directories to process
+    toProcess = []
+    for srcDir in directory.getWithDefault(target_prefix, 'files').split():
+        toProcess.extend(glob.glob(srcDir))
+
+    # If no files given to process, terminate
+    if toProcess == []:
+        print I18n.get('no_dir_to_process')
+        print pad + 'EE', target
+        return
+
+    # Get option to set in the remote directory
+    optionsToSet = []
+    newExportDir = directory.getWithDefault(target_prefix, 'export_dst')
+    if newExportDir != '':
+        optionsToSet = ['export dst_dir ' + newExportDir]
+    Ada.logInfo(target_prefix, directory, 'NEW export.dst_dir = ' + newExportDir)
+
+    # Targets to execute in the remote directory
+    givenRemoteTargets = directory.getWithDefault(target_prefix, 
+                                                  'targets').split()
+    remoteTargets = ['.'.join([x, 'clean']) \
+                         for x in givenRemoteTargets \
+                         if not re.match('(.+\.)?help$', x) and \
+                         not re.match('(.+\.)?clean$', x) and \
+                         not re.match('(.+\.)?dumphelp$', x) and \
+                         not re.match('(.+\.)?helpdump$', x)]
+
+    # If there is a remote target, but it is one of the special, do not perform
+    # a recursive clean.
+    if givenRemoteTargets != [] and remoteTargets == []:
+        Ada.logInfo(target, directory, 'Special target in gotodir. Stop.')
+        print I18n.get('no_targets_to_clean').format(target_prefix)
+        return
+        
+    Ada.logInfo(target_prefix, directory, 
+                'Remote Targets = ' + ' '.join(remoteTargets))
+
+    # Loop over each directory
+    for dirName in toProcess:
+
+        Ada.logInfo(target_prefix, directory, 'RECUR: ' + dirName)
+
+        dirObj = Directory.getDirectoryObject(dirName, optionsToSet)
+        dirObj.Execute(remoteTargets, pad + '  ')
+
+    
 # Execution as script
 if __name__ == "__main__":
     Execute(module_prefix, Directory.getDirectoryObject('.'))

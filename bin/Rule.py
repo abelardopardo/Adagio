@@ -40,21 +40,18 @@ def Execute(target, directory, pad = ''):
 
     Ada.logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
 
-    # Print msg when beginning to execute target in dir
-    dirMsg = target + ' ' + \
-        directory.current_dir[(len(pad) + 2 + len(target)) - 80:]
-    print pad + 'BB', dirMsg
-
     # Detect and execute "special" targets
     if AdaRule.processSpecialTargets(target, directory, documentation, 
                                      module_prefix):
-        print pad + 'EE', dirMsg
         return
+
+    # Print msg when beginning to execute target in dir
+    print pad + 'BB', target
 
     # If requesting clean, remove files and terminate
     if re.match('(.+)?clean', target):
         clean(target, directory)
-        print pad + 'EE', dirMsg
+        print pad + 'EE', target
         return
 
     # Get the files to process
@@ -66,11 +63,11 @@ def Execute(target, directory, pad = ''):
     # If no files given to process, terminate
     if toProcess == []:
         print I18n.get('no_file_to_process')
-        print pad + 'EE', dirMsg
+        print pad + 'EE', target
         return
 
 
-    print pad + 'EE', dirMsg
+    print pad + 'EE', target
     return
 
 def clean(target, directory):
@@ -78,9 +75,11 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
     
-    global module_prefix
+    Ada.logInfo(target, directory, 'Cleaning')
 
-    pass
+    # Remove the .clean suffix
+    target = re.sub('\.clean$', '', target)
+
 
 # Execution as script
 if __name__ == "__main__":

@@ -295,6 +295,8 @@ class Directory:
         # Change directory to the current one
         os.chdir(self.current_dir)
 
+        print pad + '--' + self.current_dir[len(pad) + 2 - 80:]
+
         # Make sure no circular execution is produced
         if self.executing:
             print I18n.get('circular_execute_directory').format(self.current_dir)
@@ -306,16 +308,32 @@ class Directory:
         # - clean*
         # - local*
         #
-        if targets == []:
-            targets = [x for x in self.section_list
-                       if not re.match('^ada$', x) and
-                          not re.match('^clean(\.?\S+)?$', x) and
-                          not re.match('^local(\.?\S+)?$', x)]
+        toExecTargets = [x for x in self.section_list
+                         if not re.match('^ada$', x) and
+                         not re.match('^clean(\.?\S+)?$', x) and
+                         not re.match('^local(\.?\S+)?$', x)]
 
-        Ada.logDebug('Directory', self, '  Targets: ' + str(targets))
+        # If no target is given, execute all except the filtered ones
+        if targets == []:
+            targets = toExecTargets
+
+        # If any of the targets is dump, help, clean, expand the current targets
+        # to add them that suffix
+        finalTargets = []
+        for target in targets:
+            if target == 'clean':
+                finalTargets.extend([x + '.clean' for x in toExecTargets])
+            elif target == 'dump':
+                finalTargets.extend([x + '.dump' for x in toExecTargets])
+            elif target == 'help':
+                finalTargets.extend([x + '.help' for x in toExecTargets])
+            else:
+                finalTargets.append(target)
+
+        Ada.logDebug('Directory', self, '  Targets: ' + str(finalTargets))
 
         # Loop over all the targets to execute
-        for target_name in targets:
+        for target_name in finalTargets:
 
             # Check the cache to see if target has already been executed
             if target_name in self.executed_targets:
@@ -332,6 +350,8 @@ class Directory:
         self.executing = False
         Ada.logDebug('Directory', self, 
                      ' Executed Targets: ' + str(self.executed_targets))
+
+        print pad + '--'
         return
 
     def getWithDefault(self, section, option):

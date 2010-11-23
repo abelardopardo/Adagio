@@ -128,46 +128,47 @@ def LoadDefaults(options):
     loadOptionsInConfig(options, Inkscape.module_prefix, Inkscape.options)
     loadOptionsInConfig(options, Gotodir.module_prefix,  Gotodir.options)
     
-def Execute(target, dirLocation, pad = ''):
+def Execute(target, directory, pad = ''):
     """
     Given a target and a directory, it checks which rule needs to be invoked and
    performs the invokation.
     """
 
-    # Detect special 'helpdump' target
-    if target.split('.')[-1] == 'helpdump':
-        Execute(re.sub('\.?helpdump$', '.dump', target), dirLocation, pad)
-        Execute(re.sub('\.?helpdump$', '.help', target), dirLocation, pad)
-        return
-
-    # Detect help or dump targets
-    noSection = (target == 'dump') or (target == 'help') or (target == 'clean')
-
     # Detect help or dump targets with/without section name
     specialTarget = re.match('(.+\.)?dump$', target) or \
         re.match('(.+\.)?help$', target) or \
-        re.match('(.+\.)?clean$', target)
+        re.match('(.+\.)?clean$', target) or \
+        re.match('(.+\.)?dumphelp$', target) or \
+        re.match('(.+\.)?helpdump$', target)
 
     # Make sure the target is legal.
-    if not specialTarget and not dirLocation.options.has_section(target):
+    if not specialTarget and not directory.options.has_section(target):
         print I18n.get('illegal_target_name').format(t=target,
-                                                     dl=dirLocation.current_dir)
+                                                     dl=directory.current_dir)
         sys.exit(2)
 
     # Get the target prefix (everything up to the first dot)
     targetPrefix = target.split('.')[0]
 
+    Ada.logInfo('Properties', directory, 'Target ' + target)
+
     # Select the proper set of rules
     # Code to extend when a new set of rules is added (@EXTEND@)
-    if noSection or targetPrefix == Ada.module_prefix:
-        Ada.Execute(target, dirLocation, pad)
+    if targetPrefix == Ada.module_prefix:
+        Ada.Execute(target, directory, pad)
 
-    if noSection or targetPrefix == Xsltproc.module_prefix:
-        Xsltproc.Execute(target, dirLocation, pad)
+    if targetPrefix == Xsltproc.module_prefix:
+        Xsltproc.Execute(target, directory, pad)
+        return
+    elif targetPrefix == Inkscape.module_prefix:
+        Inkscape.Execute(target, directory, pad)
+        return
+    elif targetPrefix == Gotodir.module_prefix:
+        Gotodir.Execute(target, directory)
+        return
 
-    if noSection or targetPrefix == Inkscape.module_prefix:
-        Inkscape.Execute(target, dirLocation, pad)
+    Ada.logFatal('Properties', directory, 'Unexpected target ' + target)
+    print I18n.get('fatal_error')
+    sys.exit(1)
 
-    if noSection or targetPrefix == Gotodir.module_prefix:
-        Gotodir.Execute(target, dirLocation)
-
+    return

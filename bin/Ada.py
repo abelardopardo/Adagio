@@ -219,16 +219,15 @@ def Execute(target, directory, pad = ''):
     logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
 
     # Print msg when beginning to execute target in dir
-    dirMsg = target + ' ' + \
-        directory.current_dir[(len(pad) + 2 + len(target)) - 80:]
-    print pad + 'BB', dirMsg
+    print pad + 'BB', target
 
     # Detect and execute "special" targets
     if AdaRule.processSpecialTargets(target, directory, documentation, 
                                      module_prefix):
-        print pad + 'EE', dirMsg
+        print pad + 'EE', target
         return
 
+    print pad + 'EE', target
     return
 
 def dumpOptions(directory):
