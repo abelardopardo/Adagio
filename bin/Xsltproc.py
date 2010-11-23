@@ -160,26 +160,30 @@ def Execute(target, directory, pad = ''):
     languages = directory.getWithDefault(target, 'languages').split()
     multilingual = len(languages) > 1
 
-    # Loop over languages
-    for language in languages:
-        # If processing multilingual, create the appropriate suffix
-        if multilingual:
-            fileSuffix = '_' + language
+    # Loop over all source files to process
+    for datafile in toProcess:
+        logger.debug(target + ' EXEC ' + datafile)
+        
+        # If file not found, terminate
+        if not os.path.isfile(datafile):
+            print I18n.get('file_not_found').format(datafile)
+            sys.exit(1)
 
-            # Insert the appropriate language parameters
-            styleParams['profile.lang'] = "\'" + language + "\'"
-            styleParams['l10n.gentext.language'] = "\'" + language + "\'"
-        else:
-            fileSuffix = ''
+        # Variable holding the data tree to be processed. Used to recycle the
+        # same tree through the language iteration.
+        dataTree = None
 
-        # Loop over all source files to process
-        for datafile in toProcess:
-            logger.debug(target + ' EXEC ' + datafile)
+        # Loop over languages
+        for language in languages:
+            # If processing multilingual, create the appropriate suffix
+            if multilingual:
+                fileSuffix = '_' + language
 
-            # If file not found, terminate
-            if not os.path.isfile(datafile):
-                print I18n.get('file_not_found').format(datafile)
-                sys.exit(1)
+                # Insert the appropriate language parameters
+                styleParams['profile.lang'] = "\'" + language + "\'"
+                styleParams['l10n.gentext.language'] = "\'" + language + "\'"
+            else:
+                fileSuffix = ''
 
             # Derive the destination file name
             dstDir = directory.getWithDefault(target, 'dst_dir')
@@ -200,14 +204,15 @@ def Execute(target, directory, pad = ''):
             # Proceed with the execution of xslt
             print I18n.get('producing').format(os.path.basename(dstFile))
             
-            # Parse the data file
-            try:
-                dataTree = etree.parse(datafile)
-                dataTree.xinclude()
-            except etree.XMLSyntaxError, e:
-                print I18n.get('severe_parse_error').format(datafile)
-                print e
-                sys.exit(0)
+            # Parse the data file if needed
+            if dataTree == None:
+                try:
+                    dataTree = etree.parse(datafile)
+                    dataTree.xinclude()
+                except etree.XMLSyntaxError, e:
+                    print I18n.get('severe_parse_error').format(datafile)
+                    print e
+                    sys.exit(0)
             
     
             # Apply the transformation
