@@ -7,7 +7,7 @@
 #
 import sys, os, re, datetime, ConfigParser, StringIO, ordereddict
 
-import Ada, I18n, Xsltproc, Inkscape, Gotodir
+import Ada, I18n, Xsltproc, Inkscape, Gotodir, Gimp
 
 # Prefix to use in the module
 module_prefix = 'properties'
@@ -127,6 +127,7 @@ def LoadDefaults(options):
     loadOptionsInConfig(options, Xsltproc.module_prefix, Xsltproc.options)
     loadOptionsInConfig(options, Inkscape.module_prefix, Inkscape.options)
     loadOptionsInConfig(options, Gotodir.module_prefix,  Gotodir.options)
+    loadOptionsInConfig(options, Gimp.module_prefix,     Gimp.options)
     
 def Execute(target, directory, pad = ''):
     """
@@ -165,6 +166,9 @@ def Execute(target, directory, pad = ''):
         return
     elif targetPrefix == Gotodir.module_prefix:
         Gotodir.Execute(target, directory)
+        return
+    elif targetPrefix == Gimp.module_prefix:
+        Gimp.Execute(target, directory)
         return
 
     Ada.logFatal('Properties', directory, 'Unexpected target ' + target)
