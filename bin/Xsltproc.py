@@ -64,19 +64,14 @@ def Execute(target, directory, pad = ''):
 
     logger.info(module_prefix + ':' + target + ':' + directory.current_dir)
 
-    dirMsg = directory.current_dir[(len(pad) + 2 + len(target)) - 80:]
-    print pad + 'BB', target, dirMsg
+    # Print msg when beginning to execute target in dir
+    dirMsg = target + directory.current_dir[(len(pad) + 2 + len(target)) - 80:]
+    print pad + 'BB', dirMsg
 
-    # Check if the requested target is "special"
+    # Detect and execute "special" targets
     if AdaRule.processSpecialTargets(target, directory, documentation, 
                                      module_prefix):
-        print pad + 'EE', target, dirMsg
-        return
-
-    # If requesting clean, remove files and terminate
-    if re.match('(.+)?clean', target):
-        clean(target, directory)
-        print pad + 'EE', target, dirMsg
+        print pad + 'EE', dirMsg
         return
 
     # Get the XML files to process
@@ -88,6 +83,13 @@ def Execute(target, directory, pad = ''):
     # If no files given to process, terminate
     if toProcess == []:
         print I18n.get('no_file_to_process')
+        print pad + 'EE', target, dirMsg
+        return
+
+    # If requesting clean, remove files and terminate (target not meaninful if
+    # there are no files to process
+    if re.match('(.+)?clean', target):
+        clean(target, directory)
         print pad + 'EE', target, dirMsg
         return
 
