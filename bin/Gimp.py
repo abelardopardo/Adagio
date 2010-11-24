@@ -22,12 +22,13 @@ options = [
 
 documentation = {
     'en' : """
-    Execute the GIMP "script" in all "files". This script transforms files from
-    *.xcf to *.png.
+    Execute the GIMP "script" in all "files". This script transforms all files
+    from *.xcf to *.png.
 
     The script is a program written in Lisp that is passed as GIMP input. There
-    is no possibility to choose a destination directory different from the
-    source directory. The transformation will only change the file extension.
+    is no possibility to choose the source files, all *.xcf are processed, and
+    the destination directory is the same as the source directory. The
+    transformation will only change the file extension.
     """}
 
 def Execute(target, directory, pad = ''):
@@ -60,11 +61,8 @@ def Execute(target, directory, pad = ''):
         print pad + 'EE', target
         return
 
-    # Get the files to process
-    srcDir = directory.getWithDefault(target, 'src_dir')
-    toProcess = []
-    for srcFile in directory.getWithDefault(target, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(directory.current_dir, srcFile)))
+    # Get the files to process (all *.xcf in the current directory)
+    toProcess = glob.glob(os.path.join(directory.current_dir, '*.xcf'))
 
     # If no files given to process, terminate
     if toProcess == []:
@@ -78,9 +76,8 @@ def Execute(target, directory, pad = ''):
         sys.exit(1)
     scriptFile = open(scriptFileName, 'r')
 
-    # Loop over the source files
-    executable = directory.getWithDefault(target, 'exec')
-    extraArgs = directory.getWithDefault(target, 'extra_arguments')
+    # Loop over the source files to see if an execution is needed
+    dstFiles = []
     for datafile in toProcess:
         Ada.logDebug(target_prefix, directory, ' EXEC ' + datafile)
 
@@ -102,8 +99,17 @@ def Execute(target, directory, pad = ''):
             print I18n.get('file_uptodate').format(os.path.basename(dstFile))
             continue
 
-        # Proceed with the execution of xslt
-        print I18n.get('producing').format(os.path.basename(dstFile))
+        # Remember the files to produce
+        dstFiles.append(dstFile)
+
+    # If the execution is needed
+    if dstFiles != []:
+        executable = directory.getWithDefault(target, 'exec')
+        extraArgs = directory.getWithDefault(target, 'extra_arguments')
+
+        # Proceed with the execution
+        fnames = ' '.join([os.path.basename(x) for x in dstFiles])
+        print I18n.get('producing').format(os.path.basename(fnames))
 
         command = [executable, '--no-data', '--no-fonts', '--no-interface', 
                    '-b', '-']
@@ -118,8 +124,9 @@ def Execute(target, directory, pad = ''):
             sys.exit(1)
         
 
-        # Update the dependencies of the newly created file
-        Dependency.update(dstFile)
+        # Update the dependencies of the newly created files
+        map(lambda x: Dependency.update(x), dstFiles)
+
     print pad + 'EE', target
     return
 
@@ -134,18 +141,15 @@ def clean(target, directory):
     target_prefix = re.sub('\.clean$', '', target)
 
     # Get the files to process
-    srcDir = directory.getWithDefault(target_prefix, 'src_dir')
-    toProcess = []
-    for srcFile in directory.getWithDefault(target_prefix, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(directory.current_dir,
-                                                srcFile)))
+    toProcess = glob.glob(os.path.join(directory.current_dir, '*.xcf'))
 
     # If no files given to process, terminate
     if toProcess == []:
         print I18n.get('no_file_to_process')
         return
 
-    # Loop over all the source files
+    # Loop over the source files to see if an execution is needed
+    dstFiles = []
     for datafile in toProcess:
 
         # If file not found, terminate
@@ -155,8 +159,7 @@ def clean(target, directory):
 
         # Derive the destination file name
         dstDir = directory.getWithDefault(target_prefix, 'src_dir')
-        dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-            '.png'
+        dstFile = os.path.splitext(os.path.basename(datafile))[0] + '.png'
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
         if not os.path.exists(dstFile):
