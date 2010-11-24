@@ -24,14 +24,15 @@ options = [
 
 documentation = {
     'en' : """
-    Uses inkscape to transform the "files" into the format given in
-    "output_format". Available formats are:
-    - png
-    - eps
-    - ps
-    - pdf
+    Uses the "convert" program scale images. The value of "geometry" is treated
+    as a space separated list of geometries of the form hxw. Each file in
+    "files" is then scaled for every value in geometry. Furthermore, the value
+    in "crop_option" can be used to crop the image. "extra_arguments" are passed
+    directly to convert. Convert is thus invoked as:
 
-    The values in "extra_arguments" are given directly to inkscape
+    convert -scale [geometry] [convert_option] [extra_args] 
+            input.xxx output_geometry.xxx
+
     """}
 
 def Execute(target, directory, pad = ''):
@@ -86,6 +87,7 @@ def Execute(target, directory, pad = ''):
     # Loop over all source files to process
     executable = directory.getWithDefault(target, 'exec')
     extraArgs = directory.getWithDefault(target, 'extra_arguments')
+    convertCrop = directory.getWithDefault(target, 'crop_option')
     for datafile in toProcess:
         Ada.logDebug(target_prefix, directory, ' EXEC ' + datafile)
 
@@ -100,6 +102,7 @@ def Execute(target, directory, pad = ''):
             dstDir = directory.getWithDefault(target, 'dst_dir')
             dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
                 '.' + format
+WRONG!
             dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
             # Check for dependencies!
@@ -113,18 +116,23 @@ def Execute(target, directory, pad = ''):
             # Proceed with the execution of xslt
             print I18n.get('producing').format(os.path.basename(dstFile))
 
-            command = [executable, '-scale', geometry *****]
+            command = [executable, '-scale', geometry]
+            command.extend(convertCrop.split())
             command.extend(extraArgs.split())
             command.append(datafile)
 
             Ada.logDebug(target_prefix, directory, 'Popen: ' + ' '.join(command))
             try:
-                pr = subprocess.Popen(command, stdout = Ada.userLog)
-                pr.wait()
+                pass
+                # pr = subprocess.Popen(command, stdout = Ada.userLog)
+                # pr.wait()
             except:
                 print I18n.get('severe_exec_error').format(executable)
                 print I18n.get('exec_line').format(' '.join(command))
                 sys.exit(1)
+
+            # Update the dependencies of the newly created file
+            Dependency.update(dstFile)
 
     print pad + 'EE', target
     return
@@ -134,16 +142,13 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
 
+    print 'BROKEN! Still in Inkscape format, Review'
+    sys.exit(1)
+
     Ada.logInfo(target, directory, 'Cleaning')
 
     # Remove the .clean suffix
     target_prefix = re.sub('\.clean$', '', target)
-
-    # Get formats and check if they are empty
-    formats = directory.getWithDefault(target_prefix, 'output_format').split()
-    if formats == []:
-        print I18n.get('no_var_value').format('output_format')
-        return
 
     # Get the files to process
     srcDir = directory.getWithDefault(target_prefix, 'src_dir')
@@ -165,19 +170,17 @@ def clean(target, directory):
             print I18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
-        # Loop over formats
-        for format in formats:
-            # Derive the destination file name
-            dstDir = directory.getWithDefault(target_prefix, 'dst_dir')
-            dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-                '.' + format
-            dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
+        # Derive the destination file name
+        dstDir = directory.getWithDefault(target_prefix, 'dst_dir')
+        dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
+            '.' + format
+        dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
-            if not os.path.exists(dstFile):
-                continue
+        if not os.path.exists(dstFile):
+            continue
 
-            print I18n.get('removing').format(os.path.basename(dstFile))
-            os.remove(dstFile)
+        print I18n.get('removing').format(os.path.basename(dstFile))
+        os.remove(dstFile)
 
 # Execution as script
 if __name__ == "__main__":
