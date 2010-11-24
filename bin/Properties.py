@@ -8,7 +8,7 @@
 import sys, os, re, datetime, ConfigParser, StringIO, ordereddict
 
 # @EXTEND@
-import Ada, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert
+import Ada, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
 
 # Prefix to use in the module
 module_prefix = 'properties'
@@ -130,6 +130,7 @@ def LoadDefaults(options):
     loadOptionsInConfig(options, Gotodir.module_prefix,  Gotodir.options)
     loadOptionsInConfig(options, Gimp.module_prefix,     Gimp.options)
     loadOptionsInConfig(options, Convert.module_prefix,  Convert.options)
+    loadOptionsInConfig(options, Copy.module_prefix,     Copy.options)
     
 def Execute(target, directory, pad = ''):
     """
@@ -174,6 +175,9 @@ def Execute(target, directory, pad = ''):
         return
     elif targetPrefix == Convert.module_prefix:
         Convert.Execute(target, directory)
+        return
+    elif targetPrefix == Copy.module_prefix:
+        Copy.Execute(target, directory)
         return
 
     Ada.logFatal('Properties', directory, 'Unexpected target ' + target)
