@@ -14,7 +14,7 @@ module_prefix = 'convert'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('exec', 'inkscape', I18n.get('name_of_executable')),
+    ('exec', 'convert', I18n.get('name_of_executable')),
     ('output_format', 'png', I18n.get('output_format')),
     ('geometry', '', I18n.get('convert_geometry')),
     ('output_suffix', '', I18n.get('convert_output_suffix')),
@@ -100,9 +100,8 @@ def Execute(target, directory, pad = ''):
         for geometry in geometries:
             # Derive the destination file name
             dstDir = directory.getWithDefault(target, 'dst_dir')
-            dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-                '.' + format
-WRONG!
+            (fn, ext) = os.path.splitext(os.path.basename(datafile))
+            dstFile = fn + '_' + geometry + ext
             dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
             # Check for dependencies!
@@ -120,12 +119,13 @@ WRONG!
             command.extend(convertCrop.split())
             command.extend(extraArgs.split())
             command.append(datafile)
+            command.append(dstFile)
 
             Ada.logDebug(target_prefix, directory, 'Popen: ' + ' '.join(command))
             try:
                 pass
-                # pr = subprocess.Popen(command, stdout = Ada.userLog)
-                # pr.wait()
+                pr = subprocess.Popen(command, stdout = Ada.userLog)
+                pr.wait()
             except:
                 print I18n.get('severe_exec_error').format(executable)
                 print I18n.get('exec_line').format(' '.join(command))
@@ -142,9 +142,6 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
 
-    print 'BROKEN! Still in Inkscape format, Review'
-    sys.exit(1)
-
     Ada.logInfo(target, directory, 'Cleaning')
 
     # Remove the .clean suffix
@@ -156,6 +153,13 @@ def clean(target, directory):
     for srcFile in directory.getWithDefault(target_prefix, 'files').split():
         toProcess.extend(glob.glob(os.path.join(directory.current_dir,
                                                 srcFile)))
+
+    # Get geometry
+    geometries = directory.getWithDefault(target_prefix, 'geometry').split()
+    if geometries == []:
+        print I18n.get('no_var_value').format('geometry')
+        print pad + 'EE', target
+        return
 
     # If no files given to process, terminate
     if toProcess == []:
@@ -170,17 +174,19 @@ def clean(target, directory):
             print I18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
-        # Derive the destination file name
-        dstDir = directory.getWithDefault(target_prefix, 'dst_dir')
-        dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-            '.' + format
-        dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
+        # Loop over formats
+        for geometry in geometries:
+            # Derive the destination file name
+            dstDir = directory.getWithDefault(target_prefix, 'dst_dir')
+            (fn, ext) = os.path.splitext(os.path.basename(datafile))
+            dstFile = fn + '_' + geometry + ext
+            dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
-        if not os.path.exists(dstFile):
-            continue
+            if not os.path.exists(dstFile):
+                continue
 
-        print I18n.get('removing').format(os.path.basename(dstFile))
-        os.remove(dstFile)
+            print I18n.get('removing').format(os.path.basename(dstFile))
+            #os.remove(dstFile)
 
 # Execution as script
 if __name__ == "__main__":
