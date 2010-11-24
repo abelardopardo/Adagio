@@ -78,8 +78,10 @@ def clean(target, directory):
     Ada.logInfo(target, directory, 'Cleaning')
 
     # Remove the .clean suffix
-    target = re.sub('\.clean$', '', target)
+    target_prefix = re.sub('\.clean$', '', target)
 
+    print 'Not implemented yet'
+    sys.exit(1)
 
 # Execution as script
 if __name__ == "__main__":

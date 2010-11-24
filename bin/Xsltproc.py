@@ -84,7 +84,7 @@ def Execute(target, directory, pad = ''):
     srcDir = directory.getWithDefault(target, 'src_dir')
     toProcess = []
     for srcFile in directory.getWithDefault(target, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(directory.current_dir, srcFile)))
+        toProcess.extend(glob.glob(os.path.join(srcDir, srcFile)))
 
     # If no files given to process, terminate
     if toProcess == []:
@@ -252,7 +252,7 @@ def clean(target, directory):
     srcDir = directory.getWithDefault(target_prefix, 'src_dir')
     toProcess = []
     for srcFile in directory.getWithDefault(target_prefix, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(directory.current_dir, srcFile)))
+        toProcess.extend(glob.glob(os.path.join(srcDir, srcFile)))
 
     # Split the languages and remember if the execution is multilingual
     languages = directory.getWithDefault(target_prefix, 'languages').split()

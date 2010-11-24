@@ -22,8 +22,7 @@ options = [
 
 documentation = {
     'en' : """
-    Execute the GIMP "script" in all "files". This script transforms all files
-    from *.xcf to *.png.
+    All files *.xcf in the current directory are transformed to *.png.
 
     The script is a program written in Lisp that is passed as GIMP input. There
     is no possibility to choose the source files, all *.xcf are processed, and
