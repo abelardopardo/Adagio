@@ -148,7 +148,7 @@ def executeRuleChain(dirList, executionContext, commands):
             # Sequence of rules to apply
 # DONE            Gotodir.process(executionContext[dirName], cmdName)
 
-#             Copyfiles.process(executionContext[dirName], cmdName)
+# DONE            Copyfiles.process(executionContext[dirName], cmdName)
 
 # NONE            Copytemplates.process(executionContext[dirName], cmdName)
 
@@ -156,9 +156,9 @@ def executeRuleChain(dirList, executionContext, commands):
 
 # DONE        Inkscape.process(executionContext[dirName], cmdName)
 
-# ????            Gimp.process(executionContext[dirName], cmdName)
+# DONE            Gimp.process(executionContext[dirName], cmdName)
 
-#             Convert.process(executionContext[dirName], cmdName)
+# DONE            Convert.process(executionContext[dirName], cmdName)
 
 # DONE            Xsltproc.process(executionContext[dirName], cmdName)
 
