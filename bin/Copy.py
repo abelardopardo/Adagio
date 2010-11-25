@@ -5,7 +5,7 @@
 #
 #
 #
-import os, re, sys, glob, shutil
+import os, re, sys, shutil
 
 import Ada, Directory, I18n, Dependency, AdaRule
 
@@ -29,44 +29,25 @@ def Execute(target, directory, pad = ''):
     global module_prefix
     global documentation
 
-    # If it is a generic target, add the prefix
-    target_prefix = target.split('.')[0]
-    if target_prefix != module_prefix:
-        target = module_prefix + '.' + target
-        target_prefix = module_prefix
-
-    Ada.logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
+    Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.processSpecialTargets(target, directory, documentation, 
-                                     module_prefix):
+    if AdaRule.specialTargets(target, directory, documentation, 
+                                     module_prefix, clean, pad):
+        return
+
+    # Get the files to process, if empty, terminate
+    toProcess = AdaRule.getFilesToProcess(target, directory)
+    if toProcess == []:
         return
 
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target
 
-    # If requesting clean, remove files and terminate
-    if re.match('(.+)?clean', target):
-        clean(target, directory)
-        print pad + 'EE', target
-        return
-
-    # Get the files to process
-    srcDir = directory.getWithDefault(target, 'src_dir')
-    toProcess = []
-    for srcFile in directory.getWithDefault(target, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(srcDir, srcFile)))
-
-    # If no files given to process, terminate
-    if toProcess == []:
-        print I18n.get('no_file_to_process')
-        print pad + 'EE', target
-        return
-
     # Loop over all source files to process
     for datafile in toProcess:
 
-        Ada.logDebug(target_prefix, directory, ' EXEC ' + datafile)
+        Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -90,7 +71,7 @@ def Execute(target, directory, pad = ''):
         print I18n.get('producing').format(os.path.basename(dstFile))
 
         # Copying the file
-        Ada.logDebug(target_prefix, directory, 'Copy ' + datafile + ' ' + 
+        Ada.logDebug(target, directory, 'Copy ' + datafile + ' ' + 
                      dstFile)
         shutil.copyfile(datafile, dstFile)
 
@@ -100,32 +81,25 @@ def Execute(target, directory, pad = ''):
     print pad + 'EE', target
     return
 
-def clean(target, directory):
+def clean(target, directory, pad):
     """
     Clean the files produced by this rule
     """
     
     Ada.logInfo(target, directory, 'Cleaning')
 
-    # Remove the .clean suffix
-    target_prefix = re.sub('\.clean$', '', target)
-
     # Get the files to process
-    srcDir = directory.getWithDefault(target_prefix, 'src_dir')
-    toProcess = []
-    for srcFile in directory.getWithDefault(target_prefix, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(srcDir, srcFile)))
-
-    # If no files given to process, terminate
+    toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
-        print I18n.get('no_file_to_process')
-        print pad + 'EE', target
         return
+
+    # Print msg when beginning to execute target in dir
+    print pad + 'BB', target + '.clean'
 
     # Loop over all source files to process
     for datafile in toProcess:
 
-        Ada.logDebug(target_prefix, directory, ' EXEC ' + datafile)
+        Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -133,7 +107,7 @@ def clean(target, directory):
             sys.exit(1)
 
         # Derive the destination file name
-        dstDir = directory.getWithDefault(target_prefix, 'dst_dir')
+        dstDir = directory.getWithDefault(target, 'dst_dir')
         dstFile = os.path.abspath(os.path.join(dstDir, 
                                                os.path.basename(datafile)))
 
@@ -144,6 +118,9 @@ def clean(target, directory):
         # Proceed with the cleaning
         print I18n.get('removing').format(os.path.basename(dstFile))
         os.remove(dstFile)
+
+    print pad + 'EE', target + '.clean'
+    return
 
 # Execution as script
 if __name__ == "__main__":

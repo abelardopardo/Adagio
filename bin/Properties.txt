@@ -99,17 +99,11 @@
         exec = soffice # Executable to use
 
 [export]
-        debug = %(ada.debug_level)s # Debug level inherited from ada section
-        files_always = file3 file4 # Files that are always exported
-
-[exportcontrol]
         date_format = yyyy/MM/dd HH:mm:ss
-        profile_revision = %(ada.profile_revision)s
         begin = yyy/MM/dd HH:mm:ss # Start of enabled window
         end = yyy/MM/dd HH:mm:ss # End of enabled window
-        now = %(ada.current_datetime)s # Current value for the time
         open = True # It is considered for export (general enable)
-        profile_revision_value = r1:r2 # Revisions to consider
+        profile_revision = r1 r2 r3
 
 [gotodir]
         files = d1 d2 # Space separated lists of directories to recur

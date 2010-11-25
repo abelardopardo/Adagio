@@ -38,36 +38,21 @@ def Execute(target, directory, pad = ''):
     global module_prefix
     global documentation
 
-    # If it is a generic target, add the prefix
-    target_prefix = target.split('.')[0]
-    if target_prefix != module_prefix:
-        target = module_prefix + '.' + target
-        target_prefix = module_prefix
-
-    Ada.logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
+    Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.processSpecialTargets(target, directory, documentation, 
-                                     module_prefix):
-        return
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
-
-    # If requesting clean, remove files and terminate
-    if re.match('(.+)?clean', target):
-        clean(target, directory)
-        print pad + 'EE', target
+    if AdaRule.specialTargets(target, directory, documentation, 
+                                     module_prefix, clean, pad):
         return
 
     # Get the files to process (all *.xcf in the current directory)
     toProcess = glob.glob(os.path.join(directory.current_dir, '*.xcf'))
-
-    # If no files given to process, terminate
     if toProcess == []:
-        print I18n.get('no_file_to_process')
-        print pad + 'EE', target
+        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
         return
+
+    # Print msg when beginning to execute target in dir
+    print pad + 'BB', target
 
     scriptFileName = directory.getWithDefault(target, 'script')
     if not os.path.isfile(scriptFileName):
@@ -78,7 +63,7 @@ def Execute(target, directory, pad = ''):
     # Loop over the source files to see if an execution is needed
     dstFiles = []
     for datafile in toProcess:
-        Ada.logDebug(target_prefix, directory, ' EXEC ' + datafile)
+        Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -112,7 +97,7 @@ def Execute(target, directory, pad = ''):
 
         command = [executable, '--no-data', '--no-fonts', '--no-interface', 
                    '-b', '-']
-        Ada.logDebug(target_prefix, directory, 'Popen: ' + ' '.join(command))
+        Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
         try:
             pr = subprocess.Popen(command, stdin = scriptFile, 
                                   stdout = Ada.userLog)
@@ -129,23 +114,21 @@ def Execute(target, directory, pad = ''):
     print pad + 'EE', target
     return
 
-def clean(target, directory):
+def clean(target, directory, pad):
     """
     Clean the files produced by this rule
     """
     
     Ada.logInfo(target, directory, 'Cleaning')
 
-    # Remove the .clean suffix
-    target_prefix = re.sub('\.clean$', '', target)
-
     # Get the files to process
     toProcess = glob.glob(os.path.join(directory.current_dir, '*.xcf'))
-
-    # If no files given to process, terminate
     if toProcess == []:
-        print I18n.get('no_file_to_process')
+        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
         return
+
+    # Print msg when beginning to execute target in dir
+    print pad + 'BB', target + '.clean'
 
     # Loop over the source files to see if an execution is needed
     dstFiles = []
@@ -157,7 +140,7 @@ def clean(target, directory):
             sys.exit(1)
 
         # Derive the destination file name
-        dstDir = directory.getWithDefault(target_prefix, 'src_dir')
+        dstDir = directory.getWithDefault(target, 'src_dir')
         dstFile = os.path.splitext(os.path.basename(datafile))[0] + '.png'
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
@@ -167,6 +150,8 @@ def clean(target, directory):
         print I18n.get('removing').format(os.path.basename(dstFile))
         os.remove(dstFile)
 
+    print pad + 'EE', target + '.clean'
+    return
     
 # Execution as script
 if __name__ == "__main__":

@@ -5,7 +5,7 @@
 #
 #
 #
-import os, re, sys, glob, subprocess
+import os, re, sys, subprocess
 
 import Ada, Directory, I18n, Dependency, AdaRule
 
@@ -43,27 +43,20 @@ def Execute(target, directory, pad = ''):
     global module_prefix
     global documentation
 
-    # If it is a generic target, add the prefix
-    target_prefix = target.split('.')[0]
-    if target_prefix != module_prefix:
-        target = module_prefix + '.' + target
-        target_prefix = module_prefix
-
-    Ada.logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
+    Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.processSpecialTargets(target, directory, documentation,
-                                     module_prefix):
+    if AdaRule.specialTargets(target, directory, documentation,
+                                     module_prefix, clean, pad):
+        return
+
+    # Get the files to process, if empty, terminate
+    toProcess = AdaRule.getFilesToProcess(target, directory)
+    if toProcess == []:
         return
 
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target
-
-    # If requesting clean, remove files and terminate
-    if re.match('(.+)?clean', target):
-        clean(target, directory)
-        print pad + 'EE', target
-        return
 
     # Get geometry
     geometries = directory.getWithDefault(target, 'geometry').split()
@@ -72,24 +65,12 @@ def Execute(target, directory, pad = ''):
         print pad + 'EE', target
         return
 
-    # Get the files to process
-    srcDir = directory.getWithDefault(target, 'src_dir')
-    toProcess = []
-    for srcFile in directory.getWithDefault(target, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(srcDir, srcFile)))
-
-    # If no files given to process, terminate
-    if toProcess == []:
-        print I18n.get('no_file_to_process')
-        print pad + 'EE', target
-        return
-
     # Loop over all source files to process
     executable = directory.getWithDefault(target, 'exec')
     extraArgs = directory.getWithDefault(target, 'extra_arguments')
     convertCrop = directory.getWithDefault(target, 'crop_option')
     for datafile in toProcess:
-        Ada.logDebug(target_prefix, directory, ' EXEC ' + datafile)
+        Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -121,7 +102,7 @@ def Execute(target, directory, pad = ''):
             command.append(datafile)
             command.append(dstFile)
 
-            Ada.logDebug(target_prefix, directory, 'Popen: ' + ' '.join(command))
+            Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
             try:
                 pass
                 pr = subprocess.Popen(command, stdout = Ada.userLog)
@@ -137,32 +118,26 @@ def Execute(target, directory, pad = ''):
     print pad + 'EE', target
     return
 
-def clean(target, directory):
+def clean(target, directory, pad):
     """
     Clean the files produced by this rule
     """
 
     Ada.logInfo(target, directory, 'Cleaning')
 
-    # Remove the .clean suffix
-    target_prefix = re.sub('\.clean$', '', target)
-
     # Get the files to process
-    srcDir = directory.getWithDefault(target_prefix, 'src_dir')
-    toProcess = []
-    for srcFile in directory.getWithDefault(target_prefix, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(srcDir, srcFile)))
+    toProcess = AdaRule.getFilesToProcess(target, directory)
+    if toProcess == []:
+        return
+
+    # Print msg when beginning to execute target in dir
+    print pad + 'BB', target + '.clean'
 
     # Get geometry
-    geometries = directory.getWithDefault(target_prefix, 'geometry').split()
+    geometries = directory.getWithDefault(target, 'geometry').split()
     if geometries == []:
         print I18n.get('no_var_value').format('geometry')
         print pad + 'EE', target
-        return
-
-    # If no files given to process, terminate
-    if toProcess == []:
-        print I18n.get('no_file_to_process')
         return
 
     # Loop over all the source files
@@ -176,7 +151,7 @@ def clean(target, directory):
         # Loop over formats
         for geometry in geometries:
             # Derive the destination file name
-            dstDir = directory.getWithDefault(target_prefix, 'dst_dir')
+            dstDir = directory.getWithDefault(target, 'dst_dir')
             (fn, ext) = os.path.splitext(os.path.basename(datafile))
             dstFile = fn + '_' + geometry + ext
             dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
@@ -186,6 +161,9 @@ def clean(target, directory):
 
             print I18n.get('removing').format(os.path.basename(dstFile))
             os.remove(dstFile)
+
+    print pad + 'EE', target + '.clean'
+    return
 
 # Execution as script
 if __name__ == "__main__":

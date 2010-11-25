@@ -32,56 +32,44 @@ def Execute(target, directory, pad = ''):
     global module_prefix
     global documentation
 
-    # If it is a generic target, add the prefix
-    target_prefix = target.split('.')[0]
-    if target_prefix != module_prefix:
-        target = module_prefix + '.' + target
-        target_prefix = module_prefix
-
     Ada.logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.processSpecialTargets(target, directory, documentation, 
-                                     module_prefix):
+    if AdaRule.specialTargets(target, directory, documentation, 
+                                     module_prefix, clean, pad):
+        return
+
+    # Get the files to process, if empty, terminate
+    toProcess = AdaRule.getFilesToProcess(target, directory)
+    if toProcess == []:
         return
 
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target
 
-    # If requesting clean, remove files and terminate
-    if re.match('(.+)?clean', target):
-        clean(target, directory)
-        print pad + 'EE', target
-        return
-
-    # Get the files to process
-    srcDir = directory.getWithDefault(target, 'src_dir')
-    toProcess = []
-    for srcFile in directory.getWithDefault(target, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(directory.current_dir, srcFile)))
-
-    # If no files given to process, terminate
-    if toProcess == []:
-        print I18n.get('no_file_to_process')
-        print pad + 'EE', target
-        return
-
-
     print pad + 'EE', target
     return
 
-def clean(target, directory):
+def clean(target, directory, pad):
     """
     Clean the files produced by this rule
     """
     
     Ada.logInfo(target, directory, 'Cleaning')
 
-    # Remove the .clean suffix
-    target_prefix = re.sub('\.clean$', '', target)
+    # Get the files to process
+    toProcess = AdaRule.getFilesToProcess(target, directory)
+    if toProcess == []:
+        return
+
+    # Print msg when beginning to execute target in dir
+    print pad + 'BB', target + '.clean'
 
     print 'Not implemented yet'
     sys.exit(1)
+
+    print pad + 'EE', target + '.clean'
+    return
 
 # Execution as script
 if __name__ == "__main__":

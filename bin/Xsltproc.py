@@ -5,7 +5,7 @@
 #
 #
 #
-import os, re, sys, StringIO, glob
+import os, re, sys, StringIO
 
 # Import conditionally either regular xml support or lxml if present
 try:
@@ -58,39 +58,20 @@ def Execute(target, directory, pad = ''):
     global module_prefix
     global documentation
 
-    # If it is a generic target, add the prefix
-    target_prefix = target.split('.')[0]
-    if target_prefix != module_prefix:
-        target = module_prefix + '.' + target
-        target_prefix = module_prefix
-
-    Ada.logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
+    Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.processSpecialTargets(target, directory, documentation, 
-                                     module_prefix):
+    if AdaRule.specialTargets(target, directory, documentation, 
+                                     module_prefix, clean, pad):
+        return
+
+    # Get the files to process, if empty, terminate
+    toProcess = AdaRule.getFilesToProcess(target, directory)
+    if toProcess == []:
         return
 
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target
-
-    # If requesting clean, remove files and terminate
-    if re.match('(.+)?clean', target):
-        clean(target, directory)
-        print pad + 'EE', target
-        return
-
-    # Get the files to process
-    srcDir = directory.getWithDefault(target, 'src_dir')
-    toProcess = []
-    for srcFile in directory.getWithDefault(target, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(srcDir, srcFile)))
-
-    # If no files given to process, terminate
-    if toProcess == []:
-        print I18n.get('no_file_to_process')
-        print pad + 'EE', target
-        return
 
     # Prepare style files (locate styles in ADA/ADA_Styles if needed
     styles = []
@@ -124,14 +105,15 @@ def Execute(target, directory, pad = ''):
         styleFile = result
 
 
-    # Parse style file, expand includes and create transformation object
+    # Parse style file, insert name resolver to consider ADA local styles,
+    # expand includes and create transformation object
     styleParser = etree.XMLParser()
     styleParser.resolvers.add(AdaRule.StyleResolver())
     styleTree = etree.parse(styleFile, styleParser)
     styleTree.xinclude()
     styleTransform = etree.XSLT(styleTree)
 
-    # Create dictionary with some stylesheet parameters
+    # Create the dictionary of stylesheet parameters
     styleParams = {}
     styleParams['ada.home'] =  "\'" + \
         directory.getWithDefault(Ada.module_prefix, 'home') + "\'"
@@ -145,7 +127,7 @@ def Execute(target, directory, pad = ''):
                                             'profile_revision')
     if profileRevision != '':
         styleParams['profile.revision'] = "\'" + profileRevision + "\'" 
-    # Parse the given dictionary in extra_arguments and fold it
+    # Parse the dictionary given in extra_arguments and fold it
     try:
         extraDict = eval('{' + directory.getWithDefault(target,
                                                      'extra_arguments') +
@@ -157,13 +139,15 @@ def Execute(target, directory, pad = ''):
         print e
         sys.exit(1)
 
-    # Split the languages and remember if the execution is multilingual
+    # Obtain languages and remember if the execution is multilingual
     languages = directory.getWithDefault(target, 'languages').split()
     multilingual = len(languages) > 1
 
-    # Loop over all source files to process
+    # Loop over all source files to process (processing one source file over
+    # several languages gives us a huge speedup because the XML tree of the
+    # source is built only once for all languages.
     for datafile in toProcess:
-        Ada.logDebug(target_prefix, directory, ' EXEC ' + datafile)
+        Ada.logDebug(target, directory, ' EXEC ' + datafile)
         
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -238,24 +222,23 @@ def Execute(target, directory, pad = ''):
     print pad + 'EE', target
     return
 
-def clean(target, directory):
+def clean(target, directory, pad):
     """
     Clean the files produced by this rule
     """
     
     Ada.logInfo(target, directory, 'Cleaning')
 
-    # Remove the .clean suffix
-    target_prefix = re.sub('\.clean$', '', target)
-
     # Get the files to process
-    srcDir = directory.getWithDefault(target_prefix, 'src_dir')
-    toProcess = []
-    for srcFile in directory.getWithDefault(target_prefix, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(srcDir, srcFile)))
+    toProcess = AdaRule.getFilesToProcess(target, directory)
+    if toProcess == []:
+        return
+
+    # Print msg when beginning to execute target in dir
+    print pad + 'BB', target + '.clean'
 
     # Split the languages and remember if the execution is multilingual
-    languages = directory.getWithDefault(target_prefix, 'languages').split()
+    languages = directory.getWithDefault(target, 'languages').split()
     multilingual = len(languages) > 1
 
 
@@ -270,10 +253,10 @@ def clean(target, directory):
                 fileSuffix = ''
 
             # Derive the destination file name
-            dstDir = directory.getWithDefault(target_prefix, 'dst_dir')
+            dstDir = directory.getWithDefault(target, 'dst_dir')
             dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
                 fileSuffix + '.' + \
-                directory.getWithDefault(target_prefix, 'output_format')
+                directory.getWithDefault(target, 'output_format')
             dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
             
             if not os.path.exists(dstFile):
@@ -281,6 +264,9 @@ def clean(target, directory):
             
             print I18n.get('removing').format(os.path.basename(dstFile))
             os.remove(dstFile)
+
+    print pad + 'EE', target + '.clean'
+    return
             
 # Execution as script
 if __name__ == "__main__":

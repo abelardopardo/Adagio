@@ -5,7 +5,7 @@
 #
 #
 #
-import os, re
+import os, re, glob, sys
 
 # Import conditionally either regular xml support or lxml if present
 try:
@@ -51,11 +51,13 @@ def locateFile(fileName, dirPrefix = os.getcwd()):
 
     return None
 
-def processSpecialTargets(target, directory, documentation, prefix):
+def specialTargets(target, directory, documentation, prefix, 
+                          clean_function = None, pad = None):
     """
     Check if the requested target is special:
     - dump
     - help
+    - clean
 
     Return boolean stating if any of them has been executed
     """
@@ -83,9 +85,28 @@ def processSpecialTargets(target, directory, documentation, prefix):
         dumpOptions(target, directory, prefix)
         hit =  True
 
+    # CLEAN
+    if re.match('(.+\.)?clean$', target) and (clean_function != None):
+        clean_function(re.sub('\.clean$', '', target), directory, pad)
+        hit =  True
+
     return hit
 
-    
+def getFilesToProcess(target, directory):
+    """
+    Get the files to process by expanding the expressions in "files" and
+    concatenating the src_dir as prefix.
+    """
+    srcDir = directory.getWithDefault(target, 'src_dir')
+    toProcess = []
+    for srcFile in directory.getWithDefault(target, 'files').split():
+        toProcess.extend(glob.glob(os.path.join(srcDir, srcFile)))
+
+    if toProcess == []:
+        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
+
+    return toProcess
+
 def dumpOptions(target, directory, prefix):
     """
     Dump the value of the options affecting the computations

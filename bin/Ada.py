@@ -210,22 +210,15 @@ def Execute(target, directory, pad = ''):
     global module_prefix
     global documentation
 
-    # If it is a generic target, add the prefix
-    target_prefix = target.split('.')[0]
-    if target_prefix != module_prefix:
-        target = module_prefix + '.' + target
-        target_prefix = module_prefix
+    logInfo(target, directory, 'Enter ' + directory.current_dir)
 
-    logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
+    # Detect and execute "special" targets
+    if AdaRule.specialTargets(target, directory, documentation, 
+                              module_prefix):
+        return
 
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target
-
-    # Detect and execute "special" targets
-    if AdaRule.processSpecialTargets(target, directory, documentation, 
-                                     module_prefix):
-        print pad + 'EE', target
-        return
 
     print pad + 'EE', target
     return
