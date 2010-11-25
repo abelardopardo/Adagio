@@ -32,7 +32,7 @@ def Execute(target, directory, pad = ''):
     Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.specialTargets(target, directory, documentation, 
+    if AdaRule.specialTargets(target, directory, documentation,
                                      module_prefix, clean, pad):
         return
 
@@ -44,39 +44,10 @@ def Execute(target, directory, pad = ''):
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target
 
-    # Loop over all source files to process
-    for datafile in toProcess:
-
-        Ada.logDebug(target, directory, ' EXEC ' + datafile)
-
-        # If file not found, terminate
-        if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
-            sys.exit(1)
-
-        # Derive the destination file name
-        dstDir = directory.getWithDefault(target, 'dst_dir')
-        dstFile = os.path.abspath(os.path.join(dstDir, 
-                                               os.path.basename(datafile)))
-
-        # Check for dependencies!
-        Dependency.update(dstFile, set([datafile] + directory.option_files))
-        
-        # If the destination file is up to date, skip the execution
-        if Dependency.isUpToDate(dstFile):
-            print I18n.get('file_uptodate').format(os.path.basename(dstFile))
-            continue
-
-        # Proceed with the execution of xslt
-        print I18n.get('producing').format(os.path.basename(dstFile))
-
-        # Copying the file
-        Ada.logDebug(target, directory, 'Copy ' + datafile + ' ' + 
-                     dstFile)
-        shutil.copyfile(datafile, dstFile)
-
-        # Update the dependencies of the newly created file
-        Dependency.update(dstFile)
+    # Perform the copy
+    doCopy(target, directory, toProcess, directory.getWithDefault(target,
+                                                                  'dst_dir')
+)
 
     print pad + 'EE', target
     return
@@ -85,7 +56,7 @@ def clean(target, directory, pad):
     """
     Clean the files produced by this rule
     """
-    
+
     Ada.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
@@ -97,6 +68,18 @@ def clean(target, directory, pad):
     print pad + 'BB', target + '.clean'
 
     # Loop over all source files to process
+    doClean(target, directory, toProcess,
+            directory.getWithDefault(target, 'dst_dir'))
+
+    print pad + 'EE', target + '.clean'
+    return
+
+def doCopy(target, directory, toProcess, dstDir):
+    """
+    Effectively perform the copy. The functionality is in this function because
+    it is used also by the Export rule.
+    """
+    # Loop over all source files to process
     for datafile in toProcess:
 
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
@@ -107,20 +90,54 @@ def clean(target, directory, pad):
             sys.exit(1)
 
         # Derive the destination file name
-        dstDir = directory.getWithDefault(target, 'dst_dir')
-        dstFile = os.path.abspath(os.path.join(dstDir, 
+        dstFile = os.path.abspath(os.path.join(dstDir,
+                                               os.path.basename(datafile)))
+
+        # Check for dependencies!
+        Dependency.update(dstFile, set([datafile] + directory.option_files))
+
+        # If the destination file is up to date, skip the execution
+        if Dependency.isUpToDate(dstFile):
+            print I18n.get('file_uptodate').format(os.path.basename(dstFile))
+            continue
+
+        # Proceed with the execution of xslt
+        print I18n.get('producing').format(os.path.basename(dstFile))
+
+        # Copying the file
+        Ada.logDebug(target, directory, 'Copy ' + datafile + ' ' +
+                     dstFile)
+        shutil.copyfile(datafile, dstFile)
+
+        # Update the dependencies of the newly created file
+        Dependency.update(dstFile)
+
+def doClean(target, directory, toProcess, dstDir):
+    """
+    Function to execute the core of the clean operation. It is in its own
+    function because it is used also by the Export rule.
+    """
+
+    for datafile in toProcess:
+        Ada.logDebug(target, directory, ' EXEC ' + datafile)
+
+        # If file not found, terminate
+        if not os.path.isfile(datafile):
+            print I18n.get('file_not_found').format(datafile)
+            sys.exit(1)
+
+        # Derive the destination file name
+        dstFile = os.path.abspath(os.path.join(dstDir,
                                                os.path.basename(datafile)))
 
         # If file is not there, bypass
         if not os.path.exists(dstFile):
             continue
 
-        # Proceed with the cleaning
-        print I18n.get('removing').format(os.path.basename(dstFile))
+        # Proceed with the cleaning (dump the file name being deleted)
+        prefix = I18n.get('removing')
+        print I18n.get('removing').format(dstFile[len(prefix) -3 - 80:])
         os.remove(dstFile)
-
-    print pad + 'EE', target + '.clean'
-    return
 
 # Execution as script
 if __name__ == "__main__":

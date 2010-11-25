@@ -31,6 +31,8 @@ documentation = {
     The values in "extra_arguments" are given directly to inkscape
     """}
 
+has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
+
 def Execute(target, directory, pad = ''):
     """
     Execute the rule in the given directory
@@ -38,6 +40,7 @@ def Execute(target, directory, pad = ''):
 
     global module_prefix
     global documentation
+    global has_executable
 
     Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
@@ -46,9 +49,17 @@ def Execute(target, directory, pad = ''):
                                      module_prefix, clean, pad):
         return
 
+    # If the executable is not present, notify and terminate
+    if not has_executable:
+        print I18n.get('no_executable').format(options['exec'])
+        if directory.options.get(target, 'partial') == '0':
+            sys.exit(1)
+        return
+
     # Get the files to process, if empty, terminate
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
+        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
         return
 
     # Print msg when beginning to execute target in dir
@@ -64,6 +75,7 @@ def Execute(target, directory, pad = ''):
     # Loop over all source files to process
     executable = directory.getWithDefault(target, 'exec')
     extraArgs = directory.getWithDefault(target, 'extra_arguments')
+    dstDir = directory.getWithDefault(target, 'dst_dir')
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
@@ -75,7 +87,6 @@ def Execute(target, directory, pad = ''):
         # Loop over formats
         for format in formats:
             # Derive the destination file name
-            dstDir = directory.getWithDefault(target, 'dst_dir')
             dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
                 '.' + format
             dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
@@ -133,6 +144,7 @@ def clean(target, directory, pad):
     print pad + 'BB', target + '.clean'
 
     # Loop over all the source files
+    dstDir = directory.getWithDefault(target, 'dst_dir')
     for datafile in toProcess:
 
         # If file not found, terminate
@@ -143,7 +155,6 @@ def clean(target, directory, pad):
         # Loop over formats
         for format in formats:
             # Derive the destination file name
-            dstDir = directory.getWithDefault(target, 'dst_dir')
             dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
                 '.' + format
             dstFile = os.path.abspath(os.path.join(dstDir, dstFile))

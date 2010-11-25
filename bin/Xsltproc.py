@@ -146,6 +146,7 @@ def Execute(target, directory, pad = ''):
     # Loop over all source files to process (processing one source file over
     # several languages gives us a huge speedup because the XML tree of the
     # source is built only once for all languages.
+    dstDir = directory.getWithDefault(target, 'dst_dir')
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
         
@@ -171,7 +172,6 @@ def Execute(target, directory, pad = ''):
                 fileSuffix = ''
 
             # Derive the destination file name
-            dstDir = directory.getWithDefault(target, 'dst_dir')
             dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
                 fileSuffix + '.' + \
                 directory.getWithDefault(target, 'output_format')
@@ -243,6 +243,7 @@ def clean(target, directory, pad):
 
 
     # Loop over all source files to process
+    dstDir = directory.getWithDefault(target, 'dst_dir')
     for datafile in toProcess:
         # Loop over languages
         for language in languages:
@@ -253,7 +254,6 @@ def clean(target, directory, pad):
                 fileSuffix = ''
 
             # Derive the destination file name
-            dstDir = directory.getWithDefault(target, 'dst_dir')
             dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
                 fileSuffix + '.' + \
                 directory.getWithDefault(target, 'output_format')

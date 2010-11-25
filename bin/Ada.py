@@ -7,7 +7,7 @@
 #
 import os, sys, locale, ordereddict, re, datetime, time
 
-import Directory, Properties, I18n, AdaRule
+import Directory, I18n, AdaRule
 
 # Get language and locale for locale option
 (lang, enc) = locale.getdefaultlocale()
@@ -43,7 +43,8 @@ config_defaults = {
     'files':            '',
     'file_separator':   os.path.sep,
     'current_datetime': str(datetime.datetime.now()),
-    'profile_revision': ''
+    'profile_revision': '',
+    'partial':          '0'
 }
 
 # List of tuples (varname, default value, description string)

@@ -18,7 +18,7 @@ msgs = {
 
     The script accepts the following options:
 
-      -c filename: File to read the configuration 
+      -c filename: File to read the configuration
 
       -d num: Debugging level. Used to control the amount of messages
        dumped. Possible values are:
@@ -31,6 +31,9 @@ msgs = {
               NOTSET =         0
 
       -h or -x: Shows this message
+
+      -p: Partial execution. Proceed even if some tools are not installed. Otherwise
+          stop execution in the first missing tool.
 
       -s 'section name value': Executes the application by first storing in the
                        environment the assignment name = value. This means that,
@@ -49,6 +52,7 @@ msgs = {
     'no_targets_to_clean' : 'No targets to clean in {0}',
     'no_style_file' : 'No style file given.',
     'no_doc_for_rule': 'No documentation for rule {0}',
+    'no_executable': 'Application {0} not present in the system.',
     'doc_preamble' : '===== {0} Processing Rules =====',
     'var_preamble' : '===== {0} Variables        =====',
     'cannot_open_file': 'Cannot open file {0}',
@@ -69,7 +73,7 @@ msgs = {
     'no_var_value': 'No value given in variable {0}',
     'incorrect_arg_num': 'Incorrect arguments for {0}',
     'incorrect_option': 'Incorrect option {0}',
-    'incorrect_option_in_file': 'Incorrect option {0} in file {1}', 
+    'incorrect_option_in_file': 'Incorrect option {0} in file {1}',
     'incorrect_option_assignment': 'Incorrect assignment {0} = {1}',
     'cannot_detect_ada_home' : 'Unable to set variable ada.home',
     'cannot_find_properties' : 'No file {0} in directory {1}',
@@ -78,13 +82,11 @@ msgs = {
     'rule_src_dir': 'Directory containing the source files.',
     'rule_dst_dir': 'Directory where the new files will be created.',
     'convert_geometry': 'Geometry used to convert the files',
-    'convert_output_suffix': 
+    'convert_output_suffix':
     'Suffix to add to files when processed with "convert"',
     'convert_crop_option': 'Crop option -crop widthxheight+x+y to convert',
     'xslt_style_file': 'Style to be applied to the given source files.',
     'output_format': 'Extension to use when creating the new files.',
-    'export_dst': 'Destination of the exports',
-    'export_targets': 'Targets to execute in the destination directories',
     'gimp_script': 'Script to process gimp files in batch mode',
     'extra_arguments':
     'Extra arguments passed directly to {0}.',
@@ -95,6 +97,21 @@ msgs = {
     'xslt_multilingual':
     'True/False if the documents to process are multilingual.\n\
       Incompatible with profile_lang',
+    'date_format': 'Format used to manipulate the dates',
+    'date_incorrect_format': 'Date {0} not compliant with format {1}',
+    'export_dst': 'Destination of the exports',
+    'export_targets': 'Targets to execute in the destination directories',
+    'export_begin': 'Date/time beyond which the export is allowed.',
+    'export_end': 'Date/time until the export is allowed.',
+    'export_open': 'If the export is enabled (must be "0" or "1").',
+    'export_no_dst': 'No destination for export. Bypassing.',
+    'export_not_open': 'Export not executed because "open" is {0}',
+    'export_not_revision':
+    'Export not executed because revision {0} is not in "profile_revisions".',
+    'export_profile_revisions':
+    'Values of profile_revision for which the export is allowed.',
+    'export_closed_begin': 'Export not executed because it is before {0}',
+    'export_closed_end': 'Export not executed because it is after {0}',
     'ada_current_datetime': 'The Current date/time to be considered',
     'ada_profile_revision':
     'Value of the revision attribute to profile Docbook files',

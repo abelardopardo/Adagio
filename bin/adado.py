@@ -38,10 +38,11 @@ def main():
     #######################################################################
     targets = []
     optionsToSet = []
+    partial = 0
 
     # Swallow the options
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "c:d:s:hx", [])
+        opts, args = getopt.getopt(sys.argv[1:], "c:d:s:hxp", [])
     except getopt.GetoptError, e:
         print e.msg
         print I18n.get('__doc__')
@@ -66,6 +67,10 @@ def main():
         elif optstr == "-h" or optstr == "-x":
             print I18n.get('__doc__')
             sys.exit(3)
+
+        # Allow for partial execution (if some tools are missing
+        elif optstr == "-p":
+            Ada.config_defaults['partial'] = '1'
 
         # Set a value in the environment
         elif optstr == "-s":

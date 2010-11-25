@@ -133,6 +133,26 @@ def dumpOptions(target, directory, prefix):
             for (on, ov) in sorted(directory.options.items(sn)):
                 print ' -', sn + '.' + on, '=', ov
 
+def which(program):
+    """
+    Function to search if an executable is available in the machine. Lifted from
+    StackOverflow.
+    """
+    def is_exe(fpath):
+        return os.path.exists(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+
+    return None
+
 class StyleResolver(etree.Resolver):
     """
     Resolver to use with XSLT stylesheets and force the detection of stylesheets
@@ -175,7 +195,7 @@ def executeRuleChain(dirList, executionContext, commands):
 
 # NONE            Xfig.process(executionContext[dirName], cmdName)
 
-# DONE        Inkscape.process(executionContext[dirName], cmdName)
+# DONE            Inkscape.process(executionContext[dirName], cmdName)
 
 # DONE            Gimp.process(executionContext[dirName], cmdName)
 
@@ -207,7 +227,7 @@ def executeRuleChain(dirList, executionContext, commands):
 
 #             ExtraAnt.process(executionContext[dirName], cmdName)
 
-#             Export.process(executionContext[dirName], cmdName)
+# DONE            Export.process(executionContext[dirName], cmdName)
 
 #             WkHtmlToPDF ???
 

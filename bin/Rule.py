@@ -24,6 +24,8 @@ documentation = {
     @DESCRIBE HERE WHAT THIS RULE DOES@
     """}
 
+has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
+
 def Execute(target, directory, pad = ''):
     """
     Execute the rule in the given directory
@@ -37,6 +39,13 @@ def Execute(target, directory, pad = ''):
     # Detect and execute "special" targets
     if AdaRule.specialTargets(target, directory, documentation, 
                                      module_prefix, clean, pad):
+        return
+
+    # If the executable is not present, notify and terminate
+    if not has_executable:
+        print I18n.get('no_executable').format(options['exec'])
+        if directory.options.get(target, 'partial') == '0':
+            sys.exit(1)
         return
 
     # Get the files to process, if empty, terminate

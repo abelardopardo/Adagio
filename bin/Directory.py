@@ -7,7 +7,7 @@
 #
 import sys, os, re, ConfigParser, ordereddict
 
-import Ada, Config, Properties, I18n, Xsltproc
+import Ada, Properties, I18n, Xsltproc
 
 # Table to store tuples:
 #   path: Directory object

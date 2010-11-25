@@ -30,6 +30,8 @@ documentation = {
     transformation will only change the file extension.
     """}
 
+has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
+
 def Execute(target, directory, pad = ''):
     """
     Execute the rule in the given directory
@@ -44,6 +46,11 @@ def Execute(target, directory, pad = ''):
     if AdaRule.specialTargets(target, directory, documentation, 
                                      module_prefix, clean, pad):
         return
+
+    # If the executable is not present, notify and terminate
+    if not has_executable:
+        print I18n.get('no_executable').format(options['exec'])
+        sys.exit(1)
 
     # Get the files to process (all *.xcf in the current directory)
     toProcess = glob.glob(os.path.join(directory.current_dir, '*.xcf'))
@@ -62,6 +69,7 @@ def Execute(target, directory, pad = ''):
 
     # Loop over the source files to see if an execution is needed
     dstFiles = []
+    dstDir = directory.getWithDefault(target, 'src_dir')
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
@@ -71,7 +79,6 @@ def Execute(target, directory, pad = ''):
             sys.exit(1)
 
         # Derive the destination file name
-        dstDir = directory.getWithDefault(target, 'src_dir')
         dstFile = os.path.splitext(os.path.basename(datafile))[0] + '.png'
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
@@ -132,6 +139,7 @@ def clean(target, directory, pad):
 
     # Loop over the source files to see if an execution is needed
     dstFiles = []
+    dstDir = directory.getWithDefault(target, 'src_dir')
     for datafile in toProcess:
 
         # If file not found, terminate
@@ -140,7 +148,6 @@ def clean(target, directory, pad):
             sys.exit(1)
 
         # Derive the destination file name
-        dstDir = directory.getWithDefault(target, 'src_dir')
         dstFile = os.path.splitext(os.path.basename(datafile))[0] + '.png'
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 

@@ -35,6 +35,8 @@ documentation = {
 
     """}
 
+has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
+
 def Execute(target, directory, pad = ''):
     """
     Execute the rule in the given directory
@@ -50,9 +52,17 @@ def Execute(target, directory, pad = ''):
                                      module_prefix, clean, pad):
         return
 
+    # If the executable is not present, notify and terminate
+    if not has_executable:
+        print I18n.get('no_executable').format(options['exec'])
+        if directory.options.get(target, 'partial') == '0':
+            sys.exit(1)
+        return
+
     # Get the files to process, if empty, terminate
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
+        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
         return
 
     # Print msg when beginning to execute target in dir
@@ -69,6 +79,7 @@ def Execute(target, directory, pad = ''):
     executable = directory.getWithDefault(target, 'exec')
     extraArgs = directory.getWithDefault(target, 'extra_arguments')
     convertCrop = directory.getWithDefault(target, 'crop_option')
+    dstDir = directory.getWithDefault(target, 'dst_dir')
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
@@ -80,7 +91,6 @@ def Execute(target, directory, pad = ''):
         # Loop over formats
         for geometry in geometries:
             # Derive the destination file name
-            dstDir = directory.getWithDefault(target, 'dst_dir')
             (fn, ext) = os.path.splitext(os.path.basename(datafile))
             dstFile = fn + '_' + geometry + ext
             dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
@@ -141,6 +151,7 @@ def clean(target, directory, pad):
         return
 
     # Loop over all the source files
+    dstDir = directory.getWithDefault(target, 'dst_dir')
     for datafile in toProcess:
 
         # If file not found, terminate
@@ -151,7 +162,6 @@ def clean(target, directory, pad):
         # Loop over formats
         for geometry in geometries:
             # Derive the destination file name
-            dstDir = directory.getWithDefault(target, 'dst_dir')
             (fn, ext) = os.path.splitext(os.path.basename(datafile))
             dstFile = fn + '_' + geometry + ext
             dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
