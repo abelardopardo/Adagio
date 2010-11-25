@@ -9,7 +9,7 @@ import sys, os, re, datetime, ConfigParser, StringIO, ordereddict
 
 # @EXTEND@
 import Ada, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
-import Export
+import Export, Dblatex
 
 # Prefix to use in the module
 module_prefix = 'properties'
@@ -132,7 +132,8 @@ def LoadDefaults(options):
     loadOptionsInConfig(options, Gimp.module_prefix,     Gimp.options)
     loadOptionsInConfig(options, Convert.module_prefix,  Convert.options)
     loadOptionsInConfig(options, Copy.module_prefix,     Copy.options)
-    loadOptionsInConfig(options, Export.module_prefix,     Export.options)
+    loadOptionsInConfig(options, Export.module_prefix,   Export.options)
+    loadOptionsInConfig(options, Dblatex.module_prefix,  Dblatex.options)
     
 def Execute(target, directory, pad = ''):
     """
@@ -183,6 +184,9 @@ def Execute(target, directory, pad = ''):
         return
     elif targetPrefix == Export.module_prefix:
         Export.Execute(target, directory)
+        return
+    elif targetPrefix == Dblatex.module_prefix:
+        Dblatex.Execute(target, directory)
         return
 
     Ada.logFatal('Properties', directory, 'Unexpected target ' + target)

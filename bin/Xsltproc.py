@@ -25,7 +25,7 @@ options = [
                    I18n.get('xslt_style_file')),
     ('output_format', 'html', I18n.get('output_format')),
     ('extra_arguments', '', I18n.get('extra_arguments').format('Xsltproc')),
-    ('languages', '%(locale)s', I18n.get('xslt_languages'))
+    ('languages', '%(locale)s', I18n.get('languages'))
     ]
 
 documentation = {

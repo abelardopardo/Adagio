@@ -16,7 +16,7 @@ module_prefix = '@PREFIX@'
 options = [
     ('exec', 'xsltproc', I18n.get('name_of_executable')),
     ('output_format', 'html', I18n.get('output_format')),
-    ('languages', '%(locale)s', I18n.get('xslt_languages'))
+    ('languages', '%(locale)s', I18n.get('languages'))
     ]
 
 documentation = {
@@ -34,7 +34,7 @@ def Execute(target, directory, pad = ''):
     global module_prefix
     global documentation
 
-    Ada.logInfo(target_prefix, directory, 'Enter ' + directory.current_dir)
+    Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
     if AdaRule.specialTargets(target, directory, documentation, 

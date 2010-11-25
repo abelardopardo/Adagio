@@ -50,7 +50,9 @@ def Execute(target, directory, pad = ''):
     # If the executable is not present, notify and terminate
     if not has_executable:
         print I18n.get('no_executable').format(options['exec'])
-        sys.exit(1)
+        if directory.options.get(target, 'partial') == '0':
+            sys.exit(1)
+        return
 
     # Get the files to process (all *.xcf in the current directory)
     toProcess = glob.glob(os.path.join(directory.current_dir, '*.xcf'))

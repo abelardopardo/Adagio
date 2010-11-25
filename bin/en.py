@@ -85,6 +85,8 @@ msgs = {
     'convert_output_suffix':
     'Suffix to add to files when processed with "convert"',
     'convert_crop_option': 'Crop option -crop widthxheight+x+y to convert',
+    'dblatex_compliant':
+    'If non zero Ada-flavored behavior (suppress version page)',
     'xslt_style_file': 'Style to be applied to the given source files.',
     'output_format': 'Extension to use when creating the new files.',
     'gimp_script': 'Script to process gimp files in batch mode',
@@ -93,7 +95,7 @@ msgs = {
     'files_to_process': 'Space separated list of files to process.',
     'xslt_merge_styles':
     'Space separated list of styles to combine with the given style',
-    'xslt_languages': 'Space separated list of languages to consider',
+    'languages': 'Space separated list of languages to consider',
     'xslt_multilingual':
     'True/False if the documents to process are multilingual.\n\
       Incompatible with profile_lang',
@@ -121,15 +123,14 @@ msgs = {
     'The maximum ada version that is required to execute this directory',
     'ada_exact_version':
     'The exact ada version that is required to execute this directory',
-    'ada_debu_level':
-    'Level of messages to print on the screen: 0 None, 10, 20, 30, 40, 50 CRITICAL',
+    'ada_debug_level_option':
+    'Level of messages to print: 0 = None, 1, 2, 3, 4, 5 = CRITICAL',
     'circular_directory':
     'Circular dependency to directory {0}.',
     'circular_execute_directory':
     'Circular execution dependency to directory {0}.',
     'illegal_target_prefix': 'Illegal target name {0}.',
     'illegal_target_name': 'The target {t} is not known in dir {dl}.',
-    'ada_debug_level_option' : 'Debug level to use',
     'incorrect_debug_option' : 'Option -d requires an integer as parameter',
     'ada_version_option' : 'Current ADA version',
     'ada_locale_option' : 'Locale used while executing ADA',
