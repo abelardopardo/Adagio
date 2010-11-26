@@ -219,7 +219,7 @@ def executeRuleChain(dirList, executionContext, commands):
 
 # NONE            Pdflatex.process(executionContext[dirName], cmdName)
 
-#             Dblatex.process(executionContext[dirName], cmdName)
+# DONE            Dblatex.process(executionContext[dirName], cmdName)
 
 #             Msf2PDF.process(executionContext[dirName], cmdName)
 
