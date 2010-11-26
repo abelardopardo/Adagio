@@ -63,7 +63,7 @@ msgs = {
         'ada.exact_version, ada.minimum_version and ' + \
         'ada.maximum_version',
     'severe_parse_error': 'Error while parsing {0}',
-    'severe_exec_error': 'Error while executing {0}',
+    'severe_exec_error': 'Error while executing {0}. Check adado.log',
     'exec_line': 'Invocation: {0}',
     'severe_option_error': 'Error in configuration file',
     'error_applying_xslt': 'Error while applying style in target {0}',

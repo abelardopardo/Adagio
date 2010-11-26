@@ -113,10 +113,14 @@ def Execute(target, directory, pad = ''):
             pr = subprocess.Popen(command, stdout = Ada.userLog,
                                   stderr = Ada.userLog)
             pr.wait()
-            print 'AAA', pr.returncode
         except:
             print I18n.get('severe_exec_error').format(executable)
             print I18n.get('exec_line').format(' '.join(command))
+            sys.exit(1)
+
+        # If dstFile does not exist, something went wrong
+        if not os.path.exists(dstFile):
+            print I18n.get('severe_exec_error').format(executable)
             sys.exit(1)
 
         # Update the dependencies of the newly created file

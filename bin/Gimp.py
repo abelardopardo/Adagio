@@ -116,6 +116,10 @@ def Execute(target, directory, pad = ''):
             print I18n.get('exec_line').format(' '.join(command))
             sys.exit(1)
         
+        # If dstFile does not exist, something went wrong
+        if next([x for x in dstFiles if not os.path.exists(x)]):
+            print I18n.get('severe_exec_error').format(executable)
+            sys.exit(1)
 
         # Update the dependencies of the newly created files
         map(lambda x: Dependency.update(x), dstFiles)
