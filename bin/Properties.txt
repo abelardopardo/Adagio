@@ -55,11 +55,9 @@
         exact_version = 2.2.1 # Exact version required
 
 [xslt]
-        exec = xsltproc # Executable to use for processing
-        style_file = %(ada.home)s/ADA_Styles/DocbookProfile.xsl # Style to apply
+        styles = %(ada.home)s/ADA_Styles/DocbookProfile.xsl # Style to apply
         output_format = html # Extension of the result file
         extra_arguments = --stringparam somename somevalue # To be passed to exec
-        merge_styles = file1 file2 file3 # Styles to combine with style_file
         languages = en # Space separated list of Languages to consider
 
 [xfig]
@@ -112,13 +110,13 @@
 
 # [copy]
 
-[exercisesubmit]
-        style_file = %(ada.home)s/ADA_Styles/ExerciseSubmit.xsl
-        submit_style_file = %(ada.home)s/ADA_Styles/AsapSubmit.xsl
+[exercise]
+        styles = %(ada.home)s/ADA_Styles/ExerciseSubmit.xsl
+        submit_styles = %(ada.home)s/ADA_Styles/AsapSubmit.xsl
         output_format = html
         extra_args = arg1 arg2 # Args passed directly to xslt
-        multilingual_files = file1 # Space separated lists of multilingual files
-        master_style = style.xls # Space separated list of styles to merge
+        languages = en # Space separated list of Languages to consider
+	produce = regular solution pguide submit # Any subset of them
 
 [pdflatex]
         exec = pdflatex # Executable to use
