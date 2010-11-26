@@ -97,13 +97,25 @@ def getFilesToProcess(target, directory):
     Get the files to process by expanding the expressions in "files" and
     concatenating the src_dir as prefix.
     """
+
+    # Safety guard, if srcFiles is empty, no need to proceed. Silence.
+    srcFiles = directory.getWithDefault(target, 'files').split()
+    if srcFiles == []:
+        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
+        return []
+
     srcDir = directory.getWithDefault(target, 'src_dir')
     toProcess = []
-    for srcFile in directory.getWithDefault(target, 'files').split():
-        toProcess.extend(glob.glob(os.path.join(srcDir, srcFile)))
+    for srcFile in srcFiles:
+        found = glob.glob(os.path.join(srcDir, srcFile))
 
-    if toProcess == []:
-        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
+        # Here we might have a problem. Something was given in the variable, but
+        # nothing was found. Bomb out, user should fix this
+        if found == []:
+            print I18n.get('file_not_found').format(srcFile)
+            sys.exit(1)
+
+        toProcess.extend(found)
 
     return toProcess
 
