@@ -217,11 +217,12 @@ def createParameterDict(target, directory):
     return styleParams
 
 def doTransformations(styles, styleTransform, styleParams, toProcess, 
-                      target, directory, paramDict = [{}]):
+                      target, directory, paramDict = [({}, '')]):
     """
     Function that given a style transformation, a set of style parameters, a
-    list of parameter dicitonaries, and a list of files to process, applies the
-    transformation to every file, every local dictionary and every language.."""
+    list of pairs (parameter dicitonaries, suffix), and a list of files to
+    process, applies the transformation to every file, every local dictionary
+    and every language.."""
 
     # Obtain languages and remember if the execution is multilingual
     languages = directory.getWithDefault(target, 'languages').split()
@@ -244,7 +245,7 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
         dataTree = None
         
         # Loop over the param dictionaries
-        for pdict in paramDict:
+        for (pdict, psuffix) in paramDict:
             # fold the values of pdict on styleParams, but in a way that they
             # can be reversed. 
             reverseDict = {}
@@ -255,17 +256,17 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
             for language in languages:
                 # If processing multilingual, create the appropriate suffix
                 if multilingual:
-                    fileSuffix = '_' + language
+                    langSuffix = '_' + language
     
                     # Insert the appropriate language parameters
                     styleParams['profile.lang'] = "\'" + language + "\'"
                     styleParams['l10n.gentext.language'] = "\'" + language + "\'"
                 else:
-                    fileSuffix = ''
+                    langSuffix = ''
     
                 # Derive the destination file name
                 dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-                    fileSuffix + '.' + \
+                    langSuffix + psuffix + '.' + \
                     directory.getWithDefault(target, 'output_format')
                 dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
                 
@@ -278,10 +279,10 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
             # End of for language loop
 
             # Restore the original content of styleParam
-            for (n, v) in reverseDict:
+            for (n, v) in reverseDict.items():
                 if v == None:
                     # Remove the value from the dictionary
-                    styleParams.pop(n)
+                    styleParams.pop(n, None)
                 else:
                     # Replace the value by the old one
                     styleParams[n] = v
