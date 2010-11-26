@@ -215,7 +215,7 @@ def executeRuleChain(dirList, executionContext, commands):
 
 # DONE            Xsltproc.process(executionContext[dirName], cmdName)
 
-#             ExerciseSubmit.process(executionContext[dirName], cmdName)
+# DONE            ExerciseSubmit.process(executionContext[dirName], cmdName)
 
 #             Exam.process(executionContext[dirName], cmdName)
 
