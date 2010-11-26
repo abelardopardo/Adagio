@@ -323,6 +323,7 @@ class Directory:
         for target in targets:
             if target == 'clean':
                 finalTargets.extend([x + '.clean' for x in toExecTargets])
+                finalTargets.reverse()
             elif target == 'dump':
                 finalTargets.extend([x + '.dump' for x in toExecTargets])
             elif target == 'help':
