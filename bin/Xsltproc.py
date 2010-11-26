@@ -105,33 +105,7 @@ def clean(target, directory, pad):
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target + '.clean'
 
-    # Split the languages and remember if the execution is multilingual
-    languages = directory.getWithDefault(target, 'languages').split()
-    multilingual = len(languages) > 1
-
-
-    # Loop over all source files to process
-    dstDir = directory.getWithDefault(target, 'dst_dir')
-    for datafile in toProcess:
-        # Loop over languages
-        for language in languages:
-            # If processing multilingual, create the appropriate suffix
-            if multilingual:
-                fileSuffix = '_' + language
-            else:
-                fileSuffix = ''
-
-            # Derive the destination file name
-            dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-                fileSuffix + '.' + \
-                directory.getWithDefault(target, 'output_format')
-            dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-            
-            if not os.path.exists(dstFile):
-                continue
-            
-            print I18n.get('removing').format(os.path.basename(dstFile))
-            os.remove(dstFile)
+    doClean(target, directory, toProcess)
 
     print pad + 'EE', target + '.clean'
     return
@@ -342,7 +316,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     return dataTree
 
-def doClean(target, directory, toProcess, dstDir, suffixes = ['']):
+def doClean(target, directory, toProcess, suffixes = ['']):
     """
     Function to perform the cleanin step
     """
