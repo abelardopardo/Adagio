@@ -342,6 +342,43 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     return dataTree
 
+def doClean(target, directory, toProcess, dstDir, suffixes = ['']):
+    """
+    Function to perform the cleanin step
+    """
+
+    # Split the languages and remember if the execution is multilingual
+    languages = directory.getWithDefault(target, 'languages').split()
+    multilingual = len(languages) > 1
+
+
+    # Loop over all source files to process
+    dstDir = directory.getWithDefault(target, 'dst_dir')
+    for datafile in toProcess:
+
+        # Loop over the different suffixes
+        for psuffix in suffixes:
+
+            # Loop over languages
+            for language in languages:
+                # If processing multilingual, create the appropriate suffix
+                if multilingual:
+                    langSuffix = '_' + language
+                else:
+                    langSuffix = ''
+    
+                # Derive the destination file name
+                dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
+                    langSuffix + psuffix + '.' + \
+                    directory.getWithDefault(target, 'output_format')
+                dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
+                
+                if not os.path.exists(dstFile):
+                    continue
+                
+                print I18n.get('removing').format(os.path.basename(dstFile))
+                os.remove(dstFile)
+    
 # Execution as script
 if __name__ == "__main__":
     Execute(module_prefix, Directory.getDirectoryObject('.'))
