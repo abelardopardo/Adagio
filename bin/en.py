@@ -101,6 +101,8 @@ msgs = {
       Incompatible with profile_lang',
     'date_format': 'Format used to manipulate the dates',
     'date_incorrect_format': 'Date {0} not compliant with format {1}',
+    'exercise_produce': 
+    'Exercise versions produced. Any subset of {regular, solution, pguide, submit}',
     'export_dst': 'Destination of the exports',
     'export_targets': 'Targets to execute in the destination directories',
     'export_begin': 'Date/time beyond which the export is allowed.',
