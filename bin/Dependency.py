@@ -55,17 +55,19 @@ def addNode(fileName):
         __FileNameToNodeIDX[fileName] = nodeIdx
         __IDXToName.append(fileName)
         __NodeOutEdges.append(set({}))
+
         # If the file exists, store the mtime, if not, zero.
         if os.path.exists(fileName):
             __NodeDate.append(os.path.getmtime(fileName))
+
+            # If the extension is xml or xsl, traverse the includes/imports
+            ext = os.path.splitext(fileName)[1]
+            if ext == '.xml' or ext == '.xsl':
+                x = getIncludes(fileName)
+                update(nodeIdx, x)
+
         else:
             __NodeDate.append(0)
-
-        # If the extension is xml or xsl, traverse the includes/imports
-        ext = os.path.splitext(fileName)[1]
-        if ext == '.xml' or ext == '.xsl':
-            x = getIncludes(fileName)
-            update(nodeIdx, x)
 
     # Return the index associated with the given file
     return nodeIdx
