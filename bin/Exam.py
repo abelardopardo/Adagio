@@ -34,7 +34,6 @@ documentation = {
       * regular: regular version, no solution, no pguide
       * solution: regular version with the solution
       * pguide: regular version including solution AND professor guide
-      * mlang: regular version with all the languages together
     """}
 
 def Execute(target, directory, pad = ''):
@@ -71,10 +70,6 @@ def Execute(target, directory, pad = ''):
     # Create the dictionary of stylesheet parameters
     styleParams = Xsltproc.createParameterDict(target, directory)
     
-    # Additional parameters to process figures
-    styleParams['passivetex.extensions'] = '1'
-    styleParams['tex.math.in.alt'] = 'latex'
-
     # Create a list with the param dictionaries to use in the different versions
     # to be created.
     paramDict = []
@@ -97,7 +92,6 @@ def Execute(target, directory, pad = ''):
     # Apply all these transformations.
     Xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams, 
                                toProcess, target, directory, paramDict)
-
 
     print pad + 'EE', target
     return
