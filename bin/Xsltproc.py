@@ -330,6 +330,9 @@ def doClean(target, directory, toProcess, suffixes = ['']):
 
     # Split the languages and remember if the execution is multilingual
     languages = directory.getWithDefault(target, 'languages').split()
+    # If languages is empty, insert an empty string to force one execution
+    if languages == []:
+        languages = ['']
     multilingual = len(languages) > 1
 
 
