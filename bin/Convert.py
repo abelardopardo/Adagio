@@ -95,40 +95,17 @@ def Execute(target, directory, pad = ''):
             dstFile = fn + '_' + geometry + ext
             dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
-            # Check for dependencies!
-            Dependency.update(dstFile, set([datafile] + directory.option_files))
-
-            # If the destination file is up to date, skip the execution
-            if Dependency.isUpToDate(dstFile):
-                print I18n.get('file_uptodate').format(os.path.basename(dstFile))
-                continue
-
-            # Proceed with the execution of xslt
-            print I18n.get('producing').format(os.path.basename(dstFile))
-
+            # Creat the command to execute (slightly non-optimal, because the
+            # following function might NOT execute the process due to
+            # dependencies
             command = [executable, '-scale', geometry]
             command.extend(convertCrop.split())
             command.extend(extraArgs.split())
             command.append(datafile)
             command.append(dstFile)
 
-            Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
-            try:
-                pass
-                pr = subprocess.Popen(command, stdout = Ada.userLog)
-                pr.wait()
-            except:
-                print I18n.get('severe_exec_error').format(executable)
-                print I18n.get('exec_line').format(' '.join(command))
-                sys.exit(1)
-
-            # If dstFile does not exist, something went wrong
-            if not os.path.exists(dstFile):
-                print I18n.get('severe_exec_error').format(executable)
-                sys.exit(1)
-
-            # Update the dependencies of the newly created file
-            Dependency.update(dstFile)
+            # Perform the execution
+            AdaRule.doExecution(target, directory, command, Ada.userLog)
 
     print pad + 'EE', target
     return
