@@ -198,8 +198,14 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
     process, applies the transformation to every file, every local dictionary
     and every language.."""
 
-    # Obtain languages and remember if the execution is multilingual
+    # Obtain languages
     languages = directory.getWithDefault(target, 'languages').split()
+
+    # If languages is empty, insert an empty string to force one execution
+    if languages == []:
+        languages = ['']
+
+    # Remember if the execution is multilingual
     multilingual = len(languages) > 1
 
     # Loop over all source files to process (processing one source file over
@@ -232,12 +238,13 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
                 if multilingual:
                     langSuffix = '_' + language
     
-                    # Insert the appropriate language parameters
-                    styleParams['profile.lang'] = "\'" + language + "\'"
-                    styleParams['l10n.gentext.language'] = "\'" + language + "\'"
                 else:
                     langSuffix = ''
     
+                # Insert the appropriate language parameters
+                styleParams['profile.lang'] = "\'" + language + "\'"
+                styleParams['l10n.gentext.language'] = "\'" + language + "\'"
+
                 # Derive the destination file name
                 dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
                     langSuffix + psuffix + '.' + \
