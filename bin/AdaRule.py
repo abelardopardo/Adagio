@@ -119,6 +119,45 @@ def getFilesToProcess(target, directory):
 
     return toProcess
 
+def doExecution(target, directory, command, stdout = None, stderr = None, 
+                stdin = None):
+    """
+    Function to execute a program using the subprocess.Popen method. The three
+    channels (std{in, out, err}) are passed directly to the call.
+    """
+
+    # Check for dependencies!
+    Dependency.update(dstFile, set([datafile] + directory.option_files))
+
+    # If the destination file is up to date, skip the execution
+    if Dependency.isUpToDate(dstFile):
+        print I18n.get('file_uptodate').format(os.path.basename(dstFile))
+        return
+
+    # Proceed with the execution of xslt
+    print I18n.get('producing').format(os.path.basename(dstFile))
+
+    Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
+    try:
+        pass
+        pr = subprocess.Popen(command, stdin = stdin, stdout = Ada.userLog,
+                              stderr = stderr)
+        pr.wait()
+    except:
+        print I18n.get('severe_exec_error').format(executable)
+        print I18n.get('exec_line').format(' '.join(command))
+        sys.exit(1)
+
+    # If dstFile does not exist, something went wrong
+    if not os.path.exists(dstFile):
+        print I18n.get('severe_exec_error').format(executable)
+        sys.exit(1)
+
+    # Update the dependencies of the newly created file
+    Dependency.update(dstFile)
+
+    return
+
 def dumpOptions(target, directory, prefix):
     """
     Dump the value of the options affecting the computations
