@@ -5,9 +5,9 @@
 #
 #
 #
-import os, re, sys, glob, subprocess
+import os, re, sys, glob
 
-import Ada, Directory, I18n, Dependency, AdaRule
+import Ada, Directory, I18n, AdaRule
 
 # Prefix to use for the options
 module_prefix = 'dblatex'
@@ -96,35 +96,12 @@ def Execute(target, directory, pad = ''):
             '.' + outputFormat
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
                                                    
-        # Check for dependencies!
-        Dependency.update(dstFile, set([datafile] + directory.option_files))
-            
-        # If the destination file is up to date, skip the execution
-        if Dependency.isUpToDate(dstFile):
-            print I18n.get('file_uptodate').format(os.path.basename(dstFile))
-            continue
-
-        # Proceed with the execution of xslt
-        print I18n.get('producing').format(os.path.basename(dstFile))
-
+        # Add the output and input files to the command
         command = commandPrefix + ['-o', dstFile] + [datafile]
-        Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
-        try:
-            pr = subprocess.Popen(command, stdout = Ada.userLog,
-                                  stderr = Ada.userLog)
-            pr.wait()
-        except:
-            print I18n.get('severe_exec_error').format(executable)
-            print I18n.get('exec_line').format(' '.join(command))
-            sys.exit(1)
 
-        # If dstFile does not exist, something went wrong
-        if not os.path.exists(dstFile):
-            print I18n.get('severe_exec_error').format(executable)
-            sys.exit(1)
-
-        # Update the dependencies of the newly created file
-        Dependency.update(dstFile)
+        # Perform the execution
+        AdaRule.doExecution(target, directory, command, datafile, dstFile, 
+                            Ada.userLog, Ada.userLog)
 
     print pad + 'EE', target
     return

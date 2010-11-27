@@ -5,9 +5,9 @@
 #
 #
 #
-import os, re, sys, subprocess
+import os, re, sys
 
-import Ada, Directory, I18n, Dependency, AdaRule
+import Ada, Directory, I18n, AdaRule
 
 # Prefix to use for the options
 module_prefix = 'convert'
@@ -105,7 +105,8 @@ def Execute(target, directory, pad = ''):
             command.append(dstFile)
 
             # Perform the execution
-            AdaRule.doExecution(target, directory, command, Ada.userLog)
+            AdaRule.doExecution(target, directory, command, datafile, dstFile, 
+                                Ada.userLog)
 
     print pad + 'EE', target
     return

@@ -5,7 +5,7 @@
 #
 #
 #
-import os, re, sys, glob, subprocess
+import os, re, sys, glob
 
 import Ada, Directory, I18n, Dependency, AdaRule
 
@@ -106,18 +106,12 @@ def Execute(target, directory, pad = ''):
 
         command = [executable, '--no-data', '--no-fonts', '--no-interface', 
                    '-b', '-']
-        Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
-        try:
-            pr = subprocess.Popen(command, stdin = scriptFile, 
-                                  stdout = Ada.userLog)
-            pr.wait()
-        except:
-            print I18n.get('severe_exec_error').format(executable)
-            print I18n.get('exec_line').format(' '.join(command))
-            sys.exit(1)
-        
+
+        AdaRule.doExecution(target, directory, command, None, None,
+                            stdout = Ada.userLog, stdin = scriptFile)
+
         # If dstFile does not exist, something went wrong
-        if next([x for x in dstFiles if not os.path.exists(x)]):
+        if next((x for x in dstFiles if not os.path.exists(x)), None):
             print I18n.get('severe_exec_error').format(executable)
             sys.exit(1)
 
