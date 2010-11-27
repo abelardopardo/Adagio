@@ -9,7 +9,7 @@ import sys, os, re, datetime, ConfigParser, StringIO, ordereddict
 
 # @EXTEND@
 import Ada, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
-import Export, Dblatex, Exercise
+import Export, Dblatex, Exercise, Exam
 
 # Prefix to use in the module
 module_prefix = 'properties'
@@ -78,8 +78,8 @@ def loadConfigFile(config, filename):
         print msg
         memoryFile.close()
         return None
-
     result = tmpconfig.sections()
+
     # Move all options to the given config but checking if they are legal
     for sname in result:
         # Get the prefix to check if the option is legal
@@ -135,6 +135,7 @@ def LoadDefaults(options):
     loadOptionsInConfig(options, Export.module_prefix,   Export.options)
     loadOptionsInConfig(options, Dblatex.module_prefix,  Dblatex.options)
     loadOptionsInConfig(options, Exercise.module_prefix, Exercise.options)
+    loadOptionsInConfig(options, Exam.module_prefix,     Exam.options)
     
 def Execute(target, directory, pad = ''):
     """
@@ -164,7 +165,6 @@ def Execute(target, directory, pad = ''):
     # Code to extend when a new set of rules is added (@EXTEND@)
     if targetPrefix == Ada.module_prefix:
         Ada.Execute(target, directory, pad)
-
     if targetPrefix == Xsltproc.module_prefix:
         Xsltproc.Execute(target, directory, pad)
         return
@@ -191,6 +191,9 @@ def Execute(target, directory, pad = ''):
         return
     elif targetPrefix == Exercise.module_prefix:
         Exercise.Execute(target, directory)
+        return
+    elif targetPrefix == Exam.module_prefix:
+        Exam.Execute(target, directory)
         return
 
     Ada.logFatal('Properties', directory, 'Unexpected target ' + target)
