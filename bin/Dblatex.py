@@ -72,6 +72,7 @@ def Execute(target, directory, pad = ''):
             '-P doc.collab.show=0 -P latex.output.revhistory=0'.split()
     else:
         compliantOptions = []
+
     extraArgs = directory.getWithDefault(target, 'extra_arguments')
     extraXsltArgs = directory.getWithDefault(target, 
                                              'extra_xslt_arguments').split()
