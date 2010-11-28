@@ -262,7 +262,7 @@ def executeRuleChain(dirList, executionContext, commands):
 
 # DONE            ExerciseSubmit.process(executionContext[dirName], cmdName)
 
-#             Exam.process(executionContext[dirName], cmdName)
+# DONE            Exam.process(executionContext[dirName], cmdName)
 
 # ???            TestExam.process(executionContext[dirName], cmdName)
 
