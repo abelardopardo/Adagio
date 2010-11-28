@@ -335,7 +335,6 @@ def doClean(target, directory, toProcess, suffixes = ['']):
         languages = ['']
     multilingual = len(languages) > 1
 
-
     # Loop over all source files to process
     dstDir = directory.getWithDefault(target, 'dst_dir')
     for datafile in toProcess:
