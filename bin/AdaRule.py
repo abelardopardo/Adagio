@@ -307,6 +307,14 @@ def executeRuleChain(dirList, executionContext, commands):
 
 # msf2pdf.files
 # ppt2pdf.files
+#
+# LINUX
+# soffice -norestore -nofirststartwizard -nologo -headless -pt PDF sample.ppt
+# Params: printer name, executable 
+#
+# WINDOWS
+# soffice -norestore -nofirststartwizard -nologo -headless -pt PDFCreator sample.ppt
+# 
 
 # rsync.destination
 # rsync.source
