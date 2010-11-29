@@ -37,7 +37,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-def main(sourceFile):
+def main(sourceFile, pout = sys.stdout):
     """
     Function that given a Docbook file containing a quandaset with a set of
     quandadivs creates as many permutations as specified in a specific element
@@ -49,15 +49,15 @@ def main(sourceFile):
     # For notifying steps through stdout
     stepCount = 1
 
-    print 'Step', stepCount, 'Check file permissions'
+    print >> pout, 'Step', stepCount, 'Check file permissions'
     stepCount += 1
 
     # If the given file is not present, return.
     if not os.path.isfile(sourceFile):
-        print 'File', sourceFile, 'cannot be accessed.'
+        print >>pout, 'File', sourceFile, 'cannot be accessed.'
         return 0
 
-    print 'Step', stepCount, 'Create the XML document manager'
+    print >>pout, 'Step', stepCount, 'Create the XML document manager'
     stepCount += 1
     
     # Parse the source tree.
@@ -65,8 +65,8 @@ def main(sourceFile):
         sourceTree = etree.parse(sourceFile)
         sourceTree.xinclude()
     except etree.XMLSyntaxError, e:
-        print 'Error while parsing', sourceFile
-        print e
+        print >>pout, 'Error while parsing', sourceFile
+        print >>pout, e
         return 0
     root = sourceTree.getroot()
 
@@ -78,10 +78,11 @@ def main(sourceFile):
         if pnumbers != None:
             for pnumber in pnumbers:
                 seedList.append(copy.deepcopy(pnumber))
-        print 'Step', stepCount, 'Read', len(pnumbers), 'seeds in document.'
+        print >>pout, 'Step', stepCount, 'Read', len(pnumbers), \
+            'seeds in document.'
         stepCount += 1
     
-    print 'Step', stepCount, 'Fetch the qandadiv elements to shuffle'
+    print >>pout, 'Step', stepCount, 'Fetch the qandadiv elements to shuffle'
     stepCount += 1
     
     # If no product number is given, create one for shuffling
@@ -92,15 +93,16 @@ def main(sourceFile):
 
     qandaset = root.find('qandaset')
     if qandaset == None:
-        print 'No element qandaset found under root'
+        print >>pout, 'No element qandaset found under root'
         return 0
 
     qandadivs = qandaset.findall('qandadiv')
     if qandadivs == []:
-        print 'No qandadiv elements found. Nothing to shuffle.'
+        print >>pout, 'No qandadiv elements found. Nothing to shuffle.'
         return 0
     
-    print 'Step', stepCount, 'Creating hash for', len(qandadivs), 'qandadivs'
+    print >>pout, 'Step', stepCount, 'Creating hash for', len(qandadivs), \
+        'qandadivs'
 
     # Create a dictionary with all the qandaentries hashed by the index
     # (starting at 1
@@ -116,16 +118,17 @@ def main(sourceFile):
             originalOrder.append(qandadiv)
     
     # Dump all the IDs being processed
-    print 'IDs: ',
+    print >>pout, 'IDs: ',
     for el in originalOrder:
         if el.tag == 'qandadiv':
-            print el.get('id'),
+            print >>pout, el.get('id'),
         else:
             p = el.getparent()
-            print p.get('id') + '_' + str(p.findall('qandaentry').index(el)),
-    print
+            print >>pout, p.get('id') + '_' + \
+                str(p.findall('qandaentry').index(el)),
+    print >>pout
 
-    print 'Step', stepCount, 'Create the permutation vectors'
+    print >>pout, 'Step', stepCount, 'Create the permutation vectors'
 
     # Loop over the elements in the seedList
     permutations = []
@@ -192,11 +195,11 @@ def main(sourceFile):
 
         # Get again the qandadivs to dump the permutation array
         qandadivs = qandaset.findall('qandadiv')
-        print 'V00:',
+        print >>pout, 'V00:',
         for qandadiv in qandadivs:
             for qandaentry in qandadiv.findall('qandaentry'):
-                print originalOrder.index(qandaentry),
-        print
+                print >>pout, originalOrder.index(qandaentry),
+        print >>pout
 
         index += 1
 
