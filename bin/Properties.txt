@@ -124,6 +124,13 @@
 	produce = regular solution pguide submit # Any subset of them
         languages = en es # Space separated list of Languages to consider
 
+[testexam]
+        styles = %(ada.home)s%(file_separator)sADA_Styles%(file_separator)s/Exam.xsl
+        output_format = html # Extension of the result file
+        extra_arguments = opt1 opt2 # Dictionary to pass to XSLT
+	produce = regular solution pguide submit # Any subset of them
+        languages = en es # Space separated list of Languages to consider
+
 # ------------------------------------------------------------------------------
 #
 # NOT IMPLEMENTED YET! (and some of them won't be)
@@ -151,21 +158,11 @@
 [dvips]
         exec = dvips # Executable to use
 
-[testexam]
-        debug = %(ada.debug_level)s # Debug level inherited from ada section
-        equation_dir = equations # Directory to leave the equations
-        output_format = html # Extension of the result file
-        style_file = %(ada.home)s/ADA_Styles/Exam.xsl # Style to use
-
-        extra_args = opt1 opt2 # Options to pass to xsltproc
-        file = file1 # Exam file
-        multilingual_file = file1 # Multilingual file
-
 [rss]
         debug = %(ada.debug_level)s # Debug level inherited from ada section
         output_format = _rss.xml
-        style_file = %(ada.home)s/ADA_Styles/Rss.xsl
-        style_file_tohtml = %(ada.home)s/ADA_Styles/RssToHtml.xsl
+        styles = %(ada.home)s/ADA_Styles/Rss.xsl
+        styles_tohtml = %(ada.home)s/ADA_Styles/RssToHtml.xsl
 
         extra_args = opt1 opt2 # Arguments to pass to xsltproc
         multilingual_files = file1 file2 # Space separated list of
