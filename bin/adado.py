@@ -103,7 +103,10 @@ def main():
                                              sorted(optionsToSet))
         
     # Execute its targets
-    dirObject.Execute(targets)
+    try:
+        dirObject.Execute(targets)
+    except KeyboardInterrupt:
+        sys.exit(1)
 
     #######################################################################
     #
