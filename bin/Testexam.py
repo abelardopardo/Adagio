@@ -25,7 +25,6 @@ options = [
     ('output_format', 'html', I18n.get('output_format')),
     ('extra_arguments', '', I18n.get('extra_arguments').format('Xsltproc')),
     ('produce', 'regular', I18n.get('exercise_produce')),
-    ('permutations', '2', I18n.get('testexam_permutations')),
     ('languages', '%(locale)s', I18n.get('languages'))
     ]
 
@@ -39,7 +38,6 @@ documentation = {
       * regular: regular version, no solution, no pguide
       * solution: regular version with the solution
       * pguide: regular version including solution AND professor guide
-    - As many as "permutations"
     """}
 
 def Execute(target, directory, pad = ''):
