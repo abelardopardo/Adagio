@@ -12,47 +12,54 @@
 # of type xslt with name "first". This allows multiple sections of the same type
 # to be included in the file.
 #
-# A section contains a set of definitions of the form name = value. If only the
-# name is included, the value True is assumed. Any string may contain a
-# substring of the form %(name)s which will be replaced by the value of the
-# variable name previously defined.
+# A section contains a set of definitions of the form name = value. Any string
+# may contain a substring of the form %(name)s which will be replaced by the
+# value of the variable name previously defined.
 #
 # If a named section is included after its corresponding unnamed section, the
 # variables in the unamed section are all visible from the named section. For
 # example:
 #
 # [xslt] # Unnamed xslt section
-#         exec = xsltproc # Definition of the exec
+#         languages = en es # Definition of the languages to use
 #
-# [xslt.first] # Named xslt section uses the exec value defined in the unnamed
 #
-# If a section is included several times, the union of the definitions included
-# up to that point is considered. If a variable is defined in several lines,
-# only the last value considered.
+# [xslt.first] # Named xslt section uses the languages value defined in the
+#                unnamed section
+#         style = MyStyle
+#
+# The command "adado" executes all the rules in the rule property in the order
+# they appear ignoring "clean", "local", "dump", "help", "helpdump" or
+# "dumphelp".
+# 
+# For every rule, the rule rule.help explains how the rule works, and rule.dump
+# shows the value of all the relevant variables. 
 #
 # The following symbols are always defined by default:
 #
-#  - home:             Directory where ADA is installed
 #  - basedir:          The value of the current directory
-#  - src_dir:          The value of the current directory
-#  - dst_dir:          The value of the current directory
-#  - files:            Files to be processed
-#  - debug_level:      Integer controlling messages shown
-#  - version:          Current version number
-#  - locale:           Taken from execution environment
-#  - property_file:    File to read in each dir (Properties.txt)
-#  - file_separator:   Taken from the platform
 #  - current_datetime: Time of execution of script
+#  - debug_level:      Integer controlling messages shown
+#  - dst_dir:          The value of the current directory
+#  - file_separator:   Taken from the platform
+#  - files:            Files to be processed
+#  - home:             Directory where ADA is installed
+#  - locale:           Taken from execution environment
 #  - profile_revision: Value passed to xslt processing as profile.revision
+#  - project_file:     File name marking the root of a project 'Ada.project'
+#  - project_home:     Directory where Ada.project has been located
+#  - property_file:    File to read in each dir (Properties.txt)
+#  - src_dir:          Source directory to consider for source files (current)
+#  - version:          Current ADA version
 #
-# It follows a sample of a Properties.txt with all possible options.
+# It follows a sample of a Properties.txt with all possible unnamed rules
 #
 # ADA General section. Typically written at the top of the file
 #
 [ada]
-        minimum_version = 2.1.10 # Minimum version required
-        maximum_version = 3.1.10 # Maximum version allowed
-        exact_version = 2.2.1 # Exact version required
+        minimum_version = # Minimum version required
+        maximum_version = # Maximum version allowed
+        exact_version =   # Exact version required
 
 [xslt]
         styles = %(ada.home)s/ADA_Styles/DocbookProfile.xsl # Style to apply
@@ -60,31 +67,65 @@
         extra_arguments = --stringparam somename somevalue # To be passed to exec
         languages = en # Space separated list of Languages to consider
 
-[xfig]
-        exec = fig2dev # Executable to use
-        output_format = png # Output extension
-
-        border = 2 # Border to surround the figure when exporting
-        smooth = 4 # Some strange option that improves image quality
-        extra_args = option option # Anything here is passed to exec
-
 [inkscape]
         exec = inkscape            # Executable to use
         output_format = png        # Extension of the output file produced
-        extra_args = option option # Anything here is passed to exec
+        extra_arguments =  	   # Anything here is passed to exec
 
-[convert]
-        exec = convert # Executable to use
-        format = png # File estension to use
-
-        geometry = 100x120 # Geometry to use when converting
-        suffix = %(convert.geometry)s # Suffix to use when converting
-        crop = 10x20+0+0 # Geometry to crop
+[gotodir]
+        files = d1 d2   # Space separated lists of dirs to process recursively
+        targets = t1 t2 # List of rules to execute in the remote dir
 
 [gimp]
-        exec = gimp # Executable to use
+        exec = gimp                # Executable to use
         script_file = %(ada.home)s%(ada.file_separator)sAntImports%(ada.file_separator)sxcftopng.scm
+        extra_arguments =  	   # Anything here is passed to exec
 
+[convert]
+        exec = convert             # Executable to use
+        output_format = png        # File estension to use
+
+        geometry = 100x120         # Geometry to use when converting
+        crop_option =              # Option to crop
+        extra_arguments =  	   # Anything here is passed to exec
+
+[copy]
+	# Works with "files", "src_dir" and "dst_dir" already defined.
+
+[export]
+        date_format = yyyy/MM/dd HH:mm:ss
+        begin = yyy/MM/dd HH:mm:ss # Start of enabled window
+        end = yyy/MM/dd HH:mm:ss   # End of enabled window
+        open = True                # It is considered for export (general enable)
+        profile_revision = r1 r2   # Revisions to consider
+
+[dblatex]
+        exec = dblatex # Executable to use
+        output_format = pdf # Extension of the result file
+        extra_argumentss = org1 org2 # Options passed directly to the exec
+        extra_xsltproc_arguments = arg1 arg2 # Options passed directly to XSLT
+        compliant_mode = 0/1 # if adapted to ADA or not
+
+[exercise]
+        styles = %(ada.home)s/ADA_Styles/ExerciseSubmit.xsl
+        submit_styles = %(ada.home)s/ADA_Styles/AsapSubmit.xsl
+        output_format = html
+        extra_args = arg1 arg2 # Args passed directly to xslt
+	produce = regular solution pguide submit # Any subset of them
+        languages = en es # Space separated list of Languages to consider
+
+[exam]
+        styles = %(ada.home)s%(file_separator)sADA_Styles%(file_separator)s/Exam.xsl
+        output_format = html # Extension for the result file
+        extra_arguments = opt1 opt2 # Dictionary to pass to XSLT
+	produce = regular solution pguide submit # Any subset of them
+        languages = en es # Space separated list of Languages to consider
+
+# ------------------------------------------------------------------------------
+#
+# NOT IMPLEMENTED YET! (and some of them won't be)
+#
+# ------------------------------------------------------------------------------
 [pdfnup]
         exec = pdfnup # Executable to use
         nup_option = 1x2 # Option to print n up
@@ -96,28 +137,6 @@
 [msf2pdf]
         exec = soffice # Executable to use
 
-[export]
-        date_format = yyyy/MM/dd HH:mm:ss
-        begin = yyy/MM/dd HH:mm:ss # Start of enabled window
-        end = yyy/MM/dd HH:mm:ss # End of enabled window
-        open = True # It is considered for export (general enable)
-        profile_revision = r1 r2 r3
-
-[gotodir]
-        files = d1 d2 # Space separated lists of directories to recur
-        export_to = Dir to overwrite export.dst_dir
-        targets = t1 t2 # List of rules to execute in the remote dir
-
-# [copy]
-
-[exercise]
-        styles = %(ada.home)s/ADA_Styles/ExerciseSubmit.xsl
-        submit_styles = %(ada.home)s/ADA_Styles/AsapSubmit.xsl
-        output_format = html
-        extra_args = arg1 arg2 # Args passed directly to xslt
-        languages = en # Space separated list of Languages to consider
-	produce = regular solution pguide submit # Any subset of them
-
 [pdflatex]
         exec = pdflatex # Executable to use
         extra_args = opt1 opt2 # To be passed directly to the executable
@@ -128,23 +147,6 @@
 
 [dvips]
         exec = dvips # Executable to use
-
-[dblatex]
-        exec = dblatex # Executable to use
-        multilingual_files = f1 f2 # Space separated list of source files
-        extra_args = org1 org2 # Options passed directly to the exec
-        extra_xsltproc_args = arg1 arg2 # Options passed directly to xsltproc
-        profile_lang = en # Profile lang to pass to xsltproc
-        compliant_mode = ???
-
-[exam]
-        equation_dir = equations # Directory to leave the equation files
-        output_format = html # Extension for the result file
-        style_file = %(ada.home)s/ADA_Styles/Exam.xsl # Style to use
-
-        extra_args = opt1 opt2 # Options to pass to xsltproc
-        file = file1 # Exam file
-        multilingual_file = file1 # Multilingual file
 
 [testexam]
         debug = %(ada.debug_level)s # Debug level inherited from ada section
@@ -166,12 +168,11 @@
         multilingual_files = file1 file2 # Space separated list of
                                            # multilingual files
 
-# [clean]
-
 # ##############################################################################
 #
-# Ohter ideas for sections in the Properties.txt file
+# Ohter ideas for sections in the Properties.txt file (brainstorming)
 #
+# ##############################################################################
 #
 # [group]
 #         targets = t1 t2 t4 # Group of targets
