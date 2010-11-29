@@ -56,6 +56,9 @@
 #
 # ADA General section. Typically written at the top of the file
 #
+[DEFAULT]
+	# Values that are visible for all the sections (or Rules)
+
 [ada]
         minimum_version = # Minimum version required
         maximum_version = # Maximum version allowed
