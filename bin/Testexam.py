@@ -7,7 +7,12 @@
 #
 import os, re, sys, glob
 
-import Ada, Directory, I18n, AdaRule, Xsltproc
+try:
+    from lxml import etree
+except ImportError:
+    import xml.etree.ElementTree as etree
+
+import Ada, Directory, I18n, AdaRule, Xsltproc, TestShuffle, Dependency
 
 # Prefix to use for the options
 module_prefix = 'testexam'
@@ -60,7 +65,9 @@ def Execute(target, directory, pad = ''):
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target
 
-FIX
+    # Every source file given is processed to know how many permutations will be
+    # rawFiles contains the list of files produced that need to be processed
+    rawFiles = doShuffle(toProcess, directory)
 
     # Prepare the style transformation
     styleFiles = directory.getWithDefault(target, 'styles')
@@ -94,7 +101,7 @@ FIX
 
     # Apply all these transformations.
     Xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams, 
-                               toProcess, target, directory, paramDict)
+                               rawFiles, target, directory, paramDict)
 
     print pad + 'EE', target
     return
@@ -114,6 +121,14 @@ def clean(target, directory, pad):
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target + '.clean'
 
+    rawFiles = []
+    for fname in toProcess:
+        # Get the result files
+        resultFiles = doGetShuffledFiles(fname)
+        
+        # Accumulate the list
+        rawFiles.extend(resultFiles)
+
     suffixes = []
     produceValues = set(directory.getWithDefault(target, 'produce').split())
     if 'regular' in produceValues:
@@ -126,10 +141,66 @@ def clean(target, directory, pad):
         # Delete the professor guide
         suffixes.append('_pguide')
 
-    Xsltproc.doClean(target, directory, toProcess, suffixes)
+    Xsltproc.doClean(target, directory, rawFiles, suffixes)
+
+    # Clean also the produced files
+    map(lambda x: AdaRule.remove(x), rawFiles)
 
     print pad + 'EE', target + '.clean'
     return
+
+def doShuffle(toProcess, directory):
+    # Every source file given is processed to know how many permutations will be
+    # produced.
+    rawFiles = []
+    for fname in toProcess:
+        # Get the result files
+        resultFiles = doGetShuffledFiles(fname)
+        
+        # Accumulate the list
+        rawFiles.extend(resultFiles)
+
+        # Update the dependencies (apply update to all elements in resultFiles)
+        map(lambda x: Dependency.update(x, 
+                                        set([fname] + directory.option_files)),
+            resultFiles)
+
+        # If all the permutation files are up to date, no need to process
+        if reduce(lambda x, y: x and y, 
+                  [Dependency.isUpToDate(x) for x in resultFiles]):
+            print I18n.get('testexam_no_shuffle_required').format(fname)
+            continue
+        
+        print I18n.get('testexam_shuffling').format(fname)
+        TestShuffle.main(fname, Ada.userLog)
+
+    return rawFiles
+
+def doGetShuffledFiles(fname):
+    """
+    Function that given an XML file, checks the presence of productnumber
+    elements in the section info and returns the names of the files which will
+    contain the permutations.
+    """
+    try:
+        sourceTree = etree.parse(fname)
+        sourceTree.xinclude()
+    except etree.XMLSyntaxError, e:
+        print I18n.get('severe_parse_error').format(fname)
+        sys.exit(1)
+    root = sourceTree.getroot()
+
+    # Get the number of 'productnumber' elements. If none, set it to 1
+    sectionInfo = root.find('sectioninfo')
+    n = 1
+    if sectionInfo != None:
+        pnumbers = sectionInfo.findall('productnumber')
+        if pnumbers != None:
+            n = len(pnumbers)
+        
+    # Create the raw files that will be produced
+    (h, t) = os.path.splitext(fname)
+    return map(lambda x: h + '_' + str(x) + t, range(1, n + 1))
 
 # Execution as script
 if __name__ == "__main__":

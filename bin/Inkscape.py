@@ -144,8 +144,7 @@ def clean(target, directory, pad):
             if not os.path.exists(dstFile):
                 continue
 
-            print I18n.get('removing').format(os.path.basename(dstFile))
-            os.remove(dstFile)
+            Ada.remove(dstFile)
 
 # Execution as script
 if __name__ == "__main__":

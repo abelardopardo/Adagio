@@ -210,6 +210,18 @@ def which(program):
 
     return None
 
+def remove(fileName):
+    """
+    Function that checks if a file exists, and if so, removes it.
+    """
+    if os.path.exists(fileName):
+        if os.path.basename(fileName) == fileName:
+            print I18n.get('removing').format(fileName)
+        else:
+            prefix = I18n.get('removing')
+            print prefix.format(fileName[len(prefix) - 3 - 80:])
+        os.remove(fileName)
+        
 class StyleResolver(etree.Resolver):
     """
     Resolver to use with XSLT stylesheets and force the detection of stylesheets
@@ -219,7 +231,7 @@ class StyleResolver(etree.Resolver):
         self.styleDir = 'file://' + os.path.join(Ada.home, 'ADA_Styles')
 
     def resolve(self, url, pubid, context):
-        if url.startswith('file://'):
+        if url.startswith('file://') or url.startswith('/'):
             url = url[7:];
             if not os.path.exists(url):
                 newURL = os.path.join(self.styleDir, os.path.basename(url))

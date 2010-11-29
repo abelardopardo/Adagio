@@ -121,8 +121,7 @@ def clean(target, directory, pad):
         if not os.path.exists(dstFile):
             continue
 
-        print I18n.get('removing').format(os.path.basename(dstFile))
-        os.remove(dstFile)
+        Ada.remove(dstFile)
 
     print pad + 'EE', target + '.clean'
     return

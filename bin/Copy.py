@@ -135,9 +135,7 @@ def doClean(target, directory, toProcess, dstDir):
             continue
 
         # Proceed with the cleaning (dump the file name being deleted)
-        prefix = I18n.get('removing')
-        print I18n.get('removing').format(dstFile[len(prefix) -3 - 80:])
-        os.remove(dstFile)
+        Ada.remove(dstFile)
 
 # Execution as script
 if __name__ == "__main__":
