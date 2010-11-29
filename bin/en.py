@@ -117,6 +117,7 @@ msgs = {
     'export_closed_begin': 'Export not executed because it is before {0}',
     'export_closed_end': 'Export not executed because it is after {0}',
     'testexam_permutations': 'Number of versions with the questions shuffled',
+    'testexam_error_shuffling': 'Error while shuffling questions in test exam',
     'ada_current_datetime': 'The Current date/time to be considered',
     'ada_profile_revision':
     'Value of the revision attribute to profile Docbook files',
