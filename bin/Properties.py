@@ -9,7 +9,7 @@ import sys, os, re, datetime, ConfigParser, StringIO, ordereddict
 
 # @EXTEND@
 import Ada, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
-import Export, Dblatex, Exercise, Exam
+import Export, Dblatex, Exercise, Exam, Testexam
 
 # Prefix to use in the module
 module_prefix = 'properties'
@@ -136,6 +136,7 @@ def LoadDefaults(options):
     loadOptionsInConfig(options, Dblatex.module_prefix,  Dblatex.options)
     loadOptionsInConfig(options, Exercise.module_prefix, Exercise.options)
     loadOptionsInConfig(options, Exam.module_prefix,     Exam.options)
+    loadOptionsInConfig(options, Testexam.module_prefix, Testexam.options)
     
 def Execute(target, directory, pad = ''):
     """
@@ -194,6 +195,9 @@ def Execute(target, directory, pad = ''):
         return
     elif targetPrefix == Exam.module_prefix:
         Exam.Execute(target, directory)
+        return
+    elif targetPrefix == Testexam.module_prefix:
+        Testexam.Execute(target, directory)
         return
 
     Ada.logFatal('Properties', directory, 'Unexpected target ' + target)
