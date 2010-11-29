@@ -185,7 +185,7 @@ def main(sourceFile):
                 qandadiv.insert(indeces[idx], entry)
                 
         result = etree.ElementTree(result)
-        (head, tail) = os.path.splitext(sourcefile)
+        (head, tail) = os.path.splitext(sourceFile)
         result.write(head + '_' + str(index) + tail,
                      encoding = 'UTF-8', xml_declaration = True, 
                      pretty_print = True)
