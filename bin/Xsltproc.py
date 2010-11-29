@@ -23,6 +23,7 @@ options = [
     ('styles', 
      '%(home)s%(file_separator)sADA_Styles%(file_separator)sDocbookProfile.xsl',
      I18n.get('xslt_style_file')),
+    ('common_styles', '', I18n.get('xslt_common_styles')),
     ('output_format', 'html', I18n.get('output_format')),
     ('extra_arguments', '', I18n.get('extra_arguments').format('Xsltproc')),
     ('languages', '%(locale)s', I18n.get('languages'))
@@ -38,7 +39,7 @@ documentation = {
     1.1 The extra arguments in 'extra_arguments'
 
     1.2 The style files in styles as if they were all in imported in a
-    single file in the given order
+    single file in the given order followed by the files in common_styles
 
     1.3 The source file
 
@@ -75,7 +76,9 @@ def Execute(target, directory, pad = ''):
 
     # Prepare the style transformation
     styleFiles = directory.getWithDefault(target, 'styles')
-    styleTransform = createStyleTransform(styleFiles.split())
+    commonStyles = directory.getWithDefault(target, 'common_styles')
+    styleTransform = createStyleTransform(styleFiles.split() + \
+                                              commonStyles.split())
     if styleTransform == None:
         print I18n.get('no_style_file')
         print pad + 'EE', target
