@@ -276,7 +276,7 @@ def executeRuleChain(dirList, executionContext, commands):
 
 # DONE            Exam.process(executionContext[dirName], cmdName)
 
-# ???            TestExam.process(executionContext[dirName], cmdName)
+# DONE            TestExam.process(executionContext[dirName], cmdName)
 
 # NONE            Rss.process(executionContext[dirName], cmdName)
 
@@ -300,67 +300,16 @@ def executeRuleChain(dirList, executionContext, commands):
 
 #             WkHtmlToPDF ???
 
-# clean.files
-
-# convert.dst.dir
-# convert.files
-# convert.geometry
-
-# copyfiles.dst.dir
-# copyfiles.files
-# copyfiles.src.dir
-
-# dblatex.compliant.mode
-# dblatex.extra.args
-# dblatex.files
-
-# exam.extra.args
-# exam.multilingual.file
-
-# exercisesubmit.extra.args
-# exercisesubmit.files
-# exercisesubmit.multilingual.files
-# exercisesubmit.style.file
-
-# export.dst.dir
-# export.files
-
-# exportcontrol.profile.revision.value
-
 # extraant.posttarget
 # extraant.posttarget.clean
-
-# file.prefix
-
-# gimp.files
-
-# inkscape.files
-# inkscape.output.format
 
 # mergestyles.master.style
 
 # msf2pdf.files
-
 # ppt2pdf.files
 
 # rsync.destination
 # rsync.source
-
-# gotodir.dirs
-# gotodir.dirs.nodst
-
-# testexam.extra.args
-# testexam.file
-# testexam.multilingual.file
-# testexam.style.file
-
-# xfig.files
-
-# xsltproc.extra.args
-# xsltproc.files
-# xsltproc.multilingual.files
-# xsltproc.output.format
-# xsltproc.style.file
 
 # position
 # project
