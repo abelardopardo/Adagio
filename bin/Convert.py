@@ -17,7 +17,6 @@ options = [
     ('exec', 'convert', I18n.get('name_of_executable')),
     ('output_format', 'png', I18n.get('output_format')),
     ('geometry', '', I18n.get('convert_geometry')),
-    ('output_suffix', '', I18n.get('convert_output_suffix')),
     ('crop_option', '', I18n.get('convert_crop_option')),
     ('extra_arguments', '', I18n.get('extra_arguments').format('Convert'))
     ]

@@ -29,22 +29,22 @@ module_prefix = 'ada'
 ################################################################################
 _currentDir = os.path.abspath(os.getcwd())
 config_defaults = {
+    'basedir':          _currentDir,
+    'current_datetime': str(datetime.datetime.now()),
     'debug_level':      '0',
-    'version':          '10.03.1',
-    'locale':           lang[0:2],
+    'dst_dir':          _currentDir,
     'encoding':         re.sub('^UTF', 'UTF-', enc),
+    'file_separator':   os.path.sep,
+    'files':            '',
     'home':             _currentDir,
+    'locale':           lang[0:2],
+    'partial':          '0',
+    'profile_revision': '',
     'project_file':     'Ada.project',
     'project_home':     _currentDir,
     'property_file':    'Properties.txt',
-    'basedir':          _currentDir,
     'src_dir':          _currentDir,
-    'dst_dir':          _currentDir,
-    'files':            '',
-    'file_separator':   os.path.sep,
-    'current_datetime': str(datetime.datetime.now()),
-    'profile_revision': '',
-    'partial':          '0'
+    'version':          '10.03.1'
 }
 
 # List of tuples (varname, default value, description string)
