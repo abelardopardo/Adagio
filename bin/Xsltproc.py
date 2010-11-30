@@ -77,8 +77,8 @@ def Execute(target, directory, pad = ''):
     # Prepare the style transformation
     styleFiles = directory.getWithDefault(target, 'styles')
     commonStyles = directory.getWithDefault(target, 'common_styles')
-    styleTransform = createStyleTransform(commonStyles.split() + \
-                                              styleFiles.split())
+    styleTransform = createStyleTransform(styleFiles.split() + \
+                                              commonStyles.split())
     if styleTransform == None:
         print I18n.get('no_style_file')
         print pad + 'EE', target
