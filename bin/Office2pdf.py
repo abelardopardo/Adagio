@@ -16,8 +16,6 @@ module_prefix = 'office2pdf'
 options = [
     ('exec', 'soffice', I18n.get('name_of_executable')),
     ('extra_arguments', '', I18n.get('extra_arguments').format('OpenOffice'))
-    # ('printer', 'PDF', I18n.get('output_format')),
-    # ('printer_dir', '', os.path.expandvars('$HOME/PDF'))
     ]
 
 documentation = {
