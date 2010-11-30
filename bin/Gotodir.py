@@ -44,6 +44,10 @@ def Execute(target, directory, pad = ''):
     # Get the directories to process, if none, terminate silently
     toProcess = []
     for srcDir in directory.getWithDefault(target, 'files').split():
+        newDirs = glob.glob(srcDir)
+        if newDirs == []:
+            print I18n.get('file_not_found').format(srcDir)
+            sys.exit(1)
         toProcess.extend(glob.glob(srcDir))
     if toProcess == []:
         Ada.logDebug(target, directory, I18n.get('no_file_to_process'))

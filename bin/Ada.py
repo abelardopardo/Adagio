@@ -42,7 +42,7 @@ config_defaults = {
     'profile_revision': '',
     'project_file':     'Ada.project',
     'project_home':     _currentDir,
-    'property_file':    'Properties.txt',
+    'property_file':    'Properties.ini',
     'src_dir':          _currentDir,
     'version':          '10.03.1'
 }

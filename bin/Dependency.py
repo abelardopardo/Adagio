@@ -13,7 +13,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-import Ada, AdaRule
+import Ada, AdaRule, I18n
 
 # The graph is stored with the following data structures:
 #
@@ -136,6 +136,7 @@ def getIncludes(fName):
 
     # Parse the document and initialize the result to the empty set
     root = etree.parse(fName)
+
     result = set([])
 
     allIncludes = \
