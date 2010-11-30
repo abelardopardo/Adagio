@@ -135,7 +135,7 @@ def doClean(target, directory, toProcess, dstDir):
             continue
 
         # Proceed with the cleaning (dump the file name being deleted)
-        Ada.remove(dstFile)
+        AdaRule.remove(dstFile)
 
 # Execution as script
 if __name__ == "__main__":

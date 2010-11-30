@@ -154,7 +154,7 @@ def clean(target, directory, pad):
         if not os.path.exists(dstFile):
             continue
 
-        Ada.remove(dstFile)
+        AdaRule.remove(dstFile)
 
     print pad + 'EE', target + '.clean'
     return

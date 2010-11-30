@@ -362,7 +362,7 @@ def doClean(target, directory, toProcess, suffixes = ['']):
                 if not os.path.exists(dstFile):
                     continue
                 
-                Ada.remove(dstFile)
+                AdaRule.remove(dstFile)
     
 # Execution as script
 if __name__ == "__main__":
