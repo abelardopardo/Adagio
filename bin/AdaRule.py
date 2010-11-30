@@ -138,8 +138,10 @@ def doExecution(target, directory, command, datafile, dstFile,
         if Dependency.isUpToDate(dstFile):
             print I18n.get('file_uptodate').format(os.path.basename(dstFile))
             return
-        # Proceed with the execution of xslt
+        # Notify the production
         print I18n.get('producing').format(os.path.basename(dstFile))
+    else:
+        print I18n.get('producing').format(os.path.basename(datafile))
 
     Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
 
