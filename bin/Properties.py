@@ -36,7 +36,7 @@ def loadOptionsInConfig(config, sectionName, options):
 
     return
 
-def loadConfigFile(config, filename):
+def loadConfigFile(config, filename, includeChain = set({})):
     """
     Function that receives a first set of config options (ConfigParser) and a
     filename. Parses the file, makes sure all the new config options are present
@@ -45,8 +45,14 @@ def loadConfigFile(config, filename):
     Returns the list of detected sections or None if problems
     """
 
+    # If the file to be processes is already processed, we are done
+    if os.path.abspath(filename) in includeChain:
+        print I18n.get('circular_include')
+        print ' '.join(includeChain)
+        sys.exit(1)
+
     if not os.path.isfile(filename):
-        I18n.get('cannot_open_file').format(filename)
+        print I18n.get('cannot_open_file').format(filename)
         return None
 
     # Open the disk file
@@ -61,9 +67,14 @@ def loadConfigFile(config, filename):
     for line in configfile:
         # Remove comments
         line = re.sub('[#;].*$', '', line)
+
+        # Remove the leading space of the lines with a variable definition
         if re.search('=', line) or re.search(':', line):
             line = re.sub('^\s+', '', line)
+
+        # Should we detect multple lines terminated in \ ?
         memoryFile.write(line)
+
     configfile.close()
 
     # Parse the memory file with a raw parser to check option validity
@@ -80,6 +91,13 @@ def loadConfigFile(config, filename):
         return None
     result = tmpconfig.sections()
 
+    # If config is None, we are done, no need to treat anything more
+    if config == None:
+        return result
+
+    # Process the includes!
+    for sname in result.
+
     # Move all options to the given config but checking if they are legal
     for sname in result:
         # Get the prefix to check if the option is legal
@@ -93,6 +111,7 @@ def loadConfigFile(config, filename):
                                                                   filename)
                 memoryFile.close()
                 return None
+
             # If present in the default options, add its value
             try:
                 config.add_section(sname)
@@ -102,6 +121,7 @@ def loadConfigFile(config, filename):
 
     # No longer needed
     memoryFile.close()
+
     return result
 
 def dump(options, pad = '', sections = None):
@@ -138,7 +158,7 @@ def LoadDefaults(options):
     loadOptionsInConfig(options, Exam.module_prefix,       Exam.options)
     loadOptionsInConfig(options, Testexam.module_prefix,   Testexam.options)
     loadOptionsInConfig(options, Office2pdf.module_prefix, Office2pdf.options)
-    
+
 def Execute(target, directory, pad = ''):
     """
     Given a target and a directory, it checks which rule needs to be invoked and
@@ -201,7 +221,7 @@ def Execute(target, directory, pad = ''):
         Testexam.Execute(target, directory, pad)
         return
     elif targetPrefix == Office2pdf.module_prefix:
-        Office2pdf.Execute(target, directory)
+        Office2pdf.Execute(target, directory, pad)
         return
 
     Ada.logFatal('Properties', directory, 'Unexpected target ' + target)
