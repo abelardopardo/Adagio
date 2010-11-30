@@ -298,7 +298,7 @@ class Directory:
         # Print a line flagging the start of the execution showing the maximum
         # suffix of the current directory up to 80 chars.
         showCurrentDir = self.current_dir[len(pad) + 3 - 80:]
-        if len(self.current_dir) > 77:
+        if len(self.current_dir) > (77 - len(pad)):
             showCurrentDir = '...' + showCurrentDir[3:]
 
         print pad + '++ ' + showCurrentDir
