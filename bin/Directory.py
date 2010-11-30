@@ -173,7 +173,7 @@ class Directory:
             self.option_files.append(userAdaConfig)
 
         #
-        # STEP 4: Options given in the config file in the directory
+        # STEP 4: Options given in the Properties file in the directory
         #
         adaPropFile = self.options.get('ada', 'property_file')
         if not os.path.exists(adaPropFile):
@@ -203,7 +203,6 @@ class Directory:
                 print I18n.get('severe_parse_error').format(adaProjFile)
                 sys.exit(3)
             self.option_files.append(adaProjFile)
-
 
         #
         # STEP 6: Options given from outside the dir
