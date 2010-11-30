@@ -185,7 +185,8 @@ class Directory:
         propAbsFile = os.path.abspath(os.path.join(self.current_dir,
                                                    adaPropFile))
         Ada.logDebug('Directory', None, 'Parsing ' + propAbsFile)
-        self.section_list = Properties.loadConfigFile(self.options, propAbsFile)
+        self.section_list = Properties.loadConfigFile(self.options, 
+                                                      propAbsFile).sections()
         if self.section_list == None:
             print I18n.get('severe_parse_error').format(propAbsFile)
             sys.exit(3)
