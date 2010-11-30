@@ -57,6 +57,7 @@ msgs = {
     'var_preamble' : '===== {0} Variables        =====',
     'cannot_open_file': 'Cannot open file {0}',
     'line_in_no_section': 'Line {ln} of {pfile} is outside a section',
+    'circular_include': 'Circular chain of includes detected:',
     'incorrect_assignment': 'Incorrect assignment in line {ln} of {pfile}',
     'incorrect_version_format': 'Incorrect version {0}. Should have major.minor.patch structure',
     'incorrect_version' : 'Incorrect ADA Version ({0}). Review variables ' + \
@@ -87,7 +88,6 @@ msgs = {
     'convert_crop_option': 'Crop option -crop widthxheight+x+y to convert',
     'dblatex_compliant':
     'If non zero Ada-flavored behavior (suppress version page)',
-    'office2pdf_printer_dir': 'Directory where print files are created', 
     'xslt_style_file': 'Style to be applied to the given source files.',
     'xslt_common_styles': 'Additional styles to apply.',
     'output_format': 'Extension to use when creating the new files.',
