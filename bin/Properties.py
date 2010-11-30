@@ -9,7 +9,7 @@ import sys, os, re, datetime, ConfigParser, StringIO, ordereddict
 
 # @EXTEND@
 import Ada, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
-import Export, Dblatex, Exercise, Exam, Testexam
+import Export, Dblatex, Exercise, Exam, Testexam, Office2pdf
 
 # Prefix to use in the module
 module_prefix = 'properties'
@@ -125,18 +125,19 @@ def LoadDefaults(options):
     Loads all the default options for all the rules in the given ConfigParser
     """
     # @EXTEND@
-    loadOptionsInConfig(options, Ada.module_prefix,      Ada.options)
-    loadOptionsInConfig(options, Xsltproc.module_prefix, Xsltproc.options)
-    loadOptionsInConfig(options, Inkscape.module_prefix, Inkscape.options)
-    loadOptionsInConfig(options, Gotodir.module_prefix,  Gotodir.options)
-    loadOptionsInConfig(options, Gimp.module_prefix,     Gimp.options)
-    loadOptionsInConfig(options, Convert.module_prefix,  Convert.options)
-    loadOptionsInConfig(options, Copy.module_prefix,     Copy.options)
-    loadOptionsInConfig(options, Export.module_prefix,   Export.options)
-    loadOptionsInConfig(options, Dblatex.module_prefix,  Dblatex.options)
-    loadOptionsInConfig(options, Exercise.module_prefix, Exercise.options)
-    loadOptionsInConfig(options, Exam.module_prefix,     Exam.options)
-    loadOptionsInConfig(options, Testexam.module_prefix, Testexam.options)
+    loadOptionsInConfig(options, Ada.module_prefix,        Ada.options)
+    loadOptionsInConfig(options, Xsltproc.module_prefix,   Xsltproc.options)
+    loadOptionsInConfig(options, Inkscape.module_prefix,   Inkscape.options)
+    loadOptionsInConfig(options, Gotodir.module_prefix,    Gotodir.options)
+    loadOptionsInConfig(options, Gimp.module_prefix,       Gimp.options)
+    loadOptionsInConfig(options, Convert.module_prefix,    Convert.options)
+    loadOptionsInConfig(options, Copy.module_prefix,       Copy.options)
+    loadOptionsInConfig(options, Export.module_prefix,     Export.options)
+    loadOptionsInConfig(options, Dblatex.module_prefix,    Dblatex.options)
+    loadOptionsInConfig(options, Exercise.module_prefix,   Exercise.options)
+    loadOptionsInConfig(options, Exam.module_prefix,       Exam.options)
+    loadOptionsInConfig(options, Testexam.module_prefix,   Testexam.options)
+    loadOptionsInConfig(options, Office2pdf.module_prefix, Office2pdf.options)
     
 def Execute(target, directory, pad = ''):
     """
@@ -198,6 +199,9 @@ def Execute(target, directory, pad = ''):
         return
     elif targetPrefix == Testexam.module_prefix:
         Testexam.Execute(target, directory)
+        return
+    elif targetPrefix == Office2pdf.module_prefix:
+        Office2pdf.Execute(target, directory)
         return
 
     Ada.logFatal('Properties', directory, 'Unexpected target ' + target)
