@@ -15,17 +15,16 @@ module_prefix = 'office2pdf'
 # List of tuples (varname, default value, description string)
 options = [
     ('exec', 'soffice', I18n.get('name_of_executable')),
-    ('printer', 'PDF', I18n.get('output_format')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('OpenOffice')),
-    ('printer_dir', '', os.path.expandvars('$HOME/PDF'))
+    ('extra_arguments', '', I18n.get('extra_arguments').format('OpenOffice'))
+    # ('printer', 'PDF', I18n.get('output_format')),
+    # ('printer_dir', '', os.path.expandvars('$HOME/PDF'))
     ]
 
 documentation = {
     'en' : """
-    This target uses OpenOffice and a virtual printer to transform files to PDF
-    documents in a fixed location. The name of the printer must be the value of
-    "printer" and the directory where the files are deposited must be
-    "printer_dir".
+    This target invokes OpenOffice to obtain a PDF version of the given
+    files. It assumes that there is a Macro already installed with name
+    SaveAsPDF.
     """}
 
 has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
@@ -64,11 +63,10 @@ def Execute(target, directory, pad = ''):
 
     # Loop over all source files to process
     executable = directory.getWithDefault(target, 'exec')
-    printerName = directory.getWithDefault(target, 'printer')
-    printerDir = os.path.expandvars(directory.getWithDefault(target, 
-                                                             'printer_dir'))
     extraArgs = directory.getWithDefault(target, 'extra_arguments')
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    command = [executable, '-nologo', '-invisible', '-headless']
+    command.extend(extraArgs.split())
+    dstDir = directory.getWithDefault(target, 'src_dir')
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
@@ -82,49 +80,14 @@ def Execute(target, directory, pad = ''):
             '.pdf'
         dstFile = os.path.abspath(os.path.join(dstDir, dstFileName))
 
-        command = [executable, '-norestore', '-nofirstartwizar', '-nologo',
-                   '-headless', '-pt', printerName]
-        command.extend(extraArgs.split())
-        command.append(datafile)
-        
-        # Check for dependencies if dstFile is given
-        if dstFile != None:
-            srcDeps = directory.option_files
-            if datafile != None:
-                srcDeps.append(datafile)
+        # Perform the execution
+        command.append('macro:///Tools.MSToPDF.ConvertMSToPDF(' + datafile + ')')
+        AdaRule.doExecution(target, directory, command, datafile, None,
+                            stdout = Ada.userLog)
+        command.pop(-1)
 
-            Dependency.update(dstFile, set(srcDeps))
+    # End of loop over all src files
 
-            # If the destination file is up to date, skip the execution
-            if Dependency.isUpToDate(dstFile):
-                print I18n.get('file_uptodate').format(os.path.basename(dstFile))
-                return
-            # Proceed with the execution of xslt
-            print I18n.get('producing').format(os.path.basename(dstFile))
-
-        Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
-
-        try:
-            pr = subprocess.Popen(command, stdout = Ada.userLog)
-            pr.wait()
-        except:
-            print I18n.get('severe_exec_error').format(command[0])
-            print I18n.get('exec_line').format(' '.join(command))
-            sys.exit(1)
-
-        # Fetch the file from the printer_dir
-        os.rename(os.path.join(printerDir, dstFileName), dstFile)
-
-        # If dstFile is given, update dependencies
-        if dstFile != None:
-            # If dstFile does not exist, something went wrong
-            if not os.path.exists(dstFile):
-                print I18n.get('severe_exec_error').format(command[0])
-                sys.exit(1)
-
-            # Update the dependencies of the newly created file
-            Dependency.update(dstFile)
-        # End of loop over all src files
     print pad + 'EE', target
     return
 
@@ -135,13 +98,6 @@ def clean(target, directory, pad):
 
     Ada.logInfo(target, directory, 'Cleaning')
 
-    # Get formats and check if they are empty
-    formats = directory.getWithDefault(target, 'output_format').split()
-    if formats == []:
-        Ada.logDebug(target, directory, 
-                     I18n.get('no_var_value').format('output_format'))
-        return
-
     # Get the files to process
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
@@ -151,7 +107,7 @@ def clean(target, directory, pad):
     print pad + 'BB', target + '.clean'
 
     # Loop over all the source files
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    dstDir = directory.getWithDefault(target, 'src_dir')
     for datafile in toProcess:
 
         # If file not found, terminate
@@ -159,17 +115,15 @@ def clean(target, directory, pad):
             print I18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
-        # Loop over formats
-        for format in formats:
-            # Derive the destination file name
-            dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-                '.' + format
-            dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
+        # Derive the destination file name
+        dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
+            '.pdf'
+        dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
+        
+        if not os.path.exists(dstFile):
+            continue
 
-            if not os.path.exists(dstFile):
-                continue
-
-            Ada.remove(dstFile)
+        AdaRule.remove(dstFile)
 
 # Execution as script
 if __name__ == "__main__":
