@@ -38,8 +38,8 @@ documentation = {
 
     1.1 The extra arguments in 'extra_arguments'
 
-    1.2 The style files in styles as if they were all in imported in a
-    single file in the given order followed by the files in common_styles
+    1.2 The style files in styles as if they were all in imported in a single
+    file in the given order starting with the common_styles
 
     1.3 The source file
 
@@ -77,8 +77,8 @@ def Execute(target, directory, pad = ''):
     # Prepare the style transformation
     styleFiles = directory.getWithDefault(target, 'styles')
     commonStyles = directory.getWithDefault(target, 'common_styles')
-    styleTransform = createStyleTransform(styleFiles.split() + \
-                                              commonStyles.split())
+    styleTransform = createStyleTransform(commonStyles.split() + \
+                                              styleFiles.split())
     if styleTransform == None:
         print I18n.get('no_style_file')
         print pad + 'EE', target
