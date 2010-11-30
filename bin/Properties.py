@@ -42,14 +42,16 @@ def loadConfigFile(config, filename, includeChain = set({})):
     filename. Parses the file, makes sure all the new config options are present
     in the first config.
 
-    Returns the list of detected sections or None if problems
+    Returns the Raw config object with the filename parsed.
     """
 
-    # If the file to be processes is already processed, we are done
+    # If the file to be processed has been processed already processed, we are
+    # in a "template" chain, terminate
     if os.path.abspath(filename) in includeChain:
         print I18n.get('circular_include')
         print ' '.join(includeChain)
         sys.exit(1)
+    includeChain.add(filename)
 
     if not os.path.isfile(filename):
         print I18n.get('cannot_open_file').format(filename)
@@ -78,39 +80,38 @@ def loadConfigFile(config, filename, includeChain = set({})):
     configfile.close()
 
     # Parse the memory file with a raw parser to check option validity
-    tmpconfig = ConfigParser.RawConfigParser({},
-                                             ordereddict.OrderedDict)
+    result = ConfigParser.RawConfigParser({},
+                                          ordereddict.OrderedDict)
     try:
         # Reset the read pointer in the memory file
         memoryFile.seek(0)
-        tmpconfig.readfp(memoryFile)
+        result.readfp(memoryFile)
     except Exception, msg:
         print I18n.get('severe_parse_error').format(filename)
         print msg
         memoryFile.close()
         return None
-    result = tmpconfig.sections()
 
     # If config is None, we are done, no need to treat anything more
     if config == None:
         return result
 
-    # Process the includes!
-    for sname in result.
+    # Process templates if they are present
+    result = expandTemplate(result, filename, includeChain)
 
     # Move all options to the given config but checking if they are legal
-    for sname in result:
+    for sname in result.sections():
         # Get the prefix to check if the option is legal
         sprefix = sname.split('.')[0]
-        for (oname, ovalue) in tmpconfig.items(sname):
+        for (oname, ovalue) in result.items(sname):
             # If not present in the default options, terminate
             if not config.has_option(sprefix, oname) and \
-                    tmpconfig.defaults().get(oname) == None:
+                    result.defaults().get(oname) == None:
                 optionName = sname + '.' + oname
                 print I18n.get('incorrect_option_in_file').format(optionName,
                                                                   filename)
                 memoryFile.close()
-                return None
+                sys.exit(1)
 
             # If present in the default options, add its value
             try:
@@ -224,9 +225,59 @@ def Execute(target, directory, pad = ''):
         Office2pdf.Execute(target, directory, pad)
         return
 
-    Ada.logFatal('Properties', directory, 'Unexpected target ' + target)
-    print I18n.get('fatal_error')
+    print I18n.get('unknown_target').format(target)
     sys.exit(1)
 
-    return
+def expandTemplate(config, filename, includeChain):
+    """
+    Process the options in the given config, and if there is any template,
+    process it by calling recursivelly to loadConfigFile.
+    """
 
+    # If there is no template, terminate
+    if not config.has_section('template'):
+        return config
+
+    # Process the sections in result that are "template"
+    result = ConfigParser.RawConfigParser(config.defaults(),
+                                          ordereddict.OrderedDict)
+
+    # Loop over the newly read values and detect templates
+    for sname in config.sections():
+        if sname != 'template':
+            result.add_section(sname)
+            for (oname, ovalue) in config.items(sname):
+                result.set(sname, oname, ovalue)
+            continue
+        
+        # Process only the template options
+        items = [(a, b) for (a, b) in config.items(sname) \
+                     if not a in config.defaults()]
+        if len(items) != 1:
+            print I18n.get('template_error').format(filename)
+            sys.exit(1)
+
+        # Fetch the only template value
+        (oname, ovalue) = items[0]
+        # It must be a 'file' option, if not, bomb out
+        if oname != 'file':
+            print I18n.get('template_error').format(filename)
+            sys.exit(1)
+
+        # Included template must exist
+        templateFile = os.path.relpath(ovalue, os.path.dirname(filename))
+        if not os.path.isfile(templateFile):
+            print I18n.get('file_not_found').format(ovalue)
+            sys.exit(1)
+
+        # Call recursively to expand the template
+        expandedConfig = loadConfigFile(None, templateFile, includeChain)
+        # Transfer all the values to the result
+        for s in expandedConfig.sections():
+            for (o, v) in expandedConfig.items(s):
+                if not result.has_section(s):
+                    result.add_section(s)
+                result.set(s, o, v)
+
+    return result
+    
