@@ -5,19 +5,19 @@
 #
 #
 #
-import os, re, sys
+import os, re, sys, subprocess
 
-import Ada, Directory, I18n, AdaRule
+import Ada, Directory, I18n, AdaRule, Dependency
 
 # Prefix to use for the options
-module_prefix = 'soffice'
+module_prefix = 'office2pdf'
 
 # List of tuples (varname, default value, description string)
 options = [
     ('exec', 'soffice', I18n.get('name_of_executable')),
     ('printer', 'PDF', I18n.get('output_format')),
     ('extra_arguments', '', I18n.get('extra_arguments').format('OpenOffice')),
-    ('printer_dir', os.path.expanduser('$HOME/PDF')
+    ('printer_dir', '', os.path.expandvars('$HOME/PDF'))
     ]
 
 documentation = {
@@ -65,6 +65,8 @@ def Execute(target, directory, pad = ''):
     # Loop over all source files to process
     executable = directory.getWithDefault(target, 'exec')
     printerName = directory.getWithDefault(target, 'printer')
+    printerDir = os.path.expandvars(directory.getWithDefault(target, 
+                                                             'printer_dir'))
     extraArgs = directory.getWithDefault(target, 'extra_arguments')
     dstDir = directory.getWithDefault(target, 'dst_dir')
     for datafile in toProcess:
@@ -76,9 +78,9 @@ def Execute(target, directory, pad = ''):
             sys.exit(1)
 
         # Derive the destination file name
-        dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
+        dstFileName = os.path.splitext(os.path.basename(datafile))[0] + \
             '.pdf'
-        dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
+        dstFile = os.path.abspath(os.path.join(dstDir, dstFileName))
 
         command = [executable, '-norestore', '-nofirstartwizar', '-nologo',
                    '-headless', '-pt', printerName]
@@ -103,16 +105,26 @@ def Execute(target, directory, pad = ''):
         Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
 
         try:
-            pr = subprocess.Popen(command, stdin = stdin, stdout = Ada.userLog,
-                                  stderr = stderr)
+            pr = subprocess.Popen(command, stdout = Ada.userLog)
             pr.wait()
         except:
             print I18n.get('severe_exec_error').format(command[0])
             print I18n.get('exec_line').format(' '.join(command))
             sys.exit(1)
 
-        # Wait for the file to appear
+        # Fetch the file from the printer_dir
+        os.rename(os.path.join(printerDir, dstFileName), dstFile)
 
+        # If dstFile is given, update dependencies
+        if dstFile != None:
+            # If dstFile does not exist, something went wrong
+            if not os.path.exists(dstFile):
+                print I18n.get('severe_exec_error').format(command[0])
+                sys.exit(1)
+
+            # Update the dependencies of the newly created file
+            Dependency.update(dstFile)
+        # End of loop over all src files
     print pad + 'EE', target
     return
 
