@@ -112,22 +112,24 @@ def Execute(target, directory, pad = ''):
     # given for the submit production, it could be folded in the previous
     # transformations...)
 
-    # Prepare the style transformation
-    styleFiles = directory.getWithDefault(target, 'submit_styles')
-    styleTransform = Xsltproc.createStyleTransform(styleFiles.split())
-    if styleTransform == None:
-        print I18n.get('no_style_file')
-        print pad + 'EE', target
-        return
+    if 'submit' in produceValues:
+        
+        # Prepare the style transformation
+        styleFiles = directory.getWithDefault(target, 'submit_styles')
+        styleTransform = Xsltproc.createStyleTransform(styleFiles.split())
+        if styleTransform == None:
+            print I18n.get('no_style_file')
+            print pad + 'EE', target
+            return
 
-    # Create the dictionary of stylesheet parameters
-    styleParams = Xsltproc.createParameterDict(target, directory)
-
-    # Apply the transformation and produce '_submit' file
-    Xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams, 
-                               toProcess, target, directory, 
-                               [({}, '_submit')])
-
+        # Create the dictionary of stylesheet parameters
+        styleParams = Xsltproc.createParameterDict(target, directory)
+        
+        # Apply the transformation and produce '_submit' file
+        Xsltproc.doTransformations(styleFiles.split(), styleTransform, 
+                                   styleParams, toProcess, target, directory, 
+                                   [({}, '_submit')])
+        
     print pad + 'EE', target
     return
 
