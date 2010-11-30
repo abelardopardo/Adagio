@@ -87,6 +87,7 @@ msgs = {
     'convert_crop_option': 'Crop option -crop widthxheight+x+y to convert',
     'dblatex_compliant':
     'If non zero Ada-flavored behavior (suppress version page)',
+    'office2pdf_printer_dir': 'Directory where print files are created', 
     'xslt_style_file': 'Style to be applied to the given source files.',
     'xslt_common_styles': 'Additional styles to apply.',
     'output_format': 'Extension to use when creating the new files.',
