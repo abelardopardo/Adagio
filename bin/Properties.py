@@ -258,26 +258,27 @@ def expandTemplate(config, filename, includeChain):
             sys.exit(1)
 
         # Fetch the only template value
-        (oname, ovalue) = items[0]
+        (oname, templateFiles) = items[0]
         # It must be a 'file' option, if not, bomb out
-        if oname != 'file':
+        if oname != 'files':
             print I18n.get('template_error').format(filename)
             sys.exit(1)
+            
+        for fname in templateFiles.split():
+            # Included template must exist
+            templateFile = os.path.relpath(fname, os.path.dirname(filename))
+            if not os.path.isfile(templateFile):
+                print I18n.get('file_not_found').format(templateFile)
+                sys.exit(1)
 
-        # Included template must exist
-        templateFile = os.path.relpath(ovalue, os.path.dirname(filename))
-        if not os.path.isfile(templateFile):
-            print I18n.get('file_not_found').format(ovalue)
-            sys.exit(1)
-
-        # Call recursively to expand the template
-        expandedConfig = loadConfigFile(None, templateFile, includeChain)
-        # Transfer all the values to the result
-        for s in expandedConfig.sections():
-            for (o, v) in expandedConfig.items(s):
-                if not result.has_section(s):
-                    result.add_section(s)
-                result.set(s, o, v)
+            # Call recursively to expand the template
+            expandedConfig = loadConfigFile(None, templateFile, includeChain)
+            # Transfer all the values to the result
+            for s in expandedConfig.sections():
+                for (o, v) in expandedConfig.items(s):
+                    if not result.has_section(s):
+                        result.add_section(s)
+                    result.set(s, o, v)
 
     return result
     
