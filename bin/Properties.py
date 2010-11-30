@@ -174,31 +174,31 @@ def Execute(target, directory, pad = ''):
         Inkscape.Execute(target, directory, pad)
         return
     elif targetPrefix == Gotodir.module_prefix:
-        Gotodir.Execute(target, directory)
+        Gotodir.Execute(target, directory, pad)
         return
     elif targetPrefix == Gimp.module_prefix:
-        Gimp.Execute(target, directory)
+        Gimp.Execute(target, directory, pad)
         return
     elif targetPrefix == Convert.module_prefix:
-        Convert.Execute(target, directory)
+        Convert.Execute(target, directory, pad)
         return
     elif targetPrefix == Copy.module_prefix:
-        Copy.Execute(target, directory)
+        Copy.Execute(target, directory, pad)
         return
     elif targetPrefix == Export.module_prefix:
-        Export.Execute(target, directory)
+        Export.Execute(target, directory, pad)
         return
     elif targetPrefix == Dblatex.module_prefix:
-        Dblatex.Execute(target, directory)
+        Dblatex.Execute(target, directory, pad)
         return
     elif targetPrefix == Exercise.module_prefix:
-        Exercise.Execute(target, directory)
+        Exercise.Execute(target, directory, pad)
         return
     elif targetPrefix == Exam.module_prefix:
-        Exam.Execute(target, directory)
+        Exam.Execute(target, directory, pad)
         return
     elif targetPrefix == Testexam.module_prefix:
-        Testexam.Execute(target, directory)
+        Testexam.Execute(target, directory, pad)
         return
     elif targetPrefix == Office2pdf.module_prefix:
         Office2pdf.Execute(target, directory)

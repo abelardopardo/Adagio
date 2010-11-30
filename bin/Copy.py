@@ -89,12 +89,23 @@ def doCopy(target, directory, toProcess, dstDir):
             print I18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
+        # What happens if DSTDIR does not exist. ¿Create?
+        # If file not found, terminate
+        if not os.path.isdir(dstDir):
+            print I18n.get('file_not_found').format(dstDir)
+            sys.exit(1)
+
         # Derive the destination file name
         dstFile = os.path.abspath(os.path.join(dstDir,
                                                os.path.basename(datafile)))
 
         # Check for dependencies!
-        Dependency.update(dstFile, set([datafile] + directory.option_files))
+        try:
+            Dependency.update(dstFile, set([datafile] + directory.option_files))
+        except etree.XMLSyntaxError, e:
+            print I18n.get('severe_parse_error').format(fName)
+            print e
+            sys.exit(1)
 
         # If the destination file is up to date, skip the execution
         if Dependency.isUpToDate(dstFile):
@@ -110,7 +121,12 @@ def doCopy(target, directory, toProcess, dstDir):
         shutil.copyfile(datafile, dstFile)
 
         # Update the dependencies of the newly created file
-        Dependency.update(dstFile)
+        try:
+            Dependency.update(dstFile)
+        except etree.XMLSyntaxError, e:
+            print I18n.get('severe_parse_error').format(fName)
+            print e
+            sys.exit(1)
 
 def doClean(target, directory, toProcess, dstDir):
     """
@@ -135,7 +151,7 @@ def doClean(target, directory, toProcess, dstDir):
             continue
 
         # Proceed with the cleaning (dump the file name being deleted)
-        Ada.remove(dstFile)
+        AdaRule.remove(dstFile)
 
 # Execution as script
 if __name__ == "__main__":

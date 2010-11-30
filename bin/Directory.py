@@ -77,7 +77,6 @@ def findProjectDir(pfile):
     Function that traverses the directories upward until the file name given by
     the option ada.projectfile is found, None otherwise
     """
-
     currentDir = '.'
 
     while (os.path.abspath(currentDir) != '/') and \
@@ -87,7 +86,7 @@ def findProjectDir(pfile):
     if os.path.abspath(currentDir) == '/' or currentDir == '.':
         return ''
 
-    currentDir = currentDir[2:] + os.path.sep
+    currentDir = currentDir + os.path.sep
 
     return currentDir
 
@@ -140,8 +139,10 @@ class Directory:
         configDefaults = Ada.getConfigDefaults(self.current_dir)
 
         # Compute the project home
+        os.chdir(self.current_dir)
         configDefaults['project_home'] = \
             findProjectDir(configDefaults['project_file'])
+        os.chdir(self.previous_dir)
 
         # Safe parser to store the options, the defaults are loaded here
         self.options = ConfigParser.SafeConfigParser(configDefaults,
@@ -172,7 +173,7 @@ class Directory:
             self.option_files.append(userAdaConfig)
 
         #
-        # STEP 4: Options given in the config file in the directory
+        # STEP 4: Options given in the Properties file in the directory
         #
         adaPropFile = self.options.get('ada', 'property_file')
         if not os.path.exists(adaPropFile):
@@ -202,7 +203,6 @@ class Directory:
                 print I18n.get('severe_parse_error').format(adaProjFile)
                 sys.exit(3)
             self.option_files.append(adaProjFile)
-
 
         #
         # STEP 6: Options given from outside the dir
@@ -359,6 +359,10 @@ class Directory:
                      ' Executed Targets: ' + str(self.executed_targets))
 
         print pad + '-- ' +  showCurrentDir
+
+        # Change directory to the current one
+        os.chdir(self.previous_dir)
+
         return
 
     def getWithDefault(self, section, option):

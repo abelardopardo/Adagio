@@ -5,9 +5,9 @@
 #
 #
 #
-import os, re, sys, subprocess
+import os, re, sys
 
-import Ada, Directory, I18n, AdaRule, Dependency
+import Ada, Directory, I18n, AdaRule
 
 # Prefix to use for the options
 module_prefix = 'office2pdf'

@@ -85,7 +85,12 @@ def Execute(target, directory, pad = ''):
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
         # Check for dependencies!
-        Dependency.update(dstFile, set([datafile] + directory.option_files))
+        try:
+            Dependency.update(dstFile, set([datafile] + directory.option_files))
+        except etree.XMLSyntaxError, e:
+            print I18n.get('severe_parse_error').format(fName)
+            print e
+            sys.exit(1)
 
         # If the destination file is up to date, skip the execution
         if Dependency.isUpToDate(dstFile):
@@ -116,7 +121,12 @@ def Execute(target, directory, pad = ''):
             sys.exit(1)
 
         # Update the dependencies of the newly created files
-        map(lambda x: Dependency.update(x), dstFiles)
+        try:
+            map(lambda x: Dependency.update(x), dstFiles)
+        except etree.XMLSyntaxError, e:
+            print I18n.get('severe_parse_error').format(fName)
+            print e
+            sys.exit(1)
 
     print pad + 'EE', target
     return
@@ -154,7 +164,7 @@ def clean(target, directory, pad):
         if not os.path.exists(dstFile):
             continue
 
-        Ada.remove(dstFile)
+        AdaRule.remove(dstFile)
 
     print pad + 'EE', target + '.clean'
     return

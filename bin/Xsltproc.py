@@ -20,7 +20,7 @@ module_prefix = 'xslt'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('styles', 
+    ('styles',
      '%(home)s%(file_separator)sADA_Styles%(file_separator)sDocbookProfile.xsl',
      I18n.get('xslt_style_file')),
     ('common_styles', '', I18n.get('xslt_common_styles')),
@@ -38,8 +38,8 @@ documentation = {
 
     1.1 The extra arguments in 'extra_arguments'
 
-    1.2 The style files in styles as if they were all in imported in a
-    single file in the given order followed by the files in common_styles
+    1.2 The style files in styles as if they were all in imported in a single
+    file in the given order starting with the common_styles
 
     1.3 The source file
 
@@ -62,7 +62,7 @@ def Execute(target, directory, pad = ''):
     Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.specialTargets(target, directory, documentation, 
+    if AdaRule.specialTargets(target, directory, documentation,
                                      module_prefix, clean, pad):
         return
 
@@ -87,7 +87,7 @@ def Execute(target, directory, pad = ''):
     # Create the dictionary of stylesheet parameters
     styleParams = createParameterDict(target, directory)
 
-    doTransformations(styleFiles.split(), styleTransform, styleParams, 
+    doTransformations(styleFiles.split(), styleTransform, styleParams,
                       toProcess, target, directory)
 
     print pad + 'EE', target
@@ -97,7 +97,7 @@ def clean(target, directory, pad):
     """
     Clean the files produced by this rule
     """
-    
+
     Ada.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
@@ -117,7 +117,7 @@ def createStyleTransform(styleList):
     """
     Function that given a list of style sheet files, prepares the style file to
     be processed. If more than one file is given, a StringIO is created with all
-    of them imported. 
+    of them imported.
     """
 
     # Prepare style files (locate styles in ADA/ADA_Styles if needed
@@ -175,10 +175,10 @@ def createParameterDict(target, directory):
         directory.getWithDefault(Ada.module_prefix, 'project_home') + "\'"
     styleParams['ada.current.datetime'] = "\'" + \
         directory.getWithDefault(Ada.module_prefix, 'current_datetime') + "\'"
-    profileRevision = directory.getWithDefault(Ada.module_prefix, 
+    profileRevision = directory.getWithDefault(Ada.module_prefix,
                                             'profile_revision')
     if profileRevision != '':
-        styleParams['profile.revision'] = "\'" + profileRevision + "\'" 
+        styleParams['profile.revision'] = "\'" + profileRevision + "\'"
     # Parse the dictionary given in extra_arguments and fold it
     try:
         extraDict = eval('{' + directory.getWithDefault(target,
@@ -193,7 +193,7 @@ def createParameterDict(target, directory):
 
     return styleParams
 
-def doTransformations(styles, styleTransform, styleParams, toProcess, 
+def doTransformations(styles, styleTransform, styleParams, toProcess,
                       target, directory, paramDict = [({}, '')]):
     """
     Function that given a style transformation, a set of style parameters, a
@@ -217,7 +217,7 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
     dstDir = directory.getWithDefault(target, 'dst_dir')
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
-        
+
         # If file not found, terminate
         if not os.path.isfile(datafile):
             print I18n.get('file_not_found').format(datafile)
@@ -226,11 +226,11 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
         # Variable holding the data tree to be processed. Used to recycle the
         # same tree through the paramDict and language iteration.
         dataTree = None
-        
+
         # Loop over the param dictionaries
         for (pdict, psuffix) in paramDict:
             # fold the values of pdict on styleParams, but in a way that they
-            # can be reversed. 
+            # can be reversed.
             reverseDict = {}
             for (n, v) in pdict.items():
                 reverseDict[n] = styleParams.get(n)
@@ -240,10 +240,10 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
                 # If processing multilingual, create the appropriate suffix
                 if multilingual:
                     langSuffix = '_' + language
-    
+
                 else:
                     langSuffix = ''
-    
+
                 # Insert the appropriate language parameters
                 styleParams['profile.lang'] = "\'" + language + "\'"
                 styleParams['l10n.gentext.language'] = "\'" + language + "\'"
@@ -253,10 +253,10 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
                     langSuffix + psuffix + '.' + \
                     directory.getWithDefault(target, 'output_format')
                 dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-                
+
                 # Apply style and store the result, get the data tree to recycle
                 # it
-                dataTree = singleStyleApplication(datafile, styles, 
+                dataTree = singleStyleApplication(datafile, styles,
                                                   styleTransform, styleParams,
                                                   dstFile, target, directory,
                                                   dataTree)
@@ -274,18 +274,23 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
         # End of for param dict loop
     # End of for each file
 
-def singleStyleApplication(datafile, styles, styleTransform, 
-                           styleParams, dstFile, target, 
+def singleStyleApplication(datafile, styles, styleTransform,
+                           styleParams, dstFile, target,
                            directory, dataTree = None):
     """
     Apply a transformation to a file with a dictionary
     """
 
     # Check for dependencies!
-    Dependency.update(dstFile, 
-                      set(styles + [datafile] + \
-                              directory.option_files))
-    
+    try:
+        Dependency.update(dstFile,
+                          set(styles + [datafile] + \
+                                  directory.option_files))
+    except etree.XMLSyntaxError, e:
+        print I18n.get('severe_parse_error').format(fName)
+        print e
+        sys.exit(1)
+
     # If the destination file is up to date, skip the execution
     if Dependency.isUpToDate(dstFile):
         print I18n.get('file_uptodate').format(os.path.basename(dstFile))
@@ -293,7 +298,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     # Proceed with the execution of xslt
     print I18n.get('producing').format(os.path.basename(dstFile))
-    
+
     # Parse the data file if needed
     if dataTree == None:
         try:
@@ -303,7 +308,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
             print I18n.get('severe_parse_error').format(datafile)
             print e
             sys.exit(0)
-    
+
 
     # Apply the transformation
     try:
@@ -312,17 +317,22 @@ def singleStyleApplication(datafile, styles, styleTransform,
         print I18n.get('error_applying_xslt').format(target)
         print e
         sys.exit(1)
-        
 
-    # Write the result 
-    result.write(dstFile, 
+
+    # Write the result
+    result.write(dstFile,
                  encoding = directory.getWithDefault(Ada.module_prefix,
                                                   'encoding'),
                  xml_declaration = True,
                  pretty_print = True)
 
     # Update the dependencies of the newly created file
-    Dependency.update(dstFile)
+    try:
+        Dependency.update(dstFile)
+    except etree.XMLSyntaxError, e:
+        print I18n.get('severe_parse_error').format(fName)
+        print e
+        sys.exit(1)
 
     return dataTree
 
@@ -352,18 +362,18 @@ def doClean(target, directory, toProcess, suffixes = ['']):
                     langSuffix = '_' + language
                 else:
                     langSuffix = ''
-    
+
                 # Derive the destination file name
                 dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
                     langSuffix + psuffix + '.' + \
                     directory.getWithDefault(target, 'output_format')
                 dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-                
+
                 if not os.path.exists(dstFile):
                     continue
-                
-                Ada.remove(dstFile)
-    
+
+                AdaRule.remove(dstFile)
+
 # Execution as script
 if __name__ == "__main__":
     Execute(module_prefix, Directory.getDirectoryObject('.'))
