@@ -57,7 +57,8 @@ msgs = {
     'var_preamble' : '===== {0} Variables        =====',
     'cannot_open_file': 'Cannot open file {0}',
     'line_in_no_section': 'Line {ln} of {pfile} is outside a section',
-    'circular_include': 'Circular chain of includes detected:',
+    'circular_template': 'Circular chain of templates detected:',
+    'template_error': 'Error in template section in file {0}',
     'incorrect_assignment': 'Incorrect assignment in line {ln} of {pfile}',
     'incorrect_version_format': 'Incorrect version {0}. Should have major.minor.patch structure',
     'incorrect_version' : 'Incorrect ADA Version ({0}). Review variables ' + \
@@ -69,6 +70,7 @@ msgs = {
     'severe_option_error': 'Error in configuration file',
     'error_applying_xslt': 'Error while applying style in target {0}',
     'error_extra_args': 'Incorrect arguments in variable {0}.extra-arguments',
+    'unknown_target': 'Unknown target {0}.',
     'file_uptodate': '{0} up to date. Bypassing.',
     'not_enough_params': 'Not enough params for {0}',
     'no_var_value': 'No value given in variable {0}',
