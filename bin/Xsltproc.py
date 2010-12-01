@@ -234,6 +234,7 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
             reverseDict = {}
             for (n, v) in pdict.items():
                 reverseDict[n] = styleParams.get(n)
+                styleParams[n] = v
 
             # Loop over languages
             for language in languages:
@@ -287,7 +288,8 @@ def singleStyleApplication(datafile, styles, styleTransform,
                           set(styles + [datafile] + \
                                   directory.option_files))
     except etree.XMLSyntaxError, e:
-        print I18n.get('severe_parse_error').format(fName)
+        # ABEL: Review how to inform of this error!
+        print I18n.get('severe_parse_error').format(datafile)
         print e
         sys.exit(1)
     
@@ -304,12 +306,12 @@ def singleStyleApplication(datafile, styles, styleTransform,
         try:
             dataTree = etree.parse(datafile)
             dataTree.xinclude()
-        except etree.XMLSyntaxError, e:
+        except (etree.XMLSyntaxError, etree.XIncludeError), e:
             print I18n.get('severe_parse_error').format(datafile)
             print e
             sys.exit(0)
     
-
+    print 'AAA', styleParams
     # Apply the transformation
     try:
         result = styleTransform(dataTree, **styleParams)

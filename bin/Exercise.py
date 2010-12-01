@@ -14,10 +14,10 @@ module_prefix = 'exercise'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('styles', 
+    ('styles',
      '%(home)s%(file_separator)sADA_Styles%(file_separator)sDocbookProfile.xsl',
      I18n.get('xslt_style_file')),
-    ('submit_styles', 
+    ('submit_styles',
      '%(home)s%(file_separator)sADA_Styles%(file_separator)sExerciseSubmit.xsl',
      I18n.get('xslt_style_file')),
     ('output_format', 'html', I18n.get('output_format')),
@@ -32,7 +32,7 @@ documentation = {
     documents can (optionally be created):
 
     - Regular document for the students
- 
+
     - Document with the solutions (elements with condition=solution)
 
     - Document with the professor guide (elements with condition =
@@ -41,10 +41,10 @@ documentation = {
     - Document cotaining a form to submit answers (different stylesheet)
 
     The generation of these documents is controlled with the following
-    convention. 
+    convention.
 
     - The "files" in "src_dir" are processed as many times as specified by the
-    "languages" variable and the created files are created in the "dst_dir". 
+    "languages" variable and the created files are created in the "dst_dir".
 
     - All the created files will have the extension given in "output_format"
 
@@ -65,7 +65,7 @@ def Execute(target, directory, pad = ''):
     Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.specialTargets(target, directory, documentation, 
+    if AdaRule.specialTargets(target, directory, documentation,
                                      module_prefix, clean, pad):
         return
 
@@ -96,15 +96,15 @@ def Execute(target, directory, pad = ''):
         # Create the regular version, no additional parameters needed
         paramDict.append(({}, ''))
     if 'solution' in produceValues:
-        paramDict.append(({'solutions.include.guide': 'yes'}, 
+        paramDict.append(({'solutions.include.guide': "'yes'"},
                           '_solution'))
     if 'pguide' in produceValues:
-        paramDict.append(({'solutions.include.guide': 'yes', 
-                          'professorguide.include.guide': 'yes'},
+        paramDict.append(({'solutions.include.guide': "'yes'",
+                          'professorguide.include.guide': "'yes'"},
                           '_pguide'))
 
     # Apply all these transformations.
-    Xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams, 
+    Xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams,
                                toProcess, target, directory, paramDict)
 
     # If 'submit' is also in the produce values, apply that transformation as
@@ -113,7 +113,7 @@ def Execute(target, directory, pad = ''):
     # transformations...)
 
     if 'submit' in produceValues:
-        
+
         # Prepare the style transformation
         styleFiles = directory.getWithDefault(target, 'submit_styles')
         styleTransform = Xsltproc.createStyleTransform(styleFiles.split())
@@ -124,12 +124,12 @@ def Execute(target, directory, pad = ''):
 
         # Create the dictionary of stylesheet parameters
         styleParams = Xsltproc.createParameterDict(target, directory)
-        
+
         # Apply the transformation and produce '_submit' file
-        Xsltproc.doTransformations(styleFiles.split(), styleTransform, 
-                                   styleParams, toProcess, target, directory, 
+        Xsltproc.doTransformations(styleFiles.split(), styleTransform,
+                                   styleParams, toProcess, target, directory,
                                    [({}, '_submit')])
-        
+
     print pad + 'EE', target
     return
 

@@ -14,7 +14,7 @@ module_prefix = 'exam'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('styles', 
+    ('styles',
      '%(home)s%(file_separator)sADA_Styles%(file_separator)sExam.xsl',
      I18n.get('xslt_style_file')),
     ('output_format', 'html', I18n.get('output_format')),
@@ -46,7 +46,7 @@ def Execute(target, directory, pad = ''):
     Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.specialTargets(target, directory, documentation, 
+    if AdaRule.specialTargets(target, directory, documentation,
                                      module_prefix, clean, pad):
         return
 
@@ -68,7 +68,7 @@ def Execute(target, directory, pad = ''):
 
     # Create the dictionary of stylesheet parameters
     styleParams = Xsltproc.createParameterDict(target, directory)
-    
+
     # Create a list with the param dictionaries to use in the different versions
     # to be created.
     paramDict = []
@@ -77,19 +77,19 @@ def Execute(target, directory, pad = ''):
         # Create the regular version, no additional parameters needed
         paramDict.append(({}, ''))
     if 'solution' in produceValues:
-        paramDict.append(({'solutions.include.guide': 'yes',
-                           'ada.testquestions.include.solutions': 'yes'}, 
+        paramDict.append(({'solutions.include.guide': "'yes'",
+                           'ada.testquestions.include.solutions': "'yes'"},
                           '_solution'))
     if 'pguide' in produceValues:
-        paramDict.append(({'solutions.include.guide': 'yes',
-                           'ada.testquestions.include.solutions': 'yes',
-                           'professorguide.include.guide': 'yes',
-                           'ada.testquestions.include.id': 'yes',
-                           'ada.testquestions.include.history': 'yes'},
+        paramDict.append(({'solutions.include.guide': "'yes'",
+                           'ada.testquestions.include.solutions': "'yes'",
+                           'professorguide.include.guide': "'yes'",
+                           'ada.testquestions.include.id': "'yes'",
+                           'ada.testquestions.include.history': "'yes'"},
                           '_pguide'))
 
     # Apply all these transformations.
-    Xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams, 
+    Xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams,
                                toProcess, target, directory, paramDict)
 
     print pad + 'EE', target
@@ -99,7 +99,7 @@ def clean(target, directory, pad):
     """
     Clean the files produced by this rule
     """
-    
+
     Ada.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
