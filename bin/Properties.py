@@ -270,10 +270,14 @@ def expandTemplate(config, filename, includeChain):
             sys.exit(1)
 
         for fname in templateFiles.split():
+            if os.path.isabs(fname):
+                templateFile = fname
+            else:
+                templateFile = os.path.join(os.path.dirname(filename), fname)
             # Included template must exist
-            print 'AAA', fname
-            templateFile = os.path.relpath(os.path.dirname(fname),
-                                           os.path.dirname(filename))
+            print 'AAA', fname, os.path.isabs(fname)
+            print 'BBB', filename, os.path.isabs(filename)
+            print 'CCC', templateFile
             if not os.path.isfile(templateFile):
                 print I18n.get('file_not_found').format(templateFile)
                 sys.exit(1)
