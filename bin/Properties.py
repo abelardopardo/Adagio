@@ -51,7 +51,9 @@ def loadConfigFile(config, filename, includeChain = set({})):
     # in a "template" chain, terminate
     if os.path.abspath(filename) in includeChain:
         print I18n.get('circular_include')
-        print ' '.join(includeChain)
+        print I18n.get('prefix') + ':', os.path.commonprefix(list(includeChain))
+        print I18n.get('files') + ':', \
+            ' '.join(map(lambda x: os.path.basename(x), includeChain))
         sys.exit(1)
     includeChain.add(filename)
 
@@ -270,14 +272,12 @@ def expandTemplate(config, filename, includeChain):
             sys.exit(1)
 
         for fname in templateFiles.split():
+            # Get the full path of the template
             if os.path.isabs(fname):
                 templateFile = fname
             else:
                 templateFile = os.path.join(os.path.dirname(filename), fname)
             # Included template must exist
-            print 'AAA', fname, os.path.isabs(fname)
-            print 'BBB', filename, os.path.isabs(filename)
-            print 'CCC', templateFile
             if not os.path.isfile(templateFile):
                 print I18n.get('file_not_found').format(templateFile)
                 sys.exit(1)
