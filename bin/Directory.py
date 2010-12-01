@@ -164,7 +164,6 @@ class Directory:
         #
         userAdaConfig = os.path.join(os.environ.get('HOME'), '.adarc')
         if os.path.isfile(userAdaConfig):
-            Ada.logDebug('Directory', None, 'Parsing ' + userAdaConfig)
             # Swallow user file on top of global options, and if trouble, report
             # up
             if Properties.loadConfigFile(self.options, userAdaConfig) == None:
@@ -184,7 +183,6 @@ class Directory:
             sys.exit(3)
         propAbsFile = os.path.abspath(os.path.join(self.current_dir,
                                                    adaPropFile))
-        Ada.logDebug('Directory', None, 'Parsing ' + propAbsFile)
         self.section_list = Properties.loadConfigFile(self.options,
                                                       propAbsFile).sections()
         if self.section_list == None:
@@ -199,7 +197,6 @@ class Directory:
                                    self.options.get(Ada.module_prefix,
                                                     'project_file'))
         if os.path.isfile(adaProjFile):
-            Ada.logDebug('Directory', None, 'Parsing ' + adaProjFile)
             if Properties.loadConfigFile(self.options, adaProjFile) == None:
                 print I18n.get('severe_parse_error').format(adaProjFile)
                 sys.exit(3)

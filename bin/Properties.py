@@ -45,6 +45,8 @@ def loadConfigFile(config, filename, includeChain = set({})):
     Returns the Raw config object with the filename parsed.
     """
 
+    Ada.logDebug('Properties', None, 'Parsing ' + filename)
+
     # If the file to be processed has been processed already processed, we are
     # in a "template" chain, terminate
     if os.path.abspath(filename) in includeChain:
@@ -92,18 +94,12 @@ def loadConfigFile(config, filename, includeChain = set({})):
         memoryFile.close()
         return None
 
-    # If config is None, we are done, no need to treat anything more
-    if config == None:
-        return result
-
     # Process templates if they are present
     result = expandTemplate(result, filename, includeChain)
 
     # If config is None, we are done, no need to treat anything more
     if config == None:
         return result
-
-    # Process the includes!
 
     # Move all options to the given config but checking if they are legal
     for sname in result.sections():
@@ -244,19 +240,22 @@ def expandTemplate(config, filename, includeChain):
     if not config.has_section('template'):
         return config
 
+    Ada.logDebug('Properties', None, 'Expanding ' + filename)
+
     # Process the sections in result that are "template"
     result = ConfigParser.RawConfigParser(config.defaults(),
                                           ordereddict.OrderedDict)
 
     # Loop over the newly read values and detect templates
     for sname in config.sections():
+
         if sname != 'template':
             result.add_section(sname)
             for (oname, ovalue) in config.items(sname):
                 result.set(sname, oname, ovalue)
             continue
 
-        # Process only the template options
+        # Process only the template options that are no in the default
         items = [(a, b) for (a, b) in config.items(sname) \
                      if not a in config.defaults()]
         if len(items) != 1:
@@ -272,7 +271,9 @@ def expandTemplate(config, filename, includeChain):
 
         for fname in templateFiles.split():
             # Included template must exist
-            templateFile = os.path.relpath(fname, os.path.dirname(filename))
+            print 'AAA', fname
+            templateFile = os.path.relpath(os.path.dirname(fname),
+                                           os.path.dirname(filename))
             if not os.path.isfile(templateFile):
                 print I18n.get('file_not_found').format(templateFile)
                 sys.exit(1)
