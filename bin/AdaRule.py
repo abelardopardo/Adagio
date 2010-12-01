@@ -143,8 +143,10 @@ def doExecution(target, directory, command, datafile, dstFile,
         if Dependency.isUpToDate(dstFile):
             print I18n.get('file_uptodate').format(os.path.basename(dstFile))
             return
-        # Proceed with the execution of xslt
+        # Notify the production
         print I18n.get('producing').format(os.path.basename(dstFile))
+    else:
+        print I18n.get('producing').format(os.path.basename(datafile))
 
     Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
 
@@ -251,20 +253,6 @@ class StyleResolver(etree.Resolver):
 # OLD
 ################################################################################
 
-def executeRuleChain(dirList, executionContext, commands):
-
-    # If no commands are given, take run as the default
-    if commands == []:
-        commands = ['run']
-
-    # Loop over all the directories
-    for dirName, exportDst in dirList:
-        Ada.infoMessage('BG ' + dirName)
-
-        # Loop over the list of commands to apply
-        for cmdName in commands:
-            Ada.infoMessage('EN ' + dirName)
-
             # Sequence of rules to apply
 # DONE            Gotodir.process(executionContext[dirName], cmdName)
 
@@ -333,8 +321,3 @@ def executeRuleChain(dirList, executionContext, commands):
 # project
 # session
 # unit
-
-    pass
-
-if __name__ == "__main__":
-    pass

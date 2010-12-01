@@ -185,7 +185,8 @@ class Directory:
         propAbsFile = os.path.abspath(os.path.join(self.current_dir,
                                                    adaPropFile))
         Ada.logDebug('Directory', None, 'Parsing ' + propAbsFile)
-        self.section_list = Properties.loadConfigFile(self.options, propAbsFile)
+        self.section_list = Properties.loadConfigFile(self.options,
+                                                      propAbsFile).sections()
         if self.section_list == None:
             print I18n.get('severe_parse_error').format(propAbsFile)
             sys.exit(3)
@@ -234,7 +235,7 @@ class Directory:
 
         # Dump a debug message showing the list of sections detected in the
         # config file
-        Ada.logDebug('Directory', None, 
+        Ada.logDebug('Directory', None,
                      'Sections: ' + ', '.join(self.section_list))
 
         return
@@ -298,7 +299,7 @@ class Directory:
         # Print a line flagging the start of the execution showing the maximum
         # suffix of the current directory up to 80 chars.
         showCurrentDir = self.current_dir[len(pad) + 3 - 80:]
-        if len(self.current_dir) > 77:
+        if len(self.current_dir) > (77 - len(pad)):
             showCurrentDir = '...' + showCurrentDir[3:]
 
         print pad + '++ ' + showCurrentDir
@@ -344,7 +345,7 @@ class Directory:
 
             # Check the cache to see if target has already been executed
             if target_name in self.executed_targets:
-                Ada.logInfo('Directory', self, 
+                Ada.logInfo('Directory', self,
                             'HIT: ' + self.current_dir + ': ' + target_name)
                 continue
 
@@ -355,7 +356,7 @@ class Directory:
             self.executed_targets.add(target_name)
 
         self.executing = False
-        Ada.logDebug('Directory', self, 
+        Ada.logDebug('Directory', self,
                      ' Executed Targets: ' + str(self.executed_targets))
 
         print pad + '-- ' +  showCurrentDir
