@@ -166,10 +166,16 @@ class Directory:
         if os.path.isfile(userAdaConfig):
             # Swallow user file on top of global options, and if trouble, report
             # up
-            if Properties.loadConfigFile(self.options, userAdaConfig) == None:
-                print I18n.get('severe_parse_error').format(userAdaConfig)
-                sys.exit(1)
-            self.option_files.append(userAdaConfig)
+            try:
+                if Properties.loadConfigFile(self.options, 
+                                             userAdaConfig) == None:
+                    print I18n.get('severe_parse_error').format(userAdaConfig)
+                    sys.exit(1)
+                self.option_files.append(userAdaConfig)
+            except ValueError, e:
+                print I18n.get('severe_parse_error').format(propAbsFile)
+                print e
+                sys.exit(3)
 
         #
         # STEP 4: Options given in the Properties file in the directory
@@ -183,8 +189,14 @@ class Directory:
             sys.exit(3)
         propAbsFile = os.path.abspath(os.path.join(self.current_dir,
                                                    adaPropFile))
-        self.section_list = Properties.loadConfigFile(self.options,
-                                                      propAbsFile).sections()
+        try:
+            self.section_list = Properties.loadConfigFile(self.options,
+                                                          propAbsFile).sections()
+        except ValueError, e:
+            print I18n.get('severe_parse_error').format(propAbsFile)
+            print e
+            sys.exit(3)
+
         if self.section_list == None:
             print I18n.get('severe_parse_error').format(propAbsFile)
             sys.exit(3)
@@ -291,6 +303,7 @@ class Directory:
         Ada.logInfo('Directory', self, 'Execute in ' + self.current_dir)
 
         # Change directory to the current one
+        self.previous_dir = os.getcwd()
         os.chdir(self.current_dir)
 
         # Print a line flagging the start of the execution showing the maximum
