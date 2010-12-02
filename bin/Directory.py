@@ -190,8 +190,8 @@ class Directory:
         propAbsFile = os.path.abspath(os.path.join(self.current_dir,
                                                    adaPropFile))
         try:
-            self.section_list = Properties.loadConfigFile(self.options,
-                                                          propAbsFile).sections()
+            dirConfig = Properties.loadConfigFile(self.options, propAbsFile)
+            self.section_list = dirConfig.sections()
         except ValueError, e:
             print I18n.get('severe_parse_error').format(propAbsFile)
             print e
