@@ -53,6 +53,9 @@ def Execute(target, directory, pad = ''):
         Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
         return
 
+    # Translate all paths to absolute paths
+    toProcess = map(lambda x: os.path.abspath(x), toProcess)
+
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target
 
