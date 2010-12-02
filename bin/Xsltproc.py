@@ -311,7 +311,6 @@ def singleStyleApplication(datafile, styles, styleTransform,
             print e
             sys.exit(0)
 
-    print 'AAA', styleParams
     # Apply the transformation
     try:
         result = styleTransform(dataTree, **styleParams)
