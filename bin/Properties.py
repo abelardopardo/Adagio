@@ -67,13 +67,13 @@ def loadConfigFile(config, filename, includeChain = None):
 
     if not os.path.isfile(filename):
         print I18n.get('cannot_open_file').format(filename)
-        return None
+        sys.exit(1)
 
     # Open the disk file
     configfile = open(filename, 'r')
     if configfile == None:
         I18n.get('cannot_open_file').format(filename)
-        return None
+        sys.exit(1)
 
     # Pass the file to a StringIO removing the leading spaces from the lines
     # containing an equal sign.
@@ -102,7 +102,7 @@ def loadConfigFile(config, filename, includeChain = None):
         print I18n.get('severe_parse_error').format(filename)
         print msg
         memoryFile.close()
-        return None
+        sys.exit(1)
 
     # Process templates if they are present
     result = expandTemplate(result, filename, includeChain)
