@@ -36,7 +36,7 @@ def loadOptionsInConfig(config, sectionName, options):
 
     return
 
-def loadConfigFile(config, filename, includeChain = set({})):
+def loadConfigFile(config, filename, includeChain = None):
     """
     Function that receives a first set of config options (ConfigParser) and a
     filename. Parses the file, makes sure all the new config options are present
@@ -47,15 +47,23 @@ def loadConfigFile(config, filename, includeChain = set({})):
 
     Ada.logDebug('Properties', None, 'Parsing ' + filename)
 
+    # Cannot use empty dictionary as default value in parameter as it
+    # accumulates the values.
+    if includeChain == None:
+        includeChain = set([])
+
     # If the file to be processed has been processed already processed, we are
     # in a "template" chain, terminate
     if os.path.abspath(filename) in includeChain:
+        commonPrefix = os.path.commonprefix(list(includeChain))
         print I18n.get('circular_include')
-        print I18n.get('prefix') + ':', os.path.commonprefix(list(includeChain))
+        print I18n.get('prefix') + ':', commonPrefix
         print I18n.get('files') + ':', \
-            ' '.join(map(lambda x: os.path.basename(x), includeChain))
+            ' '.join(map(lambda x: x.replace(commonPrefix, '', 1), includeChain))
         sys.exit(1)
-    includeChain.add(filename)
+
+    # Insert the filename in the includeChain
+    includeChain.add(os.path.normpath(filename))
 
     if not os.path.isfile(filename):
         print I18n.get('cannot_open_file').format(filename)
