@@ -203,7 +203,7 @@ def log(tprefix, directory, msg, fname = None):
         output.write(tprefix + ':' + msg + '\n')
         output.flush()
 
-def Execute(target, directory, pad = ''):
+def Execute(target, directory, pad = None):
     """
     Execute the rule in the given directory
     """
@@ -217,6 +217,9 @@ def Execute(target, directory, pad = ''):
     if AdaRule.specialTargets(target, directory, documentation, 
                               module_prefix):
         return
+
+    if pad == None:
+	pad = ''
 
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target

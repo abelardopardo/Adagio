@@ -54,7 +54,7 @@ documentation = {
 # Possible values of the 'produce' option for this rule
 _produce_values = set(['regular', 'solution', ' pguide', ' submit'])
 
-def Execute(target, directory, pad = ''):
+def Execute(target, directory, pad = None):
     """
     Execute the rule in the given directory
     """
@@ -73,6 +73,9 @@ def Execute(target, directory, pad = ''):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
+
+    if pad == None:
+	pad = ''
 
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target
@@ -133,7 +136,7 @@ def Execute(target, directory, pad = ''):
     print pad + 'EE', target
     return
 
-def clean(target, directory, pad):
+def clean(target, directory, pad = None):
     """
     Clean the files produced by this rule
     """
@@ -144,6 +147,9 @@ def clean(target, directory, pad):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
+
+    if pad == None:
+	pad = ''
 
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target + '.clean'

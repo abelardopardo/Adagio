@@ -51,7 +51,7 @@ documentation = {
   Some status messages are printed depending on the 'debug_level'
 """}
 
-def Execute(target, directory, pad = ''):
+def Execute(target, directory, pad = None):
     """
     Execute the rule in the given directory
     """
@@ -70,6 +70,9 @@ def Execute(target, directory, pad = ''):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
+
+    if pad == None:
+	pad = ''
 
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target
@@ -93,7 +96,7 @@ def Execute(target, directory, pad = ''):
     print pad + 'EE', target
     return
 
-def clean(target, directory, pad):
+def clean(target, directory, pad = None):
     """
     Clean the files produced by this rule
     """
@@ -104,6 +107,9 @@ def clean(target, directory, pad):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
+
+    if pad == None:
+	pad = ''
 
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target + '.clean'
@@ -194,12 +200,15 @@ def createParameterDict(target, directory):
     return styleParams
 
 def doTransformations(styles, styleTransform, styleParams, toProcess,
-                      target, directory, paramDict = [({}, '')]):
+                      target, directory, paramDict = None):
     """
     Function that given a style transformation, a set of style parameters, a
     list of pairs (parameter dicitonaries, suffix), and a list of files to
     process, applies the transformation to every file, every local dictionary
     and every language.."""
+
+    if paramDict == None:
+	paramDict = [({}, '')]
 
     # Obtain languages
     languages = directory.getWithDefault(target, 'languages').split()
@@ -337,10 +346,13 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     return dataTree
 
-def doClean(target, directory, toProcess, suffixes = ['']):
+def doClean(target, directory, toProcess, suffixes = None):
     """
     Function to perform the cleanin step
     """
+
+    if suffixes == None:
+	suffixes = ['']
 
     # Split the languages and remember if the execution is multilingual
     languages = directory.getWithDefault(target, 'languages').split()

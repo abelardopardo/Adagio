@@ -35,8 +35,11 @@ def isProgramAvailable(executable):
 
     return None
 
-def locateFile(fileName, dirPrefix = os.getcwd()):
+def locateFile(fileName, dirPrefix = None):
     """Search an stylesheet in the dirs in local ADA dirs"""
+
+    if dirPrefix == None:
+        dirPrefix = os.getcwd()
 
     absName = os.path.abspath(os.path.join(dirPrefix, fileName))
 

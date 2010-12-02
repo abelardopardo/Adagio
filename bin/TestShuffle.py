@@ -37,7 +37,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-def main(sourceFile, pout = sys.stdout):
+def main(sourceFile, pout = None):
     """
     Function that given a Docbook file containing a quandaset with a set of
     quandadivs creates as many permutations as specified in a specific element
@@ -45,6 +45,9 @@ def main(sourceFile, pout = sys.stdout):
     
     Returns the number of permutations created (zero means error)
     """
+
+    if pout == None:
+	pout = sys.stdout
 
     # For notifying steps through stdout
     stepCount = 1

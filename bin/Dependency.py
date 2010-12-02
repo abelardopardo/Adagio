@@ -72,7 +72,7 @@ def addNode(fileName):
     # Return the index associated with the given file
     return nodeIdx
 
-def update(dst, srcSet = set([])):
+def update(dst, srcSet = None):
     """
     Modifies the graph to reflect the addition of edges from each of the
     elements in srcSet to dst. If srcSet is empty it only updates the date of
@@ -84,6 +84,9 @@ def update(dst, srcSet = set([])):
     global __IDXToName
     global __NodeDate
     global __NodeOutEdges
+
+    if srcSet == None:
+	srcSet = set([])
 
     # If a string is given, translate to index
     if type(dst) == str:

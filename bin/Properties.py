@@ -137,12 +137,15 @@ def loadConfigFile(config, filename, includeChain = None):
 
     return result
 
-def dump(options, pad = '', sections = None):
+def dump(options, pad = None, sections = None):
     """
     Function to print out the content of a config object
     """
     if sections == None:
         sections = options.sections()
+
+    if pad == None:
+	pad = ''
 
     try:
         for sname in sections:
@@ -172,7 +175,7 @@ def LoadDefaults(options):
     loadOptionsInConfig(options, Testexam.module_prefix,   Testexam.options)
     loadOptionsInConfig(options, Office2pdf.module_prefix, Office2pdf.options)
 
-def Execute(target, directory, pad = ''):
+def Execute(target, directory, pad = None):
     """
     Given a target and a directory, it checks which rule needs to be invoked and
    performs the invokation.
@@ -195,6 +198,9 @@ def Execute(target, directory, pad = ''):
     targetPrefix = target.split('.')[0]
 
     Ada.logInfo('Properties', directory, 'Target ' + target)
+
+    if pad == None:
+	pad = ''
 
     # Select the proper set of rules
     # Code to extend when a new set of rules is added (@EXTEND@)
