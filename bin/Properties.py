@@ -38,11 +38,13 @@ def loadOptionsInConfig(config, sectionName, options):
 
 def loadConfigFile(config, filename, includeChain = None):
     """
-    Function that receives a first set of config options (ConfigParser) and a
+    Function that receives a set of config options (ConfigParser) and a
     filename. Parses the file, makes sure all the new config options are present
-    in the first config.
+    in the first config and adds them to it. The parsing may require, through
+    some options, the inclusion of additional files. The includeChain is a set
+    to detect circual includes.
 
-    Returns the Raw config object with the filename parsed.
+    Returns the list of files finally loaded.
     """
 
     Ada.logDebug('Properties', None, 'Parsing ' + filename)
@@ -94,6 +96,7 @@ def loadConfigFile(config, filename, includeChain = None):
     # Parse the memory file with a raw parser to check option validity
     result = ConfigParser.RawConfigParser({},
                                           ordereddict.OrderedDict)
+
     try:
         # Reset the read pointer in the memory file
         memoryFile.seek(0)
@@ -104,11 +107,12 @@ def loadConfigFile(config, filename, includeChain = None):
         memoryFile.close()
         sys.exit(1)
 
-    # Process templates if they are present
-    result = expandTemplate(result, filename, includeChain)
+    # # Process templates if they are present
+    # result = expandTemplate(result, filename, includeChain)
 
     # If config is None, we are done, no need to treat anything more
     if config == None:
+        print 'UNEXPECTED!'
         return result
 
     # Move all options to the given config but checking if they are legal
@@ -259,8 +263,8 @@ def expandTemplate(config, filename, includeChain):
     Ada.logDebug('Properties', None, 'Expanding ' + filename)
 
     # Process the sections in result that are "template"
-    result = ConfigParser.RawConfigParser(config.defaults(),
-                                          ordereddict.OrderedDict)
+    result = ConfigParser.RawConfigParser({},
+                                           ordereddict.OrderedDict)
 
     # Loop over the newly read values and detect templates
     for sname in config.sections():
@@ -271,9 +275,11 @@ def expandTemplate(config, filename, includeChain):
                 result.set(sname, oname, ovalue)
             continue
 
+        print 'AAA', sname, config.items(sname)
         # Process only the template options that are not in the default
         items = [(a, b) for (a, b) in config.items(sname) \
-                     if not a in config.defaults()]
+                     if a == 'files']
+
         if len(items) != 1:
             print I18n.get('template_error').format(filename)
             sys.exit(1)
@@ -299,7 +305,8 @@ def expandTemplate(config, filename, includeChain):
                 sys.exit(1)
 
             # Call recursively to expand the template
-            expandedConfig = loadConfigFile(None, templateFile, includeChain)
+            expandedConfig = loadConfigFile(None, 
+                                            templateFile, includeChain)
             # Transfer all the values to the result
             for s in expandedConfig.sections():
                 for (o, v) in expandedConfig.items(s):
