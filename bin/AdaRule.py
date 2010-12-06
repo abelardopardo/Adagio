@@ -247,7 +247,8 @@ class StyleResolver(etree.Resolver):
 
     def resolve(self, url, pubid, context):
         if url.startswith('file://') or url.startswith('/'):
-            url = url[7:];
+            if url.startswith('file://'):
+                url = url[7:];
             if not os.path.exists(url):
                 newURL = os.path.join(self.styleDir, os.path.basename(url))
                 return self.resolve_filename(newURL, context)
