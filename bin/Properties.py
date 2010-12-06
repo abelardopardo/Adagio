@@ -52,8 +52,8 @@ def loadConfigFile(config, filename, includeChain = None):
     if includeChain == None:
         includeChain = set([])
 
-    # If the file to be processed has been processed already processed, we are
-    # in a "template" chain, terminate
+    # If the file to be processed has been processed already, we are in a
+    # "template" chain, terminate
     if os.path.abspath(filename) in includeChain:
         commonPrefix = os.path.commonprefix(list(includeChain))
         print I18n.get('circular_include')
@@ -271,7 +271,7 @@ def expandTemplate(config, filename, includeChain):
                 result.set(sname, oname, ovalue)
             continue
 
-        # Process only the template options that are no in the default
+        # Process only the template options that are not in the default
         items = [(a, b) for (a, b) in config.items(sname) \
                      if not a in config.defaults()]
         if len(items) != 1:
@@ -279,18 +279,20 @@ def expandTemplate(config, filename, includeChain):
             sys.exit(1)
 
         # Fetch the only template value
-        (oname, templateFiles) = items[0]
+        oname = items[0][0]
         # It must be a 'file' option, if not, bomb out
         if oname != 'files':
             print I18n.get('template_error').format(filename)
             sys.exit(1)
 
+        templateFiles = config.get(sname, oname)
         for fname in templateFiles.split():
             # Get the full path of the template
             if os.path.isabs(fname):
                 templateFile = fname
             else:
                 templateFile = os.path.join(os.path.dirname(filename), fname)
+
             # Included template must exist
             if not os.path.isfile(templateFile):
                 print I18n.get('file_not_found').format(templateFile)
