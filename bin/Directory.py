@@ -385,6 +385,9 @@ class Directory:
         try:
             result = self.options.get(section, option)
             return result
+        except ConfigParser.InterpolationMissingOptionError, e:
+            print I18n.get('incorrect_variable_reference').format(option)
+            sys.exit(1)
         except ConfigParser.NoOptionError:
             pass
         section = section.split('.')[0]
