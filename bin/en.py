@@ -66,6 +66,7 @@ msgs = {
     'incorrect_version' : 'Incorrect ADA Version ({0}). Review variables ' + \
         'ada.exact_version, ada.minimum_version and ' + \
         'ada.maximum_version',
+    'incorrect_variable_reference': 'Incorrect reference in value {0}',
     'severe_parse_error': 'Error while parsing {0}',
     'severe_exec_error': 'Error while executing {0}. Check adado.log',
     'exec_line': 'Invocation: {0}',
