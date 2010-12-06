@@ -190,7 +190,8 @@ class Directory:
         propAbsFile = os.path.abspath(os.path.join(self.current_dir,
                                                    adaPropFile))
         try:
-            dirConfig = Properties.loadConfigFile(self.options, propAbsFile)
+            dirConfig = Properties.loadConfigFile(self.options, 
+                                                  propAbsFile)
             self.section_list = dirConfig.sections()
         except ValueError, e:
             print I18n.get('severe_parse_error').format(propAbsFile)
@@ -209,7 +210,8 @@ class Directory:
                                    self.options.get(Ada.module_prefix,
                                                     'project_file'))
         if os.path.isfile(adaProjFile):
-            if Properties.loadConfigFile(self.options, adaProjFile) == None:
+            if Properties.loadConfigFile(self.options, 
+                                         adaProjFile) == None:
                 print I18n.get('severe_parse_error').format(adaProjFile)
                 sys.exit(3)
             self.option_files.append(adaProjFile)
