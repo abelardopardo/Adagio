@@ -149,7 +149,7 @@ def doExecution(target, directory, command, datafile, dstFile,
         # Notify the production
         print I18n.get('producing').format(os.path.basename(dstFile))
     else:
-        print I18n.get('producing').format(os.path.basename(datafile))
+        print I18n.get('processing').format(os.path.basename(datafile))
 
     Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
 
