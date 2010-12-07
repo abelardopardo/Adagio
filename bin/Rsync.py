@@ -69,12 +69,15 @@ def Execute(target, directory, pad = None):
         return
 
     # Get the directories to synchronize, check if work is needed
-    srcDir = directory.geWithDefault(target, 'src_dir')
+    srcDir = directory.getWithDefault(target, 'src_dir')
     dstDir = directory.getWithDefault(target, 'dst_dir')
     if srcDir == '' or dstDir == '' or srcDir == dstDir:
         return
 
     # If source directory does not exist, terminate
+    if not os.path.isdir(srcDir):
+        print I18n.get('not_a_directory')
+        sys.exit(1)
 
     if pad == None:
 	pad = ''
@@ -86,28 +89,15 @@ def Execute(target, directory, pad = None):
     executable = directory.getWithDefault(target, 'exec')
     extraArgs = directory.getWithDefault(target, 'extra_arguments')
 
-    commandPrefix = [executable, '-avz']
-    commandPrefix.append(srcDir)
-    commandPrefix.append(dstDir)
+    command = [executable, '-avz']
+    command.append(srcDir)
+    command.append(dstDir)
 
     Ada.logDebug(target, directory, ' EXEC ' + srcDir + ' ' + dstDir)
 
-        # If file not found, terminate
-        if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
-            sys.exit(1)
-
-        # Derive the destination file name
-        dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-            '.' + outputFormat
-        dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-                                                   
-        # Add the output and input files to the command
-        command = commandPrefix + ['-o', dstFile] + [datafile]
-
-        # Perform the execution
-        AdaRule.doExecution(target, directory, command, datafile, dstFile, 
-                            Ada.userLog, Ada.userLog)
+    # Perform the execution
+    AdaRule.doExecution(target, directory, command, srcDir, None, 
+                        Ada.userLog, Ada.userLog)
 
     print pad + 'EE', target
     return
