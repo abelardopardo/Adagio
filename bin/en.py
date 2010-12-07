@@ -85,6 +85,9 @@ msgs = {
         'ada.exact_version, ada.minimum_version and ' + \
         'ada.maximum_version',
     'incorrect_variable_reference': 'Incorrect reference in value {0}',
+    'import_error': 'Error while importing script in {0}',
+    'function_name': 'Function to call in the given script.',
+    'function_error': 'Error when executing function {0}',
     'severe_parse_error': 'Error while parsing {0}',
     'severe_exec_error': 'Error while executing {0}. Check adado.log',
     'exec_line': 'Invocation: {0}',
