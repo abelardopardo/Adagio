@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, re, glob, sys, subprocess
+import os, re, glob, sys, subprocess, shutil
 
 # Import conditionally either regular xml support or lxml if present
 try:
@@ -251,8 +251,17 @@ def remove(fileName):
         else:
             prefix = I18n.get('removing')
             print prefix.format(fileName[len(prefix) - 3 - 80:])
-        os.remove(fileName)
+
+        # If the given fileName is a file, simply remove it
+        if os.path.isfile(fileName):
+            os.remove(fileName)
+            return
+
+        # If a directory, nuke the entire tree
+        shutil.rmtree(fileName)
         
+    return
+
 class StyleResolver(etree.Resolver):
     """
     Resolver to use with XSLT stylesheets and force the detection of stylesheets
