@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-#
 #
 # Copyright (C) 2008 Carlos III University of Madrid
 # This file is part of the ADA: Agile Distributed Authoring Toolkit
