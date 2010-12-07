@@ -120,25 +120,16 @@ def clean(target, directory, pad = None):
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target + '.clean'
 
-    # Loop over all source files to process
+    # Get the dstDir
     dstDir = directory.getWithDefault(target, 'dst_dir')
-    outputFormat = directory.getWithDefault(target, 'output_format')
-    for datafile in toProcess:
 
-        # If file not found, terminate
-        if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
-            sys.exit(1)
+    # If dist dir not found, terminate
+    if not os.path.isdir(dstDir):
+        print I18n.get('file_not_found').format(dstDir)
+        sys.exit(1)
 
-        # Derive the destination file name
-        dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-            '.' + outputFormat
-        dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-                                                   
-        if not os.path.exists(dstFile):
-            continue
-
-        AdaRule.remove(dstFile)
+    # Delete the dst directory
+    AdaRule.remove(dstDir)
 
     print pad + 'EE', target + '.clean'
     return
