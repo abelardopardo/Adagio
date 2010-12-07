@@ -132,7 +132,7 @@ class Directory:
         # Boolean to detect if a directory has been visited twice
         self.executing =        False
         self.executed_targets = set([])
-        self.option_files =     []
+        self.option_files =     set([])
 
         Ada.logInfo('Directory', None, 'New dir object in ' + self.current_dir)
 
@@ -167,13 +167,11 @@ class Directory:
             # Swallow user file on top of global options, and if trouble, report
             # up
             try:
-                if Properties.loadConfigFile(self.options, 
-                                             userAdaConfig) == None:
-                    print I18n.get('severe_parse_error').format(userAdaConfig)
-                    sys.exit(1)
-                self.option_files.append(userAdaConfig)
+                (newFiles, b) = Properties.loadConfigFile(self.options, 
+                                                          userAdaConfig)
+                self.option_files.update(newFiles)
             except ValueError, e:
-                print I18n.get('severe_parse_error').format(propAbsFile)
+                print I18n.get('severe_parse_error').format(userAdaConfig)
                 print e
                 sys.exit(3)
 
@@ -190,18 +188,15 @@ class Directory:
         propAbsFile = os.path.abspath(os.path.join(self.current_dir,
                                                    adaPropFile))
         try:
-            dirConfig = Properties.loadConfigFile(self.options, 
-                                                  propAbsFile)
-            self.section_list = dirConfig.sections()
+            (newFiles, sections) = Properties.loadConfigFile(self.options, 
+                                                             propAbsFile)
+            self.option_files.update(newFiles)
         except ValueError, e:
             print I18n.get('severe_parse_error').format(propAbsFile)
             print e
             sys.exit(3)
 
-        if self.section_list == None:
-            print I18n.get('severe_parse_error').format(propAbsFile)
-            sys.exit(3)
-        self.option_files.append(propAbsFile)
+        self.section_list = sections
 
         #
         # STEP 5: Options given in the project file
@@ -210,11 +205,14 @@ class Directory:
                                    self.options.get(Ada.module_prefix,
                                                     'project_file'))
         if os.path.isfile(adaProjFile):
-            if Properties.loadConfigFile(self.options, 
-                                         adaProjFile) == None:
+            try:
+                (newFiles, b) = \
+                    Properties.loadConfigFile(self.options, 
+                                              os.path.abspath(adaProjFile))
+                self.option_files.update(newFiles)
+            except ValueError, e:
                 print I18n.get('severe_parse_error').format(adaProjFile)
                 sys.exit(3)
-            self.option_files.append(adaProjFile)
 
         #
         # STEP 6: Options given from outside the dir

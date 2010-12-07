@@ -41,10 +41,11 @@ def loadConfigFile(config, filename, includeChain = None):
     Function that receives a set of config options (ConfigParser) and a
     filename. Parses the file, makes sure all the new config options are present
     in the first config and adds them to it. The parsing may require, through
-    some options, the inclusion of additional files. The includeChain is a set
-    to detect circual includes.
+    some options, the inclusion of additional files. The includeChain is a list
+    of files to detect circual includes (and to notify the path to a missing
+    file)
 
-    Returns the list of files finally loaded.
+    Returns a pair (set of files finally loaded, list of targets detected)
     """
 
     Ada.logDebug('Properties', None, 'Parsing ' + filename)
@@ -52,12 +53,12 @@ def loadConfigFile(config, filename, includeChain = None):
     # Cannot use empty dictionary as default value in parameter as it
     # accumulates the values.
     if includeChain == None:
-        includeChain = set([])
+        includeChain = []
 
     # If the file to be processed has been processed already, we are in a
     # "template" chain, terminate
     if os.path.abspath(filename) in includeChain:
-        commonPrefix = os.path.commonprefix(list(includeChain))
+        commonPrefix = os.path.commonprefix(includeChain)
         print I18n.get('circular_include')
         print I18n.get('prefix') + ':', commonPrefix
         print I18n.get('files') + ':', \
@@ -65,10 +66,13 @@ def loadConfigFile(config, filename, includeChain = None):
         sys.exit(1)
 
     # Insert the filename in the includeChain
-    includeChain.add(os.path.normpath(filename))
+    includeChain.append(os.path.normpath(filename))
 
+    # If file not found dump also the include stack
     if not os.path.isfile(filename):
         print I18n.get('cannot_open_file').format(filename)
+        print I18n.get('included_from')
+        print '  ' + '\n  '.join(includeChain[:-1])
         sys.exit(1)
 
     # Open the disk file
@@ -94,35 +98,44 @@ def loadConfigFile(config, filename, includeChain = None):
     configfile.close()
 
     # Parse the memory file with a raw parser to check option validity
-    result = ConfigParser.RawConfigParser({},
-                                          ordereddict.OrderedDict)
+    newOptions = ConfigParser.RawConfigParser({},
+                                              ordereddict.OrderedDict)
 
     try:
         # Reset the read pointer in the memory file
         memoryFile.seek(0)
-        result.readfp(memoryFile)
+        newOptions.readfp(memoryFile)
     except Exception, msg:
         print I18n.get('severe_parse_error').format(filename)
         print msg
         memoryFile.close()
         sys.exit(1)
 
-    # # Process templates if they are present
-    # result = expandTemplate(result, filename, includeChain)
-
     # If config is None, we are done, no need to treat anything more
     if config == None:
         print 'UNEXPECTED!'
-        return result
+        sys.exit(1)
 
     # Move all options to the given config but checking if they are legal
-    for sname in result.sections():
-        # Get the prefix to check if the option is legal
+    result = (set([filename]), [])
+    for sname in newOptions.sections():
+        # Get the prefix
         sprefix = sname.split('.')[0]
-        for (oname, ovalue) in result.items(sname):
+
+        # Treat the special case of a template section that needs to be expanded
+        if sprefix == 'template':
+            (a, b) = treatTemplate(config, filename, newOptions, sname, 
+                                   includeChain)
+            # Incorporate results
+            result[0].update(a)
+            result[1].extend(b)
+            continue
+
+        # Check if the option is legal
+        for (oname, ovalue) in newOptions.items(sname):
             # If not present in the default options, terminate
             if not config.has_option(sprefix, oname) and \
-                    result.defaults().get(oname) == None:
+                    newOptions.defaults().get(oname) == None:
                 optionName = sname + '.' + oname
                 print I18n.get('incorrect_option_in_file').format(optionName,
                                                                   filename)
@@ -135,6 +148,9 @@ def loadConfigFile(config, filename, includeChain = None):
             except ConfigParser.DuplicateSectionError:
                 pass
             config.set(sname, oname, ovalue)
+
+        # Add it to the result
+        result[1].append(sname)
 
     # No longer needed
     memoryFile.close()
@@ -250,69 +266,43 @@ def Execute(target, directory, pad = None):
     print I18n.get('unknown_target').format(target)
     sys.exit(1)
 
-def expandTemplate(config, filename, includeChain):
+def treatTemplate(config, filename, newOptions, sname, includeChain):
     """
-    Process the options in the given config, and if there is any template,
-    process it by calling recursivelly to loadConfigFile.
+    Process template and parse the required files.
+
+    - Config what you have so far
+    - filename file where the template is found
+    - NewOptions is the new config
+    - sname is the section name where the template was detected
+    - includeChain are the files that are included
+
+    Returns the pair (set of files processed, list of targets detected)
     """
 
-    # If there is no template, terminate
-    if not config.has_section('template'):
-        return config
+    fileItem = newOptions.items(sname)
+    # There must be a single option with name 'files'
+    if len(fileItem) != 1 or fileItem[0][0] != 'files':
+        print I18n.get('template_error').format(filename)
+        sys.exit(1)
 
-    Ada.logDebug('Properties', None, 'Expanding ' + filename)
+    # Add template section to the given config to evaluate the files assignment
+    config.add_section(sname)
+    config.set(sname, 'files', fileItem[0][1])
+    templateFiles = config.get(sname, 'files').split()
 
-    # Process the sections in result that are "template"
-    result = ConfigParser.RawConfigParser({},
-                                           ordereddict.OrderedDict)
-
-    # Loop over the newly read values and detect templates
-    for sname in config.sections():
-
-        if sname != 'template':
-            result.add_section(sname)
-            for (oname, ovalue) in config.items(sname):
-                result.set(sname, oname, ovalue)
-            continue
-
-        print 'AAA', sname, config.items(sname)
-        # Process only the template options that are not in the default
-        items = [(a, b) for (a, b) in config.items(sname) \
-                     if a == 'files']
-
-        if len(items) != 1:
-            print I18n.get('template_error').format(filename)
-            sys.exit(1)
-
-        # Fetch the only template value
-        oname = items[0][0]
-        # It must be a 'file' option, if not, bomb out
-        if oname != 'files':
-            print I18n.get('template_error').format(filename)
-            sys.exit(1)
-
-        templateFiles = config.get(sname, oname)
-        for fname in templateFiles.split():
-            # Get the full path of the template
-            if os.path.isabs(fname):
-                templateFile = fname
-            else:
-                templateFile = os.path.join(os.path.dirname(filename), fname)
-
-            # Included template must exist
-            if not os.path.isfile(templateFile):
-                print I18n.get('file_not_found').format(templateFile)
-                sys.exit(1)
-
-            # Call recursively to expand the template
-            expandedConfig = loadConfigFile(None, 
-                                            templateFile, includeChain)
-            # Transfer all the values to the result
-            for s in expandedConfig.sections():
-                for (o, v) in expandedConfig.items(s):
-                    if not result.has_section(s):
-                        result.add_section(s)
-                    result.set(s, o, v)
-
+    # Remove section from the original config:
+    config.remove_section(sname)
+    
+    # Process the template files recursively!
+    result = (set([]), [])
+    for fname in templateFiles:
+        # Get the full path of the template
+        if os.path.isabs(fname):
+            templateFile = fname
+        else:
+            templateFile = os.path.abspath(os.path.join(os.path.dirname(filename), fname))
+            
+        (a, b) = loadConfigFile(config, templateFile, includeChain)
+        result[0].update(a)
+        result[1].extend(b)
     return result
-

@@ -80,6 +80,7 @@ def Execute(target, directory, pad = None):
     # Prepare the style transformation
     styleFiles = directory.getWithDefault(target, 'styles')
     commonStyles = directory.getWithDefault(target, 'common_styles')
+    allStyles = styleFiles.split() + commonStyles.split()
     styleTransform = createStyleTransform(styleFiles.split() + \
                                               commonStyles.split())
     if styleTransform == None:
@@ -90,7 +91,7 @@ def Execute(target, directory, pad = None):
     # Create the dictionary of stylesheet parameters
     styleParams = createParameterDict(target, directory)
 
-    doTransformations(styleFiles.split(), styleTransform, styleParams,
+    doTransformations(allStyles, styleTransform, styleParams,
                       toProcess, target, directory)
 
     print pad + 'EE', target
@@ -220,6 +221,10 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
     # Remember if the execution is multilingual
     multilingual = len(languages) > 1
 
+    # Make sure the given styles are absolute paths
+    styles = map(lambda x: os.path.abspath(x), styles)
+                    
+
     # Loop over all source files to process (processing one source file over
     # several languages gives us a huge speedup because the XML tree of the
     # source is built only once for all languages.
@@ -293,9 +298,9 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     # Check for dependencies!
     try:
-        Dependency.update(dstFile,
-                          set(styles + [datafile] + \
-                                  directory.option_files))
+        sources = set(styles + [datafile])
+        sources.update(directory.option_files)
+        Dependency.update(dstFile, sources)
     except etree.XMLSyntaxError, e:
         # ABEL: Review how to inform of this error!
         print I18n.get('severe_parse_error').format(datafile)

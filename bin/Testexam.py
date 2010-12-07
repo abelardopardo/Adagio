@@ -166,10 +166,9 @@ def doShuffle(toProcess, directory):
 
         # Update the dependencies (apply update to all elements in resultFiles)
         try:
-            map(lambda x: Dependency.update(x,
-                                            set([fname] +
-                                                directory.option_files)),
-            resultFiles)
+            map(lambda x: \
+                    Dependency.update(x, set([fname]) + directory.option_files),
+                resultFiles)
         except etree.XMLSyntaxError, e:
             print I18n.get('severe_parse_error').format(fName)
             print e

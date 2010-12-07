@@ -89,7 +89,9 @@ def Execute(target, directory, pad = None):
 
         # Check for dependencies!
         try:
-            Dependency.update(dstFile, set([datafile] + directory.option_files))
+            sources = set([datafile])
+            sources.update(directory.option_files)
+            Dependency.update(dstFile, sources)
         except etree.XMLSyntaxError, e:
             print I18n.get('severe_parse_error').format(fName)
             print e

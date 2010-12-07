@@ -7,6 +7,12 @@
 #
 import os, re, sys, shutil
 
+# Import conditionally either regular xml support or lxml if present
+try:
+    from lxml import etree
+except ImportError:
+    import xml.etree.ElementTree as etree
+
 import Ada, Directory, I18n, Dependency, AdaRule
 
 # Prefix to use for the options
@@ -107,7 +113,9 @@ def doCopy(target, directory, toProcess, dstDir):
 
         # Check for dependencies!
         try:
-            Dependency.update(dstFile, set([datafile] + directory.option_files))
+            sources = set([datafile])
+            sources.update(directory.option_files)
+            Dependency.update(dstFile, sources)
         except etree.XMLSyntaxError, e:
             print I18n.get('severe_parse_error').format(fName)
             print e

@@ -58,6 +58,7 @@ msgs = {
     'cannot_open_file': 'Cannot open file {0}',
     'line_in_no_section': 'Line {ln} of {pfile} is outside a section',
     'circular_include': 'Circular chain of templates detected:',
+    'included_from': 'Included from:',
     'prefix': 'Prefix',
     'files': 'Files',
     'template_error': 'Error in template section in file {0}',
