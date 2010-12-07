@@ -83,7 +83,8 @@ def Execute(target, directory, pad = None):
 
         # Perform the execution
         command.append('macro:///Tools.MSToPDF.ConvertMSToPDF(' + datafile + ')')
-        AdaRule.doExecution(target, directory, command, datafile, None,
+
+        AdaRule.doExecution(target, directory, command, datafile, dstFile,
                             stdout = Ada.userLog)
         command.pop(-1)
 
