@@ -71,8 +71,9 @@ def loadConfigFile(config, filename, includeChain = None):
     # If file not found dump also the include stack
     if not os.path.isfile(filename):
         print I18n.get('cannot_open_file').format(filename)
-        print I18n.get('included_from')
-        print '  ' + '\n  '.join(includeChain[:-1])
+        if includeChain[:-1] != []:
+            print I18n.get('included_from')
+            print '  ' + '\n  '.join(includeChain[:-1])
         sys.exit(1)
 
     # Open the disk file
