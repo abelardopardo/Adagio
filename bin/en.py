@@ -46,6 +46,7 @@ msgs = {
     'file_not_found': 'File {0} not found',
     'not_a_directory': '{0} is not a directory',
     'producing': 'Producing {0}',
+    'processing': 'Processing {0}',
     'removing': 'Removing {0}',
     'no_file_to_process' : 'No file given to process',
     'no_dir_to_process' : 'No directory given to process',
