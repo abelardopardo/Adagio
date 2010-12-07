@@ -200,7 +200,7 @@ def log(tprefix, directory, msg, fname = None):
         threshold = directory.getWithDefault(module_prefix, 'debug_level')
     
     if int(threshold) >= int(current):
-        output.write(tprefix + ':' + msg + '\n')
+        output.write(tprefix + ':' + str(msg) + '\n')
         output.flush()
 
 def Execute(target, directory, pad = None):
