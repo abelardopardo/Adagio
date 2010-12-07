@@ -133,7 +133,7 @@ def doExecution(target, directory, command, datafile, dstFile,
     if dstFile != None:
         srcDeps = directory.option_files
         if datafile != None:
-            srcDeps.append(datafile)
+            srcDeps.add(datafile)
 
         try:
             Dependency.update(dstFile, set(srcDeps))
