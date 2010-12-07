@@ -115,7 +115,7 @@ def executeFunction(toProcess, target, directory, functionName):
     scriptOptions = {}
     for sname in directory.options.sections():
         for (on, ov) in directory.options.items(sname):
-            scriptOptions[on] = ov
+            scriptOptions[sname + '.' + on] = ov
     # Fold now the default values as well
     for (on, ov) in directory.options.defaults().items():
         scriptOptions[on] = ov
