@@ -208,7 +208,7 @@ def doGetShuffledFiles(fname):
     contain the permutations.
     """
     try:
-        sourceTree = etree.parse(fname)
+        sourceTree = etree.parse(fname, no_network = True)
         sourceTree.xinclude()
     except etree.XMLSyntaxError, e:
         print I18n.get('severe_parse_error').format(fname)

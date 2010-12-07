@@ -155,7 +155,7 @@ def getIncludes(fName):
     fDir = os.path.dirname(fName)
 
     # Parse the document and initialize the result to the empty set
-    root = etree.parse(fName)
+    root = etree.parse(fName, no_network = True)
 
     result = set([])
 
