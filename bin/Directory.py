@@ -129,7 +129,7 @@ class Directory:
     # previous_dir:     dir before switching to the given one
     # current_dir:      dir represented by this object
     # givenOptions:     list of options given from outside this dir
-    # options:          dictionary with the options read from the Properties.txt
+    # options:          ConfigParse with the options read from the Properties.txt
     # section_list:     targets in the Properties.txt file
     # current_section:  section being processed
     # executing:        true if in the middle of the "Execute" method
