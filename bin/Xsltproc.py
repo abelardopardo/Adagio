@@ -174,9 +174,9 @@ def createStyleTransform(styleList):
 
     # Parse style file, insert name resolver to consider ADA local styles,
     # expand includes and create transformation object
-    styleParser = etree.XMLParser()
+    styleParser = etree.XMLParser(no_network = True)
     styleParser.resolvers.add(AdaRule.StyleResolver())
-    styleTree = etree.parse(styleFile, styleParser, no_network = True)
+    styleTree = etree.parse(styleFile, styleParser)
     styleTree.xinclude()
     styleTransform = etree.XSLT(styleTree)
 
@@ -334,7 +334,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
     # Parse the data file if needed
     if dataTree == None:
         try:
-            dataTree = etree.parse(datafile, no_network = True)
+            dataTree = etree.parse(datafile, etree.XMLParser(no_network = True))
             dataTree.xinclude()
         except (etree.XMLSyntaxError, etree.XIncludeError), e:
             print I18n.get('severe_parse_error').format(datafile)
