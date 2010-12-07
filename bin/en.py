@@ -104,6 +104,8 @@ msgs = {
     'name_of_executable': 'Name of the executable to use in this rule',
     'rule_debug_level': 'Level of debug message',
     'rule_src_dir': 'Directory containing the source files.',
+    'rsync_src_dir': 'Source directory to copy from',
+    'rsync_dst_dir': 'Destination directory to synchronize',
     'rule_dst_dir': 'Directory where the new files will be created.',
     'convert_geometry': 'Geometry used to convert the files',
     'convert_output_suffix':
