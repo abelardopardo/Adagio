@@ -23,10 +23,6 @@
 #
 import os, re, sys, shutil
 
-#
-#TODO: Treat the case of directories in files to process!
-# 
-
 # Import conditionally either regular xml support or lxml if present
 try:
     from lxml import etree
@@ -117,7 +113,7 @@ def doCopy(target, directory, toProcess, dstDir):
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If file not found, terminate
-        if not os.path.isfile(datafile):
+        if (not os.path.isfile(datafile)) and (not os.path.isdir(datafile)):
             print I18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
@@ -149,10 +145,16 @@ def doCopy(target, directory, toProcess, dstDir):
         # Proceed with the execution of xslt
         print I18n.get('producing').format(os.path.basename(dstFile))
 
-        # Copying the file
+        # Copying the file/dir
         Ada.logDebug(target, directory, 'Copy ' + datafile + ' ' +
                      dstFile)
-        shutil.copyfile(datafile, dstFile)
+        
+        if os.path.isdir(datafile):
+            # The copy operation involves a directory
+            shutil.copytree(datafile, dstFile)
+        else:
+            # It is a regular file
+            shutil.copyfile(datafile, dstFile)
 
         # Update the dependencies of the newly created file
         try:
