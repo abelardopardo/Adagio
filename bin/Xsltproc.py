@@ -171,6 +171,8 @@ def createStyleTransform(styleList):
         result.write('</xsl:stylesheet>')
         result.seek(0)
         styleFile = result
+        Ada.logDebug('Xsltproc', None, 'Applying ' + styleFile.getvalue())
+
 
     # Parse style file, insert name resolver to consider ADA local styles,
     # expand includes and create transformation object
@@ -214,6 +216,7 @@ def createParameterDict(target, directory):
         print e
         sys.exit(1)
 
+    Ada.logInfo(target, directory, 'StyleParmas: ' + str(styleParams))
     return styleParams
 
 def doTransformations(styles, styleTransform, styleParams, toProcess,
@@ -313,15 +316,9 @@ def singleStyleApplication(datafile, styles, styleTransform,
     """
 
     # Check for dependencies!
-    try:
-        sources = set(styles + [datafile])
-        sources.update(directory.option_files)
-        Dependency.update(dstFile, sources)
-    except etree.XMLSyntaxError, e:
-        # ABEL: Review how to inform of this error!
-        print I18n.get('severe_parse_error').format(datafile)
-        print e
-        sys.exit(1)
+    sources = set(styles + [datafile])
+    sources.update(directory.option_files)
+    Dependency.update(dstFile, sources)
 
     # If the destination file is up to date, skip the execution
     if Dependency.isUpToDate(dstFile):
@@ -334,6 +331,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
     # Parse the data file if needed
     if dataTree == None:
         try:
+            Ada.logInfo(target, directory, 'Parsing ' + datafile)
             dataTree = etree.parse(datafile, etree.XMLParser(no_network = True))
             dataTree.xinclude()
         except (etree.XMLSyntaxError, etree.XIncludeError), e:
