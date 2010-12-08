@@ -85,6 +85,7 @@ msgs = {
         'ada.exact_version, ada.minimum_version and ' + \
         'ada.maximum_version',
     'incorrect_variable_reference': 'Incorrect reference in value {0}',
+    'incorrect_section': 'Incorrect section {0}',
     'import_error': 'Error while importing script in {0}',
     'function_name': 'Function to call in the given script.',
     'function_error': 'Error when executing function {0}',
