@@ -50,7 +50,7 @@ def loadOptionsInConfig(config, sectionName, options):
     # Loop over all the given values and add them to the proper sections
     for (vn, vv, msg) in options:
         config.set(sectionName, vn, vv)
-
+        # ABEL: Verify with a get
     return
 
 def loadConfigFile(config, filename, includeChain = None):
@@ -113,6 +113,7 @@ def loadConfigFile(config, filename, includeChain = None):
         # Should we detect multple lines terminated in \ ?
         memoryFile.write(line)
 
+    memoryFile.seek(0)
     configfile.close()
 
     # Parse the memory file with a raw parser to check option validity
@@ -121,7 +122,6 @@ def loadConfigFile(config, filename, includeChain = None):
 
     try:
         # Reset the read pointer in the memory file
-        memoryFile.seek(0)
         newOptions.readfp(memoryFile)
     except Exception, msg:
         print I18n.get('severe_parse_error').format(filename)
@@ -129,11 +129,20 @@ def loadConfigFile(config, filename, includeChain = None):
         memoryFile.close()
         sys.exit(1)
 
-    # If config is None, we are done, no need to treat anything more
-    if config == None:
-        print 'UNEXPECTED!'
+    # Move defaults to the original config passing them to a [DEFAULT] section
+    defaultsIO = StringIO.StringIO()
+    defaultsIO.write('[DEFAULT]\n')
+    for (on, ov) in newOptions.defaults().items():
+        defaultsIO.write(on + ' = ' + ov + '\n')
+    defaultsIO.seek(0)
+    try:
+        config.readfp(defaultsIO)
+    except ConfigParser.ParsingError, msg:
+        print I18n.get('severe_parse_error').format(filename)
+        print msg
+        defaultsIO.close()
         sys.exit(1)
-
+    
     # Move all options to the given config but checking if they are legal
     result = (set([filename]), [])
     for sname in newOptions.sections():
@@ -166,6 +175,7 @@ def loadConfigFile(config, filename, includeChain = None):
             except ConfigParser.DuplicateSectionError:
                 pass
             config.set(sname, oname, ovalue)
+            # ABEL: Verify with a get
 
         # Add it to the result
         result[1].append(sname)
@@ -314,6 +324,7 @@ def treatTemplate(config, filename, newOptions, sname, includeChain):
     # Add template section to the given config to evaluate the files assignment
     config.add_section(sname)
     config.set(sname, 'files', fileItem[0][1])
+    # ABEL: Verify with a get
     templateFiles = config.get(sname, 'files').split()
 
     # Remove section from the original config:
