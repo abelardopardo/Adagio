@@ -192,7 +192,23 @@ class Directory:
                 sys.exit(3)
 
         #
-        # STEP 4: Options given in the Properties file in the directory
+        # STEP 4: Options given in the project file
+        #
+        adaProjFile = os.path.join(configDefaults['project_home'],
+                                   self.options.get(Ada.module_prefix,
+                                                    'project_file'))
+        if os.path.isfile(adaProjFile):
+            try:
+                (newFiles, b) = \
+                    Properties.loadConfigFile(self.options, 
+                                              os.path.abspath(adaProjFile))
+                self.option_files.update(newFiles)
+            except ValueError, e:
+                print I18n.get('severe_parse_error').format(adaProjFile)
+                sys.exit(3)
+
+        #
+        # STEP 5: Options given in the Properties file in the directory
         #
         adaPropFile = self.options.get('ada', 'property_file')
         if not os.path.exists(adaPropFile):
@@ -215,22 +231,6 @@ class Directory:
         self.section_list = sections
 
         #
-        # STEP 5: Options given in the project file
-        #
-        adaProjFile = os.path.join(configDefaults['project_home'],
-                                   self.options.get(Ada.module_prefix,
-                                                    'project_file'))
-        if os.path.isfile(adaProjFile):
-            try:
-                (newFiles, b) = \
-                    Properties.loadConfigFile(self.options, 
-                                              os.path.abspath(adaProjFile))
-                self.option_files.update(newFiles)
-            except ValueError, e:
-                print I18n.get('severe_parse_error').format(adaProjFile)
-                sys.exit(3)
-
-        #
         # STEP 6: Options given from outside the dir
         #
         # Compute the project home
@@ -244,8 +244,14 @@ class Directory:
                 sys.exit(3)
             # Insert in the options in the directory
             try:
-                self.options.set(sn, on, ov)
+                self.options.set(sn, one, ov)
+                # To verify interpolation
+                self.options.get(sn, on)
             except ConfigParser.NoSectionError:
+                print I18n.get('incorrect_section').format(sn)
+                sys.exit(1)
+            except ConfigParser.InterpolationDepthError, e:
+                print I18n.get('incorrect_variable_reference').format(ov)
                 sys.exit(3)
 
         # Compare ADA versions to see if execution is allowed
