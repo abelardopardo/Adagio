@@ -93,7 +93,7 @@ msgs = {
     'exec_line': 'Invocation: {0}',
     'severe_option_error': 'Error in configuration file',
     'error_applying_xslt': 'Error while applying style in target {0}',
-    'error_extra_args': 'Incorrect arguments in variable {0}.extra-arguments',
+    'error_extra_args': 'Incorrect arguments in variable {0}.',
     'unknown_target': 'Unknown target {0}.',
     'file_uptodate': '{0} up to date. Bypassing.',
     'not_enough_params': 'Not enough params for {0}',
