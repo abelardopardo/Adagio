@@ -50,7 +50,13 @@ def loadOptionsInConfig(config, sectionName, options):
     # Loop over all the given values and add them to the proper sections
     for (vn, vv, msg) in options:
         config.set(sectionName, vn, vv)
-        # ABEL: Verify with a get
+        try:
+            # To verify interpolation
+            config.get(sectionName, vn)
+        except (ConfigParser.InterpolationDepthError, 
+                ConfigParser.InterpolationMissingOptionError), e:
+            print I18n.get('incorrect_variable_reference').format(vv)
+            sys.exit(3)
     return
 
 def loadConfigFile(config, filename, includeChain = None):
@@ -132,6 +138,7 @@ def loadConfigFile(config, filename, includeChain = None):
     # Move defaults to the original config passing them to a [DEFAULT] section
     defaultsIO = StringIO.StringIO()
     defaultsIO.write('[DEFAULT]\n')
+    print 'AAA', newOptions.defaults().items()
     for (on, ov) in newOptions.defaults().items():
         defaultsIO.write(on + ' = ' + ov + '\n')
     defaultsIO.seek(0)
@@ -175,7 +182,13 @@ def loadConfigFile(config, filename, includeChain = None):
             except ConfigParser.DuplicateSectionError:
                 pass
             config.set(sname, oname, ovalue)
-            # ABEL: Verify with a get
+            try:
+                # To verify interpolation
+                config.get(sname, oname)
+            except (ConfigParser.InterpolationDepthError, 
+                    ConfigParser.InterpolationMissingOptionError), e:
+                print I18n.get('incorrect_variable_reference').format(ovalue)
+                sys.exit(3)
 
         # Add it to the result
         result[1].append(sname)
@@ -324,8 +337,15 @@ def treatTemplate(config, filename, newOptions, sname, includeChain):
     # Add template section to the given config to evaluate the files assignment
     config.add_section(sname)
     config.set(sname, 'files', fileItem[0][1])
-    # ABEL: Verify with a get
-    templateFiles = config.get(sname, 'files').split()
+
+    try:
+        # Get the files and catch interpolation error
+        templateFiles = config.get(sname, 'files').split()
+    except (ConfigParser.InterpolationDepthError, 
+            ConfigParser.InterpolationMissingOptionError), e:
+        print I18n.get('incorrect_variable_reference').format(fileItem[0][1])
+        sys.exit(3)
+
 
     # Remove section from the original config:
     config.remove_section(sname)
