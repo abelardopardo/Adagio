@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, re, glob, sys, subprocess, shutil
+import os, re, glob, sys, subprocess, shutil, ConfigParser
 
 # Import conditionally either regular xml support or lxml if present
 try:
@@ -165,7 +165,10 @@ def doExecution(target, directory, command, datafile, dstFile,
         # Notify the production
         print I18n.get('producing').format(os.path.basename(dstFile))
     else:
-        print I18n.get('processing').format(os.path.basename(datafile))
+        if datafile != None:
+            print I18n.get('processing').format(os.path.basename(datafile))
+        else:
+            print I18n.get('processing').format(os.path.basename(directory.current_dir))
 
     Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
 
