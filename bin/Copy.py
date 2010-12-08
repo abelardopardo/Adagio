@@ -23,6 +23,10 @@
 #
 import os, re, sys, shutil
 
+#
+#TODO: Treat the case of directories in files to process!
+# 
+
 # Import conditionally either regular xml support or lxml if present
 try:
     from lxml import etree

@@ -25,6 +25,10 @@ import os, re, sys, datetime
 
 import Ada, Directory, I18n, Dependency, AdaRule, Copy
 
+#
+#TODO: Treat the case of directories in files to process!
+# 
+
 # Prefix to use for the options
 module_prefix = 'export'
 
