@@ -244,7 +244,7 @@ class Directory:
                 sys.exit(3)
             # Insert in the options in the directory
             try:
-                self.options.set(sn, one, ov)
+                self.options.set(sn, on, ov)
                 # To verify interpolation
                 self.options.get(sn, on)
             except ConfigParser.NoSectionError:
