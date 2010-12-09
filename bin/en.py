@@ -66,6 +66,7 @@ msgs = {
     'producing': 'Producing {0}',
     'processing': 'Processing {0}',
     'removing': 'Removing {0}',
+    'xslt_empty_result': 'XSLT transformation result is empty',
     'no_file_to_process' : 'No file given to process',
     'no_dir_to_process' : 'No directory given to process',
     'no_targets_to_clean' : 'No targets to clean in {0}',
@@ -82,13 +83,16 @@ msgs = {
     'files': 'Files',
     'template_error': 'Error in template section in file {0}',
     'incorrect_assignment': 'Incorrect assignment in line {ln} of {pfile}',
-    'incorrect_version_format': 'Incorrect version {0}. Should have major.minor.patch structure',
+    'incorrect_version_format': 
+    'Incorrect version {0}. Should have major.minor.patch structure',
     'incorrect_version' : 'Incorrect ADA Version ({0}). Review variables ' + \
         'ada.exact_version, ada.minimum_version and ' + \
         'ada.maximum_version',
     'incorrect_variable_reference': 'Incorrect reference in value {0}',
     'incorrect_section': 'Incorrect section {0}',
     'import_error': 'Error while importing script in {0}',
+    'import_collision': 
+    'Script {0} collides with another ADA script. Name change required',
     'function_name': 'Function to call in the given script.',
     'function_error': 'Error when executing function {0}',
     'severe_parse_error': 'Error while parsing {0}',
