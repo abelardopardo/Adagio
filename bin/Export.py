@@ -90,12 +90,13 @@ def Execute(target, directory, pad = None):
 
     # Check the condition
     dstDir = directory.getWithDefault(target, 'dst_dir')
+    srcDir = directory.getWithDefault(target, 'src_dir')
     if not evaluateCondition(target, directory, dstDir, pad):
         print pad + 'EE', target
         return
 
     # If we are here, the export may proceed!
-    Copy.doCopy(target, directory, toProcess, dstDir)
+    Copy.doCopy(target, directory, toProcess, srcDir, dstDir)
 
     print pad + 'EE', target
     return
@@ -126,7 +127,8 @@ def clean(target, directory, pad = None):
         return
 
     # If we are here, the export may proceed!
-    Copy.doClean(target, directory, toProcess, dstDir)
+    Copy.doClean(target, directory, toProcess, 
+                 directory.getWithDefault(target, 'src_dir'), dstDir)
 
     print pad + 'EE', target + '.clean'
     return
