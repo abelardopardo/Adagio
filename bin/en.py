@@ -60,6 +60,8 @@ msgs = {
     """,
     'fatal_error': 'Fatal error encountered. Attach "adado.log" to notification.',
     'file_not_found': 'File {0} not found',
+    'dir_not_found': 'Directory {0} not found',
+    'dir_created': 'Directory {0} created',
     'not_a_directory': '{0} is not a directory',
     'producing': 'Producing {0}',
     'processing': 'Processing {0}',
