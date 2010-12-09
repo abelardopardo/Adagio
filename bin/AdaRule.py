@@ -128,11 +128,11 @@ def getFilesToProcess(target, directory):
     for srcFile in srcFiles:
         found = glob.glob(os.path.join(srcDir, srcFile))
 
-        # Here we might have a problem. Something was given in the variable, but
-        # nothing was found. Bomb out, user should fix this
+        # Something was given in the variable, but nothing was found. Warn the
+        # user but proceed
         if found == []:
             print I18n.get('file_not_found').format(srcFile)
-            sys.exit(1)
+            # sys.exit(1)
 
         toProcess.extend(found)
 
