@@ -67,7 +67,8 @@ def main(sourceFile, pout = None):
     
     # Parse the source tree.
     try:
-        sourceTree = etree.parse(sourceFile, etree.XMLParser(no_network = True))
+        sourceTree = etree.parse(sourceFile, etree.XMLParser(load_dtd=True, 
+                                                             no_network = True))
         sourceTree.xinclude()
     except etree.XMLSyntaxError, e:
         print >>pout, 'Error while parsing', sourceFile

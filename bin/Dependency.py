@@ -156,7 +156,8 @@ def getIncludes(fName):
 
     # Parse the document and initialize the result to the empty set
     try:
-        root = etree.parse(fName, etree.XMLParser(no_network = True))
+        root = etree.parse(fName, etree.XMLParser(load_dtd=True, 
+                                                  no_network = True))
     except etree.XMLSyntaxError, e:
         print I18n.get('severe_parse_error').format(fName)
         print e
