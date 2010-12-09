@@ -70,9 +70,9 @@ def Execute(target, directory, pad = None):
     print pad + 'BB', target
 
     # Perform the copy
-    doCopy(target, directory, toProcess, directory.getWithDefault(target,
-                                                                  'dst_dir')
-)
+    doCopy(target, directory, toProcess, 
+           directory.getWithDefault(target, 'src_dir'),
+           directory.getWithDefault(target, 'dst_dir'))
 
     print pad + 'EE', target
     return
@@ -97,28 +97,17 @@ def clean(target, directory, pad = None):
 
     # Loop over all source files to process
     doClean(target, directory, toProcess,
+            directory.getWithDefault(target, 'src_dir'),
             directory.getWithDefault(target, 'dst_dir'))
 
     print pad + 'EE', target + '.clean'
     return
 
-def doCopy(target, directory, toProcess, dstDir):
+def doCopy(target, directory, toProcess, srcDir, dstDir):
     """
     Effectively perform the copy. The functionality is in this function because
     it is used also by the Export rule.
     """
-
-    toProcessExpanded = []
-    for datafile in toProcess:
-        # Regular file, append
-        if os.path.isfile(datafile):
-            toProcessExpanded.append(datafile)
-            continue
-        
-        # Directory. Walk and append
-        for r, d, files in os.walk(datafile):
-            toProcessExpanded.extend(map(lambda x: os.path.join(r, x), files))
-    toProcess = toProcessExpanded
 
     # Loop over all source files to process
     for datafile in toProcess:
@@ -126,19 +115,27 @@ def doCopy(target, directory, toProcess, dstDir):
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If file not found, terminate
-        if (not os.path.isfile(datafile)) and (not os.path.isdir(datafile)):
+        if not os.path.exists(datafile):
             print I18n.get('file_not_found').format(datafile)
-            sys.exit(1)
-
-        # What happens if DSTDIR does not exist. ¿Create?
-        # If file not found, terminate
-        if not os.path.isdir(dstDir):
-            print I18n.get('file_not_found').format(dstDir)
             sys.exit(1)
 
         # Derive the destination file name
         dstFile = os.path.abspath(os.path.join(dstDir,
-                                               os.path.basename(datafile)))
+                                               datafile.replace(srcDir, '', 1)))
+	# I have to find a path operation that removes a prefix, not str.
+	# ABEL: Broken in 
+        # /home/abel/Courses/ProgSis/ProgSisComun/projects/gamePlatform/grading
+	print 'AAA', srcDir
+	print 'BBB', dstDir
+	print 'CCC', dstFile
+	print 'DDD', datafile
+	print 'EEE', datafile.replace(srcDir, '', 1)
+
+        # What happens if DSTDIR does not exist. Create
+        finalDir = os.path.dirname(dstFile)
+        if not os.path.isdir(finalDir):
+            os.makedirs(finalDir)
+            print I18n.get('dir_created').format(finalDir)
 
         # Check for dependencies!
         try:
@@ -164,7 +161,15 @@ def doCopy(target, directory, toProcess, dstDir):
         
         if os.path.isdir(datafile):
             # The copy operation involves a directory
-            shutil.copytree(datafile, dstFile)
+            if not os.path.exists(dstFile):
+                # If the dstFile does not exist, this lib does it all
+                shutil.copytree(datafile, dstFile)
+            else:
+                # If dstDir exists, we need to process one file at a time
+                for (r, d, f) in os.walk(datafile):
+                    # Apply the copy to all files in f
+                    map(lambda x: shutil.copyfile(os.path.join(r, x), 
+                                                  os.path.join(dstFile, x)), f)
         else:
             # It is a regular file
             shutil.copyfile(datafile, dstFile)
@@ -177,7 +182,7 @@ def doCopy(target, directory, toProcess, dstDir):
             print e
             sys.exit(1)
 
-def doClean(target, directory, toProcess, dstDir):
+def doClean(target, directory, toProcess, srcDir, dstDir):
     """
     Function to execute the core of the clean operation. It is in its own
     function because it is used also by the Export rule.
@@ -187,13 +192,14 @@ def doClean(target, directory, toProcess, dstDir):
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If file not found, terminate
-        if not os.path.isfile(datafile):
+        if not os.path.exists(datafile):
             print I18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Derive the destination file name
         dstFile = os.path.abspath(os.path.join(dstDir,
-                                               os.path.basename(datafile)))
+                                               datafile.replace(srcDir, 
+                                                                dstDir, 1)))
 
         # If file is not there, bypass
         if not os.path.exists(dstFile):
