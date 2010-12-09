@@ -138,10 +138,15 @@ def clean(target, directory, pad = None):
                          not re.match('(.+\.)?clean$', x) and \
                          not re.match('(.+\.)?dumphelp$', x) and \
                          not re.match('(.+\.)?helpdump$', x)]
-
-    # If there is a remote target, but it is one of the special, do not perform
-    # a recursive clean.
-    if givenRemoteTargets != [] and remoteTargets == []:
+    # If both the given targets and remoteTargets is empty, it should simply be
+    # clean. This is the case when a command line clean is propagated
+    if givenRemoteTargets == []:
+        if remoteTargets == []:
+            remoteTargets = ['clean']
+    elif remoteTargets == []:
+        # If there is a given target, but it is one of the special ones (it was
+        # filtered), do not perform a recursive clean. Useful when only a dump
+        # is required in the remote directory.
         Ada.logInfo(target, directory, 'Special target in gotodir. Stop.')
         print I18n.get('no_targets_to_clean').format(target)
         return
