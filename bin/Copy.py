@@ -119,19 +119,15 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
             print I18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
+        # Remove the srcDir prefix
+        dstFile = datafile.replace(srcDir, '', 1)
+        # If the result has a slash, remove it
+        if dstFile[0] == '/':
+            dstFile = dstFile[1:]
         # Derive the destination file name
-        dstFile = os.path.abspath(os.path.join(dstDir,
-                                               datafile.replace(srcDir, '', 1)))
-	# I have to find a path operation that removes a prefix, not str.
-	# ABEL: Broken in 
-        # /home/abel/Courses/ProgSis/ProgSisComun/projects/gamePlatform/grading
-	print 'AAA', srcDir
-	print 'BBB', dstDir
-	print 'CCC', dstFile
-	print 'DDD', datafile
-	print 'EEE', datafile.replace(srcDir, '', 1)
+        dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
-        # What happens if DSTDIR does not exist. Create
+        # What happens if DSTDIR does not exist. Create and warn the user
         finalDir = os.path.dirname(dstFile)
         if not os.path.isdir(finalDir):
             os.makedirs(finalDir)
