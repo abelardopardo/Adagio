@@ -107,6 +107,19 @@ def doCopy(target, directory, toProcess, dstDir):
     Effectively perform the copy. The functionality is in this function because
     it is used also by the Export rule.
     """
+
+    toProcessExpanded = []
+    for datafile in toProcess:
+        # Regular file, append
+        if os.path.isfile(datafile):
+            toProcessExpanded.append(datafile)
+            continue
+        
+        # Directory. Walk and append
+        for r, d, files in os.walk(datafile):
+            toProcessExpanded.extend(map(lambda x: os.path.join(r, x), files))
+    toProcess = toProcessExpanded
+
     # Loop over all source files to process
     for datafile in toProcess:
 
