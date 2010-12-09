@@ -23,6 +23,14 @@
 #
 import os, sys, getopt, datetime, locale, re, codecs, ConfigParser
 
+# Fix the output encoding when redirecting stdout
+# if sys.stdout.encoding is None:
+(lang, enc) = locale.getdefaultlocale()
+if enc is not None:
+    (e, d, sr, sw) = codecs.lookup(enc)
+    # sw will encode Unicode data to the locale-specific character set.
+    sys.stdout = sw(sys.stdout)
+
 def main(dataFile):
     """
     File that takes the file given as the only parameter and tries to migrate to
@@ -33,17 +41,9 @@ def main(dataFile):
     ... and dumps content to stdout
     """
 
-    # Fix the output encoding when redirecting stdout
-    if sys.stdout.encoding is None:
-        (lang, enc) = locale.getdefaultlocale()
-        if enc is not None:
-            (e, d, sr, sw) = codecs.lookup(enc)
-            # sw will encode Unicode data to the locale-specific character set.
-            sys.stdout = sw(sys.stdout)
-
     config = ConfigParser.SafeConfigParser()
 
-    dataIn = open(dataFile, 'r')
+    dataIn = codecs.open(dataFile, 'r', 'utf-8')
     multiline = ''
     currentSection = ''
     # Loop over the data in
@@ -152,6 +152,8 @@ def translateSection(sin, subs = None):
         return 'copy'
     elif sin == 'exercisesubmit':
         return 'exercise'
+    elif sin == 'extraant':
+        return 'script'
     
     return sin
 
