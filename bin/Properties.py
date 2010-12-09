@@ -138,7 +138,6 @@ def loadConfigFile(config, filename, includeChain = None):
     # Move defaults to the original config passing them to a [DEFAULT] section
     defaultsIO = StringIO.StringIO()
     defaultsIO.write('[DEFAULT]\n')
-    print 'AAA', newOptions.defaults().items()
     for (on, ov) in newOptions.defaults().items():
         defaultsIO.write(on + ' = ' + ov + '\n')
     defaultsIO.seek(0)
