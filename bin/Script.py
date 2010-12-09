@@ -121,18 +121,24 @@ def executeFunction(toProcess, target, directory, functionName):
         scriptOptions[on] = ov
 
     # Add the current directory to the path to fetch python modules
-    sys.path.append(os.getcwd())
+    sys.path.insert(0, os.getcwd())
 
     # Loop over the given source files
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
-        (h, tail) = os.path.split(datafile)
+        (head, tail) = os.path.split(datafile)
         try:
             module = __import__(tail, fromlist=[])
         except ImportError, e:
             print I18n.get('import_error').format(tail)
             print e
+            sys.exit(1)
+
+        # If the file of the import is not what is expected, notify and
+        # terminate.
+        if not module.__file__.startswith(head):
+            print I18n.get('import_collision').format(datafile)
             sys.exit(1)
 
         # If the import has been successfull, go ahead and execute the main
@@ -144,7 +150,7 @@ def executeFunction(toProcess, target, directory, functionName):
             sys.exit(1)
 
     # Restore path the way it was at the beginning of the script
-    sys.path.pop()
+    sys.path.pop(0)
 
     
 # Execution as script
