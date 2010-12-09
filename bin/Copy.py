@@ -192,10 +192,13 @@ def doClean(target, directory, toProcess, srcDir, dstDir):
             print I18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
+        # Remove the srcDir prefix
+        dstFile = datafile.replace(srcDir, '', 1)
+        # If the result has a slash, remove it
+        if dstFile[0] == '/':
+            dstFile = dstFile[1:]
         # Derive the destination file name
-        dstFile = os.path.abspath(os.path.join(dstDir,
-                                               datafile.replace(srcDir, 
-                                                                dstDir, 1)))
+        dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
         # If file is not there, bypass
         if not os.path.exists(dstFile):
