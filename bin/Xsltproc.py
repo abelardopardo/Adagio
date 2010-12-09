@@ -348,9 +348,13 @@ def singleStyleApplication(datafile, styles, styleTransform,
         print e
         sys.exit(1)
 
+    # If there is no result (it could be because the stylesheet has no match)
+    # notify the user
+    if result.getroot() == None:
+        print I18n.get('xslt_empty_result')
+        return dataTree
 
     # Write the result
-    # ABEL: Broken in /home/abel/Courses/ProgSis/ProgSisComun/doc/ada-guide
     result.write(dstFile,
                  encoding = directory.getWithDefault(Ada.module_prefix,
                                                   'encoding'),
