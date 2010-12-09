@@ -350,6 +350,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
 
     # Write the result
+    # ABEL: Broken in /home/abel/Courses/ProgSis/ProgSisComun/doc/ada-guide
     result.write(dstFile,
                  encoding = directory.getWithDefault(Ada.module_prefix,
                                                   'encoding'),
