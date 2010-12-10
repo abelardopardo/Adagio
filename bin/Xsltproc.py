@@ -341,9 +341,11 @@ def singleStyleApplication(datafile, styles, styleTransform,
             sys.exit(0)
 
     # Apply the transformation
+    xsltprocEquivalent(target, directory, styleParams, datafile, dstFile)
     try:
         result = styleTransform(dataTree, **styleParams)
     except etree.XSLTApplyError, e:
+        # ABEL: Fix. Try to detect when there is an error here!
         print I18n.get('error_applying_xslt').format(target)
         print e
         sys.exit(1)
@@ -411,6 +413,21 @@ def doClean(target, directory, toProcess, suffixes = None):
                     continue
 
                 AdaRule.remove(dstFile)
+
+def xsltprocEquivalent(target, directory, styleParams, datafile, dstFile):
+    """
+    Dump the xsltproc command line equivalent to the given transformation for
+    debugging purposes
+    """
+    msg = 'xsltproc --xinclude'
+    for (a, b) in styleParams.items():
+        msg += ' --stringparam ' + '"' + a + '" ' + b 
+
+    msg += ' -o ' + dstFile
+    msg += ' STYLE.xsl'
+    msg += ' ' + datafile
+
+    Ada.logDebug(target, directory, 'XSLTPROC: ' + msg)
 
 # Execution as script
 if __name__ == "__main__":

@@ -44,6 +44,9 @@ __IDXToName = []
 __NodeDate = []
 __NodeOutEdges = []
 
+# ABEL: Fix
+# Dir: /home/abel/Courses/AS/Website/Surveys
+# After touching Params.xml, the files are not refreshed.
 def addNode(fileName):
     """
     Given a fileName creates (if needed) the node in the graph. It adds a new
