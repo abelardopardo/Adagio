@@ -327,9 +327,14 @@ def treatTemplate(config, filename, newOptions, sname, includeChain):
     Returns the pair (set of files processed, list of targets detected)
     """
 
-    fileItem = newOptions.items(sname)
+    # Get the pairs in the template section that are not in the defaults
+    # dictionary
+    fileItem = [(a, b) for (a, b) in newOptions.items(sname)
+                if not a in newOptions.defaults()]
+
     # There must be a single option with name 'files'
     if len(fileItem) != 1 or fileItem[0][0] != 'files':
+        print 'AAA', fileItem
         print I18n.get('template_error').format(filename)
         sys.exit(1)
 
