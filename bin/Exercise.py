@@ -31,10 +31,10 @@ module_prefix = 'exercise'
 # List of tuples (varname, default value, description string)
 options = [
     ('styles',
-     '%(home)s%(file_separator)sADA_Styles%(file_separator)sDocbookProfile.xsl',
+     '%(home)s%(file_separator)sADA_Styles%(file_separator)sExerciseSubmit.xsl',
      I18n.get('xslt_style_file')),
     ('submit_styles',
-     '%(home)s%(file_separator)sADA_Styles%(file_separator)sExerciseSubmit.xsl',
+     '%(home)s%(file_separator)sADA_Styles%(file_separator)sAsapSubmit.xsl',
      I18n.get('xslt_style_file')),
     ('output_format', 'html', I18n.get('output_format')),
     ('extra_arguments', '', I18n.get('extra_arguments').format('Xsltproc')),
