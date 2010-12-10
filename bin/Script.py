@@ -30,7 +30,8 @@ module_prefix = 'script'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('function', 'main', I18n.get('function_name')),
+    ('build_function', 'main', I18n.get('build_function_name')),
+    ('clean_function', 'clean', I18n.get('clean_function_name')),
     ]
 
 documentation = {
@@ -71,7 +72,7 @@ def Execute(target, directory, pad = None):
     print pad + 'BB', target
 
     # Get the function to execute
-    functionName = directory.getWithDefault(target, 'function')
+    functionName = directory.getWithDefault(target, 'build_function')
 
     # Execute the 'main' function
     executeFunction(toProcess, target, directory, functionName)
@@ -100,8 +101,11 @@ def clean(target, directory, pad = None):
     # Print msg when beginning to execute target in dir
     print pad + 'BB', target + '.clean'
 
-    # Execute the 'clean' function
-    executeFunction(toProcess, target, directory, 'clean')
+    # Get the function to execute
+    functionName = directory.getWithDefault(target, 'clean_function')
+
+    # Execute the 'main' function
+    executeFunction(toProcess, target, directory, functionName)
 
     print pad + 'EE', target + '.clean'
     return

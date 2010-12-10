@@ -93,7 +93,8 @@ msgs = {
     'import_error': 'Error while importing script in {0}',
     'import_collision': 
     'Script {0} collides with another ADA script. Name change required',
-    'function_name': 'Function to call in the given script.',
+    'build_function_name': 'Function to call in the script.',
+    'clean_function_name': 'Function to call in the script in target "clean"',
     'function_error': 'Error when executing function {0}',
     'severe_parse_error': 'Error while parsing {0}',
     'severe_exec_error': 'Error while executing {0}. Check adado.log',
