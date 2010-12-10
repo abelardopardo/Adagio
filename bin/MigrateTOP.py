@@ -111,6 +111,13 @@ def main(dataFile):
         if subsection == 'dst.dir':
             print '        dst_dir =', fields[1]
 
+        if subsection == 'output.format':
+	    if fields[1][0] == '.':
+                print '        output_format =', 
+		print fields[1][1:]
+	    else:
+                print fields[1]
+
         if subsection == 'style.file':
             print '        styles =', fields[1]
 
