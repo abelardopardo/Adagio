@@ -166,6 +166,16 @@ def loadConfigFile(config, filename, includeChain = None):
 
         # Check if the option is legal
         for (oname, ovalue) in newOptions.items(sname):
+            # Treat the special case of option with +name or name+
+            prepend = False
+            append = False
+            if oname[0] == '+' and oname[-1] != '+':
+                prepend = True
+                oname = oname[1:]
+            elif oname[0] != '+' and oname[-1] == '+':
+                append = True
+                oname = oname[:-1]
+
             # If not present in the default options, terminate
             if not config.has_option(sprefix, oname) and \
                     newOptions.defaults().get(oname) == None:
@@ -175,12 +185,19 @@ def loadConfigFile(config, filename, includeChain = None):
                 memoryFile.close()
                 sys.exit(1)
 
-            # If present in the default options, add its value
+            # Add the section first
             try:
                 config.add_section(sname)
             except ConfigParser.DuplicateSectionError:
                 pass
+            
+            # Set the values considering the cases of append or prepend
+            if prepend:
+                ovalue = ' '.join([ovalue, config.get(sname, oname)])
+            elif append:
+                ovalue = ' '.join([config.get(sname, oname), ovalue])
             config.set(sname, oname, ovalue)
+
             try:
                 # To verify interpolation
                 config.get(sname, oname)
