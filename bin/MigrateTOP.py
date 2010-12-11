@@ -47,6 +47,8 @@ def main(dataFile):
     multiline = ''
     currentSection = ''
     # Loop over the data in
+    dumpedStyles = False
+    mergeLine = ''
     for line in dataIn:
         # Ad-hoc for Progsys
         line = re.sub('^# See ada.home/AntImports/Properties.txt',
@@ -80,8 +82,11 @@ def main(dataFile):
         line = changeInterpolation(line)
 
         # Change variables
-        # line = re.sub('AdaCourseParams', 'AdaProjectParams', line)
-
+        line = re.sub('AdaCourseParams', 'AdaProjectParams', line)
+        line = re.sub('%\(project_home\)s\.\.\/scratch\/', '%(publish_dir)s', 
+                      line)
+        line = re.sub('%\(project_home\)s\.\.\/Material\/', '%(material_dir)s', 
+                      line)
         # Split lines into fields
         fields = line.split('=')
         if len(fields) != 2:
@@ -120,14 +125,21 @@ def main(dataFile):
 
         if subsection == 'style.file':
             print '        styles =', fields[1]
+            dumpedStyles = True
+            if mergeLine != '':
+                for fname in mergeLine.split():
+                    print '                ', fname, '# Mergestyles'
 
         if subsection.startswith('multilingual.file'):
             print '        files =', fields[1]
             print '        languages = en es'
 
         if section == 'mergestyles':
-            for fname in fields[1].split():
-                print '                ', fname, '# Mergestyles'
+            if dumpedStyles:
+                for fname in fields[1].split():
+                    print '                ', fname, '# Mergestyles'
+            else:
+                mergeLine = fields[1]
 
         if section == 'subrecursive' and subsection == 'dirs':
             print '        files =', fields[1]
@@ -152,7 +164,7 @@ def translateSection(sin, subs = None):
     elif sin == 'subrecursive' and subs == 'dirs':
         return 'gotodir.export'
     elif sin == 'subrecursive' and subs == 'dirs.nodst':
-        return 'gotodir.publish'
+        return 'gotodir'
     elif sin == 'msf2pdf':
         return 'office2pdf'
     elif sin == 'copyfiles':
@@ -191,7 +203,7 @@ def changeInterpolation(line):
         s = match.group(1)
         return '%(' + re.sub('ada\.course\.home', 'project_home', s) + ')s'
 
-    pattern = re.compile(r'\$\{([^\)]+)\}', re.DOTALL)
+    pattern = re.compile(r'\$\{([^\}]+)\}', re.DOTALL)
     
     return re.sub(pattern, replacer, line)
 
