@@ -92,6 +92,11 @@ def findProjectDir(pfile):
     """
     Function that traverses the directories upward until the file name given by
     the option ada.projectfile is found, None otherwise
+
+    WARNING: If the directory found is the current one, the EMPTY string is
+    returned. If any other directory is returned, the os.path.sep is added at
+   the end. This is to maintain the convention that the function returns the
+   MINIMUM dir expression to be used as prefix.
     """
     currentDir = '.'
 
@@ -194,8 +199,9 @@ class Directory:
         #
         # STEP 4: Options given in the project file
         #
-        adaProjFile = os.path.join(configDefaults['project_home'],
-                                   self.options.get(Ada.module_prefix,
+        adaProjFile = os.path.join(self.current_dir,
+                                   configDefaults['project_home'],
+                                   self.options.get(Ada.module_prefix, 
                                                     'project_file'))
         if os.path.isfile(adaProjFile):
             try:
@@ -211,14 +217,14 @@ class Directory:
         # STEP 5: Options given in the Properties file in the directory
         #
         adaPropFile = self.options.get('ada', 'property_file')
-        if not os.path.exists(adaPropFile):
+        propAbsFile = os.path.abspath(os.path.join(self.current_dir,
+                                                   adaPropFile))
+        if not os.path.exists(propAbsFile):
             Ada.logInfo('Directory', None, 'No ' + adaPropFile + \
                             ' found in ' + self.current_dir)
             print I18n.get('cannot_find_properties').format(adaPropFile,
                                                             self.current_dir)
             sys.exit(3)
-        propAbsFile = os.path.abspath(os.path.join(self.current_dir,
-                                                   adaPropFile))
         try:
             (newFiles, sections) = Properties.loadConfigFile(self.options, 
                                                              propAbsFile)
