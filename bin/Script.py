@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, re, sys, glob
+import os, re, sys, glob, codecs
 
 import Ada, Directory, I18n, AdaRule
 
@@ -32,14 +32,20 @@ module_prefix = 'script'
 options = [
     ('build_function', 'main', I18n.get('build_function_name')),
     ('clean_function', 'clean', I18n.get('clean_function_name')),
+    ('stdin', '', I18n.get('script_input_file')),
+    ('stdout', '', I18n.get('script_output_file')),
+    ('stderr', '', I18n.get('script_error_file')),
+    ('arguments', '', I18n.get('script_arguments'))
     ]
 
 documentation = {
     'en' : """
 
-    Executes either the main or clean function of the python scripts given in
-    "files". The invocation passes as only parameter a dictionary with all the
-    values of all the options.
+    Executes "build_function" (or "clean_function" when processing target
+    "clean") of the scripts given in "files". The invocation of the script can
+    be done redirecting stdin, stdout and/or stderr to the corresponding
+    variables (they are assumed to be files) and the script is invoked with the
+    given arguments.
     """}
 
 def Execute(target, directory, pad = None):
@@ -57,25 +63,7 @@ def Execute(target, directory, pad = None):
                                      module_prefix, clean, pad):
         return
 
-    # Get the files to process, if empty, terminate
-    toProcess = AdaRule.getFilesToProcess(target, directory)
-    if toProcess == []:
-        return
-
-    # Drop the extensions of the script files
-    toProcess = map(lambda x: os.path.splitext(x)[0], toProcess)
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
-
-    # Get the function to execute
-    functionName = directory.getWithDefault(target, 'build_function')
-
-    # Execute the 'main' function
-    executeFunction(toProcess, target, directory, functionName)
+    selectExecution(target, directory, 'build_function', pad)
 
     print pad + 'EE', target
     return
@@ -87,25 +75,7 @@ def clean(target, directory, pad = None):
     
     Ada.logInfo(target, directory, 'Cleaning')
 
-    # Get the files to process
-    toProcess = AdaRule.getFilesToProcess(target, directory)
-    if toProcess == []:
-        return
-
-    # Drop the extensions of the script files
-    toProcess = map(lambda x: os.path.splitext(x)[0], toProcess)
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target + '.clean'
-
-    # Get the function to execute
-    functionName = directory.getWithDefault(target, 'clean_function')
-
-    # Execute the 'main' function
-    executeFunction(toProcess, target, directory, functionName)
+    selectExecution(target, directory, 'clean_function', pad)
 
     print pad + 'EE', target + '.clean'
     return
@@ -146,6 +116,12 @@ def executeFunction(toProcess, target, directory, functionName):
             print I18n.get('import_collision').format(datafile)
             sys.exit(1)
 
+        # Replace argv
+        oldArgv = sys.argv
+        newArgv = directory.getWithDefault(target, 'arguments')
+        if newArgv != '':
+            sys.argv = [datafile] + newArgv.split() 
+
         # If the import has been successfull, go ahead and execute the main
         try:
             getattr(sys.modules[tail], functionName)(scriptOptions)
@@ -154,12 +130,62 @@ def executeFunction(toProcess, target, directory, functionName):
             print e
             sys.exit(1)
 
+        # Restore tye sys.argv
+        sys.argv = oldArgv
+
         # Restore path the way it was at the beginning of the script
         sys.path.pop(0)
 
     # End for each datafile 
 
     return
+
+def selectExecution(target, directory, functionOption, pad):
+    """
+    Execute one function of the given script
+    """
+
+    # Get the files to process, if empty, terminate
+    toProcess = AdaRule.getFilesToProcess(target, directory)
+    if toProcess == []:
+        return
+
+    # Drop the extensions of the script files
+    toProcess = map(lambda x: os.path.splitext(x)[0], toProcess)
+
+    if pad == None:
+	pad = ''
+
+    # Print msg when beginning to execute target in dir
+    print pad + 'BB', target
+
+    # Get the function to execute
+    functionName = directory.getWithDefault(target, functionOption)
+
+    # Modify input/output/error channels
+    oldStdin = sys.stdin
+    oldStdout = sys.stdout
+    oldStderr = sys.stderr
+    newStdin = directory.getWithDefault(target, 'stdin')
+    newStdout = directory.getWithDefault(target, 'stdout')
+    newStderr = directory.getWithDefault(target, 'stderr')
+    if newStdin != '':
+        if not os.path.exists(newStdin):
+            print I18n.get('file_not_found').format(newStdin)
+            sys.exit(1)
+        sys.stdin = codecs.open(newStdin, 'r')
+    if newStdout != '':
+        sys.stdout = codecs.open(newStdout, 'w')
+    if newStderr != '':
+        sys.stderr = codecs.open(newStderr, 'w')
+        
+    # Execute the 'main' function
+    executeFunction(toProcess, target, directory, functionName)
+
+    # Restore
+    sys.stdin = oldStdin
+    sys.stdout = oldStdout
+    sys.stderr = oldStderr
 
 # Execution as script
 if __name__ == "__main__":
