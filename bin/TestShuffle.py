@@ -94,7 +94,7 @@ def main(sourceFile, pout = None):
     # If no product number is given, create one for shuffling
     if seedList == []:
         pnumber = etree.Element('productnumber')
-        pnumber.text = int(time.time())
+        pnumber.text = str(int(time.time()))
         seedList.append(pnumber)
 
     qandaset = root.find('qandaset')
@@ -130,8 +130,12 @@ def main(sourceFile, pout = None):
             print >>pout, el.get('id'),
         else:
             p = el.getparent()
-            print >>pout, p.get('id') + '_' + \
-                str(p.findall('qandaentry').index(el)),
+            idStr = p.get('id')
+            if idStr == None:
+                print 'Anomaly while shuffling. Quandadiv with no id attribute'
+                print etree.tostring(p)
+                sys.exit(1)
+            print >>pout, idStr + '_' + str(p.findall('qandaentry').index(el)),
     print >>pout
 
     print >>pout, 'Step', stepCount, 'Create the permutation vectors'
@@ -165,7 +169,10 @@ def main(sourceFile, pout = None):
             originalOrder.extend(qandadiv.findall('qandaentry'))
     
         # Remove the qandadivs (this is to replace them by a shuffled version)
+        # There is something wrong with this function! It bombs out in some cases
+        # ABEL: FIX
         map(lambda x: qandaset.remove(x), qandadivs)
+        
 
         # Get a list representing a permutation of the indices of the list
         random.shuffle(qandadivs)
