@@ -129,9 +129,13 @@ def getFilesToProcess(target, directory):
         found = glob.glob(os.path.join(srcDir, srcFile))
 
         # Something was given in the variable, but nothing was found. Warn the
-        # user but proceed
+        # user but proceed.
         if found == []:
             print I18n.get('file_not_found').format(srcFile)
+            # Exiting here sometimes is needed (i.e. when searching for a source
+            # file to process) and sometimes it's ok (i.e. when searching for
+            # files to export). There should be a boolean to select either
+            # behavior
             # sys.exit(1)
 
         toProcess.extend(found)
