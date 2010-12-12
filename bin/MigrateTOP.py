@@ -87,6 +87,7 @@ def main(dataFile):
                       line)
         line = re.sub('%\(project_home\)s\.\.\/Material\/', '%(material_dir)s', 
                       line)
+        line = re.sub('%\(ada.home\)s', '%(home)s', line)
         # Split lines into fields
         fields = line.split('=')
         if len(fields) != 2:
@@ -101,13 +102,18 @@ def main(dataFile):
         transSection = translateSection(section, subsection)
         # See if we have changed the section
         if transSection != currentSection and section != 'mergestyles':
+            if (currentSection == 'xslt' or currentSection == 'exercise') \
+                and dumpedStyles == False and mergeLine != '':
+                for fname in mergeLine.split():
+                    print '                ', fname, '# Mergestyles'
+                
             if currentSection != '':
                 print
             currentSection = transSection
             print '[' + currentSection + ']'
-        
+
         # Fire cases:
-        if subsection == 'files':
+        if subsection == 'files' or subsection == 'file':
             print '        files =', fields[1]
 
         if subsection == 'src.dir':
@@ -115,6 +121,9 @@ def main(dataFile):
 
         if subsection == 'dst.dir':
             print '        dst_dir =', fields[1]
+
+        if subsection == 'geometry':
+            print '        geometry =', fields[1]
 
         if subsection == 'output.format':
 	    if fields[1][0] == '.':
@@ -153,6 +162,9 @@ def main(dataFile):
                 print '        src_dir =', fields[1]
             if subsection == 'destination':
                 print '        dst_dir =', fields[1]
+
+    if dumpedStyles == False and mergeLine != '':
+        print '        styles =', '\n                 '.join(mergeLine.split())
 
 def translateSection(sin, subs = None):
     """
