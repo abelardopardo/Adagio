@@ -105,7 +105,7 @@ def main(dataFile):
             if (currentSection == 'xslt' or currentSection == 'exercise') \
                 and dumpedStyles == False and mergeLine != '':
                 for fname in mergeLine.split():
-                    print '                ', fname, '# Mergestyles'
+                    print ' ', fname, '# Mergestyles'
                 
             if currentSection != '':
                 print
@@ -114,57 +114,57 @@ def main(dataFile):
 
         # Fire cases:
         if subsection == 'files' or subsection == 'file':
-            print '        files =', fields[1]
+            print 'files =', fields[1]
 
         if subsection == 'src.dir':
-            print '        src_dir =', fields[1]
+            print 'src_dir =', fields[1]
 
         if subsection == 'dst.dir':
-            print '        dst_dir =', fields[1]
+            print 'dst_dir =', fields[1]
 
         if subsection == 'geometry':
-            print '        geometry =', fields[1]
+            print 'geometry =', fields[1]
 
         if subsection == 'output.format':
+            print 'output_format =', 
 	    if fields[1][0] == '.':
-                print '        output_format =', 
 		print fields[1][1:]
 	    else:
                 print fields[1]
 
         if subsection == 'style.file':
-            print '        styles =', fields[1]
+            print 'styles =', fields[1]
             dumpedStyles = True
             if mergeLine != '':
                 for fname in mergeLine.split():
-                    print '                ', fname, '# Mergestyles'
+                    print '        ', fname, '# Mergestyles'
 
         if subsection.startswith('multilingual.file'):
-            print '        files =', fields[1]
-            print '        languages = en es'
+            print 'files =', fields[1]
+            print 'languages = en es'
 
         if section == 'mergestyles':
             if dumpedStyles:
                 for fname in fields[1].split():
-                    print '                ', fname, '# Mergestyles'
+                    print '        ', fname, '# Mergestyles'
             else:
                 mergeLine = fields[1]
 
         if section == 'subrecursive' and subsection == 'dirs':
-            print '        files =', fields[1]
-            print '        export_dst = %(basedir)s'
+            print 'files =', fields[1]
+            print 'export_dst = %(basedir)s'
 
         if section == 'subrecursive' and subsection == 'dirs.nodst':
-            print '        files =', fields[1]
+            print 'files =', fields[1]
 
         if section == 'rsync':
             if subsection == 'source':
-                print '        src_dir =', fields[1]
+                print 'src_dir =', fields[1]
             if subsection == 'destination':
-                print '        dst_dir =', fields[1]
+                print 'dst_dir =', fields[1]
 
     if dumpedStyles == False and mergeLine != '':
-        print '        styles =', '\n                 '.join(mergeLine.split())
+        print 'styles =', '\n                 '.join(mergeLine.split())
 
 def translateSection(sin, subs = None):
     """

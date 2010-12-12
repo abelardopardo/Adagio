@@ -99,40 +99,14 @@ def loadConfigFile(config, filename, includeChain = None):
             print '  ' + '\n  '.join(includeChain[:-1])
         sys.exit(1)
 
-    # Open the disk file
-    configfile = open(filename, 'r')
-    if configfile == None:
-        I18n.get('cannot_open_file').format(filename)
-        sys.exit(1)
-
-    # Pass the file to a StringIO removing the leading spaces from the lines
-    # containing an equal sign.
-    memoryFile = StringIO.StringIO()
-    for line in configfile:
-        # Remove comments
-        line = re.sub('[#;].*$', '', line)
-
-        # Remove the leading space of the lines with a variable definition
-        if re.search('=', line) or re.search(':', line):
-            line = re.sub('^\s+', '', line)
-
-        # Should we detect multple lines terminated in \ ?
-        memoryFile.write(line)
-
-    memoryFile.seek(0)
-    configfile.close()
-
-    # Parse the memory file with a raw parser to check option validity
+    # Parse the file with a raw parser to check option validity
     newOptions = ConfigParser.RawConfigParser({},
                                               ordereddict.OrderedDict)
-
     try:
-        # Reset the read pointer in the memory file
-        newOptions.readfp(memoryFile)
+        newOptions.read([filename])
     except Exception, msg:
         print I18n.get('severe_parse_error').format(filename)
         print msg
-        memoryFile.close()
         sys.exit(1)
 
     # Move defaults to the original config passing them to a [DEFAULT] section
@@ -182,7 +156,6 @@ def loadConfigFile(config, filename, includeChain = None):
                 optionName = sname + '.' + oname
                 print I18n.get('incorrect_option_in_file').format(optionName,
                                                                   filename)
-                memoryFile.close()
                 sys.exit(1)
 
             # Add the section first
@@ -213,9 +186,6 @@ def loadConfigFile(config, filename, includeChain = None):
 
         # Add it to the result
         result[1].append(sname)
-
-    # No longer needed
-    memoryFile.close()
 
     return result
 
