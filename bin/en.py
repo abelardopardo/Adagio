@@ -125,7 +125,9 @@ msgs = {
     'dblatex_compliant':
     'If non zero Ada-flavored behavior (suppress version page)',
     'xslt_style_file': 'Style to be applied to the given source files.',
-    'xslt_common_styles': 'Additional styles to apply.',
+    'script_input_file': 'File to use as script input',
+    'script_output_file': 'File to write the srcipt output',
+    'script_error_file': 'File to write the script errors',
     'output_format': 'Extension to use when creating the new files.',
     'gimp_script': 'Script to process gimp files in batch mode',
     'extra_arguments':
