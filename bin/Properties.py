@@ -192,10 +192,15 @@ def loadConfigFile(config, filename, includeChain = None):
                 pass
             
             # Set the values considering the cases of append or prepend
-            if prepend:
-                ovalue = ' '.join([ovalue, config.get(sname, oname)])
-            elif append:
-                ovalue = ' '.join([config.get(sname, oname), ovalue])
+            try:
+                if prepend:
+                    ovalue = ' '.join([ovalue, config.get(sname, oname)])
+                elif append:
+                    ovalue = ' '.join([config.get(sname, oname), ovalue])
+            except ConfigParser.NoOptionError, e:
+                print I18n.get('severe_parse_error').format(filename)
+                print e
+                sys.exit(1)
             config.set(sname, oname, ovalue)
 
             try:
@@ -350,9 +355,14 @@ def treatTemplate(config, filename, newOptions, sname, includeChain):
                 if not a in newOptions.defaults()]
 
     # There must be a single option with name 'files'
-    if len(fileItem) != 1 or fileItem[0][0] != 'files':
-        print 'AAA', fileItem
+    if len(fileItem) != 1:
         print I18n.get('template_error').format(filename)
+        sys.exit(1)
+
+    # The option must have name files
+    if fileItem[0][0] != 'files':
+        print I18n.get('incorrect_option_in_file').format(fileItem[0][0],
+                                                          filename)
         sys.exit(1)
 
     # Add template section to the given config to evaluate the files assignment
