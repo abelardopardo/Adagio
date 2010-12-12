@@ -39,7 +39,6 @@ options = [
     ('styles',
      '%(home)s%(file_separator)sADA_Styles%(file_separator)sDocbookProfile.xsl',
      I18n.get('xslt_style_file')),
-    ('common_styles', '', I18n.get('xslt_common_styles')),
     ('output_format', 'html', I18n.get('output_format')),
     ('extra_arguments', '', I18n.get('extra_arguments').format('Xsltproc')),
     ('languages', '%(locale)s', I18n.get('languages'))
@@ -55,7 +54,7 @@ documentation = {
     1.1 The extra arguments in 'extra_arguments'
 
     1.2 The style files in styles as if they were all in imported in a single
-    file in the given order starting with the common_styles
+    file in the given order
 
     1.3 The source file
 
@@ -94,11 +93,8 @@ def Execute(target, directory, pad = None):
     print pad + 'BB', target
 
     # Prepare the style transformation
-    styleFiles = directory.getWithDefault(target, 'styles')
-    commonStyles = directory.getWithDefault(target, 'common_styles')
-    allStyles = styleFiles.split() + commonStyles.split()
-    styleTransform = createStyleTransform(styleFiles.split() + \
-                                              commonStyles.split())
+    styleFiles = directory.getWithDefault(target, 'styles').split()
+    styleTransform = createStyleTransform(styleFiles)
     if styleTransform == None:
         print I18n.get('no_style_file')
         print pad + 'EE', target
@@ -107,7 +103,7 @@ def Execute(target, directory, pad = None):
     # Create the dictionary of stylesheet parameters
     styleParams = createParameterDict(target, directory)
 
-    doTransformations(allStyles, styleTransform, styleParams,
+    doTransformations(styleFiles, styleTransform, styleParams,
                       toProcess, target, directory)
 
     print pad + 'EE', target
@@ -136,7 +132,7 @@ def clean(target, directory, pad = None):
     print pad + 'EE', target + '.clean'
     return
 
-def createStyleTransform(styleList):
+def createStyleTransform(styleList, srcDir = None):
     """
     Function that given a list of style sheet files, prepares the style file to
     be processed. If more than one file is given, a StringIO is created with all
@@ -146,7 +142,7 @@ def createStyleTransform(styleList):
     # Prepare style files (locate styles in ADA/ADA_Styles if needed
     styles = []
     for name in styleList:
-        styles.append(AdaRule.locateFile(name))
+        styles.append(AdaRule.locateFile(name, srcDir))
         if styles[-1] == None:
             print I18n.get('file_not_found').format(name)
             sys.exit(1)
