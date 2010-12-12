@@ -206,7 +206,7 @@ def createParameterDict(target, directory):
                                                      'extra_arguments') +
                          '}')
         for (k, v) in extraDict.items():
-            styleParams[k] = v
+            styleParams[k] = etree.XSLT.strparam(v)
     except SyntaxError, e:
         print I18n.get('error_extra_args').format(target)
         print e
@@ -417,7 +417,7 @@ def xsltprocEquivalent(target, directory, styleParams, datafile, dstFile):
     """
     msg = 'xsltproc --xinclude'
     for (a, b) in styleParams.items():
-        msg += ' --stringparam ' + '"' + a + '" ' + b 
+        msg += ' --stringparam ' + '"' + str(a) + '" ' + str(b)
 
     msg += ' -o ' + dstFile
     msg += ' STYLE.xsl'
