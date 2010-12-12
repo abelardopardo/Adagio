@@ -28,7 +28,9 @@ import Ada, Properties, I18n, Xsltproc
 # Table to store tuples:
 #   path: Directory object
 #
-# to avoid executing twice the same directory (cache)
+# to avoid executing twice the same directory (cache). It stores pairs such as
+# (path + givenOptions, dirObj)
+
 _createdDirs = {}
 
 def getDirectoryObject(path, givenOptions):
@@ -111,7 +113,20 @@ def findProjectDir(pfile):
 
     return currentDir
 
+def resetExecuted():
+    """
+    Sets all the executed flags of all directories to false. This is useful for
+    debugging purposes. When re-starting a script, the old values of these
+    variables are still valid.
+    """
+    global _createdDirs
+
+    for (a, dObj) in _createDirs.items():
+        dObj.executed = False
+    return
+
 class Directory:
+    pass
     """
     Class to represent a directory where ADA executes some rules.
 
@@ -420,6 +435,7 @@ class Directory:
             pass
         section = section.split('.')[0]
         return self.options.get(section, option)
+
 
 ################################################################################
 
