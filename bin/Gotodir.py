@@ -52,9 +52,11 @@ def Execute(target, directory, pad = None):
 
     Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
-    # Detect and execute "special" targets
+    # Detect and execute "special" targets. For the case of deepclean, provide a
+    # bogus lambda file to ignore the effects
     if AdaRule.specialTargets(target, directory, documentation, 
-                                     module_prefix, clean, pad):
+                              module_prefix, clean, pad,
+                              lambda x: x):
         return
 
     # Get the directories to process, if none, terminate silently

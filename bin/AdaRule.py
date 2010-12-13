@@ -71,7 +71,8 @@ def locateFile(fileName, dirPrefix = None):
     return None
 
 def specialTargets(target, directory, documentation, prefix, 
-                          clean_function = None, pad = None):
+                   clean_function = None, pad = None,
+                   deepclean_function = None):
     """
     Check if the requested target is special:
     - dump
@@ -108,6 +109,14 @@ def specialTargets(target, directory, documentation, prefix,
     if re.match('(.+\.)?clean$', target) and (clean_function != None):
         clean_function(re.sub('\.clean$', '', target), directory, pad)
         hit =  True
+
+    # DEEPCLEAN
+    if re.match('(.+\.)?deepclean$', target):
+        if deepclean_function != None:
+            deepclean_function(re.sub('\.deepclean$', '', target), directory, pad)
+        elif clean_function != None:
+            clean_function(re.sub('\.clean$', '', target), directory, pad)
+            hit =  True
 
     return hit
 

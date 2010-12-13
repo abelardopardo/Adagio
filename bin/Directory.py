@@ -381,8 +381,15 @@ class Directory:
         # to add them that suffix
         finalTargets = []
         for target in targets:
-            if target == 'clean':
+            if target == 'deepclean':
+                # Get all the targets
                 finalTargets.extend([x + '.clean' for x in toExecTargets])
+                finalTargets.reverse()
+            elif target == 'clean':
+                # Get all the targets except the "gotodir" ones
+                finalTargets.extend([x + '.clean' 
+                                     for x in toExecTargets
+                                     if not x.startswith('gotodir')])
                 finalTargets.reverse()
             elif target == 'dump':
                 finalTargets.extend([x + '.dump' for x in toExecTargets])

@@ -239,6 +239,7 @@ def Execute(target, directory, pad = None):
     specialTarget = re.match('(.+\.)?dump$', target) or \
         re.match('(.+\.)?help$', target) or \
         re.match('(.+\.)?clean$', target) or \
+        re.match('(.+\.)?deepclean$', target) or \
         re.match('(.+\.)?dumphelp$', target) or \
         re.match('(.+\.)?helpdump$', target)
 
