@@ -395,6 +395,9 @@ class Directory:
                 finalTargets.extend([x + '.dump' for x in toExecTargets])
             elif target == 'help':
                 finalTargets.extend([x + '.help' for x in toExecTargets])
+            elif target == 'local':
+                finalTargets.extend([x for x in toExecTargets
+                                     if not x.startswith('gotodir')])
             else:
                 finalTargets.append(target)
 
