@@ -29,6 +29,7 @@ except ImportError:
     import xml.etree.ElementTree as etree
 
 import Ada, Directory, I18n, AdaRule, Xsltproc, TestShuffle, Dependency
+import TreeCache
 
 # Prefix to use for the options
 module_prefix = 'testexam'
@@ -207,14 +208,8 @@ def doGetShuffledFiles(fname):
     elements in the section info and returns the names of the files which will
     contain the permutations.
     """
-    try:
-        sourceTree = etree.parse(fname, etree.XMLParser(load_dtd=True, 
-                                                        no_network = True))
-        sourceTree.xinclude()
-    except (etree.XMLSyntaxError, etree.XIncludeError), e:
-        print I18n.get('severe_parse_error').format(fname)
-        print e
-        sys.exit(1)
+    
+    sourceTree = TreeCache.findOrAddTree(fname, True)
     root = sourceTree.getroot()
 
     # Get the number of 'productnumber' elements. If none, set it to 1

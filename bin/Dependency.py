@@ -28,7 +28,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-import Ada, AdaRule, I18n
+import Ada, AdaRule, I18n, TreeCache
 
 # The graph is stored with the following data structures:
 #
@@ -158,14 +158,7 @@ def getIncludes(fName):
     fDir = os.path.dirname(fName)
 
     # Parse the document and initialize the result to the empty set
-    try:
-        root = etree.parse(fName, etree.XMLParser(load_dtd=True, 
-                                                  no_network = True))
-    except etree.XMLSyntaxError, e:
-        print I18n.get('severe_parse_error').format(fName)
-        print e
-        sys.exit(1)
-        
+    root = TreeCache.findOrAddTree(fName, False)
     result = set([])
 
     allIncludes = \

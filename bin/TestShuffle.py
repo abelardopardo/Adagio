@@ -39,6 +39,8 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
+import TreeCache
+
 def main(sourceFile, pout = None):
     """
     Function that given a Docbook file containing a quandaset with a set of
@@ -66,14 +68,7 @@ def main(sourceFile, pout = None):
     stepCount += 1
     
     # Parse the source tree.
-    try:
-        sourceTree = etree.parse(sourceFile, etree.XMLParser(load_dtd=True, 
-                                                             no_network = True))
-        sourceTree.xinclude()
-    except etree.XMLSyntaxError, e:
-        print >>pout, 'Error while parsing', sourceFile
-        print >>pout, e
-        return 0
+    sourceTree = TreeCache.findOrAddTree(sourceFile, True)
     root = sourceTree.getroot()
 
     # Get all product numbers from the source document (they are the seeds)

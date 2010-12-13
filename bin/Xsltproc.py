@@ -29,7 +29,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-import Ada, Directory, I18n, Dependency, AdaRule
+import Ada, Directory, I18n, Dependency, AdaRule, TreeCache
 
 # Prefix to use for the options
 module_prefix = 'xslt'
@@ -169,16 +169,8 @@ def createStyleTransform(styleList, srcDir = None):
         styleFile = result
         Ada.logDebug('Xsltproc', None, 'Applying ' + styleFile.getvalue())
 
-
-    # Parse style file, insert name resolver to consider ADA local styles,
-    # expand includes and create transformation object
-    styleParser = etree.XMLParser(load_dtd=True, no_network = True)
-    styleParser.resolvers.add(AdaRule.StyleResolver())
-    styleTree = etree.parse(styleFile, styleParser)
-    styleTree.xinclude()
-    styleTransform = etree.XSLT(styleTree)
-
-    return styleTransform
+    # Get the transformation object
+    return TreeCache.findOrAddTransform(styleFile)
 
 def createParameterDict(target, directory):
     """
@@ -326,15 +318,8 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     # Parse the data file if needed
     if dataTree == None:
-        try:
-            Ada.logInfo(target, directory, 'Parsing ' + datafile)
-            dataTree = etree.parse(datafile, etree.XMLParser(load_dtd=True, 
-                                                             no_network = True))
-            dataTree.xinclude()
-        except (etree.XMLSyntaxError, etree.XIncludeError), e:
-            print I18n.get('severe_parse_error').format(datafile)
-            print e
-            sys.exit(0)
+        Ada.logInfo(target, directory, 'Parsing ' + datafile)
+        dataTree = TreeCache.findOrAddTree(datafile, True)
 
     # Apply the transformation
     xsltprocEquivalent(target, directory, styleParams, datafile, dstFile)
