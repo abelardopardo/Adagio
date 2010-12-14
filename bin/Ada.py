@@ -77,12 +77,11 @@ documentation = {
 options = [
     # Minimum version number required
     ('minimum_version', '', I18n.get('ada_minimum_version')),
-
     # Maximum version number required
     ('maximum_version', '', I18n.get('ada_maximum_version')),
-
     # Exact version required
-    ('exact_version', '', I18n.get('ada_exact_version'))
+    ('exact_version', '', I18n.get('ada_exact_version')),
+    ('target_alias', '', I18n.get('target_alias'))
     ]
 
 # Directory where ADA is installed
@@ -246,6 +245,48 @@ def Execute(target, directory, pad = None):
 
     print pad + 'EE', target
     return
+
+def expandAlias(target, directory):
+    """
+    Given a target, apply the values in the dictionary contained in the option
+    Ada.targer_alias and return the result.
+    """
+    
+    # Separate the target head from the tail
+    parts = target.split('.')
+    head = parts[0]
+    tail = []
+    if len(parts) > 1:
+        tail = parts[1:]
+
+    # Create the alias dictionary
+    aliasDict = eval('{' + directory.getWithDefault('ada', 'target_alias') + '}')
+
+    # Prepare values for the loop
+    oldValue = None
+    result = head
+    appliedAliases = set([])
+
+    # Loop until the alias expansion has no effect
+    while oldValue != result:
+        # Store the previous value
+        oldValue = result
+        
+        # Apply the alias expansion
+        newValue = aliasDict.get(result)
+
+        # If it was effective, remember it
+        if newValue != None:
+            # If the new value has been applied, exit
+            if newValue in appliedAliases:
+                print I18n.get('circular_alias')
+                print ' '.join(appliedAliases)
+                sys.exit(1)
+
+            # Propagate the change and remember it
+            appliedAliases.add(result)
+            result = newValue
+    return '.'.join([result] + tail)
 
 def dumpOptions(directory):
     """

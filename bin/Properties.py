@@ -23,15 +23,15 @@
 #
 import sys, os, re, datetime, ConfigParser, StringIO, ordereddict
 
-# @EXTEND@
+# @@@@@@@@@@@@@@@@@@@@  EXTEND  @@@@@@@@@@@@@@@@@@@@ 
 import Ada, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
 import Export, Dblatex, Exercise, Exam, Testexam, Office2pdf, Rsync
 import Script
 
-# @EXTEND@
 modules = ['Ada', 'Xsltproc', 'Inkscape', 'Gotodir', 'Gimp', 'Convert',
            'Copy', 'Export', 'Dblatex', 'Exercise', 'Exam', 'Testexam',
            'Office2pdf', 'Rsync', 'Script']
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 
 # Prefix to use in the module
 module_prefix = 'properties'
@@ -191,7 +191,7 @@ def LoadDefaults(config):
     """
     global modules
 
-    # Traverse the modules and 
+    # Traverse the modules and load the values in the "option" variable
     for moduleName in modules:
         # Get the three required values from the module
         sectionName = eval(moduleName + '.module_prefix')
@@ -230,6 +230,11 @@ def Execute(target, directory, pad = None):
    performs the invokation.
     """
 
+    global modules
+
+    # Apply the alias expansion
+    target = Ada.expandAlias(target, directory)
+
     # Detect help or dump targets with/without section name
     specialTarget = re.match('(.+\.)?dump$', target) or \
         re.match('(.+\.)?help$', target) or \
@@ -252,56 +257,18 @@ def Execute(target, directory, pad = None):
     if pad == None:
 	pad = ''
 
-    # Select the proper set of rules
-    # Code to extend when a new set of rules is added (@EXTEND@)
-    if targetPrefix == Ada.module_prefix:
-        Ada.Execute(target, directory, pad)
-        return
-    if targetPrefix == Xsltproc.module_prefix:
-        Xsltproc.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Inkscape.module_prefix:
-        Inkscape.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Gotodir.module_prefix:
-        Gotodir.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Gimp.module_prefix:
-        Gimp.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Convert.module_prefix:
-        Convert.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Copy.module_prefix:
-        Copy.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Export.module_prefix:
-        Export.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Dblatex.module_prefix:
-        Dblatex.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Exercise.module_prefix:
-        Exercise.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Exam.module_prefix:
-        Exam.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Testexam.module_prefix:
-        Testexam.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Office2pdf.module_prefix:
-        Office2pdf.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Rsync.module_prefix:
-        Rsync.Execute(target, directory, pad)
-        return
-    elif targetPrefix == Script.module_prefix:
-        Script.Execute(target, directory, pad)
-        return
+    # Traverse the modules and execute the "Execute" function
+    executed = False
+    for moduleName in modules:
+        module_prefix = eval(moduleName + '.module_prefix')
+        
+        if targetPrefix == module_prefix:
+            eval(moduleName + '.Execute(target, directory, pad)')
+            executed = True
 
-    print I18n.get('unknown_target').format(target)
-    sys.exit(1)
+    if not executed:
+        print I18n.get('unknown_target').format(target)
+        sys.exit(1)
 
 def treatTemplate(config, filename, newOptions, sname, includeChain):
     """
