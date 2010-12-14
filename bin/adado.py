@@ -20,7 +20,7 @@
 # Boston, MA  02110-1301, USA.
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
-import os, sys, getopt, datetime, locale, ConfigParser, codecs
+import os, sys, getopt, datetime, locale, ConfigParser, codecs, pydoc
 
 import Ada, I18n, Properties, Directory
 # import Ada, Directory, I18n, Xsltproc
@@ -59,8 +59,7 @@ def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], "c:d:s:hxp", [])
     except getopt.GetoptError, e:
-        print e.msg
-        print I18n.get('__doc__')
+        pydoc.pager(e.msg + '\n' + I18n.get('adado.help'))
         sys.exit(2)
 
     # Parse the options
@@ -80,7 +79,7 @@ def main():
 
         # Dump the manual page
         elif optstr == "-h" or optstr == "-x":
-            print I18n.get('__doc__')
+            pydoc.pager(I18n.get('adado.help'))
             sys.exit(3)
 
         # Allow for partial execution (if some tools are missing
@@ -92,8 +91,8 @@ def main():
             sname_value = value.split()
             # If incorrect number of arguments, stop processing
             if len(sname_value) != 3:
-                print I18n.get('incorrect_arg_num').format('-s option')
-                print I18n.get('__doc__')
+                pydoc.pager(I18n.get('incorrect_arg_num').format('-s option')
+                               + '\n' + I18n.get('adado.help'))
                 sys.exit(3)
             optionsToSet.append(' '.join(sname_value))
 

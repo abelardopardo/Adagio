@@ -43,17 +43,25 @@ dictionary = {}
 
 # Select the appropriate import
 file = None
+
+# Directory where the i18n information is installed
+i18nHome = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), 'i18n')
+
 # First, use the locale as is
-if os.path.exists(os.path.join('i18n', locale + '.py')):
+if os.path.exists(os.path.join(i18nHome, locale + '.py')):
     file = locale
 # Take the locale prefix (everything up to the first _ and use it as filename)
-elif os.path.exists(os.path.join('i18n', localePrefix + '.py')):
+elif os.path.exists(os.path.join(i18nHome, localePrefix + '.py')):
     file = localePrefix
 else:
     file = 'en'
 
 try:
+    # Insert this directory in the path to load scripts as the first one
+    sys.path.insert(0, i18nHome)
     langModule = __import__(file, globals(), locals(), [], -1)
+    # Remove the path from the directory
+    sys.path.pop(0)
 except SyntaxError, e:
     print 'Error while parsing localization file ' + file
     print str(e)

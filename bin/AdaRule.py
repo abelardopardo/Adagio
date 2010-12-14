@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, re, glob, sys, subprocess, shutil, ConfigParser
+import os, re, glob, sys, subprocess, shutil, ConfigParser, pydoc
 
 # Import conditionally either regular xml support or lxml if present
 try:
@@ -70,8 +70,7 @@ def locateFile(fileName, dirPrefix = None):
 
     return None
 
-def specialTargets(target, directory, documentation, prefix, 
-                   clean_function = None, pad = None,
+def specialTargets(target, directory, prefix, clean_function = None, pad = None,
                    deepclean_function = None):
     """
     Check if the requested target is special:
@@ -91,11 +90,9 @@ def specialTargets(target, directory, documentation, prefix,
 
     # If requesting help, dump msg and terminate
     if doubleTarget or re.match('(.+)?help$', target):
-        msg = documentation[directory.getWithDefault(Ada.module_prefix, 
-                                                     'locale')]
+        msg = directory.getWithDefault(prefix, 'help')
         if msg != None:
-            print I18n.get('doc_preamble').format(prefix)
-            print msg
+            print I18n.get('doc_preamble').format(prefix) + '\n' + msg
         else:
             print I18n.get('no_doc_for_rule').format(prefix)
         hit = True

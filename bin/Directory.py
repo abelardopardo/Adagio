@@ -23,7 +23,7 @@
 #
 import sys, os, re, ConfigParser, ordereddict
 
-import Ada, Properties, I18n, Xsltproc
+import Ada, Properties, I18n
 
 # Table to store tuples:
 #   path: Directory object
@@ -234,22 +234,24 @@ class Directory:
         adaPropFile = self.options.get('ada', 'property_file')
         propAbsFile = os.path.abspath(os.path.join(self.current_dir,
                                                    adaPropFile))
-        if not os.path.exists(propAbsFile):
+        if os.path.exists(propAbsFile):
+            try:
+                (newFiles, sections) = Properties.loadConfigFile(self.options, 
+                                                                 propAbsFile)
+                self.option_files.update(newFiles)
+            except ValueError, e:
+                print I18n.get('severe_parse_error').format(propAbsFile)
+                print e
+                sys.exit(3)
+                
+            self.section_list = sections
+        else:
+            # If there is no rule file, notify and execute help target
             Ada.logInfo('Directory', None, 'No ' + adaPropFile + \
                             ' found in ' + self.current_dir)
             print I18n.get('cannot_find_properties').format(adaPropFile,
                                                             self.current_dir)
-            sys.exit(3)
-        try:
-            (newFiles, sections) = Properties.loadConfigFile(self.options, 
-                                                             propAbsFile)
-            self.option_files.update(newFiles)
-        except ValueError, e:
-            print I18n.get('severe_parse_error').format(propAbsFile)
-            print e
-            sys.exit(3)
-
-        self.section_list = sections
+            self.section_list = []
 
         #
         # STEP 6: Options given from outside the dir
@@ -402,6 +404,11 @@ class Directory:
                 finalTargets.append(target)
 
         Ada.logDebug('Directory', self, '  Targets: ' + str(finalTargets))
+
+        # If after all these preparations, finalTargets is empty, help is
+        # needed, hardwire the target to ada.help.
+        if finalTargets == []:
+            finalTargets = ['ada.help']
 
         # Loop over all the targets to execute
         for target_name in finalTargets:

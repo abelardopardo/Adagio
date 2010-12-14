@@ -54,8 +54,7 @@ def Execute(target, directory, pad = None):
     Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.specialTargets(target, directory, documentation,
-                                     module_prefix, clean, pad):
+    if AdaRule.specialTargets(target, directory, module_prefix, clean, pad):
         return
 
     # Get the files to process, if empty, terminate

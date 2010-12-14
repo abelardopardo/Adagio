@@ -52,6 +52,7 @@ config_defaults = {
     'encoding':         re.sub('^UTF', 'UTF-', enc),
     'file_separator':   os.path.sep,
     'files':            '',
+    'help':            I18n.get('no_help_available'),
     'home':             _currentDir,
     'locale':           lang[0:2],
     'partial':          '0',
@@ -62,6 +63,15 @@ config_defaults = {
     'src_dir':          _currentDir,
     'version':          '10.03.1'
 }
+
+documentation = {
+    'en': """
+
+ Documentation explaining the basic ada variables. 
+
+ To be written.
+ 
+    """}
 
 # List of tuples (varname, default value, description string)
 options = [
@@ -74,11 +84,6 @@ options = [
     # Exact version required
     ('exact_version', '', I18n.get('ada_exact_version'))
     ]
-
-documentation = {
-    'en': """
-     Documentation explaining the basic ada variables. To be written.
-     """}
 
 # Directory where ADA is installed
 home = os.path.dirname(os.path.abspath(sys.argv[0]))
@@ -230,8 +235,7 @@ def Execute(target, directory, pad = None):
     logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.specialTargets(target, directory, documentation, 
-                              module_prefix):
+    if AdaRule.specialTargets(target, directory, module_prefix):
         return
 
     if pad == None:

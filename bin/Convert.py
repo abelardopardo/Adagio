@@ -28,6 +28,19 @@ import Ada, Directory, I18n, AdaRule
 # Prefix to use for the options
 module_prefix = 'convert'
 
+documentation = {
+    'en' : """
+  Uses the "convert" program to scale images. The value of "geometry" is treated
+  as a space separated list of geometries of the form heightxwidth. Each file in
+  "files" is then scaled for every value in geometry. Furthermore, the value in
+  "crop_option" can be used to crop the image. "extra_arguments" are passed
+  directly to convert. Convert is thus invoked as:
+
+  convert -scale [geometry] [convert_option] [extra_args]  
+          input.xxx output_geometry.xxx
+
+    """}
+
 # List of tuples (varname, default value, description string)
 options = [
     ('exec', 'convert', I18n.get('name_of_executable')),
@@ -36,19 +49,6 @@ options = [
     ('crop_option', '', I18n.get('convert_crop_option')),
     ('extra_arguments', '', I18n.get('extra_arguments').format('Convert'))
     ]
-
-documentation = {
-    'en' : """
-    Uses the "convert" program scale images. The value of "geometry" is treated
-    as a space separated list of geometries of the form hxw. Each file in
-    "files" is then scaled for every value in geometry. Furthermore, the value
-    in "crop_option" can be used to crop the image. "extra_arguments" are passed
-    directly to convert. Convert is thus invoked as:
-
-    convert -scale [geometry] [convert_option] [extra_args] 
-            input.xxx output_geometry.xxx
-
-    """}
 
 has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
 
@@ -63,8 +63,7 @@ def Execute(target, directory, pad = None):
     Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.specialTargets(target, directory, documentation,
-                                     module_prefix, clean, pad):
+    if AdaRule.specialTargets(target, directory, module_prefix, clean, pad):
         return
 
     # If the executable is not present, notify and terminate

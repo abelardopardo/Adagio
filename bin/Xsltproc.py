@@ -22,12 +22,7 @@
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 import os, re, sys, StringIO
-
-# Import conditionally either regular xml support or lxml if present
-try:
-    from lxml import etree
-except ImportError:
-    import xml.etree.ElementTree as etree
+from lxml import etree
 
 import Ada, Directory, I18n, Dependency, AdaRule, TreeCache
 
@@ -77,8 +72,7 @@ def Execute(target, directory, pad = None):
     Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
 
     # Detect and execute "special" targets
-    if AdaRule.specialTargets(target, directory, documentation,
-                                     module_prefix, clean, pad):
+    if AdaRule.specialTargets(target, directory, module_prefix, clean, pad):
         return
 
     # Get the files to process, if empty, terminate
@@ -198,7 +192,12 @@ def createParameterDict(target, directory):
                                                      'extra_arguments') +
                          '}')
         for (k, v) in extraDict.items():
-            styleParams[k] = etree.XSLT.strparam(v)
+            if hasattr(etree.XSLT, 'strparam'):
+                # Valid beyond version 2.2 of lxml
+                styleParams[k] = etree.XSLT.strparam(v)
+            else:
+                # If v has quotes, too bad...
+                styleParams[k] = '"' + v + '"'
     except SyntaxError, e:
         print I18n.get('error_extra_args').format(target)
         print e

@@ -28,36 +28,13 @@ import Ada, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
 import Export, Dblatex, Exercise, Exam, Testexam, Office2pdf, Rsync
 import Script
 
+# @EXTEND@
+modules = ['Ada', 'Xsltproc', 'Inkscape', 'Gotodir', 'Gimp', 'Convert',
+           'Copy', 'Export', 'Dblatex', 'Exercise', 'Exam', 'Testexam',
+           'Office2pdf', 'Rsync', 'Script']
+
 # Prefix to use in the module
 module_prefix = 'properties'
-
-def loadOptionsInConfig(config, sectionName, options):
-    """
-    Given a ConfigParser object config, the name of a section and a list of
-    triplets (varname, value, message), upload (section, varname= value) to the
-    configuration.
-    """
-
-    if sectionName == None or options == None:
-        raise TypeError, 'Incorrect type in loadOptionsInConfig'
-
-    # If the section is already created, never mind
-    try:
-        config.add_section(sectionName)
-    except ConfigParser.DuplicateSectionError:
-        pass
-
-    # Loop over all the given values and add them to the proper sections
-    for (vn, vv, msg) in options:
-        config.set(sectionName, vn, vv)
-        try:
-            # To verify interpolation
-            config.get(sectionName, vn)
-        except (ConfigParser.InterpolationDepthError, 
-                ConfigParser.InterpolationMissingOptionError), e:
-            print I18n.get('incorrect_variable_reference').format(vv)
-            sys.exit(3)
-    return
 
 def loadConfigFile(config, filename, includeChain = None):
     """
@@ -208,26 +185,44 @@ def dump(options, pad = None, sections = None):
         print e
         sys.exit(1)
 
-def LoadDefaults(options):
+def LoadDefaults(config):
     """
-    Loads all the default options for all the rules in the given ConfigParser
+    Loads all the default options for all the rules in the given ConfigParser.
     """
-    # @EXTEND@
-    loadOptionsInConfig(options, Ada.module_prefix,        Ada.options)
-    loadOptionsInConfig(options, Xsltproc.module_prefix,   Xsltproc.options)
-    loadOptionsInConfig(options, Inkscape.module_prefix,   Inkscape.options)
-    loadOptionsInConfig(options, Gotodir.module_prefix,    Gotodir.options)
-    loadOptionsInConfig(options, Gimp.module_prefix,       Gimp.options)
-    loadOptionsInConfig(options, Convert.module_prefix,    Convert.options)
-    loadOptionsInConfig(options, Copy.module_prefix,       Copy.options)
-    loadOptionsInConfig(options, Export.module_prefix,     Export.options)
-    loadOptionsInConfig(options, Dblatex.module_prefix,    Dblatex.options)
-    loadOptionsInConfig(options, Exercise.module_prefix,   Exercise.options)
-    loadOptionsInConfig(options, Exam.module_prefix,       Exam.options)
-    loadOptionsInConfig(options, Testexam.module_prefix,   Testexam.options)
-    loadOptionsInConfig(options, Office2pdf.module_prefix, Office2pdf.options)
-    loadOptionsInConfig(options, Rsync.module_prefix,      Rsync.options)
-    loadOptionsInConfig(options, Script.module_prefix,     Script.options)
+    global modules
+
+    # Traverse the modules and 
+    for moduleName in modules:
+        # Get the three required values from the module
+        sectionName = eval(moduleName + '.module_prefix')
+        options = eval(moduleName + '.options')
+        documentation = eval(moduleName + '.documentation')
+
+        # If any of these variables is None, bomb out.
+        if sectionName == None or options == None or documentation == None:
+            raise TypeError, 'Incorrect type in LoadDefaults'
+
+        # If the section is already present in the config, never mind
+        try:
+            config.add_section(sectionName)
+        except ConfigParser.DuplicateSectionError:
+            pass
+
+        # Loop over all the default values and add them to the proper sections
+        for (vn, vv, msg) in options:
+            config.set(sectionName, vn, vv)
+            try:
+                # To verify interpolation
+                config.get(sectionName, vn)
+            except (ConfigParser.InterpolationDepthError, 
+                    ConfigParser.InterpolationMissingOptionError), e:
+                print I18n.get('incorrect_variable_reference').format(vv)
+                sys.exit(3)
+
+        # Add the string for the help
+        config.set(sectionName, 'help', 
+                   documentation[Ada.config_defaults['locale']])
+    return
 
 def Execute(target, directory, pad = None):
     """
@@ -261,6 +256,7 @@ def Execute(target, directory, pad = None):
     # Code to extend when a new set of rules is added (@EXTEND@)
     if targetPrefix == Ada.module_prefix:
         Ada.Execute(target, directory, pad)
+        return
     if targetPrefix == Xsltproc.module_prefix:
         Xsltproc.Execute(target, directory, pad)
         return
