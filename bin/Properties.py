@@ -229,8 +229,10 @@ def LoadDefaults(config):
                 sys.exit(3)
 
         # Add the string for the help
-        config.set(sectionName, 'help', 
-                   documentation[Ada.config_defaults['locale']])
+        helpStr = documentation.get(Ada.config_defaults['locale'])
+        if helpStr == None:
+            helpStr = documentation.get('en')
+        config.set(sectionName, 'help', helpStr)
     return
 
 def Execute(target, directory, pad = None):
