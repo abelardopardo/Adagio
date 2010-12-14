@@ -82,11 +82,11 @@ def main(dataFile):
         line = changeInterpolation(line)
 
         # Change variables
-        line = re.sub('AdaCourseParams', 'AdaProjectParams', line)
-        line = re.sub('%\(project_home\)s\.\.\/scratch\/', '%(publish_dir)s', 
-                      line)
-        line = re.sub('%\(project_home\)s\.\.\/Material\/', '%(material_dir)s', 
-                      line)
+        # line = re.sub('AdaCourseParams', 'AdaProjectParams', line)
+        # line = re.sub('%\(project_home\)s\.\.\/scratch\/', '%(publish_dir)s', 
+        #               line)
+        # line = re.sub('%\(project_home\)s\.\.\/Material\/', '%(material_dir)s', 
+        #               line)
         line = re.sub('%\(ada.home\)s', '%(home)s', line)
         # Split lines into fields
         fields = line.split('=')

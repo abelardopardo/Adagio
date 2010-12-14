@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, copy
+import sys, os, copy
 from lxml import etree
 
 import AdaRule, I18n
@@ -47,7 +47,6 @@ def findOrAddTree(path, expanded = True):
     (simpleTree, expandedTree) = _createdTrees.get(theKey, (None, None))
     if expanded and expandedTree != None:
         # HIT
-        print 'AAA'
         return expandedTree
     if not expanded and simpleTree != None:
         # HIT
