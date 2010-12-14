@@ -23,7 +23,7 @@
 #
 
 msgs = {
-    '__doc__': """
+    'adado.help': """
     Execute the given targets from the production rules described in a local
     file. The invocation of this script must follow the structure:
 
@@ -58,6 +58,8 @@ msgs = {
                        executed.
 
     """,
+    'no_help_available': 'There is no documentation for this target.',
+    'help_option': 'Text explaining the tasks carried by this rule.',
     'fatal_error': 'Fatal error encountered. Attach "adado.log" to notification.',
     'file_not_found': 'File {0} not found',
     'dir_not_found': 'Directory {0} not found',
