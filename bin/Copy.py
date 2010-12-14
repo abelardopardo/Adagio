@@ -43,7 +43,7 @@ documentation = {
     Takes the "files" in "src_dir" and copies them to "dst_dir"
     """}
 
-def Execute(target, directory, pad = None):
+def Execute(target, directory):
     """
     Execute the rule in the given directory
     """
@@ -53,21 +53,14 @@ def Execute(target, directory, pad = None):
     if toProcess == []:
         return
 
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
-
     # Perform the copy
     doCopy(target, directory, toProcess, 
            directory.getWithDefault(target, 'src_dir'),
            directory.getWithDefault(target, 'dst_dir'))
 
-    print pad + 'EE', target
     return
 
-def clean(target, directory, pad = None):
+def clean(target, directory):
     """
     Clean the files produced by this rule
     """
@@ -79,18 +72,11 @@ def clean(target, directory, pad = None):
     if toProcess == []:
         return
 
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target + '.clean'
-
     # Loop over all source files to process
     doClean(target, directory, toProcess,
             directory.getWithDefault(target, 'src_dir'),
             directory.getWithDefault(target, 'dst_dir'))
 
-    print pad + 'EE', target + '.clean'
     return
 
 def doCopy(target, directory, toProcess, srcDir, dstDir):

@@ -62,7 +62,7 @@ documentation = {
     These conditions apply also to the "clean" target.
     """}
 
-def Execute(target, directory, pad = None):
+def Execute(target, directory):
     """
     Execute the rule in the given directory
     """
@@ -72,26 +72,18 @@ def Execute(target, directory, pad = None):
     if toProcess == []:
         return
 
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
-
     # Check the condition
     dstDir = directory.getWithDefault(target, 'dst_dir')
     srcDir = directory.getWithDefault(target, 'src_dir')
-    if not evaluateCondition(target, directory, dstDir, pad):
-        print pad + 'EE', target
+    if not evaluateCondition(target, directory, dstDir):
         return
 
     # If we are here, the export may proceed!
     Copy.doCopy(target, directory, toProcess, srcDir, dstDir)
 
-    print pad + 'EE', target
     return
 
-def clean(target, directory, pad = None):
+def clean(target, directory):
     """
     Clean the files produced by this rule. The target is executed under the same
     rules explained in the documentation.
@@ -104,26 +96,18 @@ def clean(target, directory, pad = None):
     if toProcess == []:
         return
 
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target + '.clean'
-
     # Check the condition
     dstDir = directory.getWithDefault(target, 'dst_dir')
-    if not evaluateCondition(target, directory, dstDir, pad):
-        print pad + 'EE', target
+    if not evaluateCondition(target, directory, dstDir):
         return
 
     # If we are here, the export may proceed!
     Copy.doClean(target, directory, toProcess, 
                  directory.getWithDefault(target, 'src_dir'), dstDir)
 
-    print pad + 'EE', target + '.clean'
     return
 
-def evaluateCondition(target, directory, dstDir, pad):
+def evaluateCondition(target, directory, dstDir):
     """
     Evaluates the condition to allow the execution of any export target.
     """

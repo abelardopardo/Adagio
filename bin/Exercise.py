@@ -70,7 +70,7 @@ documentation = {
 # Possible values of the 'produce' option for this rule
 _produce_values = set(['regular', 'solution', ' pguide', ' submit'])
 
-def Execute(target, directory, pad = None):
+def Execute(target, directory):
     """
     Execute the rule in the given directory
     """
@@ -80,18 +80,11 @@ def Execute(target, directory, pad = None):
     if toProcess == []:
         return
 
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
-
     # Prepare the style transformation
     styleFiles = directory.getWithDefault(target, 'styles')
     styleTransform = Xsltproc.createStyleTransform(styleFiles.split())
     if styleTransform == None:
         print I18n.get('no_style_file')
-        print pad + 'EE', target
         return
 
     # Create the dictionary of stylesheet parameters
@@ -128,7 +121,6 @@ def Execute(target, directory, pad = None):
         styleTransform = Xsltproc.createStyleTransform(styleFiles.split())
         if styleTransform == None:
             print I18n.get('no_style_file')
-            print pad + 'EE', target
             return
 
         # Create the dictionary of stylesheet parameters
@@ -139,10 +131,9 @@ def Execute(target, directory, pad = None):
                                    styleParams, toProcess, target, directory,
                                    [({}, '_submit')])
 
-    print pad + 'EE', target
     return
 
-def clean(target, directory, pad = None):
+def clean(target, directory):
     """
     Clean the files produced by this rule
     """
@@ -153,12 +144,6 @@ def clean(target, directory, pad = None):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target + '.clean'
 
     # Create a list with the suffixes to consider
     suffixes = []
@@ -178,7 +163,6 @@ def clean(target, directory, pad = None):
 
     Xsltproc.doClean(target, directory, toProcess, suffixes)
 
-    print pad + 'EE', target + '.clean'
     return
 
 # Execution as script

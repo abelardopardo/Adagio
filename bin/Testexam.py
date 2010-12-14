@@ -57,7 +57,7 @@ documentation = {
       * pguide: regular version including solution AND professor guide
     """}
 
-def Execute(target, directory, pad = None):
+def Execute(target, directory):
     """
     Execute the rule in the given directory
     """
@@ -66,12 +66,6 @@ def Execute(target, directory, pad = None):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
 
     # Every source file given is processed to know how many permutations will be
     # rawFiles contains the list of files produced that need to be processed
@@ -82,7 +76,6 @@ def Execute(target, directory, pad = None):
     styleTransform = Xsltproc.createStyleTransform(styleFiles.split())
     if styleTransform == None:
         print I18n.get('no_style_file')
-        print pad + 'EE', target
         return
 
     # Create the dictionary of stylesheet parameters
@@ -111,10 +104,9 @@ def Execute(target, directory, pad = None):
     Xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams,
                                rawFiles, target, directory, paramDict)
 
-    print pad + 'EE', target
     return
 
-def clean(target, directory, pad = None):
+def clean(target, directory):
     """
     Clean the files produced by this rule
     """
@@ -125,12 +117,6 @@ def clean(target, directory, pad = None):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target + '.clean'
 
     rawFiles = []
     for fname in toProcess:
@@ -157,7 +143,6 @@ def clean(target, directory, pad = None):
     # Clean also the produced files
     map(lambda x: AdaRule.remove(x), rawFiles)
 
-    print pad + 'EE', target + '.clean'
     return
 
 def doShuffle(toProcess, directory):

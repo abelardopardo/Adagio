@@ -62,12 +62,6 @@ def Execute(target, directory, pad = None):
     # Translate all paths to absolute paths
     toProcess = map(lambda x: os.path.abspath(x), toProcess)
 
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
-
     # Get option to set in the remote directory
     optionsToSet = []
     newExportDir = directory.getWithDefault(target, 'export_dst')
@@ -86,7 +80,6 @@ def Execute(target, directory, pad = None):
         dirObj = Directory.getDirectoryObject(dirName, optionsToSet)
         dirObj.Execute(remoteTargets, pad + '  ')
 
-    print pad + 'EE', target
     return
 
 def clean(target, directory, pad = None):
@@ -105,12 +98,6 @@ def clean(target, directory, pad = None):
     if toProcess == []:
         Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
         return
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target + '.clean'
 
     # Get option to set in the remote directory
     optionsToSet = []
@@ -152,7 +139,6 @@ def clean(target, directory, pad = None):
         dirObj = Directory.getDirectoryObject(dirName, optionsToSet)
         dirObj.Execute(remoteTargets, pad + '  ')
 
-    print pad + 'EE', target + '.clean'
     return
     
 # Execution as script

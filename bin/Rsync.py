@@ -46,7 +46,7 @@ documentation = {
 
 has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
 
-def Execute(target, directory, pad = None):
+def Execute(target, directory):
     """
     Execute the rule in the given directory
     """
@@ -71,12 +71,6 @@ def Execute(target, directory, pad = None):
         print I18n.get('not_a_directory')
         sys.exit(1)
 
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
-
     # Prepare the command to execute
     executable = directory.getWithDefault(target, 'exec')
     extraArgs = directory.getWithDefault(target, 'extra_arguments')
@@ -91,10 +85,9 @@ def Execute(target, directory, pad = None):
     AdaRule.doExecution(target, directory, command, srcDir, None, 
                         Ada.userLog, Ada.userLog)
 
-    print pad + 'EE', target
     return
 
-def clean(target, directory, pad = None):
+def clean(target, directory):
     """
     Clean the files produced by this rule
     """
@@ -105,12 +98,6 @@ def clean(target, directory, pad = None):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target + '.clean'
 
     # Get the dstDir
     dstDir = directory.getWithDefault(target, 'dst_dir')
@@ -123,7 +110,6 @@ def clean(target, directory, pad = None):
     # Delete the dst directory
     AdaRule.remove(dstDir)
 
-    print pad + 'EE', target + '.clean'
     return
 
 # Execution as script

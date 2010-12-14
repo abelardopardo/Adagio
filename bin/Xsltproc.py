@@ -61,7 +61,7 @@ documentation = {
   Some status messages are printed depending on the 'debug_level'
 """}
 
-def Execute(target, directory, pad = None):
+def Execute(target, directory):
     """
     Execute the rule in the given directory
     """
@@ -71,18 +71,11 @@ def Execute(target, directory, pad = None):
     if toProcess == []:
         return
 
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
-
     # Prepare the style transformation
     styleFiles = directory.getWithDefault(target, 'styles').split()
     styleTransform = createStyleTransform(styleFiles)
     if styleTransform == None:
         print I18n.get('no_style_file')
-        print pad + 'EE', target
         return
 
     # Create the dictionary of stylesheet parameters
@@ -91,10 +84,9 @@ def Execute(target, directory, pad = None):
     doTransformations(styleFiles, styleTransform, styleParams,
                       toProcess, target, directory)
 
-    print pad + 'EE', target
     return
 
-def clean(target, directory, pad = None):
+def clean(target, directory):
     """
     Clean the files produced by this rule
     """
@@ -106,15 +98,8 @@ def clean(target, directory, pad = None):
     if toProcess == []:
         return
 
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target + '.clean'
-
     doClean(target, directory, toProcess)
 
-    print pad + 'EE', target + '.clean'
     return
 
 def createStyleTransform(styleList, srcDir = None):

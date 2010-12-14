@@ -225,17 +225,9 @@ def log(tprefix, directory, msg, fname = None):
 
 def Execute(target, directory, pad = None):
     """
-    Execute the rule in the given directory
+    This rule is supposed to do nothing, it only contains auxiliary data
     """
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
-
-    print pad + 'EE', target
-    return
+    pass
 
 def expandAlias(target, aliasDict):
     """

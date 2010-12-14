@@ -95,6 +95,8 @@ def specialTargets(target, directory, prefix, clean_function = None, pad = None)
     if doubleTarget or re.match('(.+)?help$', target):
         msg = directory.getWithDefault(prefix, 'help')
         print I18n.get('doc_preamble').format(prefix) + '\n' + msg
+        else:
+            print I18n.get('no_doc_for_rule').format(prefix)
         hit = True
 
     # If requesting var dump, do it and finish
@@ -106,13 +108,17 @@ def specialTargets(target, directory, prefix, clean_function = None, pad = None)
     if re.match('(.+\.)?clean$', target) and (clean_function != None):
         if prefix != 'gotodir':
             # Gotodir does not clean, unless the deepclean is given
-            clean_function(re.sub('\.clean$', '', target), directory, pad)
+            clean_function(re.sub('\.clean$', '', target), directory)
             hit =  True
 
     # DEEPCLEAN
     if re.match('(.+\.)?deepclean$', target):
         if clean_function != None:
-            clean_function(re.sub('\.clean$', '', target), directory, pad)
+            if prefix == 'gotodir':
+                # Gotodir propagates the pad
+                clean_function(re.sub('\.clean$', '', target), directory, pad)
+            else:
+                clean_function(re.sub('\.clean$', '', target), directory)
             hit =  True
 
     return hit

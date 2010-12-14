@@ -48,36 +48,68 @@ documentation = {
     given arguments.
     """}
 
-def Execute(target, directory, pad = None):
+def Execute(target, directory):
     """
     Execute the rule in the given directory
     """
 
-    global module_prefix
-    global documentation
+    prepareExecution(target, directory, 'build_function')
 
-    Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
-
-    # Detect and execute "special" targets
-    if AdaRule.specialTargets(target, directory, module_prefix, clean, pad):
-        return
-
-    selectExecution(target, directory, 'build_function', pad)
-
-    print pad + 'EE', target
     return
-
-def clean(target, directory, pad = None):
+def clean(target, directory):
     """
     Clean the files produced by this rule
     """
     
     Ada.logInfo(target, directory, 'Cleaning')
 
-    selectExecution(target, directory, 'clean_function', pad)
+    prepareExecution(target, directory, 'clean_function')
 
-    print pad + 'EE', target + '.clean'
     return
+
+def prepareExecution(target, directory, functionOption):
+    """
+    Redirect stdin, stdout, stderr + set argv to new values.
+    """
+
+    # Get the files to process, if empty, terminate
+    toProcess = AdaRule.getFilesToProcess(target, directory)
+    if toProcess == []:
+        return
+
+    # Drop the extensions of the script files
+    toProcess = map(lambda x: os.path.splitext(x)[0], toProcess)
+
+    # Get the function to execute
+    functionName = directory.getWithDefault(target, functionOption)
+
+    # Modify input/output/error channels
+    oldStdin = sys.stdin
+    oldStdout = sys.stdout
+    oldStderr = sys.stderr
+    newStdin = directory.getWithDefault(target, 'stdin')
+    newStdout = directory.getWithDefault(target, 'stdout')
+    newStderr = directory.getWithDefault(target, 'stderr')
+    if newStdin != '':
+        if not os.path.exists(newStdin):
+            print I18n.get('file_not_found').format(newStdin)
+            sys.exit(1)
+        sys.stdin = codecs.open(newStdin, 'r')
+    if newStdout != '':
+        sys.stdout = codecs.open(newStdout, 'w')
+    if newStderr != '':
+        sys.stderr = codecs.open(newStderr, 'w')
+        
+    # Execute the 'main' function
+    executeFunction(toProcess, target, directory, functionName)
+
+    # Restore
+    sys.stdin = oldStdin
+    sys.stdout = oldStdout
+    sys.stderr = oldStderr
+
+    return
+
 
 def executeFunction(toProcess, target, directory, functionName):
     """
@@ -138,53 +170,6 @@ def executeFunction(toProcess, target, directory, functionName):
     # End for each datafile 
 
     return
-
-def selectExecution(target, directory, functionOption, pad):
-    """
-    Execute one function of the given script
-    """
-
-    # Get the files to process, if empty, terminate
-    toProcess = AdaRule.getFilesToProcess(target, directory)
-    if toProcess == []:
-        return
-
-    # Drop the extensions of the script files
-    toProcess = map(lambda x: os.path.splitext(x)[0], toProcess)
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
-
-    # Get the function to execute
-    functionName = directory.getWithDefault(target, functionOption)
-
-    # Modify input/output/error channels
-    oldStdin = sys.stdin
-    oldStdout = sys.stdout
-    oldStderr = sys.stderr
-    newStdin = directory.getWithDefault(target, 'stdin')
-    newStdout = directory.getWithDefault(target, 'stdout')
-    newStderr = directory.getWithDefault(target, 'stderr')
-    if newStdin != '':
-        if not os.path.exists(newStdin):
-            print I18n.get('file_not_found').format(newStdin)
-            sys.exit(1)
-        sys.stdin = codecs.open(newStdin, 'r')
-    if newStdout != '':
-        sys.stdout = codecs.open(newStdout, 'w')
-    if newStderr != '':
-        sys.stderr = codecs.open(newStderr, 'w')
-        
-    # Execute the 'main' function
-    executeFunction(toProcess, target, directory, functionName)
-
-    # Restore
-    sys.stdin = oldStdin
-    sys.stdout = oldStdout
-    sys.stderr = oldStderr
 
 # Execution as script
 if __name__ == "__main__":

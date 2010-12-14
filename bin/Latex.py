@@ -42,7 +42,7 @@ documentation = {
 
 has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
 
-def Execute(target, directory, pad = None):
+def Execute(target, directory):
     """
     Execute the rule in the given directory
     """
@@ -60,12 +60,6 @@ def Execute(target, directory, pad = None):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
 
     # Prepare the command to execute
     commandPrefix = [directory.getWithDefault(target, 'exec'), 
@@ -96,10 +90,9 @@ def Execute(target, directory, pad = None):
         AdaRule.doExecution(target, directory, command, datafile, dstFile, 
                             Ada.userLog)
 
-    print pad + 'EE', target
     return
 
-def clean(target, directory, pad = None):
+def clean(target, directory):
     """
     Clean the files produced by this rule
     """
@@ -110,12 +103,6 @@ def clean(target, directory, pad = None):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target + '.clean'
 
     # Loop over all source files to process
     dstDir = directory.getWithDefault(target, 'dst_dir')
@@ -137,7 +124,6 @@ def clean(target, directory, pad = None):
 
         AdaRule.remove(dstFile)
 
-    print pad + 'EE', target + '.clean'
     return
 
 # Execution as script

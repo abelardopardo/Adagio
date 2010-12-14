@@ -52,7 +52,7 @@ options = [
 
 has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
 
-def Execute(target, directory, pad = None):
+def Execute(target, directory):
     """
     Execute the rule in the given directory
     """
@@ -72,17 +72,10 @@ def Execute(target, directory, pad = None):
         Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
         return
 
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
-
     # Get geometry
     geometries = directory.getWithDefault(target, 'geometry').split()
     if geometries == []:
         print I18n.get('no_var_value').format('geometry')
-        print pad + 'EE', target
         return
 
     # Loop over all source files to process
@@ -118,10 +111,9 @@ def Execute(target, directory, pad = None):
             AdaRule.doExecution(target, directory, command, datafile, dstFile, 
                                 Ada.userLog)
 
-    print pad + 'EE', target
     return
 
-def clean(target, directory, pad = None):
+def clean(target, directory):
     """
     Clean the files produced by this rule
     """
@@ -133,17 +125,10 @@ def clean(target, directory, pad = None):
     if toProcess == []:
         return
 
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target + '.clean'
-
     # Get geometry
     geometries = directory.getWithDefault(target, 'geometry').split()
     if geometries == []:
         print I18n.get('no_var_value').format('geometry')
-        print pad + 'EE', target
         return
 
     # Loop over all the source files
@@ -167,7 +152,6 @@ def clean(target, directory, pad = None):
 
             AdaRule.remove(dstFile)
 
-    print pad + 'EE', target + '.clean'
     return
 
 # Execution as script

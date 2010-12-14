@@ -43,7 +43,7 @@ documentation = {
 
 has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
 
-def Execute(target, directory, pad = None):
+def Execute(target, directory):
     """
     Execute the rule in the given directory
     """
@@ -62,12 +62,6 @@ def Execute(target, directory, pad = None):
     if toProcess == []:
         Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
         return
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target
 
     # Loop over all source files to process
     executable = directory.getWithDefault(target, 'exec')
@@ -97,10 +91,9 @@ def Execute(target, directory, pad = None):
 
     # End of loop over all src files
 
-    print pad + 'EE', target
     return
 
-def clean(target, directory, pad = None):
+def clean(target, directory):
     """
     Clean the files produced by this rule
     """
@@ -111,12 +104,6 @@ def clean(target, directory, pad = None):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
-
-    if pad == None:
-	pad = ''
-
-    # Print msg when beginning to execute target in dir
-    print pad + 'BB', target + '.clean'
 
     # Loop over all the source files
     dstDir = directory.getWithDefault(target, 'src_dir')

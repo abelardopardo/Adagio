@@ -19,7 +19,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor
 # Boston, MA  02110-1301, USA.
 #
-# Author: Abelardo Pardo (abelardo.padro@uc3m.es)
+# Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 import sys, os, re, datetime, ConfigParser, StringIO, ordereddict
 
@@ -278,22 +278,34 @@ def Execute(target, directory, pad = None):
         # Get the module prefix
         module_prefix = eval(moduleName + '.module_prefix')
         
-        # If the target belongs to this module, execute it
-        if targetPrefix == module_prefix:
+        # If the target does not belong to this module, keep iterating
+        if targetPrefix != module_prefix:
+            continue
             
-            Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
+        Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
             
-            # Detect and execute "special" targets
-            if AdaRule.specialTargets(target, directory, module_prefix,
-                                      eval(moduleName + '.clean'), pad):
-                return
+        # Print msg when beginning to execute target in dir
+        print pad + 'BB', target
 
-            # Execute
+        # Detect and execute "special" targets
+        if AdaRule.specialTargets(target, directory, module_prefix,
+                                  eval(moduleName + '.clean'), pad):
+            Ada.logInfo(target, directory, 'Exit ' + directory.current_dir)
+            return
+        
+        # Execute. 
+        if moduleName == 'Gotodir':
+            # Gotodir must take into account padding
             eval(moduleName + '.Execute(target, directory, pad)')
+        else:
+            eval(moduleName + '.Execute(target, directory)')
 
-            # Detect if no module executed the target
-            executed = True
+        # Detect if no module executed the target
+        executed = True
 
+        print pad + 'EE', target
+
+        Ada.logInfo(target, directory, 'Exit ' + directory.current_dir)
 
     if not executed:
         print I18n.get('unknown_target').format(target)
