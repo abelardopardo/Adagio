@@ -223,9 +223,15 @@ def log(tprefix, directory, msg, fname = None):
         output.write(tprefix + ':' + str(msg) + '\n')
         output.flush()
 
-def Execute(target, directory, pad = None):
+def Execute(target, directory):
     """
     This rule is supposed to do nothing, it only contains auxiliary data
+    """
+    pass
+
+def clean(target, directory):
+    """
+    This rule is supposed to do nothing
     """
     pass
 
@@ -266,7 +272,12 @@ def expandAlias(target, aliasDict):
             # Propagate the change and remember it
             appliedAliases.add(result)
             result = newValue
-    return '.'.join([result] + tail)
+
+    result = '.'.join([result] + tail)
+
+    logDebug(target, None, 'Aliasing ' + target + ' to ' + result)
+
+    return result
 
 def dumpOptions(directory):
     """
