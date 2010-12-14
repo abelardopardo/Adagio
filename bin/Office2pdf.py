@@ -48,15 +48,7 @@ def Execute(target, directory, pad = None):
     Execute the rule in the given directory
     """
 
-    global module_prefix
-    global documentation
     global has_executable
-
-    Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
-
-    # Detect and execute "special" targets
-    if AdaRule.specialTargets(target, directory, module_prefix, clean, pad):
-        return
 
     # If the executable is not present, notify and terminate
     if not has_executable:

@@ -47,17 +47,6 @@ def Execute(target, directory, pad = None):
     Execute the rule in the given directory
     """
 
-    global module_prefix
-    global documentation
-
-    Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
-
-    # Detect and execute "special" targets. For the case of deepclean, provide a
-    # bogus lambda file to ignore the effects
-    if AdaRule.specialTargets(target, directory, module_prefix, clean, pad,
-                              lambda x: x):
-        return
-
     # Get the directories to process, if none, terminate silently
     toProcess = []
     for srcDir in directory.getWithDefault(target, 'files').split():

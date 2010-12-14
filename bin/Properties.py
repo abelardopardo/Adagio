@@ -24,7 +24,7 @@
 import sys, os, re, datetime, ConfigParser, StringIO, ordereddict
 
 # @@@@@@@@@@@@@@@@@@@@  EXTEND  @@@@@@@@@@@@@@@@@@@@ 
-import Ada, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
+import Ada, AdaRule, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
 import Export, Dblatex, Exercise, Exam, Testexam, Office2pdf, Rsync
 import Script
 
@@ -115,6 +115,16 @@ def loadConfigFile(config, filename, includeChain = None):
             result[1].extend(b)
             continue
 
+        # Apply the alias expansion
+        print 'AAA', sname
+        unaliased = Ada.expandAlias(sname, 
+                                    eval('{' +
+                                         config.get('ada', 'target_alias') + '}')
+                                    )
+        print 'AAA', unaliased
+        # Get the prefix again
+        sprefix = unaliased.split('.')[0]
+
         # Check if the option is legal
         for (oname, ovalue) in newOptions.items(sname):
             # Treat the special case of option with +name or name+
@@ -137,32 +147,32 @@ def loadConfigFile(config, filename, includeChain = None):
 
             # Add the section first
             try:
-                config.add_section(sname)
+                config.add_section(unaliased)
             except ConfigParser.DuplicateSectionError:
                 pass
             
             # Set the values considering the cases of append or prepend
             try:
                 if prepend:
-                    ovalue = ' '.join([ovalue, config.get(sname, oname)])
+                    ovalue = ' '.join([ovalue, config.get(unaliased, oname)])
                 elif append:
-                    ovalue = ' '.join([config.get(sname, oname), ovalue])
+                    ovalue = ' '.join([config.get(unaliased, oname), ovalue])
             except ConfigParser.NoOptionError, e:
                 print I18n.get('severe_parse_error').format(filename)
                 print e
                 sys.exit(1)
-            config.set(sname, oname, ovalue)
+            config.set(unaliased, oname, ovalue)
 
             try:
                 # To verify interpolation
-                config.get(sname, oname)
+                config.get(unaliased, oname)
             except (ConfigParser.InterpolationDepthError, 
                     ConfigParser.InterpolationMissingOptionError), e:
                 print I18n.get('incorrect_variable_reference').format(ovalue)
                 sys.exit(3)
 
         # Add it to the result
-        result[1].append(sname)
+        result[1].append(unaliased)
 
     return result
 
@@ -233,7 +243,11 @@ def Execute(target, directory, pad = None):
     global modules
 
     # Apply the alias expansion
-    target = Ada.expandAlias(target, directory)
+    target = Ada.expandAlias(target, 
+                             eval('{' + 
+                                  directory.getWithDefault('ada', 
+                                                           'target_alias') + '}')
+                             )
 
     # Detect help or dump targets with/without section name
     specialTarget = re.match('(.+\.)?dump$', target) or \
@@ -260,11 +274,26 @@ def Execute(target, directory, pad = None):
     # Traverse the modules and execute the "Execute" function
     executed = False
     for moduleName in modules:
+        
+        # Get the module prefix
         module_prefix = eval(moduleName + '.module_prefix')
         
+        # If the target belongs to this module, execute it
         if targetPrefix == module_prefix:
+            
+            Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
+            
+            # Detect and execute "special" targets
+            if AdaRule.specialTargets(target, directory, module_prefix,
+                                      eval(moduleName + '.clean'), pad):
+                return
+
+            # Execute
             eval(moduleName + '.Execute(target, directory, pad)')
+
+            # Detect if no module executed the target
             executed = True
+
 
     if not executed:
         print I18n.get('unknown_target').format(target)

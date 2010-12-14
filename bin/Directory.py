@@ -380,7 +380,7 @@ class Directory:
             targets = toExecTargets
 
         # If any of the targets is dump, help, clean, expand the current targets
-        # to add them that suffix
+        # to add them that suffix, otherwise, apply alias expansion
         finalTargets = []
         for target in targets:
             if target == 'deepclean':
@@ -410,7 +410,6 @@ class Directory:
         if finalTargets == []:
             finalTargets = ['ada.help']
 
-        # Loop over all the targets to execute
         for target_name in finalTargets:
 
             # Check the cache to see if target has already been executed

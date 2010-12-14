@@ -70,19 +70,22 @@ def locateFile(fileName, dirPrefix = None):
 
     return None
 
-def specialTargets(target, directory, prefix, clean_function = None, pad = None,
-                   deepclean_function = None):
+def specialTargets(target, directory, prefix, clean_function = None, pad = None):
     """
     Check if the requested target is special:
     - dump
     - help
     - clean
+    - deepclean
 
     Return boolean stating if any of them has been executed
     """
     
     # Detect if any of the special target has been detected
     hit = False
+
+    # Calculate the target prefix (up to the first dot)
+    prefix = target.split('.')[0]
 
     # Remember if it is one of the helpdump or dumphelp
     doubleTarget = re.match('(.+\.)?helpdump$', target) or \
@@ -91,10 +94,7 @@ def specialTargets(target, directory, prefix, clean_function = None, pad = None,
     # If requesting help, dump msg and terminate
     if doubleTarget or re.match('(.+)?help$', target):
         msg = directory.getWithDefault(prefix, 'help')
-        if msg != None:
-            print I18n.get('doc_preamble').format(prefix) + '\n' + msg
-        else:
-            print I18n.get('no_doc_for_rule').format(prefix)
+        print I18n.get('doc_preamble').format(prefix) + '\n' + msg
         hit = True
 
     # If requesting var dump, do it and finish
@@ -104,14 +104,14 @@ def specialTargets(target, directory, prefix, clean_function = None, pad = None,
 
     # CLEAN
     if re.match('(.+\.)?clean$', target) and (clean_function != None):
-        clean_function(re.sub('\.clean$', '', target), directory, pad)
-        hit =  True
+        if prefix != 'gotodir':
+            # Gotodir does not clean, unless the deepclean is given
+            clean_function(re.sub('\.clean$', '', target), directory, pad)
+            hit =  True
 
     # DEEPCLEAN
     if re.match('(.+\.)?deepclean$', target):
-        if deepclean_function != None:
-            deepclean_function(re.sub('\.deepclean$', '', target), directory, pad)
-        elif clean_function != None:
+        if clean_function != None:
             clean_function(re.sub('\.clean$', '', target), directory, pad)
             hit =  True
 

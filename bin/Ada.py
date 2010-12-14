@@ -228,15 +228,6 @@ def Execute(target, directory, pad = None):
     Execute the rule in the given directory
     """
 
-    global module_prefix
-    global documentation
-
-    logInfo(target, directory, 'Enter ' + directory.current_dir)
-
-    # Detect and execute "special" targets
-    if AdaRule.specialTargets(target, directory, module_prefix):
-        return
-
     if pad == None:
 	pad = ''
 
@@ -246,7 +237,7 @@ def Execute(target, directory, pad = None):
     print pad + 'EE', target
     return
 
-def expandAlias(target, directory):
+def expandAlias(target, aliasDict):
     """
     Given a target, apply the values in the dictionary contained in the option
     Ada.targer_alias and return the result.
@@ -258,9 +249,6 @@ def expandAlias(target, directory):
     tail = []
     if len(parts) > 1:
         tail = parts[1:]
-
-    # Create the alias dictionary
-    aliasDict = eval('{' + directory.getWithDefault('ada', 'target_alias') + '}')
 
     # Prepare values for the loop
     oldValue = None
