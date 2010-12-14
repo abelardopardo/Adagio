@@ -242,6 +242,9 @@ def Execute(target, directory, pad = None):
 
     global modules
 
+    # Keep a copy of the target before applying aliases
+    originalTarget = target
+
     # Apply the alias expansion
     target = Ada.expandAlias(target, 
                              eval('{' + 
@@ -259,14 +262,12 @@ def Execute(target, directory, pad = None):
 
     # Make sure the target is legal.
     if not specialTarget and not directory.options.has_section(target):
-        print I18n.get('illegal_target_name').format(t=target,
-                                                     dl=directory.current_dir)
+        print I18n.get('illegal_target_name').format(t = originalTarget,
+                                                     dl = directory.current_dir)
         sys.exit(2)
 
     # Get the target prefix (everything up to the first dot)
     targetPrefix = target.split('.')[0]
-
-    Ada.logInfo('Properties', directory, 'Target ' + target)
 
     if pad == None:
 	pad = ''
@@ -282,15 +283,16 @@ def Execute(target, directory, pad = None):
         if targetPrefix != module_prefix:
             continue
             
-        Ada.logInfo(target, directory, 'Enter ' + directory.current_dir)
+        Ada.logInfo(originalTarget, directory, 'Enter ' + directory.current_dir)
             
         # Print msg when beginning to execute target in dir
-        print pad + 'BB', target
+        print pad + 'BB', originalTarget
 
         # Detect and execute "special" targets
         if AdaRule.specialTargets(target, directory, module_prefix,
                                   eval(moduleName + '.clean'), pad):
-            Ada.logInfo(target, directory, 'Exit ' + directory.current_dir)
+            Ada.logInfo(oritinalTarget, directory, 
+                        'Exit ' + directory.current_dir)
             return
         
         # Execute. 
@@ -303,12 +305,12 @@ def Execute(target, directory, pad = None):
         # Detect if no module executed the target
         executed = True
 
-        print pad + 'EE', target
+        print pad + 'EE', originalTarget
 
-        Ada.logInfo(target, directory, 'Exit ' + directory.current_dir)
+        Ada.logInfo(originalTarget, directory, 'Exit ' + directory.current_dir)
 
     if not executed:
-        print I18n.get('unknown_target').format(target)
+        print I18n.get('unknown_target').format(originalTarget)
         sys.exit(1)
 
 def treatTemplate(config, filename, newOptions, sname, includeChain):
