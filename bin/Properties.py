@@ -116,12 +116,11 @@ def loadConfigFile(config, filename, includeChain = None):
             continue
 
         # Apply the alias expansion
-        print 'AAA', sname
         unaliased = Ada.expandAlias(sname, 
                                     eval('{' +
                                          config.get('ada', 'target_alias') + '}')
                                     )
-        print 'AAA', unaliased
+        
         # Get the prefix again
         sprefix = unaliased.split('.')[0]
 
@@ -289,9 +288,8 @@ def Execute(target, directory, pad = None):
         print pad + 'BB', originalTarget
 
         # Detect and execute "special" targets
-        if AdaRule.specialTargets(target, directory, module_prefix,
-                                  eval(moduleName + '.clean'), pad):
-            Ada.logInfo(oritinalTarget, directory, 
+        if AdaRule.specialTargets(target, directory, module_prefix, pad):
+            Ada.logInfo(originalTarget, directory, 
                         'Exit ' + directory.current_dir)
             return
         
