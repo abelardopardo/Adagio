@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import sys, os, re, ConfigParser, ordereddict
+import sys, os, re, ConfigParser, ordereddict, atexit
 
 import Ada, Properties, I18n
 
@@ -105,17 +105,19 @@ def findProjectDir(pfile):
 
     return os.path.abspath(currentDir)
 
-def resetExecuted():
+def flushCreatedDirs():
     """
-    Sets all the executed flags of all directories to false. This is useful for
-    debugging purposes. When re-starting a script, the old values of these
-    variables are still valid.
+    Removes all the created dirs. Function registered atexit to facilitate debugging
     """
     global _createdDirs
 
-    for (a, dObj) in _createDirs.items():
-        dObj.executed = False
+    _createdDirs = {}
     return
+
+#
+# Flush _createdDirs
+#
+atexit.register(flushCreatedDirs);
 
 class Directory:
     pass

@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import sys, os, copy
+import sys, os, copy, atexit
 from lxml import etree
 
 import AdaRule, I18n
@@ -34,6 +34,22 @@ _createdTrees = {}
 # Dictionary storing XSL transformations. The key is either the text of a
 # StringIO or the absolute path given as parameter.
 _createdTransforms = {}
+
+def flushData():
+    """
+    Flush both caches
+    """
+    global _createdTrees
+    global _createdTransforms
+
+    _createdTrees = {}
+    _createdTransforms = {}
+    return
+
+#
+# Flush data upon exit
+#
+atexit.register(flushData)
 
 def findOrAddTree(path, expanded = True):
     """

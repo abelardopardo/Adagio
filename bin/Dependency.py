@@ -20,7 +20,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, sys, datetime, subprocess, re, time
+import os, sys, datetime, subprocess, re, time, atexit
 
 # Import conditionally either regular xml support or lxml if present
 try:
@@ -44,9 +44,23 @@ __IDXToName = []
 __NodeDate = []
 __NodeOutEdges = []
 
-# ABEL: Fix
-# Dir: /home/abel/Courses/AS/Website/Surveys
-# After touching Params.xml, the files are not refreshed.
+def flushData():
+    global __FileNameToNodeIDX
+    global __IDXToName
+    global __NodeDate
+    global __NodeOutEdges
+
+    __FileNameToNodeIDX = {}
+    __IDXToName = []
+    __NodeDate = []
+    __NodeOutEdges = []
+    return
+
+#
+# Flush data upon exit
+#
+atexit.register(flushData)
+
 def addNode(fileName):
     """
     Given a fileName creates (if needed) the node in the graph. It adds a new
