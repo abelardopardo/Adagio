@@ -93,12 +93,9 @@ def dump(self):
 def findProjectDir(pfile):
     """
     Function that traverses the directories upward until the file name given by
-    the option ada.projectfile is found, None otherwise
+    the option ada.projectfile is found.
 
-    WARNING: If the directory found is the current one, the EMPTY string is
-    returned. If any other directory is returned, the os.path.sep is added at
-   the end. This is to maintain the convention that the function returns the
-   MINIMUM dir expression to be used as prefix.
+    WARNING: This function returns always an ABSOLUTE path
     """
     currentDir = '.'
 
@@ -106,12 +103,7 @@ def findProjectDir(pfile):
             (not os.path.exists(os.path.join(currentDir, pfile))):
         currentDir = os.path.join(currentDir, "..")
 
-    if os.path.abspath(currentDir) == '/' or currentDir == '.':
-        return ''
-
-    currentDir = currentDir + os.path.sep
-
-    return currentDir
+    return os.path.abspath(currentDir)
 
 def resetExecuted():
     """

@@ -154,14 +154,30 @@ def createParameterDict(target, directory):
         directory.getWithDefault(Ada.module_prefix, 'home') + "\'"
     styleParams['basedir'] =  "\'" + \
         directory.getWithDefault(Ada.module_prefix, 'basedir') + "\'"
-    styleParams['ada.project.home'] =  "\'" + \
-        directory.getWithDefault(Ada.module_prefix, 'project_home') + "\'"
+
+    # Calculate ada.project.home as a relative path with respect to the project
+    # home
+    relProjectHome = os.path.relpath(directory.getWithDefault(Ada.module_prefix, 
+                                                              'project_home'),
+                                     directory.current_dir)
+    # Attach always the slash at the end to allow the stylesheets to assume it
+    # and that way, they work in the case of an empty path.
+    relProjectHome += '/'
+
+    # If the project home is the current one, return the empty string
+    if relProjectHome == './':
+        relProjectHome = ''
+
+    Ada.logDebug('Xsltproc', None, 'ada.project.home ' + relProjectHome)
+    styleParams['ada.project.home'] =  "\'" + relProjectHome + "\'"
+
     styleParams['ada.current.datetime'] = "\'" + \
         directory.getWithDefault(Ada.module_prefix, 'current_datetime') + "\'"
     profileRevision = directory.getWithDefault(Ada.module_prefix,
                                             'profile_revision')
     if profileRevision != '':
         styleParams['profile.revision'] = "\'" + profileRevision + "\'"
+
     # Parse the dictionary given in extra_arguments and fold it
     try:
         extraDict = eval('{' + directory.getWithDefault(target,

@@ -31,8 +31,8 @@ import AdaRule, I18n
 # tree.
 _createdTrees = {}
 
-# Dictionary storing XSL transformations. The keys are the concatenation of all
-# the absolute paths to files in the order in which they are imported
+# Dictionary storing XSL transformations. The key is either the text of a
+# StringIO or the absolute path given as parameter.
 _createdTransforms = {}
 
 def findOrAddTree(path, expanded = True):
@@ -50,7 +50,6 @@ def findOrAddTree(path, expanded = True):
         return expandedTree
     if not expanded and simpleTree != None:
         # HIT
-        print 'BBB'
         return simpleTree
 
     # Missing tree
@@ -71,8 +70,9 @@ def findOrAddTree(path, expanded = True):
             expandedTree.xinclude()
         else:
             try:
-                expandedTree = etree.parse(path, etree.XMLParser(load_dtd = True, 
-                                                                 no_network = True))
+                expandedTree = etree.parse(path, 
+                                           etree.XMLParser(load_dtd = True, 
+                                                           no_network = True))
                 expandedTree.xinclude()
             except etree.XMLSyntaxError, e:
                 print I18n.get('severe_parse_error').format(path)
