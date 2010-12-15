@@ -277,11 +277,8 @@ def Execute(target, directory, pad = None):
     executed = False
     for moduleName in modules:
         
-        # Get the module prefix
-        module_prefix = eval(moduleName + '.module_prefix')
-        
         # If the target does not belong to this module, keep iterating
-        if targetPrefix != module_prefix:
+        if targetPrefix != eval(moduleName + '.module_prefix'):
             continue
             
         Ada.logInfo(originalTarget, directory, 'Enter ' + directory.current_dir)
@@ -290,7 +287,7 @@ def Execute(target, directory, pad = None):
         print pad + 'BB', originalTarget
 
         # Detect and execute "special" targets
-        if AdaRule.specialTargets(target, directory, module_prefix, pad):
+        if specialTargets(target, directory, moduleName, pad):
             Ada.logInfo(originalTarget, directory, 
                         'Exit ' + directory.current_dir)
             return
@@ -371,3 +368,59 @@ def treatTemplate(config, filename, newOptions, sname, includeChain):
         result[0].update(a)
         result[1].extend(b)
     return result
+
+def specialTargets(target, directory, moduleName, pad = None):
+    """
+    Check if the requested target is special:
+    - dump
+    - help
+    - clean
+    - deepclean
+
+    Return boolean stating if any of them has been executed
+    """
+    
+    # Detect if any of the special target has been detected
+    hit = False
+
+    # Calculate the target prefix (up to the first dot)
+    prefix = target.split('.')[0]
+
+    # Remember if it is one of the helpdump or dumphelp
+    doubleTarget = re.match('(.+\.)?helpdump$', target) or \
+        re.match('(.+\.)?dumphelp$', target)
+
+    # If requesting help, dump msg and terminate
+    if doubleTarget or re.match('(.+)?help$', target):
+        msg = directory.getWithDefault(prefix, 'help')
+        print I18n.get('doc_preamble').format(prefix) + '\n' + msg
+        hit = True
+
+    # If requesting var dump, do it and finish
+    if doubleTarget or re.match('(.+\.)?dump$', target):
+        dumpOptions(target, directory, prefix)
+        hit =  True
+
+    # CLEAN
+    if re.match('(.+\.)?clean$', target):
+
+        if prefix != 'gotodir':
+            # Gotodir does not clean, unless the deepclean is given
+            eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
+                 + '\', directory)')
+            hit =  True
+
+    # DEEPCLEAN
+    if re.match('(.+\.)?deepclean$', target):
+        if clean_function != None:
+            if prefix == 'gotodir':
+                # Gotodir propagates the pad
+                eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
+                     + '\', directory, pad)')
+            else:
+                eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
+                     + '\', directory)')
+            hit =  True
+
+    return hit
+

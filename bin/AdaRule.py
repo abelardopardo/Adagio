@@ -70,60 +70,6 @@ def locateFile(fileName, dirPrefix = None):
 
     return None
 
-def specialTargets(target, directory, module_prefix, pad = None):
-    """
-    Check if the requested target is special:
-    - dump
-    - help
-    - clean
-    - deepclean
-
-    Return boolean stating if any of them has been executed
-    """
-    
-    # Detect if any of the special target has been detected
-    hit = False
-
-    # Calculate the target prefix (up to the first dot)
-    prefix = target.split('.')[0]
-
-    # Remember if it is one of the helpdump or dumphelp
-    doubleTarget = re.match('(.+\.)?helpdump$', target) or \
-        re.match('(.+\.)?dumphelp$', target)
-
-    # If requesting help, dump msg and terminate
-    if doubleTarget or re.match('(.+)?help$', target):
-        msg = directory.getWithDefault(prefix, 'help')
-        print I18n.get('doc_preamble').format(prefix) + '\n' + msg
-        hit = True
-
-    # If requesting var dump, do it and finish
-    if doubleTarget or re.match('(.+\.)?dump$', target):
-        dumpOptions(target, directory, prefix)
-        hit =  True
-
-    # CLEAN
-    if re.match('(.+\.)?clean$', target):
-        if prefix != 'gotodir':
-            # Gotodir does not clean, unless the deepclean is given
-            eval(module_prefix + '.clean(' + re.sub('\.clean$', '', target)
-                 + ', directory)')
-            hit =  True
-
-    # DEEPCLEAN
-    if re.match('(.+\.)?deepclean$', target):
-        if clean_function != None:
-            if prefix == 'gotodir':
-                # Gotodir propagates the pad
-                eval(module_prefix + '.clean(' + re.sub('\.clean$', '', target)
-                     + ', directory, pad)')
-            else:
-                eval(module_prefix + '.clean(' + re.sub('\.clean$', '', target)
-                     + ', directory)')
-            hit =  True
-
-    return hit
-
 def getFilesToProcess(target, directory):
     """
     Get the files to process by expanding the expressions in "files" and
