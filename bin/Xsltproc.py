@@ -174,9 +174,10 @@ def createParameterDict(target, directory):
     styleParams['ada.current.datetime'] = "\'" + \
         directory.getWithDefault(Ada.module_prefix, 'current_datetime') + "\'"
     profileRevision = directory.getWithDefault(Ada.module_prefix,
-                                            'profile_revision')
+                                            'profile_revisions')
     if profileRevision != '':
-        styleParams['profile.revision'] = "\'" + profileRevision + "\'"
+        styleParams['profile.revision'] = "\'" + \
+            profileRevision.join(';') + "\'"
 
     # Parse the dictionary given in extra_arguments and fold it
     try:

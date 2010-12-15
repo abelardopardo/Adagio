@@ -384,8 +384,8 @@ def specialTargets(target, directory, moduleName, pad = None):
     # Detect if any of the special target has been detected
     hit = False
 
-    # Calculate the target prefix (up to the first dot)
-    prefix = target.split('.')[0]
+    # Calculate the target prefix (up to the last dot)
+    (prefix, b, c) = target.rpartition('.')
 
     # Remember if it is one of the helpdump or dumphelp
     doubleTarget = re.match('(.+\.)?helpdump$', target) or \
@@ -394,7 +394,7 @@ def specialTargets(target, directory, moduleName, pad = None):
     # If requesting help, dump msg and terminate
     if doubleTarget or re.match('(.+)?help$', target):
         msg = directory.getWithDefault(prefix, 'help')
-        print I18n.get('doc_preamble').format(prefix) + '\n' + msg
+        print I18n.get('doc_preamble').format(prefix) + '\n\n' + msg + '\n\n'
         hit = True
 
     # If requesting var dump, do it and finish
@@ -405,7 +405,7 @@ def specialTargets(target, directory, moduleName, pad = None):
     # CLEAN
     if re.match('(.+\.)?clean$', target):
 
-        if prefix != 'gotodir':
+        if not prefix.startswith('gotodir'):
             # Gotodir does not clean, unless the deepclean is given
             eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
                  + '\', directory)')
@@ -414,7 +414,7 @@ def specialTargets(target, directory, moduleName, pad = None):
     # DEEPCLEAN
     if re.match('(.+\.)?deepclean$', target):
         if clean_function != None:
-            if prefix == 'gotodir':
+            if prefix.startswith('gotodir'):
                 # Gotodir propagates the pad
                 eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
                      + '\', directory, pad)')
