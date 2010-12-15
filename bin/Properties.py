@@ -116,10 +116,15 @@ def loadConfigFile(config, filename, includeChain = None):
             continue
 
         # Apply the alias expansion
-        unaliased = Ada.expandAlias(sname, 
-                                    eval('{' +
-                                         config.get('ada', 'target_alias') + '}')
-                                    )
+        try:
+            unaliased = Ada.expandAlias(sname, 
+                                        eval('{' +
+                                             config.get('ada', 
+                                                        'target_alias') + '}')
+                                        )
+        except SyntaxError:
+            print I18n.get('error_alias_expression')
+            sys.exit(1)
         
         # Get the prefix again
         sprefix = unaliased.split('.')[0]
@@ -153,9 +158,11 @@ def loadConfigFile(config, filename, includeChain = None):
             # Set the values considering the cases of append or prepend
             try:
                 if prepend:
-                    ovalue = ' '.join([ovalue, config.get(unaliased, oname)])
+                    ovalue = ' '.join([ovalue, getWithDefault(config, unaliased, 
+                                                              oname)])
                 elif append:
-                    ovalue = ' '.join([config.get(unaliased, oname), ovalue])
+                    ovalue = ' '.join([getWithDefault(config, unaliased, oname), 
+                                       ovalue])
             except ConfigParser.NoOptionError:
                 print I18n.get('severe_parse_error').format(filename)
                 print I18n.get('error_option_addition').format(sname + '.' + oname)
@@ -175,6 +182,23 @@ def loadConfigFile(config, filename, includeChain = None):
 
     return result
 
+def getWithDefault(config, section, option):
+    """
+    Try to get a pair section/option from the given ConfigParser. If it
+    does not exist, check if the section has the form name.subname. If so, check
+    for the option name/option.
+    """
+    try:
+        result = config.get(section, option)
+        return result
+    except ConfigParser.InterpolationMissingOptionError, e:
+        print I18n.get('incorrect_variable_reference').format(option)
+        sys.exit(1)
+    except ConfigParser.NoOptionError:
+        pass
+    section = section.split('.')[0]
+    return config.get(section, option)
+    
 def dump(options, pad = None, sections = None):
     """
     Function to print out the content of a config object
@@ -404,20 +428,17 @@ def specialTargets(target, directory, moduleName, pad = None):
 
     # CLEAN
     if re.match('(.+\.)?clean$', target):
-
-        if not prefix.startswith('gotodir'):
-            # Gotodir does not clean, unless the deepclean is given
-            eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
-                 + '\', directory)')
-            hit =  True
+        eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
+             + '\', directory)')
+        hit =  True
 
     # DEEPCLEAN
     if re.match('(.+\.)?deepclean$', target):
         if clean_function != None:
             if prefix.startswith('gotodir'):
-                # Gotodir propagates the pad
+                # Gotodir propagates the pad for the deep
                 eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
-                     + '\', directory, pad)')
+                     + '\', directory, True, pad)')
             else:
                 eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
                      + '\', directory)')

@@ -384,8 +384,7 @@ class Directory:
             elif target == 'clean':
                 # Get all the targets except the "gotodir" ones
                 finalTargets.extend([x + '.clean' 
-                                     for x in toExecTargets
-                                     if not x.startswith('gotodir')])
+                                     for x in toExecTargets])
                 finalTargets.reverse()
             elif target == 'dump':
                 finalTargets.extend([x + '.dump' for x in toExecTargets])
@@ -403,6 +402,9 @@ class Directory:
         # needed, hardwire the target to ada.help.
         if finalTargets == []:
             finalTargets = ['ada.help']
+
+        Ada.logDebug('Directory', self,
+                     ' to execute ' + ' '.join(finalTargets))
 
         for target_name in finalTargets:
 
@@ -435,17 +437,7 @@ class Directory:
         it does not exist, check if the section has the form name.subname. If
         so, check for the option name/option.
         """
-        try:
-            result = self.options.get(section, option)
-            return result
-        except ConfigParser.InterpolationMissingOptionError, e:
-            print I18n.get('incorrect_variable_reference').format(option)
-            sys.exit(1)
-        except ConfigParser.NoOptionError:
-            pass
-        section = section.split('.')[0]
-        return self.options.get(section, option)
-
+        return Properties.getWithDefault(self.options, section, option)
 
 ################################################################################
 
