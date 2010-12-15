@@ -83,14 +83,19 @@ def findOrAddTree(path, expanded = True):
         # Create the expandedTree (check if the simpleTree can be used
         if simpleTree != None:
             expandedTree = copy.deepcopy(simpleTree)
-            expandedTree.xinclude()
+            try:
+                expandedTree.xinclude()
+            except (etree.XMLSyntaxError, etree.XIncludeError), e:
+                print I18n.get('severe_parse_error').format(path)
+                print e
+                sys.exit(1)
         else:
             try:
                 expandedTree = etree.parse(path, 
                                            etree.XMLParser(load_dtd = True, 
                                                            no_network = True))
                 expandedTree.xinclude()
-            except etree.XMLSyntaxError, e:
+            except (etree.XMLSyntaxError, etree.XIncludeError), e:
                 print I18n.get('severe_parse_error').format(path)
                 print e
                 sys.exit(1)
