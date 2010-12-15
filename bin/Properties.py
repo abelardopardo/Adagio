@@ -288,6 +288,7 @@ def Execute(target, directory, pad = None):
 
         # Detect and execute "special" targets
         if specialTargets(target, directory, moduleName, pad):
+            print pad + 'EE', originalTarget
             Ada.logInfo(originalTarget, directory, 
                         'Exit ' + directory.current_dir)
             return
@@ -398,7 +399,7 @@ def specialTargets(target, directory, moduleName, pad = None):
 
     # If requesting var dump, do it and finish
     if doubleTarget or re.match('(.+\.)?dump$', target):
-        dumpOptions(target, directory, prefix)
+        AdaRule.dumpOptions(target, directory, prefix)
         hit =  True
 
     # CLEAN
