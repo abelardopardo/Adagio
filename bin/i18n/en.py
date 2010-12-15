@@ -103,6 +103,7 @@ msgs = {
     'severe_parse_error': 'Error while parsing {0}',
     'severe_exec_error': 'Error while executing {0}. Check adado.log',
     'exec_line': 'Invocation: {0}',
+    'error_option_addition': 'Option {0} is empty. No addition allowed',
     'severe_option_error': 'Error in configuration file',
     'error_applying_xslt': 'Error while applying style in target {0}',
     'error_extra_args': 'Incorrect arguments in variable {0}.',

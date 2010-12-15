@@ -156,9 +156,9 @@ def loadConfigFile(config, filename, includeChain = None):
                     ovalue = ' '.join([ovalue, config.get(unaliased, oname)])
                 elif append:
                     ovalue = ' '.join([config.get(unaliased, oname), ovalue])
-            except ConfigParser.NoOptionError, e:
+            except ConfigParser.NoOptionError:
                 print I18n.get('severe_parse_error').format(filename)
-                print e
+                print I18n.get('error_option_addition').format(sname + '.' + oname)
                 sys.exit(1)
             config.set(unaliased, oname, ovalue)
 
