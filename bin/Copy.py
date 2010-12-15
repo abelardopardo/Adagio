@@ -124,8 +124,8 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
             print I18n.get('file_uptodate').format(os.path.basename(dstFile))
             continue
 
-        # Proceed with the execution of xslt
-        print I18n.get('producing').format(os.path.basename(dstFile))
+        # Proceed with the execution of copy
+        print I18n.get('copying').format(os.path.basename(dstFile))
 
         # Copying the file/dir
         Ada.logDebug(target, directory, 'Copy ' + datafile + ' ' +
