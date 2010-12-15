@@ -47,6 +47,9 @@ def Execute(target, directory, pad = None):
     Execute the rule in the given directory
     """
 
+    if pad == 'None':
+        pad = ''
+
     # Get the directories to process, if none, terminate silently
     toProcess = []
     for srcDir in directory.getWithDefault(target, 'files').split():
@@ -82,12 +85,15 @@ def Execute(target, directory, pad = None):
 
     return
 
-def clean(target, directory, pad = None):
+def clean(target, directory, deepClean = False, pad = None):
     """
     Clean the files produced by this rule
     """
     
     global module_prefix
+
+    if pad == None:
+        pad = ''
 
     Ada.logInfo(target, directory, 'Cleaning')
 
@@ -106,27 +112,38 @@ def clean(target, directory, pad = None):
         optionsToSet = ['export dst_dir ' + newExportDir]
     Ada.logInfo(target, directory, 'NEW export.dst_dir = ' + newExportDir)
 
-    # Targets to execute in the remote directory
-    givenRemoteTargets = directory.getWithDefault(target, 
-                                                  'targets').split()
-    remoteTargets = ['.'.join([x, 'clean']) \
-                         for x in givenRemoteTargets \
-                         if not re.match('(.+\.)?help$', x) and \
-                         not re.match('(.+\.)?clean$', x) and \
-                         not re.match('(.+\.)?dumphelp$', x) and \
-                         not re.match('(.+\.)?helpdump$', x)]
-    # If both the given targets and remoteTargets is empty, it should simply be
-    # clean. This is the case when a command line clean is propagated
-    if givenRemoteTargets == []:
-        if remoteTargets == []:
-            remoteTargets = ['clean']
-    elif remoteTargets == []:
-        # If there is a given target, but it is one of the special ones (it was
-        # filtered), do not perform a recursive clean. Useful when only a dump
-        # is required in the remote directory.
-        Ada.logInfo(target, directory, 'Special target in gotodir. Stop.')
-        print I18n.get('no_targets_to_clean').format(target)
-        return
+    if not deepClean:
+        # If the clean is not deep, the target only propagates if the
+        # newExportDir is this directory (to clean the current directory
+        # only). Otherwise, the target is simply ignore.
+        if newExportDir != directory.current_dir:
+            return
+
+        remoteTargets = ['export.clean']
+    else:
+        # Targets to execute in the remote directory
+        givenRemoteTargets = directory.getWithDefault(target, 'targets').split()
+
+        remoteTargets = ['.'.join([x, 'clean']) \
+                             for x in givenRemoteTargets \
+                             if not re.match('(.+\.)?help$', x) and \
+                             not re.match('(.+\.)?clean$', x) and \
+                             not re.match('(.+\.)?dumphelp$', x) and \
+                             not re.match('(.+\.)?helpdump$', x)]
+
+        # If both the given targets and remoteTargets are empty, it should
+        # simply be clean. This is the case when a command line clean is
+        # propagated
+        if givenRemoteTargets == []:
+            if remoteTargets == []:
+                remoteTargets = ['clean']
+        elif remoteTargets == []:
+            # If there is a given target, but it is one of the special ones (it
+            # was filtered), do not perform a recursive clean. Useful when only
+            # a dump is required in the remote directory.
+            Ada.logInfo(target, directory, 'Special target in gotodir. Stop.')
+            print I18n.get('no_targets_to_clean').format(target)
+            return
         
     Ada.logInfo(target, directory, 
                 'Remote Targets = ' + ' '.join(remoteTargets))
