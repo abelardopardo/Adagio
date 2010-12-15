@@ -141,9 +141,6 @@ msgs = {
     'xslt_merge_styles':
     'Space separated list of styles to combine with the given style',
     'languages': 'Space separated list of languages to consider',
-    'xslt_multilingual':
-    'True/False if the documents to process are multilingual.\n\
-      Incompatible with profile_lang',
     'date_format': 'Format used to manipulate the dates',
     'date_incorrect_format': 'Date {0} not compliant with format {1}',
     'exercise_produce': 
@@ -155,10 +152,11 @@ msgs = {
     'export_open': 'If the export is enabled (must be "0" or "1").',
     'export_no_dst': 'No destination for export. Bypassing.',
     'export_not_open': 'Export not executed because "open" is {0}',
-    'export_not_revision':
-    'Export not executed because revision {0} is not in "profile_revisions".',
-    'export_profile_revisions':
-    'Values of profile_revision for which the export is allowed.',
+    'export_not_revision': 
+    """Export not executed because the value of "{0}.profile_revision" is not in
+"ada.profile_revisions".""",
+    'export_profile_revision':
+    'Value in ada.profile_revision for which the export is allowed.',
     'export_closed_begin': 'Export not executed because it is before {0}',
     'export_closed_end': 'Export not executed because it is after {0}',
     'testexam_permutations': 'Number of versions with the questions shuffled',
@@ -166,8 +164,8 @@ msgs = {
     'testexam_shuffling': 'Shuffling questions in file {0}',
     'testexam_error_shuffling': 'Error while shuffling questions in test exam',
     'ada_current_datetime': 'The Current date/time to be considered',
-    'ada_profile_revision':
-    'Value of the revision attribute to profile Docbook files',
+    'ada_profile_revisions':
+    'Space separated list of values to use for various rules (export,...)',
     'ada_minimum_version':
     'The minimum ada version that is required to execute this directory',
     'ada_maximum_version':

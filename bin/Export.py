@@ -35,7 +35,7 @@ options = [
     ('begin', '', I18n.get('export_begin')),
     ('end', '', I18n.get('export_end')),
     ('open', '1', I18n.get('export_open')),
-    ('profile_revisions', '', I18n.get('export_profile_revisions'))
+    ('profile_revision', '', I18n.get('export_profile_revision'))
     ]
 
 documentation = {
@@ -145,12 +145,11 @@ def evaluateCondition(target, directory, dstDir):
             return False
 
     # Check part 4 of the rule: profile_revision must be in profile_revisions
-    revisionsData = directory.getWithDefault(target, 'profile_revisions')
+    revisionsData = directory.getWithDefault('ada', 'profile_revisions')
     if revisionsData != '':
-        thisRevision = directory.options.get(Ada.module_prefix,
-                                             'profile_revision')
-        if not (thisRevision in set(revisionData.split())):
-            print I18n.get('export_not_revision').format(thisRevision)
+        thisRevision = directory.options.get(target, 'profile_revision')
+        if not (thisRevision in set(revisionsData.split())):
+            print I18n.get('export_not_revision').format(target)
             return False
 
     return True
