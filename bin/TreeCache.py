@@ -100,7 +100,6 @@ def findOrAddTransform(path):
     transform = _createdTransforms.get(theKey)
     if transform != None:
         # HIT
-        print 'CCC'
         return transform
 
     # Parse style file, insert name resolver to consider ADA local styles,
