@@ -30,12 +30,7 @@ module_prefix = 'export'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('dst_dir', '', I18n.get('rule_dst_dir')),
-    ('date_format', 'yyyy/MM/dd HH:mm:ss', I18n.get('date_format')),
-    ('begin', '', I18n.get('export_begin')),
-    ('end', '', I18n.get('export_end')),
-    ('open', '1', I18n.get('export_open')),
-    ('profile_revision', '', I18n.get('export_profile_revision'))
+    ('dst_dir', '', I18n.get('rule_dst_dir'))
     ]
 
 documentation = {
@@ -43,16 +38,16 @@ documentation = {
     This rule copies the "files" in "src_dir" to "dst_dir" if ALL the following
     conditions are satisfied:
 
-    - "begin" is empty or the current time is greater than "begin"
-    - "end" is empty or the current time is less than "end"
-    - "open" has the value 1
-    - "profile_revisions" is empty or contains %(profile_revision)s
+    - "enable_begin" is empty or the current time is greater than "enable_begin"
+    - "enable_end" is empty or the current time is less than "enable_end"
+    - "enable_open" has the value 1
+    - "ada.enabled_profiles" is empty or contains target.enable_profile
 
     The default values of these variables are:
-    - open : '1'
-    - begin : ''
-    - end : ''
-    - profile_revisions : ''
+    - enable_open : '1'
+    - enable_begin : ''
+    - enable_end : ''
+    - enable_profile : ''
 
     The dates are parsed following the format stored in "data_format"
 
@@ -72,13 +67,18 @@ def Execute(target, directory):
     if toProcess == []:
         return
 
-    # Check the condition
+    # Check if dstDir is empty, in which case, there is nothing to do
     dstDir = directory.getWithDefault(target, 'dst_dir')
-    srcDir = directory.getWithDefault(target, 'src_dir')
-    if not evaluateCondition(target, directory, dstDir):
+    if dstDir == '':
+        print I18n.get('export_no_dst')
+        return
+
+    # Check the condition
+    if not AdaRule.evaluateCondition(target, directory.options):
         return
 
     # If we are here, the export may proceed!
+    srcDir = directory.getWithDefault(target, 'src_dir')
     Copy.doCopy(target, directory, toProcess, srcDir, dstDir)
 
     return
@@ -106,53 +106,6 @@ def clean(target, directory):
                  directory.getWithDefault(target, 'src_dir'), dstDir)
 
     return
-
-def evaluateCondition(target, directory, dstDir):
-    """
-    Evaluates the condition to allow the execution of any export target.
-    """
-
-    # If the dst_dir is empty, do not export
-    if dstDir == '':
-        print I18n.get('export_no_dst')
-        return False
-
-    # Check part 1 of the rule: open must be 1
-    openData = directory.getWithDefault(target, 'open')
-    openValue = openData == '1'
-    if not openValue:
-        print I18n.get('export_not_open').format(openData)
-        return False
-
-    # Get current date/time
-    now = datetime.datetime.now()
-
-    # Get the date_format
-    dateFormat = directory.getWithDefault(target, 'date_format')
-
-    # Check part 2 of the rule: begin date is before current date
-    beginDate = directory.getWithDefault(target, 'begin')
-    if beginDate != '':
-        if checkDateFormat(beginDate, dateFormat) < now:
-            print I18n.get('export_closed_begin').format(beginDate)
-            return False
-
-    # Check part 3 of the rule: end date is after current date
-    endDate = directory.getWithDefault(target, 'end')
-    if endDate != '':
-        if now < checkDateFormat(endDate, dateFormat):
-            print I18n.get('export_closed_end').format(endDate)
-            return False
-
-    # Check part 4 of the rule: profile_revision must be in profile_revisions
-    revisionsData = directory.getWithDefault('ada', 'profile_revisions')
-    if revisionsData != '':
-        thisRevision = directory.options.get(target, 'profile_revision')
-        if not (thisRevision in set(revisionsData.split())):
-            print I18n.get('export_not_revision').format(target)
-            return False
-
-    return True
 
 def checkDateFormat(d, f):
     """

@@ -45,22 +45,27 @@ module_prefix = 'ada'
 ################################################################################
 _currentDir = os.path.abspath(os.getcwd())
 config_defaults = {
-    'basedir':           _currentDir,
-    'current_datetime':  str(datetime.datetime.now()),
-    'debug_level':       '0',
-    'dst_dir':           _currentDir,
-    'encoding':          re.sub('^UTF', 'UTF-', enc),
-    'file_separator':    os.path.sep,
-    'files':             '',
-    'help':              I18n.get('no_help_available'),
-    'home':              _currentDir,
-    'locale':            lang[0:2],
-    'partial':           '0',
-    'project_file':      'Ada.project',
-    'project_home':      _currentDir,
-    'property_file':     'Properties.ddo',
-    'src_dir':           _currentDir,
-    'version':           '10.03.1'
+    'basedir':            _currentDir,
+    'current_datetime':   str(datetime.datetime.now()),
+    'debug_level':        '0',
+    'dst_dir':            _currentDir,
+    'enable_begin':       '',
+    'enable_date_format': 'yyyy/MM/dd HH:mm:ss',
+    'enable_end':         '',
+    'enable_open':        '1',
+    'enable_profile':     '',
+    'encoding':           re.sub('^UTF', 'UTF-', enc),
+    'file_separator':     os.path.sep,
+    'files':              '',
+    'help':               I18n.get('no_help_available'),
+    'home':               _currentDir,
+    'locale':             lang[0:2],
+    'partial':            '0',
+    'project_file':       'Ada.project',
+    'project_home':       _currentDir,
+    'property_file':      'Properties.ddo',
+    'src_dir':            _currentDir,
+    'version':            '10.03.1'
 }
 
 documentation = {
@@ -83,7 +88,7 @@ options = [
     # Translation mechanism for target names
     ('target_alias', '', I18n.get('target_alias')),
     # Revisions to consider when executing rules
-    ('profile_revisions', '', I18n.get('ada_profile_revisions'))
+    ('enabled_profiles', '', I18n.get('ada_enabled_profiles'))
      ]
 
 # Directory where ADA is installed

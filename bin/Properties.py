@@ -351,6 +351,10 @@ def Execute(target, directory, pad = None):
         # Print msg when beginning to execute target in dir
         print pad + 'BB', originalTarget
 
+        # Check the condition
+        if not AdaRule.evaluateCondition(target, directory.options):
+            return
+
         # Detect and execute "special" targets
         if specialTargets(target, directory, moduleName, pad):
             print pad + 'EE', originalTarget

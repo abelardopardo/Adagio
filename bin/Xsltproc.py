@@ -174,7 +174,7 @@ def createParameterDict(target, directory):
     styleParams['ada.current.datetime'] = "\'" + \
         directory.getWithDefault(Ada.module_prefix, 'current_datetime') + "\'"
     profileRevision = directory.getWithDefault(Ada.module_prefix,
-                                            'profile_revisions')
+                                            'enabled_profiles')
     if profileRevision != '':
         styleParams['profile.revision'] = "\'" + \
             profileRevision.join(';') + "\'"

@@ -143,8 +143,8 @@ class Directory:
     # previous_dir:     dir before switching to the given one
     # current_dir:      dir represented by this object
     # givenOptions:     list of options given from outside this dir
-    # options:          ConfigParse with the options read from the Properties.txt
-    # section_list:     targets in the Properties.txt file
+    # options:          ConfigParse with the options given in Properties.ddo
+    # section_list:     targets in the Properties.ddo file
     # current_section:  section being processed
     # executing:        true if in the middle of the "Execute" method
     # executed_targets: set of targets executed with empty given directory
@@ -336,7 +336,7 @@ class Directory:
 
     def Execute(self, targets = [], pad = ''):
         """
-        Properties.txt has been parsed into a ConfigParse. Loop over the targets
+        Properties.ddo has been parsed into a ConfigParse. Loop over the targets
         and execute all of them.
         """
 

@@ -156,21 +156,19 @@ msgs = {
     'export_end': 'Date/time until the export is allowed.',
     'export_open': 'If the export is enabled (must be "0" or "1").',
     'export_no_dst': 'No destination for export. Bypassing.',
-    'export_not_open': 'Export not executed because "open" is {0}',
-    'export_not_revision': 
-    """Export not executed because the value of "{0}.profile_revision" is not in
-"ada.profile_revisions".""",
-    'export_profile_revision':
-    'Value in ada.profile_revision for which the export is allowed.',
-    'export_closed_begin': 'Export not executed because it is before {0}',
-    'export_closed_end': 'Export not executed because it is after {0}',
+    'enable_not_open': 'Rule not executed because "open" is {0}',
+    'enable_not_revision': 
+    """Rule not executed because the value of "{0}.enable_profile" is not in
+"ada.enabled_profiles".""",
+    'enable_closed_begin': 'Rule not executed because it is before {0}',
+    'enable_closed_end': 'Rule not executed because it is after {0}',
     'testexam_permutations': 'Number of versions with the questions shuffled',
     'testexam_no_shuffle_required': 'No shuffle required for file {0}',
     'testexam_shuffling': 'Shuffling questions in file {0}',
     'testexam_error_shuffling': 'Error while shuffling questions in test exam',
     'ada_current_datetime': 'The Current date/time to be considered',
-    'ada_profile_revisions':
-    'Space separated list of values to use for various rules (export,...)',
+    'ada_enabled_profiles':
+    'Space separated list of values to use to enable rule execution',
     'ada_minimum_version':
     'The minimum ada version that is required to execute this directory',
     'ada_maximum_version':

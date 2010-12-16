@@ -161,6 +161,55 @@ def doExecution(target, directory, command, datafile, dstFile,
 
     return
 
+def evaluateCondition(target, options):
+    """
+    Evaluates the following condition with the given options (conjunction)
+
+    1) option "enable_open" is '1'
+    2) option "enable_begin" is empty or is a datetime before now
+    3) option "enable_end" is empty or is a datetime past now
+    4) If "ada.enabled_profiles" is empty or contains the value of option
+    "target.enable_profile"
+
+    The function returns the conjunction of these 5 rules.
+    """
+
+    # Check part 1 of the rule: open must be 1
+    if Properties.getWithDefault(options, target, 'open') != '1':
+        print I18n.get('enable_not_open').format(openData)
+        return False
+
+    # Get current date/time
+    now = datetime.datetime.now()
+
+    # Get the date_format
+    dateFormat = Properties.getWithDefault(options, target, 'date_format')
+
+    # Check part 2 of the rule: begin date is before current date
+    beginDate = Properties.getWithDefault(options, target, 'begin')
+    if beginDate != '':
+        if checkDateFormat(beginDate, dateFormat) < now:
+            print I18n.get('enable_closed_begin').format(beginDate)
+            return False
+
+    # Check part 3 of the rule: end date is after current date
+    endDate = Properties.getWithDefault(options, target, 'end')
+    if endDate != '':
+        if now < checkDateFormat(endDate, dateFormat):
+            print I18n.get('enable_closed_end').format(endDate)
+            return False
+
+    # Check part 4 of the rule: target.enable_profile must be in
+    # ada.enabled_profiles
+    revisionsData = Properties.getWithDefault(options, 'ada', 'enabled_profiles')
+    if revisionsData != '':
+        thisRevision = directory.options.get(target, 'enable_profile')
+        if not (thisRevision in set(revisionsData.split())):
+            print I18n.get('enable_not_revision').format(target)
+            return False
+
+    return True
+
 def dumpOptions(target, directory, prefix):
     """
     Dump the value of the options affecting the computations

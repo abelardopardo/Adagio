@@ -1,33 +1,34 @@
 #
 # ADA Properties file
 #
-# This is a sample of a Properties.txt file
+# This is a sample of a Properties.ddo file
 #
-# The file is divided into sections. The beginning of a section is marked by a
-# line starting by [name] or [name.subname] and finishes when a new section or
-# the end of file is found.
+# The file is divided into rules. The beginning of a rule is marked by a line
+# starting by [name] or [name.subname] and finishes when a new rule or the end
+# of file is found. A rule is simply a set of assignments of the form "name =
+# value". Values may span over several lines as long as the lines start with a
+# space.
 #
-# All sections except [ada] can be "named" or "unmamed". A named section is a
-# section that contains a .<name> suffix. For example [xslt.first] is a section
-# of type xslt with name "first". This allows multiple sections of the same type
-# to be included in the file.
+# All rules except [ada] can be "named" or "unmamed". A named rule is a rule
+# that contains a .<name> suffix. For example [xslt.first] is a rule of type
+# xslt with name "first". This allows multiple rules of the same type to be
+# included in the file.
 #
-# A section contains a set of definitions of the form name = value. Any string
-# may contain a substring of the form %(name)s which will be replaced by the
-# value of the variable name previously defined.
+# A rule contains a set of definitions of the form name = value. Any string may
+# contain a substring of the form %(name)s which will be replaced by the value
+# of the variable name previously defined.
 #
-# If a named section is included after its corresponding unnamed section, the
-# variables in the unamed section are all visible from the named section. For
-# example:
+# If a named rule is included after its corresponding unnamed rule, the
+# variables in the unamed rule are all visible from the named rule. For example:
 #
-#  # Unnamed xslt section
+#  # Unnamed xslt rule
 #  [xslt] 
 #  # Definition of the languages to use
 #  languages = en es 
 #
 #
-#  # Named xslt section uses the languages value defined in the
-#  # unnamed section
+#  # Named xslt rule uses the languages value defined in the
+#  # unnamed rule
 #  [xslt.first] 
 #         style = MyStyle
 #
@@ -40,23 +41,28 @@
 #
 # The following variables are always defined by default:
 #
-#  - basedir:          The value of the current directory
-#  - current_datetime: Time of execution of script
-#  - debug_level:      Integer controlling messages shown
-#  - dst_dir:          The value of the current directory
-#  - encoding:         The default encoding for XML files
-#  - file_separator:   Taken from the platform
-#  - files:            Files to be processed
-#  - home:             Directory where ADA is installed
-#  - locale:           Taken from execution environment
-#  - profile_revision: Value passed to xslt processing as profile.revision
-#  - project_file:     File name marking the root of a project 'Ada.project'
-#  - project_home:     Directory where Ada.project has been located
-#  - property_file:    File to read in each dir (Properties.txt)
-#  - src_dir:          Source directory to consider for source files (current)
-#  - version:          Current ADA version
+#  - basedir:            The value of the current directory
+#  - current_datetime:   Time of execution of script
+#  - debug_level:        Integer controlling messages shown
+#  - dst_dir:            The value of the current directory
+#  - enable_begin:       Date/time from which a rule is enable (if not empty)
+#  - enable_date_format: Format for date/time specification
+#  - enable_end:         Date/time after which a rule is disable (if not empty)
+#  - enable_open:        If '1' the rule is allowed to execute
+#  - enable_profile:     Value passed to xslt processing as profile.revision
+#  - encoding:           The default encoding for XML files
+#  - file_separator:     Taken from the platform
+#  - files:              Files to be processed
+#  - help:               Text explaining how the rule works
+#  - home:               Directory where ADA is installed
+#  - locale:             Taken from execution environment
+#  - project_file:       File name marking the root of a project 'Ada.project'
+#  - project_home:       Directory where Ada.project has been located
+#  - property_file:      File to read in each dir (Properties.ddo)
+#  - src_dir:            Source directory to consider for source files (current)
+#  - version:            Current ADA version
 #
-# It follows a sample of a Properties.txt with all possible unnamed rules and 
+# It follows a sample of a Properties.ddo with all possible unnamed rules and 
 # their available options with their default values.
 #
 # -----------------------------------------------------------------------------
@@ -72,7 +78,7 @@
 # 
 # -----------------------------------------------------------------------------
 #
-# ADA General section. Typically written at the top of the file
+# ADA global options. Typically written at the top of the file
 #
 [DEFAULT]
 # Values that are visible for all rules. Default values in parenthesis
@@ -81,18 +87,22 @@ current_datetime	= (current time)
 debug_level		= (0)
 dst_dir			= (current directory)
 encoding		= (system encoding)
+enable_begin		= ()
+enable_date_format	= ('yyyy/MM/dd HH:mm:ss')
+enable_end		= ()
+enable_open		= (1)
+enable_profile		= ()
 file_separator		= (system file separator)
 files			=
 help			= (brief description of the target)
 home			= (ada installation directory)
 locale			= (system locale)
-profile_revision	=
+partial			= (0)
 project_file		= (Ada.project)
 project_home		= (current directory)
-property_file		= (Properties.ini)
+property_file		= (Properties.ddo)
 src_dir			= (current directory)
 version			= (current ada version)
-
 #
 # Rules with their specific variables (the defaults are available in all
 #
@@ -103,6 +113,8 @@ minimum_version		=
 maximum_version		=
 # Exact version required to execute ADA
 exact_version		=
+# Profiles that enable rules
+enabled_profiles	=
 
 [xslt]
 # Styles to apply (they are concatenated into a single style file
@@ -290,7 +302,7 @@ arguments		=
 
 # ##############################################################################
 #
-# Ohter ideas for sections in the Properties.txt file (brainstorming)
+# Ohter ideas for sections in the Properties.ddo file (brainstorming)
 #
 # ##############################################################################
 #

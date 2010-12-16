@@ -51,8 +51,8 @@ def main(dataFile):
     mergeLine = ''
     for line in dataIn:
         # Ad-hoc for Progsys
-        line = re.sub('^# See ada.home/AntImports/Properties.txt',
-                      '# See %(home)s/bin/Properties.ini', line)
+        # line = re.sub('^# See ada.home/AntImports/Properties.txt',
+        #              '# See %(home)s/bin/Properties.ini', line)
 
         # If line starts with #, pass it directly to output
         if line[0] == '#':
