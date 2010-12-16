@@ -61,6 +61,17 @@
 #
 # -----------------------------------------------------------------------------
 #
+# It follows a set of customization to view these files with colors in several
+# editors:
+#
+# Emacs:
+# (setq auto-mode-alist (append (list '("\\.ddo" . conf-mode)) auto-mode-alist))
+# 
+# VIM (in ~/.vim/ftdetect/ddo.vim)
+# au BufRead,BufNewFile *.ddo     set syntax=dosini
+# 
+# -----------------------------------------------------------------------------
+#
 # ADA General section. Typically written at the top of the file
 #
 [DEFAULT]
