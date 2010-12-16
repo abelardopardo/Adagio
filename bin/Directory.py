@@ -45,9 +45,8 @@ def getDirectoryObject(path, givenOptions):
     dirObj = _createdDirs.get(theKey)
     if dirObj != None:
         # Hit in the cache, return
-        if dirObj != None:
-            Ada.logDebug('Directory', None, 'Directory HIT: ' + path)
-            return dirObj
+        Ada.logDebug('Directory', None, 'Directory HIT: ' + path)
+        return dirObj
 
     # Create new object
     dirObj = Directory(path, givenOptions)
@@ -107,7 +106,8 @@ def findProjectDir(pfile):
 
 def flushCreatedDirs():
     """
-    Removes all the created dirs. Function registered atexit to facilitate debugging
+    Removes all the created dirs. Function registered atexit to facilitate
+    debugging
     """
     global _createdDirs
 
@@ -149,6 +149,7 @@ class Directory:
     # executing:        true if in the middle of the "Execute" method
     # executed_targets: set of targets executed with empty given directory
     # option_files:     set of files providing options (to detect dependencies)
+
     # Change to the given dir and initlialize fields
     def __init__(self, path=os.getcwd(), givenOptions = []):
 

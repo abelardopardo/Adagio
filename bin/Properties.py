@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import sys, os, re, datetime, ConfigParser, StringIO, ordereddict
+import sys, os, re, datetime, ConfigParser, StringIO, ordereddict, atexit
 
 # @@@@@@@@@@@@@@@@@@@@  EXTEND  @@@@@@@@@@@@@@@@@@@@ 
 import Ada, AdaRule, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
@@ -35,6 +35,53 @@ modules = ['Ada', 'Xsltproc', 'Inkscape', 'Gotodir', 'Gimp', 'Convert',
 
 # Prefix to use in the module
 module_prefix = 'properties'
+
+# Dictionary to store the ConfigParsers for a set of files. The pairs stored are
+# of the form (filename, ConfigParser.RawConfigParser({},
+# orderedict.OrderedDict))
+_configParsers = {}
+
+def getConfigParser(fileList):
+    """
+    Given a set of files, returns the resulting ConfigParser object after being
+    parsed.
+    """
+    
+    global _configParsers
+
+    theKey = ' '.join(fileList)
+    config = _configParsers.get(theKey)
+    if config != None:
+        # Hit in the cache, return
+        Ada.logDebug('Directory', None, 'Parser HIT: ' + ' '.join(fileList))
+        return config
+    
+    # Parse the file with a raw parser
+    config = ConfigParser.RawConfigParser({}, ordereddict.OrderedDict)
+
+    try:
+        config.read(fileList)
+    except Exception, msg:
+        print I18n.get('severe_parse_error').format(' '.join(fileList))
+        print msg
+        sys.exit(1)
+    
+    _configParsers[theKey] = config
+    return config
+    
+def flushConfigParsers():
+    """
+    Delete all the stored parsers
+    """
+    global _configParsers
+
+    _configParsers = {}
+    return
+
+#
+# Flush _createdDirs
+#
+atexit.register(flushConfigParsers);
 
 def loadConfigFile(config, filename, includeChain = None):
     """
@@ -76,15 +123,8 @@ def loadConfigFile(config, filename, includeChain = None):
             print '  ' + '\n  '.join(includeChain[:-1])
         sys.exit(1)
 
-    # Parse the file with a raw parser to check option validity
-    newOptions = ConfigParser.RawConfigParser({},
-                                              ordereddict.OrderedDict)
-    try:
-        newOptions.read([filename])
-    except Exception, msg:
-        print I18n.get('severe_parse_error').format(filename)
-        print msg
-        sys.exit(1)
+    # Get the ConfigParser for the input file
+    newOptions = getConfigParser([filename])
 
     # Move defaults to the original config passing them to a [DEFAULT] section
     defaultsIO = StringIO.StringIO()
