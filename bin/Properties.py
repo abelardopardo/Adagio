@@ -83,7 +83,7 @@ def flushConfigParsers():
 #
 atexit.register(flushConfigParsers);
 
-def loadConfigFile(config, filename, includeChain = None):
+def loadConfigFile(config, filename, aliasDict, includeChain = None):
     """
     Function that receives a set of config options (ConfigParser) and a
     filename. Parses the file, makes sure all the new config options are present
@@ -149,7 +149,7 @@ def loadConfigFile(config, filename, includeChain = None):
         # Treat the special case of a template section that needs to be expanded
         if sprefix == 'template':
             (a, b) = treatTemplate(config, filename, newOptions, sname, 
-                                   includeChain)
+                                   aliasDict, includeChain)
             # Incorporate results
             result[0].update(a)
             result[1].extend(b)
@@ -157,11 +157,7 @@ def loadConfigFile(config, filename, includeChain = None):
 
         # Apply the alias expansion
         try:
-            unaliased = Ada.expandAlias(sname, 
-                                        eval('{' +
-                                             config.get('ada', 
-                                                        'target_alias') + '}')
-                                        )
+            unaliased = Ada.expandAlias(sname, aliasDict)
         except SyntaxError:
             print I18n.get('error_alias_expression')
             sys.exit(1)
@@ -169,7 +165,7 @@ def loadConfigFile(config, filename, includeChain = None):
         # Get the prefix again
         sprefix = unaliased.split('.')[0]
 
-        # Check if the option is legal
+        # Process all the new options (check if legal, add them, etc)
         for (oname, ovalue) in newOptions.items(sname):
             # Treat the special case of option with +name or name+
             prepend = False
@@ -212,14 +208,17 @@ def loadConfigFile(config, filename, includeChain = None):
 
             try:
                 # To verify interpolation
-                config.get(unaliased, oname)
+                finalValue = config.get(unaliased, oname)
             except (ConfigParser.InterpolationDepthError, 
                     ConfigParser.InterpolationMissingOptionError), e:
                 print I18n.get('incorrect_variable_reference').format(ovalue)
                 sys.exit(3)
 
-        # Add it to the result
-        # result[1].append(unaliased)
+            # Consider the special case of the alias
+            if oname == 'alias':
+                for keyValue in finalValue.split():
+                    aliasDict[keyValue] = sname
+        # Add the original target ot the result
         result[1].append(sname)
 
     return result
@@ -313,11 +312,11 @@ def Execute(target, directory, pad = None):
     originalTarget = target
 
     # Apply the alias expansion
-    target = Ada.expandAlias(target, 
-                             eval('{' + 
-                                  directory.getWithDefault('ada', 
-                                                           'target_alias') + '}')
-                             )
+    try:
+        target = Ada.expandAlias(target, directory.alias)
+    except SyntaxError:
+        print I18n.get('error_alias_expression')
+        sys.exit(1)
 
     # Detect help or dump targets with/without section name
     specialTarget = re.match('(.+\.)?dump$', target) or \
@@ -336,8 +335,12 @@ def Execute(target, directory, pad = None):
     # Get the target prefix (everything up to the first dot)
     targetParts = target.split('.')
     modulePrefix = targetParts[0]
-    targetPrefix = '.'.join(targetParts[:-1])
-    
+    if len(targetParts) == 1:
+        targetPrefix = modulePrefix
+    else:
+        targetPrefix = '.'.join(targetParts[:-1])
+    print 'AAA', targetPrefix, target
+
     if pad == None:
 	pad = ''
 
@@ -383,7 +386,7 @@ def Execute(target, directory, pad = None):
         print I18n.get('unknown_target').format(originalTarget)
         sys.exit(1)
 
-def treatTemplate(config, filename, newOptions, sname, includeChain):
+def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
     """
     Process template and parse the required files.
 
@@ -437,7 +440,7 @@ def treatTemplate(config, filename, newOptions, sname, includeChain):
         else:
             templateFile = os.path.abspath(os.path.join(os.path.dirname(filename), fname))
             
-        (a, b) = loadConfigFile(config, templateFile, includeChain)
+        (a, b) = loadConfigFile(config, templateFile, aliasDict, includeChain)
         result[0].update(a)
         result[1].extend(b)
     return result

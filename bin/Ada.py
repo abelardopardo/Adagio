@@ -45,6 +45,7 @@ module_prefix = 'ada'
 ################################################################################
 _currentDir = os.path.abspath(os.getcwd())
 config_defaults = {
+    'alias': '',
     'basedir':            _currentDir,
     'current_datetime':   str(datetime.datetime.now()),
     'debug_level':        '0',
@@ -85,8 +86,6 @@ options = [
     ('maximum_version', '', I18n.get('ada_maximum_version')),
     # Exact version required
     ('exact_version', '', I18n.get('ada_exact_version')),
-    # Translation mechanism for target names
-    ('target_alias', '', I18n.get('target_alias')),
     # Revisions to consider when executing rules
     ('enabled_profiles', '', I18n.get('ada_enabled_profiles'))
      ]

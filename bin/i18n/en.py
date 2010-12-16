@@ -88,7 +88,7 @@ msgs = {
     'included_from': 'Included from:',
     'prefix': 'Prefix',
     'files': 'Files',
-    'target_alias': 'Comma separated sequence of \'aliasname\': \'aliasvalue\'',
+    'target_alias': 'Space separated list of aliases to use for this target',
     'template_error': 'Error in template section in file {0}',
     'incorrect_assignment': 'Incorrect assignment in line {ln} of {pfile}',
     'incorrect_version_format': 

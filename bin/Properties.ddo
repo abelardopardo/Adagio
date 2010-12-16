@@ -41,6 +41,7 @@
 #
 # The following variables are always defined by default:
 #
+#  - alias:              Space separated list of aliases for a target
 #  - basedir:            The value of the current directory
 #  - current_datetime:   Time of execution of script
 #  - debug_level:        Integer controlling messages shown
@@ -82,6 +83,7 @@
 #
 [DEFAULT]
 # Values that are visible for all rules. Default values in parenthesis
+alias			= ()
 basedir			= (current directory)
 current_datetime	= (current time)
 debug_level		= (0)

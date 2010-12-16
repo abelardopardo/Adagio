@@ -144,6 +144,7 @@ class Directory:
     # current_dir:      dir represented by this object
     # givenOptions:     list of options given from outside this dir
     # options:          ConfigParse with the options given in Properties.ddo
+    # alias:            Dictionary of 'aliasname': 'aliasvalue'
     # section_list:     targets in the Properties.ddo file
     # current_section:  section being processed
     # executing:        true if in the middle of the "Execute" method
@@ -159,6 +160,7 @@ class Directory:
         self.givenOptions =     ''
         self.options =          None
         self.section_list =     []
+        self.alias =            {}
         self.current_section =  None
         # Boolean to detect if a directory has been visited twice
         self.executing =        False
@@ -199,7 +201,8 @@ class Directory:
             # up
             try:
                 (newFiles, b) = Properties.loadConfigFile(self.options, 
-                                                          userAdaConfig)
+                                                          userAdaConfig,
+                                                          self.alias)
                 self.option_files.update(newFiles)
             except ValueError, e:
                 print I18n.get('severe_parse_error').format(userAdaConfig)
@@ -217,7 +220,8 @@ class Directory:
             try:
                 (newFiles, b) = \
                     Properties.loadConfigFile(self.options, 
-                                              os.path.abspath(adaProjFile))
+                                              os.path.abspath(adaProjFile),
+                                              self.alias)
                 self.option_files.update(newFiles)
             except ValueError, e:
                 print I18n.get('severe_parse_error').format(adaProjFile)
@@ -232,7 +236,8 @@ class Directory:
         if os.path.exists(propAbsFile):
             try:
                 (newFiles, sections) = Properties.loadConfigFile(self.options, 
-                                                                 propAbsFile)
+                                                                 propAbsFile,
+                                                                 self.alias)
                 self.option_files.update(newFiles)
             except ValueError, e:
                 print I18n.get('severe_parse_error').format(propAbsFile)
