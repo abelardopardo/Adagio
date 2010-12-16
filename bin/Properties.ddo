@@ -65,182 +65,182 @@
 #
 [DEFAULT]
 # Values that are visible for all rules. Default values in parenthesis
-basedir = (current directory)
-current_datetime = (current time)
-debug_level = (0)
-dst_dir = (current directory)
-encoding = (system encoding)
-file_separator = (system file separator)
-files = 
-help = (brief description of the target)
-home = (ada installation directory)
-locale = (system locale)
-profile_revision = 
-project_file = (Ada.project)
-project_home = (current directory)
-property_file = (Properties.ini)
-src_dir = (current directory)
-version = (current ada version)
+basedir			= (current directory)
+current_datetime	= (current time)
+debug_level		= (0)
+dst_dir			= (current directory)
+encoding		= (system encoding)
+file_separator		= (system file separator)
+files			=
+help			= (brief description of the target)
+home			= (ada installation directory)
+locale			= (system locale)
+profile_revision	=
+project_file		= (Ada.project)
+project_home		= (current directory)
+property_file		= (Properties.ini)
+src_dir			= (current directory)
+version			= (current ada version)
 
 #
 # Rules with their specific variables (the defaults are available in all
 #
 [ada]
 # Minimum version required to execute ADA
-minimum_version = 
+minimum_version		=
 # Maximum version allowed to exsecute ADA
-maximum_version = 
+maximum_version		=
 # Exact version required to execute ADA
-exact_version =   
+exact_version		=
 
 [xslt]
 # Styles to apply (they are concatenated into a single style file
-styles = %(home)s/ADA_Styles/DocbookProfile.xsl
+styles			= %(home)s/ADA_Styles/DocbookProfile.xsl
 # Extension for the result file (no dot)
-output_format = html
+output_format		= html
 # Parameters passed to xsltproc. Format: 'name': 'value', 'name': 'value'. They
 # are equivalent to <xsl:param name="name" value="value"/>
-extra_arguments = 
+extra_arguments		=
 # Languages to consider for the translation
-languages = 
+languages		=
 
 [inkscape]
 # Executable to invoke
-exec = inkscape
+exec			= inkscape
 # Output format to obtain
-output_format = png
+output_format		= png
 # Extra arguments passed to the program
-extra_arguments = 
+extra_arguments		=
 
 [gotodir]
-files = d1 d2   # Space separated lists of dirs to process recursively
-targets = t1 t2 # List of rules to execute in the remote dir
+files			= d1 d2   # Space separated lists of dirs to process recursively
+targets			= t1 t2 # List of rules to execute in the remote dir
 
 [gimp]
 # Executable to invoke
-exec = gimp
+exec			= gimp
 # Script to execute to translate all files to png
-script_file = %(home)s%(ada.file_separator)sAntImports%(ada.file_separator)sxcftopng.scm
+script_file		= %(home)s%(ada.file_separator)sAntImports%(ada.file_separator)sxcftopng.scm
 # Extra arguments passed to the program
-extra_arguments = 
+extra_arguments		=
 
 [convert]
 # Executable to invoke
-exec = convert
+exec			= convert
 # Output format to obtain
-output_format = png
+output_format		= png
 # Geometry to use when converting
-geometry = 
+geometry		=
 # Option to crop images
-crop_option = 
+crop_option		=
 # Extra arguments passed to the program
-extra_arguments = 
+extra_arguments		=
 
 [copy]
 # Works with "files", "src_dir" and "dst_dir" already defined.
 
 [export]
 # Destination of the export
-dst_dir = 
+dst_dir			=
 # Date format to consider (def: yyyy/MM/dd HH:mm:ss)
-date_format = yyy/MM/dd HH:mm:ss
+date_format		= yyy/MM/dd HH:mm:ss
 # Date from which export is allowed (in date_format)
-begin = 
+begin			=
 # Date after which export is not allowed (in date_format)
-end = 
+end			=
 # Export enable. If false, target is not executed
-open = True
+open			= True
 # Set of revisions to compare with global profile_revision to allow export
-profile_revision = 
+profile_revision	=
 
 [dblatex]
 # Executable to invoke
-exec = dblatex
+exec			= dblatex
 # Output format to obtain
-output_format = pdf
+output_format		= pdf
 # Extra arguments passed to the dblatex
-extra_argumentss =
+extra_argumentss	=
 # Parameters passed to xsltproc. Format: 'name': 'value', 'name': 'value'. They
 # are equivalent to <xsl:param name="name" value="value"/>
-extra_xsltproc_arguments = 
+extra_xsltproc_arguments =
 # Add some ADA specific modifications Yes = 1, No = 0
-compliant_mode = 0
+compliant_mode		= 0
 
 [exercise]
 # Space separated list of Stylesheets to pass to xsltproc 
-styles = %(home)s/ADA_Styles/ExerciseSubmit.xsl
+styles			= %(home)s/ADA_Styles/ExerciseSubmit.xsl
 # Space separated list of Stylesheets to pass to xsltproc to generate the submit
 # version
-submit_styles = %(home)s/ADA_Styles/AsapSubmit.xsl
+submit_styles		= %(home)s/ADA_Styles/AsapSubmit.xsl
 # Extension of the output files
-output_format = html
+output_format		= html
 # Parameters passed to xsltproc. Format: 'name': 'value', 'name': 'value'. They
 # are equivalent to <xsl:param name="name" value="value"/>
-extra_args = 
+extra_args		=
 # Versionts to be produced by the rule: regular, pguide, solution, submit
-produce =
+produce			=
 # Space separated list of languages to process
-languages = (default locale)
+languages		= (default locale)
 
 [exam]
 # Space separated list of Stylesheets to pass to xsltproc 
-styles = %(home)s%(file_separator)sADA_Styles%(file_separator)sExam.xsl
+styles			= %(home)s%(file_separator)sADA_Styles%(file_separator)sExam.xsl
 # Extension of the output files
-output_format = html
+output_format		= html
 # Parameters passed to xsltproc. Format: 'name': 'value', 'name': 'value'. They
 # are equivalent to <xsl:param name="name" value="value"/>
-extra_arguments = 
+extra_arguments		=
 # Versionts to be produced by the rule: regular, pguide, solution
-produce =
+produce			=
 # Space separated list of languages to process
-languages = (default locale)
+languages		= (default locale)
 
 [testexam]
 # Space separated list of Stylesheets to pass to xsltproc 
-styles = %(home)s%(file_separator)sADA_Styles%(file_separator)sExam.xsl
+styles			= %(home)s%(file_separator)sADA_Styles%(file_separator)sExam.xsl
 # Extension of the output files
-output_format = html
+output_format		= html
 # Parameters passed to xsltproc. Format: 'name': 'value', 'name': 'value'. They
 # are equivalent to <xsl:param name="name" value="value"/>
-extra_arguments = 
+extra_arguments		=
 # Versionts to be produced by the rule: regular, pguide, solution
-produce =
+produce			=
 # Space separated list of languages to process
-languages = (default locale)
+languages		= (default locale)
 
 [office2pdf]
 # Executable to invoke
-exec = soffice
+exec			= soffice
 # Extra arguments passed to the program
-extra_arguments =
+extra_arguments		=
 
 [template]
 # Space separated list of templates to include at this point in the file
-files =
+files			=
                               
 [rsync]
 # Executable to invoke
-exec = rsync
+exec			= rsync
 # Source directory to synchronize
-src_dir = 
+src_dir			=
 # Destination directory to synchronize
-dst_dir = 
+dst_dir			=
 # Extra arguments passed to the program
-extra_arguments = 
+extra_arguments		=
 
 [script]
 # Name of the script function to invoke when executing all targets
-build_function = main  
+build_function		= main  
 # Name of the script function to invoke when executing the clean target
-clean_function = clean
+clean_function		= clean
 # File to use as script input
-stdin =                 
+stdin			=
 # File to write the script output
-stdout =
+stdout			=
 # File to write the script error
-stderr = 
+stderr			=
 # Arguments given to the script in sys.args
-arguments = 
+arguments		=
 
 # ------------------------------------------------------------------------------
 #

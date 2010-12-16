@@ -58,7 +58,7 @@ config_defaults = {
     'partial':           '0',
     'project_file':      'Ada.project',
     'project_home':      _currentDir,
-    'property_file':     'Properties.ini',
+    'property_file':     'Properties.ddo',
     'src_dir':           _currentDir,
     'version':           '10.03.1'
 }
