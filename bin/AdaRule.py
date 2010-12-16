@@ -29,7 +29,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-import Ada, I18n, Dependency
+import Ada, I18n, Dependency, Properties
 
 def isProgramAvailable(executable):
     def is_exe(fpath):
