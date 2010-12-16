@@ -41,13 +41,6 @@ def main():
 
     #######################################################################
     #
-    # Initialization of all the required variables
-    #
-    #######################################################################
-    Ada.initialize()
-
-    #######################################################################
-    #
     # OPTIONS
     #
     #######################################################################
@@ -57,7 +50,7 @@ def main():
 
     # Swallow the options
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "c:d:s:hxp", [])
+        opts, args = getopt.getopt(sys.argv[1:], "c:d:s:f:hxp", [])
     except getopt.GetoptError, e:
         pydoc.pager(e.msg + '\n' + I18n.get('adado.help'))
         sys.exit(2)
@@ -76,6 +69,13 @@ def main():
                 print I18n.get('incorrect_debug_option')
                 sys.exit(3)
             Ada.config_defaults['debug_level'] = value
+
+        # Change directory
+        elif optstr == "-f":
+            if not os.path.isdir(value):
+                print I18n.get('dir_not_found')
+                sys.exit(1)
+            os.chdir(value)
 
         # Dump the manual page
         elif optstr == "-h" or optstr == "-x":
@@ -100,10 +100,20 @@ def main():
     # right type (integers, floats, date/time, et.
     pass # TO BE IMPLEMENTED
 
+    #######################################################################
+    #
+    # Initialization of all the required variables
+    #
+    #######################################################################
+    Ada.initialize()
+
     # The rest of the arguments are the targets
     targets = args
 
-    # Print Reamining arguments. If none, just stick the current dir
+    # Print arguments
+    Ada.logDebug('main', None, 'Argv: ' + ' '.join(sys.argv))
+
+    # Print targets
     Ada.logDebug('main', None, 'Targets: ' + ' '.join(targets))
 
     #######################################################################

@@ -34,7 +34,7 @@ msgs = {
 
     The script accepts the following options:
 
-      -c filename: File to read the configuration
+      -c filename: File to read the configuration from (Properties.ini)
 
       -d num: Debugging level. Used to control the amount of messages
        dumped. Possible values are:
@@ -46,10 +46,12 @@ msgs = {
               DEBUG =          1
               NOTSET =         0
 
+      -f folder: Execute in the given folder
+
       -h or -x: Shows this message
 
-      -p: Partial execution. Proceed even if some tools are not installed. Otherwise
-          stop execution in the first missing tool.
+      -p: Partial execution. Proceed even if some tools are not
+          installed. Otherwise stop execution in the first missing tool.
 
       -s 'section name value': Executes the application by first storing in the
                        environment the assignment name = value. This means that,
