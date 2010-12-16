@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, re, glob, sys, subprocess, shutil, ConfigParser, pydoc
+import os, re, glob, sys, subprocess, shutil, ConfigParser, pydoc, datetime
 
 # Import conditionally either regular xml support or lxml if present
 try:
@@ -175,7 +175,7 @@ def evaluateCondition(target, options):
     """
 
     # Check part 1 of the rule: open must be 1
-    if Properties.getWithDefault(options, target, 'open') != '1':
+    if Properties.getWithDefault(options, target, 'enable_open') != '1':
         print I18n.get('enable_not_open').format(openData)
         return False
 
@@ -183,17 +183,17 @@ def evaluateCondition(target, options):
     now = datetime.datetime.now()
 
     # Get the date_format
-    dateFormat = Properties.getWithDefault(options, target, 'date_format')
+    dateFormat = Properties.getWithDefault(options, target, 'enable_date_format')
 
     # Check part 2 of the rule: begin date is before current date
-    beginDate = Properties.getWithDefault(options, target, 'begin')
+    beginDate = Properties.getWithDefault(options, target, 'enable_begin')
     if beginDate != '':
         if checkDateFormat(beginDate, dateFormat) < now:
             print I18n.get('enable_closed_begin').format(beginDate)
             return False
 
     # Check part 3 of the rule: end date is after current date
-    endDate = Properties.getWithDefault(options, target, 'end')
+    endDate = Properties.getWithDefault(options, target, 'enable_end')
     if endDate != '':
         if now < checkDateFormat(endDate, dateFormat):
             print I18n.get('enable_closed_end').format(endDate)

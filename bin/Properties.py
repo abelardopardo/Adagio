@@ -333,8 +333,10 @@ def Execute(target, directory, pad = None):
         sys.exit(2)
 
     # Get the target prefix (everything up to the first dot)
-    targetPrefix = target.split('.')[0]
-
+    targetParts = target.split('.')
+    modulePrefix = targetParts[0]
+    targetPrefix = '.'.join(targetParts[:-1])
+    
     if pad == None:
 	pad = ''
 
@@ -343,7 +345,7 @@ def Execute(target, directory, pad = None):
     for moduleName in modules:
         
         # If the target does not belong to this module, keep iterating
-        if targetPrefix != eval(moduleName + '.module_prefix'):
+        if modulePrefix != eval(moduleName + '.module_prefix'):
             continue
             
         Ada.logInfo(originalTarget, directory, 'Enter ' + directory.current_dir)
@@ -352,7 +354,7 @@ def Execute(target, directory, pad = None):
         print pad + 'BB', originalTarget
 
         # Check the condition
-        if not AdaRule.evaluateCondition(target, directory.options):
+        if not AdaRule.evaluateCondition(targetPrefix, directory.options):
             return
 
         # Detect and execute "special" targets

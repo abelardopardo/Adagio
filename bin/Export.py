@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, re, sys, datetime
+import os, re, sys
 
 import Ada, Directory, I18n, Dependency, AdaRule, Copy
 
@@ -71,10 +71,6 @@ def Execute(target, directory):
     dstDir = directory.getWithDefault(target, 'dst_dir')
     if dstDir == '':
         print I18n.get('export_no_dst')
-        return
-
-    # Check the condition
-    if not AdaRule.evaluateCondition(target, directory.options):
         return
 
     # If we are here, the export may proceed!
