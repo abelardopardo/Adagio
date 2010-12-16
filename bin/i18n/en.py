@@ -46,7 +46,8 @@ msgs = {
               DEBUG =          1
               NOTSET =         0
 
-      -f folder: Execute in the given folder
+      -f path_to_rule_file: Given a path to a rule file, execute ADA in the
+       directory where that file is, and with the given file as the rule file
 
       -h or -x: Shows this message
 

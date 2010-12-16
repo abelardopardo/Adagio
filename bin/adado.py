@@ -72,10 +72,16 @@ def main():
 
         # Change directory
         elif optstr == "-f":
-            if not os.path.isdir(value):
-                print I18n.get('dir_not_found')
+            (toDir, cFile) = os.path.split(value)
+            # If the dir is not empty and does not exist, terminate
+            if toDir != '' and not os.path.isdir(toDir):
+                print I18n.get('dir_not_found').format(toDir)
                 sys.exit(1)
-            os.chdir(value)
+            # If dir not empty, change to that dir
+            if toDir != '':
+                os.chdir(toDir)
+            # Set the property_file to cFile
+            Ada.config_defaults['property_file'] = cFile
 
         # Dump the manual page
         elif optstr == "-h" or optstr == "-x":
