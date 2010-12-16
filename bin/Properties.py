@@ -219,7 +219,8 @@ def loadConfigFile(config, filename, includeChain = None):
                 sys.exit(3)
 
         # Add it to the result
-        result[1].append(unaliased)
+        # result[1].append(unaliased)
+        result[1].append(sname)
 
     return result
 
