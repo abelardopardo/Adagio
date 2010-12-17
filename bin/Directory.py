@@ -193,9 +193,9 @@ class Directory:
         Properties.LoadDefaults(self.options)
 
         #
-        # STEP 3: Load the $HOME/.adarc if any
+        # STEP 3: Load the ~/.adarc if any
         #
-        userAdaConfig = os.path.join(os.environ.get('HOME'), '.adarc')
+        userAdaConfig = os.path.expanduser('~/.adarc') 
         if os.path.isfile(userAdaConfig):
             # Swallow user file on top of global options, and if trouble, report
             # up
