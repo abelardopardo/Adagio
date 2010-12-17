@@ -256,7 +256,6 @@ class Directory:
         #
         # STEP 6: Options given from outside the dir
         #
-        # Compute the project home
         for assignment in givenOptions:
             # Chop assignment into its three parts
             (sn, on, ov) = assignment.split()

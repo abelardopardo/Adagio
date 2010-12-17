@@ -211,6 +211,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
                 finalValue = config.get(unaliased, oname)
             except (ConfigParser.InterpolationDepthError, 
                     ConfigParser.InterpolationMissingOptionError), e:
+                print I18n.get('severe_parse_error').format(filename)
                 print I18n.get('incorrect_variable_reference').format(ovalue)
                 sys.exit(3)
 
@@ -291,6 +292,7 @@ def LoadDefaults(config):
             except (ConfigParser.InterpolationDepthError, 
                     ConfigParser.InterpolationMissingOptionError), e:
                 print I18n.get('incorrect_variable_reference').format(vv)
+                print I18n.get('fatal_error')
                 sys.exit(3)
 
         # Add the string for the help
@@ -339,7 +341,6 @@ def Execute(target, directory, pad = None):
         targetPrefix = modulePrefix
     else:
         targetPrefix = '.'.join(targetParts[:-1])
-    print 'AAA', targetPrefix, target
 
     if pad == None:
 	pad = ''
@@ -424,6 +425,7 @@ def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
         templateFiles = config.get(sname, 'files').split()
     except (ConfigParser.InterpolationDepthError, 
             ConfigParser.InterpolationMissingOptionError), e:
+        print I18n.get('severe_parse_error').format(filename)
         print I18n.get('incorrect_variable_reference').format(fileItem[0][1])
         sys.exit(3)
 
