@@ -1,0 +1,26 @@
+[gotodir.export]
+files = ApplyXSL
+        Copyfiles
+        Copytemplates
+        Docbook
+        Dvips
+        Exam
+        ExamBL
+        ExerciseSubmit
+        HeadTail
+        HeaderLinks
+        Inkscape
+        Latex
+        Multilingual
+        PDFnup
+        Ps2pdf
+        SimpleDoc
+        TestExam
+        TestExamBL
+        TestQuestions
+        TestStats
+        Xfig
+
+[export]
+files = */*
+dst_dir = ../scratch/Samples

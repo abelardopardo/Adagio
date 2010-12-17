@@ -1,0 +1,6 @@
+[latex]
+files = input.tex
+output_format = dvi
+
+[dvips]
+files = *.dvi

@@ -1,0 +1,11 @@
+# Definition to process the SVG files with inkscape
+[inkscape]
+files = *.svg
+
+# Definition of the XML files to be processed by Xsltproc
+[xslt]
+files = index.xml
+
+# Files to copy to another location when requested
+[export]
+files = *.png

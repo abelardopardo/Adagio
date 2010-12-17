@@ -224,8 +224,14 @@ def log(tprefix, directory, msg, fname = None):
     threshold = config_defaults['debug_level']
     if directory != None:
         threshold = directory.getWithDefault(module_prefix, 'debug_level')
-    
-    if int(threshold) >= int(current):
+
+    try:
+        threshold = int(threshold)
+    except ValueError:
+        print I18n.get('incorrect_debug_option').format(threshold)
+        sys.exit(1)
+
+    if threshold >= int(current):
         output.write(tprefix + ':' + str(msg) + '\n')
         output.flush()
 

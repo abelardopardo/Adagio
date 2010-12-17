@@ -1,0 +1,6 @@
+# Use the file with parameters to control the exam appearance
+# File containing the exam information
+[exam]
+files = Test.xml
+languages = en es
+styles+ = Params.xml

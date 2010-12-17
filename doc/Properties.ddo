@@ -1,0 +1,48 @@
+#
+# Copyright (C) 2008 Carlos III University of Madrid
+# This file is part of the ADA: Agile Distributed Authoring Toolkit
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor
+# Boston, MA  02110-1301, USA.
+# Variables to define the processing step
+#
+# See ada.home/AntImports/Properties.txt for the complete list of these
+# variables as well as an explanation.
+#
+[gotodir.export]
+export_dst = %(basedir)s
+files = images 
+#         ../bin
+#         VarTables
+#         ParamTables
+
+[gotodir]
+files = Samples
+
+[xslt]
+files = FAQ.xml
+styles = QandaentryTable.xsl
+
+# [copy]
+# src_dir = ../AntImports
+# files = Properties_sample.txt
+
+[export]
+dst_dir = scratch
+files = FAQ.html 
+        images/*.png 
+        style.css 
+        Properties_sample.txt
+
+[rsync]
+src_dir = scratch/
+dst_dir = abel@varpa.it.uc3m.es:lib/www/ADA/doc

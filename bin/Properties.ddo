@@ -65,7 +65,6 @@
 #
 # It follows a sample of a Properties.ddo with all possible unnamed rules and 
 # their available options with their default values.
-#
 # -----------------------------------------------------------------------------
 #
 # It follows a set of customization to view these files with colors in several
@@ -145,15 +144,13 @@ targets			= t1 t2 # List of rules to execute in the remote dir
 # Executable to invoke
 exec			= gimp
 # Script to execute to translate all files to png
-script_file		= %(home)s%(ada.file_separator)sAntImports%(ada.file_separator)sxcftopng.scm
+script			= %(home)s%(file_separator)sbin%(file_separator)s/xcftopng.scm
 # Extra arguments passed to the program
 extra_arguments		=
 
 [convert]
 # Executable to invoke
 exec			= convert
-# Output format to obtain
-output_format		= png
 # Geometry to use when converting
 geometry		=
 # Option to crop images
@@ -167,16 +164,20 @@ extra_arguments		=
 [export]
 # Destination of the export
 dst_dir			=
-# Date format to consider (def: yyyy/MM/dd HH:mm:ss)
-date_format		= yyy/MM/dd HH:mm:ss
-# Date from which export is allowed (in date_format)
-begin			=
-# Date after which export is not allowed (in date_format)
-end			=
-# Export enable. If false, target is not executed
-open			= True
-# Set of revisions to compare with global profile_revision to allow export
-profile_revision	=
+
+[latex]
+# Executable to invoke
+exec			= latex
+# Output format to obtain
+output_format		= pdf
+# Extra arguments passed to the dblatex
+extra_arguments		=
+
+[dvips]
+# Executable to invoke
+exec			= dvips
+# Extra arguments passed to the dblatex
+extra_arguments		=
 
 [dblatex]
 # Executable to invoke
@@ -184,10 +185,10 @@ exec			= dblatex
 # Output format to obtain
 output_format		= pdf
 # Extra arguments passed to the dblatex
-extra_argumentss	=
+extra_arguments		=
 # Parameters passed to xsltproc. Format: 'name': 'value', 'name': 'value'. They
 # are equivalent to <xsl:param name="name" value="value"/>
-extra_xsltproc_arguments =
+extra_xslt_arguments	=
 # Add some ADA specific modifications Yes = 1, No = 0
 compliant_mode		= 0
 
@@ -201,7 +202,7 @@ submit_styles		= %(home)s/ADA_Styles/AsapSubmit.xsl
 output_format		= html
 # Parameters passed to xsltproc. Format: 'name': 'value', 'name': 'value'. They
 # are equivalent to <xsl:param name="name" value="value"/>
-extra_args		=
+extra_arguments		=
 # Versionts to be produced by the rule: regular, pguide, solution, submit
 produce			=
 # Space separated list of languages to process
@@ -239,10 +240,18 @@ exec			= soffice
 # Extra arguments passed to the program
 extra_arguments		=
 
-[template]
+# [template]
 # Space separated list of templates to include at this point in the file
-files			=
+# files			=
                               
+[pdfnup]
+# Executable to invoke
+exec			= pdfnup
+# Option to print n up
+nup_option		= 2x1
+# Extra arguments passed to the program
+extra_arguments		=
+
 [rsync]
 # Executable to invoke
 exec			= rsync
@@ -272,9 +281,6 @@ arguments		=
 # NOT IMPLEMENTED YET! (and some of them won't be)
 #
 # ------------------------------------------------------------------------------
-# [pdfnup]
-#         exec = pdfnup # Executable to use
-#         nup_option = 1x2 # Option to print n up
 
 # [ps2pdf]
 #         exec = ps2pdf # Executable to use
@@ -284,23 +290,6 @@ arguments		=
 # [pdflatex]
 #         exec = pdflatex # Executable to use
 #         extra_args = opt1 opt2 # To be passed directly to the executable
-
-# [latex]
-#         exec = latex # Executable to use
-#         extra_args = opt1 opt2 # To be passed directly to the executable
-
-# [dvips]
-#         exec = dvips # Executable to use
-
-# [rss]
-#         debug = %(ada.debug_level)s # Debug level inherited from ada section
-#         output_format = _rss.xml
-#         styles = %(home)s/ADA_Styles/Rss.xsl
-#         styles_tohtml = %(home)s/ADA_Styles/RssToHtml.xsl
-
-#         extra_args = opt1 opt2 # Arguments to pass to xsltproc
-#         multilingual_files = file1 file2 # Space separated list of
-#                                            # multilingual files
 
 # ##############################################################################
 #

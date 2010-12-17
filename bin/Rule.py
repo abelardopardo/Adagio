@@ -61,6 +61,14 @@ def Execute(target, directory):
     if toProcess == []:
         return
 
+    executable = directory.getWithDefault(target, 'exec')
+    outputFormat = directory.getWithDefault(target, 'output_format')
+    if not outputFormat in set([]):
+        print I18n.get('program_incorrect_format').format(executable, 
+                                                          outputFormat)
+        sys.exit(1)
+
+    # Prepare the command to execute
     return
 
 def clean(target, directory):

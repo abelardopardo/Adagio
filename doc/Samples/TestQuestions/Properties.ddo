@@ -1,0 +1,3 @@
+[testexam]
+files = Test.xml
+styles+ = Params.xml

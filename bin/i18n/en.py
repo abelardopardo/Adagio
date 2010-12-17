@@ -89,7 +89,8 @@ msgs = {
     'prefix': 'Prefix',
     'files': 'Files',
     'target_alias': 'Space separated list of aliases to use for this target',
-    'template_error': 'Error in template section in file {0}',
+    'template_error': 'Incorrect template in file {0}.\n' + 
+    'Target must define only the variable "files"',
     'incorrect_assignment': 'Incorrect assignment in line {ln} of {pfile}',
     'incorrect_version_format': 
     'Incorrect version {0}. Should have major.minor.patch structure',
@@ -139,6 +140,7 @@ msgs = {
     'script_output_file': 'File to write the srcipt output',
     'script_error_file': 'File to write the script errors',
     'output_format': 'Extension to use when creating the new files.',
+    'empty_output_format': 'Option output_format in target {0} cannot be empty.',
     'gimp_script': 'Script to process gimp files in batch mode',
     'extra_arguments':
     'Extra arguments passed directly to {0}.',
@@ -148,6 +150,7 @@ msgs = {
     'languages': 'Space separated list of languages to consider',
     'date_format': 'Format used to manipulate the dates',
     'date_incorrect_format': 'Date {0} not compliant with format {1}',
+    'program_incorrect_format': '{0} cannot process format {1}',
     'exercise_produce': 
     'Exercise versions produced. Any subset of {regular, solution, pguide, submit}',
     'export_dst': 'Destination of the exports',
@@ -183,12 +186,13 @@ msgs = {
     'Circular execution dependency to directory {0}.',
     'illegal_target_prefix': 'Illegal target name {0}.',
     'illegal_target_name': 'The target {t} is not known in dir {dl}.',
-    'incorrect_debug_option' : 'Option -d requires an integer as parameter',
+    'incorrect_debug_option' : 'Debug option requires an integer as parameter',
     'ada_version_option' : 'Current ADA version',
     'ada_locale_option' : 'Locale used while executing ADA',
     'ada_home_option' : 'Directory where ADA is installed',
     'ada_property_file_option' : 'File containing the definitions',
     'ada_file_separator_option' : 'Character to separate filenames',
+    'pdfnup_nup': 'How to divide the pages, default 2 per page.',
     'option': 'Option',
     'options': 'Options',
     'not_found': 'not found'

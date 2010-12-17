@@ -75,8 +75,16 @@ def Execute(target, directory):
         print I18n.get('no_var_value').format('output_format')
         return
 
-    # Loop over all source files to process
     executable = directory.getWithDefault(target, 'exec')
+    incorrectFormat = set(formats).difference(set(['png', 'ps', 
+                                                   'eps', 'pdf', 'plain-svg']))
+    if incorrectFormat != set([]):
+        print \
+            I18n.get('program_incorrect_format').format(executable, 
+                                                        ' '.join(incorrectFormat))
+        sys.exit(1)
+        
+    # Loop over all source files to process
     extraArgs = directory.getWithDefault(target, 'extra_arguments')
     dstDir = directory.getWithDefault(target, 'dst_dir')
     for datafile in toProcess:

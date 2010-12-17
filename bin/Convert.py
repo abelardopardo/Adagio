@@ -44,7 +44,6 @@ documentation = {
 # List of tuples (varname, default value, description string)
 options = [
     ('exec', 'convert', I18n.get('name_of_executable')),
-    ('output_format', 'png', I18n.get('output_format')),
     ('geometry', '', I18n.get('convert_geometry')),
     ('crop_option', '', I18n.get('convert_crop_option')),
     ('extra_arguments', '', I18n.get('extra_arguments').format('Convert'))

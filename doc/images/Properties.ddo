@@ -1,0 +1,8 @@
+#
+# Variables to define the processing step
+#
+# See ada.home/bin/Properties.ddo for the complete list of these
+# variables as well as an explanation.
+#
+[inkscape]
+files = *.svg *.svgz

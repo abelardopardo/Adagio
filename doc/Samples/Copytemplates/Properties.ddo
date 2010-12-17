@@ -1,0 +1,3 @@
+[copytemplates]
+files = section.tmpl
+output_format = xml

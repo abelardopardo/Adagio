@@ -26,11 +26,11 @@ import sys, os, re, datetime, ConfigParser, StringIO, ordereddict, atexit
 # @@@@@@@@@@@@@@@@@@@@  EXTEND  @@@@@@@@@@@@@@@@@@@@ 
 import Ada, AdaRule, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
 import Export, Dblatex, Exercise, Exam, Testexam, Office2pdf, Rsync
-import Script
+import Script, Latex, Dvips, Pdfnup, Xfig
 
 modules = ['Ada', 'Xsltproc', 'Inkscape', 'Gotodir', 'Gimp', 'Convert',
            'Copy', 'Export', 'Dblatex', 'Exercise', 'Exam', 'Testexam',
-           'Office2pdf', 'Rsync', 'Script']
+           'Office2pdf', 'Rsync', 'Script', 'Latex', 'Dvips', 'Pdfnup', 'Xfig']
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
 
 # Prefix to use in the module

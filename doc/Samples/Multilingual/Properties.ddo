@@ -1,0 +1,6 @@
+[inkscape]
+files = *.svg
+
+[xslt]
+files = index.xml
+languages = en es

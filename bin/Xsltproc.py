@@ -222,8 +222,10 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
 
     # Make sure the given styles are absolute paths
     styles = map(lambda x: os.path.abspath(x), styles)
+                   
+    # Obtain the file extension to use
+    outputFormat = processOuputFormat(target, directory)
                     
-
     # Loop over all source files to process (processing one source file over
     # several languages gives us a huge speedup because the XML tree of the
     # source is built only once for all languages.
@@ -264,8 +266,7 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
 
                 # Derive the destination file name
                 dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-                    langSuffix + psuffix + '.' + \
-                    directory.getWithDefault(target, 'output_format')
+                    langSuffix + psuffix + outputFormat
                 dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
                 # Apply style and store the result, get the data tree to recycle
@@ -361,6 +362,9 @@ def doClean(target, directory, toProcess, suffixes = None):
         languages = ['']
     multilingual = len(languages) > 1
 
+    # Obtain the file extension to use
+    outputFormat = processOuputFormat(target, directory)
+                    
     # Loop over all source files to process
     dstDir = directory.getWithDefault(target, 'dst_dir')
     for datafile in toProcess:
@@ -378,8 +382,7 @@ def doClean(target, directory, toProcess, suffixes = None):
 
                 # Derive the destination file name
                 dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-                    langSuffix + psuffix + '.' + \
-                    directory.getWithDefault(target, 'output_format')
+                    langSuffix + psuffix + outputFormat
                 dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
                 if not os.path.exists(dstFile):
@@ -401,6 +404,19 @@ def xsltprocEquivalent(target, directory, styleParams, datafile, dstFile):
     msg += ' ' + datafile
 
     Ada.logDebug(target, directory, 'XSLTPROC: ' + msg)
+
+def processOuputFormat(target, directory):
+    """
+    Process output_format option. If it does not include a dot, it is inserted
+    as first character. Otherwise, it is left untouched. That way, if the user
+    sets the value to 'html', a file with the extension '.html' is created, but
+    if the value is '_myversion.xml', the file is generated with a suffix and an
+    extension without problems.
+    """
+    outputFormat = directory.getWithDefault(target, 'output_format')
+    if outputFormat.find('.') == -1:
+        outputFormat = '.' + outputFormat
+    return outputFormat                
 
 # Execution as script
 if __name__ == "__main__":

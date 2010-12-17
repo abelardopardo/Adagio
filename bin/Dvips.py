@@ -26,18 +26,17 @@ import os, sys, glob
 import Ada, Directory, I18n, Dependency, AdaRule
 
 # Prefix to use for the options
-module_prefix = 'latex'
+module_prefix = 'dvips'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('exec', 'latex', I18n.get('name_of_executable')),
-    ('output_format', 'pdf', I18n.get('output_format')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('LaTeX'))
+    ('exec', 'dvips', I18n.get('name_of_executable')),
+    ('extra_arguments', '', I18n.get('extra_arguments').format('Dvips'))
     ]
 
 documentation = {
     'en' : """
-    Executes LaTeX with the given extra arguments over "files".
+    Executes Dvips with the given extra arguments over "files".
     """}
 
 has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
@@ -62,19 +61,9 @@ def Execute(target, directory):
         return
 
     executable = directory.getWithDefault(target, 'exec')
-    outputFormat = directory.getWithDefault(target, 'output_format')
-    if not outputFormat in set(['dvi', 'pdf']):
-        print I18n.get('program_incorrect_format').format(executable, 
-                                                          outputFormat)
-        sys.exit(1)
-
     
     # Prepare the command to execute
     dstDir = directory.getWithDefault(target, 'dst_dir')
-    commandPrefix = [executable, '-output-directory=' + dstDir,
-                     '-output-format=' + outputFormat]
-    commandPrefix.extend(directory.getWithDefault(target, 
-                                                  'extra_arguments').split())
     
     # Loop over all source files to process
     for datafile in toProcess:
@@ -87,15 +76,18 @@ def Execute(target, directory):
 
         # Derive the destination file name
         dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-            '.' + outputFormat
+            '.ps'
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
                                                    
         # Add the input file to the command
-        command = commandPrefix + [datafile]
+        command = [executable, '-o', dstFile]
+        command.extend(directory.getWithDefault(target, 
+                                                'extra_arguments').split())
+        command.append(datafile)
         
         # Perform the execution
         AdaRule.doExecution(target, directory, command, datafile, dstFile, 
-                            Ada.userLog)
+                            Ada.userLog, Ada.userLog)
 
     return
 
@@ -113,7 +105,6 @@ def clean(target, directory):
 
     # Loop over all source files to process
     dstDir = directory.getWithDefault(target, 'dst_dir')
-    outputFormat = directory.getWithDefault(target, 'output_format')
     for datafile in toProcess:
 
         # If file not found, terminate
@@ -122,17 +113,14 @@ def clean(target, directory):
             sys.exit(1)
 
         # Derive the destination file name
-        dstPrefix = os.path.splitext(os.path.basename(datafile))[0]
-        dstPrefix = os.path.join(dstDir, dstPrefix)
-
-        for fmt in [outputFormat, 'out', 'aux', 'log', 'bbl', 'blg', 'idx', 
-                    'ilg', 'ind', 'lof', 'lot', 'toc']:
-            dstFile = dstPrefix + '.' + fmt
+        dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
+            '.ps'
+        dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
                                                    
-            if not os.path.exists(dstFile):
-                continue
+        if not os.path.exists(dstFile):
+            continue
 
-            AdaRule.remove(dstFile)
+        AdaRule.remove(dstFile)
 
     return
 

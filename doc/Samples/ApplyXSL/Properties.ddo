@@ -1,0 +1,5 @@
+# Definition of the XML files to be processed by Xsltproc
+[xslt]
+files = index.xml
+styles = %(home)s/ADA_Styles/Dump.xsl
+output_format = _Dump.xml

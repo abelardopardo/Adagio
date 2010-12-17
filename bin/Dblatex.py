@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, re, sys, glob
+import os, sys, glob
 
 import Ada, Directory, I18n, AdaRule
 
@@ -67,11 +67,16 @@ def Execute(target, directory):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
+    
+    executable = directory.getWithDefault(target, 'exec')
+    outputFormat = directory.getWithDefault(target, 'output_format')
+    if not outputFormat in set(['tex', 'dvi', 'ps', 'pdf']):
+        print I18n.get('program_incorrect_format').format(executable, 
+                                                          outputFormat)
+        sys.exit(1)
 
     # Prepare the command to execute
-    executable = directory.getWithDefault(target, 'exec')
     dstDir = directory.getWithDefault(target, 'dst_dir')
-    outputFormat = directory.getWithDefault(target, 'output_format')
     if directory.getWithDefault(target, 'compliant_mode') == '1':
         compliantOptions = \
             '-P doc.collab.show=0 -P latex.output.revhistory=0'.split()

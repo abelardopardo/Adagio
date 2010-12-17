@@ -1,0 +1,7 @@
+[inkscape]
+files = *.svg
+
+[xslt]
+files = index.xml
+styles = %(home)s/ADA_Styles/HeadTail.xsl
+         Params.xml

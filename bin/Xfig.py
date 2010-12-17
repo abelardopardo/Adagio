@@ -26,18 +26,19 @@ import os, sys, glob
 import Ada, Directory, I18n, Dependency, AdaRule
 
 # Prefix to use for the options
-module_prefix = 'latex'
+module_prefix = 'xfig'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('exec', 'latex', I18n.get('name_of_executable')),
-    ('output_format', 'pdf', I18n.get('output_format')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('LaTeX'))
+    ('exec', 'fig2dev', I18n.get('name_of_executable')),
+    ('output_format', 'png', I18n.get('output_format')),
+    ('extra_arguments', '', I18n.get('extra_arguments').format('Fig2dev'))
     ]
 
 documentation = {
     'en' : """
-    Executes LaTeX with the given extra arguments over "files".
+    Executes fig2dev to translate *.fig figures to the given "output_format" of
+    all the "files".
     """}
 
 has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
@@ -61,21 +62,14 @@ def Execute(target, directory):
     if toProcess == []:
         return
 
+    # Prepare the command to execute
     executable = directory.getWithDefault(target, 'exec')
+    dstDir = directory.getWithDefault(target, 'dst_dir')
     outputFormat = directory.getWithDefault(target, 'output_format')
-    if not outputFormat in set(['dvi', 'pdf']):
-        print I18n.get('program_incorrect_format').format(executable, 
-                                                          outputFormat)
+    if outputFormat == '':
+        print I18n.get('empty_output_format').format(target)
         sys.exit(1)
 
-    
-    # Prepare the command to execute
-    dstDir = directory.getWithDefault(target, 'dst_dir')
-    commandPrefix = [executable, '-output-directory=' + dstDir,
-                     '-output-format=' + outputFormat]
-    commandPrefix.extend(directory.getWithDefault(target, 
-                                                  'extra_arguments').split())
-    
     # Loop over all source files to process
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
@@ -91,11 +85,14 @@ def Execute(target, directory):
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
                                                    
         # Add the input file to the command
-        command = commandPrefix + [datafile]
+        command = [executable, '-L', outputFormat]
+        command.extend(directory.getWithDefault(target, 
+                                                'extra_arguments').split())
+        command.extend([datafile, dstFile])
         
         # Perform the execution
         AdaRule.doExecution(target, directory, command, datafile, dstFile, 
-                            Ada.userLog)
+                            Ada.userLog, Ada.userLog)
 
     return
 
@@ -111,9 +108,13 @@ def clean(target, directory):
     if toProcess == []:
         return
 
-    # Loop over all source files to process
     dstDir = directory.getWithDefault(target, 'dst_dir')
     outputFormat = directory.getWithDefault(target, 'output_format')
+    if outputFormat == '':
+        print I18n.get('empty_output_format').format(target)
+        sys.exit(1)
+
+    # Loop over all source files to process
     for datafile in toProcess:
 
         # If file not found, terminate
@@ -122,17 +123,14 @@ def clean(target, directory):
             sys.exit(1)
 
         # Derive the destination file name
-        dstPrefix = os.path.splitext(os.path.basename(datafile))[0]
-        dstPrefix = os.path.join(dstDir, dstPrefix)
-
-        for fmt in [outputFormat, 'out', 'aux', 'log', 'bbl', 'blg', 'idx', 
-                    'ilg', 'ind', 'lof', 'lot', 'toc']:
-            dstFile = dstPrefix + '.' + fmt
+        dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
+            '.' + outputFormat
+        dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
                                                    
-            if not os.path.exists(dstFile):
-                continue
+        if not os.path.exists(dstFile):
+            continue
 
-            AdaRule.remove(dstFile)
+        AdaRule.remove(dstFile)
 
     return
 

@@ -1,0 +1,3 @@
+[xslt]
+files = index.xml
+styles = HeadTail.xsl
