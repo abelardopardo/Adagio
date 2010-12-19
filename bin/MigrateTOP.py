@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, sys, getopt, datetime, locale, re, codecs, ConfigParser
+import sys, locale, re, codecs
 
 # Fix the output encoding when redirecting stdout
 # if sys.stdout.encoding is None:
@@ -40,8 +40,6 @@ def main(dataFile):
 
     ... and dumps content to stdout
     """
-
-    config = ConfigParser.SafeConfigParser()
 
     dataIn = codecs.open(dataFile, 'r', 'utf-8')
     multiline = ''
@@ -103,7 +101,7 @@ def main(dataFile):
         # See if we have changed the section
         if transSection != currentSection and section != 'mergestyles':
             if (currentSection == 'xslt' or currentSection == 'exercise') \
-                and dumpedStyles == False and mergeLine != '':
+                and (not dumpedStyles) and mergeLine != '':
                 for fname in mergeLine.split():
                     print ' ', fname, '# Mergestyles'
                 
@@ -163,7 +161,7 @@ def main(dataFile):
             if subsection == 'destination':
                 print 'dst_dir =', fields[1]
 
-    if dumpedStyles == False and mergeLine != '':
+    if (not dumpedStyles) and mergeLine != '':
         print 'styles =', '\n                 '.join(mergeLine.split())
 
 def translateSection(sin, subs = None):

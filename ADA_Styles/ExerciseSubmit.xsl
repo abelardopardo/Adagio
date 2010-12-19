@@ -79,56 +79,50 @@
         </div>
       </xsl:if>
       
-      <div id="countdown">
-        <!-- Insert countdown here -->
-        <xsl:if
-          test="note[@condition='AdminInfo']/para[@condition =
-                'deadline.format']/text()">
-          <xsl:variable name="deadlineparts">
-            <tokens xmlns="">
-              <xsl:copy-of
-                select="str:tokenize(normalize-space(note[@condition =
-                        'AdminInfo']/para[@condition =
-                        'deadline.format']/text()), ' /')" />
-            </tokens>
-          </xsl:variable>
-          <p>
-            <xsl:call-template name="ada.page.countdown.insert">
-              <xsl:with-param name="countdown.year">
-                <xsl:value-of
-                  select="exsl:node-set($deadlineparts)/tokens/token[position()
-                          = 4]/text()"/>
-              </xsl:with-param>
-              <xsl:with-param name="countdown.month">
-                <xsl:value-of
-                  select="exsl:node-set($deadlineparts)/tokens/token[position()
-                          = 3]/text()"/>
-              </xsl:with-param>
-              <xsl:with-param name="countdown.day">
-                <xsl:value-of
-                  select="exsl:node-set($deadlineparts)/tokens/token[position()
-                          = 2]/text()"/>
-              </xsl:with-param>
-              <xsl:with-param name="countdown.hour">
-                <xsl:value-of
-                  select="exsl:node-set($deadlineparts)/tokens/token[position()
-                          = 5]/text()"/>
-              </xsl:with-param>
-              <xsl:with-param name="countdown.minute">
-                <xsl:value-of
-                  select="exsl:node-set($deadlineparts)/tokens/token[position()
-                          = 6]/text()"/>
-              </xsl:with-param>
-            </xsl:call-template>
-          </p>
-        </xsl:if>
-        <xsl:if
-          test="((note[@condition='AdminInfo']/para[@condition='handinlink']/text()
-                != '') and ($solutions.include.guide != 'yes')) or
-                (note[@condition='AdminInfo']/para[@condition =
-                'deadline.format']/text())">
-        </xsl:if>
-      </div> <!-- End of coutdown -->
+      <!-- Insert countdown here -->
+      <xsl:if
+        test="note[@condition='AdminInfo']/para[@condition =
+              'deadline.format']/text()">
+        <xsl:variable name="deadlineparts">
+          <tokens xmlns="">
+            <xsl:copy-of
+              select="str:tokenize(normalize-space(note[@condition =
+                      'AdminInfo']/para[@condition =
+                      'deadline.format']/text()), ' /')" />
+          </tokens>
+        </xsl:variable>
+	<div id="countdown">
+	  <p>
+	    <xsl:call-template name="ada.page.countdown.insert">
+	      <xsl:with-param name="countdown.year">
+		<xsl:value-of
+		  select="exsl:node-set($deadlineparts)/tokens/token[position()
+			  = 4]/text()"/>
+	      </xsl:with-param>
+	      <xsl:with-param name="countdown.month">
+		<xsl:value-of
+		  select="exsl:node-set($deadlineparts)/tokens/token[position()
+			  = 3]/text()"/>
+	      </xsl:with-param>
+	      <xsl:with-param name="countdown.day">
+		<xsl:value-of
+		  select="exsl:node-set($deadlineparts)/tokens/token[position()
+			  = 2]/text()"/>
+	      </xsl:with-param>
+	      <xsl:with-param name="countdown.hour">
+		<xsl:value-of
+		  select="exsl:node-set($deadlineparts)/tokens/token[position()
+			  = 5]/text()"/>
+	      </xsl:with-param>
+	      <xsl:with-param name="countdown.minute">
+		<xsl:value-of
+		  select="exsl:node-set($deadlineparts)/tokens/token[position()
+			  = 6]/text()"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </p>
+	</div> <!-- End of coutdown -->
+      </xsl:if>
 
       <!-- Render the TOC if allowed AND top-level document -->
       <xsl:if test="$exercisesubmit.include.toc = 'yes' and
