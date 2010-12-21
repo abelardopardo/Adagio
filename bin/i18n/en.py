@@ -88,7 +88,6 @@ msgs = {
     'included_from': 'Included from:',
     'prefix': 'Prefix',
     'files': 'Files',
-    'target_alias': 'Space separated list of aliases to use for this target',
     'template_error': 'Incorrect template in file {0}.\n' + 
     'Target must define only the variable "files"',
     'incorrect_assignment': 'Incorrect assignment in line {ln} of {pfile}',

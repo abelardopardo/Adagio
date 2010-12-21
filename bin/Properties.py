@@ -157,7 +157,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
 
         # Apply the alias expansion
         try:
-            unaliased = Ada.expandAlias(sname, aliasDict)
+            unaliased = expandAlias(sname, aliasDict)
         except SyntaxError:
             print I18n.get('error_alias_expression')
             sys.exit(1)
@@ -350,7 +350,7 @@ def Execute(target, directory, pad = None):
 
     # Apply the alias expansion
     try:
-        target = Ada.expandAlias(target, directory.alias)
+        target = expandAlias(target, directory.alias)
     except SyntaxError:
         print I18n.get('error_alias_expression')
         sys.exit(1)
@@ -533,4 +533,48 @@ def specialTargets(target, directory, moduleName, pad = None):
             hit =  True
 
     return hit
+
+def expandAlias(target, aliasDict):
+    """
+    Given a target, apply the values in the dictionary contained in the option
+    Ada.targer_alias and return the result.
+    """
+    
+    # Separate the target head from the tail
+    parts = target.split('.')
+    head = parts[0]
+    tail = []
+    if len(parts) > 1:
+        tail = parts[1:]
+
+    # Prepare values for the loop
+    oldValue = None
+    result = head
+    appliedAliases = set([])
+
+    # Loop until the alias expansion has no effect
+    while oldValue != result:
+        # Store the previous value
+        oldValue = result
+        
+        # Apply the alias expansion
+        newValue = aliasDict.get(result)
+
+        # If it was effective, remember it
+        if newValue != None:
+            # If the new value has been applied, exit
+            if newValue in appliedAliases:
+                print I18n.get('circular_alias')
+                print ' '.join(appliedAliases)
+                sys.exit(1)
+
+            # Propagate the change and remember it
+            appliedAliases.add(result)
+            result = newValue
+
+    result = '.'.join([result] + tail)
+
+    Ada.logDebug(target, None, 'Aliasing ' + target + ' to ' + result)
+
+    return result
 

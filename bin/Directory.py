@@ -259,10 +259,12 @@ class Directory:
         for assignment in givenOptions:
             # Chop assignment into its three parts
             (sn, on, ov) = assignment.split()
+
+            sn = Properties.expandAlias(sn, self.alias)
             # Check first if the option is legal
             if not self.options.has_option(sn, on):
                 optionName = sn + '.' + on
-                print I18n.get('incorrect_option').format(value)
+                print I18n.get('incorrect_option').format(optionName)
                 sys.exit(3)
             # Insert in the options in the directory
             try:
@@ -379,7 +381,7 @@ class Directory:
             targets = toExecTargets
 
         # If any of the targets is dump, help, clean, expand the current targets
-        # to add them that suffix, otherwise, apply alias expansion
+        # to add them that suffix, otherwise simply accumulate
         finalTargets = []
         for target in targets:
             if target == 'deepclean':

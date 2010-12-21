@@ -31,7 +31,7 @@ module_prefix = 'gotodir'
 # List of tuples (varname, default value, description string)
 options = [
     ('export_dst', '', I18n.get('export_dst')),
-    ('targets', '', I18n.get('export_targets'))
+    ('targets', 'export', I18n.get('export_targets'))
     ]
 
 documentation = {
@@ -65,15 +65,19 @@ def Execute(target, directory, pad = None):
     # Translate all paths to absolute paths
     toProcess = map(lambda x: os.path.abspath(x), toProcess)
 
+    # Targets to execute in the remote directory
+    remoteTargets = directory.getWithDefault(target, 'targets').split()
+
     # Get option to set in the remote directory
     optionsToSet = []
     newExportDir = directory.getWithDefault(target, 'export_dst')
     if newExportDir != '':
-        optionsToSet = ['export dst_dir ' + newExportDir]
-    Ada.logInfo(target, directory, 'NEW export.dst_dir = ' + newExportDir)
+        # If a new dst_dir has been specified, include as options the
+        # modification of that variable
+        optionsToSet = map(lambda x: x + ' dst_dir ' + newExportDir, 
+                           remoteTargets)
 
-    # Targets to execute in the remote directory
-    remoteTargets = directory.getWithDefault(target, 'targets').split()
+    Ada.logInfo(target, directory, 'NEW Options = ' + ', '.join(optionsToSet))
 
     # Loop over each directory
     for dirName in toProcess:
