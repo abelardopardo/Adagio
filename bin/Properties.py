@@ -331,7 +331,7 @@ def LoadDefaults(config):
                 sys.exit(3)
 
         # Add the string for the help
-        helpStr = documentation.get(Ada.config_defaults['locale'])
+        helpStr = documentation.get(Ada.config_defaults['languages'].split()[0])
         if helpStr == None:
             helpStr = documentation.get('en')
         config.set(sectionName, 'help', helpStr)

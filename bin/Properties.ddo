@@ -56,7 +56,7 @@
 #  - files:              Files to be processed
 #  - help:               Text explaining how the rule works
 #  - home:               Directory where ADA is installed
-#  - locale:             Taken from execution environment
+#  - languages:          The locale taken from execution environment
 #  - project_file:       File name marking the root of a project 'Ada.project'
 #  - project_home:       Directory where Ada.project has been located
 #  - property_file:      File to read in each dir (Properties.ddo)

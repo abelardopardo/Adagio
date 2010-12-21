@@ -60,7 +60,7 @@ config_defaults = {
     'files':              '',
     'help':               I18n.get('no_help_available'),
     'home':               _currentDir,
-    'locale':             lang[0:2],
+    'languages':          lang[0:2],
     'partial':            '0',
     'project_file':       'Ada.project',
     'project_home':       _currentDir,

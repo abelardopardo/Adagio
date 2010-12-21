@@ -31,8 +31,7 @@ module_prefix = '@PREFIX@'
 # List of tuples (varname, default value, description string)
 options = [
     ('exec', 'xsltproc', I18n.get('name_of_executable')),
-    ('output_format', 'html', I18n.get('output_format')),
-    ('languages', '%(locale)s', I18n.get('languages'))
+    ('output_format', 'html', I18n.get('output_format'))
     ]
 
 documentation = {

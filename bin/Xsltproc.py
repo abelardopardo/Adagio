@@ -35,8 +35,7 @@ options = [
      '%(home)s%(file_separator)sADA_Styles%(file_separator)sDocbookProfile.xsl',
      I18n.get('xslt_style_file')),
     ('output_format', 'html', I18n.get('output_format')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('Xsltproc')),
-    ('languages', '%(locale)s', I18n.get('languages'))
+    ('extra_arguments', '', I18n.get('extra_arguments').format('Xsltproc'))
     ]
 
 documentation = {
