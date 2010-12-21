@@ -94,7 +94,7 @@ def clean(target, directory):
 
     # Check the condition
     dstDir = directory.getWithDefault(target, 'dst_dir')
-    if not evaluateCondition(target, directory, dstDir):
+    if dstDir == '':
         return
 
     # If we are here, the export may proceed!
