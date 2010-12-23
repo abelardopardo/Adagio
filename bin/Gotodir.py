@@ -31,7 +31,7 @@ module_prefix = 'gotodir'
 # List of tuples (varname, default value, description string)
 options = [
     ('export_dst', '', I18n.get('export_dst')),
-    ('targets', 'export', I18n.get('export_targets'))
+    ('targets', '', I18n.get('export_targets'))
     ]
 
 documentation = {
