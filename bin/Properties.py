@@ -356,12 +356,12 @@ def Execute(target, directory, pad = None):
         sys.exit(1)
 
     # Detect help or dump targets with/without section name
-    specialTarget = re.match('(.+\.)?dump$', target) or \
-        re.match('(.+\.)?help$', target) or \
-        re.match('(.+\.)?clean$', target) or \
-        re.match('(.+\.)?deepclean$', target) or \
-        re.match('(.+\.)?dumphelp$', target) or \
-        re.match('(.+\.)?helpdump$', target)
+    specialTarget = re.match('.+\.dump$', target) or \
+        re.match('.+\.help$', target) or \
+        re.match('.+\.clean$', target) or \
+        re.match('.+\.deepclean$', target) or \
+        re.match('.+\.dumphelp$', target) or \
+        re.match('.+\.helpdump$', target)
 
     # Make sure the target is legal.
     if not specialTarget and not directory.options.has_section(target):
@@ -500,37 +500,36 @@ def specialTargets(target, directory, moduleName, pad = None):
     (prefix, b, c) = target.rpartition('.')
 
     # Remember if it is one of the helpdump or dumphelp
-    doubleTarget = re.match('(.+\.)?helpdump$', target) or \
-        re.match('(.+\.)?dumphelp$', target)
+    doubleTarget = re.match('.+\.helpdump$', target) or \
+        re.match('.+\.dumphelp$', target)
 
     # If requesting help, dump msg and terminate
-    if doubleTarget or re.match('(.+)?help$', target):
+    if doubleTarget or re.match('.+\.help$', target):
         msg = directory.getWithDefault(prefix, 'help')
         print I18n.get('doc_preamble').format(prefix) + '\n\n' + msg + '\n\n'
         hit = True
 
     # If requesting var dump, do it and finish
-    if doubleTarget or re.match('(.+\.)?dump$', target):
+    if doubleTarget or re.match('.+\.dump$', target):
         AdaRule.dumpOptions(target, directory, prefix)
         hit =  True
 
     # CLEAN
-    if re.match('(.+\.)?clean$', target):
+    if re.match('.+\.clean$', target):
         eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
              + '\', directory)')
         hit =  True
 
     # DEEPCLEAN
-    if re.match('(.+\.)?deepclean$', target):
-        if clean_function != None:
-            if prefix.startswith('gotodir'):
-                # Gotodir propagates the pad for the deep
-                eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
-                     + '\', directory, True, pad)')
-            else:
-                eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
-                     + '\', directory)')
-            hit =  True
+    if re.match('.+\.deepclean$', target):
+        if prefix.startswith('gotodir'):
+            # Gotodir propagates the pad for the deep
+            eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', target)
+                 + '\', directory, True, pad)')
+        else:
+            eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', target)
+                 + '\', directory)')
+        hit =  True
 
     return hit
 

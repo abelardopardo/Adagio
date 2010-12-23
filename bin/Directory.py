@@ -386,7 +386,7 @@ class Directory:
         for target in targets:
             if target == 'deepclean':
                 # Get all the targets
-                finalTargets.extend([x + '.clean' for x in toExecTargets])
+                finalTargets.extend([x + '.deepclean' for x in toExecTargets])
                 finalTargets.reverse()
             elif target == 'clean':
                 # Get all the targets except the "gotodir" ones
