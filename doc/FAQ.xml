@@ -23,9 +23,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
 "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
 
-<article id="ADA_FAQ">
-  <title>ADA Frequently Asked Questions <phrase condition="ada_version"/></title>
-
+<article xmlns="http://docbook.org/ns/docbook">
+  <title>ADA Frequently Asked Questions <phrase
+  condition="ada_version"/></title> 
   <articleinfo condition="dc.info">
     <publisher>
       <publishername>Carlos III University of Madrid</publishername>
@@ -42,7 +42,7 @@
       <para>Frequently Asked Questions of ADA</para>
     </abstract>
     <copyright>
-      <year><link linkend="gfdl">2008, 2009</link></year>
+      <year><link linkend="gfdl">2010, 2011</link></year>
       <holder>
         <ulink url="http://www.uc3m.es">Universidad Carlos III de
           Madrid</ulink>
@@ -50,9 +50,6 @@
     </copyright>
   </articleinfo>
   
-<!--   <para>You may also access to the <ulink url="FAQ.pdf">PDF version of this -->
-<!--   document</ulink>.</para> -->
-
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                         WHAT IS ADA                          -->
