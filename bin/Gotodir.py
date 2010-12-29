@@ -149,14 +149,19 @@ def prepareTarget(target, directory):
     # Targets to execute in the remote directory
     remoteTargets = directory.getWithDefault(target, 'targets').split()
 
-    # Get option to set in the remote directory
+    # Create the option dict for the remote directories
     optionsToSet = []
     newExportDir = directory.getWithDefault(target, 'export_dst')
     if newExportDir != '':
-        # If a new dst_dir has been specified, include as options the
-        # modification of that variable
-        optionsToSet = [x + ' dst_dir ' + newExportDir 
-                        for x in remoteTargets if x.startswith('export')]
+        # If a new dst_dir has been specified, include the options to modify
+        # that variable for each of the targets
+        if remoteTargets != []:
+            # If there are some targets given, use them
+            optionsToSet = [x + ' dst_dir ' + newExportDir 
+                            for x in remoteTargets if x.startswith('export')]
+        else:
+            # If no target is given, leave the option in the export.dst_dir default
+            optionsToSet = ['export dst_dir ' + newExportDir]
 
     Ada.logInfo(target, directory, 'NEW Options = ' + ', '.join(optionsToSet))
 
