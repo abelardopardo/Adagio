@@ -185,7 +185,7 @@ class Directory:
         # STEP 1: Set ada.home in global options
         #
         self.options.add_section(Ada.module_prefix)
-        self.options.set(Ada.module_prefix, 'home', Ada.home)
+        Properties.setProperty(self.options, Ada.module_prefix, 'home', Ada.home)
 
         #
         # STEP 2: Load the default options from the Rule files
@@ -266,17 +266,9 @@ class Directory:
                 optionName = sn + '.' + on
                 print I18n.get('incorrect_option').format(optionName)
                 sys.exit(3)
-            # Insert in the options in the directory
-            try:
-                self.options.set(sn, on, ov)
-                # To verify interpolation
-                self.options.get(sn, on)
-            except ConfigParser.NoSectionError:
-                print I18n.get('incorrect_section').format(sn)
-                sys.exit(1)
-            except ConfigParser.InterpolationDepthError, e:
-                print I18n.get('incorrect_variable_reference').format(ov)
-                sys.exit(3)
+
+            # Insert the new assignment in options of the directory
+            Properties.setProperty(self.options, sn, on, ov)
 
         # Compare ADA versions to see if execution is allowed
         if not self.isCorrectAdaVersion():
