@@ -23,7 +23,7 @@
 #
 import os, re, sys, glob
 
-import Ada, Directory, I18n, Dependency, AdaRule
+import Ada, Directory, I18n, Dependency, AdaRule, Properties
 
 # Prefix to use for the options
 module_prefix = 'gotodir'
@@ -103,11 +103,6 @@ def clean(target, directory, deepClean = False, pad = None):
         remoteTargets = [x + '.clean'  for x in remoteTargets 
                          if x.startswith('export')]
 
-        # If no rule is obtained, clean, means simply execute the export.clean
-        # rule (if nothing is defined, no action is taken)
-        if remoteTargets == []:
-            remoteTargets = ['export.clean']
-        
     Ada.logInfo(target, directory, 
                 'Remote Targets = ' + ' '.join(remoteTargets))
 
@@ -115,8 +110,17 @@ def clean(target, directory, deepClean = False, pad = None):
     for dirName in toProcess:
 
         Ada.logInfo(target, directory, 'RECUR: ' + dirName)
-
         dirObj = Directory.getDirectoryObject(dirName, optionsToSet)
+
+        # If the clean is not deep and there is no given remote targets, we need
+        # to select as targets those that start with 'export'
+        if (not deepClean) and (remoteTargets == []):
+            remoteTargets = [x + '.clean' for x in dirObj.section_list
+                             if re.match('^export(\..+)?$',
+                                         Properties.expandAlias(x, 
+                                                                dirObj.alias))]
+
+        # Execute the remote targets
         dirObj.Execute(remoteTargets, pad + '  ')
 
     return
