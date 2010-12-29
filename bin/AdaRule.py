@@ -203,7 +203,7 @@ def evaluateCondition(target, options):
     # ada.enabled_profiles
     revisionsData = Properties.getWithDefault(options, 'ada', 'enabled_profiles')
     if revisionsData != '':
-        thisRevision = directory.options.get(target, 'enable_profile')
+        thisRevision = options.get(target, 'enable_profile')
         if not (thisRevision in set(revisionsData.split())):
             print I18n.get('enable_not_revision').format(target)
             return False
