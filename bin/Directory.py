@@ -41,7 +41,7 @@ def getDirectoryObject(path, givenOptions):
     global _createdDirs
 
     # The key to access the hash is the concatenation of path and givenOptions
-    theKey = path + ''.join(givenOptions)
+    theKey = path + ''.join(sorted(givenOptions))
     dirObj = _createdDirs.get(theKey)
     if dirObj != None:
         # Hit in the cache, return
