@@ -455,47 +455,51 @@ def specialTargets(target, directory, moduleName, pad = None):
 
 def expandAlias(target, aliasDict):
     """
-    Given a target, apply the values in the dictionary contained in the option
-    Ada.targer_alias and return the result.
+    Given a target a.b.c, apply the alias values contained in the given
+    dictionary. The values are applied hierarchically. That is, the alias is
+    looked up starting with the whole target and then removing the suffixes one
+    by one. Once an alias is found, it is applied and the process is repeated
+    with the new target. Loops in the alias expansion are detected.
     """
-
-    # Separate the target head from the tail
-    parts = target.split('.')
-    head = parts[0]
-    tail = []
-    if len(parts) > 1:
-        tail = parts[1:]
-
-    # Prepare values for the loop
-    oldValue = None
-    result = head
+    
+    # Split the target in two halfs to separate suffixes
+    head = target
+    oldHead = None
+    
+    # Set to store the applied rules
     appliedAliases = set([])
 
-    # Loop until the alias expansion has no effect
-    while oldValue != result:
-        # Store the previous value
-        oldValue = result
+    # Keep looping while changes are detected
+    while head != oldHead:
 
-        # Apply the alias expansion
-        newValue = aliasDict.get(result)
+        # Remember the current value
+        oldHead = head;
 
-        # If it was effective, remember it
-        if newValue != None:
-            # If the new value has been applied, exit
-            if newValue in appliedAliases:
-                print I18n.get('circular_alias')
-                print ' '.join(appliedAliases)
-                sys.exit(1)
+        tail = ''
+        while head != '':
+            # Look up the target
+            newHead = aliasDict.get(head)
+            if newHead != None:
+                # HIT: Apply the alias
+                if newHead in appliedAliases:
+                    # A loop in the alias expansion has been detected. Bomb out
+                    print I18n.get('circular_alias')
+                    print ' '.join(appliedAliases)
+                    sys.exit(1)
+                # Propagate the change and remember it
+                appliedAliases.add(head)
+                head = newHead
+                # Get out of the inner loop
+                break
+            # No alias has been applied, re-apply with a shorter prefix and pass
+            # the suffix to the tail
+            (head, sep, pr) = head.rpartition('.')
+            tail = sep + pr + tail
+        
+        # If there is a tail, attach it to the new head
+        head += tail
 
-            # Propagate the change and remember it
-            appliedAliases.add(result)
-            result = newValue
-
-    result = '.'.join([result] + tail)
-
-    Ada.logDebug(target, None, 'Aliasing ' + target + ' to ' + result)
-
-    return result
+    return head
 
 def getProperty(config, section, option):
     """
