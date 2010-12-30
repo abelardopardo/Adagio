@@ -72,6 +72,9 @@ def main():
 
         # Change directory
         elif optstr == "-f":
+            if not os.path.isfile(value):
+                print I18n.get('file_not_found').format(value)
+                sys.exit(1)
             (toDir, cFile) = os.path.split(value)
             # If the dir is not empty and does not exist, terminate
             if toDir != '' and not os.path.isdir(toDir):

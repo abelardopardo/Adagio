@@ -323,12 +323,19 @@ def Execute(target, directory, pad = None):
         # Print msg when beginning to execute target in dir
         print pad + 'BB', originalTarget
 
+        # Detect and execute "help/dump" targets
+        if specialTargets(target, directory, moduleName, pad):
+            print pad + 'EE', originalTarget
+            Ada.logInfo(originalTarget, directory,
+                        'Exit ' + directory.current_dir)
+            return
+
         # Check the condition
         if not AdaRule.evaluateCondition(targetPrefix, directory.options):
             return
 
-        # Detect and execute "special" targets
-        if specialTargets(target, directory, moduleName, pad):
+        # Detect and execute "clean" targets
+        if cleanTargets(target, directory, moduleName, pad):
             print pad + 'EE', originalTarget
             Ada.logInfo(originalTarget, directory,
                         'Exit ' + directory.current_dir)
@@ -434,24 +441,31 @@ def specialTargets(target, directory, moduleName, pad = None):
         AdaRule.dumpOptions(target, directory, prefix)
         hit =  True
 
+    return hit
+
+def cleanTargets(target, directory, moduleName, pad = None):
+    """
+    Execute the clean targets. Return True if a target has been executed
+    """
+
     # CLEAN
     if re.match('.+\.clean$', target):
         eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
              + '\', directory)')
-        hit =  True
+        return True
 
     # DEEPCLEAN
     if re.match('.+\.deepclean$', target):
-        if prefix.startswith('gotodir'):
+        if target.startswith('gotodir'):
             # Gotodir propagates the pad for the deep
             eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', target)
                  + '\', directory, True, pad)')
         else:
             eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', target)
                  + '\', directory)')
-        hit =  True
+        return True
 
-    return hit
+    return False
 
 def expandAlias(target, aliasDict):
     """
@@ -461,11 +475,11 @@ def expandAlias(target, aliasDict):
     by one. Once an alias is found, it is applied and the process is repeated
     with the new target. Loops in the alias expansion are detected.
     """
-    
+
     # Split the target in two halfs to separate suffixes
     head = target
     oldHead = None
-    
+
     # Set to store the applied rules
     appliedAliases = set([])
 
@@ -495,7 +509,7 @@ def expandAlias(target, aliasDict):
             # the suffix to the tail
             (head, sep, pr) = head.rpartition('.')
             tail = sep + pr + tail
-        
+
         # If there is a tail, attach it to the new head
         head += tail
 
