@@ -71,7 +71,7 @@ def Execute(target, directory):
         return
 
     # Prepare the style transformation
-    styleFiles = directory.getWithDefault(target, 'styles').split()
+    styleFiles = directory.getProperty(target, 'styles').split()
     styleTransform = createStyleTransform(styleFiles)
     if styleTransform == None:
         print I18n.get('no_style_file')
@@ -150,13 +150,13 @@ def createParameterDict(target, directory):
     # Create the dictionary of stylesheet parameters
     styleParams = {}
     styleParams['ada.home'] =  "\'" + \
-        directory.getWithDefault(Ada.module_prefix, 'home') + "\'"
+        directory.getProperty(Ada.module_prefix, 'home') + "\'"
     styleParams['basedir'] =  "\'" + \
-        directory.getWithDefault(Ada.module_prefix, 'basedir') + "\'"
+        directory.getProperty(Ada.module_prefix, 'basedir') + "\'"
 
     # Calculate ada.project.home as a relative path with respect to the project
     # home
-    relProjectHome = os.path.relpath(directory.getWithDefault(Ada.module_prefix, 
+    relProjectHome = os.path.relpath(directory.getProperty(Ada.module_prefix,
                                                               'project_home'),
                                      directory.current_dir)
     # Attach always the slash at the end to allow the stylesheets to assume it
@@ -171,8 +171,8 @@ def createParameterDict(target, directory):
     styleParams['ada.project.home'] =  "\'" + relProjectHome + "\'"
 
     styleParams['ada.current.datetime'] = "\'" + \
-        directory.getWithDefault(Ada.module_prefix, 'current_datetime') + "\'"
-    profileRevision = directory.getWithDefault(Ada.module_prefix,
+        directory.getProperty(Ada.module_prefix, 'current_datetime') + "\'"
+    profileRevision = directory.getProperty(Ada.module_prefix,
                                             'enabled_profiles').split()
     if profileRevision != []:
         styleParams['profile.revision'] = "\'" + \
@@ -180,7 +180,7 @@ def createParameterDict(target, directory):
 
     # Parse the dictionary given in extra_arguments and fold it
     try:
-        extraDict = eval('{' + directory.getWithDefault(target,
+        extraDict = eval('{' + directory.getProperty(target,
                                                      'extra_arguments') +
                          '}')
         for (k, v) in extraDict.items():
@@ -210,7 +210,7 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
 	paramDict = [({}, '')]
 
     # Obtain languages
-    languages = directory.getWithDefault(target, 'languages').split()
+    languages = directory.getProperty(target, 'languages').split()
 
     # If languages is empty, insert an empty string to force one execution
     if languages == []:
@@ -221,14 +221,14 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
 
     # Make sure the given styles are absolute paths
     styles = map(lambda x: os.path.abspath(x), styles)
-                   
+
     # Obtain the file extension to use
     outputFormat = processOuputFormat(target, directory)
-                    
+
     # Loop over all source files to process (processing one source file over
     # several languages gives us a huge speedup because the XML tree of the
     # source is built only once for all languages.
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    dstDir = directory.getProperty(target, 'dst_dir')
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
@@ -331,7 +331,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     # Write the result
     result.write(dstFile,
-                 encoding = directory.getWithDefault(Ada.module_prefix,
+                 encoding = directory.getProperty(Ada.module_prefix,
                                                   'encoding'),
                  xml_declaration = True,
                  pretty_print = True)
@@ -355,7 +355,7 @@ def doClean(target, directory, toProcess, suffixes = None):
 	suffixes = ['']
 
     # Split the languages and remember if the execution is multilingual
-    languages = directory.getWithDefault(target, 'languages').split()
+    languages = directory.getProperty(target, 'languages').split()
     # If languages is empty, insert an empty string to force one execution
     if languages == []:
         languages = ['']
@@ -363,9 +363,9 @@ def doClean(target, directory, toProcess, suffixes = None):
 
     # Obtain the file extension to use
     outputFormat = processOuputFormat(target, directory)
-                    
+
     # Loop over all source files to process
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    dstDir = directory.getProperty(target, 'dst_dir')
     for datafile in toProcess:
 
         # Loop over the different suffixes
@@ -412,10 +412,10 @@ def processOuputFormat(target, directory):
     if the value is '_myversion.xml', the file is generated with a suffix and an
     extension without problems.
     """
-    outputFormat = directory.getWithDefault(target, 'output_format')
+    outputFormat = directory.getProperty(target, 'output_format')
     if outputFormat.find('.') == -1:
         outputFormat = '.' + outputFormat
-    return outputFormat                
+    return outputFormat
 
 # Execution as script
 if __name__ == "__main__":

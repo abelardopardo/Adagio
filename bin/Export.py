@@ -68,13 +68,13 @@ def Execute(target, directory):
         return
 
     # Check if dstDir is empty, in which case, there is nothing to do
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    dstDir = directory.getProperty(target, 'dst_dir')
     if dstDir == '':
         print I18n.get('export_no_dst')
         return
 
     # If we are here, the export may proceed!
-    srcDir = directory.getWithDefault(target, 'src_dir')
+    srcDir = directory.getProperty(target, 'src_dir')
     Copy.doCopy(target, directory, toProcess, srcDir, dstDir)
 
     return
@@ -93,13 +93,13 @@ def clean(target, directory):
         return
 
     # Check the condition
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    dstDir = directory.getProperty(target, 'dst_dir')
     if dstDir == '':
         return
 
     # If we are here, the export may proceed!
     Copy.doClean(target, directory, toProcess, 
-                 directory.getWithDefault(target, 'src_dir'), dstDir)
+                 directory.getProperty(target, 'src_dir'), dstDir)
 
     return
 

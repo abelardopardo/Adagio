@@ -430,13 +430,13 @@ class Directory:
 
         return
 
-    def getWithDefault(self, section, option):
+    def getProperty(self, section, option):
         """
         Try to get a pair section/option from the ConfigParser in the object. If
         it does not exist, check if the section has the form name.subname. If
         so, check for the option name/option.
         """
-        return Properties.getWithDefault(self.options, section, option)
+        return Properties.getProperty(self.options, section, option)
 
 ################################################################################
 

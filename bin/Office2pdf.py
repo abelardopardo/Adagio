@@ -64,11 +64,11 @@ def Execute(target, directory):
         return
 
     # Loop over all source files to process
-    executable = directory.getWithDefault(target, 'exec')
-    extraArgs = directory.getWithDefault(target, 'extra_arguments')
+    executable = directory.getProperty(target, 'exec')
+    extraArgs = directory.getProperty(target, 'extra_arguments')
     command = [executable, '-nologo', '-invisible', '-headless']
     command.extend(extraArgs.split())
-    dstDir = directory.getWithDefault(target, 'src_dir')
+    dstDir = directory.getProperty(target, 'src_dir')
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
@@ -106,7 +106,7 @@ def clean(target, directory):
         return
 
     # Loop over all the source files
-    dstDir = directory.getWithDefault(target, 'src_dir')
+    dstDir = directory.getProperty(target, 'src_dir')
     for datafile in toProcess:
 
         # If file not found, terminate

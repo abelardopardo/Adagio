@@ -60,8 +60,8 @@ def Execute(target, directory):
     if toProcess == []:
         return
 
-    executable = directory.getWithDefault(target, 'exec')
-    outputFormat = directory.getWithDefault(target, 'output_format')
+    executable = directory.getProperty(target, 'exec')
+    outputFormat = directory.getProperty(target, 'output_format')
     if not outputFormat in set([]):
         print I18n.get('program_incorrect_format').format(executable, 
                                                           outputFormat)

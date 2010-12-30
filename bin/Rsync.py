@@ -61,8 +61,8 @@ def Execute(target, directory):
         return
 
     # Get the directories to synchronize, check if work is needed
-    srcDir = directory.getWithDefault(target, 'src_dir')
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    srcDir = directory.getProperty(target, 'src_dir')
+    dstDir = directory.getProperty(target, 'dst_dir')
     if srcDir == '' or dstDir == '' or srcDir == dstDir:
         return
 
@@ -72,8 +72,8 @@ def Execute(target, directory):
         sys.exit(1)
 
     # Prepare the command to execute
-    executable = directory.getWithDefault(target, 'exec')
-    extraArgs = directory.getWithDefault(target, 'extra_arguments')
+    executable = directory.getProperty(target, 'exec')
+    extraArgs = directory.getProperty(target, 'extra_arguments')
 
     command = [executable, '-avz']
     command.append(srcDir)
@@ -100,7 +100,7 @@ def clean(target, directory):
         return
 
     # Get the dstDir
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    dstDir = directory.getProperty(target, 'dst_dir')
 
     # If dist dir not found, terminate
     if not os.path.isdir(dstDir):

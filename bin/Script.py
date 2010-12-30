@@ -81,15 +81,15 @@ def prepareExecution(target, directory, functionOption):
     toProcess = map(lambda x: os.path.splitext(x)[0], toProcess)
 
     # Get the function to execute
-    functionName = directory.getWithDefault(target, functionOption)
+    functionName = directory.getProperty(target, functionOption)
 
     # Modify input/output/error channels
     oldStdin = sys.stdin
     oldStdout = sys.stdout
     oldStderr = sys.stderr
-    newStdin = directory.getWithDefault(target, 'stdin')
-    newStdout = directory.getWithDefault(target, 'stdout')
-    newStderr = directory.getWithDefault(target, 'stderr')
+    newStdin = directory.getProperty(target, 'stdin')
+    newStdout = directory.getProperty(target, 'stdout')
+    newStderr = directory.getProperty(target, 'stderr')
     if newStdin != '':
         if not os.path.exists(newStdin):
             print I18n.get('file_not_found').format(newStdin)
@@ -149,7 +149,7 @@ def executeFunction(toProcess, target, directory, functionName):
 
         # Replace argv
         oldArgv = sys.argv
-        newArgv = directory.getWithDefault(target, 'arguments')
+        newArgv = directory.getProperty(target, 'arguments')
         if newArgv != '':
             sys.argv = [datafile] + newArgv.split() 
 

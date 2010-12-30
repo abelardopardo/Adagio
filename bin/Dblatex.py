@@ -67,24 +67,24 @@ def Execute(target, directory):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
-    
-    executable = directory.getWithDefault(target, 'exec')
-    outputFormat = directory.getWithDefault(target, 'output_format')
+
+    executable = directory.getProperty(target, 'exec')
+    outputFormat = directory.getProperty(target, 'output_format')
     if not outputFormat in set(['tex', 'dvi', 'ps', 'pdf']):
-        print I18n.get('program_incorrect_format').format(executable, 
+        print I18n.get('program_incorrect_format').format(executable,
                                                           outputFormat)
         sys.exit(1)
 
     # Prepare the command to execute
-    dstDir = directory.getWithDefault(target, 'dst_dir')
-    if directory.getWithDefault(target, 'compliant_mode') == '1':
+    dstDir = directory.getProperty(target, 'dst_dir')
+    if directory.getProperty(target, 'compliant_mode') == '1':
         compliantOptions = \
             '-P doc.collab.show=0 -P latex.output.revhistory=0'.split()
     else:
         compliantOptions = []
 
-    extraArgs = directory.getWithDefault(target, 'extra_arguments')
-    extraXsltArgs = directory.getWithDefault(target, 
+    extraArgs = directory.getProperty(target, 'extra_arguments')
+    extraXsltArgs = directory.getProperty(target,
                                              'extra_xslt_arguments').split()
     extraXsltArgs = reduce(lambda x, y: x + ['-x', y], extraXsltArgs, [])
 
@@ -106,12 +106,12 @@ def Execute(target, directory):
         dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
             '.' + outputFormat
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-                                                   
+
         # Add the output and input files to the command
         command = commandPrefix + ['-o', dstFile] + [datafile]
 
         # Perform the execution
-        AdaRule.doExecution(target, directory, command, datafile, dstFile, 
+        AdaRule.doExecution(target, directory, command, datafile, dstFile,
                             Ada.userLog, Ada.userLog)
 
     return
@@ -120,7 +120,7 @@ def clean(target, directory):
     """
     Clean the files produced by this rule
     """
-    
+
     Ada.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
@@ -129,8 +129,8 @@ def clean(target, directory):
         return
 
     # Loop over all source files to process
-    dstDir = directory.getWithDefault(target, 'dst_dir')
-    outputFormat = directory.getWithDefault(target, 'output_format')
+    dstDir = directory.getProperty(target, 'dst_dir')
+    outputFormat = directory.getProperty(target, 'output_format')
     for datafile in toProcess:
 
         # If file not found, terminate
@@ -142,7 +142,7 @@ def clean(target, directory):
         dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
             '.' + outputFormat
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-                                                   
+
         if not os.path.exists(dstFile):
             continue
 

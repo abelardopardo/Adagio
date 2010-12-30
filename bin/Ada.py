@@ -223,7 +223,7 @@ def log(tprefix, directory, msg, fname = None):
     # Check for debug levels
     threshold = config_defaults['debug_level']
     if directory != None:
-        threshold = directory.getWithDefault(module_prefix, 'debug_level')
+        threshold = directory.getProperty(module_prefix, 'debug_level')
 
     try:
         threshold = int(threshold)

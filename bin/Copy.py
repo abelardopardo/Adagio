@@ -55,8 +55,8 @@ def Execute(target, directory):
 
     # Perform the copy
     doCopy(target, directory, toProcess, 
-           directory.getWithDefault(target, 'src_dir'),
-           directory.getWithDefault(target, 'dst_dir'))
+           directory.getProperty(target, 'src_dir'),
+           directory.getProperty(target, 'dst_dir'))
 
     return
 
@@ -74,8 +74,8 @@ def clean(target, directory):
 
     # Loop over all source files to process
     doClean(target, directory, toProcess,
-            directory.getWithDefault(target, 'src_dir'),
-            directory.getWithDefault(target, 'dst_dir'))
+            directory.getProperty(target, 'src_dir'),
+            directory.getProperty(target, 'dst_dir'))
 
     return
 

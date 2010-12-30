@@ -72,16 +72,16 @@ def Execute(target, directory):
         return
 
     # Get geometry
-    geometries = directory.getWithDefault(target, 'geometry').split()
+    geometries = directory.getProperty(target, 'geometry').split()
     if geometries == []:
         print I18n.get('no_var_value').format('geometry')
         return
 
     # Loop over all source files to process
-    executable = directory.getWithDefault(target, 'exec')
-    extraArgs = directory.getWithDefault(target, 'extra_arguments')
-    convertCrop = directory.getWithDefault(target, 'crop_option')
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    executable = directory.getProperty(target, 'exec')
+    extraArgs = directory.getProperty(target, 'extra_arguments')
+    convertCrop = directory.getProperty(target, 'crop_option')
+    dstDir = directory.getProperty(target, 'dst_dir')
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
@@ -125,13 +125,13 @@ def clean(target, directory):
         return
 
     # Get geometry
-    geometries = directory.getWithDefault(target, 'geometry').split()
+    geometries = directory.getProperty(target, 'geometry').split()
     if geometries == []:
         print I18n.get('no_var_value').format('geometry')
         return
 
     # Loop over all the source files
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    dstDir = directory.getProperty(target, 'dst_dir')
     for datafile in toProcess:
 
         # If file not found, terminate

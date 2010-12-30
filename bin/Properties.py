@@ -23,7 +23,7 @@
 #
 import sys, os, re, datetime, ConfigParser, StringIO, ordereddict, atexit
 
-# @@@@@@@@@@@@@@@@@@@@  EXTEND  @@@@@@@@@@@@@@@@@@@@ 
+# @@@@@@@@@@@@@@@@@@@@  EXTEND  @@@@@@@@@@@@@@@@@@@@
 import Ada, AdaRule, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
 import Export, Dblatex, Exercise, Exam, Testexam, Office2pdf, Rsync
 import Script, Latex, Dvips, Pdfnup, Xfig
@@ -31,7 +31,7 @@ import Script, Latex, Dvips, Pdfnup, Xfig
 modules = ['Ada', 'Xsltproc', 'Inkscape', 'Gotodir', 'Gimp', 'Convert',
            'Copy', 'Export', 'Dblatex', 'Exercise', 'Exam', 'Testexam',
            'Office2pdf', 'Rsync', 'Script', 'Latex', 'Dvips', 'Pdfnup', 'Xfig']
-# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
+# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 # Prefix to use in the module
 module_prefix = 'properties'
@@ -46,7 +46,7 @@ def getConfigParser(fileList):
     Given a set of files, returns the resulting ConfigParser object after being
     parsed.
     """
-    
+
     global _configParsers
 
     theKey = ' '.join(fileList)
@@ -55,7 +55,7 @@ def getConfigParser(fileList):
         # Hit in the cache, return
         Ada.logDebug('Directory', None, 'Parser HIT: ' + ' '.join(fileList))
         return config
-    
+
     # Parse the file with a raw parser
     config = ConfigParser.RawConfigParser({}, ordereddict.OrderedDict)
 
@@ -65,10 +65,10 @@ def getConfigParser(fileList):
         print I18n.get('severe_parse_error').format(' '.join(fileList))
         print msg
         sys.exit(1)
-    
+
     _configParsers[theKey] = config
     return config
-    
+
 def flushConfigParsers():
     """
     Delete all the stored parsers
@@ -139,7 +139,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
         print msg
         defaultsIO.close()
         sys.exit(1)
-    
+
     # Move all options to the given config but checking if they are legal
     result = (set([filename]), [])
     for sname in newOptions.sections():
@@ -148,7 +148,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
 
         # Treat the special case of a template section that needs to be expanded
         if sprefix == 'template':
-            (a, b) = treatTemplate(config, filename, newOptions, sname, 
+            (a, b) = treatTemplate(config, filename, newOptions, sname,
                                    aliasDict, includeChain)
             # Incorporate results
             result[0].update(a)
@@ -161,7 +161,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
         except SyntaxError:
             print I18n.get('error_alias_expression')
             sys.exit(1)
-        
+
         # Get the prefix again
         sprefix = unaliased.split('.')[0]
 
@@ -187,18 +187,18 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
 
             # Add the section first
             newSubsection(config, unaliased)
-            
+
             # Set the values considering the cases of append or prepend
             try:
                 if prepend:
-                    ovalue = ' '.join([ovalue, getWithDefault(config, unaliased, 
+                    ovalue = ' '.join([ovalue, getProperty(config, unaliased,
                                                               oname)])
                 elif append:
-                    ovalue = ' '.join([getWithDefault(config, unaliased, oname), 
+                    ovalue = ' '.join([getProperty(config, unaliased, oname),
                                        ovalue])
             except ConfigParser.NoOptionError:
                 print I18n.get('severe_parse_error').format(filename)
-                print I18n.get('error_option_addition').format(sname + '.' + 
+                print I18n.get('error_option_addition').format(sname + '.' +
                                                                oname)
                 sys.exit(1)
             finalValue = setProperty(config, unaliased, oname, ovalue, filename)
@@ -212,26 +212,6 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
 
     return result
 
-def getWithDefault(config, section, option):
-    """
-    Try to get a pair section/option from the given ConfigParser. If it
-    does not exist, check if the section has the form name.subname. If so, check
-    for the option name/option.
-    """
-    try:
-        result = config.get(section, option)
-        return result
-    except ConfigParser.InterpolationMissingOptionError, e:
-        print I18n.get('incorrect_variable_reference').format(option)
-        sys.exit(1)
-    except ConfigParser.NoSectionError:
-        print I18n.get('unknown_target').format(section)
-        sys.exit(1)
-    except ConfigParser.NoOptionError:
-        pass
-    section = section.split('.')[0]
-    return config.get(section, option)
-    
 def dump(options, pad = None, sections = None):
     """
     Function to print out the content of a config object
@@ -333,13 +313,13 @@ def Execute(target, directory, pad = None):
     # Traverse the modules and execute the "Execute" function
     executed = False
     for moduleName in modules:
-        
+
         # If the target does not belong to this module, keep iterating
         if modulePrefix != eval(moduleName + '.module_prefix'):
             continue
-            
+
         Ada.logInfo(originalTarget, directory, 'Enter ' + directory.current_dir)
-            
+
         # Print msg when beginning to execute target in dir
         print pad + 'BB', originalTarget
 
@@ -350,11 +330,11 @@ def Execute(target, directory, pad = None):
         # Detect and execute "special" targets
         if specialTargets(target, directory, moduleName, pad):
             print pad + 'EE', originalTarget
-            Ada.logInfo(originalTarget, directory, 
+            Ada.logInfo(originalTarget, directory,
                         'Exit ' + directory.current_dir)
             return
-        
-        # Execute. 
+
+        # Execute.
         if moduleName == 'Gotodir':
             # Gotodir must take into account padding
             eval(moduleName + '.Execute(target, directory, pad)')
@@ -402,12 +382,12 @@ def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
         sys.exit(1)
 
     # Add template section to the given config to evaluate the files assignment
-    templateFiles = setProperty(config, sname, 'files', fileItem[0][1], 
+    templateFiles = setProperty(config, sname, 'files', fileItem[0][1],
                                 filename).split()
 
     # Remove section from the original config:
     config.remove_section(sname)
-    
+
     # Process the template files recursively!
     result = (set([]), [])
     for fname in templateFiles:
@@ -416,7 +396,7 @@ def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
             templateFile = fname
         else:
             templateFile = os.path.abspath(os.path.join(os.path.dirname(filename), fname))
-            
+
         (a, b) = loadConfigFile(config, templateFile, aliasDict, includeChain)
         result[0].update(a)
         result[1].extend(b)
@@ -432,7 +412,7 @@ def specialTargets(target, directory, moduleName, pad = None):
 
     Return boolean stating if any of them has been executed
     """
-    
+
     # Detect if any of the special target has been detected
     hit = False
 
@@ -445,7 +425,7 @@ def specialTargets(target, directory, moduleName, pad = None):
 
     # If requesting help, dump msg and terminate
     if doubleTarget or re.match('.+\.help$', target):
-        msg = directory.getWithDefault(prefix, 'help')
+        msg = getProperty(directory.options, prefix, 'help')
         print I18n.get('doc_preamble').format(prefix) + '\n\n' + msg + '\n\n'
         hit = True
 
@@ -478,7 +458,7 @@ def expandAlias(target, aliasDict):
     Given a target, apply the values in the dictionary contained in the option
     Ada.targer_alias and return the result.
     """
-    
+
     # Separate the target head from the tail
     parts = target.split('.')
     head = parts[0]
@@ -495,7 +475,7 @@ def expandAlias(target, aliasDict):
     while oldValue != result:
         # Store the previous value
         oldValue = result
-        
+
         # Apply the alias expansion
         newValue = aliasDict.get(result)
 
@@ -517,13 +497,39 @@ def expandAlias(target, aliasDict):
 
     return result
 
+def getProperty(config, section, option):
+    """
+    Function that given a section name of the form 'a.b.c.d' and an option name,
+    gets the value obtained from the given config. The procedure works
+    hierarchically. It first checks for the option value in the given section,
+    and if not found, it keeps asking for the values in the sections obtained by
+    dropping the last suffix (from the last dot until the end of the section
+    name.
+    """
+
+    while section != '':
+        try:
+            result = config.get(section, option)
+            return result
+        except ConfigParser.InterpolationMissingOptionError, e:
+            print I18n.get('incorrect_variable_reference').format(option)
+            sys.exit(1)
+        except ConfigParser.NoSectionError:
+            print I18n.get('unknown_target').format(section)
+            sys.exit(1)
+        except ConfigParser.NoOptionError:
+            pass
+        section = section.rpartition('.')[0]
+
+    raise ConfigParser.NoOptionError
+
 def setProperty(config, section, option, value, fileName = None):
     """
     Function that sets the given value for the section.option in the given
     config. The function implements the precedence rule among targets forced
     within ADA: Options in unnamed targets are the defaults for the named
     targets.
-  
+
     More precisely, the ConfigParser module offers one single level of default
     values. If a variable is not defined as part of a section (or target) but is
     is defined as a default, it is considered part of the target. For example,
@@ -545,7 +551,7 @@ def setProperty(config, section, option, value, fileName = None):
 
     This second operation is the one implemented in this function. The result is
     simply reflected in the given ConfigParser object.
-    
+
     The function returns the final value assigned (after interpolation)
     """
 
@@ -559,23 +565,23 @@ def setProperty(config, section, option, value, fileName = None):
 
     # Divide the target name into pieces
     parts = section.split('.')
-    
+
     # If the given target is unnamed, propagate the value to the named ones
     if len(parts) == 1:
 
         # Loop over those named targets with the same prefix
-        for sname in [x for x in config.sections() 
+        for sname in [x for x in config.sections()
                       if x.startswith(section + '.')]:
             # Set the new value for the named target as well
             config.set(sname, option, value)
-        
+
     # Get the option just inserted to verify interpolation errors
     try:
         finalValue = config.get(section, option)
     except ConfigParser.NoSectionError:
         print I18n.get('incorrect_section').format(section)
         sys.exit(1)
-    except (ConfigParser.InterpolationDepthError, 
+    except (ConfigParser.InterpolationDepthError,
             ConfigParser.InterpolationMissingOptionError), e:
         if fileName != None:
             print I18n.get('severe_parse_error').format(fileName)
@@ -618,5 +624,5 @@ def newSubsection(config, section):
         if defValue != None and defValue != value:
             config.set(section, name, value)
     return
-    
-    
+
+

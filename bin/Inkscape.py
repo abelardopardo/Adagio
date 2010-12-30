@@ -70,12 +70,12 @@ def Execute(target, directory):
         return
 
     # Get formats and check if they are empty
-    formats = directory.getWithDefault(target, 'output_format').split()
+    formats = directory.getProperty(target, 'output_format').split()
     if formats == []:
         print I18n.get('no_var_value').format('output_format')
         return
 
-    executable = directory.getWithDefault(target, 'exec')
+    executable = directory.getProperty(target, 'exec')
     incorrectFormat = set(formats).difference(set(['png', 'ps', 
                                                    'eps', 'pdf', 'plain-svg']))
     if incorrectFormat != set([]):
@@ -85,8 +85,8 @@ def Execute(target, directory):
         sys.exit(1)
         
     # Loop over all source files to process
-    extraArgs = directory.getWithDefault(target, 'extra_arguments')
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    extraArgs = directory.getProperty(target, 'extra_arguments')
+    dstDir = directory.getProperty(target, 'dst_dir')
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
@@ -121,7 +121,7 @@ def clean(target, directory):
     Ada.logInfo(target, directory, 'Cleaning')
 
     # Get formats and check if they are empty
-    formats = directory.getWithDefault(target, 'output_format').split()
+    formats = directory.getProperty(target, 'output_format').split()
     if formats == []:
         Ada.logDebug(target, directory, 
                      I18n.get('no_var_value').format('output_format'))
@@ -133,7 +133,7 @@ def clean(target, directory):
         return
 
     # Loop over all the source files
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    dstDir = directory.getProperty(target, 'dst_dir')
     for datafile in toProcess:
 
         # If file not found, terminate

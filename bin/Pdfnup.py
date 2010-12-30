@@ -62,11 +62,11 @@ def Execute(target, directory):
     if toProcess == []:
         return
 
-    
+
     # Prepare the command to execute
-    executable = directory.getWithDefault(target, 'exec')
-    dstDir = directory.getWithDefault(target, 'dst_dir')
-    nupOption = directory.getWithDefault(target, 'nup')
+    executable = directory.getProperty(target, 'exec')
+    dstDir = directory.getProperty(target, 'dst_dir')
+    nupOption = directory.getProperty(target, 'nup')
     # Loop over all source files to process
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
@@ -80,17 +80,17 @@ def Execute(target, directory):
         dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
             '-' + nupOption + os.path.splitext(os.path.basename(datafile))[1]
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-                                                   
+
         # Add the input file to the command
         command = [executable]
         if nupOption != '':
             command.extend(['--outfile', dstFile])
-        command.extend(directory.getWithDefault(target, 
+        command.extend(directory.getProperty(target,
                                                 'extra_arguments').split())
         command.append(datafile)
-        
+
         # Perform the execution
-        AdaRule.doExecution(target, directory, command, datafile, dstFile, 
+        AdaRule.doExecution(target, directory, command, datafile, dstFile,
                             Ada.userLog, Ada.userLog)
 
     return
@@ -99,7 +99,7 @@ def clean(target, directory):
     """
     Clean the files produced by this rule
     """
-    
+
     Ada.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
@@ -108,8 +108,8 @@ def clean(target, directory):
         return
 
     # Loop over all source files to process
-    dstDir = directory.getWithDefault(target, 'dst_dir')
-    nupOption = directory.getWithDefault(target, 'nup')
+    dstDir = directory.getProperty(target, 'dst_dir')
+    nupOption = directory.getProperty(target, 'nup')
     for datafile in toProcess:
 
         # If file not found, terminate
@@ -121,7 +121,7 @@ def clean(target, directory):
         dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
             '-' + nupOption + os.path.splitext(os.path.basename(datafile))[1]
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-                                                   
+
         if not os.path.exists(dstFile):
             continue
 

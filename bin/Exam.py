@@ -61,7 +61,7 @@ def Execute(target, directory):
         return
 
     # Prepare the style transformation
-    styleFiles = directory.getWithDefault(target, 'styles')
+    styleFiles = directory.getProperty(target, 'styles')
     styleTransform = Xsltproc.createStyleTransform(styleFiles.split())
     if styleTransform == None:
         print I18n.get('no_style_file')
@@ -73,7 +73,7 @@ def Execute(target, directory):
     # Create a list with the param dictionaries to use in the different versions
     # to be created.
     paramDict = []
-    produceValues = set(directory.getWithDefault(target, 'produce').split())
+    produceValues = set(directory.getProperty(target, 'produce').split())
     if 'regular' in produceValues:
         # Create the regular version, no additional parameters needed
         paramDict.append(({}, ''))
@@ -108,7 +108,7 @@ def clean(target, directory):
         return
 
     suffixes = []
-    produceValues = set(directory.getWithDefault(target, 'produce').split())
+    produceValues = set(directory.getProperty(target, 'produce').split())
     if 'regular' in produceValues:
         # Delete the regular version
         suffixes.append('')

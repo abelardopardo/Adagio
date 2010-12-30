@@ -63,9 +63,9 @@ def Execute(target, directory):
         return
 
     # Prepare the command to execute
-    executable = directory.getWithDefault(target, 'exec')
-    dstDir = directory.getWithDefault(target, 'dst_dir')
-    outputFormat = directory.getWithDefault(target, 'output_format')
+    executable = directory.getProperty(target, 'exec')
+    dstDir = directory.getProperty(target, 'dst_dir')
+    outputFormat = directory.getProperty(target, 'output_format')
     if outputFormat == '':
         print I18n.get('empty_output_format').format(target)
         sys.exit(1)
@@ -83,15 +83,15 @@ def Execute(target, directory):
         dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
             '.' + outputFormat
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-                                                   
+
         # Add the input file to the command
         command = [executable, '-L', outputFormat]
-        command.extend(directory.getWithDefault(target, 
+        command.extend(directory.getProperty(target,
                                                 'extra_arguments').split())
         command.extend([datafile, dstFile])
-        
+
         # Perform the execution
-        AdaRule.doExecution(target, directory, command, datafile, dstFile, 
+        AdaRule.doExecution(target, directory, command, datafile, dstFile,
                             Ada.userLog, Ada.userLog)
 
     return
@@ -100,7 +100,7 @@ def clean(target, directory):
     """
     Clean the files produced by this rule
     """
-    
+
     Ada.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
@@ -108,8 +108,8 @@ def clean(target, directory):
     if toProcess == []:
         return
 
-    dstDir = directory.getWithDefault(target, 'dst_dir')
-    outputFormat = directory.getWithDefault(target, 'output_format')
+    dstDir = directory.getProperty(target, 'dst_dir')
+    outputFormat = directory.getProperty(target, 'output_format')
     if outputFormat == '':
         print I18n.get('empty_output_format').format(target)
         sys.exit(1)
@@ -126,7 +126,7 @@ def clean(target, directory):
         dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
             '.' + outputFormat
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-                                                   
+
         if not os.path.exists(dstFile):
             continue
 

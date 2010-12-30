@@ -137,7 +137,7 @@ def prepareTarget(target, directory):
 
     # Get the directories to process, if none, terminate silently
     toProcess = []
-    for srcDir in directory.getWithDefault(target, 'files').split():
+    for srcDir in directory.getProperty(target, 'files').split():
         newDirs = glob.glob(srcDir)
         if newDirs == []:
             print I18n.get('file_not_found').format(srcDir)
@@ -151,11 +151,11 @@ def prepareTarget(target, directory):
     toProcess = map(lambda x: os.path.abspath(x), toProcess)
 
     # Targets to execute in the remote directory
-    remoteTargets = directory.getWithDefault(target, 'targets').split()
+    remoteTargets = directory.getProperty(target, 'targets').split()
 
     # Create the option dict for the remote directories
     optionsToSet = []
-    newExportDir = directory.getWithDefault(target, 'export_dst')
+    newExportDir = directory.getProperty(target, 'export_dst')
     if newExportDir != '':
         # If a new dst_dir has been specified, include the options to modify
         # that variable for each of the targets
@@ -164,7 +164,8 @@ def prepareTarget(target, directory):
             optionsToSet = [x + ' dst_dir ' + newExportDir 
                             for x in remoteTargets if x.startswith('export')]
         else:
-            # If no target is given, leave the option in the export.dst_dir default
+            # If no target is given, leave the option in the export.dst_dir
+            # default
             optionsToSet = ['export dst_dir ' + newExportDir]
 
     Ada.logInfo(target, directory, 'NEW Options = ' + ', '.join(optionsToSet))

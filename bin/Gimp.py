@@ -68,7 +68,7 @@ def Execute(target, directory):
         Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
         return
 
-    scriptFileName = directory.getWithDefault(target, 'script')
+    scriptFileName = directory.getProperty(target, 'script')
     if not os.path.isfile(scriptFileName):
         print I18n.get('file_not_found').format(scriptFileName)
         sys.exit(1)
@@ -76,7 +76,7 @@ def Execute(target, directory):
 
     # Loop over the source files to see if an execution is needed
     dstFiles = []
-    dstDir = directory.getWithDefault(target, 'src_dir')
+    dstDir = directory.getProperty(target, 'src_dir')
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
 
@@ -109,8 +109,8 @@ def Execute(target, directory):
 
     # If the execution is needed
     if dstFiles != []:
-        executable = directory.getWithDefault(target, 'exec')
-        extraArgs = directory.getWithDefault(target, 'extra_arguments')
+        executable = directory.getProperty(target, 'exec')
+        extraArgs = directory.getProperty(target, 'extra_arguments')
 
         # Proceed with the execution
         fnames = ' '.join([os.path.basename(x) for x in dstFiles])
@@ -152,7 +152,7 @@ def clean(target, directory):
 
     # Loop over the source files to see if an execution is needed
     dstFiles = []
-    dstDir = directory.getWithDefault(target, 'src_dir')
+    dstDir = directory.getProperty(target, 'src_dir')
     for datafile in toProcess:
 
         # If file not found, terminate

@@ -61,21 +61,21 @@ def Execute(target, directory):
     if toProcess == []:
         return
 
-    executable = directory.getWithDefault(target, 'exec')
-    outputFormat = directory.getWithDefault(target, 'output_format')
+    executable = directory.getProperty(target, 'exec')
+    outputFormat = directory.getProperty(target, 'output_format')
     if not outputFormat in set(['dvi', 'pdf']):
-        print I18n.get('program_incorrect_format').format(executable, 
+        print I18n.get('program_incorrect_format').format(executable,
                                                           outputFormat)
         sys.exit(1)
 
-    
+
     # Prepare the command to execute
-    dstDir = directory.getWithDefault(target, 'dst_dir')
+    dstDir = directory.getProperty(target, 'dst_dir')
     commandPrefix = [executable, '-output-directory=' + dstDir,
                      '-output-format=' + outputFormat]
-    commandPrefix.extend(directory.getWithDefault(target, 
+    commandPrefix.extend(directory.getProperty(target,
                                                   'extra_arguments').split())
-    
+
     # Loop over all source files to process
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
@@ -89,12 +89,12 @@ def Execute(target, directory):
         dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
             '.' + outputFormat
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
-                                                   
+
         # Add the input file to the command
         command = commandPrefix + [datafile]
-        
+
         # Perform the execution
-        AdaRule.doExecution(target, directory, command, datafile, dstFile, 
+        AdaRule.doExecution(target, directory, command, datafile, dstFile,
                             Ada.userLog)
 
     return
@@ -103,7 +103,7 @@ def clean(target, directory):
     """
     Clean the files produced by this rule
     """
-    
+
     Ada.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
@@ -112,8 +112,8 @@ def clean(target, directory):
         return
 
     # Loop over all source files to process
-    dstDir = directory.getWithDefault(target, 'dst_dir')
-    outputFormat = directory.getWithDefault(target, 'output_format')
+    dstDir = directory.getProperty(target, 'dst_dir')
+    outputFormat = directory.getProperty(target, 'output_format')
     for datafile in toProcess:
 
         # If file not found, terminate
@@ -125,10 +125,10 @@ def clean(target, directory):
         dstPrefix = os.path.splitext(os.path.basename(datafile))[0]
         dstPrefix = os.path.join(dstDir, dstPrefix)
 
-        for fmt in [outputFormat, 'out', 'aux', 'log', 'bbl', 'blg', 'idx', 
+        for fmt in [outputFormat, 'out', 'aux', 'log', 'bbl', 'blg', 'idx',
                     'ilg', 'ind', 'lof', 'lot', 'toc']:
             dstFile = dstPrefix + '.' + fmt
-                                                   
+
             if not os.path.exists(dstFile):
                 continue
 
