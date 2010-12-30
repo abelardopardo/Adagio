@@ -160,7 +160,7 @@ msgs = {
     'export_no_dst': 'No destination for export. Bypassing.',
     'enable_not_open': 'Rule not executed because "open" is {0}',
     'enable_not_revision': 
-    """Rule not executed because the value of "{0}.enable_profile" is not in
+    """Rule not executed. Value of "{0}.enable_profile" is not in
 "ada.enabled_profiles".""",
     'enable_closed_begin': 'Rule not executed because it is before {0}',
     'enable_closed_end': 'Rule not executed because it is after {0}',

@@ -202,7 +202,7 @@ def evaluateCondition(target, options):
     # Check part 4 of the rule: target.enable_profile must be in
     # ada.enabled_profiles
     revisionsData = Properties.getWithDefault(options, 'ada', 'enabled_profiles')
-    thisRevision = options.get(target, 'enable_profile')
+    thisRevision = Properties.getWithDefault(options, target, 'enable_profile')
     if revisionsData != '' and thisRevision != '':
         if not (thisRevision in set(revisionsData.split())):
             print I18n.get('enable_not_revision').format(target)

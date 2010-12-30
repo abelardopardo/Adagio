@@ -318,13 +318,14 @@ def Execute(target, directory, pad = None):
                                                      dl = directory.current_dir)
         sys.exit(2)
 
-    # Get the target prefix (everything up to the first dot)
+    # Get the module prefix (everything up to the first dot) and the target
+    # prefix (dropping any special target suffix)
     targetParts = target.split('.')
     modulePrefix = targetParts[0]
-    if len(targetParts) == 1:
-        targetPrefix = modulePrefix
-    else:
+    if specialTarget:
         targetPrefix = '.'.join(targetParts[:-1])
+    else:
+        targetPrefix = target
 
     if pad == None:
 	pad = ''
@@ -577,7 +578,7 @@ def setProperty(config, section, option, value, fileName = None):
     except (ConfigParser.InterpolationDepthError, 
             ConfigParser.InterpolationMissingOptionError), e:
         if fileName != None:
-            print I18n.get('severe_parse_error').format(filename)
+            print I18n.get('severe_parse_error').format(fileName)
         print I18n.get('incorrect_variable_reference').format(value)
         sys.exit(3)
 
