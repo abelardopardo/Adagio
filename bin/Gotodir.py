@@ -31,6 +31,7 @@ module_prefix = 'gotodir'
 # List of tuples (varname, default value, description string)
 options = [
     ('export_dst', '', I18n.get('export_dst')),
+    ('files_included_from', '', I18n.get('export_targets'))
     ('targets', '', I18n.get('export_targets'))
     ]
 
@@ -135,7 +136,7 @@ def prepareTarget(target, directory):
     (list of dirs to process, remote targets, options to set in the remote exec)
     """
 
-    # Get the directories to process, if none, terminate silently
+    # Get the directories to process from the files option 
     toProcess = []
     for srcDir in directory.getProperty(target, 'files').split():
         newDirs = glob.glob(srcDir)
@@ -143,6 +144,12 @@ def prepareTarget(target, directory):
             print I18n.get('file_not_found').format(srcDir)
             sys.exit(1)
         toProcess.extend(glob.glob(srcDir))
+
+    # Get the directories to proces from the files_included_from option
+    for srcFile in directory.getProperty(target, 'files_included_from').split():
+        ABEL
+
+    # If there are no files to process stop
     if toProcess == []:
         Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
         return

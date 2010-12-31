@@ -162,6 +162,8 @@ msgs = {
     'enable_not_revision': 
     """Rule not executed. Value of "{0}.enable_profile" is not in
 "ada.enabled_profiles".""",
+    'files_included_from': 
+    'List of files to parse and obtain the included files and visit their directories', 
     'enable_closed_begin': 'Rule not executed because it is before {0}',
     'enable_closed_end': 'Rule not executed because it is after {0}',
     'testexam_permutations': 'Number of versions with the questions shuffled',
