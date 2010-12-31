@@ -23,7 +23,7 @@
 #
 import os, re, sys, glob
 
-import Ada, Directory, I18n, Dependency, AdaRule, Properties
+import Ada, Directory, I18n, Dependency, AdaRule, Properties, TreeCache
 
 # Prefix to use for the options
 module_prefix = 'gotodir'
@@ -31,6 +31,7 @@ module_prefix = 'gotodir'
 # List of tuples (varname, default value, description string)
 options = [
     ('export_dst', '', I18n.get('export_dst')),
+    ('files_included_from', '', I18n.get('export_targets')),
     ('targets', '', I18n.get('export_targets'))
     ]
 
@@ -135,7 +136,7 @@ def prepareTarget(target, directory):
     (list of dirs to process, remote targets, options to set in the remote exec)
     """
 
-    # Get the directories to process, if none, terminate silently
+    # Get the directories to process from the files option 
     toProcess = []
     for srcDir in directory.getProperty(target, 'files').split():
         newDirs = glob.glob(srcDir)
@@ -143,6 +144,16 @@ def prepareTarget(target, directory):
             print I18n.get('file_not_found').format(srcDir)
             sys.exit(1)
         toProcess.extend(glob.glob(srcDir))
+
+    # Add the files included in files_included_from
+    filesIncluded = \
+        obtainXincludes(directory.getProperty(target,
+                                              'files_included_from').split())
+
+    # The list of dirs is extended with a set to avoid duplications
+    toProcess.extend(set(map(lambda x: os.path.dirname(x), filesIncluded)))
+
+    # If there are no files to process stop
     if toProcess == []:
         Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
         return (toProcess, [], None, '')
@@ -171,6 +182,43 @@ def prepareTarget(target, directory):
     Ada.logInfo(target, directory, 'NEW Options = ' + ', '.join(optionsToSet))
 
     return (toProcess, remoteTargets, optionsToSet, newExportDir)
+
+def obtainXincludes(files):
+    """
+    Obtain the files included using xinclude in the given file. Return a list
+    with the absolute filenames
+    """
+
+    result = set([])
+    for fileName in files:
+        # We only accept absolute paths
+        if not os.path.isabs(fileName):
+            fileName = os.path.abspath(fileName)
+
+        # Get the directory where the file is located
+        fDir = os.path.dirname(fileName)
+
+        # Get the file parsed without expanding the xincludes
+        root = TreeCache.findOrAddTree(fileName, False)
+
+        # Path to locate the includes and dir of the given file
+        includePath = '//{http://www.w3.org/2001/XInclude}include'
+
+        # Obtain the included files
+        includeFiles = set([AdaRule.locateFile(x.attrib['href'], fDir)
+                            for x in root.findall(includePath)
+                            if x.attrib.get('href') != None])
+
+        # Traverse all the include files
+        for includeFile in includeFiles:
+            if os.path.dirname(os.path.abspath(includeFile)) == fDir:
+                # If it is in the same dir, prepare to traverse
+                files.insert(includeFile)
+            else:
+                # If in another dir, append to the result
+                result.add(os.path.abspath(includeFile))
+
+    return result
 
 # Execution as script
 if __name__ == "__main__":
