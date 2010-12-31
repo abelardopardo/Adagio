@@ -23,7 +23,7 @@
 #
 import os, re, sys, glob
 
-import Ada, Directory, I18n, Dependency, AdaRule, Properties
+import Ada, Directory, I18n, Dependency, AdaRule, Properties, TreeCache
 
 # Prefix to use for the options
 module_prefix = 'gotodir'
@@ -31,7 +31,7 @@ module_prefix = 'gotodir'
 # List of tuples (varname, default value, description string)
 options = [
     ('export_dst', '', I18n.get('export_dst')),
-    ('files_included_from', '', I18n.get('export_targets'))
+    ('files_included_from', '', I18n.get('export_targets')),
     ('targets', '', I18n.get('export_targets'))
     ]
 
@@ -147,7 +147,7 @@ def prepareTarget(target, directory):
 
     # Get the directories to proces from the files_included_from option
     for srcFile in directory.getProperty(target, 'files_included_from').split():
-        ABEL
+        print 'AAA', obtainXincludes(srcFile)
 
     # If there are no files to process stop
     if toProcess == []:
@@ -178,6 +178,26 @@ def prepareTarget(target, directory):
     Ada.logInfo(target, directory, 'NEW Options = ' + ', '.join(optionsToSet))
 
     return (toProcess, remoteTargets, optionsToSet, newExportDir)
+
+def obtainXincludes(fileName):
+    """
+    Obtain the files included using xinclude in the given file. Return a list
+    with the absolute filenames
+    """
+
+    # We only accept absolute paths
+    if not os.path.isabs(fileName):
+        fileName = os.path.abspath(fileName)
+
+    # Get the file parsed without expanding the xincludes
+    root = TreeCache.findOrAddTree(fileName, False)
+
+    # Path to locate the includes and dir of the given file
+    includePath = '//{http://www.w3.org/2001/XInclude}include'
+
+    return set([AdaRule.locateFile(x.attrib['href'], os.path.dirname(fileName))
+                for x in root.findall(includePath)
+                if x.attrib.get('href') != None])
 
 # Execution as script
 if __name__ == "__main__":
