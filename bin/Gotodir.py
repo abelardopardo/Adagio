@@ -213,7 +213,7 @@ def obtainXincludes(files):
         for includeFile in includeFiles:
             if os.path.dirname(os.path.abspath(includeFile)) == fDir:
                 # If it is in the same dir, prepare to traverse
-                files.insert(includeFile)
+                files.append(includeFile)
             else:
                 # If in another dir, append to the result
                 result.add(os.path.abspath(includeFile))
