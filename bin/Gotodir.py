@@ -145,9 +145,13 @@ def prepareTarget(target, directory):
             sys.exit(1)
         toProcess.extend(glob.glob(srcDir))
 
-    # Get the directories to proces from the files_included_from option
-    for srcFile in directory.getProperty(target, 'files_included_from').split():
-        print 'AAA', obtainXincludes(srcFile)
+    # Add the files included in files_included_from
+    filesIncluded = \
+        obtainXincludes(directory.getProperty(target,
+                                              'files_included_from').split())
+
+    # The list of dirs is extended with a set to avoid duplications
+    toProcess.extend(set(map(lambda x: os.path.dirname(x), filesIncluded)))
 
     # If there are no files to process stop
     if toProcess == []:
@@ -179,25 +183,42 @@ def prepareTarget(target, directory):
 
     return (toProcess, remoteTargets, optionsToSet, newExportDir)
 
-def obtainXincludes(fileName):
+def obtainXincludes(files):
     """
     Obtain the files included using xinclude in the given file. Return a list
     with the absolute filenames
     """
 
-    # We only accept absolute paths
-    if not os.path.isabs(fileName):
-        fileName = os.path.abspath(fileName)
+    result = set([])
+    for fileName in files:
+        # We only accept absolute paths
+        if not os.path.isabs(fileName):
+            fileName = os.path.abspath(fileName)
 
-    # Get the file parsed without expanding the xincludes
-    root = TreeCache.findOrAddTree(fileName, False)
+        # Get the directory where the file is located
+        fDir = os.path.dirname(fileName)
 
-    # Path to locate the includes and dir of the given file
-    includePath = '//{http://www.w3.org/2001/XInclude}include'
+        # Get the file parsed without expanding the xincludes
+        root = TreeCache.findOrAddTree(fileName, False)
 
-    return set([AdaRule.locateFile(x.attrib['href'], os.path.dirname(fileName))
-                for x in root.findall(includePath)
-                if x.attrib.get('href') != None])
+        # Path to locate the includes and dir of the given file
+        includePath = '//{http://www.w3.org/2001/XInclude}include'
+
+        # Obtain the included files
+        includeFiles = set([AdaRule.locateFile(x.attrib['href'], fDir)
+                            for x in root.findall(includePath)
+                            if x.attrib.get('href') != None])
+
+        # Traverse all the include files
+        for includeFile in includeFiles:
+            if os.path.dirname(os.path.abspath(includeFile)) == fDir:
+                # If it is in the same dir, prepare to traverse
+                files.insert(includeFile)
+            else:
+                # If in another dir, append to the result
+                result.add(os.path.abspath(includeFile))
+
+    return result
 
 # Execution as script
 if __name__ == "__main__":
