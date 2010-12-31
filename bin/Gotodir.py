@@ -152,7 +152,7 @@ def prepareTarget(target, directory):
     # If there are no files to process stop
     if toProcess == []:
         Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
-        return
+        return (toProcess, [], None, '')
 
     # Translate all paths to absolute paths
     toProcess = map(lambda x: os.path.abspath(x), toProcess)
