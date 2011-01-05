@@ -205,9 +205,12 @@ def obtainXincludes(files):
         includePath = '//{http://www.w3.org/2001/XInclude}include'
 
         # Obtain the included files
-        includeFiles = set([AdaRule.locateFile(x.attrib['href'], fDir)
-                            for x in root.findall(includePath)
-                            if x.attrib.get('href') != None])
+        includeFiles = \
+            set([AdaRule.locateFile(os.path.join(
+                        x.attrib.get('{http://www.w3.org/XML/1998/namespace}base', '') + 
+                        x.attrib.get('href')), fDir)
+                 for x in root.findall(includePath)
+                 if x.attrib.get('href') != None])
 
         # Traverse all the include files
         for includeFile in includeFiles:
