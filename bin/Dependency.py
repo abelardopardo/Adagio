@@ -190,7 +190,11 @@ def getIncludes(fName):
 
     # Loop over all the includes, and imports of XML and XSL
     for element in [e for e in allIncludes if 'href' in e.attrib]:
-        hrefValue = AdaRule.locateFile(element.attrib['href'], fDir)
+        hrefValue = AdaRule.locateFile(
+            os.path.join(
+                element.attrib.get('{http://www.w3.org/XML/1998/namespace}base', 
+                                   '') + 
+                element.attrib.get('href')), fDir)
 
         if hrefValue != None:
             result.add(hrefValue)
