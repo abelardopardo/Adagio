@@ -51,7 +51,7 @@ def Execute(target, directory, pad = None):
     if pad == 'None':
         pad = ''
 
-    (toProcess, remoteTargets, 
+    (toProcess, remoteTargets,
      optionsToSet, newExportDir) = prepareTarget(target,directory)
 
     # Loop over each directory
@@ -66,30 +66,30 @@ def clean(target, directory, deepClean = False, pad = None):
     """
     Clean the files produced by this rule
     """
-    
+
     global module_prefix
 
     if pad == None:
         pad = ''
 
     Ada.logInfo(target, directory, 'Cleaning')
-    
-    (toProcess, remoteTargets, 
+
+    (toProcess, remoteTargets,
      optionsToSet, newExportDir) = prepareTarget(target,
                                                  directory)
-     
+
     # When cleaning, targets should be executed in reversed order
     remoteTargets.reverse()
 
     if deepClean:
         # If the clean is deep, attach .clean suffix to all remote targets
-        remoteTargets = [x + '.deepclean' 
+        remoteTargets = [x + '.deepclean'
                          for x in remoteTargets
                          if not re.match('(.+\.)?help$', x) and \
                              not re.match('(.+\.)?clean$', x) and \
                              not re.match('(.+\.)?dumphelp$', x) and \
                              not re.match('(.+\.)?helpdump$', x)]
-                         
+
         # If no rule is obtained, deep clean, means simply execute the clean
         # rule
         if remoteTargets == []:
@@ -101,10 +101,10 @@ def clean(target, directory, deepClean = False, pad = None):
         if newExportDir != directory.current_dir:
             return
 
-        remoteTargets = [x + '.clean'  for x in remoteTargets 
+        remoteTargets = [x + '.clean'  for x in remoteTargets
                          if x.startswith('export')]
 
-    Ada.logInfo(target, directory, 
+    Ada.logInfo(target, directory,
                 'Remote Targets = ' + ' '.join(remoteTargets))
 
     # Loop over each directory
@@ -118,7 +118,7 @@ def clean(target, directory, deepClean = False, pad = None):
         if (not deepClean) and (remoteTargets == []):
             remoteTargets = [x + '.clean' for x in dirObj.section_list
                              if re.match('^export(\..+)?$',
-                                         Properties.expandAlias(x, 
+                                         Properties.expandAlias(x,
                                                                 dirObj.alias))]
 
         # Execute the remote targets
@@ -130,13 +130,13 @@ def prepareTarget(target, directory):
     """
     Obtain the directories to process, calculate the optiost to set in the
     remote execution and obtain the remote targets.
-    
+
     Return:
 
     (list of dirs to process, remote targets, options to set in the remote exec)
     """
 
-    # Get the directories to process from the files option 
+    # Get the directories to process from the files option
     toProcess = []
     for srcDir in directory.getProperty(target, 'files').split():
         newDirs = glob.glob(srcDir)
@@ -172,7 +172,7 @@ def prepareTarget(target, directory):
         # that variable for each of the targets
         if remoteTargets != []:
             # If there are some targets given, use them
-            optionsToSet = [x + ' dst_dir ' + newExportDir 
+            optionsToSet = [x + ' dst_dir ' + newExportDir
                             for x in remoteTargets if x.startswith('export')]
         else:
             # If no target is given, leave the option in the export.dst_dir
@@ -206,20 +206,30 @@ def obtainXincludes(files):
 
         # Obtain the included files
         includeFiles = \
-            set([AdaRule.locateFile(os.path.join(
-                        x.attrib.get('{http://www.w3.org/XML/1998/namespace}base', '') + 
-                        x.attrib.get('href')), fDir)
+            set([os.path.join(
+                    x.attrib.get('{http://www.w3.org/XML/1998/namespace}base',
+                                 ''),
+                    x.attrib.get('href'))
                  for x in root.findall(includePath)
                  if x.attrib.get('href') != None])
 
         # Traverse all the include files
         for includeFile in includeFiles:
-            if os.path.dirname(os.path.abspath(includeFile)) == fDir:
+            # Locate the file applying ADA search rules
+            locatedFile = AdaRule.locateFile(includeFile, fDir)
+
+            # If not found, notify and terminate
+            if locatedFile == None:
+                print I18n.get('file_not_found').format(includeFile)
+                print I18n.get('included_from'), fileName
+                sys.exit(1)
+
+            if os.path.dirname(os.path.abspath(locatedFile)) == fDir:
                 # If it is in the same dir, prepare to traverse
-                files.append(includeFile)
+                files.append(locatedFile)
             else:
                 # If in another dir, append to the result
-                result.add(os.path.abspath(includeFile))
+                result.add(os.path.abspath(locatedFile))
 
     return result
 

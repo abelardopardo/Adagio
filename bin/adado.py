@@ -25,19 +25,19 @@ import os, sys, getopt, datetime, locale, ConfigParser, codecs, pydoc
 import Ada, I18n, Properties, Directory
 # import Ada, Directory, I18n, Xsltproc
 
+# Fix the output encoding when redirecting stdout
+if sys.stdout.encoding is None:
+    (lang, enc) = locale.getdefaultlocale()
+    if enc is not None:
+        (e, d, sr, sw) = codecs.lookup(enc)
+        # sw will encode Unicode data to the locale-specific character set.
+        sys.stdout = sw(sys.stdout)
+
 def main():
     """
     The manual page for this method is inside the localization package. Check
     the proper [ĺang].py file.
     """
-
-    # Fix the output encoding when redirecting stdout
-    if sys.stdout.encoding is None:
-        (lang, enc) = locale.getdefaultlocale()
-        if enc is not None:
-            (e, d, sr, sw) = codecs.lookup(enc)
-            # sw will encode Unicode data to the locale-specific character set.
-            sys.stdout = sw(sys.stdout)
 
     #######################################################################
     #
@@ -67,6 +67,7 @@ def main():
                 numValue = int(value)
             except ValueError, e:
                 print I18n.get('incorrect_debug_option')
+	        print e.message
                 sys.exit(3)
             Ada.config_defaults['debug_level'] = value
 

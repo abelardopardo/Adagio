@@ -64,7 +64,7 @@ try:
     sys.path.pop(0)
 except SyntaxError, e:
     print 'Error while parsing localization file ' + file
-    print str(e)
+    print e.message
     sys.exit(-1)
 
 # overwrite the dictionary

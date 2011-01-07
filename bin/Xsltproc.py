@@ -192,7 +192,7 @@ def createParameterDict(target, directory):
                 styleParams[k] = '"' + v + '"'
     except SyntaxError, e:
         print I18n.get('error_extra_args').format(target)
-        print e
+        print e.message
         sys.exit(1)
 
     Ada.logInfo(target, directory, 'StyleParmas: ' + str(styleParams))
@@ -320,7 +320,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
     except etree.XSLTApplyError, e:
         # ABEL: Fix. Try to detect when there is an error here!
         print I18n.get('error_applying_xslt').format(target)
-        print e
+        print e.message
         sys.exit(1)
 
     # If there is no result (it could be because the stylesheet has no match)
@@ -341,7 +341,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
         Dependency.update(dstFile)
     except etree.XMLSyntaxError, e:
         print I18n.get('severe_parse_error').format(fName)
-        print e
+        print e.message
         sys.exit(1)
 
     return dataTree
