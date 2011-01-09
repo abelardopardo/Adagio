@@ -71,7 +71,7 @@ config_defaults = {
     'project_home':       (_currentDir, I18n.get('default_project_home')),
     'property_file':      ('Properties.ddo', I18n.get('default_property_file')),
     'src_dir':            (_currentDir, I18n.get('default_src_dir')),
-    'version':            ('11.01.1' I18n.get('default_version'))
+    'version':            ('11.01.1', I18n.get('default_version'))
 }
 
 # List of tuples (varname, default value, description string)
@@ -114,7 +114,7 @@ home = os.path.abspath(os.path.join(home, '..'))
 if not os.path.isdir(home):
     print I18n.get('cannot_detect_ada_home')
     sys.exit(1)
-(a, b) = Ada.config_defaults['home']
+(a, b) = config_defaults['home']
 config_defaults['home'] = (home, b)
 
 userLog = None
@@ -174,10 +174,17 @@ def getConfigDefaults(path):
     result = {}
     for (n, v) in config_defaults.items():
         if n == 'basedir' or n == 'src_dir' or n == 'dst_dir':
-            v = (path, v[1])
+            # If any of these options, set it to the path
+            v = path
         elif n == 'current_datetime':
-            v = (str(datetime.datetime.now()), v[1])
-            
+            # Set the current date time
+            v = str(datetime.datetime.now())
+        else:
+            # If not any of them, take the default value of the tuple
+            v = v[0]
+
+        # Set the dictionary as name: default_value, without the documentation
+        # string
         result[n] = v
             
     return result
