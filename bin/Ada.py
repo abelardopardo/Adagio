@@ -71,7 +71,6 @@ config_defaults = {
 
 documentation = {
     'en': """
-
  Documentation explaining the basic ada variables. 
 
  To be written.

@@ -248,7 +248,7 @@ extra_arguments		=
 # Executable to invoke
 exec			= pdfnup
 # Option to print n up
-nup_option		= 2x1
+nup       		= 2x1
 # Extra arguments passed to the program
 extra_arguments		=
 

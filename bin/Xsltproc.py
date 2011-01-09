@@ -40,24 +40,36 @@ options = [
 
 documentation = {
     'en': """
-  The rule performs the following tasks:
+  This rule creates a style sheet with the files given in the variable "styles"
+  (in the same order). This sheet is then applied to all the values in the
+  "files" variable. This procedure is repeated as many times as values in the
+  "languages" variable. 
 
-  1.- For each file in directory 'src_dir' with names 'files' the XSLT
-  transformation is applied with the following options:
+  The result of these transformations are left in the directory specified by the
+  variable "dst_dir" with the extension given in the variable
+  "output_format". If there were more than one language to process, each
+  resulting file has a suffix before the extension denoting the language.
 
-    1.1 The extra arguments in 'extra_arguments'
+  Example:
 
-    1.2 The style files in styles as if they were all in imported in a single
-    file in the given order
+  [xslt]
+  files = first.xml second.xml
+  styles = style1.xsl style2.xsl
+  languages = en es
+  output_format = html
 
-    1.3 The source file
+  The variable "extra_arguments" can be used to pass extra arguments at the
+  transformation applied to the files. The format of this variable is:
 
-    1.4 The option to produce the output file in the 'dst_dir' by replacing the
-    extension of the source file by the value given in 'output_format'
+  'name1': 'value1', 'name2': 'value2', ..., 'nameN': 'valueN'
 
-  2.- Step 1 is repeated with as many languages as given in 'languages'
+  These definitions are identical to including in the stylesheet the
+  definitions:
 
-  Some status messages are printed depending on the 'debug_level'
+  <xsl:param name="name1">value1</xsl:param>
+  <xsl:param name="name2">value2</xsl:param>
+  ...
+  <xsl:param name="nameN">valueN</xsl:param>
 """}
 
 def Execute(target, directory):
@@ -192,7 +204,7 @@ def createParameterDict(target, directory):
                 styleParams[k] = '"' + v + '"'
     except SyntaxError, e:
         print I18n.get('error_extra_args').format(target)
-        print e.message
+        print str(e)
         sys.exit(1)
 
     Ada.logInfo(target, directory, 'StyleParmas: ' + str(styleParams))
@@ -320,7 +332,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
     except etree.XSLTApplyError, e:
         # ABEL: Fix. Try to detect when there is an error here!
         print I18n.get('error_applying_xslt').format(target)
-        print e.message
+        print str(e)
         sys.exit(1)
 
     # If there is no result (it could be because the stylesheet has no match)
@@ -341,7 +353,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
         Dependency.update(dstFile)
     except etree.XMLSyntaxError, e:
         print I18n.get('severe_parse_error').format(fName)
-        print e.message
+        print str(e)
         sys.exit(1)
 
     return dataTree

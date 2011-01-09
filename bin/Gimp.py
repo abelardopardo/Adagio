@@ -96,7 +96,7 @@ def Execute(target, directory):
             Dependency.update(dstFile, sources)
         except etree.XMLSyntaxError, e:
             print I18n.get('severe_parse_error').format(fName)
-            print e.message
+            print str(e)
             sys.exit(1)
 
         # If the destination file is up to date, skip the execution
@@ -132,7 +132,7 @@ def Execute(target, directory):
             map(lambda x: Dependency.update(x), dstFiles)
         except etree.XMLSyntaxError, e:
             print I18n.get('severe_parse_error').format(fName)
-            print e.message
+            print str(e)
             sys.exit(1)
 
     return

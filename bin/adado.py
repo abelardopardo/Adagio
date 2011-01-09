@@ -67,7 +67,7 @@ def main():
                 numValue = int(value)
             except ValueError, e:
                 print I18n.get('incorrect_debug_option')
-	        print e.message
+	        print str(e)
                 sys.exit(3)
             Ada.config_defaults['debug_level'] = value
 

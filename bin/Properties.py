@@ -63,7 +63,7 @@ def getConfigParser(fileList):
         config.read(fileList)
     except Exception, msg:
         print I18n.get('severe_parse_error').format(' '.join(fileList))
-        print msg.message
+        print str(msg)
         sys.exit(1)
 
     _configParsers[theKey] = config
@@ -136,7 +136,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
         config.readfp(defaultsIO)
     except ConfigParser.ParsingError, msg:
         print I18n.get('severe_parse_error').format(filename)
-        print msg.message
+        print str(msg)
         defaultsIO.close()
         sys.exit(1)
 
@@ -160,7 +160,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
             unaliased = expandAlias(sname, aliasDict)
         except SyntaxError, e:
             print I18n.get('error_alias_expression')
-	    print e.message
+	    print str(e)
             sys.exit(1)
 
         # Get the prefix again
@@ -229,7 +229,7 @@ def dump(options, pad = None, sections = None):
                 print pad, '  ', oname, '=', options.get(sname, oname)
     except ConfigParser.InterpolationDepthError, e:
         print I18n.get('severe_option_error')
-        print e.message
+        print str(e)
         sys.exit(1)
 
 def LoadDefaults(config):

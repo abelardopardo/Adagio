@@ -114,7 +114,7 @@ def checkDateFormat(d, f):
        result = datetime.datetime.strptime(d, f)
     except ValueError, e:
        print I18n.get('date_incorrect_format').format(d, f)
-       print e.message
+       print str(e)
        sys.exit(1)
 
     return result

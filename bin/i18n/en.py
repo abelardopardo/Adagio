@@ -142,7 +142,8 @@ msgs = {
     'empty_output_format': 'Option output_format in target {0} cannot be empty.',
     'gimp_script': 'Script to process gimp files in batch mode',
     'extra_arguments':
-    'Extra arguments passed directly to {0}.',
+    """Extra arguments passed directly to {0}. 
+     Format: comma separated list of pairs name: value""",
     'files_to_process': 'Space separated list of files to process.',
     'xslt_merge_styles':
     'Space separated list of styles to combine with the given style',
