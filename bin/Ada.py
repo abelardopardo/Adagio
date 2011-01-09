@@ -45,37 +45,34 @@ module_prefix = 'ada'
 ################################################################################
 _currentDir = os.path.abspath(os.getcwd())
 config_defaults = {
-    'alias': '',
-    'basedir':            _currentDir,
-    'current_datetime':   str(datetime.datetime.now()),
-    'debug_level':        '0',
-    'dst_dir':            _currentDir,
-    'enable_begin':       '',
-    'enable_date_format': 'yyyy/MM/dd HH:mm:ss',
-    'enable_end':         '',
-    'enable_open':        '1',
-    'enable_profile':     '',
-    'encoding':           re.sub('^UTF', 'UTF-', enc),
-    'file_separator':     os.path.sep,
-    'files':              '',
-    'help':               I18n.get('no_help_available'),
-    'home':               _currentDir,
-    'languages':          lang[0:2],
-    'partial':            '0',
-    'project_file':       'Ada.project',
-    'project_home':       _currentDir,
-    'property_file':      'Properties.ddo',
-    'src_dir':            _currentDir,
-    'version':            '10.03.1'
+    'alias':              ('', I18n.get('default_alias')),
+    'basedir':            (_currentDir, 
+                           I18n.get('default_basedir')),
+    'current_datetime':   (str(datetime.datetime.now()), 
+                           I18n.get('default_current_datetime')),
+    'debug_level':        ('0', I18n.get('default_debug_level')),
+    'dst_dir':            (_currentDir, I18n.get('default_dst_dir')),
+    'enable_begin':       ('', I18n.get('default_enable_begin')),
+    'enable_date_format': ('yyyy/MM/dd HH:mm:ss', 
+                           I18n.get('default_enable_date_format')),
+    'enable_end':         ('', I18n.get('default_enable_end')),
+    'enable_open':        ('1', I18n.get('default_enable_open')),
+    'enable_profile':     ('', I18n.get('default_enable_profile')),
+    'encoding':           (re.sub('^UTF', 'UTF-', enc), 
+                           I18n.get('default_encoding')),
+    'file_separator':     (os.path.sep, I18n.get('default_file_separator')),
+    'files':              ('', I18n.get('default_files')),
+    'help':               (I18n.get('default_no_help_available'), 
+                           I18n.get('default_help')),
+    'home':               (_currentDir, I18n.get('default_home')),
+    'languages':          (lang[0:2], I18n.get('default_languages')),
+    'partial':            ('0', I18n.get('default_partial')),
+    'project_file':       ('Ada.project', I18n.get('default_project_file')),
+    'project_home':       (_currentDir, I18n.get('default_project_home')),
+    'property_file':      ('Properties.ddo', I18n.get('default_property_file')),
+    'src_dir':            (_currentDir, I18n.get('default_src_dir')),
+    'version':            ('11.01.1' I18n.get('default_version'))
 }
-
-documentation = {
-    'en': """
- Documentation explaining the basic ada variables. 
-
- To be written.
- 
-    """}
 
 # List of tuples (varname, default value, description string)
 options = [
@@ -89,13 +86,36 @@ options = [
     ('enabled_profiles', '', I18n.get('ada_enabled_profiles'))
      ]
 
+documentation = {
+    'en': """
+<section id="minimum_version" xreflabel="Top of the Section">
+    <title>The <code>[ada]</code> rule</title>
+    
+    <para>The <code>[ada]</code> rule is an expception because it does not
+    perform any specific task. It is simply a place holder for the
+    definition of the following variables:</para>
+    """ + AdaRule.optionDoc(options) + 
+    """
+    <para>The variables referring to versions are used to force the execution of
+    ADA only if the version number is after the minimun version, before the
+    maximum version or a specific version (if any of the variable values is not
+    empty.</para>
+  
+    <para>Variable <code>enabled_profiles</code> is used as a set of values to
+    check if a rule must be executed or not (see <xref
+    linkend="default_config"/> for a more detailed description of the variables
+    that enable the execution of a rule).</para>
+    """ + 
+    '</section>'}
+
 # Directory where ADA is installed
 home = os.path.dirname(os.path.abspath(sys.argv[0]))
 home = os.path.abspath(os.path.join(home, '..'))
 if not os.path.isdir(home):
     print I18n.get('cannot_detect_ada_home')
     sys.exit(1)
-config_defaults['home'] = home
+(a, b) = Ada.config_defaults['home']
+config_defaults['home'] = (home, b)
 
 userLog = None
 
@@ -154,9 +174,9 @@ def getConfigDefaults(path):
     result = {}
     for (n, v) in config_defaults.items():
         if n == 'basedir' or n == 'src_dir' or n == 'dst_dir':
-            v = path
+            v = (path, v[1])
         elif n == 'current_datetime':
-            v = str(datetime.datetime.now())
+            v = (str(datetime.datetime.now()), v[1])
             
         result[n] = v
             
@@ -220,7 +240,7 @@ def log(tprefix, directory, msg, fname = None):
         current = 0
         
     # Check for debug levels
-    threshold = config_defaults['debug_level']
+    threshold = config_defaults['debug_level'][0]
     if directory != None:
         threshold = directory.getProperty(module_prefix, 'debug_level')
 

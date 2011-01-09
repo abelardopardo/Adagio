@@ -59,7 +59,8 @@ def main():
     for optstr, value in opts:
         # Debug option
         if optstr == "-c":
-            Ada.config_defaults['property_file'] = value
+            (a, b) = Ada.config_defaults['property_file']
+            Ada.config_defaults['property_file'] = (value, b)
 
         elif optstr == "-d":
             # An integer is required
@@ -69,7 +70,8 @@ def main():
                 print I18n.get('incorrect_debug_option')
 	        print str(e)
                 sys.exit(3)
-            Ada.config_defaults['debug_level'] = value
+            (a, b) = Ada.config_defaults['debug_level']
+            Ada.config_defaults['debug_level'] = (value, b)
 
         # Change directory
         elif optstr == "-f":
@@ -85,7 +87,8 @@ def main():
             if toDir != '':
                 os.chdir(toDir)
             # Set the property_file to cFile
-            Ada.config_defaults['property_file'] = cFile
+            (a, b) = Ada.config_defaults['property_file']
+            Ada.config_defaults['property_file'] = (value, b)
 
         # Dump the manual page
         elif optstr == "-h" or optstr == "-x":
@@ -94,7 +97,8 @@ def main():
 
         # Allow for partial execution (if some tools are missing
         elif optstr == "-p":
-            Ada.config_defaults['partial'] = '1'
+            (a, b) = Ada.config_defaults['partial']
+            Ada.config_defaults['partial'] = (1, b)
 
         # Set a value in the environment
         elif optstr == "-s":
