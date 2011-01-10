@@ -43,6 +43,6 @@ files = FAQ.html
         style.css 
         Properties_sample.txt
 
-[rsync]
-src_dir = scratch/
-dst_dir = abel@varpa.it.uc3m.es:lib/www/ADA/doc
+# [rsync]
+# src_dir = scratch/
+# dst_dir = abel@varpa.it.uc3m.es:lib/www/ADA/doc
