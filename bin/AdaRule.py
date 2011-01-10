@@ -224,17 +224,8 @@ def dumpOptions(target, directory, prefix):
     if target == '':
         target = prefix
 
-    # Calculate default section if any
-    defSection = target.split('.')
-    if len(defSection) > 1:
-        defSection = defSection[0]
-    else:
-        defSection = target
-
-    for sn in directory.options.sections():
-        if sn.startswith(target) or sn == defSection:
-            for (on, ov) in sorted(directory.options.items(sn)):
-                print ' -', sn + '.' + on, '=', ov
+    for (on, ov) in sorted(directory.options.items(target)):
+        print ' -', on, '=', ov
 
 def which(program):
     """
