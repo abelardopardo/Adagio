@@ -206,7 +206,7 @@ class Directory:
                 self.option_files.update(newFiles)
             except ValueError, e:
                 print I18n.get('severe_parse_error').format(userAdaConfig)
-                print e.message
+                print str(e)
                 sys.exit(3)
 
         #
@@ -225,7 +225,7 @@ class Directory:
                 self.option_files.update(newFiles)
             except ValueError, e:
                 print I18n.get('severe_parse_error').format(adaProjFile)
-                print e.message
+                print str(e)
                 sys.exit(3)
 
         #
@@ -242,7 +242,7 @@ class Directory:
                 self.option_files.update(newFiles)
             except ValueError, e:
                 print I18n.get('severe_parse_error').format(propAbsFile)
-                print e.message
+                print str(e)
                 sys.exit(3)
                 
             self.section_list = sections

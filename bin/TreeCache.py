@@ -76,7 +76,7 @@ def findOrAddTree(path, expanded = True):
                                                            no_network = True))
         except etree.XMLSyntaxError, e:
             print I18n.get('severe_parse_error').format(path)
-            print e.message
+            print str(e)
             sys.exit(1)
 
     if expanded:
@@ -87,7 +87,7 @@ def findOrAddTree(path, expanded = True):
                 expandedTree.xinclude()
             except (etree.XMLSyntaxError, etree.XIncludeError), e:
                 print I18n.get('severe_parse_error').format(path)
-                print e.message
+                print str(e)
                 sys.exit(1)
         else:
             try:
@@ -97,7 +97,7 @@ def findOrAddTree(path, expanded = True):
                 expandedTree.xinclude()
             except (etree.XMLSyntaxError, etree.XIncludeError), e:
                 print I18n.get('severe_parse_error').format(path)
-                print e.message
+                print str(e)
                 sys.exit(1)
     # Update the cache
     _createdTrees[theKey] = (simpleTree, expandedTree)
@@ -131,7 +131,7 @@ def findOrAddTransform(path):
         transform = etree.parse(path, styleParser)
     except etree.XMLSyntaxError, e:
         print I18n.get('severe_parse_error').format(path)
-        print e.message
+        print str(e)
         sys.exit(1)
 
     transform.xinclude()

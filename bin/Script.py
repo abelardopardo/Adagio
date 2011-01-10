@@ -138,7 +138,7 @@ def executeFunction(toProcess, target, directory, functionName):
             module = __import__(tail, fromlist=[])
         except ImportError, e:
             print I18n.get('import_error').format(tail)
-            print e.message
+            print str(e)
             sys.exit(1)
 
         # If the file of the import is not what is expected, notify and
@@ -158,7 +158,7 @@ def executeFunction(toProcess, target, directory, functionName):
             getattr(sys.modules[tail], functionName)(scriptOptions)
         except AttributeError, e:
             print I18n.get('function_error').format(functionName)
-            print e.message
+            print str(e)
             sys.exit(1)
 
         # Restore tye sys.argv

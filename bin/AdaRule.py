@@ -118,7 +118,7 @@ def doExecution(target, directory, command, datafile, dstFile,
             Dependency.update(dstFile, set(srcDeps))
         except etree.XMLSyntaxError, e:
             print I18n.get('severe_parse_error').format(fName)
-            print e.message
+            print str(e)
             sys.exit(1)
 
         # If the destination file is up to date, skip the execution
@@ -156,7 +156,7 @@ def doExecution(target, directory, command, datafile, dstFile,
             Dependency.update(dstFile)
         except etree.XMLSyntaxError, e:
             print I18n.get('severe_parse_error').format(fName)
-            print e.message
+            print str(e)
             sys.exit(1)
 
     return
@@ -224,17 +224,8 @@ def dumpOptions(target, directory, prefix):
     if target == '':
         target = prefix
 
-    # Calculate default section if any
-    defSection = target.split('.')
-    if len(defSection) > 1:
-        defSection = defSection[0]
-    else:
-        defSection = target
-
-    for sn in directory.options.sections():
-        if sn.startswith(target) or sn == defSection:
-            for (on, ov) in sorted(directory.options.items(sn)):
-                print ' -', sn + '.' + on, '=', ov
+    for (on, ov) in sorted(directory.options.items(target)):
+        print ' -', on, '=', ov
 
 def which(program):
     """
@@ -276,6 +267,46 @@ def remove(fileName):
         shutil.rmtree(fileName)
         
     return
+
+def optionDoc(options):
+    """
+    Function that given a list of triplets (variable, default_value,
+    documentation) creates a Docbook snippet with the documentation about the
+    variables.
+    """
+    
+    result = """<informaltable frame="all">
+  <tgroup rowsep="1" colsep="1" cols="3">
+    <colspec colnum="1" colname="col1" align="left"></colspec>
+    <colspec colnum="2" colname="col2" align="left"></colspec>
+    <colspec colnum="3" colname="col3" align="center"></colspec>
+    <thead>
+      <row>
+        <entry align="center">Name</entry>
+        <entry align="center">Description</entry>
+        <entry align="center">Default value</entry>
+      </row>
+    </thead>
+    <tbody>"""
+
+    for vname, vdefault, vdoc in options:
+        result += """      <row>
+        <entry><varname>""" + vname + """</varname></entry>
+        <entry>""" + vdoc + """</entry>
+        <entry>"""
+        if vdefault == '':
+            result += '(empty)'
+        else:
+            result += vdefault
+
+        result += """</entry>
+      </row>"""
+
+    result += """    </tbody>
+  </tgroup>
+</informaltable>"""
+
+    return result
 
 class StyleResolver(etree.Resolver):
     """

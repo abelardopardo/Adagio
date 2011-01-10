@@ -61,6 +61,33 @@ msgs = {
                        executed.
 
     """,
+    # Explanations of the values in config_defaults
+    'default_alias': 'Define a synonym for the current rule',
+    'default_basedir': 'Current directory where the rules are being executed',
+    'default_current_datetime': 'Date/time when the execution started',
+    'default_debug_level': """Level of debug messages to appear in log file (0-5)
+  The higher the value the more messages are written""",
+    'default_dst_dir': 'Directory where the resulting files are created',
+    'default_enable_begin': 'Date/time from which the rule must execute.',
+    'default_enable_date_format': 'Format to specify the date/times for the enable',
+    'default_enable_end': 'Date/time up to which the rule can execute.',
+    'default_enable_open': 'Rule is allowed to execute',
+    'default_enable_profile': 'Value authorizing the execution of the rule',
+    'default_encoding': 'Encoding to use in the produced files',
+    'default_file_separator': 'Separator used by the system in file paths',
+    'default_files': 'Source files to use in a rule',
+    'default_help': 'Documentation about what the rule does',
+    'default_home': 'Directory where ADA is installed',
+    'default_languages': """Space separated list of languages to consider when
+    processing the files (when appropriate)""",
+    'default_partial': """0/1 value stating if ADA continues when a rule cannot be 
+    executed""",
+    'default_project_file': 'File with project-wide declarations',
+    'default_project_home': 'Directory where the project file is found',
+    'default_property_file': 'File name with the rule definitions',
+    'default_src_dir': 'Directory from where to take the source files',
+    'default_version': 'Current ADA version',
+    ## End of config_defaults
     'no_help_available': 'There is no documentation for this target.',
     'help_option': 'Text explaining the tasks carried by this rule.',
     'fatal_error': 'Fatal error encountered. Attach "adado.log" to notification.',
@@ -142,7 +169,8 @@ msgs = {
     'empty_output_format': 'Option output_format in target {0} cannot be empty.',
     'gimp_script': 'Script to process gimp files in batch mode',
     'extra_arguments':
-    'Extra arguments passed directly to {0}.',
+    """Extra arguments passed directly to {0}. 
+     Format: comma separated list of pairs name: value""",
     'files_to_process': 'Space separated list of files to process.',
     'xslt_merge_styles':
     'Space separated list of styles to combine with the given style',

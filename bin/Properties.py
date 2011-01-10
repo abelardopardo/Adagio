@@ -22,6 +22,7 @@
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 import sys, os, re, datetime, ConfigParser, StringIO, ordereddict, atexit
+from lxml import etree
 
 # @@@@@@@@@@@@@@@@@@@@  EXTEND  @@@@@@@@@@@@@@@@@@@@
 import Ada, AdaRule, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
@@ -63,7 +64,7 @@ def getConfigParser(fileList):
         config.read(fileList)
     except Exception, msg:
         print I18n.get('severe_parse_error').format(' '.join(fileList))
-        print msg.message
+        print str(msg)
         sys.exit(1)
 
     _configParsers[theKey] = config
@@ -136,7 +137,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
         config.readfp(defaultsIO)
     except ConfigParser.ParsingError, msg:
         print I18n.get('severe_parse_error').format(filename)
-        print msg.message
+        print str(msg)
         defaultsIO.close()
         sys.exit(1)
 
@@ -160,7 +161,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
             unaliased = expandAlias(sname, aliasDict)
         except SyntaxError, e:
             print I18n.get('error_alias_expression')
-	    print e.message
+	    print str(e)
             sys.exit(1)
 
         # Get the prefix again
@@ -229,7 +230,7 @@ def dump(options, pad = None, sections = None):
                 print pad, '  ', oname, '=', options.get(sname, oname)
     except ConfigParser.InterpolationDepthError, e:
         print I18n.get('severe_option_error')
-        print e.message
+        print str(e)
         sys.exit(1)
 
 def LoadDefaults(config):
@@ -260,7 +261,7 @@ def LoadDefaults(config):
             setProperty(config, sectionName, vn, vv)
 
         # Add the string for the help
-        helpStr = documentation.get(Ada.config_defaults['languages'].split()[0])
+        helpStr = documentation.get(Ada.config_defaults['languages'][0].split()[0])
         if helpStr == None:
             helpStr = documentation.get('en')
         setProperty(config, sectionName, 'help', helpStr)
@@ -285,7 +286,7 @@ def Execute(target, directory, pad = None):
         print I18n.get('error_alias_expression')
         sys.exit(1)
 
-    # Detect help or dump targets with/without section name
+    # Detect help, dump or clean targets
     specialTarget = re.match('.+\.dump$', target) or \
         re.match('.+\.help$', target) or \
         re.match('.+\.clean$', target) or \
@@ -433,8 +434,11 @@ def specialTargets(target, directory, moduleName, pad = None):
 
     # If requesting help, dump msg and terminate
     if doubleTarget or re.match('.+\.help$', target):
-        msg = getProperty(directory.options, prefix, 'help')
-        print I18n.get('doc_preamble').format(prefix) + '\n\n' + msg + '\n\n'
+        msg = etree.fromstring('<book>' + 
+                               getProperty(directory.options, prefix, 'help')
+                               + '</book>')
+        print I18n.get('doc_preamble').format(prefix) + '\n' + \
+            etree.tostring(msg, method = "text") + '\n'
         hit = True
 
     # If requesting var dump, do it and finish
