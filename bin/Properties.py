@@ -434,11 +434,11 @@ def specialTargets(target, directory, moduleName, pad = None):
 
     # If requesting help, dump msg and terminate
     if doubleTarget or re.match('.+\.help$', target):
-        msg = etree.fromstring('<book>' + 
-                               getProperty(directory.options, prefix, 'help')
-                               + '</book>')
+        msg = etree.fromstring('<book>' +
+                                getProperty(directory.options, prefix,
+                                            'help') + '</book>')
         print I18n.get('doc_preamble').format(prefix) + '\n' + \
-            etree.tostring(msg, method = "text") + '\n'
+            etree.tostring(msg, encoding = "UTF-8", method = "text") + '\n'
         hit = True
 
     # If requesting var dump, do it and finish
