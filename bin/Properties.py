@@ -22,6 +22,7 @@
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 import sys, os, re, datetime, ConfigParser, StringIO, ordereddict, atexit
+import codecs
 from lxml import etree
 
 # @@@@@@@@@@@@@@@@@@@@  EXTEND  @@@@@@@@@@@@@@@@@@@@
@@ -42,7 +43,7 @@ module_prefix = 'properties'
 # orderedict.OrderedDict))
 _configParsers = {}
 
-def getConfigParser(fileList):
+def getConfigParser(fileName):
     """
     Given a set of files, returns the resulting ConfigParser object after being
     parsed.
@@ -50,24 +51,23 @@ def getConfigParser(fileList):
 
     global _configParsers
 
-    theKey = ' '.join(fileList)
-    config = _configParsers.get(theKey)
+    config = _configParsers.get(fileName)
     if config != None:
         # Hit in the cache, return
-        Ada.logDebug('Directory', None, 'Parser HIT: ' + ' '.join(fileList))
+        Ada.logDebug('Directory', None, 'Parser HIT: ' + fileName)
         return config
 
     # Parse the file with a raw parser
     config = ConfigParser.RawConfigParser({}, ordereddict.OrderedDict)
 
     try:
-        config.read(fileList)
+        config.readfp(codecs.open(fileName, "r", "utf8"))
     except Exception, msg:
-        print I18n.get('severe_parse_error').format(' '.join(fileList))
+        print I18n.get('severe_parse_error').format(fileName)
         print str(msg)
         sys.exit(1)
 
-    _configParsers[theKey] = config
+    _configParsers[fileName] = config
     return config
 
 def flushConfigParsers():
@@ -125,7 +125,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
         sys.exit(1)
 
     # Get the ConfigParser for the input file
-    newOptions = getConfigParser([filename])
+    newOptions = getConfigParser(filename)
 
     # Move defaults to the original config passing them to a [DEFAULT] section
     defaultsIO = StringIO.StringIO()
@@ -438,7 +438,8 @@ def specialTargets(target, directory, moduleName, pad = None):
                                 getProperty(directory.options, prefix,
                                             'help') + '</book>')
         print I18n.get('doc_preamble').format(prefix) + '\n' + \
-            etree.tostring(msg, encoding = "UTF-8", method = "text") + '\n'
+            etree.tostring(msg, encoding = "UTF-8", 
+                           method = "text").decode("utf8") + '\n'
         hit = True
 
     # If requesting var dump, do it and finish
