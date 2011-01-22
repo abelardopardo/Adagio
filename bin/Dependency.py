@@ -75,6 +75,7 @@ def addNode(fileName):
     global __NodeDate
     global __NodeOutEdges
 
+
     # Make fileName absolute
     fileName = os.path.abspath(fileName)
 
@@ -121,7 +122,7 @@ def update(dst, srcSet = None):
 	srcSet = set([])
 
     # If a string is given, translate to index
-    if type(dst) == str:
+    if (type(dst) == str) or (type(dst) == unicode):
         dstIDX = addNode(dst)
     else:
         dstIDX = dst
@@ -139,7 +140,7 @@ def update(dst, srcSet = None):
 
     # Loop over the nodes in the source set
     for node in srcSet:
-        if type(node) == str:
+        if type(node) == str or type(node) == unicode:
             srcIDX = addNode(node)
         else:
             srcIDX = node
