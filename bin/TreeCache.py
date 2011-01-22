@@ -115,7 +115,7 @@ def findOrAddTransform(path):
     global _createdTransforms
 
     theKey = path
-    if type(path).__name__ != 'str':
+    if (type(path) != str) and (type(path) != unicode):
         theKey = path.getvalue()
 
     transform = _createdTransforms.get(theKey)
