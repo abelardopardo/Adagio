@@ -66,10 +66,10 @@ documentation = {
   These definitions are identical to including in the stylesheet the
   definitions:
 
-  <xsl:param name="name1">value1</xsl:param>
-  <xsl:param name="name2">value2</xsl:param>
+  &lt;xsl:param name="name1"&gt;value1&lt;/xsl:param&gt;
+  &lt;xsl:param name="name2"&gt;value2&lt;/xsl:param&gt;
   ...
-  <xsl:param name="nameN">valueN</xsl:param>
+  &lt;xsl:param name="nameN"&gt;valueN&lt;/xsl:param&gt;
 """}
 
 def Execute(target, directory):
@@ -198,12 +198,12 @@ def createParameterDict(target, directory):
         for (k, v) in extraDict.items():
             if hasattr(etree.XSLT, 'strparam'):
                 # Valid beyond version 2.2 of lxml
-                styleParams[k] = etree.XSLT.strparam(v)
+                styleParams[k] = etree.XSLT.strparam(str(v))
             else:
                 # If v has quotes, too bad...
                 styleParams[k] = '"' + v + '"'
     except SyntaxError, e:
-        print I18n.get('error_extra_args').format(target)
+        print I18n.get('error_extra_args').format(target + '.extra_arguments')
         print str(e)
         sys.exit(1)
 
