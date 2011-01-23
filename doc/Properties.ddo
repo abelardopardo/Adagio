@@ -31,6 +31,11 @@ files = Samples
 [xslt]
 files = FAQ.xml
 styles = QandaentryTable.xsl
+extra_arguments = 'chapter.autolabel': 0,
+                  'section.autolabel': 1,
+	          'section.toc.depth': 0,
+                  'html.stylesheet': 'style.css',
+                  'ada.version': '%(version)s'
 
 # [copy]
 # src_dir = ../AntImports
