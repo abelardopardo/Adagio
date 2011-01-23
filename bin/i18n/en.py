@@ -138,7 +138,8 @@ msgs = {
     'error_alias_expression': """Incorrect alias expression. Format: 'name': 'value', 'name': 'value'""",
     'severe_option_error': 'Error in configuration file',
     'error_applying_xslt': 'Error while applying style in target {0}',
-    'error_extra_args': 'Incorrect arguments in variable {0}.',
+    'error_extra_args': """Incorrect argument in variable {0}.
+The format must be 'name1': 'value2', 'name2': 'value2'...""",
     'unknown_target': 'Unknown target {0}.',
     'file_uptodate': '{0} up to date. Bypassing.',
     'not_enough_params': 'Not enough params for {0}',
