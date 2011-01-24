@@ -88,7 +88,7 @@ options = [
 
 documentation = {
     'en': """
-<section id="minimum_version" xreflabel="Top of the Section">
+<section id="ada_rule" xreflabel="Top of the Section">
     <title>The <code>[ada]</code> rule</title>
     
     <para>The <code>[ada]</code> rule is an expception because it does not
