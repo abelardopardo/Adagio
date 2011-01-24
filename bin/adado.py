@@ -88,7 +88,7 @@ def main():
                 os.chdir(toDir)
             # Set the property_file to cFile
             (a, b) = Ada.config_defaults['property_file']
-            Ada.config_defaults['property_file'] = (value, b)
+            Ada.config_defaults['property_file'] = (cFile, b)
 
         # Dump the manual page
         elif optstr == "-h" or optstr == "-x":
