@@ -88,8 +88,8 @@ def dump(self):
         print '  Options:\n    ',
         Properties.dump(self.options, '   ')
 
-# Search for .sc all the way up the hierarchy (until the top)
-def findProjectDir(pfile):
+# Search for pfile all the way up the hierarchy (until the top)
+def findProjectDir(pfile, startdir):
     """
     Function that traverses the directories upward until the file name given by
     the option ada.projectfile is found.
@@ -102,7 +102,7 @@ def findProjectDir(pfile):
             (not os.path.exists(os.path.join(currentDir, pfile))):
         currentDir = os.path.join(currentDir, "..")
 
-    return os.path.abspath(currentDir)
+    return os.path.normpath(os.path.join(startdir, currentDir))
 
 def flushCreatedDirs():
     """
@@ -174,7 +174,7 @@ class Directory:
         # Compute the project home
         os.chdir(self.current_dir)
         configDefaults['project_home'] = \
-            findProjectDir(configDefaults['project_file'])
+            findProjectDir(configDefaults['project_file'], self.current_dir)
         os.chdir(self.previous_dir)
 
         # Safe parser to store the options, the defaults are loaded here
