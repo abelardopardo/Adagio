@@ -64,18 +64,18 @@
   <!--                    INSTALLATION IN WINDOWS                   -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Installing_ADA_in_Windows.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Installing_ADA_in_Windows.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                    INSTALLATION IN LINUX                     -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Installing_ADA_in_Linux.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Installing_ADA_in_Linux.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -83,99 +83,99 @@
   <!--                    PROCESSING RESOURCES                      -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Processing_resources_with_ADA.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Processing_resources_with_ADA.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                         APPLYING XSLT                        -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Applying_XSLT.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Applying_XSLT.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                        STYLE HEADTAIL                        -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Style_HeadTail.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Style_HeadTail.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                        IMAGE CREATION                        -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Image_Creation.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Image_Creation.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                       STYLE FLASH SWF                        -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Style_FlashSWF.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Style_FlashSWF.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                       MULTILINGUAL                           -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Processing_Multilingual.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Processing_Multilingual.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                          CLEANING                            -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Cleaning.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Cleaning.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--               COPYFILES/SUBRECURSIVE/EXPORT                  -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Copyfiles.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Copyfiles.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                    COPYTEMPLATES                             -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Copytemplates.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Copytemplates.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                     LATEX PROCESSING                         -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Processing_Latex.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Processing_Latex.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                   PDF FILE MANIPULATION                      -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Processing_PDF.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Processing_PDF.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- 
   RSS:
@@ -217,24 +217,22 @@
   <!--                    EXERCISES TO SUBMIT                       -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="ExerciseSubmit.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="ExerciseSubmit.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
   <!--                   TYPESETTING EXAMINATIONS                   -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Typesetting_exams.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+  <!-- <xi:include href="Typesetting_exams.xml" -->
+  <!--             parse="xml" -->
+  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
 <!--
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   UNDOCUMMENTED:
-  RULES
-    Scp.xml
   STYLES:
     AsapBenchResults.xsl
     AdaProfile.xsl
