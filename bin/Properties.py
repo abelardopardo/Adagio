@@ -592,13 +592,12 @@ def setProperty(config, section, option, value, fileName = None):
 
     # If the given target is unnamed, propagate the value to the named ones
     if len(parts) == 1:
+
         # Loop over those named targets with the same prefix
         for sname in [x for x in config.sections()
                       if x.startswith(section + '.')]:
-            # Set only the values that are not already set
-            if not config.has_option(sname, option):
-                # Set the new value for the named target
-                config.set(sname, option, value)
+            # Set the new value for the named target as well
+            config.set(sname, option, value)
 
     # Get the option just inserted to verify interpolation errors
     try:
