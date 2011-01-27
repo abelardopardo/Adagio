@@ -71,7 +71,7 @@ config_defaults = {
     'project_home':       (_currentDir, I18n.get('default_project_home')),
     'property_file':      ('Properties.ddo', I18n.get('default_property_file')),
     'src_dir':            (_currentDir, I18n.get('default_src_dir')),
-    'version':            ('11.01.5', I18n.get('default_version'))
+    'version':            ('11.01.6', I18n.get('default_version'))
 }
 
 # List of tuples (varname, default value, description string)
