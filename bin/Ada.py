@@ -62,7 +62,7 @@ config_defaults = {
                            I18n.get('default_encoding')),
     'file_separator':     (os.path.sep, I18n.get('default_file_separator')),
     'files':              ('', I18n.get('default_files')),
-    'help':               (I18n.get('default_no_help_available'), 
+    'help':               (I18n.get('no_help_available'),
                            I18n.get('default_help')),
     'home':               (_currentDir, I18n.get('default_home')),
     'languages':          (lang[0:2], I18n.get('default_languages')),
