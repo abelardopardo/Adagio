@@ -22,7 +22,7 @@
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 import os, sys, getopt, datetime, locale, ConfigParser, codecs, pydoc
 
-import Ada, I18n, Properties, Directory
+import Ada, I18n, Properties, Directory, TreeCache, Dependency
 # import Ada, Directory, I18n, Xsltproc
 
 # Fix the output encoding when redirecting stdout
@@ -38,6 +38,12 @@ def main():
     The manual page for this method is inside the localization package. Check
     the proper [ĺang].py file.
     """
+
+    # To simplify debugging
+    Dependency.flushData()
+    Directory.flushCreatedDirs()
+    Properties.flushConfigParsers()
+    TreeCache.flushData()
 
     #######################################################################
     #
