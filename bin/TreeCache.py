@@ -121,6 +121,7 @@ def findOrAddTransform(path):
     transform = _createdTransforms.get(theKey)
     if transform != None:
         # HIT
+        Ada.logDebug('TreeCache', None, 'HIT: ' + path)
         return transform
 
     # Parse style file, insert name resolver to consider ADA local styles,

@@ -56,7 +56,7 @@ def getConfigParser(fileName):
     config = _configParsers.get(fileName)
     if config != None:
         # Hit in the cache, return
-        Ada.logDebug('Directory', None, 'Parser HIT: ' + fileName)
+        Ada.logDebug('Properties', None, 'Parser HIT: ' + fileName)
         return config
 
     # Parse the file with a raw parser
