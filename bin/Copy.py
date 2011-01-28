@@ -52,10 +52,10 @@ def Execute(target, directory):
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
         return
-
+    
     # Perform the copy
     doCopy(target, directory, toProcess, 
-           directory.getProperty(target, 'src_dir'),
+           directory.getProperty(target, 'src_dir'), 
            directory.getProperty(target, 'dst_dir'))
 
     return
@@ -73,8 +73,8 @@ def clean(target, directory):
         return
 
     # Loop over all source files to process
-    doClean(target, directory, toProcess,
-            directory.getProperty(target, 'src_dir'),
+    doClean(target, directory, toProcess, 
+            directory.getProperty(target, 'src_dir'), 
             directory.getProperty(target, 'dst_dir'))
 
     return
@@ -84,6 +84,10 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
     Effectively perform the copy. The functionality is in this function because
     it is used also by the Export rule.
     """
+
+    # Identical source and destination, useless operation
+    if os.path.abspath(srcDir) == os.path.abspath(dstDir):
+        return
 
     # Loop over all source files to process
     for datafile in toProcess:
@@ -159,6 +163,10 @@ def doClean(target, directory, toProcess, srcDir, dstDir):
     Function to execute the core of the clean operation. It is in its own
     function because it is used also by the Export rule.
     """
+
+    # Identical source and destination, useless operation
+    if os.path.abspath(srcDir) == os.path.abspath(dstDir):
+        return
 
     for datafile in toProcess:
         Ada.logDebug(target, directory, ' EXEC ' + datafile)
