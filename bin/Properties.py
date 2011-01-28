@@ -43,6 +43,8 @@ module_prefix = 'properties'
 # orderedict.OrderedDict))
 _configParsers = {}
 
+_ada_given_definiton_section_name = "__ADA_GIVEN_DEFINITIONS_SECTION_NAME__"
+
 def getConfigParser(fileName):
     """
     Given a set of files, returns the resulting ConfigParser object after being
@@ -187,9 +189,6 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
                                                                   filename)
                 sys.exit(1)
 
-            # Add the section first
-            newSubsection(config, unaliased)
-
             # Set the values considering the cases of append or prepend
             try:
                 if prepend:
@@ -203,7 +202,8 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
                 print I18n.get('error_option_addition').format(sname + '.' +
                                                                oname)
                 sys.exit(1)
-            finalValue = setProperty(config, unaliased, oname, ovalue, filename)
+            finalValue = setProperty(config, unaliased, oname, ovalue, 
+                                     fileName = filename)
 
             # Consider the special case of the alias option
             if oname == 'alias':
@@ -258,13 +258,15 @@ def LoadDefaults(config):
 
         # Loop over all the default values and add them to the proper sections
         for (vn, vv, msg) in options:
-            setProperty(config, sectionName, vn, vv)
+            setProperty(config, sectionName, vn, vv,
+                        createSection = True, createOption = True)
 
         # Add the string for the help
         helpStr = documentation.get(Ada.config_defaults['languages'][0].split()[0])
         if helpStr == None:
             helpStr = documentation.get('en')
-        setProperty(config, sectionName, 'help', helpStr)
+        setProperty(config, sectionName, 'help', helpStr, 
+                    createSection = True, createOption = True)
 
     return
 
@@ -392,7 +394,9 @@ def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
 
     # Add template section to the given config to evaluate the files assignment
     templateFiles = setProperty(config, sname, 'files', fileItem[0][1],
-                                filename).split()
+                                fileName = filename,
+                                createSection = True,
+                                createOption = True).split()
 
     # Remove section from the original config:
     config.remove_section(sname)
@@ -531,80 +535,76 @@ def getProperty(config, section, option):
     name.
     """
 
-    while section != '':
-        try:
-            result = config.get(section, option)
-            return result
-        except ConfigParser.InterpolationMissingOptionError, e:
-            print I18n.get('incorrect_variable_reference').format(option)
-            sys.exit(1)
-        except ConfigParser.NoSectionError:
-            print I18n.get('unknown_target').format(section)
-            sys.exit(1)
-        except ConfigParser.NoOptionError:
-            pass
-        section = section.rpartition('.')[0]
+    global _ada_given_definiton_section_name
 
+    # If the section is a.b.c, loop asking if we have the option a.b.c.option,
+    # then a.b.option, and then a.option.
+    partialSection = section
+    while partialSection != '':
+        if config.has_option(_ada_given_definiton_section_name, 
+                             partialSection + '.' + option):
+            result = config.get(partialSection, option)
+            return result
+        partialSection = partialSection.rpartition('.')[0]
+
+    # If no hit so far, need to make one more test to see if the value is in the
+    # DEFAULT section
+    try:
+        result = config.get(section, option)
+        # Yes, the value is stored as in  DEFAULT
+        return result
+    except ConfigParser.InterpolationMissingOptionError, e:
+        print I18n.get('incorrect_variable_reference').format(option)
+        sys.exit(1)
+    except ConfigParser.NoSectionError:
+        print I18n.get('unknown_target').format(section)
+        sys.exit(1)
+
+    # Weird case, bomb out to notify error
     raise ConfigParser.NoOptionError
 
-def setProperty(config, section, option, value, fileName = None):
+def setProperty(config, section, option, value, fileName = None,
+                createSection = None, createOption = None):
     """
     Function that sets the given value for the section.option in the given
-    config. The function implements the precedence rule among targets forced
-    within ADA: Options in unnamed targets are the defaults for the named
-    targets.
-
-    More precisely, the ConfigParser module offers one single level of default
-    values. If a variable is not defined as part of a section (or target) but is
-    is defined as a default, it is considered part of the target. For example,
-    'foo.bar' is not defined, but 'bar' is defined in the default section, thus,
-    'foo.bar' has the value specified for the default 'bar'.
-
-    However, in ADA we make the distinction between unnamed targets ([foo]) and
-    named targets ([foo.name]). If a variable is not defined in a named target,
-    the default value should be obtained from its unnamed counterpart. This
-    behavior requires to intercept two operations over the ConfigParser object:
-
-    1) If a new named target is created, all variables in such section that are
-    also defined in its unnamed counterpart need to be explicitly propagated to
-    the new section. If not, the defaults are taken from the DEFAULT section
-    instead (see newSubsection function).
-
-    2) If an option is modified in an unnamed, the corresponding options in all
-    the named sections need to be adjusted.
-
-    This second operation is the one implemented in this function. The result is
-    simply reflected in the given ConfigParser object.
-
-    The function returns the final value assigned (after interpolation)
+    config and returns the resulting value (after interpolation). createSection
+    and createOption is the boolean allowing the creation of both.
     """
 
-    # First, perform a regular set operation
-    try:
+    # Obtain the section prefix
+    sectionPrefix = section.split('.')[0]
+    
+    # Check if the section is allowed, 
+    if (not createSection) and (not config.has_section(sectionPrefix)):
+        # Section prefix does not exist in config, and creation is not allowed
+        raise ValueError
+
+    # Create the section if needed
+    if not config.has_section(section):
         config.add_section(section)
-    except ConfigParser.DuplicateSectionError:
-        # The section is already part of the config, continue
-        pass
+
+    # See if the option is already present in the config
+    try:
+        optionPresent = True
+        getProperty(config, section, option)
+    except ConfigParser.NoOptionError:
+        optionPresent = False
+
+    # Check if option is allowed
+    if (not createOption) and (not optionPresent):
+        # Option does not exist in config, and creation is not allowed
+        raise ValueError
+
+    # Insert the option
     config.set(section, option, value)
 
-    # Divide the target name into pieces
-    parts = section.split('.')
-
-    # If the given target is unnamed, propagate the value to the named ones
-    if len(parts) == 1:
-
-        # Loop over those named targets with the same prefix
-        for sname in [x for x in config.sections()
-                      if x.startswith(section + '.')]:
-            # Set the new value for the named target as well
-            config.set(sname, option, value)
-
+    # Register the section.option also in the __ADA_GIVEN_SECTION__
+    config.set(_ada_given_definiton_section_name,
+               section + '.' + option, value)
+    
     # Get the option just inserted to verify interpolation errors
     try:
         finalValue = config.get(section, option)
-    except ConfigParser.NoSectionError:
-        print I18n.get('incorrect_section').format(section)
-        sys.exit(1)
     except (ConfigParser.InterpolationDepthError,
             ConfigParser.InterpolationMissingOptionError), e:
         if fileName != None:
@@ -614,39 +614,27 @@ def setProperty(config, section, option, value, fileName = None):
 
     return finalValue
 
-def newSubsection(config, section):
+def initialConfig(configDefaults):
     """
-    Function to create a new subsection in the given config. The given section
-    is of the form a.b. We cannot simply add this section with an add_section,
-    because when doing so, the default values (those given in the DEFAULT
-    section) take precedence over the values in target a. For example:
+    Given a dictiornary with a set of pairs (name, value), return a ConfigParser
+    in which all these values are stored in a special section with a special
+    name to be treated as default values. The reason for not using the DEFAULT
+    section of ConfigParser is because there is no way to know if a section.name
+    has a value that appeared explicitly in a config file, or it derives from
+    the DEFAULT. However, both sections are kept (DEFAULTS and the ADA internal)
+    because interpolations may require values in DEFAULS"""
 
-  - DEFAULT: dst_dir = a/b/c/d
-  - export: dst_dir = ''
-  - New section export.blah: dst_dir = a/b/c/d <- from the DEFAULTS.
+    global _ada_given_definiton_section_name
 
-  The correct value for export.blah.dst_dir should be '' inherited from
-  export.dst_dir. The function traverses all the options in a.* that are
-  different or absent in the defaults of the config. Those are set in the given
-  section.
-  """
-    try:
-        config.add_section(section)
-    except ConfigParser.DuplicateSectionError:
-        # The section is already part of the config, nothing to do
-        return
+    result = ConfigParser.SafeConfigParser(configDefaults,
+                                           ordereddict.OrderedDict)
 
-    # The section has been added, and therefore it is empty (no given
-    # options). Get the base name for the target and propagate those values to
-    # section.
-    targetBase = section.split('.')[0]
+    # Add the special section for ADA defaults
+    result.add_section(_ada_given_definiton_section_name)
 
-    for name, value in config.items(targetBase):
-        defValue = config.defaults().get(name)
-        # If there IS a default and is different from the targetBase value,
-        # propagate
-        if defValue != None and defValue != value:
-            config.set(section, name, value)
-    return
+    # Add the 'ada' section as well and set the first property
+    result.add_section(Ada.module_prefix)
+    result.set(Ada.module_prefix, 'home', Ada.home)
 
-
+    return result
+        

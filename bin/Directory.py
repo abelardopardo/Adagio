@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import sys, os, re, ConfigParser, ordereddict, atexit
+import sys, os, re, ConfigParser, atexit
 
 import Ada, Properties, I18n
 
@@ -178,22 +178,15 @@ class Directory:
         os.chdir(self.previous_dir)
 
         # Safe parser to store the options, the defaults are loaded here
-        self.options = ConfigParser.SafeConfigParser(configDefaults,
-                                                     ordereddict.OrderedDict)
+        self.options = Properties.initialConfig(configDefaults)
 
         #
-        # STEP 1: Set ada.home in global options
-        #
-        self.options.add_section(Ada.module_prefix)
-        Properties.setProperty(self.options, Ada.module_prefix, 'home', Ada.home)
-
-        #
-        # STEP 2: Load the default options from the Rule files
+        # STEP 1: Load the default options from the Rule files
         #
         Properties.LoadDefaults(self.options)
 
         #
-        # STEP 3: Load the ~/.adarc if any
+        # STEP 2: Load the ~/.adarc if any
         #
         userAdaConfig = os.path.expanduser('~/.adarc') 
         if os.path.isfile(userAdaConfig):
@@ -210,7 +203,7 @@ class Directory:
                 sys.exit(3)
 
         #
-        # STEP 4: Options given in the project file
+        # STEP 3: Options given in the project file
         #
         adaProjFile = os.path.join(self.current_dir,
                                    configDefaults['project_home'],
@@ -229,7 +222,7 @@ class Directory:
                 sys.exit(3)
 
         #
-        # STEP 5: Options given in the Properties file in the directory
+        # STEP 4: Options given in the Properties file in the directory
         #
         adaPropFile = self.options.get('ada', 'property_file')
         propAbsFile = os.path.abspath(os.path.join(self.current_dir,
@@ -255,7 +248,7 @@ class Directory:
             self.section_list = []
 
         #
-        # STEP 6: Options given from outside the dir
+        # STEP 5: Options given from outside the directory
         #
         for assignment in givenOptions:
             # Chop assignment into its three parts
