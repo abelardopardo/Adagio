@@ -24,7 +24,7 @@
 import sys, os, copy, atexit
 from lxml import etree
 
-import AdaRule, I18n
+import AdaRule, I18n, Ada
 
 # A dictionary storing XML trees and XSLTProcs. The values are pairs (a, b)
 # where a is the tree without the includes expanded and b is the fully expanded
@@ -121,7 +121,7 @@ def findOrAddTransform(path):
     transform = _createdTransforms.get(theKey)
     if transform != None:
         # HIT
-        Ada.logDebug('TreeCache', None, 'HIT: ' + path)
+        Ada.logDebug('TreeCache', None, 'HIT: ' + str(path))
         return transform
 
     # Parse style file, insert name resolver to consider ADA local styles,
