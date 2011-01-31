@@ -405,7 +405,8 @@ class Directory:
             # Check the cache to see if target has already been executed
             if target_name in self.executed_targets:
                 Ada.logInfo('Directory', self,
-                            'HIT: ' + self.current_dir + ': ' + target_name)
+                            'Target HIT: ' + self.current_dir + ': ' + \
+                            target_name)
                 continue
 
             # Execute the target
