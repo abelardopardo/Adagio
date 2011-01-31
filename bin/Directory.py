@@ -367,7 +367,8 @@ class Directory:
         toExecTargets = [x for x in self.section_list
                          if not re.match('^ada$', x) and
                          not re.match('^clean(\.?\S+)?$', x) and
-                         not re.match('^local(\.?\S+)?$', x)]
+                         not re.match('^local(\.?\S+)?$', x) and
+                         not re.match('^rsync(\.?\S+)?$', x)]
 
         # If no target is given, execute all except the filtered ones
         if targets == []:

@@ -63,11 +63,12 @@ def main():
 
     # Parse the options
     for optstr, value in opts:
-        # Debug option
+        # Choose a different configuration file
         if optstr == "-c":
             (a, b) = Ada.config_defaults['property_file']
             Ada.config_defaults['property_file'] = (value, b)
 
+        # Debug option
         elif optstr == "-d":
             # An integer is required
             try:
