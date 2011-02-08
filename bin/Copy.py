@@ -134,8 +134,13 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
             # Copy source tree to dst tree
             distutils.dir_util.copy_tree(datafile, dstFile)
         else:
-            # It is a regular file
-            shutil.copy(datafile, dstFile)
+            # It is a regular file, make sure the dirs leading to it are created
+            dirPrefix = os.path.dirname(dstFile)
+            if not os.path.exists(dirPrefix):
+                os.makedirs(dirPrefix)
+
+            # Proceed wih the copy
+            shutil.copyfile(datafile, dstFile)
 
         # Update the dependencies of the newly created file
         if not isDirectory:
