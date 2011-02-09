@@ -38,7 +38,7 @@ def main():
     the proper [ĺang].py file.
     """
 
-    # To simplify debugging
+    # Flush all data structures (to simplify debugging)
     Dependency.flushData()
     Directory.flushCreatedDirs()
     Properties.flushConfigParsers()
