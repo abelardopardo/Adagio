@@ -23,7 +23,6 @@
 import os, sys, getopt, datetime, locale, ConfigParser, codecs, pydoc
 
 import Ada, I18n, Properties, Directory, TreeCache, Dependency
-# import Ada, Directory, I18n, Xsltproc
 
 # Fix the output encoding when redirecting stdout
 if sys.stdout.encoding is None:

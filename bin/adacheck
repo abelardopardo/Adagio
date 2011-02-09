@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-#
 #
-# Copyright (C) 2008 Carlos III University of Madrid
+# Copyright (C) 2010 Carlos III University of Madrid
 # This file is part of the ADA: Agile Distributed Authoring Toolkit
 
 # This program is free software; you can redistribute it and/or
@@ -17,224 +18,31 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor
 # Boston, MA  02110-1301, USA.
-
 #
-#
-# Script to simply invoke adado to check which tools are installed.
+# Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 
-# Function use to make sure ADA_HOME is set, if not, suggest the steps to do
-# so. VERY important the message including the $ADA_REAL_USER_HOME variable. For
-# ant this variable points to C:\Documents and Settings\username, whereas for
-# cygwin $HOME points to some location within its internal tree (/home/...)
-function ada_check_home() {
-    if [ "$ADA_HOME" = "" ]; then
-	echo
-	echo "                                  -- ERROR --"
-	echo "  Unable to set variable ADA_HOME"
-	echo
-	case "$ada_ostype" in
-	    cygwin)
-		ADA_REAL_USER_HOME=`cygpath --windows $HOME`
-		;;
-	    *)
-		ADA_REAL_USER_HOME="$HOME"
-		;;
-	esac
-	echo "Edit the file .ant.properties in $ADA_REAL_USER_HOME and"
-        echo "add a line such as:"
-	echo "ada.home=[path to your ADA dir]"
-	exit
-    fi
-    # Add check to see if there are white spaces in ada_home.
-    if [ `expr index "$ADA_HOME" ' '` -ne 0 ]; then
-	echo
-	echo "                                  -- ERROR --"
-	echo "  ADA seems to be installed in a location where the absolute"
-	echo "  path contains spaces: $ADA_HOME"
-	echo "  Some of the tools used by ADA (xsltproc, for example) do not support"
-	echo "  the presence of white spaces in the paths."
-	echo
-	echo "  The solution is to move the directory where ADA is installed to a"
-	echo "  location where the absolute path has no white spaces."
-	echo
-	exit
-    fi
-}
+import sys, I18n
 
-echo
-echo "ADA: Agile Distributed Authoring Toolkit"
-echo "Copyright (C) 2008 Carlos III University of Madrid"
-echo
+print
+print I18n.get('checking_configuration')
+print
 
-ada_ostype=`set | egrep OSTYPE`
-case "$ada_ostype" in
-    *cygwin*)
-	ada_ostype="cygwin"
-	;;
-    *linux*)
-	ada_ostype="linux"
-	;;
-    *darwin*)
-	ada_ostype="macintosh"
-	;;
-    *)
-	ada_ostype="unknown"
-	;;
-esac
-
-echo "  + Detected system of type $ada_ostype"
-
-# TEST: Dirname is installed
-echo -n "  + Command dirname is properly installed .................. "
-if [ ! `which dirname` ]; then
-    echo
-    echo "************************* ERROR *************************"
-    echo
-    echo "Program 'dirname' not found and is required by ADA."
-    case "$ada_ostype" in
-	cygwin)
-	    echo "  Make sure the 'coreutils' package is properly installed."
-	    echo "  If after installing this package the problem persists, send"
-	    echo "  the file 'adacheck.log' to your technical support."
-	    cygcheck -s -v -r 1>adacheck.log 2>&1
-	    ;;
-	linux)
-	    echo "  Make sure the 'coreutils' package is properly installed."
-	    ;;
-	*)
-	    echo "  Make sure the appropriate package is installed."
-	    ;;
-    esac
-    exit
-else
-    echo " OK"
-fi
-
-ADA_HOME=$(cd "$(dirname "$0")"; pwd)/..
-ADA_HOME_UNIX="$ADA_HOME"
-if [ $ada_ostype = "cygwin" ]; then
-    # If within cygwin, pahts need to be manipulated for a correct ant
-    # invocation
-
-    ADA_HOME=`cygpath --windows $ADA_HOME`
-    ADA_HOME=${ADA_HOME//\\/\\\\}
-fi
-
-echo "  + Detected ADA_HOME=$ADA_HOME"
-echo "  + Detected ADA_HOME_UNIX=$ADA_HOME_UNIX"
-
-# If ADA_HOME is empty or contains white spaces, bomb out with msg
-ada_check_home
-
-# Slurp some additional functions
-source "$ADA_HOME_UNIX/bin/functions.bash"
-ada_version
-echo "  + ADA Version $ada_version"
-
-echo "  + Check if the required packages are installed: "
-ada_check_packages
-
-# Set the dirs with the catalogs to be checked
-export XML_CATALOG_FILES="$ADA_HOME_UNIX/DTDs/catalog"
-
-echo "  + Using catalog XML_CATALOG_FILES=$ADA_HOME_UNIX/DTDs/catalog"
-
-# Docbook properly installed
-echo -n "  + Docbook DTDs and XSLs are properly installed............. "
-xsltproc  \
-    --nonet \
-    --path \
-    ".:$ADA_HOME_UNIX/ADA_Styles" \
-    "--xinclude" \
-    "--stringparam" \
-    "ada.home" \
-    "$ADA_HOME" \
-    "--stringparam" \
-    "basedir" \
-    "$ADA_HOME/doc" \
-    "--stringparam" \
-    "ada.course.home" \
-    "./" \
-    "--stringparam" \
-    "ada.current.datetime" \
-    "" \
-    "--stringparam" \
-    "profile.revision" \
-    "" \
-    "--stringparam" \
-    "chapter.autolabel" \
-    "0" \
-    "--stringparam" \
-    "section.autolabel" \
-    "1" \
-    "--stringparam" \
-    "section.toc.depth" \
-    "0" \
-    "--stringparam" \
-    "html.stylesheet" \
-    "style.css" \
-    "--stringparam" \
-    "ada.version" \
-    "$ada_version" \
-    "$ADA_HOME/doc/QandaentryTable.xsl" \
-    "$ADA_HOME/bin/XML_Test.xml" \
-    1>/dev/null 2>&1
-
-adaXsltprocStatus="$?"
-if [ $adaXsltprocStatus -ne 0 ]; then
-    echo
-    echo
-    echo "************************* WARNING *************************"
-    echo
-    echo "Your system does not appear to have the DTD catalogs properly"
-    echo "installed. These catalogs prevent Xsltproc from fetching all the"
-    echo "required style and DTD files from their remote locations (through"
-    echo "URLs) and instead use local copies. The catalog file is usually in"
-    echo "/etc/xml/catalog and managed automatically by package"
-    echo "installers. However, if this file is not available you need to have"
-    echo "this definitions inserted manually in the file "
-    echo  "$ADA_HOME/catalog."
-    echo "If these catalog files are not properly installed, stylesheet processing"
-    echo "will be extremely slow (because all the imported style sheets are"
-    echo "fetched from the net)."
-    echo
-    echo "************************************************************"
-    echo
-    exit
-else
-    echo "OK"
-fi
-
-# TEST: "matches" (included in ant-optional is available
 #
-# Execute SampleCourses/Admin/Laboratory2
+# Verify that the lxml library is installed
 #
-echo -n "  + 'matches' condition can be used ......................... "
-ant -q -Dada.home="$ADA_HOME" \
-    -Dada.version="$ada_version" \
-    -Dexportcontrol.files.given=true \
-    -Dexportcontrol.profile.revision="Lab1,Lab2,Lab3" \
-    -Dbasedir="$ADA_HOME/SampleCourse/Admin/Laboratory2" \
-    -f "$ADA_HOME/AntImports/ExportControl.xml" 1>/dev/null 2>&1
+print ' - lxml: ',
+try:
+    from lxml import etree as etree
+except ImportError:
+    print
+    print '***', I18n.get('lxml_not_installed')
+    sys.exit(1)
+print 'OK'
 
-adaXsltprocStatus="$?"
-if [ $adaXsltprocStatus -ne 0 ]; then
-    echo
-    echo
-    echo "************************* WARNING *************************"
-    echo
-    echo "Your system does not appear to have the ant-optional library."
-    echo "Install it and re-run this test."
-    echo
-    echo "************************************************************"
-    echo
-    exit
-else
-    echo "OK"
-fi
+#
+# Check ada.home directory
+#
+print ' - ADA directory: ',
 
-echo
-$ADA_HOME/bin/adado -Dada.property.file.ready=true report
-
-rm -rf $ADA_HOME/bin/XML_Test.html
+sys.exit(0)
