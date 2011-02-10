@@ -73,9 +73,9 @@
   <!--                    INSTALLATION IN LINUX                     -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <!-- <xi:include href="Installing_ADA_in_Linux.xml" -->
-  <!--             parse="xml" -->
-  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
+  <xi:include href="Installing_ADA_in_Linux.xml"
+              parse="xml"
+              xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->

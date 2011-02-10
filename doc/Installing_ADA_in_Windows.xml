@@ -34,391 +34,153 @@
   <qandaset>
     <qandaentry id="requiredapplicationsinwindows">
       <question>
-        <para>What are the required applications to run ADA in Windows?</para>
+        <para>Which packages are needed in a Windows system before installing
+	ADA?</para>
       </question>
       <answer>
-        <para>
-          ADA is prepared to supply rules to be used with several tools, but
-          these tools need to be installed in the system. If they are not, the
-          rules are never applied. However, to obtain the minimum
-          functionality, ADA needs <emphasis>at least</emphasis> three
-          applications to be installed (all of them Open Source, by the way.)
-        </para>
+        <para>ADA needs some extra programs installed in your computer in order
+        to work properly. The toolkit is installed using the version control
+        system <command>git</command>. The minimum required packages to install
+        (with their correspondign dependencies) are:</para>
 
-        <itemizedlist>
+        <itemizedlist id="tool_requirements">
           <listitem>
-            <para>
-              A <ulink url="http://java.sun.com">Java Run Time
-              Environment (or simply a JRE)</ulink>.
-            </para>
+            <para><command>git</command>: Fast version control system used to
+            download the latest ADA version.</para>
           </listitem>
-          <listitem>
-            <para>
-              <ulink url="http://www.cygwin.com">Cygwin</ulink>: A Linux-like
-              environment for Windows. This application itself contains
-              several additional packages used by ADA.
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <ulink url="http://ant.apache.org">Ant</ulink>: A Java based
-              build tool. ADA relies on Ant to decide which documents to build
-              and which tools to use for the task. The rules are all written
-              as Ant building files.
-            </para>
-          </listitem>
-        </itemizedlist>
-
-        <para>
-          Aside from these three tools, ADA allows to process certain file
-          types if some additional programs are installed. For example,
-          translating figures from <ulink
-          url="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</ulink>
-          to <ulink url="en.wikipedia.org/wiki/PNG">PNG</ulink> can be done
-          using <command>Inkscape</command> but it needs to be properly
-          installed and available for execution.
-        </para>
-      </answer>
-    </qandaentry>
-    
-    <qandaentry id="how_to_install_jre" 
-                xreflabel="Java has been installed">
-      <question>
-        <para>
-          How to install a Java Run-time Environment (or JRE) in Windows?
-        </para>
-      </question>
-      <answer>
-        <para>
-          Java is a free tool developed by Sun Microsystems and the
-          instructions on how to install it in windows provided with the
-          package. You may download the software from <ulink
-          url="http://www.java.com/en/download/download_the_latest.jsp">the
-          official Free Java Download page</ulink>. Once the download
-          finishes, execute the installer that asks a few simple questions and
-          installs Java in your system.
-        </para>
-      </answer>
-    </qandaentry>
-
-    <qandaentry id="howtoinstallcygwin" xreflabel="How to install Cygwin">
-      <question>
-        <para>I got Java already installed, What else is required to run ADA?</para>
-      </question>
-      <answer>
-        <para>
-          Once <xref linkend="how_to_install_jre"/>, the next step is to
-          download the <command>Cygwin</command> tool, a Linux-like
-          environment for Windows. Once downloaded, the initial page of the
-          installer is shown in the following figure.
-        </para>
-
-        <informalfigure>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/CygwinSetUp.png" format="PNG"/>
-            </imageobject>
-            <textobject>
-              <phrase>Initial Cygwin Setup Program</phrase>
-            </textobject>
-          </mediaobject>
-        </informalfigure>
-
-        <para>
-          After starting the set-up program, you need to specify several
-          parameters to establish a connection with a server. Keep advancing on
-          the installation steps until the screen to select the packages like
-          the one in the following figure is shown.
-        </para>
-
-        <informalfigure>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/CygwinSelectPackages.png"
-                         format="PNG"/>
-            </imageobject>
-            <textobject>
-              <phrase>Screen to select packages in Cygwin</phrase>
-            </textobject>
-          </mediaobject>
-        </informalfigure>
-
-        <para>
-          Click in the button with name <command>View</command> that appears above
-          the package list until the word <quote>Full</quote> appears to its
-          left. At that point, all packages suitable to be installed are shown
-          alphabetically ordered. From the list, you need to select
-          <emphasis>at least</emphasis> the following packages.
-        </para>
-
-        <itemizedlist>
 	  <listitem>
-	    <para><command>bash</command>: The GNU Bourne Again Shell.</para>
+	    <para><command>Python</command>: the interpreter and
+	    libraries.</para>
 	  </listitem>
 	  <listitem>
-	    <para><command>coreutils</command>: GNU core utilities.</para>
+	    <para><command>python-lxml</command>: Python bindings for
+	    <command>libxml2</command> and <command>libxslt</command>
+	    libraries.</para>
+	  </listitem>
+	  <listitem>
+	    <para><command>python-libxml2</command>: Python bindings for the
+	    GNOME XML library.</para>
 	  </listitem>
           <listitem>
-            <para><command>docbook-xml4*</command>: Docbook XML DTDs. Install
-	    all the packages with different versions to guarantee a wider
-	    compatibility scope.</para>
+            <para><command>docbook-xml</command>: Docbook XML DTDs.</para>
           </listitem>
           <listitem>
             <para><command>docbook-xsl</command>: XSL stylesheets to process
             DocBook.</para>
           </listitem>
           <listitem>
-            <para><command>file</command>: Determine file types using the magic
-	    number.</para>
+            <para><command>openssh-client</command>: SSH client program to
+            connect to remote sites.</para>
           </listitem>
-          <listitem>
-            <para><command>findutils</command>: Utilities for finding
-            files.</para>
-          </listitem>
-          <listitem>
-            <para><command>gawk</command>: A pattern scanning processing
-	    language.</para>
-          </listitem>
-          <listitem>
-            <para><command>git</command>: Fast version control system used to
-            download the latest ADA version.</para>
-          </listitem>
-          <listitem>
-            <para><command>grep</command>: Search and print textual input for
-	    lines matching a specific pattern.</para>
-          </listitem>
-	  <listitem>
-	    <para><command>libxml2</command>: XML C parser and toolkit.</para>
-	  </listitem>
-	  <listitem>
-	    <para><command>libxslt</command>: The GNOME XSLT Library.</para>
-	  </listitem>
-	  <listitem>
-	    <para><command>openssh</command>: SSH client and server programs.</para>
-	  </listitem>
         </itemizedlist>
 
-        <para>
-          ADA is capable of using additional tools, but they are not essential
-          for the installation. The set-up program takes a few minutes to
-          download all the required packages through a reasonably fast net
-          connection. Keep in mind that this installer application remains
-          installed in your computer and therefore can be executed at any
-          other time to add/remove applications to the
-          <command>Cygwin</command> environment.
-        </para>
+	<para>TO REWRITE</para>
 
-        <para>
-          After all the required packages are installed, finish the execution
-          of the set-up program and start a <emphasis>Cygwin
-          shell</emphasis>. This is done by clicking on the icon that the
-          set-up program has left on your desktop or browsing through the
-          program menu and selecting the Cygwin executable. Once started, a
-          window like the one shown in the following figure appears on the
-          screen.
-        </para>
-
-        <informalfigure>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/CygwinShell.png" format="PNG"/>
-            </imageobject>
-            <textobject>
-              <phrase>Cygwin shell screen</phrase>
-            </textobject>
-          </mediaobject>
-        </informalfigure>
-
-        <para>
-          This window is a typical Linux command interpreter ready to process
-          your commands. It is just a different way to give orders to your
-          computer. Instead of clicking in different icons and menus,
-          <command>Cygwin</command> allows you to type the orders at the
-          prompt of this interpreter. The first check is to make sure the
-          Java Run-time Environment (or JRE) is properly installed. Go ahead
-          and type the command:
-        </para>
-
-        <programlisting>$ <command>which java</command></programlisting>
-
-        <para>
-          If the answer is a single path to a file with name
-          <command>java</command> similar to
-        </para>
-
-        <programlisting>/cygdrive/c/WINDOWS/system32/java</programlisting>
-        
-        <para>
-          then the JRE is properly installed. If the message says something
-          similar to <quote>which: no java in
-          (/usr/local/bin:/usr/bin:/....)</quote> then you need to review your
-          Java installation, because no JRE was found.
-        </para>
+        <para>Aside from these three tools, ADA allows to process certain file
+        types if some additional programs are installed. For example,
+        translating figures from <ulink
+        url="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</ulink>
+        to <ulink url="en.wikipedia.org/wiki/PNG">PNG</ulink> can be done using
+        <command>Inkscape</command> but it needs to be properly installed and
+        available for execution.</para>
       </answer>
     </qandaentry>
 
-    <qandaentry id="install_ant" xreflabel="Ant installation">
+    <qandaentry id="how_to_install_python"
+		xreflabel="Python has been installed">
       <question>
-        <para>
-          Got Java and Cygwin already installed, what is missing to run ADA?
-        </para>
+        <para>How to install Python in Windows?</para>
       </question>
       <answer>
-        <para>
-          The next tool required by ADA is <ulink
-          url="http://ant.apache.org">Ant</ulink>, a Java based build
-          tool. Ant is a multi-platform tool, and the installation simply
-          amounts to downloading a zip file, deploying its files in a
-          directory, and declaring a couple of environment variables.
-        </para>
+	<para>TO BE WRITTEN</para>
+      </answer>
+    </qandaentry>
 
-        <para>
-          When deploying Ant in a directory there are two choices: install Ant
-          as a regular windows application, or install Ant inside Cygwin
-          (remember that <command>Cygwin</command> is a simple Linux-like
-          environment within your Windows system). The two choices are very
-          similar because it only requires a JRE to be available. The
-          important step is to set the environment variables ANT_HOME to point
-          to the directory where Ant is installed and <varname>PATH</varname>
-          to include the <filename>bin</filename> directory inside that
-          directory.
-        </para>
-
-        <para>
-          To add a new variable or modify a current variable in the execution
-          environment in Windows you need to first select the <quote>Control
-          Panel</quote>, then select the <quote>System</quote> link. A new
-          window opens with several panes. Select the pane with name
-          <quote>Advanced</quote> and then click on the button with name
-          <quote>Environment Variables</quote>. These definitions must be
-	  inserted as part of the System Variables.
-        </para>
-
-        <para>
-          A new variable with name <command>ANT_HOME</command> (all uppercase)
-          has to be declared and its value must be the directory where the Ant
-          files where deployed from the zip archive. Additionally, the
-          <varname>PATH</varname> variable (which is already defined) needs to
-          be modified by adding the path to the <filename>bin</filename>
-          directory within the Ant installation directory. That is, append to
-          the string already in the variable a semicolon and then the path to
-          the bin directory within Ant (something similar to
-          <filename>C:\Applications\Ant\bin</filename>.)
-        </para>
-
-        <para>
-          Once the installation is finished, you may check the availability of
-          the tool by opening a new Cygwin shell. Type the command
-        </para>
-
-        <programlisting>$ <command>which ant</command></programlisting>
-
-        <para>
-          If the answer is a single path to a file with name
-          <command>ant</command> such as
-        </para>
-
-        <programlisting>/cygdrive/c/Program Files/apache-ant-1.7.0/bin/ant</programlisting>
-        
-        <para>
-          Ant is properly installed. If the message says <quote>which: no ant
-          in (/usr/local/bin:/usr/bin:/....)</quote>, Ant is not being found
-          and you need to review your installation steps.
-        </para>
+    <qandaentry id="howtoinstallpackages" xreflabel="How to install other packages">
+      <question>
+        <para>I got Java already installed, What else is required to run
+        ADA?</para>
+      </question>
+      <answer>
+	<para>TO BE REWRITTEN</para>
+        <para>Once <xref linkend="how_to_install_jre"/>, the next step is to
+        download the <command>Cygwin</command> tool, a Linux-like environment
+        for Windows. Once downloaded, the initial page of the installer is shown
+        in the following figure.</para>
       </answer>
     </qandaentry>
 
     <qandaentry id="Fetch_ada_in_windows">
       <question>
-        <para>
-          Once I have the JRE, Cygwin and Ant installed, How do I install ADA?
-        </para>
+        <para>All the required packages are installed. How do I install
+        ADA?</para>
       </question>
       <answer>
-        <para>
-          Open a Cygwin shell and go to the directory where you want ADA
-          installed (a directory with name <filename>ADA</filename> will be
-          created. The computer needs to be connected to the net. Execute the
-          command:
-        </para>
+	<para>TO BE REWRITTEN</para>
+        <para>Open a Cygwin shell and go to the directory where you want ADA
+        installed (a directory with name <filename>ADA</filename> will be
+        created. The computer needs to be connected to the net. Execute the
+        command:</para>
 
-        <programlisting id="git_install_command_windows">$ <command>git clone <xi:include
-          href="Params.xml"
-          xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='ADA_DOWNLOAD_URL']/text())"
-          parse="xml"
-          xmlns:xi="http://www.w3.org/2001/XInclude"/></command></programlisting>
+        <programlisting id="git_install_command_windows">$ <command>git clone <xi:include href="Params.xml"
+        xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='ADA_DOWNLOAD_URL']/text())"
+        parse="xml"
+        xmlns:xi="http://www.w3.org/2001/XInclude"/></command></programlisting>
 
-        <para>
-          A list of messages appear on the screen. After a while (depending on
-          the speed of your net connection), the command terminates and a new
-          directory with name <filename>ADA</filename> has been created
-          containing all the required files.
-        </para>
-        <para>
-          In order to make ADA available, the PATH environment variable needs
-          to be modified by adding the path to the <filename>bin</filename>
-          directory. You may follow the same procedure described in the <xref
-          linkend="install_ant"/>.
-        </para>
+        <para>A list of messages appear on the screen. After a while (depending
+        on the speed of your net connection), the command terminates and a new
+        directory with name <filename>ADA</filename> has been created containing
+        all the required files.</para>
+        <para>In order to make ADA available, the PATH environment variable
+        needs to be modified by adding the path to the <filename>bin</filename>
+        directory. You may follow the same procedure described in the <xref
+        linkend="install_ant"/>.</para>
 
-        <para>
-          Once the environment variable <command>PATH</command> has been modified to
-          include the <filename>bin</filename> directory within ADA, open a
-          brand new Cygwin shell and type the following command
-        </para>
+        <para>Once the environment variable <command>PATH</command> has been
+        modified to include the <filename>bin</filename> directory within ADA,
+        open a brand new Cygwin shell and type the following command</para>
         
         <programlisting>$ <command>which adado</command></programlisting>
         
-        <para>
-          As in the case of the <xref linkend="install_ant"/>, if the
-          answer is a single path to the <filename>adado</filename> file
-          similar to
-        </para>
+        <para>As in the case of the <xref linkend="install_ant"/>, if the answer
+        is a single path to the <filename>adado</filename> file similar
+        to</para>
 
         <programlisting>/home/.../.../ADA/bin/adado</programlisting>
         
-        <para>
-          ADA is properly installed. If the message says <quote>which: no
-          adado in (/usr/local/bin:/usr/bin:/....)</quote>, ADA is not
-          available for execution and you need to review your installation.
-        </para>
+        <para>ADA is properly installed. If the message says <quote>which: no
+        adado in (/usr/local/bin:/usr/bin:/....)</quote>, ADA is not available
+        for execution and you need to review your installation.</para>
 
-        <para>
-          The final step to make sure that the commands provided by ADA are
-          available is to <xref linkend="run_adacheck"/>.
-        </para>
+        <para>The final step to make sure that the commands provided by ADA are
+        available is to <xref linkend="run_adacheck"/>.</para>
       </answer>
     </qandaentry>
 
     <qandaentry id="no_catalogs">
       <question>
-	<para>
-	  ADA takes a huge amount of time to process Docbook documents, why?
-	</para>
+	<para>TO REWRITE</para>
+	<para>ADA takes a huge amount of time to process Docbook documents,
+	why?</para>
       </question>
 
       <answer>
-	<para>
-	  The symptoms for this problem is an unusually large amount of time for
-	  the toolkit to process a Docbook file. The process eventually
-	  finishes, but it takes for ever (in the order of minutes to process
-	  one or two files).
-	</para>
+	<para>The symptoms for this problem is an unusually large amount of time
+	for the toolkit to process a Docbook file. The process eventually
+	finishes, but it takes for ever (in the order of minutes to process one
+	or two files).</para>
 
-	<para>
-	  The stylesheets in ADA import a set of default stylesheets to process
-	  most of the Docbook constructs. The location of these styleheets may
-	  vary from machine to machine. The way to solve this problem is using
-	  XML Catalogs. A catalog is a file specific for a single machine that
-	  specifies the location where certain files are installed. If this
-	  catalog is not properly deployed, <command>xsltproc</command> (the
-	  XSLT processor used by ADA) obtaines them all from the web. The number
-	  of stylesheets is high and therefore, processing time goes through the
-	  roof.
-	</para>
+	<para>The stylesheets in ADA import a set of default stylesheets to
+	process most of the Docbook constructs. The location of these styleheets
+	may vary from machine to machine. The way to solve this problem is using
+	XML Catalogs. A catalog is a file specific for a single machine that
+	specifies the location where certain files are installed. If this
+	catalog is not properly deployed, <command>xsltproc</command> (the XSLT
+	processor used by ADA) obtaines them all from the web. The number of
+	stylesheets is high and therefore, processing time goes through the
+	roof.</para>
 
-	<para>
-	  Te solution for this problem is to make sure the packages specified in
+	<para>	  Te solution for this problem is to make sure the packages specified in
 	  <xref linkend="howtoinstallcygwin"/> are properly installed.
 	</para>
       </answer>
@@ -426,41 +188,33 @@
 
     <qandaentry id="new_version_upgrade">
       <question>
-        <para>
-          A new version of ADA has been published, how do I upgrade?
-        </para>
+        <para>A new version of ADA has been published, how do I upgrade?</para>
       </question>
       <answer>
-        <para>
-          ADA is distributed using the tool <command>git</command> which keeps
+        <para>ADA is distributed using the tool <command>git</command> which keeps
           track of the files you already have and the changes that need to be
           applied to upgrade to the latest version. The upgrade process
           requires simply to open a shell window, go to the directory where
-          ADA is installed and execute the command:
-        </para>
+          ADA is installed and execute the command:</para>
 
         <programlisting>$ <command>git pull</command></programlisting>
 
-        <para>
-          The command will inform in some fairly cryptic way of the changes
+        <para>The command will inform in some fairly cryptic way of the changes
           that are taking place. In principle, if the source files have not
           been modified, the change will go smoothly. If you have some
           personal modifications in the source files, you need first to tell
           <command>git</command> to store those changes. You need to execute
-          the command:
-        </para>
+          the command:</para>
 
         <programlisting>$ <command>git commit -a -m "Your message here"</command></programlisting>
 
-        <para>
-          Try again to execute <command>git pull</command>. This time, the
+        <para>Try again to execute <command>git pull</command>. This time, the
           update process should go smoothly. There could be some conflicts
           when <command>git</command> tries to merge these changes with the
           ones you introduced. If such situation happens, it is called a
           <quote>merge conflict</quote> and it needs to be solved manually by
           the user. If you touched the source code of ADA, then we assume that
-          you know how to solve merge conflicts.
-        </para>
+          you know how to solve merge conflicts.</para>
       </answer>
     </qandaentry>
   </qandaset>
