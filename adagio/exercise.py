@@ -81,13 +81,13 @@ def Execute(target, directory):
 
     # Prepare the style transformation
     styleFiles = directory.getProperty(target, 'styles')
-    styleTransform = Xsltproc.createStyleTransform(styleFiles.split())
+    styleTransform = xsltproc.createStyleTransform(styleFiles.split())
     if styleTransform == None:
         print i18n.get('no_style_file')
         return
 
     # Create the dictionary of stylesheet parameters
-    styleParams = Xsltproc.createParameterDict(target, directory)
+    styleParams = xsltproc.createParameterDict(target, directory)
 
     # Create a list with the param dictionaries to use in the different versions
     # to be created.
@@ -105,7 +105,7 @@ def Execute(target, directory):
                           '_pguide'))
 
     # Apply all these transformations.
-    Xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams,
+    xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams,
                                toProcess, target, directory, paramDict)
 
     # If 'submit' is also in the produce values, apply that transformation as
@@ -117,16 +117,16 @@ def Execute(target, directory):
 
         # Prepare the style transformation
         styleFiles = directory.getProperty(target, 'submit_styles')
-        styleTransform = Xsltproc.createStyleTransform(styleFiles.split())
+        styleTransform = xsltproc.createStyleTransform(styleFiles.split())
         if styleTransform == None:
             print i18n.get('no_style_file')
             return
 
         # Create the dictionary of stylesheet parameters
-        styleParams = Xsltproc.createParameterDict(target, directory)
+        styleParams = xsltproc.createParameterDict(target, directory)
 
         # Apply the transformation and produce '_submit' file
-        Xsltproc.doTransformations(styleFiles.split(), styleTransform,
+        xsltproc.doTransformations(styleFiles.split(), styleTransform,
                                    styleParams, toProcess, target, directory,
                                    [({}, '_submit')])
 
@@ -160,7 +160,7 @@ def clean(target, directory):
         # Delete the submission file
         suffixes.append('_submit')
 
-    Xsltproc.doClean(target, directory, toProcess, suffixes)
+    xsltproc.doClean(target, directory, toProcess, suffixes)
 
     return
 

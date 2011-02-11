@@ -72,13 +72,13 @@ def Execute(target, directory):
 
     # Prepare the style transformation
     styleFiles = directory.getProperty(target, 'styles')
-    styleTransform = Xsltproc.createStyleTransform(styleFiles.split())
+    styleTransform = xsltproc.createStyleTransform(styleFiles.split())
     if styleTransform == None:
         print i18n.get('no_style_file')
         return
 
     # Create the dictionary of stylesheet parameters
-    styleParams = Xsltproc.createParameterDict(target, directory)
+    styleParams = xsltproc.createParameterDict(target, directory)
 
     # Create a list with the param dictionaries to use in the different versions
     # to be created.
@@ -100,7 +100,7 @@ def Execute(target, directory):
                           '_pguide'))
 
     # Apply all these transformations.
-    Xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams,
+    xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams,
                                rawFiles, target, directory, paramDict)
 
     return
@@ -137,7 +137,7 @@ def clean(target, directory):
         # Delete the professor guide
         suffixes.append('_pguide')
 
-    Xsltproc.doClean(target, directory, rawFiles, suffixes)
+    xsltproc.doClean(target, directory, rawFiles, suffixes)
 
     # Clean also the produced files
     map(lambda x: AdaRule.remove(x), rawFiles)
