@@ -30,10 +30,10 @@ module_prefix = 'gimp'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('exec', 'gimp', I18n.get('name_of_executable')),
+    ('exec', 'gimp', i18n.get('name_of_executable')),
     ('script', '%(home)s%(file_separator)sbin%(file_separator)sxcftopng.scm', 
-     I18n.get('gimp_script')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('Inkscape'))
+     i18n.get('gimp_script')),
+    ('extra_arguments', '', i18n.get('extra_arguments').format('Inkscape'))
     ]
 
 documentation = {
@@ -57,7 +57,7 @@ def Execute(target, directory):
 
     # If the executable is not present, notify and terminate
     if not has_executable:
-        print I18n.get('no_executable').format(options['exec'])
+        print i18n.get('no_executable').format(options['exec'])
         if directory.options.get(target, 'partial') == '0':
             sys.exit(1)
         return
@@ -65,12 +65,12 @@ def Execute(target, directory):
     # Get the files to process (all *.xcf in the current directory)
     toProcess = glob.glob(os.path.join(directory.current_dir, '*.xcf'))
     if toProcess == []:
-        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
+        Ada.logDebug(target, directory, i18n.get('no_file_to_process'))
         return
 
     scriptFileName = directory.getProperty(target, 'script')
     if not os.path.isfile(scriptFileName):
-        print I18n.get('file_not_found').format(scriptFileName)
+        print i18n.get('file_not_found').format(scriptFileName)
         sys.exit(1)
     scriptFile = open(scriptFileName, 'r')
 
@@ -82,7 +82,7 @@ def Execute(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Derive the destination file name
@@ -95,13 +95,13 @@ def Execute(target, directory):
             sources.update(directory.option_files)
             Dependency.update(dstFile, sources)
         except etree.XMLSyntaxError, e:
-            print I18n.get('severe_parse_error').format(fName)
+            print i18n.get('severe_parse_error').format(fName)
             print str(e)
             sys.exit(1)
 
         # If the destination file is up to date, skip the execution
         if Dependency.isUpToDate(dstFile):
-            print I18n.get('file_uptodate').format(os.path.basename(dstFile))
+            print i18n.get('file_uptodate').format(os.path.basename(dstFile))
             continue
 
         # Remember the files to produce
@@ -114,7 +114,7 @@ def Execute(target, directory):
 
         # Proceed with the execution
         fnames = ' '.join([os.path.basename(x) for x in dstFiles])
-        print I18n.get('producing').format(os.path.basename(fnames))
+        print i18n.get('producing').format(os.path.basename(fnames))
 
         command = [executable, '--no-data', '--no-fonts', '--no-interface', 
                    '-b', '-']
@@ -124,14 +124,14 @@ def Execute(target, directory):
 
         # If dstFile does not exist, something went wrong
         if next((x for x in dstFiles if not os.path.exists(x)), None):
-            print I18n.get('severe_exec_error').format(executable)
+            print i18n.get('severe_exec_error').format(executable)
             sys.exit(1)
 
         # Update the dependencies of the newly created files
         try:
             map(lambda x: Dependency.update(x), dstFiles)
         except etree.XMLSyntaxError, e:
-            print I18n.get('severe_parse_error').format(fName)
+            print i18n.get('severe_parse_error').format(fName)
             print str(e)
             sys.exit(1)
 
@@ -147,7 +147,7 @@ def clean(target, directory):
     # Get the files to process
     toProcess = glob.glob(os.path.join(directory.current_dir, '*.xcf'))
     if toProcess == []:
-        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
+        Ada.logDebug(target, directory, i18n.get('no_file_to_process'))
         return
 
     # Loop over the source files to see if an execution is needed
@@ -157,7 +157,7 @@ def clean(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Derive the destination file name

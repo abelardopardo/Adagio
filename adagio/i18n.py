@@ -73,11 +73,11 @@ dictionary = langModule.msgs
 def get(msg):
     global dictionary
     if dict == {}:
-        return 'I18n Error. No dictionary has been defined'
+        return 'i18n Error. No dictionary has been defined'
     try:
         result = dictionary[msg]
     except KeyError:
-        return '<<<No I18n for ' + msg + '>>>'
+        return '<<<No i18n for ' + msg + '>>>'
 
     return result
 

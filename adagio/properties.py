@@ -65,7 +65,7 @@ def getConfigParser(fileName):
     try:
         config.readfp(codecs.open(fileName, "r", "utf8"))
     except Exception, msg:
-        print I18n.get('severe_parse_error').format(fileName)
+        print i18n.get('severe_parse_error').format(fileName)
         print str(msg)
         sys.exit(1)
 
@@ -109,9 +109,9 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
     # "template" chain, terminate
     if os.path.abspath(filename) in includeChain:
         commonPrefix = os.path.commonprefix(includeChain)
-        print I18n.get('circular_include')
-        print I18n.get('prefix') + ':', commonPrefix
-        print I18n.get('files') + ':', \
+        print i18n.get('circular_include')
+        print i18n.get('prefix') + ':', commonPrefix
+        print i18n.get('files') + ':', \
             ' '.join(map(lambda x: x.replace(commonPrefix, '', 1), includeChain))
         sys.exit(1)
 
@@ -120,9 +120,9 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
 
     # If file not found dump also the include stack
     if not os.path.isfile(filename):
-        print I18n.get('cannot_open_file').format(filename)
+        print i18n.get('cannot_open_file').format(filename)
         if includeChain[:-1] != []:
-            print I18n.get('included_from')
+            print i18n.get('included_from')
             print '  ' + '\n  '.join(includeChain[:-1])
         sys.exit(1)
 
@@ -138,7 +138,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
     try:
         config.readfp(defaultsIO)
     except ConfigParser.ParsingError, msg:
-        print I18n.get('severe_parse_error').format(filename)
+        print i18n.get('severe_parse_error').format(filename)
         print str(msg)
         defaultsIO.close()
         sys.exit(1)
@@ -162,7 +162,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
         try:
             unaliased = expandAlias(sname, aliasDict)
         except SyntaxError, e:
-            print I18n.get('error_alias_expression')
+            print i18n.get('error_alias_expression')
 	    print str(e)
             sys.exit(1)
 
@@ -185,7 +185,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
             if not config.has_option(sprefix, oname) and \
                     newOptions.defaults().get(oname) == None:
                 optionName = sname + '.' + oname
-                print I18n.get('incorrect_option_in_file').format(optionName,
+                print i18n.get('incorrect_option_in_file').format(optionName,
                                                                   filename)
                 sys.exit(1)
 
@@ -198,8 +198,8 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
                     ovalue = ' '.join([getProperty(config, unaliased, oname),
                                        ovalue])
             except ConfigParser.NoOptionError:
-                print I18n.get('severe_parse_error').format(filename)
-                print I18n.get('error_option_addition').format(sname + '.' +
+                print i18n.get('severe_parse_error').format(filename)
+                print i18n.get('error_option_addition').format(sname + '.' +
                                                                oname)
                 sys.exit(1)
             finalValue = setProperty(config, unaliased, oname, ovalue, 
@@ -229,7 +229,7 @@ def dump(options, pad = None, sections = None):
             for (oname, vname) in options.items(sname):
                 print pad, '  ', oname, '=', options.get(sname, oname)
     except ConfigParser.InterpolationDepthError, e:
-        print I18n.get('severe_option_error')
+        print i18n.get('severe_option_error')
         print str(e)
         sys.exit(1)
 
@@ -285,7 +285,7 @@ def Execute(target, directory, pad = None):
     try:
         target = expandAlias(target, directory.alias)
     except SyntaxError:
-        print I18n.get('error_alias_expression')
+        print i18n.get('error_alias_expression')
         sys.exit(1)
 
     # Detect help, dump or clean targets
@@ -298,7 +298,7 @@ def Execute(target, directory, pad = None):
 
     # Make sure the target is legal.
     if not specialTarget and not directory.options.has_section(target):
-        print I18n.get('illegal_target_name').format(t = originalTarget,
+        print i18n.get('illegal_target_name').format(t = originalTarget,
                                                      dl = directory.current_dir)
         sys.exit(2)
 
@@ -360,7 +360,7 @@ def Execute(target, directory, pad = None):
         Ada.logInfo(originalTarget, directory, 'Exit ' + directory.current_dir)
 
     if not executed:
-        print I18n.get('unknown_target').format(originalTarget)
+        print i18n.get('unknown_target').format(originalTarget)
         sys.exit(1)
 
 def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
@@ -383,12 +383,12 @@ def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
 
     # There must be a single option with name 'files'
     if len(fileItem) != 1:
-        print I18n.get('template_error').format(filename)
+        print i18n.get('template_error').format(filename)
         sys.exit(1)
 
     # The option must have name files
     if fileItem[0][0] != 'files':
-        print I18n.get('incorrect_option_in_file').format(fileItem[0][0],
+        print i18n.get('incorrect_option_in_file').format(fileItem[0][0],
                                                           filename)
         sys.exit(1)
 
@@ -441,7 +441,7 @@ def specialTargets(target, directory, moduleName, pad = None):
         msg = etree.fromstring('<book>' +
                                 getProperty(directory.options, prefix,
                                             'help') + '</book>')
-        print I18n.get('doc_preamble').format(prefix) + '\n' + \
+        print i18n.get('doc_preamble').format(prefix) + '\n' + \
             etree.tostring(msg, encoding = "UTF-8", 
                            method = "text").decode("utf8") + '\n'
         hit = True
@@ -507,7 +507,7 @@ def expandAlias(target, aliasDict):
                 # HIT: Apply the alias
                 if newHead in appliedAliases:
                     # A loop in the alias expansion has been detected. Bomb out
-                    print I18n.get('circular_alias')
+                    print i18n.get('circular_alias')
                     print ' '.join(appliedAliases)
                     sys.exit(1)
                 # Propagate the change and remember it
@@ -554,10 +554,10 @@ def getProperty(config, section, option):
         # Yes, the value is stored as in  DEFAULT
         return result
     except ConfigParser.InterpolationMissingOptionError, e:
-        print I18n.get('incorrect_variable_reference').format(option)
+        print i18n.get('incorrect_variable_reference').format(option)
         sys.exit(1)
     except ConfigParser.NoSectionError:
-        print I18n.get('unknown_target').format(section)
+        print i18n.get('unknown_target').format(section)
         sys.exit(1)
 
     # Weird case, bomb out to notify error
@@ -608,8 +608,8 @@ def setProperty(config, section, option, value, fileName = None,
     except (ConfigParser.InterpolationDepthError,
             ConfigParser.InterpolationMissingOptionError), e:
         if fileName != None:
-            print I18n.get('severe_parse_error').format(fileName)
-        print I18n.get('incorrect_variable_reference').format(value)
+            print i18n.get('severe_parse_error').format(fileName)
+        print i18n.get('incorrect_variable_reference').format(value)
         sys.exit(3)
 
     return finalValue

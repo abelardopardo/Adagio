@@ -32,9 +32,12 @@ if sys.stdout.encoding is None:
 
 # Import the Adagio package
 _dirName = os.path.dirname(__file__)
-_dirName = os.path.abspath(os.path.join(dirName, '..'))
-sys.path.insert(0, dirName)
+_dirName = os.path.abspath(os.path.join(_dirName, '..'))
+sys.path.insert(0, _dirName)
 import adagio
+
+print GOOD
+exit
 
 def main():
     """

@@ -30,11 +30,11 @@ module_prefix = 'dblatex'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('exec', 'dblatex', I18n.get('name_of_executable')),
-    ('output_format', 'pdf', I18n.get('output_format')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('Dblatex')),
-    ('extra_xslt_arguments', '', I18n.get('extra_arguments').format('Xsltproc')),
-    ('compliant_mode', '0', I18n.get('').format('Xsltproc'))
+    ('exec', 'dblatex', i18n.get('name_of_executable')),
+    ('output_format', 'pdf', i18n.get('output_format')),
+    ('extra_arguments', '', i18n.get('extra_arguments').format('Dblatex')),
+    ('extra_xslt_arguments', '', i18n.get('extra_arguments').format('Xsltproc')),
+    ('compliant_mode', '0', i18n.get('').format('Xsltproc'))
     ]
 
 documentation = {
@@ -58,7 +58,7 @@ def Execute(target, directory):
 
     # If the executable is not present, notify and terminate
     if not has_executable:
-        print I18n.get('no_executable').format(options['exec'])
+        print i18n.get('no_executable').format(options['exec'])
         if directory.options.get(target, 'partial') == '0':
             sys.exit(1)
         return
@@ -71,7 +71,7 @@ def Execute(target, directory):
     executable = directory.getProperty(target, 'exec')
     outputFormat = directory.getProperty(target, 'output_format')
     if not outputFormat in set(['tex', 'dvi', 'ps', 'pdf']):
-        print I18n.get('program_incorrect_format').format(executable,
+        print i18n.get('program_incorrect_format').format(executable,
                                                           outputFormat)
         sys.exit(1)
 
@@ -99,7 +99,7 @@ def Execute(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Derive the destination file name
@@ -135,7 +135,7 @@ def clean(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Derive the destination file name

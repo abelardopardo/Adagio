@@ -79,7 +79,7 @@ def getFilesToProcess(target, directory):
     # Safety guard, if srcFiles is empty, no need to proceed. Silence.
     srcFiles = directory.getProperty(target, 'files').split()
     if srcFiles == []:
-        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
+        Ada.logDebug(target, directory, i18n.get('no_file_to_process'))
         return []
 
     srcDir = directory.getProperty(target, 'src_dir')
@@ -90,7 +90,7 @@ def getFilesToProcess(target, directory):
         # Something was given in the variable, but nothing was found. Warn the
         # user but proceed.
         if found == []:
-            print I18n.get('file_not_found').format(srcFile)
+            print i18n.get('file_not_found').format(srcFile)
             # Exiting here sometimes is needed (i.e. when searching for a source
             # file to process) and sometimes it's ok (i.e. when searching for
             # files to export). There should be a boolean to select either
@@ -117,21 +117,21 @@ def doExecution(target, directory, command, datafile, dstFile,
         try:
             Dependency.update(dstFile, set(srcDeps))
         except etree.XMLSyntaxError, e:
-            print I18n.get('severe_parse_error').format(fName)
+            print i18n.get('severe_parse_error').format(fName)
             print str(e)
             sys.exit(1)
 
         # If the destination file is up to date, skip the execution
         if Dependency.isUpToDate(dstFile):
-            print I18n.get('file_uptodate').format(os.path.basename(dstFile))
+            print i18n.get('file_uptodate').format(os.path.basename(dstFile))
             return
         # Notify the production
-        print I18n.get('producing').format(os.path.basename(dstFile))
+        print i18n.get('producing').format(os.path.basename(dstFile))
     else:
         if datafile != None:
-            print I18n.get('processing').format(os.path.basename(datafile))
+            print i18n.get('processing').format(os.path.basename(datafile))
         else:
-            print I18n.get('processing').format(os.path.basename(directory.current_dir))
+            print i18n.get('processing').format(os.path.basename(directory.current_dir))
 
     Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
 
@@ -140,22 +140,22 @@ def doExecution(target, directory, command, datafile, dstFile,
                               stderr = stderr)
         pr.wait()
     except:
-        print I18n.get('severe_exec_error').format(command[0])
-        print I18n.get('exec_line').format(' '.join(command))
+        print i18n.get('severe_exec_error').format(command[0])
+        print i18n.get('exec_line').format(' '.join(command))
         sys.exit(1)
 
     # If dstFile is given, update dependencies
     if dstFile != None:
         # If dstFile does not exist, something went wrong
         if not os.path.exists(dstFile):
-            print I18n.get('severe_exec_error').format(command[0])
+            print i18n.get('severe_exec_error').format(command[0])
             sys.exit(1)
 
         # Update the dependencies of the newly created file
         try:
             Dependency.update(dstFile)
         except etree.XMLSyntaxError, e:
-            print I18n.get('severe_parse_error').format(fName)
+            print i18n.get('severe_parse_error').format(fName)
             print str(e)
             sys.exit(1)
 
@@ -176,7 +176,7 @@ def evaluateCondition(target, options):
 
     # Check part 1 of the rule: open must be 1
     if Properties.getProperty(options, target, 'enable_open') != '1':
-        print I18n.get('enable_not_open').format(openData)
+        print i18n.get('enable_not_open').format(openData)
         return False
 
     # Get current date/time
@@ -189,14 +189,14 @@ def evaluateCondition(target, options):
     beginDate = Properties.getProperty(options, target, 'enable_begin')
     if beginDate != '':
         if checkDateFormat(beginDate, dateFormat) < now:
-            print I18n.get('enable_closed_begin').format(beginDate)
+            print i18n.get('enable_closed_begin').format(beginDate)
             return False
 
     # Check part 3 of the rule: end date is after current date
     endDate = Properties.getProperty(options, target, 'enable_end')
     if endDate != '':
         if now < checkDateFormat(endDate, dateFormat):
-            print I18n.get('enable_closed_end').format(endDate)
+            print i18n.get('enable_closed_end').format(endDate)
             return False
 
     # Check part 4 of the rule: target.enable_profile must be in
@@ -205,7 +205,7 @@ def evaluateCondition(target, options):
     thisRevision = Properties.getProperty(options, target, 'enable_profile')
     if revisionsData != '' and thisRevision != '':
         if not (thisRevision in set(revisionsData.split())):
-            print I18n.get('enable_not_revision').format(target)
+            print i18n.get('enable_not_revision').format(target)
             return False
 
     return True
@@ -217,7 +217,7 @@ def dumpOptions(target, directory, prefix):
 
     global options
 
-    print I18n.get('var_preamble').format(prefix)
+    print i18n.get('var_preamble').format(prefix)
 
     # Remove the .dump from the end of the target to fish for options
     target = re.sub('\.?dump$', '', target)
@@ -253,9 +253,9 @@ def remove(fileName):
     """
     if os.path.exists(fileName):
         if os.path.basename(fileName) == fileName:
-            print I18n.get('removing').format(fileName)
+            print i18n.get('removing').format(fileName)
         else:
-            prefix = I18n.get('removing')
+            prefix = i18n.get('removing')
             print prefix.format(fileName[len(prefix) - 3 - 80:])
 
         # If the given fileName is a file, simply remove it

@@ -43,10 +43,10 @@ documentation = {
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('exec', 'convert', I18n.get('name_of_executable')),
-    ('geometry', '', I18n.get('convert_geometry')),
-    ('crop_option', '', I18n.get('convert_crop_option')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('Convert'))
+    ('exec', 'convert', i18n.get('name_of_executable')),
+    ('geometry', '', i18n.get('convert_geometry')),
+    ('crop_option', '', i18n.get('convert_crop_option')),
+    ('extra_arguments', '', i18n.get('extra_arguments').format('Convert'))
     ]
 
 has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
@@ -60,7 +60,7 @@ def Execute(target, directory):
 
     # If the executable is not present, notify and terminate
     if not has_executable:
-        print I18n.get('no_executable').format(options['exec'])
+        print i18n.get('no_executable').format(options['exec'])
         if directory.options.get(target, 'partial') == '0':
             sys.exit(1)
         return
@@ -68,13 +68,13 @@ def Execute(target, directory):
     # Get the files to process, if empty, terminate
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
-        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
+        Ada.logDebug(target, directory, i18n.get('no_file_to_process'))
         return
 
     # Get geometry
     geometries = directory.getProperty(target, 'geometry').split()
     if geometries == []:
-        print I18n.get('no_var_value').format('geometry')
+        print i18n.get('no_var_value').format('geometry')
         return
 
     # Loop over all source files to process
@@ -87,7 +87,7 @@ def Execute(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Loop over formats
@@ -127,7 +127,7 @@ def clean(target, directory):
     # Get geometry
     geometries = directory.getProperty(target, 'geometry').split()
     if geometries == []:
-        print I18n.get('no_var_value').format('geometry')
+        print i18n.get('no_var_value').format('geometry')
         return
 
     # Loop over all the source files
@@ -136,7 +136,7 @@ def clean(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Loop over formats

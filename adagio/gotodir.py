@@ -30,9 +30,9 @@ module_prefix = 'gotodir'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('export_dst', '', I18n.get('export_dst')),
-    ('files_included_from', '', I18n.get('export_targets')),
-    ('targets', '', I18n.get('export_targets'))
+    ('export_dst', '', i18n.get('export_dst')),
+    ('files_included_from', '', i18n.get('export_targets')),
+    ('targets', '', i18n.get('export_targets'))
     ]
 
 documentation = {
@@ -141,7 +141,7 @@ def prepareTarget(target, directory):
     for srcDir in directory.getProperty(target, 'files').split():
         newDirs = glob.glob(srcDir)
         if newDirs == []:
-            print I18n.get('file_not_found').format(srcDir)
+            print i18n.get('file_not_found').format(srcDir)
             sys.exit(1)
         toProcess.extend(glob.glob(srcDir))
 
@@ -155,7 +155,7 @@ def prepareTarget(target, directory):
 
     # If there are no files to process stop
     if toProcess == []:
-        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
+        Ada.logDebug(target, directory, i18n.get('no_file_to_process'))
         return (toProcess, [], None, '')
 
     # Translate all paths to absolute paths
@@ -220,8 +220,8 @@ def obtainXincludes(files):
 
             # If not found, notify and terminate
             if locatedFile == None:
-                print I18n.get('file_not_found').format(includeFile)
-                print I18n.get('included_from'), fileName
+                print i18n.get('file_not_found').format(includeFile)
+                print i18n.get('included_from'), fileName
                 sys.exit(1)
 
             if os.path.dirname(os.path.abspath(locatedFile)) == fDir:

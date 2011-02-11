@@ -99,7 +99,7 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
 
         # If source is not found, terminate
         if not os.path.exists(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Remove the srcDir prefix
@@ -118,17 +118,17 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
             sources.update(directory.option_files)
             Dependency.update(dstFile, sources)
         except etree.XMLSyntaxError, e:
-            print I18n.get('severe_parse_error').format(fName)
+            print i18n.get('severe_parse_error').format(fName)
             print str(e)
             sys.exit(1)
 
         # If the destination file is up to date, skip the execution
         if (not isDirectory) and Dependency.isUpToDate(dstFile):
-            print I18n.get('file_uptodate').format(os.path.basename(dstFile))
+            print i18n.get('file_uptodate').format(os.path.basename(dstFile))
             continue
 
         # Proceed with the execution of copy
-        print I18n.get('copying').format(os.path.basename(dstFile))
+        print i18n.get('copying').format(os.path.basename(dstFile))
 
         # Copying the file/dir
         Ada.logDebug(target, directory, 'Copy ' + datafile + ' ' +
@@ -151,7 +151,7 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
             try:
                 Dependency.update(dstFile)
             except etree.XMLSyntaxError, e:
-                print I18n.get('severe_parse_error').format(fName)
+                print i18n.get('severe_parse_error').format(fName)
                 print str(e)
                 sys.exit(1)
 
@@ -171,7 +171,7 @@ def doClean(target, directory, toProcess, srcDir, dstDir):
 
         # If file not found, terminate
         if not os.path.exists(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Remove the srcDir prefix

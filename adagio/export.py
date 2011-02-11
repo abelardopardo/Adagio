@@ -30,7 +30,7 @@ module_prefix = 'export'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('dst_dir', '', I18n.get('rule_dst_dir'))
+    ('dst_dir', '', i18n.get('rule_dst_dir'))
     ]
 
 documentation = {
@@ -70,7 +70,7 @@ def Execute(target, directory):
     # Check if dstDir is empty, in which case, there is nothing to do
     dstDir = directory.getProperty(target, 'dst_dir')
     if dstDir == '':
-        print I18n.get('export_no_dst')
+        print i18n.get('export_no_dst')
         return
 
     # If we are here, the export may proceed!
@@ -113,7 +113,7 @@ def checkDateFormat(d, f):
     try:
        result = datetime.datetime.strptime(d, f)
     except ValueError, e:
-       print I18n.get('date_incorrect_format').format(d, f)
+       print i18n.get('date_incorrect_format').format(d, f)
        print str(e)
        sys.exit(1)
 

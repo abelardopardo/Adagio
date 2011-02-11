@@ -33,9 +33,9 @@ module_prefix = 'xslt'
 options = [
     ('styles',
      '%(home)s%(file_separator)sADA_Styles%(file_separator)sDocbookProfile.xsl',
-     I18n.get('xslt_style_file')),
-    ('output_format', 'html', I18n.get('output_format')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('Xsltproc'))
+     i18n.get('xslt_style_file')),
+    ('output_format', 'html', i18n.get('output_format')),
+    ('extra_arguments', '', i18n.get('extra_arguments').format('Xsltproc'))
     ]
 
 documentation = {
@@ -86,7 +86,7 @@ def Execute(target, directory):
     styleFiles = directory.getProperty(target, 'styles').split()
     styleTransform = createStyleTransform(styleFiles)
     if styleTransform == None:
-        print I18n.get('no_style_file')
+        print i18n.get('no_style_file')
         return
 
     # Create the dictionary of stylesheet parameters
@@ -125,7 +125,7 @@ def createStyleTransform(styleList, srcDir = None):
     for name in styleList:
         styles.append(AdaRule.locateFile(name, srcDir))
         if styles[-1] == None:
-            print I18n.get('file_not_found').format(name)
+            print i18n.get('file_not_found').format(name)
             sys.exit(1)
 
     # If no style is given, terminate
@@ -203,7 +203,7 @@ def createParameterDict(target, directory):
                 # If v has quotes, too bad...
                 styleParams[k] = '"' + v + '"'
     except SyntaxError, e:
-        print I18n.get('error_extra_args').format(target + '.extra_arguments')
+        print i18n.get('error_extra_args').format(target + '.extra_arguments')
         print str(e)
         sys.exit(1)
 
@@ -246,7 +246,7 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Variable holding the data tree to be processed. Used to recycle the
@@ -314,11 +314,11 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     # If the destination file is up to date, skip the execution
     if Dependency.isUpToDate(dstFile):
-        print I18n.get('file_uptodate').format(os.path.basename(dstFile))
+        print i18n.get('file_uptodate').format(os.path.basename(dstFile))
         return dataTree
 
     # Proceed with the execution of xslt
-    print I18n.get('producing').format(os.path.basename(dstFile))
+    print i18n.get('producing').format(os.path.basename(dstFile))
 
     # Parse the data file if needed
     if dataTree == None:
@@ -331,14 +331,14 @@ def singleStyleApplication(datafile, styles, styleTransform,
         result = styleTransform(dataTree, **styleParams)
     except etree.XSLTApplyError, e:
         # ABEL: Fix. Try to detect when there is an error here!
-        print I18n.get('error_applying_xslt').format(target)
+        print i18n.get('error_applying_xslt').format(target)
         print str(e)
         sys.exit(1)
 
     # If there is no result (it could be because the stylesheet has no match)
     # notify the user
     if result.getroot() == None:
-        print I18n.get('xslt_empty_result')
+        print i18n.get('xslt_empty_result')
         return dataTree
 
     # Write the result
@@ -352,7 +352,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
     try:
         Dependency.update(dstFile)
     except etree.XMLSyntaxError, e:
-        print I18n.get('severe_parse_error').format(fName)
+        print i18n.get('severe_parse_error').format(fName)
         print str(e)
         sys.exit(1)
 

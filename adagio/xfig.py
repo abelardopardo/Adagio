@@ -30,9 +30,9 @@ module_prefix = 'xfig'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('exec', 'fig2dev', I18n.get('name_of_executable')),
-    ('output_format', 'png', I18n.get('output_format')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('Fig2dev'))
+    ('exec', 'fig2dev', i18n.get('name_of_executable')),
+    ('output_format', 'png', i18n.get('output_format')),
+    ('extra_arguments', '', i18n.get('extra_arguments').format('Fig2dev'))
     ]
 
 documentation = {
@@ -52,7 +52,7 @@ def Execute(target, directory):
 
     # If the executable is not present, notify and terminate
     if not has_executable:
-        print I18n.get('no_executable').format(options['exec'])
+        print i18n.get('no_executable').format(options['exec'])
         if directory.options.get(target, 'partial') == '0':
             sys.exit(1)
         return
@@ -67,7 +67,7 @@ def Execute(target, directory):
     dstDir = directory.getProperty(target, 'dst_dir')
     outputFormat = directory.getProperty(target, 'output_format')
     if outputFormat == '':
-        print I18n.get('empty_output_format').format(target)
+        print i18n.get('empty_output_format').format(target)
         sys.exit(1)
 
     # Loop over all source files to process
@@ -76,7 +76,7 @@ def Execute(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Derive the destination file name
@@ -111,7 +111,7 @@ def clean(target, directory):
     dstDir = directory.getProperty(target, 'dst_dir')
     outputFormat = directory.getProperty(target, 'output_format')
     if outputFormat == '':
-        print I18n.get('empty_output_format').format(target)
+        print i18n.get('empty_output_format').format(target)
         sys.exit(1)
 
     # Loop over all source files to process
@@ -119,7 +119,7 @@ def clean(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Derive the destination file name

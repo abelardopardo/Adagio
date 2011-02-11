@@ -30,9 +30,9 @@ module_prefix = 'inkscape'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('exec', 'inkscape', I18n.get('name_of_executable')),
-    ('output_format', 'png', I18n.get('output_format')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('Inkscape'))
+    ('exec', 'inkscape', i18n.get('name_of_executable')),
+    ('output_format', 'png', i18n.get('output_format')),
+    ('extra_arguments', '', i18n.get('extra_arguments').format('Inkscape'))
     ]
 
 documentation = {
@@ -58,7 +58,7 @@ def Execute(target, directory):
 
     # If the executable is not present, notify and terminate
     if not has_executable:
-        print I18n.get('no_executable').format(options['exec'])
+        print i18n.get('no_executable').format(options['exec'])
         if directory.options.get(target, 'partial') == '0':
             sys.exit(1)
         return
@@ -66,13 +66,13 @@ def Execute(target, directory):
     # Get the files to process, if empty, terminate
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
-        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
+        Ada.logDebug(target, directory, i18n.get('no_file_to_process'))
         return
 
     # Get formats and check if they are empty
     formats = directory.getProperty(target, 'output_format').split()
     if formats == []:
-        print I18n.get('no_var_value').format('output_format')
+        print i18n.get('no_var_value').format('output_format')
         return
 
     executable = directory.getProperty(target, 'exec')
@@ -80,7 +80,7 @@ def Execute(target, directory):
                                                    'eps', 'pdf', 'plain-svg']))
     if incorrectFormat != set([]):
         print \
-            I18n.get('program_incorrect_format').format(executable, 
+            i18n.get('program_incorrect_format').format(executable,
                                                         ' '.join(incorrectFormat))
         sys.exit(1)
         
@@ -92,7 +92,7 @@ def Execute(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Loop over formats
@@ -124,7 +124,7 @@ def clean(target, directory):
     formats = directory.getProperty(target, 'output_format').split()
     if formats == []:
         Ada.logDebug(target, directory, 
-                     I18n.get('no_var_value').format('output_format'))
+                     i18n.get('no_var_value').format('output_format'))
         return
 
     # Get the files to process
@@ -138,7 +138,7 @@ def clean(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Loop over formats

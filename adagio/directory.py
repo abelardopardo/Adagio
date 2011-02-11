@@ -61,7 +61,7 @@ def versionToInteger(version):
     match = re.match('^(?P<major>[0-9]+)\.(?P<minor>[0-9]+)\.(?P<pt>[0-9]+)$',
                      version)
     if not match:
-        print I18n.get('incorrect_version_format').version
+        print i18n.get('incorrect_version_format').version
         sys.exit(3)
 
     result = 0
@@ -198,7 +198,7 @@ class Directory:
                                                           self.alias)
                 self.option_files.update(newFiles)
             except ValueError, e:
-                print I18n.get('severe_parse_error').format(userAdaConfig)
+                print i18n.get('severe_parse_error').format(userAdaConfig)
                 print str(e)
                 sys.exit(3)
 
@@ -217,7 +217,7 @@ class Directory:
                                               self.alias)
                 self.option_files.update(newFiles)
             except ValueError, e:
-                print I18n.get('severe_parse_error').format(adaProjFile)
+                print i18n.get('severe_parse_error').format(adaProjFile)
                 print str(e)
                 sys.exit(3)
 
@@ -234,7 +234,7 @@ class Directory:
                                                                  self.alias)
                 self.option_files.update(newFiles)
             except ValueError, e:
-                print I18n.get('severe_parse_error').format(propAbsFile)
+                print i18n.get('severe_parse_error').format(propAbsFile)
                 print str(e)
                 sys.exit(3)
                 
@@ -243,7 +243,7 @@ class Directory:
             # If there is no rule file, notify and execute help target
             Ada.logInfo('Directory', None, 'No ' + adaPropFile + \
                             ' found in ' + self.current_dir)
-            print I18n.get('cannot_find_properties').format(adaPropFile,
+            print i18n.get('cannot_find_properties').format(adaPropFile,
                                                             self.current_dir)
             self.section_list = []
 
@@ -258,7 +258,7 @@ class Directory:
             # Check first if the option is legal
             if not self.options.has_option(sn, on):
                 optionName = sn + '.' + on
-                print I18n.get('incorrect_option').format(optionName)
+                print i18n.get('incorrect_option').format(optionName)
                 sys.exit(3)
 
             # Insert the new assignment in options of the directory
@@ -269,7 +269,7 @@ class Directory:
             version = self.options.get(Ada.module_prefix, 'version')
             Ada.logError('Directory', None, \
                              'ERROR: Incorrect Ada Version (' + version + ')')
-            print I18n.get('incorrect_version').format(version)
+            print i18n.get('incorrect_version').format(version)
             sys.exit(3)
 
         self.current_section = None
@@ -348,7 +348,7 @@ class Directory:
 
         # Make sure no circular execution is produced
         if self.executing:
-            print I18n.get('circular_execute_directory').format(self.current_dir)
+            print i18n.get('circular_execute_directory').format(self.current_dir)
             sys.exit(2)
         self.executing = True
 

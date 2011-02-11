@@ -30,10 +30,10 @@ module_prefix = 'rsync'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('exec', 'rsync', I18n.get('name_of_executable')),
-    ('src_dir', '', I18n.get('rsync_src_dir')),
-    ('dst_dir', '', I18n.get('rsync_dst_dir')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('Dblatex'))
+    ('exec', 'rsync', i18n.get('name_of_executable')),
+    ('src_dir', '', i18n.get('rsync_src_dir')),
+    ('dst_dir', '', i18n.get('rsync_dst_dir')),
+    ('extra_arguments', '', i18n.get('extra_arguments').format('Dblatex'))
     ]
 
 documentation = {
@@ -55,7 +55,7 @@ def Execute(target, directory):
 
     # If the executable is not present, notify and terminate
     if not has_executable:
-        print I18n.get('no_executable').format(options['exec'])
+        print i18n.get('no_executable').format(options['exec'])
         if directory.options.get(target, 'partial') == '0':
             sys.exit(1)
         return
@@ -68,7 +68,7 @@ def Execute(target, directory):
 
     # If source directory does not exist, terminate
     if not os.path.isdir(srcDir):
-        print I18n.get('not_a_directory')
+        print i18n.get('not_a_directory')
         sys.exit(1)
 
     # Prepare the command to execute
@@ -104,7 +104,7 @@ def clean(target, directory):
 
     # If dist dir not found, terminate
     if not os.path.isdir(dstDir):
-        print I18n.get('file_not_found').format(dstDir)
+        print i18n.get('file_not_found').format(dstDir)
         sys.exit(1)
 
     # Delete the dst directory

@@ -30,9 +30,9 @@ module_prefix = 'pdfnup'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('exec', 'pdfnup', I18n.get('name_of_executable')),
-    ('nup', '2x1', I18n.get('pdfnup_nup')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('Pdfnup'))
+    ('exec', 'pdfnup', i18n.get('name_of_executable')),
+    ('nup', '2x1', i18n.get('pdfnup_nup')),
+    ('extra_arguments', '', i18n.get('extra_arguments').format('Pdfnup'))
     ]
 
 documentation = {
@@ -52,7 +52,7 @@ def Execute(target, directory):
 
     # If the executable is not present, notify and terminate
     if not has_executable:
-        print I18n.get('no_executable').format(options['exec'])
+        print i18n.get('no_executable').format(options['exec'])
         if directory.options.get(target, 'partial') == '0':
             sys.exit(1)
         return
@@ -73,7 +73,7 @@ def Execute(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Derive the destination file name
@@ -114,7 +114,7 @@ def clean(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Derive the destination file name

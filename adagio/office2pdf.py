@@ -30,8 +30,8 @@ module_prefix = 'office2pdf'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('exec', 'soffice', I18n.get('name_of_executable')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('OpenOffice'))
+    ('exec', 'soffice', i18n.get('name_of_executable')),
+    ('extra_arguments', '', i18n.get('extra_arguments').format('OpenOffice'))
     ]
 
 documentation = {
@@ -52,7 +52,7 @@ def Execute(target, directory):
 
     # If the executable is not present, notify and terminate
     if not has_executable:
-        print I18n.get('no_executable').format(options['exec'])
+        print i18n.get('no_executable').format(options['exec'])
         if directory.options.get(target, 'partial') == '0':
             sys.exit(1)
         return
@@ -60,7 +60,7 @@ def Execute(target, directory):
     # Get the files to process, if empty, terminate
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
-        Ada.logDebug(target, directory, I18n.get('no_file_to_process'))
+        Ada.logDebug(target, directory, i18n.get('no_file_to_process'))
         return
 
     # Loop over all source files to process
@@ -74,7 +74,7 @@ def Execute(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Derive the destination file name
@@ -111,7 +111,7 @@ def clean(target, directory):
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
-            print I18n.get('file_not_found').format(datafile)
+            print i18n.get('file_not_found').format(datafile)
             sys.exit(1)
 
         # Derive the destination file name

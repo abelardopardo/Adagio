@@ -30,12 +30,12 @@ module_prefix = 'script'
 
 # List of tuples (varname, default value, description string)
 options = [
-    ('build_function', 'main', I18n.get('build_function_name')),
-    ('clean_function', 'clean', I18n.get('clean_function_name')),
-    ('stdin', '', I18n.get('script_input_file')),
-    ('stdout', '', I18n.get('script_output_file')),
-    ('stderr', '', I18n.get('script_error_file')),
-    ('arguments', '', I18n.get('script_arguments'))
+    ('build_function', 'main', i18n.get('build_function_name')),
+    ('clean_function', 'clean', i18n.get('clean_function_name')),
+    ('stdin', '', i18n.get('script_input_file')),
+    ('stdout', '', i18n.get('script_output_file')),
+    ('stderr', '', i18n.get('script_error_file')),
+    ('arguments', '', i18n.get('script_arguments'))
     ]
 
 documentation = {
@@ -92,7 +92,7 @@ def prepareExecution(target, directory, functionOption):
     newStderr = directory.getProperty(target, 'stderr')
     if newStdin != '':
         if not os.path.exists(newStdin):
-            print I18n.get('file_not_found').format(newStdin)
+            print i18n.get('file_not_found').format(newStdin)
             sys.exit(1)
         sys.stdin = codecs.open(newStdin, 'r')
     if newStdout != '':
@@ -137,14 +137,14 @@ def executeFunction(toProcess, target, directory, functionName):
         try:
             module = __import__(tail, fromlist=[])
         except ImportError, e:
-            print I18n.get('import_error').format(tail)
+            print i18n.get('import_error').format(tail)
             print str(e)
             sys.exit(1)
 
         # If the file of the import is not what is expected, notify and
         # terminate.
         if not module.__file__.startswith(head):
-            print I18n.get('import_collision').format(datafile)
+            print i18n.get('import_collision').format(datafile)
             sys.exit(1)
 
         # Replace argv
@@ -157,7 +157,7 @@ def executeFunction(toProcess, target, directory, functionName):
         try:
             getattr(sys.modules[tail], functionName)(scriptOptions)
         except AttributeError, e:
-            print I18n.get('function_error').format(functionName)
+            print i18n.get('function_error').format(functionName)
             print str(e)
             sys.exit(1)
 

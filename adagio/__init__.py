@@ -22,6 +22,7 @@
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 import os, sys, locale, re, datetime, time
+import i18n
 
 __all__ = ['rules']
 
@@ -36,45 +37,45 @@ _currentDir = os.path.abspath(os.getcwd())
 
 # Defults values for all the options
 config_defaults = {
-    'alias':              ('', I18n.get('default_alias')),
+    'alias':              ('', i18n.get('default_alias')),
     'basedir':            (_currentDir, 
-                           I18n.get('default_basedir')),
+                           i18n.get('default_basedir')),
     'current_datetime':   (str(datetime.datetime.now()), 
-                           I18n.get('default_current_datetime')),
-    'debug_level':        ('0', I18n.get('default_debug_level')),
-    'dst_dir':            (_currentDir, I18n.get('default_dst_dir')),
-    'enable_begin':       ('', I18n.get('default_enable_begin')),
+                           i18n.get('default_current_datetime')),
+    'debug_level':        ('0', i18n.get('default_debug_level')),
+    'dst_dir':            (_currentDir, i18n.get('default_dst_dir')),
+    'enable_begin':       ('', i18n.get('default_enable_begin')),
     'enable_date_format': ('yyyy/MM/dd HH:mm:ss', 
-                           I18n.get('default_enable_date_format')),
-    'enable_end':         ('', I18n.get('default_enable_end')),
-    'enable_open':        ('1', I18n.get('default_enable_open')),
-    'enable_profile':     ('', I18n.get('default_enable_profile')),
+                           i18n.get('default_enable_date_format')),
+    'enable_end':         ('', i18n.get('default_enable_end')),
+    'enable_open':        ('1', i18n.get('default_enable_open')),
+    'enable_profile':     ('', i18n.get('default_enable_profile')),
     'encoding':           (re.sub('^UTF', 'UTF-', enc), 
-                           I18n.get('default_encoding')),
-    'file_separator':     (os.path.sep, I18n.get('default_file_separator')),
-    'files':              ('', I18n.get('default_files')),
-    'help':               (I18n.get('no_help_available'),
-                           I18n.get('default_help')),
-    'home':               (_currentDir, I18n.get('default_home')),
-    'languages':          (lang[0:2], I18n.get('default_languages')),
-    'partial':            ('0', I18n.get('default_partial')),
-    'project_file':       ('Adagio.project', I18n.get('default_project_file')),
-    'project_home':       (_currentDir, I18n.get('default_project_home')),
-    'property_file':      ('Properties.ddo', I18n.get('default_property_file')),
-    'src_dir':            (_currentDir, I18n.get('default_src_dir')),
-    'version':            ('11.02.1', I18n.get('default_version'))
+                           i18n.get('default_encoding')),
+    'file_separator':     (os.path.sep, i18n.get('default_file_separator')),
+    'files':              ('', i18n.get('default_files')),
+    'help':               (i18n.get('no_help_available'),
+                           i18n.get('default_help')),
+    'home':               (_currentDir, i18n.get('default_home')),
+    'languages':          (lang[0:2], i18n.get('default_languages')),
+    'partial':            ('0', i18n.get('default_partial')),
+    'project_file':       ('Adagio.project', i18n.get('default_project_file')),
+    'project_home':       (_currentDir, i18n.get('default_project_home')),
+    'property_file':      ('Properties.ddo', i18n.get('default_property_file')),
+    'src_dir':            (_currentDir, i18n.get('default_src_dir')),
+    'version':            ('11.02.1', i18n.get('default_version'))
 }
 
 # List of tuples (varname, default value, description string)
 options = [
     # Minimum version number required
-    ('minimum_version', '', I18n.get('ada_minimum_version')),
+    ('minimum_version', '', i18n.get('ada_minimum_version')),
     # Maximum version number required
-    ('maximum_version', '', I18n.get('ada_maximum_version')),
+    ('maximum_version', '', i18n.get('ada_maximum_version')),
     # Exact version required
-    ('exact_version', '', I18n.get('ada_exact_version')),
+    ('exact_version', '', i18n.get('ada_exact_version')),
     # Revisions to consider when executing rules
-    ('enabled_profiles', '', I18n.get('ada_enabled_profiles'))
+    ('enabled_profiles', '', i18n.get('ada_enabled_profiles'))
      ]
 
 documentation = {
@@ -105,7 +106,7 @@ documentation = {
 home = os.path.dirname(os.path.abspath(sys.argv[0]))
 home = os.path.abspath(os.path.join(home, '..'))
 if not os.path.isdir(home):
-    print I18n.get('cannot_detect_adagio_home')
+    print i18n.get('cannot_detect_adagio_home')
     sys.exit(1)
 (a, b) = config_defaults['home']
 config_defaults['home'] = (home, b)
@@ -256,7 +257,7 @@ def log(tprefix, directory, msg, fname = None):
     try:
         threshold = int(threshold)
     except ValueError:
-        print I18n.get('incorrect_debug_option').format(threshold)
+        print i18n.get('incorrect_debug_option').format(threshold)
         sys.exit(1)
 
     if threshold >= int(current):
@@ -283,7 +284,7 @@ def dumpOptions(directory):
     global options
     global module_prefix
 
-    print I18n.get('var_preamble').format(module_prefix)
+    print i18n.get('var_preamble').format(module_prefix)
 
     for sn in directory.options.sections():
         if sn.startswith(module_prefix):

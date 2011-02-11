@@ -38,10 +38,10 @@ module_prefix = 'testexam'
 options = [
     ('styles',
      '%(home)s%(file_separator)sADA_Styles%(file_separator)sExam.xsl',
-     I18n.get('xslt_style_file')),
-    ('output_format', 'html', I18n.get('output_format')),
-    ('extra_arguments', '', I18n.get('extra_arguments').format('Xsltproc')),
-    ('produce', 'regular', I18n.get('exercise_produce'))
+     i18n.get('xslt_style_file')),
+    ('output_format', 'html', i18n.get('output_format')),
+    ('extra_arguments', '', i18n.get('extra_arguments').format('Xsltproc')),
+    ('produce', 'regular', i18n.get('exercise_produce'))
     ]
 
 documentation = {
@@ -74,7 +74,7 @@ def Execute(target, directory):
     styleFiles = directory.getProperty(target, 'styles')
     styleTransform = Xsltproc.createStyleTransform(styleFiles.split())
     if styleTransform == None:
-        print I18n.get('no_style_file')
+        print i18n.get('no_style_file')
         return
 
     # Create the dictionary of stylesheet parameters
@@ -161,17 +161,17 @@ def doShuffle(toProcess, directory):
             sources.update(directory.option_files)
             map(lambda x: Dependency.update(x, sources), resultFiles)
         except etree.XMLSyntaxError, e:
-            print I18n.get('severe_parse_error').format(fName)
+            print i18n.get('severe_parse_error').format(fName)
             print e
             sys.exit(1)
 
         # If all the permutation files are up to date, no need to process
         if reduce(lambda x, y: x and y,
                   [Dependency.isUpToDate(x) for x in resultFiles]):
-            print I18n.get('testexam_no_shuffle_required').format(fname)
+            print i18n.get('testexam_no_shuffle_required').format(fname)
             continue
 
-        print I18n.get('testexam_shuffling').format(fname)
+        print i18n.get('testexam_shuffling').format(fname)
         TestShuffle.main(fname, Ada.userLog)
 
     return rawFiles
