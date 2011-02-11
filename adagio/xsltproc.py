@@ -151,7 +151,7 @@ def createStyleTransform(styleList, srcDir = None):
         Ada.logDebug('Xsltproc', None, 'Applying ' + styleFile.getvalue())
 
     # Get the transformation object
-    return TreeCache.findOrAddTransform(styleFile)
+    return treecache.findOrAddTransform(styleFile)
 
 def createParameterDict(target, directory):
     """
@@ -323,7 +323,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
     # Parse the data file if needed
     if dataTree == None:
         Ada.logInfo(target, directory, 'Parsing ' + datafile)
-        dataTree = TreeCache.findOrAddTree(datafile, True)
+        dataTree = treecache.findOrAddTree(datafile, True)
 
     # Apply the transformation
     xsltprocEquivalent(target, directory, styleParams, datafile, dstFile)
@@ -431,4 +431,4 @@ def processOuputFormat(target, directory):
 
 # Execution as script
 if __name__ == "__main__":
-    Execute(module_prefix, Directory.getDirectoryObject('.'))
+    Execute(module_prefix, directory.getDirectoryObject('.'))

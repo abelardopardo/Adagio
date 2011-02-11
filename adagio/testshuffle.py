@@ -68,7 +68,7 @@ def main(sourceFile, pout = None):
     stepCount += 1
     
     # Parse the source tree.
-    sourceTree = TreeCache.findOrAddTree(sourceFile, True)
+    sourceTree = treecache.findOrAddTree(sourceFile, True)
     root = sourceTree.getroot()
 
     # Get all product numbers from the source document (they are the seeds)

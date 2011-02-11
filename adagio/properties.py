@@ -346,8 +346,8 @@ def Execute(target, directory, pad = None):
             return
 
         # Execute.
-        if moduleName == 'Gotodir':
-            # Gotodir must take into account padding
+        if moduleName == 'gotodir':
+            # gotodir must take into account padding
             eval(moduleName + '.Execute(target, directory, pad)')
         else:
             eval(moduleName + '.Execute(target, directory)')
@@ -467,7 +467,7 @@ def cleanTargets(target, directory, moduleName, pad = None):
     # DEEPCLEAN
     if re.match('.+\.deepclean$', target):
         if target.startswith('gotodir'):
-            # Gotodir propagates the pad for the deep
+            # gotodir propagates the pad for the deep
             eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', target)
                  + '\', directory, True, pad)')
         else:

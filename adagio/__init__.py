@@ -130,9 +130,9 @@ def initialize():
 
     # Flush all data structures (to simplify debugging)
     dependency.flushData()
-    Directory.flushCreatedDirs()
+    directory.flushCreatedDirs()
     properties.flushConfigParsers()
-    TreeCache.flushData()
+    treecache.flushData()
 
     # Insert the definition of catalogs in the environment
     os.environ["XML_CATALOG_FILES"] = os.path.join(home, 'DTDs',

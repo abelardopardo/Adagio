@@ -126,4 +126,4 @@ def clean(target, directory):
 
 # Execution as script
 if __name__ == "__main__":
-    Execute(module_prefix, Directory.getDirectoryObject('.'))
+    Execute(module_prefix, directory.getDirectoryObject('.'))

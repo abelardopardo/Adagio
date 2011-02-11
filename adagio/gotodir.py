@@ -57,7 +57,7 @@ def Execute(target, directory, pad = None):
     # Loop over each directory
     for dirName in toProcess:
         Ada.logInfo(target, directory, 'RECUR: ' + dirName)
-        dirObj = Directory.getDirectoryObject(dirName, optionsToSet)
+        dirObj = directory.getDirectoryObject(dirName, optionsToSet)
         dirObj.Execute(remoteTargets, pad + '  ')
 
     return
@@ -111,7 +111,7 @@ def clean(target, directory, deepClean = False, pad = None):
     for dirName in toProcess:
 
         Ada.logInfo(target, directory, 'RECUR: ' + dirName)
-        dirObj = Directory.getDirectoryObject(dirName, optionsToSet)
+        dirObj = directory.getDirectoryObject(dirName, optionsToSet)
 
         # If the clean is not deep and there is no given remote targets, we need
         # to select as targets those that start with 'export'
@@ -199,7 +199,7 @@ def obtainXincludes(files):
         fDir = os.path.dirname(fileName)
 
         # Get the file parsed without expanding the xincludes
-        root = TreeCache.findOrAddTree(fileName, False)
+        root = treecache.findOrAddTree(fileName, False)
 
         # Path to locate the includes and dir of the given file
         includePath = '//{http://www.w3.org/2001/XInclude}include'
@@ -235,4 +235,4 @@ def obtainXincludes(files):
 
 # Execution as script
 if __name__ == "__main__":
-    Execute(module_prefix, Directory.getDirectoryObject('.'))
+    Execute(module_prefix, directory.getDirectoryObject('.'))

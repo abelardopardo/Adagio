@@ -173,7 +173,7 @@ def getIncludes(fName):
     fDir = os.path.dirname(fName)
 
     # Parse the document and initialize the result to the empty set
-    root = TreeCache.findOrAddTree(fName, False)
+    root = treecache.findOrAddTree(fName, False)
     result = set([])
 
     allIncludes = \

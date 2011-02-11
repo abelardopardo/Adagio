@@ -183,7 +183,7 @@ def doGetShuffledFiles(fname):
     contain the permutations.
     """
     
-    sourceTree = TreeCache.findOrAddTree(fname, True)
+    sourceTree = treecache.findOrAddTree(fname, True)
     root = sourceTree.getroot()
 
     # Get the number of 'productnumber' elements. If none, set it to 1
@@ -200,4 +200,4 @@ def doGetShuffledFiles(fname):
 
 # Execution as script
 if __name__ == "__main__":
-    Execute(module_prefix, Directory.getDirectoryObject('.'))
+    Execute(module_prefix, directory.getDirectoryObject('.'))
