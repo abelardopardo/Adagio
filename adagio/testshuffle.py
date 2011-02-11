@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-#
 #
 # Copyright (C) 2010 Carlos III University of Madrid
-# This file is part of the ADA: Agile Distributed Authoring Toolkit
+# This file is part of the Adagio: Agile Distributed Authoring Toolkit
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License

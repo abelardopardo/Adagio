@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-#
 #
 # Copyright (C) 2010 Carlos III University of Madrid
-# This file is part of the ADA: Agile Distributed Authoring Toolkit
+# This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -75,7 +75,7 @@ def Execute(target, directory):
 
     # If we are here, the export may proceed!
     srcDir = directory.getProperty(target, 'src_dir')
-    Copy.doCopy(target, directory, toProcess, srcDir, dstDir)
+    copy.doCopy(target, directory, toProcess, srcDir, dstDir)
 
     return
 
@@ -98,7 +98,7 @@ def clean(target, directory):
         return
 
     # If we are here, the export may proceed!
-    Copy.doClean(target, directory, toProcess, 
+    copy.doClean(target, directory, toProcess,
                  directory.getProperty(target, 'src_dir'), dstDir)
 
     return

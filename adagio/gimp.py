@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-#
 #
 # Copyright (C) 2010 Carlos III University of Madrid
-# This file is part of the ADA: Agile Distributed Authoring Toolkit
+# This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -33,7 +33,7 @@ options = [
     ('exec', 'gimp', i18n.get('name_of_executable')),
     ('script', '%(home)s%(file_separator)sbin%(file_separator)sxcftopng.scm', 
      i18n.get('gimp_script')),
-    ('extra_arguments', '', i18n.get('extra_arguments').format('Inkscape'))
+    ('extra_arguments', '', i18n.get('extra_arguments').format('Gimp'))
     ]
 
 documentation = {
