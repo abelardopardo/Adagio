@@ -46,7 +46,7 @@ documentation = {
     transformation will only change the file extension.
     """}
 
-has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
+has_executable = rules.which(next(b for (a, b, c) in options if a == 'exec'))
 
 def Execute(target, directory):
     """
@@ -119,7 +119,7 @@ def Execute(target, directory):
         command = [executable, '--no-data', '--no-fonts', '--no-interface', 
                    '-b', '-']
 
-        AdaRule.doExecution(target, directory, command, None, None,
+        rules.doExecution(target, directory, command, None, None,
                             stdout = adagio.userLog, stdin = scriptFile)
 
         # If dstFile does not exist, something went wrong
@@ -167,7 +167,7 @@ def clean(target, directory):
         if not os.path.exists(dstFile):
             continue
 
-        AdaRule.remove(dstFile)
+        rules.remove(dstFile)
 
     return
     

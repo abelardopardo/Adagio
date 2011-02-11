@@ -335,7 +335,7 @@ def Execute(target, directory, pad = None):
             return
 
         # Check the condition
-        if not AdaRule.evaluateCondition(targetPrefix, directory.options):
+        if not rules.evaluateCondition(targetPrefix, directory.options):
             return
 
         # Detect and execute "clean" targets
@@ -448,7 +448,7 @@ def specialTargets(target, directory, moduleName, pad = None):
 
     # If requesting var dump, do it and finish
     if doubleTarget or re.match('.+\.dump$', target):
-        AdaRule.dumpOptions(target, directory, prefix)
+        rules.dumpOptions(target, directory, prefix)
         hit =  True
 
     return hit

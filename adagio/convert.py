@@ -36,7 +36,7 @@ documentation = {
   "crop_option" can be used to crop the image. "extra_arguments" are passed
   directly to convert. Convert is thus invoked as:
 
-  convert -scale [geometry] [convert_option] [extra_args]  
+  convert -scale [geometry] [convert_option] [extra_args]
           input.xxx output_geometry.xxx
 
     """}
@@ -49,13 +49,13 @@ options = [
     ('extra_arguments', '', i18n.get('extra_arguments').format('Convert'))
     ]
 
-has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
+has_executable = rules.which(next(b for (a, b, c) in options if a == 'exec'))
 
 def Execute(target, directory):
     """
     Execute the rule in the given directory
     """
-    
+
     global has_executable
 
     # If the executable is not present, notify and terminate
@@ -66,7 +66,7 @@ def Execute(target, directory):
         return
 
     # Get the files to process, if empty, terminate
-    toProcess = AdaRule.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, directory)
     if toProcess == []:
         adagio.logDebug(target, directory, i18n.get('no_file_to_process'))
         return
@@ -107,7 +107,7 @@ def Execute(target, directory):
             command.append(dstFile)
 
             # Perform the execution
-            AdaRule.doExecution(target, directory, command, datafile, dstFile, 
+            rules.doExecution(target, directory, command, datafile, dstFile,
                                 adagio.userLog)
 
     return
@@ -120,7 +120,7 @@ def clean(target, directory):
     adagio.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
-    toProcess = AdaRule.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, directory)
     if toProcess == []:
         return
 
@@ -149,7 +149,7 @@ def clean(target, directory):
             if not os.path.exists(dstFile):
                 continue
 
-            AdaRule.remove(dstFile)
+            rules.remove(dstFile)
 
     return
 

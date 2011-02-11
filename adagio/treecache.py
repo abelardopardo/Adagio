@@ -127,7 +127,7 @@ def findOrAddTransform(path):
     # Parse style file, insert name resolver to consider ADA local styles,
     # expand includes and create transformation object
     styleParser = etree.XMLParser(load_dtd = True, no_network = True)
-    styleParser.resolvers.add(AdaRule.StyleResolver())
+    styleParser.resolvers.add(rules.StyleResolver())
     try:
         transform = etree.parse(path, styleParser)
     except etree.XMLSyntaxError, e:

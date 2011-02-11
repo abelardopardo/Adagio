@@ -56,7 +56,7 @@ def Execute(target, directory):
     """
 
     # Get the files to process, if empty, terminate
-    toProcess = AdaRule.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, directory)
     if toProcess == []:
         return
 
@@ -103,7 +103,7 @@ def clean(target, directory):
     adagio.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
-    toProcess = AdaRule.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, directory)
     if toProcess == []:
         return
 

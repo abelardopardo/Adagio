@@ -216,7 +216,7 @@ def obtainXincludes(files):
         # Traverse all the include files
         for includeFile in includeFiles:
             # Locate the file applying ADA search rules
-            locatedFile = AdaRule.locateFile(includeFile, fDir)
+            locatedFile = rules.locateFile(includeFile, fDir)
 
             # If not found, notify and terminate
             if locatedFile == None:

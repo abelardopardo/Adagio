@@ -73,7 +73,7 @@ def prepareExecution(target, directory, functionOption):
     """
 
     # Get the files to process, if empty, terminate
-    toProcess = AdaRule.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, directory)
     if toProcess == []:
         return
 

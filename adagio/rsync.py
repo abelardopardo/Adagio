@@ -44,7 +44,7 @@ documentation = {
 
     """}
 
-has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
+has_executable = rules.which(next(b for (a, b, c) in options if a == 'exec'))
 
 def Execute(target, directory):
     """
@@ -82,7 +82,7 @@ def Execute(target, directory):
     adagio.logDebug(target, directory, ' EXEC ' + srcDir + ' ' + dstDir)
 
     # Perform the execution
-    AdaRule.doExecution(target, directory, command, srcDir, None, 
+    rules.doExecution(target, directory, command, srcDir, None,
                         adagio.userLog, adagio.userLog)
 
     return
@@ -91,11 +91,11 @@ def clean(target, directory):
     """
     Clean the files produced by this rule
     """
-    
+
     adagio.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
-    toProcess = AdaRule.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, directory)
     if toProcess == []:
         return
 
@@ -108,7 +108,7 @@ def clean(target, directory):
         sys.exit(1)
 
     # Delete the dst directory
-    AdaRule.remove(dstDir)
+    rules.remove(dstDir)
 
     return
 

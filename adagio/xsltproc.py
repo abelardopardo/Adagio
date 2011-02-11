@@ -78,7 +78,7 @@ def Execute(target, directory):
     """
 
     # Get the files to process, if empty, terminate
-    toProcess = AdaRule.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, directory)
     if toProcess == []:
         return
 
@@ -105,7 +105,7 @@ def clean(target, directory):
     adagio.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
-    toProcess = AdaRule.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, directory)
     if toProcess == []:
         return
 
@@ -123,7 +123,7 @@ def createStyleTransform(styleList, srcDir = None):
     # Prepare style files (locate styles in ADA/ADA_Styles if needed
     styles = []
     for name in styleList:
-        styles.append(AdaRule.locateFile(name, srcDir))
+        styles.append(rules.locateFile(name, srcDir))
         if styles[-1] == None:
             print i18n.get('file_not_found').format(name)
             sys.exit(1)
@@ -399,7 +399,7 @@ def doClean(target, directory, toProcess, suffixes = None):
                 if not os.path.exists(dstFile):
                     continue
 
-                AdaRule.remove(dstFile)
+                rules.remove(dstFile)
 
 def xsltprocEquivalent(target, directory, styleParams, datafile, dstFile):
     """

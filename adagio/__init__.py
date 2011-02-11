@@ -38,19 +38,19 @@ _currentDir = os.path.abspath(os.getcwd())
 # Defults values for all the options
 config_defaults = {
     'alias':              ('', i18n.get('default_alias')),
-    'basedir':            (_currentDir, 
+    'basedir':            (_currentDir,
                            i18n.get('default_basedir')),
-    'current_datetime':   (str(datetime.datetime.now()), 
+    'current_datetime':   (str(datetime.datetime.now()),
                            i18n.get('default_current_datetime')),
     'debug_level':        ('0', i18n.get('default_debug_level')),
     'dst_dir':            (_currentDir, i18n.get('default_dst_dir')),
     'enable_begin':       ('', i18n.get('default_enable_begin')),
-    'enable_date_format': ('yyyy/MM/dd HH:mm:ss', 
+    'enable_date_format': ('yyyy/MM/dd HH:mm:ss',
                            i18n.get('default_enable_date_format')),
     'enable_end':         ('', i18n.get('default_enable_end')),
     'enable_open':        ('1', i18n.get('default_enable_open')),
     'enable_profile':     ('', i18n.get('default_enable_profile')),
-    'encoding':           (re.sub('^UTF', 'UTF-', enc), 
+    'encoding':           (re.sub('^UTF', 'UTF-', enc),
                            i18n.get('default_encoding')),
     'file_separator':     (os.path.sep, i18n.get('default_file_separator')),
     'files':              ('', i18n.get('default_files')),
@@ -82,22 +82,22 @@ documentation = {
     'en': """
 <section id="ada_rule" xreflabel="Top of the Section">
     <title>The <code>[ada]</code> rule</title>
-    
+
     <para>The <code>[ada]</code> rule is an expception because it does not
     perform any specific task. It is simply a place holder for the
     definition of the following variables:</para>
-    """ + AdaRule.optionDoc(options) + 
+    """ + rules.optionDoc(options) +
     """
     <para>The variables referring to versions are used to force the execution of
     ADA only if the version number is after the minimun version, before the
     maximum version or a specific version (if any of the variable values is not
     empty.</para>
-  
+
     <para>Variable <code>enabled_profiles</code> is used as a set of values to
     check if a rule must be executed or not (see <xref
     linkend="default_config"/> for a more detailed description of the variables
     that enable the execution of a rule).</para>
-    """ + 
+    """ +
     '</section>'}
 
 #
@@ -171,7 +171,7 @@ def getConfigDefaults(path):
     Return a dictionary with the default options. It needs to be re-computed
     because some of these options are sensitive to the current directory.
     """
-    
+
     global config_defaults
 
     result = {}
@@ -189,38 +189,38 @@ def getConfigDefaults(path):
         # Set the dictionary as name: default_value, without the documentation
         # string
         result[n] = v
-            
+
     return result
 
 def logFatal(tprefix, directory, msg):
     """
     """
     log(tprefix, directory, msg, sys._getframe().f_code.co_name)
-    
+
 
 def logError(tprefix, directory, msg):
     """
     """
     log(tprefix, directory, msg, sys._getframe().f_code.co_name)
-    
+
 
 def logWarn(tprefix, directory, msg):
     """
     """
     log(tprefix, directory, msg, sys._getframe().f_code.co_name)
-    
+
 
 def logInfo(tprefix, directory, msg):
     """
     """
     log(tprefix, directory, msg, sys._getframe().f_code.co_name)
-    
+
 
 def logDebug(tprefix, directory, msg):
     """
     """
     log(tprefix, directory, msg, sys._getframe().f_code.co_name)
-    
+
 
 def log(tprefix, directory, msg, fname = None):
     """
@@ -248,7 +248,7 @@ def log(tprefix, directory, msg, fname = None):
         current = 1
     else:
         current = 0
-        
+
     # Check for debug levels
     threshold = config_defaults['debug_level'][0]
     if directory != None:
