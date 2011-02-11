@@ -23,7 +23,7 @@
 #
 import os, sys, glob
 
-import Ada, Directory, I18n, AdaRule
+import directory, i18n, adarule
 
 # Prefix to use for the options
 module_prefix = 'dblatex'

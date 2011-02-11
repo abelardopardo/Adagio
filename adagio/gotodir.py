@@ -23,7 +23,7 @@
 #
 import os, re, sys, glob
 
-import Ada, Directory, I18n, Dependency, AdaRule, Properties, TreeCache
+import directory, i18n, dependency, adarule, properties, treecache
 
 # Prefix to use for the options
 module_prefix = 'gotodir'

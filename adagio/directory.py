@@ -23,7 +23,7 @@
 #
 import sys, os, re, ConfigParser, atexit
 
-import Ada, Properties, I18n
+import properties, i18n
 
 # Table to store tuples:
 #   path: Directory object

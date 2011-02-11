@@ -23,7 +23,7 @@
 #
 import os, re, sys, glob
 
-import Ada, Directory, I18n, AdaRule, Xsltproc
+import directory, i18n, adarule, xsltproc
 
 # Prefix to use for the options
 module_prefix = 'exam'

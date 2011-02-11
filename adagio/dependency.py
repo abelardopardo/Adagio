@@ -28,7 +28,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-import Ada, AdaRule, I18n, TreeCache
+import adarule, i18n, treecache
 
 # The graph is stored with the following data structures:
 #

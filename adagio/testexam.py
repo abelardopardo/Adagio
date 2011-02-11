@@ -28,8 +28,8 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-import Ada, Directory, I18n, AdaRule, Xsltproc, TestShuffle, Dependency
-import TreeCache
+import directory, i18n, adarule, xsltproc, testshuffle, dependency
+import treecache
 
 # Prefix to use for the options
 module_prefix = 'testexam'

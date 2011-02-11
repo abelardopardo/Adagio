@@ -23,7 +23,7 @@
 #
 import os, re, sys
 
-import Ada, Directory, I18n, Dependency, AdaRule, Copy
+import directory, i18n, dependency, adarule, copy
 
 # Prefix to use for the options
 module_prefix = 'export'

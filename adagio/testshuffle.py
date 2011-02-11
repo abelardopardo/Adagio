@@ -39,7 +39,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-import TreeCache
+import treecache
 
 def main(sourceFile, pout = None):
     """

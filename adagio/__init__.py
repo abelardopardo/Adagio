@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-#
 #
 # Copyright (C) 2010 Carlos III University of Madrid
-# This file is part of the ADA: Agile Distributed Authoring Toolkit
+# This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -21,29 +21,18 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, sys, locale, ordereddict, re, datetime, time
-
-import Directory, I18n, AdaRule
+import os, sys, locale, re, datetime, time
 
 # Get language and locale for locale option
 (lang, enc) = locale.getdefaultlocale()
 
 # Prefix to use for the options
-module_prefix = 'ada'
+module_prefix = 'adagio'
 
-################################################################################
-#
-# ConfigParser:
-#
-# Global variable in this module with name options
-#
-# SECTIONS
-#
-# Ada: variables affecting the overall set of operations.
-# Xsltproc: apply xsltproc with options/style/xmlfile
-#
-################################################################################
+# Local variable with the dir to use as default
 _currentDir = os.path.abspath(os.getcwd())
+
+# Defults values for all the options
 config_defaults = {
     'alias':              ('', I18n.get('default_alias')),
     'basedir':            (_currentDir, 
@@ -67,7 +56,7 @@ config_defaults = {
     'home':               (_currentDir, I18n.get('default_home')),
     'languages':          (lang[0:2], I18n.get('default_languages')),
     'partial':            ('0', I18n.get('default_partial')),
-    'project_file':       ('Ada.project', I18n.get('default_project_file')),
+    'project_file':       ('Adagio.project', I18n.get('default_project_file')),
     'project_home':       (_currentDir, I18n.get('default_project_home')),
     'property_file':      ('Properties.ddo', I18n.get('default_property_file')),
     'src_dir':            (_currentDir, I18n.get('default_src_dir')),
@@ -108,15 +97,20 @@ documentation = {
     """ + 
     '</section>'}
 
-# Directory where ADA is installed
+#
+# Directory where Adagio is installed
+#
 home = os.path.dirname(os.path.abspath(sys.argv[0]))
 home = os.path.abspath(os.path.join(home, '..'))
 if not os.path.isdir(home):
-    print I18n.get('cannot_detect_ada_home')
+    print I18n.get('cannot_detect_adagio_home')
     sys.exit(1)
 (a, b) = config_defaults['home']
 config_defaults['home'] = (home, b)
 
+#
+# File object where to dump the log of the execution
+#
 userLog = None
 
 def initialize():
@@ -130,6 +124,12 @@ def initialize():
 
     global home
     global userLog
+
+    # Flush all data structures (to simplify debugging)
+    Dependency.flushData()
+    Directory.flushCreatedDirs()
+    Properties.flushConfigParsers()
+    TreeCache.flushData()
 
     # Insert the definition of catalogs in the environment
     os.environ["XML_CATALOG_FILES"] = os.path.join(home, 'DTDs',
@@ -149,7 +149,7 @@ def initialize():
     ****************************************"""
 
     userLog = open('adado.log', 'w')
-    userLog.write('Ada execution started at ' + time.asctime() + '\n')
+    userLog.write('Adagio execution started at ' + time.asctime() + '\n')
     userLog.flush()
 
 def finish():
@@ -160,7 +160,7 @@ def finish():
     global userLog
 
     userLog.flush()
-    userLog.write('Ada finished at ' + time.asctime() + '\n')
+    userLog.write('Adagio finished at ' + time.asctime() + '\n')
     userLog.close()
 
 def getConfigDefaults(path):
@@ -287,7 +287,3 @@ def dumpOptions(directory):
         if sn.startswith(module_prefix):
             for (on, ov) in sorted(directory.options.items(sn)):
                 print ' -', module_prefix + '.' + on, '=', ov
-
-# Execution as script
-if __name__ == "__main__":
-    Execute(module_prefix, Directory.getDirectoryObject('.'))

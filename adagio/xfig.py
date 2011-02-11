@@ -23,7 +23,7 @@
 #
 import os, sys, glob
 
-import Ada, Directory, I18n, Dependency, AdaRule
+import directory, i18n, dependency, adarule
 
 # Prefix to use for the options
 module_prefix = 'xfig'

@@ -23,7 +23,7 @@
 #
 import os, re, sys
 
-import Ada, Directory, I18n, AdaRule
+import directory, i18n, adarule
 
 # Prefix to use for the options
 module_prefix = 'office2pdf'

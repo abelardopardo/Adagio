@@ -26,13 +26,13 @@ import codecs
 from lxml import etree
 
 # @@@@@@@@@@@@@@@@@@@@  EXTEND  @@@@@@@@@@@@@@@@@@@@
-import Ada, AdaRule, I18n, Xsltproc, Inkscape, Gotodir, Gimp, Convert, Copy
-import Export, Dblatex, Exercise, Exam, Testexam, Office2pdf, Rsync
-import Script, Latex, Dvips, Pdfnup, Xfig
+import adarule, i18n, xsltproc, inkscape, gotodir, gimp, convert, copy
+import export, dblatex, exercise, exam, testexam, office2pdf, rsync
+import script, latex, dvips, pdfnup, xfig
 
-modules = ['Ada', 'Xsltproc', 'Inkscape', 'Gotodir', 'Gimp', 'Convert',
-           'Copy', 'Export', 'Dblatex', 'Exercise', 'Exam', 'Testexam',
-           'Office2pdf', 'Rsync', 'Script', 'Latex', 'Dvips', 'Pdfnup', 'Xfig']
+modules = ['xsltproc', 'inkscape', 'gotodir', 'gimp', 'convert',
+           'copy', 'export', 'dblatex', 'exercise', 'exam', 'testexam',
+           'office2pdf', 'rsync', 'script', 'latex', 'dvips', 'pdfnup', 'xfig']
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 # Prefix to use in the module
