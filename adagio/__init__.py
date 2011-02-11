@@ -129,7 +129,7 @@ def initialize():
     global userLog
 
     # Flush all data structures (to simplify debugging)
-    Dependency.flushData()
+    dependency.flushData()
     Directory.flushCreatedDirs()
     Properties.flushConfigParsers()
     TreeCache.flushData()

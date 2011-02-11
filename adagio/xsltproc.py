@@ -310,10 +310,10 @@ def singleStyleApplication(datafile, styles, styleTransform,
     # Check for dependencies!
     sources = set(styles + [datafile])
     sources.update(directory.option_files)
-    Dependency.update(dstFile, sources)
+    dependency.update(dstFile, sources)
 
     # If the destination file is up to date, skip the execution
-    if Dependency.isUpToDate(dstFile):
+    if dependency.isUpToDate(dstFile):
         print i18n.get('file_uptodate').format(os.path.basename(dstFile))
         return dataTree
 
@@ -350,7 +350,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     # Update the dependencies of the newly created file
     try:
-        Dependency.update(dstFile)
+        dependency.update(dstFile)
     except etree.XMLSyntaxError, e:
         print i18n.get('severe_parse_error').format(fName)
         print str(e)

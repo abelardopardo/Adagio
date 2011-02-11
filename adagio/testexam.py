@@ -159,7 +159,7 @@ def doShuffle(toProcess, directory):
         try:
             sources = set([fname])
             sources.update(directory.option_files)
-            map(lambda x: Dependency.update(x, sources), resultFiles)
+            map(lambda x: dependency.update(x, sources), resultFiles)
         except etree.XMLSyntaxError, e:
             print i18n.get('severe_parse_error').format(fName)
             print e
@@ -167,7 +167,7 @@ def doShuffle(toProcess, directory):
 
         # If all the permutation files are up to date, no need to process
         if reduce(lambda x, y: x and y,
-                  [Dependency.isUpToDate(x) for x in resultFiles]):
+                  [dependency.isUpToDate(x) for x in resultFiles]):
             print i18n.get('testexam_no_shuffle_required').format(fname)
             continue
 

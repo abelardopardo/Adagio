@@ -115,14 +115,14 @@ def doExecution(target, directory, command, datafile, dstFile,
             srcDeps.add(datafile)
 
         try:
-            Dependency.update(dstFile, set(srcDeps))
+            dependency.update(dstFile, set(srcDeps))
         except etree.XMLSyntaxError, e:
             print i18n.get('severe_parse_error').format(fName)
             print str(e)
             sys.exit(1)
 
         # If the destination file is up to date, skip the execution
-        if Dependency.isUpToDate(dstFile):
+        if dependency.isUpToDate(dstFile):
             print i18n.get('file_uptodate').format(os.path.basename(dstFile))
             return
         # Notify the production
@@ -153,7 +153,7 @@ def doExecution(target, directory, command, datafile, dstFile,
 
         # Update the dependencies of the newly created file
         try:
-            Dependency.update(dstFile)
+            dependency.update(dstFile)
         except etree.XMLSyntaxError, e:
             print i18n.get('severe_parse_error').format(fName)
             print str(e)

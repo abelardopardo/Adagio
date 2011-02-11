@@ -93,14 +93,14 @@ def Execute(target, directory):
         try:
             sources = set([datafile])
             sources.update(directory.option_files)
-            Dependency.update(dstFile, sources)
+            dependency.update(dstFile, sources)
         except etree.XMLSyntaxError, e:
             print i18n.get('severe_parse_error').format(fName)
             print str(e)
             sys.exit(1)
 
         # If the destination file is up to date, skip the execution
-        if Dependency.isUpToDate(dstFile):
+        if dependency.isUpToDate(dstFile):
             print i18n.get('file_uptodate').format(os.path.basename(dstFile))
             continue
 
@@ -129,7 +129,7 @@ def Execute(target, directory):
 
         # Update the dependencies of the newly created files
         try:
-            map(lambda x: Dependency.update(x), dstFiles)
+            map(lambda x: dependency.update(x), dstFiles)
         except etree.XMLSyntaxError, e:
             print i18n.get('severe_parse_error').format(fName)
             print str(e)
