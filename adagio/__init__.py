@@ -23,6 +23,8 @@
 #
 import os, sys, locale, re, datetime, time
 
+__all__ = ['rules']
+
 # Get language and locale for locale option
 (lang, enc) = locale.getdefaultlocale()
 
