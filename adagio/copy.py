@@ -65,7 +65,7 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
 
-    Ada.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
     toProcess = AdaRule.getFilesToProcess(target, directory)
@@ -82,7 +82,7 @@ def clean(target, directory):
 def doCopy(target, directory, toProcess, srcDir, dstDir):
     """
     Effectively perform the copy. The functionality is in this function because
-    it is used also by the Export rule.
+    it is used also by the export rule.
     """
 
     # Identical source and destination, useless operation
@@ -95,7 +95,7 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
         # Remember if the source is a directory
         isDirectory = os.path.isdir(datafile)
 
-        Ada.logDebug(target, directory, ' EXEC ' + datafile)
+        adagio.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If source is not found, terminate
         if not os.path.exists(datafile):
@@ -131,7 +131,7 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
         print i18n.get('copying').format(os.path.basename(dstFile))
 
         # Copying the file/dir
-        Ada.logDebug(target, directory, 'Copy ' + datafile + ' ' +
+        adagio.logDebug(target, directory, 'Copy ' + datafile + ' ' +
                      dstFile)
         
         if os.path.isdir(datafile):
@@ -158,7 +158,7 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
 def doClean(target, directory, toProcess, srcDir, dstDir):
     """
     Function to execute the core of the clean operation. It is in its own
-    function because it is used also by the Export rule.
+    function because it is used also by the export rule.
     """
 
     # Identical source and destination, useless operation
@@ -167,7 +167,7 @@ def doClean(target, directory, toProcess, srcDir, dstDir):
 
     for datafile in toProcess:
 
-        Ada.logDebug(target, directory, ' EXEC ' + datafile)
+        adagio.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.exists(datafile):

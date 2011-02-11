@@ -56,7 +56,7 @@ def getConfigParser(fileName):
     config = _configParsers.get(fileName)
     if config != None:
         # Hit in the cache, return
-        Ada.logDebug('properties', None, 'Parser HIT: ' + fileName)
+        adagio.logDebug('properties', None, 'Parser HIT: ' + fileName)
         return config
 
     # Parse the file with a raw parser
@@ -98,7 +98,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
     Returns a pair (set of files finally loaded, list of targets detected)
     """
 
-    Ada.logDebug('properties', None, 'Parsing ' + filename)
+    adagio.logDebug('properties', None, 'Parsing ' + filename)
 
     # Cannot use empty dictionary as default value in parameter as it
     # accumulates the values.
@@ -262,7 +262,7 @@ def LoadDefaults(config):
                         createSection = True, createOption = True)
 
         # Add the string for the help
-        helpStr = documentation.get(Ada.config_defaults['languages'][0].split()[0])
+        helpStr = documentation.get(adagio.config_defaults['languages'][0].split()[0])
         if helpStr == None:
             helpStr = documentation.get('en')
         setProperty(config, sectionName, 'help', helpStr, 
@@ -322,7 +322,7 @@ def Execute(target, directory, pad = None):
         if modulePrefix != eval(moduleName + '.module_prefix'):
             continue
 
-        Ada.logInfo(originalTarget, directory, 'Enter ' + directory.current_dir)
+        adagio.logInfo(originalTarget, directory, 'Enter ' + directory.current_dir)
 
         # Print msg when beginning to execute target in dir
         print pad + 'BB', originalTarget
@@ -330,7 +330,7 @@ def Execute(target, directory, pad = None):
         # Detect and execute "help/dump" targets
         if specialTargets(target, directory, moduleName, pad):
             print pad + 'EE', originalTarget
-            Ada.logInfo(originalTarget, directory,
+            adagio.logInfo(originalTarget, directory,
                         'Exit ' + directory.current_dir)
             return
 
@@ -341,7 +341,7 @@ def Execute(target, directory, pad = None):
         # Detect and execute "clean" targets
         if cleanTargets(target, directory, moduleName, pad):
             print pad + 'EE', originalTarget
-            Ada.logInfo(originalTarget, directory,
+            adagio.logInfo(originalTarget, directory,
                         'Exit ' + directory.current_dir)
             return
 
@@ -357,7 +357,7 @@ def Execute(target, directory, pad = None):
 
         print pad + 'EE', originalTarget
 
-        Ada.logInfo(originalTarget, directory, 'Exit ' + directory.current_dir)
+        adagio.logInfo(originalTarget, directory, 'Exit ' + directory.current_dir)
 
     if not executed:
         print i18n.get('unknown_target').format(originalTarget)
@@ -633,8 +633,8 @@ def initialConfig(configDefaults):
     result.add_section(_ada_given_definiton_section_name)
 
     # Add the 'ada' section as well and set the first property
-    result.add_section(Ada.module_prefix)
-    result.set(Ada.module_prefix, 'home', Ada.home)
+    result.add_section(adagio.module_prefix)
+    result.set(adagio.module_prefix, 'home', adagio.home)
 
     return result
         

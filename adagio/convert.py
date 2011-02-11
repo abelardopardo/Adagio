@@ -68,7 +68,7 @@ def Execute(target, directory):
     # Get the files to process, if empty, terminate
     toProcess = AdaRule.getFilesToProcess(target, directory)
     if toProcess == []:
-        Ada.logDebug(target, directory, i18n.get('no_file_to_process'))
+        adagio.logDebug(target, directory, i18n.get('no_file_to_process'))
         return
 
     # Get geometry
@@ -83,7 +83,7 @@ def Execute(target, directory):
     convertCrop = directory.getProperty(target, 'crop_option')
     dstDir = directory.getProperty(target, 'dst_dir')
     for datafile in toProcess:
-        Ada.logDebug(target, directory, ' EXEC ' + datafile)
+        adagio.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -108,7 +108,7 @@ def Execute(target, directory):
 
             # Perform the execution
             AdaRule.doExecution(target, directory, command, datafile, dstFile, 
-                                Ada.userLog)
+                                adagio.userLog)
 
     return
 
@@ -117,7 +117,7 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
 
-    Ada.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
     toProcess = AdaRule.getFilesToProcess(target, directory)

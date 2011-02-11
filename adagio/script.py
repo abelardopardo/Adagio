@@ -61,7 +61,7 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
     
-    Ada.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, directory, 'Cleaning')
 
     prepareExecution(target, directory, 'clean_function')
 
@@ -127,7 +127,7 @@ def executeFunction(toProcess, target, directory, functionName):
 
     # Loop over the given source files
     for datafile in toProcess:
-        Ada.logDebug(target, directory, ' EXEC ' + datafile)
+        adagio.logDebug(target, directory, ' EXEC ' + datafile)
 
         (head, tail) = os.path.split(datafile)
 

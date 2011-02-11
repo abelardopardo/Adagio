@@ -65,7 +65,7 @@ def Execute(target, directory):
     # Get the files to process (all *.xcf in the current directory)
     toProcess = glob.glob(os.path.join(directory.current_dir, '*.xcf'))
     if toProcess == []:
-        Ada.logDebug(target, directory, i18n.get('no_file_to_process'))
+        adagio.logDebug(target, directory, i18n.get('no_file_to_process'))
         return
 
     scriptFileName = directory.getProperty(target, 'script')
@@ -78,7 +78,7 @@ def Execute(target, directory):
     dstFiles = []
     dstDir = directory.getProperty(target, 'src_dir')
     for datafile in toProcess:
-        Ada.logDebug(target, directory, ' EXEC ' + datafile)
+        adagio.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -120,7 +120,7 @@ def Execute(target, directory):
                    '-b', '-']
 
         AdaRule.doExecution(target, directory, command, None, None,
-                            stdout = Ada.userLog, stdin = scriptFile)
+                            stdout = adagio.userLog, stdin = scriptFile)
 
         # If dstFile does not exist, something went wrong
         if next((x for x in dstFiles if not os.path.exists(x)), None):
@@ -142,12 +142,12 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
     
-    Ada.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
     toProcess = glob.glob(os.path.join(directory.current_dir, '*.xcf'))
     if toProcess == []:
-        Ada.logDebug(target, directory, i18n.get('no_file_to_process'))
+        adagio.logDebug(target, directory, i18n.get('no_file_to_process'))
         return
 
     # Loop over the source files to see if an execution is needed

@@ -79,11 +79,11 @@ def Execute(target, directory):
     command.append(srcDir)
     command.append(dstDir)
 
-    Ada.logDebug(target, directory, ' EXEC ' + srcDir + ' ' + dstDir)
+    adagio.logDebug(target, directory, ' EXEC ' + srcDir + ' ' + dstDir)
 
     # Perform the execution
     AdaRule.doExecution(target, directory, command, srcDir, None, 
-                        Ada.userLog, Ada.userLog)
+                        adagio.userLog, adagio.userLog)
 
     return
 
@@ -92,7 +92,7 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
     
-    Ada.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
     toProcess = AdaRule.getFilesToProcess(target, directory)

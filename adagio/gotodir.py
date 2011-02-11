@@ -56,7 +56,7 @@ def Execute(target, directory, pad = None):
 
     # Loop over each directory
     for dirName in toProcess:
-        Ada.logInfo(target, directory, 'RECUR: ' + dirName)
+        adagio.logInfo(target, directory, 'RECUR: ' + dirName)
         dirObj = directory.getDirectoryObject(dirName, optionsToSet)
         dirObj.Execute(remoteTargets, pad + '  ')
 
@@ -72,7 +72,7 @@ def clean(target, directory, deepClean = False, pad = None):
     if pad == None:
         pad = ''
 
-    Ada.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, directory, 'Cleaning')
 
     (toProcess, remoteTargets,
      optionsToSet, newExportDir) = prepareTarget(target,
@@ -104,13 +104,13 @@ def clean(target, directory, deepClean = False, pad = None):
         remoteTargets = [x + '.clean'  for x in remoteTargets
                          if x.startswith('export')]
 
-    Ada.logInfo(target, directory,
+    adagio.logInfo(target, directory,
                 'Remote Targets = ' + ' '.join(remoteTargets))
 
     # Loop over each directory
     for dirName in toProcess:
 
-        Ada.logInfo(target, directory, 'RECUR: ' + dirName)
+        adagio.logInfo(target, directory, 'RECUR: ' + dirName)
         dirObj = directory.getDirectoryObject(dirName, optionsToSet)
 
         # If the clean is not deep and there is no given remote targets, we need
@@ -155,7 +155,7 @@ def prepareTarget(target, directory):
 
     # If there are no files to process stop
     if toProcess == []:
-        Ada.logDebug(target, directory, i18n.get('no_file_to_process'))
+        adagio.logDebug(target, directory, i18n.get('no_file_to_process'))
         return (toProcess, [], None, '')
 
     # Translate all paths to absolute paths
@@ -179,7 +179,7 @@ def prepareTarget(target, directory):
             # default
             optionsToSet = ['export dst_dir ' + newExportDir]
 
-    Ada.logInfo(target, directory, 'NEW Options = ' + ', '.join(optionsToSet))
+    adagio.logInfo(target, directory, 'NEW Options = ' + ', '.join(optionsToSet))
 
     return (toProcess, remoteTargets, optionsToSet, newExportDir)
 

@@ -63,7 +63,7 @@ def locateFile(fileName, dirPrefix = None):
     if os.path.exists(absName):
         return absName
 
-    localAdaStyle = os.path.join(Ada.home, 'ADA_Styles', fileName)
+    localAdaStyle = os.path.join(adagio.home, 'ADA_Styles', fileName)
 
     if os.path.exists(localAdaStyle):
         return os.path.abspath(localAdaStyle)
@@ -79,7 +79,7 @@ def getFilesToProcess(target, directory):
     # Safety guard, if srcFiles is empty, no need to proceed. Silence.
     srcFiles = directory.getProperty(target, 'files').split()
     if srcFiles == []:
-        Ada.logDebug(target, directory, i18n.get('no_file_to_process'))
+        adagio.logDebug(target, directory, i18n.get('no_file_to_process'))
         return []
 
     srcDir = directory.getProperty(target, 'src_dir')
@@ -133,10 +133,10 @@ def doExecution(target, directory, command, datafile, dstFile,
         else:
             print i18n.get('processing').format(os.path.basename(directory.current_dir))
 
-    Ada.logDebug(target, directory, 'Popen: ' + ' '.join(command))
+    adagio.logDebug(target, directory, 'Popen: ' + ' '.join(command))
 
     try:
-        pr = subprocess.Popen(command, stdin = stdin, stdout = Ada.userLog,
+        pr = subprocess.Popen(command, stdin = stdin, stdout = adagio.userLog,
                               stderr = stderr)
         pr.wait()
     except:
@@ -314,7 +314,7 @@ class StyleResolver(etree.Resolver):
     in the ADA home directory
     """
     def __init__(self):
-        self.styleDir = 'file://' + os.path.join(Ada.home, 'ADA_Styles')
+        self.styleDir = 'file://' + os.path.join(adagio.home, 'ADA_Styles')
 
     def resolve(self, url, pubid, context):
         if url.startswith('file://') or url.startswith('/'):

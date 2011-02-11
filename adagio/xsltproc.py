@@ -102,7 +102,7 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
 
-    Ada.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
     toProcess = AdaRule.getFilesToProcess(target, directory)
@@ -148,7 +148,7 @@ def createStyleTransform(styleList, srcDir = None):
         result.write('</xsl:stylesheet>')
         result.seek(0)
         styleFile = result
-        Ada.logDebug('Xsltproc', None, 'Applying ' + styleFile.getvalue())
+        adagio.logDebug('Xsltproc', None, 'Applying ' + styleFile.getvalue())
 
     # Get the transformation object
     return treecache.findOrAddTransform(styleFile)
@@ -162,13 +162,13 @@ def createParameterDict(target, directory):
     # Create the dictionary of stylesheet parameters
     styleParams = {}
     styleParams['ada.home'] =  "\'" + \
-        directory.getProperty(Ada.module_prefix, 'home') + "\'"
+        directory.getProperty(adagio.module_prefix, 'home') + "\'"
     styleParams['basedir'] =  "\'" + \
-        directory.getProperty(Ada.module_prefix, 'basedir') + "\'"
+        directory.getProperty(adagio.module_prefix, 'basedir') + "\'"
 
     # Calculate ada.project.home as a relative path with respect to the project
     # home
-    relProjectHome = os.path.relpath(directory.getProperty(Ada.module_prefix,
+    relProjectHome = os.path.relpath(directory.getProperty(adagio.module_prefix,
                                                               'project_home'),
                                      directory.current_dir)
     # Attach always the slash at the end to allow the stylesheets to assume it
@@ -179,12 +179,12 @@ def createParameterDict(target, directory):
     if relProjectHome == './':
         relProjectHome = ''
 
-    Ada.logDebug('Xsltproc', None, 'ada.project.home ' + relProjectHome)
+    adagio.logDebug('Xsltproc', None, 'ada.project.home ' + relProjectHome)
     styleParams['ada.project.home'] =  "\'" + relProjectHome + "\'"
 
     styleParams['ada.current.datetime'] = "\'" + \
-        directory.getProperty(Ada.module_prefix, 'current_datetime') + "\'"
-    profileRevision = directory.getProperty(Ada.module_prefix,
+        directory.getProperty(adagio.module_prefix, 'current_datetime') + "\'"
+    profileRevision = directory.getProperty(adagio.module_prefix,
                                             'enabled_profiles').split()
     if profileRevision != []:
         styleParams['profile.revision'] = "\'" + \
@@ -207,7 +207,7 @@ def createParameterDict(target, directory):
         print str(e)
         sys.exit(1)
 
-    Ada.logInfo(target, directory, 'StyleParmas: ' + str(styleParams))
+    adagio.logInfo(target, directory, 'StyleParmas: ' + str(styleParams))
     return styleParams
 
 def doTransformations(styles, styleTransform, styleParams, toProcess,
@@ -242,7 +242,7 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
     # source is built only once for all languages.
     dstDir = directory.getProperty(target, 'dst_dir')
     for datafile in toProcess:
-        Ada.logDebug(target, directory, ' EXEC ' + datafile)
+        adagio.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -322,7 +322,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     # Parse the data file if needed
     if dataTree == None:
-        Ada.logInfo(target, directory, 'Parsing ' + datafile)
+        adagio.logInfo(target, directory, 'Parsing ' + datafile)
         dataTree = treecache.findOrAddTree(datafile, True)
 
     # Apply the transformation
@@ -343,7 +343,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     # Write the result
     result.write(dstFile,
-                 encoding = directory.getProperty(Ada.module_prefix,
+                 encoding = directory.getProperty(adagio.module_prefix,
                                                   'encoding'),
                  xml_declaration = True,
                  pretty_print = True)
@@ -414,7 +414,7 @@ def xsltprocEquivalent(target, directory, styleParams, datafile, dstFile):
     msg += ' STYLE.xsl'
     msg += ' ' + datafile
 
-    Ada.logDebug(target, directory, 'XSLTPROC: ' + msg)
+    adagio.logDebug(target, directory, 'XSLTPROC: ' + msg)
 
 def processOuputFormat(target, directory):
     """

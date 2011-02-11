@@ -72,7 +72,7 @@ def Execute(target, directory):
 
     # Loop over all source files to process
     for datafile in toProcess:
-        Ada.logDebug(target, directory, ' EXEC ' + datafile)
+        adagio.logDebug(target, directory, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -92,7 +92,7 @@ def Execute(target, directory):
 
         # Perform the execution
         AdaRule.doExecution(target, directory, command, datafile, dstFile,
-                            Ada.userLog, Ada.userLog)
+                            adagio.userLog, adagio.userLog)
 
     return
 
@@ -101,7 +101,7 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
 
-    Ada.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
     toProcess = AdaRule.getFilesToProcess(target, directory)

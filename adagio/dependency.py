@@ -127,8 +127,8 @@ def update(dst, srcSet = None):
     else:
         dstIDX = dst
 
-    Ada.logDebug('dependency', None, dst)
-    Ada.logDebug('dependency', None, srcSet)
+    adagio.logDebug('dependency', None, dst)
+    adagio.logDebug('dependency', None, srcSet)
     # Initialize the mark to the index and date of the destination
     moreRecentIDX = dstIDX
 

@@ -45,7 +45,7 @@ def getDirectoryObject(path, givenOptions):
     dirObj = _createdDirs.get(theKey)
     if dirObj != None:
         # Hit in the cache, return
-        Ada.logDebug('Directory', None, 'Directory HIT: ' + path)
+        adagio.logDebug('Directory', None, 'Directory HIT: ' + path)
         return dirObj
 
     # Create new object
@@ -167,9 +167,9 @@ class Directory:
         self.executed_targets = set([])
         self.option_files =     set([])
 
-        Ada.logInfo('Directory', None, 'New dir object in ' + self.current_dir)
+        adagio.logInfo('Directory', None, 'New dir object in ' + self.current_dir)
 
-        configDefaults = Ada.getConfigDefaults(self.current_dir)
+        configDefaults = adagio.getConfigDefaults(self.current_dir)
 
         # Compute the project home
         os.chdir(self.current_dir)
@@ -207,7 +207,7 @@ class Directory:
         #
         adaProjFile = os.path.join(self.current_dir,
                                    configDefaults['project_home'],
-                                   self.options.get(Ada.module_prefix, 
+                                   self.options.get(adagio.module_prefix,
                                                     'project_file'))
         if os.path.isfile(adaProjFile):
             try:
@@ -241,7 +241,7 @@ class Directory:
             self.section_list = sections
         else:
             # If there is no rule file, notify and execute help target
-            Ada.logInfo('Directory', None, 'No ' + adaPropFile + \
+            adagio.logInfo('Directory', None, 'No ' + adaPropFile + \
                             ' found in ' + self.current_dir)
             print i18n.get('cannot_find_properties').format(adaPropFile,
                                                             self.current_dir)
@@ -266,8 +266,8 @@ class Directory:
 
         # Compare ADA versions to see if execution is allowed
         if not self.isCorrectAdaVersion():
-            version = self.options.get(Ada.module_prefix, 'version')
-            Ada.logError('Directory', None, \
+            version = self.options.get(adagio.module_prefix, 'version')
+            adagio.logError('Directory', None, \
                              'ERROR: Incorrect Ada Version (' + version + ')')
             print i18n.get('incorrect_version').format(version)
             sys.exit(3)
@@ -276,7 +276,7 @@ class Directory:
 
         # Dump a debug message showing the list of sections detected in the
         # config file
-        Ada.logDebug('Directory', None,
+        adagio.logDebug('Directory', None,
                      'Sections: ' + ', '.join(self.section_list))
 
         return
@@ -295,15 +295,15 @@ class Directory:
         global module_prefix
 
         # Get versions to allow execution depending on the version
-        minVersion = self.options.get(Ada.module_prefix, 'minimum_version')
-        maxVersion = self.options.get(Ada.module_prefix, 'maximum_version')
-        exactVersion = self.options.get(Ada.module_prefix, 'exact_version')
+        minVersion = self.options.get(adagio.module_prefix, 'minimum_version')
+        maxVersion = self.options.get(adagio.module_prefix, 'maximum_version')
+        exactVersion = self.options.get(adagio.module_prefix, 'exact_version')
 
         # If no value is given in any variable, avanti
         if (minVersion == '') and (maxVersion == '') and (exactVersion == ''):
             return True
 
-        currentValue = versionToInteger(self.options.get(Ada.module_prefix,
+        currentValue = versionToInteger(self.options.get(adagio.module_prefix,
                                                          'version'))
 
         # Translate all three variables to numbers
@@ -332,7 +332,7 @@ class Directory:
         and execute all of them.
         """
 
-        Ada.logInfo('Directory', self, 'Execute in ' + self.current_dir)
+        adagio.logInfo('Directory', self, 'Execute in ' + self.current_dir)
 
         # Change directory to the current one
         self.previous_dir = os.getcwd()
@@ -390,21 +390,21 @@ class Directory:
             else:
                 finalTargets.append(target)
 
-        Ada.logDebug('Directory', self, '  Targets: ' + str(finalTargets))
+        adagio.logDebug('Directory', self, '  Targets: ' + str(finalTargets))
 
         # If after all these preparations, finalTargets is empty, help is
         # needed, hardwire the target to ada.help.
         if finalTargets == []:
             finalTargets = ['ada.help']
 
-        Ada.logDebug('Directory', self,
+        adagio.logDebug('Directory', self,
                      ' to execute ' + ' '.join(finalTargets))
 
         for target_name in finalTargets:
 
             # Check the cache to see if target has already been executed
             if target_name in self.executed_targets:
-                Ada.logInfo('Directory', self,
+                adagio.logInfo('Directory', self,
                             'Target HIT: ' + self.current_dir + ': ' + \
                             target_name)
                 continue
@@ -416,7 +416,7 @@ class Directory:
             self.executed_targets.add(target_name)
 
         self.executing = False
-        Ada.logDebug('Directory', self,
+        adagio.logDebug('Directory', self,
                      ' Executed Targets: ' + str(self.executed_targets))
 
         print pad + '-- ' +  showCurrentDir

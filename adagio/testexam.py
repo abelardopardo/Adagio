@@ -110,7 +110,7 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
 
-    Ada.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
     toProcess = AdaRule.getFilesToProcess(target, directory)
@@ -172,7 +172,7 @@ def doShuffle(toProcess, directory):
             continue
 
         print i18n.get('testexam_shuffling').format(fname)
-        TestShuffle.main(fname, Ada.userLog)
+        TestShuffle.main(fname, adagio.userLog)
 
     return rawFiles
 
