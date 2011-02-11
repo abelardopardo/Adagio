@@ -23,7 +23,7 @@
 #
 import os, re, sys
 
-import directory, i18n, adarule
+import directory, i18n, rules.
 
 # Prefix to use for the options
 module_prefix = 'inkscape'

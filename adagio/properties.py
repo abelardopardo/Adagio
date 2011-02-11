@@ -26,7 +26,7 @@ import codecs
 from lxml import etree
 
 # @@@@@@@@@@@@@@@@@@@@  EXTEND  @@@@@@@@@@@@@@@@@@@@
-import adarule, i18n, xsltproc, inkscape, gotodir, gimp, convert, copy
+import rules., i18n, xsltproc, inkscape, gotodir, gimp, convert, copy
 import export, dblatex, exercise, exam, testexam, office2pdf, rsync
 import script, latex, dvips, pdfnup, xfig
 

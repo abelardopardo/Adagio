@@ -23,7 +23,7 @@
 #
 import os, re, sys
 
-import directory, i18n, dependency, adarule, copy
+import directory, i18n, dependency, rules., copy
 
 # Prefix to use for the options
 module_prefix = 'export'

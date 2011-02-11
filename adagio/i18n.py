@@ -45,7 +45,8 @@ dictionary = {}
 file = None
 
 # Directory where the i18n information is installed
-i18nHome = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), 'i18n')
+i18nHome = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])),
+                        '..', 'adagio', 'i18n_dicts')
 
 # First, use the locale as is
 if os.path.exists(os.path.join(i18nHome, locale + '.py')):

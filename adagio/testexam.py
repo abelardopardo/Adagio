@@ -28,7 +28,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-import directory, i18n, adarule, xsltproc, testshuffle, dependency
+import directory, i18n, rules., xsltproc, testshuffle, dependency
 import treecache
 
 # Prefix to use for the options

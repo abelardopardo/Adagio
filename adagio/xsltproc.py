@@ -24,7 +24,7 @@
 import os, re, sys, StringIO
 from lxml import etree
 
-import directory, i18n, dependency, adarule, treecache
+import directory, i18n, dependency, rules., treecache
 
 # Prefix to use for the options
 module_prefix = 'xslt'

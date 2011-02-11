@@ -24,7 +24,7 @@
 import sys, os, copy, atexit
 from lxml import etree
 
-import adarule, i18n
+import rules., i18n
 
 # A dictionary storing XML trees and XSLTProcs. The values are pairs (a, b)
 # where a is the tree without the includes expanded and b is the fully expanded

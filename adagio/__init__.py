@@ -22,9 +22,9 @@
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 import os, sys, locale, re, datetime, time
-import i18n
+import i18n, rules
 
-__all__ = ['rules']
+__all__ = ['rules', 'i18n']
 
 # Get language and locale for locale option
 (lang, enc) = locale.getdefaultlocale()
