@@ -56,7 +56,7 @@ def getConfigParser(fileName):
     config = _configParsers.get(fileName)
     if config != None:
         # Hit in the cache, return
-        Ada.logDebug('Properties', None, 'Parser HIT: ' + fileName)
+        Ada.logDebug('properties', None, 'Parser HIT: ' + fileName)
         return config
 
     # Parse the file with a raw parser
@@ -98,7 +98,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
     Returns a pair (set of files finally loaded, list of targets detected)
     """
 
-    Ada.logDebug('Properties', None, 'Parsing ' + filename)
+    Ada.logDebug('properties', None, 'Parsing ' + filename)
 
     # Cannot use empty dictionary as default value in parameter as it
     # accumulates the values.

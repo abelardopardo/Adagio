@@ -175,7 +175,7 @@ def evaluateCondition(target, options):
     """
 
     # Check part 1 of the rule: open must be 1
-    if Properties.getProperty(options, target, 'enable_open') != '1':
+    if properties.getProperty(options, target, 'enable_open') != '1':
         print i18n.get('enable_not_open').format(openData)
         return False
 
@@ -183,17 +183,17 @@ def evaluateCondition(target, options):
     now = datetime.datetime.now()
 
     # Get the date_format
-    dateFormat = Properties.getProperty(options, target, 'enable_date_format')
+    dateFormat = properties.getProperty(options, target, 'enable_date_format')
 
     # Check part 2 of the rule: begin date is before current date
-    beginDate = Properties.getProperty(options, target, 'enable_begin')
+    beginDate = properties.getProperty(options, target, 'enable_begin')
     if beginDate != '':
         if checkDateFormat(beginDate, dateFormat) < now:
             print i18n.get('enable_closed_begin').format(beginDate)
             return False
 
     # Check part 3 of the rule: end date is after current date
-    endDate = Properties.getProperty(options, target, 'enable_end')
+    endDate = properties.getProperty(options, target, 'enable_end')
     if endDate != '':
         if now < checkDateFormat(endDate, dateFormat):
             print i18n.get('enable_closed_end').format(endDate)
@@ -201,8 +201,8 @@ def evaluateCondition(target, options):
 
     # Check part 4 of the rule: target.enable_profile must be in
     # ada.enabled_profiles
-    revisionsData = Properties.getProperty(options, 'ada', 'enabled_profiles')
-    thisRevision = Properties.getProperty(options, target, 'enable_profile')
+    revisionsData = properties.getProperty(options, 'ada', 'enabled_profiles')
+    thisRevision = properties.getProperty(options, target, 'enable_profile')
     if revisionsData != '' and thisRevision != '':
         if not (thisRevision in set(revisionsData.split())):
             print i18n.get('enable_not_revision').format(target)

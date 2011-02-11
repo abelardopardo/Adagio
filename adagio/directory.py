@@ -86,7 +86,7 @@ def dump(self):
         print '  Prev dir: ', d.previous_dir
         print '  Given dict: ', go
         print '  Options:\n    ',
-        Properties.dump(self.options, '   ')
+        properties.dump(self.options, '   ')
 
 # Search for pfile all the way up the hierarchy (until the top)
 def findProjectDir(pfile, startdir):
@@ -143,9 +143,9 @@ class Directory:
     # previous_dir:     dir before switching to the given one
     # current_dir:      dir represented by this object
     # givenOptions:     list of options given from outside this dir
-    # options:          ConfigParse with the options given in Properties.ddo
+    # options:          ConfigParse with the options given in properties.ddo
     # alias:            Dictionary of 'aliasname': 'aliasvalue'
-    # section_list:     targets in the Properties.ddo file
+    # section_list:     targets in the properties.ddo file
     # current_section:  section being processed
     # executing:        true if in the middle of the "Execute" method
     # executed_targets: set of targets executed with empty given directory
@@ -178,12 +178,12 @@ class Directory:
         os.chdir(self.previous_dir)
 
         # Safe parser to store the options, the defaults are loaded here
-        self.options = Properties.initialConfig(configDefaults)
+        self.options = properties.initialConfig(configDefaults)
 
         #
         # STEP 1: Load the default options from the Rule files
         #
-        Properties.LoadDefaults(self.options)
+        properties.LoadDefaults(self.options)
 
         #
         # STEP 2: Load the ~/.adarc if any
@@ -193,7 +193,7 @@ class Directory:
             # Swallow user file on top of global options, and if trouble, report
             # up
             try:
-                (newFiles, b) = Properties.loadConfigFile(self.options, 
+                (newFiles, b) = properties.loadConfigFile(self.options,
                                                           userAdaConfig,
                                                           self.alias)
                 self.option_files.update(newFiles)
@@ -212,7 +212,7 @@ class Directory:
         if os.path.isfile(adaProjFile):
             try:
                 (newFiles, b) = \
-                    Properties.loadConfigFile(self.options, 
+                    properties.loadConfigFile(self.options,
                                               os.path.abspath(adaProjFile),
                                               self.alias)
                 self.option_files.update(newFiles)
@@ -229,7 +229,7 @@ class Directory:
                                                    adaPropFile))
         if os.path.exists(propAbsFile):
             try:
-                (newFiles, sections) = Properties.loadConfigFile(self.options, 
+                (newFiles, sections) = properties.loadConfigFile(self.options,
                                                                  propAbsFile,
                                                                  self.alias)
                 self.option_files.update(newFiles)
@@ -254,7 +254,7 @@ class Directory:
             # Chop assignment into its three parts
             (sn, on, ov) = assignment.split()
 
-            sn = Properties.expandAlias(sn, self.alias)
+            sn = properties.expandAlias(sn, self.alias)
             # Check first if the option is legal
             if not self.options.has_option(sn, on):
                 optionName = sn + '.' + on
@@ -262,7 +262,7 @@ class Directory:
                 sys.exit(3)
 
             # Insert the new assignment in options of the directory
-            Properties.setProperty(self.options, sn, on, ov)
+            properties.setProperty(self.options, sn, on, ov)
 
         # Compare ADA versions to see if execution is allowed
         if not self.isCorrectAdaVersion():
@@ -328,7 +328,7 @@ class Directory:
 
     def Execute(self, targets = [], pad = ''):
         """
-        Properties.ddo has been parsed into a ConfigParse. Loop over the targets
+        properties.ddo has been parsed into a ConfigParse. Loop over the targets
         and execute all of them.
         """
 
@@ -410,7 +410,7 @@ class Directory:
                 continue
 
             # Execute the target
-            Properties.Execute(target_name, self, pad)
+            properties.Execute(target_name, self, pad)
 
             # Insert executed target in cache
             self.executed_targets.add(target_name)
@@ -432,7 +432,7 @@ class Directory:
         it does not exist, check if the section has the form name.subname. If
         so, check for the option name/option.
         """
-        return Properties.getProperty(self.options, section, option)
+        return properties.getProperty(self.options, section, option)
 
 ################################################################################
 

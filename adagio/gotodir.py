@@ -118,7 +118,7 @@ def clean(target, directory, deepClean = False, pad = None):
         if (not deepClean) and (remoteTargets == []):
             remoteTargets = [x + '.clean' for x in dirObj.section_list
                              if re.match('^export(\..+)?$',
-                                         Properties.expandAlias(x,
+                                         properties.expandAlias(x,
                                                                 dirObj.alias))]
 
         # Execute the remote targets
