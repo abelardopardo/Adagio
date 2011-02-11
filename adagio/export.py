@@ -23,7 +23,7 @@
 #
 import os, re, sys
 
-import directory, i18n, dependency, rules., copy
+import directory, i18n, dependency, rules, filecopy
 
 # Prefix to use for the options
 module_prefix = 'export'
@@ -75,7 +75,7 @@ def Execute(target, directory):
 
     # If we are here, the export may proceed!
     srcDir = directory.getProperty(target, 'src_dir')
-    copy.doCopy(target, directory, toProcess, srcDir, dstDir)
+    filecopy.doCopy(target, directory, toProcess, srcDir, dstDir)
 
     return
 
@@ -98,7 +98,7 @@ def clean(target, directory):
         return
 
     # If we are here, the export may proceed!
-    copy.doClean(target, directory, toProcess,
+    filecopy.doClean(target, directory, toProcess,
                  directory.getProperty(target, 'src_dir'), dstDir)
 
     return

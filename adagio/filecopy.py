@@ -29,7 +29,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-import directory, i18n, dependency, rules.
+import directory, i18n, dependency, rules
 
 # Prefix to use for the options
 module_prefix = 'copy'

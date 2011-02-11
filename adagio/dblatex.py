@@ -23,7 +23,7 @@
 #
 import os, sys, glob
 
-import directory, i18n, rules.
+import directory, i18n, rules
 
 # Prefix to use for the options
 module_prefix = 'dblatex'

@@ -23,7 +23,7 @@
 #
 import os, sys, glob
 
-import directory, i18n, dependency, rules.
+import directory, i18n, dependency, rules
 
 # Prefix to use for the options
 module_prefix = 'latex'
