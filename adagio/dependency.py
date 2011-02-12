@@ -191,7 +191,7 @@ def getIncludes(fName):
 
     # Loop over all the includes, and imports of XML and XSL
     for element in [e for e in allIncludes if 'href' in e.attrib]:
-        hrefValue = rules.locateFile(
+        hrefValue = locateFile(
             os.path.join(
                 element.attrib.get('{http://www.w3.org/XML/1998/namespace}base', 
                                    '') + 
@@ -227,6 +227,25 @@ def isUpToDate(fileName):
         return False
 
     return (os.path.getmtime(fileName) >= __NodeDate[addNode(fileName)])
+
+def locateFile(fileName, dirPrefix = None):
+    """Search an stylesheet in the dirs in local ADA dirs"""
+
+    if dirPrefix == None:
+        dirPrefix = os.getcwd()
+
+    absName = os.path.abspath(os.path.join(dirPrefix, fileName))
+
+    # If it exists in the given dir, return
+    if os.path.exists(absName):
+        return absName
+
+    localAdaStyle = os.path.join(adagio.home, 'ADA_Styles', fileName)
+
+    if os.path.exists(localAdaStyle):
+        return os.path.abspath(localAdaStyle)
+
+    return None
 
 def dumpGraph():
     global __FileNameToNodeIDX

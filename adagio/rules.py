@@ -51,25 +51,6 @@ def isProgramAvailable(executable):
 
     return None
 
-def locateFile(fileName, dirPrefix = None):
-    """Search an stylesheet in the dirs in local ADA dirs"""
-
-    if dirPrefix == None:
-        dirPrefix = os.getcwd()
-
-    absName = os.path.abspath(os.path.join(dirPrefix, fileName))
-
-    # If it exists in the given dir, return
-    if os.path.exists(absName):
-        return absName
-
-    localAdaStyle = os.path.join(adagio.home, 'ADA_Styles', fileName)
-
-    if os.path.exists(localAdaStyle):
-        return os.path.abspath(localAdaStyle)
-
-    return None
-
 def getFilesToProcess(target, directory):
     """
     Get the files to process by expanding the expressions in "files" and
@@ -209,23 +190,6 @@ def evaluateCondition(target, options):
             return False
 
     return True
-
-def dumpOptions(target, directory, prefix):
-    """
-    Dump the value of the options affecting the computations
-    """
-
-    global options
-
-    print i18n.get('var_preamble').format(prefix)
-
-    # Remove the .dump from the end of the target to fish for options
-    target = re.sub('\.?dump$', '', target)
-    if target == '':
-        target = prefix
-
-    for (on, ov) in sorted(directory.options.items(target)):
-        print ' -', on, '=', ov
 
 def which(program):
     """

@@ -25,15 +25,7 @@ import sys, os, re, datetime, ConfigParser, StringIO, ordereddict, atexit
 import codecs
 from lxml import etree
 
-# @@@@@@@@@@@@@@@@@@@@  EXTEND  @@@@@@@@@@@@@@@@@@@@
-import rules, i18n, xsltproc, inkscape, gotodir, gimp, convert, filecopy
-import export, dblatex, exercise, exam, testexam, office2pdf, rsync
-import script, latex, dvips, pdfnup, xfig
-
-modules = ['xsltproc', 'inkscape', 'gotodir', 'gimp', 'convert',
-           'filecopy', 'export', 'dblatex', 'exercise', 'exam', 'testexam',
-           'office2pdf', 'rsync', 'script', 'latex', 'dvips', 'pdfnup', 'xfig']
-# @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+import i18n
 
 # Prefix to use in the module
 module_prefix = 'properties'
@@ -233,136 +225,6 @@ def dump(options, pad = None, sections = None):
         print str(e)
         sys.exit(1)
 
-def LoadDefaults(config):
-    """
-    Loads all the default options for all the rules in the given ConfigParser.
-    """
-    global modules
-
-    # Traverse the modules and load the values in the "option" variable
-    for moduleName in modules:
-        # Get the three required values from the module
-        sectionName = eval(moduleName + '.module_prefix')
-        options = eval(moduleName + '.options')
-        documentation = eval(moduleName + '.documentation')
-
-        # If any of these variables is None, bomb out.
-        if sectionName == None or options == None or documentation == None:
-            raise TypeError, 'Incorrect type in LoadDefaults'
-
-        # If the section is already present in the config, never mind
-        try:
-            config.add_section(sectionName)
-        except ConfigParser.DuplicateSectionError:
-            pass
-
-        # Loop over all the default values and add them to the proper sections
-        for (vn, vv, msg) in options:
-            setProperty(config, sectionName, vn, vv,
-                        createSection = True, createOption = True)
-
-        # Add the string for the help
-        helpStr = documentation.get(adagio.config_defaults['languages'][0].split()[0])
-        if helpStr == None:
-            helpStr = documentation.get('en')
-        setProperty(config, sectionName, 'help', helpStr, 
-                    createSection = True, createOption = True)
-
-    return
-
-def Execute(target, directory, pad = None):
-    """
-    Given a target and a directory, it checks which rule needs to be invoked and
-   performs the invokation.
-    """
-
-    global modules
-
-    # Keep a copy of the target before applying aliases
-    originalTarget = target
-
-    # Apply the alias expansion
-    try:
-        target = expandAlias(target, directory.alias)
-    except SyntaxError:
-        print i18n.get('error_alias_expression')
-        sys.exit(1)
-
-    # Detect help, dump or clean targets
-    specialTarget = re.match('.+\.dump$', target) or \
-        re.match('.+\.help$', target) or \
-        re.match('.+\.clean$', target) or \
-        re.match('.+\.deepclean$', target) or \
-        re.match('.+\.dumphelp$', target) or \
-        re.match('.+\.helpdump$', target)
-
-    # Make sure the target is legal.
-    if not specialTarget and not directory.options.has_section(target):
-        print i18n.get('illegal_target_name').format(t = originalTarget,
-                                                     dl = directory.current_dir)
-        sys.exit(2)
-
-    # Get the module prefix (everything up to the first dot) and the target
-    # prefix (dropping any special target suffix)
-    targetParts = target.split('.')
-    modulePrefix = targetParts[0]
-    if specialTarget:
-        targetPrefix = '.'.join(targetParts[:-1])
-    else:
-        targetPrefix = target
-
-    if pad == None:
-	pad = ''
-
-    # Traverse the modules and execute the "Execute" function
-    executed = False
-    for moduleName in modules:
-
-        # If the target does not belong to this module, keep iterating
-        if modulePrefix != eval(moduleName + '.module_prefix'):
-            continue
-
-        adagio.logInfo(originalTarget, directory, 'Enter ' + directory.current_dir)
-
-        # Print msg when beginning to execute target in dir
-        print pad + 'BB', originalTarget
-
-        # Detect and execute "help/dump" targets
-        if specialTargets(target, directory, moduleName, pad):
-            print pad + 'EE', originalTarget
-            adagio.logInfo(originalTarget, directory,
-                        'Exit ' + directory.current_dir)
-            return
-
-        # Check the condition
-        if not rules.evaluateCondition(targetPrefix, directory.options):
-            return
-
-        # Detect and execute "clean" targets
-        if cleanTargets(target, directory, moduleName, pad):
-            print pad + 'EE', originalTarget
-            adagio.logInfo(originalTarget, directory,
-                        'Exit ' + directory.current_dir)
-            return
-
-        # Execute.
-        if moduleName == 'gotodir':
-            # gotodir must take into account padding
-            eval(moduleName + '.Execute(target, directory, pad)')
-        else:
-            eval(moduleName + '.Execute(target, directory)')
-
-        # Detect if no module executed the target
-        executed = True
-
-        print pad + 'EE', originalTarget
-
-        adagio.logInfo(originalTarget, directory, 'Exit ' + directory.current_dir)
-
-    if not executed:
-        print i18n.get('unknown_target').format(originalTarget)
-        sys.exit(1)
-
 def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
     """
     Process template and parse the required files.
@@ -448,7 +310,7 @@ def specialTargets(target, directory, moduleName, pad = None):
 
     # If requesting var dump, do it and finish
     if doubleTarget or re.match('.+\.dump$', target):
-        rules.dumpOptions(target, directory, prefix)
+        dumpOptions(target, directory, prefix)
         hit =  True
 
     return hit
@@ -638,3 +500,20 @@ def initialConfig(configDefaults):
 
     return result
         
+def dumpOptions(target, directory, prefix):
+    """
+    Dump the value of the options affecting the computations
+    """
+
+    global options
+
+    print i18n.get('var_preamble').format(prefix)
+
+    # Remove the .dump from the end of the target to fish for options
+    target = re.sub('\.?dump$', '', target)
+    if target == '':
+        target = prefix
+
+    for (on, ov) in sorted(directory.options.items(target)):
+        print ' -', on, '=', ov
+

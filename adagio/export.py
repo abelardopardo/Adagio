@@ -23,7 +23,7 @@
 #
 import os, re, sys
 
-import directory, i18n, dependency, rules, filecopy
+import directory, i18n, rules, filecopy
 
 # Prefix to use for the options
 module_prefix = 'export'

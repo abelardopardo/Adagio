@@ -172,7 +172,7 @@ def doShuffle(toProcess, directory):
             continue
 
         print i18n.get('testexam_shuffling').format(fname)
-        TestShuffle.main(fname, adagio.userLog)
+        testshuffle.main(fname, adagio.userLog)
 
     return rawFiles
 

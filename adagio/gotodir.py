@@ -23,7 +23,7 @@
 #
 import os, re, sys, glob
 
-import directory, i18n, dependency, rules, properties, treecache
+import directory, i18n, dependency, properties, treecache
 
 # Prefix to use for the options
 module_prefix = 'gotodir'
@@ -52,7 +52,7 @@ def Execute(target, directory, pad = None):
         pad = ''
 
     (toProcess, remoteTargets,
-     optionsToSet, newExportDir) = prepareTarget(target,directory)
+     optionsToSet, newExportDir) = prepareTarget(target, directory)
 
     # Loop over each directory
     for dirName in toProcess:
@@ -216,7 +216,7 @@ def obtainXincludes(files):
         # Traverse all the include files
         for includeFile in includeFiles:
             # Locate the file applying ADA search rules
-            locatedFile = rules.locateFile(includeFile, fDir)
+            locatedFile = dependency.locateFile(includeFile, fDir)
 
             # If not found, notify and terminate
             if locatedFile == None:
