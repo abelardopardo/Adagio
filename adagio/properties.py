@@ -31,7 +31,7 @@ import export, dblatex, exercise, exam, testexam, office2pdf, rsync
 import script, latex, dvips, pdfnup, xfig
 
 modules = ['xsltproc', 'inkscape', 'gotodir', 'gimp', 'convert',
-           'copy', 'export', 'dblatex', 'exercise', 'exam', 'testexam',
+           'filecopy', 'export', 'dblatex', 'exercise', 'exam', 'testexam',
            'office2pdf', 'rsync', 'script', 'latex', 'dvips', 'pdfnup', 'xfig']
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
