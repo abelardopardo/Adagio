@@ -121,6 +121,11 @@ def clean(target, directory, deepClean = False, pad = None):
                                          Properties.expandAlias(x,
                                                                 dirObj.alias))]
 
+        # If remote targets is empty, there is nothing to process in the remote
+        # directory.
+        if remoteTargets == []:
+            continue
+
         # Execute the remote targets
         dirObj.Execute(remoteTargets, pad + '  ')
 
