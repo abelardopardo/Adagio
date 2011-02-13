@@ -34,6 +34,7 @@ if sys.stdout.encoding is None:
 _dirName = os.path.dirname(__file__)
 _dirName = os.path.abspath(os.path.join(_dirName, '..'))
 sys.path.insert(0, _dirName)
+sys.path.insert(0, os.path.join(_dirName, 'adagio'))
 import adagio
 
 def main():
