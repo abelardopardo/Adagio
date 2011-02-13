@@ -22,10 +22,35 @@
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 
-import sys, I18n
+import sys, locale, re, os
+
+# Get locale info and infer language from it
+locale = locale.getdefaultlocale()[0]
+m = re.match('^([^_]+)_.+$', locale)
+if m != None:
+    localePrefix = m.group(1)
+else:
+    localePrefix = 'en'
+
+dictionary_en = {
+  'checking_configuration': 'Checking ADA configuration'
+}
+
+dictionary_es = {
+  'checking_configuration': 'Comprobando la configuración de ADA'
+}
+
+all_dicts = { 'en': dictionary_en,
+	      'es': dictionary_es
+            }
+
+# Set the global dicionary
+dictionary = all_dicts.get(localePrefix)
+if dictionary == None:
+    dictionary = dictionary_en
 
 print
-print I18n.get('checking_configuration')
+print dictionary.get('checking_configuration')
 print
 
 #
@@ -44,5 +69,7 @@ print 'OK'
 # Check ada.home directory
 #
 print ' - ADA directory: ',
+adaDir = os.path.dirname(__file__)
+adaDir = os.path.abspath(os.path.join(adaDir, '..'))
 
 sys.exit(0)

@@ -24,8 +24,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   
   <!-- This param is directly for docbook stylesheets -->
-  <xsl:param name="PROPERTIES_FILENAME">Properties.txt</xsl:param>
-  <xsl:param name="ADA_DOWNLOAD_URL">http://flautin.it.uc3m.es/abel/ADA</xsl:param>
+  <xsl:param name="PROPERTIES_FILENAME">Properties.ddo</xsl:param>
+  <xsl:param name="ADA_DOWNLOAD_URL">http://www.it.uc3m.es/abel/ADA</xsl:param>
 
   <xsl:param name="ada.page.include.dc.descriptors"
     description="yes/no contolling if the Dublin Core descriptors are included
