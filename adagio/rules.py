@@ -29,7 +29,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-import i18n, dependency, properties
+import adagio, i18n, dependency, properties
 
 def isProgramAvailable(executable):
     def is_exe(fpath):
@@ -51,19 +51,19 @@ def isProgramAvailable(executable):
 
     return None
 
-def getFilesToProcess(target, directory):
+def getFilesToProcess(target, dirObj):
     """
     Get the files to process by expanding the expressions in "files" and
     concatenating the src_dir as prefix.
     """
 
     # Safety guard, if srcFiles is empty, no need to proceed. Silence.
-    srcFiles = directory.getProperty(target, 'files').split()
+    srcFiles = dirObj.getProperty(target, 'files').split()
     if srcFiles == []:
-        adagio.logDebug(target, directory, i18n.get('no_file_to_process'))
+        adagio.logDebug(target, dirObj, i18n.get('no_file_to_process'))
         return []
 
-    srcDir = directory.getProperty(target, 'src_dir')
+    srcDir = dirObj.getProperty(target, 'src_dir')
     toProcess = []
     for srcFile in srcFiles:
         found = glob.glob(os.path.join(srcDir, srcFile))
@@ -82,7 +82,7 @@ def getFilesToProcess(target, directory):
 
     return toProcess
 
-def doExecution(target, directory, command, datafile, dstFile,
+def doExecution(target, dirObj, command, datafile, dstFile,
                 stdout = None, stderr = None, stdin = None):
     """
     Function to execute a program using the subprocess.Popen method. The three
@@ -91,7 +91,7 @@ def doExecution(target, directory, command, datafile, dstFile,
 
     # Check for dependencies if dstFile is given
     if dstFile != None:
-        srcDeps = directory.option_files
+        srcDeps = dirObj.option_files
         if datafile != None:
             srcDeps.add(datafile)
 
@@ -112,9 +112,9 @@ def doExecution(target, directory, command, datafile, dstFile,
         if datafile != None:
             print i18n.get('processing').format(os.path.basename(datafile))
         else:
-            print i18n.get('processing').format(os.path.basename(directory.current_dir))
+            print i18n.get('processing').format(os.path.basename(dirObj.current_dir))
 
-    adagio.logDebug(target, directory, 'Popen: ' + ' '.join(command))
+    adagio.logDebug(target, dirObj, 'Popen: ' + ' '.join(command))
 
     try:
         pr = subprocess.Popen(command, stdin = stdin, stdout = adagio.userLog,
@@ -149,7 +149,7 @@ def evaluateCondition(target, options):
     1) option "enable_open" is '1'
     2) option "enable_begin" is empty or is a datetime before now
     3) option "enable_end" is empty or is a datetime past now
-    4) If "ada.enabled_profiles" is empty or contains the value of option
+    4) If "adagio.enabled_profiles" is empty or contains the value of option
     "target.enable_profile"
 
     The function returns the conjunction of these 5 rules.
@@ -181,8 +181,8 @@ def evaluateCondition(target, options):
             return False
 
     # Check part 4 of the rule: target.enable_profile must be in
-    # ada.enabled_profiles
-    revisionsData = properties.getProperty(options, 'ada', 'enabled_profiles')
+    # adagio.enabled_profiles
+    revisionsData = properties.getProperty(options, 'adagio', 'enabled_profiles')
     thisRevision = properties.getProperty(options, target, 'enable_profile')
     if revisionsData != '' and thisRevision != '':
         if not (thisRevision in set(revisionsData.split())):
@@ -275,10 +275,10 @@ def optionDoc(options):
 class StyleResolver(etree.Resolver):
     """
     Resolver to use with XSLT stylesheets and force the detection of stylesheets
-    in the ADA home directory
+    in the Adagio home directory
     """
     def __init__(self):
-        self.styleDir = 'file://' + os.path.join(adagio.home, 'ADA_Styles')
+        self.styleDir = 'file://' + os.path.join(adagio.home, 'Adagio_Styles')
 
     def resolve(self, url, pubid, context):
         if url.startswith('file://') or url.startswith('/'):

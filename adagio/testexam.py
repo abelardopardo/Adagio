@@ -37,7 +37,7 @@ module_prefix = 'testexam'
 # List of tuples (varname, default value, description string)
 options = [
     ('styles',
-     '%(home)s%(file_separator)sADA_Styles%(file_separator)sExam.xsl',
+     '%(home)s%(file_separator)sAdagio_Styles%(file_separator)sExam.xsl',
      i18n.get('xslt_style_file')),
     ('output_format', 'html', i18n.get('output_format')),
     ('extra_arguments', '', i18n.get('extra_arguments').format('Xsltproc')),
@@ -56,64 +56,64 @@ documentation = {
       * pguide: regular version including solution AND professor guide
     """}
 
-def Execute(target, directory):
+def Execute(target, dirObj):
     """
     Execute the rule in the given directory
     """
 
     # Get the files to process, if empty, terminate
-    toProcess = rules.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, dirObj)
     if toProcess == []:
         return
 
     # Every source file given is processed to know how many permutations will be
     # rawFiles contains the list of files produced that need to be processed
-    rawFiles = doShuffle(toProcess, directory)
+    rawFiles = doShuffle(toProcess, dirObj)
 
     # Prepare the style transformation
-    styleFiles = directory.getProperty(target, 'styles')
+    styleFiles = dirObj.getProperty(target, 'styles')
     styleTransform = xsltproc.createStyleTransform(styleFiles.split())
     if styleTransform == None:
         print i18n.get('no_style_file')
         return
 
     # Create the dictionary of stylesheet parameters
-    styleParams = xsltproc.createParameterDict(target, directory)
+    styleParams = xsltproc.createParameterDict(target, dirObj)
 
     # Create a list with the param dictionaries to use in the different versions
     # to be created.
     paramDict = []
-    produceValues = set(directory.getProperty(target, 'produce').split())
+    produceValues = set(dirObj.getProperty(target, 'produce').split())
     if 'regular' in produceValues:
         # Create the regular version, no additional parameters needed
         paramDict.append(({}, ''))
     if 'solution' in produceValues:
         paramDict.append(({'solutions.include.guide': "'yes'",
-                           'ada.testquestions.include.solutions': "'yes'"},
+                           'adagio.testquestions.include.solutions': "'yes'"},
                           '_solution'))
     if 'pguide' in produceValues:
         paramDict.append(({'solutions.include.guide': "'yes'",
-                           'ada.testquestions.include.solutions': "'yes'",
+                           'adagio.testquestions.include.solutions': "'yes'",
                            'professorguide.include.guide': "'yes'",
-                           'ada.testquestions.include.id': "'yes'",
-                           'ada.testquestions.include.history': "'yes'"},
+                           'adagio.testquestions.include.id': "'yes'",
+                           'adagio.testquestions.include.history': "'yes'"},
                           '_pguide'))
 
     # Apply all these transformations.
     xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams,
-                               rawFiles, target, directory, paramDict)
+                               rawFiles, target, dirObj, paramDict)
 
     return
 
-def clean(target, directory):
+def clean(target, dirObj):
     """
     Clean the files produced by this rule
     """
 
-    adagio.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, dirObj, 'Cleaning')
 
     # Get the files to process
-    toProcess = rules.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, dirObj)
     if toProcess == []:
         return
 
@@ -126,7 +126,7 @@ def clean(target, directory):
         rawFiles.extend(resultFiles)
 
     suffixes = []
-    produceValues = set(directory.getProperty(target, 'produce').split())
+    produceValues = set(dirObj.getProperty(target, 'produce').split())
     if 'regular' in produceValues:
         # Delete the regular version
         suffixes.append('')
@@ -137,14 +137,14 @@ def clean(target, directory):
         # Delete the professor guide
         suffixes.append('_pguide')
 
-    xsltproc.doClean(target, directory, rawFiles, suffixes)
+    xsltproc.doClean(target, dirObj, rawFiles, suffixes)
 
     # Clean also the produced files
     map(lambda x: rules.remove(x), rawFiles)
 
     return
 
-def doShuffle(toProcess, directory):
+def doShuffle(toProcess, dirObj):
     # Every source file given is processed to know how many permutations will be
     # produced.
     rawFiles = []
@@ -158,7 +158,7 @@ def doShuffle(toProcess, directory):
         # Update the dependencies (apply update to all elements in resultFiles)
         try:
             sources = set([fname])
-            sources.update(directory.option_files)
+            sources.update(dirObj.option_files)
             map(lambda x: dependency.update(x, sources), resultFiles)
         except etree.XMLSyntaxError, e:
             print i18n.get('severe_parse_error').format(fName)
@@ -197,7 +197,3 @@ def doGetShuffledFiles(fname):
     # Create the raw files that will be produced
     (h, t) = os.path.splitext(fname)
     return map(lambda x: h + '_' + str(x) + t, range(1, n + 1))
-
-# Execution as script
-if __name__ == "__main__":
-    Execute(module_prefix, directory.getDirectoryObject('.'))

@@ -48,7 +48,7 @@ documentation = {
 
 has_executable = rules.which(next(b for (a, b, c) in options if a == 'exec'))
 
-def Execute(target, directory):
+def Execute(target, dirObj):
     """
     Execute the rule in the given directory
     """
@@ -58,17 +58,17 @@ def Execute(target, directory):
     # If the executable is not present, notify and terminate
     if not has_executable:
         print i18n.get('no_executable').format(options['exec'])
-        if directory.options.get(target, 'partial') == '0':
+        if dirObj.options.get(target, 'partial') == '0':
             sys.exit(1)
         return
 
     # Get the files to process (all *.xcf in the current directory)
-    toProcess = glob.glob(os.path.join(directory.current_dir, '*.xcf'))
+    toProcess = glob.glob(os.path.join(dirObj.current_dir, '*.xcf'))
     if toProcess == []:
-        adagio.logDebug(target, directory, i18n.get('no_file_to_process'))
+        adagio.logDebug(target, dirObj, i18n.get('no_file_to_process'))
         return
 
-    scriptFileName = directory.getProperty(target, 'script')
+    scriptFileName = dirObj.getProperty(target, 'script')
     if not os.path.isfile(scriptFileName):
         print i18n.get('file_not_found').format(scriptFileName)
         sys.exit(1)
@@ -76,9 +76,9 @@ def Execute(target, directory):
 
     # Loop over the source files to see if an execution is needed
     dstFiles = []
-    dstDir = directory.getProperty(target, 'src_dir')
+    dstDir = dirObj.getProperty(target, 'src_dir')
     for datafile in toProcess:
-        adagio.logDebug(target, directory, ' EXEC ' + datafile)
+        adagio.logDebug(target, dirObj, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -92,7 +92,7 @@ def Execute(target, directory):
         # Check for dependencies!
         try:
             sources = set([datafile])
-            sources.update(directory.option_files)
+            sources.update(dirObj.option_files)
             dependency.update(dstFile, sources)
         except etree.XMLSyntaxError, e:
             print i18n.get('severe_parse_error').format(fName)
@@ -109,8 +109,8 @@ def Execute(target, directory):
 
     # If the execution is needed
     if dstFiles != []:
-        executable = directory.getProperty(target, 'exec')
-        extraArgs = directory.getProperty(target, 'extra_arguments')
+        executable = dirObj.getProperty(target, 'exec')
+        extraArgs = dirObj.getProperty(target, 'extra_arguments')
 
         # Proceed with the execution
         fnames = ' '.join([os.path.basename(x) for x in dstFiles])
@@ -119,7 +119,7 @@ def Execute(target, directory):
         command = [executable, '--no-data', '--no-fonts', '--no-interface', 
                    '-b', '-']
 
-        rules.doExecution(target, directory, command, None, None,
+        rules.doExecution(target, dirObj, command, None, None,
                             stdout = adagio.userLog, stdin = scriptFile)
 
         # If dstFile does not exist, something went wrong
@@ -137,22 +137,22 @@ def Execute(target, directory):
 
     return
 
-def clean(target, directory):
+def clean(target, dirObj):
     """
     Clean the files produced by this rule
     """
     
-    adagio.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, dirObj, 'Cleaning')
 
     # Get the files to process
-    toProcess = glob.glob(os.path.join(directory.current_dir, '*.xcf'))
+    toProcess = glob.glob(os.path.join(dirObj.current_dir, '*.xcf'))
     if toProcess == []:
-        adagio.logDebug(target, directory, i18n.get('no_file_to_process'))
+        adagio.logDebug(target, dirObj, i18n.get('no_file_to_process'))
         return
 
     # Loop over the source files to see if an execution is needed
     dstFiles = []
-    dstDir = directory.getProperty(target, 'src_dir')
+    dstDir = dirObj.getProperty(target, 'src_dir')
     for datafile in toProcess:
 
         # If file not found, terminate
@@ -171,6 +171,3 @@ def clean(target, directory):
 
     return
     
-# Execution as script
-if __name__ == "__main__":
-    Execute(module_prefix, directory.getDirectoryObject('.'))

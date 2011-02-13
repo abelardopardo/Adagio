@@ -23,7 +23,7 @@
 #
 import sys, os, re, ConfigParser, atexit
 
-import properties, i18n
+import adagio, properties, i18n
 
 # Table to store tuples:
 #   path: Directory object
@@ -92,7 +92,7 @@ def dump(self):
 def findProjectDir(pfile, startdir):
     """
     Function that traverses the directories upward until the file name given by
-    the option ada.projectfile is found.
+    the option adagio.projectfile is found.
 
     WARNING: This function returns always an ABSOLUTE path
     """
@@ -122,7 +122,7 @@ atexit.register(flushCreatedDirs);
 class Directory:
     pass
     """
-    Class to represent a directory where ADA executes some rules.
+    Class to represent a directory where Adagio executes some rules.
 
     TODO:
 
@@ -183,50 +183,50 @@ class Directory:
         #
         # STEP 1: Load the default options from the Rule files
         #
-        properties.LoadDefaults(self.options)
+        adagio.LoadDefaults(self.options)
 
         #
-        # STEP 2: Load the ~/.adarc if any
+        # STEP 2: Load the ~/.adagiorc if any
         #
-        userAdaConfig = os.path.expanduser('~/.adarc') 
-        if os.path.isfile(userAdaConfig):
+        userAdagioConfig = os.path.expanduser('~/.adagiorc')
+        if os.path.isfile(userAdagioConfig):
             # Swallow user file on top of global options, and if trouble, report
             # up
             try:
                 (newFiles, b) = properties.loadConfigFile(self.options,
-                                                          userAdaConfig,
+                                                          userAdagioConfig,
                                                           self.alias)
                 self.option_files.update(newFiles)
             except ValueError, e:
-                print i18n.get('severe_parse_error').format(userAdaConfig)
+                print i18n.get('severe_parse_error').format(userAdagioConfig)
                 print str(e)
                 sys.exit(3)
 
         #
         # STEP 3: Options given in the project file
         #
-        adaProjFile = os.path.join(self.current_dir,
-                                   configDefaults['project_home'],
-                                   self.options.get(adagio.module_prefix,
-                                                    'project_file'))
-        if os.path.isfile(adaProjFile):
+        adagioProjFile = os.path.join(self.current_dir,
+                                      configDefaults['project_home'],
+                                      self.options.get(adagio.module_prefix,
+                                                       'project_file'))
+        if os.path.isfile(adagioProjFile):
             try:
                 (newFiles, b) = \
                     properties.loadConfigFile(self.options,
-                                              os.path.abspath(adaProjFile),
+                                              os.path.abspath(adagioProjFile),
                                               self.alias)
                 self.option_files.update(newFiles)
             except ValueError, e:
-                print i18n.get('severe_parse_error').format(adaProjFile)
+                print i18n.get('severe_parse_error').format(adagioProjFile)
                 print str(e)
                 sys.exit(3)
 
         #
         # STEP 4: Options given in the Properties file in the directory
         #
-        adaPropFile = self.options.get('ada', 'property_file')
+        adagioPropFile = self.options.get('adagio', 'property_file')
         propAbsFile = os.path.abspath(os.path.join(self.current_dir,
-                                                   adaPropFile))
+                                                   adagioPropFile))
         if os.path.exists(propAbsFile):
             try:
                 (newFiles, sections) = properties.loadConfigFile(self.options,
@@ -241,9 +241,9 @@ class Directory:
             self.section_list = sections
         else:
             # If there is no rule file, notify and execute help target
-            adagio.logInfo('Directory', None, 'No ' + adaPropFile + \
+            adagio.logInfo('Directory', None, 'No ' + adagioPropFile + \
                             ' found in ' + self.current_dir)
-            print i18n.get('cannot_find_properties').format(adaPropFile,
+            print i18n.get('cannot_find_properties').format(adagioPropFile,
                                                             self.current_dir)
             self.section_list = []
 
@@ -264,11 +264,11 @@ class Directory:
             # Insert the new assignment in options of the directory
             properties.setProperty(self.options, sn, on, ov)
 
-        # Compare ADA versions to see if execution is allowed
-        if not self.isCorrectAdaVersion():
+        # Compare Adagio versions to see if execution is allowed
+        if not self.isCorrectAdagioVersion():
             version = self.options.get(adagio.module_prefix, 'version')
             adagio.logError('Directory', None, \
-                             'ERROR: Incorrect Ada Version (' + version + ')')
+                             'ERROR: Incorrect Adagio Version (' + version + ')')
             print i18n.get('incorrect_version').format(version)
             sys.exit(3)
 
@@ -287,10 +287,12 @@ class Directory:
         """
         return
 
-    def isCorrectAdaVersion(self):
-        """ Method to check if the curren ada version is within the potentially
-        limited values specified in variables ada.minimum_version,
-        ada.maximum_version and ada.exact_version"""
+    def isCorrectAdagioVersion(self):
+        """
+        Method to check if the curren adagio version is within the potentially
+        limited values specified in variables adagio.minimum_version,
+        adagio.maximum_version and adagio.exact_version
+        """
 
         global module_prefix
 
@@ -353,12 +355,12 @@ class Directory:
         self.executing = True
 
         # If no targets are given, choose the default ones, that is, ignore:
-        # - ada
+        # - adagio
         # - clean*
         # - local*
         #
         toExecTargets = [x for x in self.section_list
-                         if not re.match('^ada$', x) and
+                         if not re.match('^adagio$', x) and
                          not re.match('^clean(\.?\S+)?$', x) and
                          not re.match('^local(\.?\S+)?$', x) and
                          not re.match('^rsync(\.?\S+)?$', x)]
@@ -393,9 +395,9 @@ class Directory:
         adagio.logDebug('Directory', self, '  Targets: ' + str(finalTargets))
 
         # If after all these preparations, finalTargets is empty, help is
-        # needed, hardwire the target to ada.help.
+        # needed, hardwire the target to adagio.help.
         if finalTargets == []:
-            finalTargets = ['ada.help']
+            finalTargets = ['adagio.help']
 
         adagio.logDebug('Directory', self,
                      ' to execute ' + ' '.join(finalTargets))
@@ -410,7 +412,7 @@ class Directory:
                 continue
 
             # Execute the target
-            properties.Execute(target_name, self, pad)
+            adagio.Execute(target_name, self, pad)
 
             # Insert executed target in cache
             self.executed_targets.add(target_name)

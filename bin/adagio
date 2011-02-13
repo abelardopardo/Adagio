@@ -36,9 +36,6 @@ _dirName = os.path.abspath(os.path.join(_dirName, '..'))
 sys.path.insert(0, _dirName)
 import adagio
 
-print GOOD
-exit
-
 def main():
     """
     The manual page for this method is inside the localization package. Check
@@ -58,7 +55,7 @@ def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], "c:d:s:f:hxp", [])
     except getopt.GetoptError, e:
-        pydoc.pager(e.msg + '\n' + I18n.get('adagio.help'))
+        pydoc.pager(e.msg + '\n' + adagio.i18n.get('adagio.help'))
         sys.exit(2)
 
     # Parse the options
@@ -74,7 +71,7 @@ def main():
             try:
                 numValue = int(value)
             except ValueError, e:
-                print I18n.get('incorrect_debug_option')
+                print adagio.i18n.get('incorrect_debug_option')
 	        print str(e)
                 sys.exit(3)
             (a, b) = adagio.config_defaults['debug_level']
@@ -83,12 +80,12 @@ def main():
         # Change directory
         elif optstr == "-f":
             if not os.path.isfile(value):
-                print I18n.get('file_not_found').format(value)
+                print adagio.i18n.get('file_not_found').format(value)
                 sys.exit(1)
             (toDir, cFile) = os.path.split(value)
             # If the dir is not empty and does not exist, terminate
             if toDir != '' and not os.path.isdir(toDir):
-                print I18n.get('dir_not_found').format(toDir)
+                print adagio.i18n.get('dir_not_found').format(toDir)
                 sys.exit(1)
             # If dir not empty, change to that dir
             if toDir != '':
@@ -99,7 +96,7 @@ def main():
 
         # Dump the manual page
         elif optstr == "-h" or optstr == "-x":
-            pydoc.pager(I18n.get('adagio.help'))
+            pydoc.pager(adagio.i18n.get('adagio.help'))
             sys.exit(3)
 
         # Allow for partial execution (if some tools are missing
@@ -112,8 +109,8 @@ def main():
             sname_value = value.split()
             # If incorrect number of arguments, stop processing
             if len(sname_value) != 3:
-                pydoc.pager(I18n.get('incorrect_arg_num').format('-s option')
-                               + '\n' + I18n.get('adagio.help'))
+                pydoc.pager(adagio.i18n.get('incorrect_arg_num').format('-s option')
+                               + '\n' + adagio.i18n.get('adagio.help'))
                 sys.exit(3)
             optionsToSet.append(' '.join(sname_value))
 
@@ -144,8 +141,8 @@ def main():
     #######################################################################
 
     # Create the directory
-    dirObject = Directory.getDirectoryObject(os.getcwd(),
-                                             sorted(optionsToSet))
+    dirObject = adagio.directory.getDirectoryObject(os.getcwd(),
+                                                    sorted(optionsToSet))
         
     # Execute its targets
     try:

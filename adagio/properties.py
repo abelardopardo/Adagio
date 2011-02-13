@@ -25,7 +25,7 @@ import sys, os, re, datetime, ConfigParser, StringIO, ordereddict, atexit
 import codecs
 from lxml import etree
 
-import i18n
+import adagio, i18n
 
 # Prefix to use in the module
 module_prefix = 'properties'
@@ -35,7 +35,7 @@ module_prefix = 'properties'
 # orderedict.OrderedDict))
 _configParsers = {}
 
-_ada_given_definiton_section_name = "__ADA_GIVEN_DEFINITIONS_SECTION_NAME__"
+_adagio_given_definiton_section_name = "__ADAGIO_GIVEN_DEFINITIONS_SECTION_NAME__"
 
 def getConfigParser(fileName):
     """
@@ -194,7 +194,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
                 print i18n.get('error_option_addition').format(sname + '.' +
                                                                oname)
                 sys.exit(1)
-            finalValue = setProperty(config, unaliased, oname, ovalue, 
+            finalValue = setProperty(config, unaliased, oname, ovalue,
                                      fileName = filename)
 
             # Consider the special case of the alias option
@@ -277,7 +277,7 @@ def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
         result[1].extend(b)
     return result
 
-def specialTargets(target, directory, moduleName, pad = None):
+def specialTargets(target, dirObj, moduleName, pad = None):
     """
     Check if the requested target is special:
     - dump
@@ -301,43 +301,19 @@ def specialTargets(target, directory, moduleName, pad = None):
     # If requesting help, dump msg and terminate
     if doubleTarget or re.match('.+\.help$', target):
         msg = etree.fromstring('<book>' +
-                                getProperty(directory.options, prefix,
+                                getProperty(dirObj.options, prefix,
                                             'help') + '</book>')
         print i18n.get('doc_preamble').format(prefix) + '\n' + \
-            etree.tostring(msg, encoding = "UTF-8", 
+            etree.tostring(msg, encoding = "UTF-8",
                            method = "text").decode("utf8") + '\n'
         hit = True
 
     # If requesting var dump, do it and finish
     if doubleTarget or re.match('.+\.dump$', target):
-        dumpOptions(target, directory, prefix)
+        dumpOptions(target, dirObj, prefix)
         hit =  True
 
     return hit
-
-def cleanTargets(target, directory, moduleName, pad = None):
-    """
-    Execute the clean targets. Return True if a target has been executed
-    """
-
-    # CLEAN
-    if re.match('.+\.clean$', target):
-        eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
-             + '\', directory)')
-        return True
-
-    # DEEPCLEAN
-    if re.match('.+\.deepclean$', target):
-        if target.startswith('gotodir'):
-            # gotodir propagates the pad for the deep
-            eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', target)
-                 + '\', directory, True, pad)')
-        else:
-            eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', target)
-                 + '\', directory)')
-        return True
-
-    return False
 
 def expandAlias(target, aliasDict):
     """
@@ -397,13 +373,13 @@ def getProperty(config, section, option):
     name.
     """
 
-    global _ada_given_definiton_section_name
+    global _adagio_given_definiton_section_name
 
     # If the section is a.b.c, loop asking if we have the option a.b.c.option,
     # then a.b.option, and then a.option.
     partialSection = section
     while partialSection != '':
-        if config.has_option(_ada_given_definiton_section_name, 
+        if config.has_option(_adagio_given_definiton_section_name,
                              partialSection + '.' + option):
             result = config.get(partialSection, option)
             return result
@@ -435,8 +411,8 @@ def setProperty(config, section, option, value, fileName = None,
 
     # Obtain the section prefix
     sectionPrefix = section.split('.')[0]
-    
-    # Check if the section is allowed, 
+
+    # Check if the section is allowed,
     if (not createSection) and (not config.has_section(sectionPrefix)):
         # Section prefix does not exist in config, and creation is not allowed
         raise ValueError
@@ -460,10 +436,10 @@ def setProperty(config, section, option, value, fileName = None,
     # Insert the option
     config.set(section, option, value)
 
-    # Register the section.option also in the __ADA_GIVEN_SECTION__
-    config.set(_ada_given_definiton_section_name,
+    # Register the section.option also in the __ADAGIO_GIVEN_SECTION__
+    config.set(_adagio_given_definiton_section_name,
                section + '.' + option, value)
-    
+
     # Get the option just inserted to verify interpolation errors
     try:
         finalValue = config.get(section, option)
@@ -483,24 +459,24 @@ def initialConfig(configDefaults):
     name to be treated as default values. The reason for not using the DEFAULT
     section of ConfigParser is because there is no way to know if a section.name
     has a value that appeared explicitly in a config file, or it derives from
-    the DEFAULT. However, both sections are kept (DEFAULTS and the ADA internal)
-    because interpolations may require values in DEFAULS"""
+    the DEFAULT. However, both sections are kept (DEFAULTS and the Adagio
+    internal) because interpolations may require values in DEFAULS"""
 
-    global _ada_given_definiton_section_name
+    global _adagio_given_definiton_section_name
 
     result = ConfigParser.SafeConfigParser(configDefaults,
                                            ordereddict.OrderedDict)
 
-    # Add the special section for ADA defaults
-    result.add_section(_ada_given_definiton_section_name)
+    # Add the special section for Adagio defaults
+    result.add_section(_adagio_given_definiton_section_name)
 
-    # Add the 'ada' section as well and set the first property
+    # Add the 'adagio' section as well and set the first property
     result.add_section(adagio.module_prefix)
     result.set(adagio.module_prefix, 'home', adagio.home)
 
     return result
-        
-def dumpOptions(target, directory, prefix):
+
+def dumpOptions(target, dirObj, prefix):
     """
     Dump the value of the options affecting the computations
     """
@@ -514,6 +490,6 @@ def dumpOptions(target, directory, prefix):
     if target == '':
         target = prefix
 
-    for (on, ov) in sorted(directory.options.items(target)):
+    for (on, ov) in sorted(dirObj.options.items(target)):
         print ' -', on, '=', ov
 

@@ -29,7 +29,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-import directory, i18n, dependency, rules
+import adagio, directory, i18n, dependency, rules
 
 # Prefix to use for the options
 module_prefix = 'copy'
@@ -43,43 +43,43 @@ documentation = {
     Takes the "files" in "src_dir" and copies them to "dst_dir"
     """}
 
-def Execute(target, directory):
+def Execute(target, dirObj):
     """
     Execute the rule in the given directory
     """
 
     # Get the files to process, if empty, terminate
-    toProcess = rules.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, dirObj)
     if toProcess == []:
         return
-    
+
     # Perform the copy
-    doCopy(target, directory, toProcess, 
-           directory.getProperty(target, 'src_dir'), 
-           directory.getProperty(target, 'dst_dir'))
+    doCopy(target, dirObj, toProcess,
+           dirObj.getProperty(target, 'src_dir'),
+           dirObj.getProperty(target, 'dst_dir'))
 
     return
 
-def clean(target, directory):
+def clean(target, dirObj):
     """
     Clean the files produced by this rule
     """
 
-    adagio.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, dirObj, 'Cleaning')
 
     # Get the files to process
-    toProcess = rules.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, dirObj)
     if toProcess == []:
         return
 
     # Loop over all source files to process
-    doClean(target, directory, toProcess, 
-            directory.getProperty(target, 'src_dir'), 
-            directory.getProperty(target, 'dst_dir'))
+    doClean(target, dirObj, toProcess,
+            dirObj.getProperty(target, 'src_dir'),
+            dirObj.getProperty(target, 'dst_dir'))
 
     return
 
-def doCopy(target, directory, toProcess, srcDir, dstDir):
+def doCopy(target, dirObj, toProcess, srcDir, dstDir):
     """
     Effectively perform the copy. The functionality is in this function because
     it is used also by the export rule.
@@ -95,7 +95,7 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
         # Remember if the source is a directory
         isDirectory = os.path.isdir(datafile)
 
-        adagio.logDebug(target, directory, ' EXEC ' + datafile)
+        adagio.logDebug(target, dirObj, ' EXEC ' + datafile)
 
         # If source is not found, terminate
         if not os.path.exists(datafile):
@@ -115,7 +115,7 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
         # Check for dependencies!
         try:
             sources = set([datafile])
-            sources.update(directory.option_files)
+            sources.update(dirObj.option_files)
             dependency.update(dstFile, sources)
         except etree.XMLSyntaxError, e:
             print i18n.get('severe_parse_error').format(fName)
@@ -131,9 +131,9 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
         print i18n.get('copying').format(os.path.basename(dstFile))
 
         # Copying the file/dir
-        adagio.logDebug(target, directory, 'Copy ' + datafile + ' ' +
+        adagio.logDebug(target, dirObj, 'Copy ' + datafile + ' ' +
                      dstFile)
-        
+
         if os.path.isdir(datafile):
             # Copy source tree to dst tree
             distutils.dir_util.copy_tree(datafile, dstFile)
@@ -155,7 +155,7 @@ def doCopy(target, directory, toProcess, srcDir, dstDir):
                 print str(e)
                 sys.exit(1)
 
-def doClean(target, directory, toProcess, srcDir, dstDir):
+def doClean(target, dirObj, toProcess, srcDir, dstDir):
     """
     Function to execute the core of the clean operation. It is in its own
     function because it is used also by the export rule.
@@ -167,7 +167,7 @@ def doClean(target, directory, toProcess, srcDir, dstDir):
 
     for datafile in toProcess:
 
-        adagio.logDebug(target, directory, ' EXEC ' + datafile)
+        adagio.logDebug(target, dirObj, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.exists(datafile):
@@ -188,7 +188,3 @@ def doClean(target, directory, toProcess, srcDir, dstDir):
 
         # Proceed with the cleaning (dump the file name being deleted)
         rules.remove(dstFile)
-
-# Execution as script
-if __name__ == "__main__":
-    Execute(module_prefix, directory.getDirectoryObject('.'))

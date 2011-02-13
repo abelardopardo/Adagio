@@ -23,7 +23,7 @@
 #
 import os, re, sys, glob
 
-import directory, i18n, dependency, properties, treecache
+import adagio, directory, i18n, dependency, properties, treecache
 
 # Prefix to use for the options
 module_prefix = 'gotodir'
@@ -43,7 +43,7 @@ documentation = {
     export.dst_dir in the remote directory.
     """}
 
-def Execute(target, directory, pad = None):
+def Execute(target, dirObj, pad = None):
     """
     Execute the rule in the given directory
     """
@@ -52,17 +52,17 @@ def Execute(target, directory, pad = None):
         pad = ''
 
     (toProcess, remoteTargets,
-     optionsToSet, newExportDir) = prepareTarget(target, directory)
+     optionsToSet, newExportDir) = prepareTarget(target, dirObj)
 
     # Loop over each directory
     for dirName in toProcess:
-        adagio.logInfo(target, directory, 'RECUR: ' + dirName)
-        dirObj = directory.getDirectoryObject(dirName, optionsToSet)
-        dirObj.Execute(remoteTargets, pad + '  ')
+        adagio.logInfo(target, dirObj, 'RECUR: ' + dirName)
+        remoteDir = directory.getDirectoryObject(dirName, optionsToSet)
+        remoteDir.Execute(remoteTargets, pad + '  ')
 
     return
 
-def clean(target, directory, deepClean = False, pad = None):
+def clean(target, dirObj, deepClean = False, pad = None):
     """
     Clean the files produced by this rule
     """
@@ -72,11 +72,10 @@ def clean(target, directory, deepClean = False, pad = None):
     if pad == None:
         pad = ''
 
-    adagio.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, dirObj, 'Cleaning')
 
     (toProcess, remoteTargets,
-     optionsToSet, newExportDir) = prepareTarget(target,
-                                                 directory)
+     optionsToSet, newExportDir) = prepareTarget(target, dirObj)
 
     # When cleaning, targets should be executed in reversed order
     remoteTargets.reverse()
@@ -98,35 +97,35 @@ def clean(target, directory, deepClean = False, pad = None):
         # If the clean is not deep, the target only propagates to those targets
         # of type export and if the newExportDir is this directory (to clean the
         # current directory only). Otherwise, the target is simply ignore.
-        if newExportDir != directory.current_dir:
+        if newExportDir != dirObj.current_dir:
             return
 
         remoteTargets = [x + '.clean'  for x in remoteTargets
                          if x.startswith('export')]
 
-    adagio.logInfo(target, directory,
+    adagio.logInfo(target, dirObj,
                 'Remote Targets = ' + ' '.join(remoteTargets))
 
     # Loop over each directory
     for dirName in toProcess:
 
-        adagio.logInfo(target, directory, 'RECUR: ' + dirName)
-        dirObj = directory.getDirectoryObject(dirName, optionsToSet)
+        adagio.logInfo(target, dirObj, 'RECUR: ' + dirName)
+        remoteObj = directory.getDirectoryObject(dirName, optionsToSet)
 
         # If the clean is not deep and there is no given remote targets, we need
         # to select as targets those that start with 'export'
         if (not deepClean) and (remoteTargets == []):
-            remoteTargets = [x + '.clean' for x in dirObj.section_list
+            remoteTargets = [x + '.clean' for x in remoteObj.section_list
                              if re.match('^export(\..+)?$',
                                          properties.expandAlias(x,
-                                                                dirObj.alias))]
+                                                                remoteObj.alias))]
 
         # Execute the remote targets
-        dirObj.Execute(remoteTargets, pad + '  ')
+        remoteObj.Execute(remoteTargets, pad + '  ')
 
     return
 
-def prepareTarget(target, directory):
+def prepareTarget(target, dirObj):
     """
     Obtain the directories to process, calculate the optiost to set in the
     remote execution and obtain the remote targets.
@@ -138,7 +137,7 @@ def prepareTarget(target, directory):
 
     # Get the directories to process from the files option
     toProcess = []
-    for srcDir in directory.getProperty(target, 'files').split():
+    for srcDir in dirObj.getProperty(target, 'files').split():
         newDirs = glob.glob(srcDir)
         if newDirs == []:
             print i18n.get('file_not_found').format(srcDir)
@@ -147,7 +146,7 @@ def prepareTarget(target, directory):
 
     # Add the files included in files_included_from
     filesIncluded = \
-        obtainXincludes(directory.getProperty(target,
+        obtainXincludes(dirObj.getProperty(target,
                                               'files_included_from').split())
 
     # The list of dirs is extended with a set to avoid duplications
@@ -155,18 +154,18 @@ def prepareTarget(target, directory):
 
     # If there are no files to process stop
     if toProcess == []:
-        adagio.logDebug(target, directory, i18n.get('no_file_to_process'))
+        adagio.logDebug(target, dirObj, i18n.get('no_file_to_process'))
         return (toProcess, [], None, '')
 
     # Translate all paths to absolute paths
     toProcess = map(lambda x: os.path.abspath(x), toProcess)
 
     # Targets to execute in the remote directory
-    remoteTargets = directory.getProperty(target, 'targets').split()
+    remoteTargets = dirObj.getProperty(target, 'targets').split()
 
     # Create the option dict for the remote directories
     optionsToSet = []
-    newExportDir = directory.getProperty(target, 'export_dst')
+    newExportDir = dirObj.getProperty(target, 'export_dst')
     if newExportDir != '':
         # If a new dst_dir has been specified, include the options to modify
         # that variable for each of the targets
@@ -179,7 +178,7 @@ def prepareTarget(target, directory):
             # default
             optionsToSet = ['export dst_dir ' + newExportDir]
 
-    adagio.logInfo(target, directory, 'NEW Options = ' + ', '.join(optionsToSet))
+    adagio.logInfo(target, dirObj, 'NEW Options = ' + ', '.join(optionsToSet))
 
     return (toProcess, remoteTargets, optionsToSet, newExportDir)
 
@@ -233,6 +232,3 @@ def obtainXincludes(files):
 
     return result
 
-# Execution as script
-if __name__ == "__main__":
-    Execute(module_prefix, directory.getDirectoryObject('.'))

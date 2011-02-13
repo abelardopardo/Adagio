@@ -24,7 +24,7 @@
 import os, re, sys, StringIO
 from lxml import etree
 
-import directory, i18n, dependency, rules, treecache
+import adagio, directory, i18n, dependency, rules, treecache
 
 # Prefix to use for the options
 module_prefix = 'xslt'
@@ -32,7 +32,7 @@ module_prefix = 'xslt'
 # List of tuples (varname, default value, description string)
 options = [
     ('styles',
-     '%(home)s%(file_separator)sADA_Styles%(file_separator)sDocbookProfile.xsl',
+     '%(home)s%(file_separator)sAdagio_Styles%(file_separator)sDocbookProfile.xsl',
      i18n.get('xslt_style_file')),
     ('output_format', 'html', i18n.get('output_format')),
     ('extra_arguments', '', i18n.get('extra_arguments').format('Xsltproc'))
@@ -72,44 +72,44 @@ documentation = {
   &lt;xsl:param name="nameN"&gt;valueN&lt;/xsl:param&gt;
 """}
 
-def Execute(target, directory):
+def Execute(target, dirObj):
     """
     Execute the rule in the given directory
     """
 
     # Get the files to process, if empty, terminate
-    toProcess = rules.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, dirObj)
     if toProcess == []:
         return
 
     # Prepare the style transformation
-    styleFiles = directory.getProperty(target, 'styles').split()
+    styleFiles = dirObj.getProperty(target, 'styles').split()
     styleTransform = createStyleTransform(styleFiles)
     if styleTransform == None:
         print i18n.get('no_style_file')
         return
 
     # Create the dictionary of stylesheet parameters
-    styleParams = createParameterDict(target, directory)
+    styleParams = createParameterDict(target, dirObj)
 
     doTransformations(styleFiles, styleTransform, styleParams,
-                      toProcess, target, directory)
+                      toProcess, target, dirObj)
 
     return
 
-def clean(target, directory):
+def clean(target, dirObj):
     """
     Clean the files produced by this rule
     """
 
-    adagio.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, dirObj, 'Cleaning')
 
     # Get the files to process
-    toProcess = rules.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, dirObj)
     if toProcess == []:
         return
 
-    doClean(target, directory, toProcess)
+    doClean(target, dirObj, toProcess)
 
     return
 
@@ -120,7 +120,7 @@ def createStyleTransform(styleList, srcDir = None):
     of them imported.
     """
 
-    # Prepare style files (locate styles in ADA/ADA_Styles if needed
+    # Prepare style files (locate styles in HOME/Adagio_Styles if needed
     styles = []
     for name in styleList:
         styles.append(dependency.locateFile(name, srcDir))
@@ -153,7 +153,7 @@ def createStyleTransform(styleList, srcDir = None):
     # Get the transformation object
     return treecache.findOrAddTransform(styleFile)
 
-def createParameterDict(target, directory):
+def createParameterDict(target, dirObj):
     """
     Function that creates the dictionary with all the parameters required to
     apply the stylesheet.
@@ -161,16 +161,16 @@ def createParameterDict(target, directory):
 
     # Create the dictionary of stylesheet parameters
     styleParams = {}
-    styleParams['ada.home'] =  "\'" + \
-        directory.getProperty(adagio.module_prefix, 'home') + "\'"
+    styleParams['adagio.home'] =  "\'" + \
+        dirObj.getProperty(adagio.module_prefix, 'home') + "\'"
     styleParams['basedir'] =  "\'" + \
-        directory.getProperty(adagio.module_prefix, 'basedir') + "\'"
+        dirObj.getProperty(adagio.module_prefix, 'basedir') + "\'"
 
-    # Calculate ada.project.home as a relative path with respect to the project
-    # home
-    relProjectHome = os.path.relpath(directory.getProperty(adagio.module_prefix,
+    # Calculate adagio.project.home as a relative path with respect to the
+    # project home
+    relProjectHome = os.path.relpath(dirObj.getProperty(adagio.module_prefix,
                                                               'project_home'),
-                                     directory.current_dir)
+                                     dirObj.current_dir)
     # Attach always the slash at the end to allow the stylesheets to assume it
     # and that way, they work in the case of an empty path.
     relProjectHome += '/'
@@ -179,12 +179,12 @@ def createParameterDict(target, directory):
     if relProjectHome == './':
         relProjectHome = ''
 
-    adagio.logDebug('Xsltproc', None, 'ada.project.home ' + relProjectHome)
-    styleParams['ada.project.home'] =  "\'" + relProjectHome + "\'"
+    adagio.logDebug('Xsltproc', None, 'adagio.project.home ' + relProjectHome)
+    styleParams['adagio.project.home'] =  "\'" + relProjectHome + "\'"
 
-    styleParams['ada.current.datetime'] = "\'" + \
-        directory.getProperty(adagio.module_prefix, 'current_datetime') + "\'"
-    profileRevision = directory.getProperty(adagio.module_prefix,
+    styleParams['adagio.current.datetime'] = "\'" + \
+        dirObj.getProperty(adagio.module_prefix, 'current_datetime') + "\'"
+    profileRevision = dirObj.getProperty(adagio.module_prefix,
                                             'enabled_profiles').split()
     if profileRevision != []:
         styleParams['profile.revision'] = "\'" + \
@@ -192,7 +192,7 @@ def createParameterDict(target, directory):
 
     # Parse the dictionary given in extra_arguments and fold it
     try:
-        extraDict = eval('{' + directory.getProperty(target,
+        extraDict = eval('{' + dirObj.getProperty(target,
                                                      'extra_arguments') +
                          '}')
         for (k, v) in extraDict.items():
@@ -207,11 +207,11 @@ def createParameterDict(target, directory):
         print str(e)
         sys.exit(1)
 
-    adagio.logInfo(target, directory, 'StyleParmas: ' + str(styleParams))
+    adagio.logInfo(target, dirObj, 'StyleParmas: ' + str(styleParams))
     return styleParams
 
 def doTransformations(styles, styleTransform, styleParams, toProcess,
-                      target, directory, paramDict = None):
+                      target, dirObj, paramDict = None):
     """
     Function that given a style transformation, a set of style parameters, a
     list of pairs (parameter dicitonaries, suffix), and a list of files to
@@ -222,7 +222,7 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
 	paramDict = [({}, '')]
 
     # Obtain languages
-    languages = directory.getProperty(target, 'languages').split()
+    languages = dirObj.getProperty(target, 'languages').split()
 
     # If languages is empty, insert an empty string to force one execution
     if languages == []:
@@ -235,14 +235,14 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
     styles = map(lambda x: os.path.abspath(x), styles)
 
     # Obtain the file extension to use
-    outputFormat = processOuputFormat(target, directory)
+    outputFormat = processOuputFormat(target, dirObj)
 
     # Loop over all source files to process (processing one source file over
     # several languages gives us a huge speedup because the XML tree of the
     # source is built only once for all languages.
-    dstDir = directory.getProperty(target, 'dst_dir')
+    dstDir = dirObj.getProperty(target, 'dst_dir')
     for datafile in toProcess:
-        adagio.logDebug(target, directory, ' EXEC ' + datafile)
+        adagio.logDebug(target, dirObj, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -284,7 +284,7 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
                 # it
                 dataTree = singleStyleApplication(datafile, styles,
                                                   styleTransform, styleParams,
-                                                  dstFile, target, directory,
+                                                  dstFile, target, dirObj,
                                                   dataTree)
             # End of for language loop
 
@@ -302,14 +302,14 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
 
 def singleStyleApplication(datafile, styles, styleTransform,
                            styleParams, dstFile, target,
-                           directory, dataTree = None):
+                           dirObj, dataTree = None):
     """
     Apply a transformation to a file with a dictionary
     """
 
     # Check for dependencies!
     sources = set(styles + [datafile])
-    sources.update(directory.option_files)
+    sources.update(dirObj.option_files)
     dependency.update(dstFile, sources)
 
     # If the destination file is up to date, skip the execution
@@ -322,11 +322,11 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     # Parse the data file if needed
     if dataTree == None:
-        adagio.logInfo(target, directory, 'Parsing ' + datafile)
+        adagio.logInfo(target, dirObj, 'Parsing ' + datafile)
         dataTree = treecache.findOrAddTree(datafile, True)
 
     # Apply the transformation
-    xsltprocEquivalent(target, directory, styleParams, datafile, dstFile)
+    xsltprocEquivalent(target, dirObj, styleParams, datafile, dstFile)
     try:
         result = styleTransform(dataTree, **styleParams)
     except etree.XSLTApplyError, e:
@@ -343,7 +343,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     # Write the result
     result.write(dstFile,
-                 encoding = directory.getProperty(adagio.module_prefix,
+                 encoding = dirObj.getProperty(adagio.module_prefix,
                                                   'encoding'),
                  xml_declaration = True,
                  pretty_print = True)
@@ -358,7 +358,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     return dataTree
 
-def doClean(target, directory, toProcess, suffixes = None):
+def doClean(target, dirObj, toProcess, suffixes = None):
     """
     Function to perform the cleanin step
     """
@@ -367,17 +367,17 @@ def doClean(target, directory, toProcess, suffixes = None):
 	suffixes = ['']
 
     # Split the languages and remember if the execution is multilingual
-    languages = directory.getProperty(target, 'languages').split()
+    languages = dirObj.getProperty(target, 'languages').split()
     # If languages is empty, insert an empty string to force one execution
     if languages == []:
         languages = ['']
     multilingual = len(languages) > 1
 
     # Obtain the file extension to use
-    outputFormat = processOuputFormat(target, directory)
+    outputFormat = processOuputFormat(target, dirObj)
 
     # Loop over all source files to process
-    dstDir = directory.getProperty(target, 'dst_dir')
+    dstDir = dirObj.getProperty(target, 'dst_dir')
     for datafile in toProcess:
 
         # Loop over the different suffixes
@@ -401,7 +401,7 @@ def doClean(target, directory, toProcess, suffixes = None):
 
                 rules.remove(dstFile)
 
-def xsltprocEquivalent(target, directory, styleParams, datafile, dstFile):
+def xsltprocEquivalent(target, dirObj, styleParams, datafile, dstFile):
     """
     Dump the xsltproc command line equivalent to the given transformation for
     debugging purposes
@@ -414,9 +414,9 @@ def xsltprocEquivalent(target, directory, styleParams, datafile, dstFile):
     msg += ' STYLE.xsl'
     msg += ' ' + datafile
 
-    adagio.logDebug(target, directory, 'XSLTPROC: ' + msg)
+    adagio.logDebug(target, dirObj, 'XSLTPROC: ' + msg)
 
-def processOuputFormat(target, directory):
+def processOuputFormat(target, dirObj):
     """
     Process output_format option. If it does not include a dot, it is inserted
     as first character. Otherwise, it is left untouched. That way, if the user
@@ -424,11 +424,7 @@ def processOuputFormat(target, directory):
     if the value is '_myversion.xml', the file is generated with a suffix and an
     extension without problems.
     """
-    outputFormat = directory.getProperty(target, 'output_format')
+    outputFormat = dirObj.getProperty(target, 'output_format')
     if outputFormat.find('.') == -1:
         outputFormat = '.' + outputFormat
     return outputFormat
-
-# Execution as script
-if __name__ == "__main__":
-    Execute(module_prefix, directory.getDirectoryObject('.'))

@@ -42,7 +42,7 @@ documentation = {
 
 has_executable = rules.which(next(b for (a, b, c) in options if a == 'exec'))
 
-def Execute(target, directory):
+def Execute(target, dirObj):
     """
     Execute the rule in the given directory
     """
@@ -52,17 +52,17 @@ def Execute(target, directory):
     # If the executable is not present, notify and terminate
     if not has_executable:
         print i18n.get('no_executable').format(options['exec'])
-        if directory.options.get(target, 'partial') == '0':
+        if dirObj.options.get(target, 'partial') == '0':
             sys.exit(1)
         return
 
     # Get the files to process, if empty, terminate
-    toProcess = rules.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, dirObj)
     if toProcess == []:
         return
 
-    executable = directory.getProperty(target, 'exec')
-    outputFormat = directory.getProperty(target, 'output_format')
+    executable = dirObj.getProperty(target, 'exec')
+    outputFormat = dirObj.getProperty(target, 'output_format')
     if not outputFormat in set(['dvi', 'pdf']):
         print i18n.get('program_incorrect_format').format(executable,
                                                           outputFormat)
@@ -70,15 +70,15 @@ def Execute(target, directory):
 
 
     # Prepare the command to execute
-    dstDir = directory.getProperty(target, 'dst_dir')
-    commandPrefix = [executable, '-output-directory=' + dstDir,
+    dstDir = dirObj.getProperty(target, 'dst_dir')
+    commandPrefix = [executable, '-output-dirObj=' + dstDir,
                      '-output-format=' + outputFormat]
-    commandPrefix.extend(directory.getProperty(target,
+    commandPrefix.extend(dirObj.getProperty(target,
                                                   'extra_arguments').split())
 
     # Loop over all source files to process
     for datafile in toProcess:
-        adagio.logDebug(target, directory, ' EXEC ' + datafile)
+        adagio.logDebug(target, dirObj, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -94,26 +94,26 @@ def Execute(target, directory):
         command = commandPrefix + [datafile]
 
         # Perform the execution
-        rules.doExecution(target, directory, command, datafile, dstFile,
+        rules.doExecution(target, dirObj, command, datafile, dstFile,
                             adagio.userLog)
 
     return
 
-def clean(target, directory):
+def clean(target, dirObj):
     """
     Clean the files produced by this rule
     """
 
-    adagio.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, dirObj, 'Cleaning')
 
     # Get the files to process
-    toProcess = rules.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, dirObj)
     if toProcess == []:
         return
 
     # Loop over all source files to process
-    dstDir = directory.getProperty(target, 'dst_dir')
-    outputFormat = directory.getProperty(target, 'output_format')
+    dstDir = dirObj.getProperty(target, 'dst_dir')
+    outputFormat = dirObj.getProperty(target, 'output_format')
     for datafile in toProcess:
 
         # If file not found, terminate
@@ -135,7 +135,3 @@ def clean(target, directory):
             rules.remove(dstFile)
 
     return
-
-# Execution as script
-if __name__ == "__main__":
-    Execute(module_prefix, directory.getDirectoryObject('.'))

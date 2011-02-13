@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, sys, locale, re, datetime, time
+import os, sys, locale, re, datetime, time, ConfigParser
 import directory, i18n, rules, dependency, properties, treecache
 
 # @@@@@@@@@@@@@@@@@@@@  EXTEND  @@@@@@@@@@@@@@@@@@@@
@@ -71,7 +71,7 @@ config_defaults = {
     'partial':            ('0', i18n.get('default_partial')),
     'project_file':       ('Adagio.project', i18n.get('default_project_file')),
     'project_home':       (_currentDir, i18n.get('default_project_home')),
-    'property_file':      ('properties.ddo', i18n.get('default_property_file')),
+    'property_file':      ('Properties.ddo', i18n.get('default_property_file')),
     'src_dir':            (_currentDir, i18n.get('default_src_dir')),
     'version':            ('11.02.1', i18n.get('default_version'))
 }
@@ -79,27 +79,27 @@ config_defaults = {
 # List of tuples (varname, default value, description string)
 options = [
     # Minimum version number required
-    ('minimum_version', '', i18n.get('ada_minimum_version')),
+    ('minimum_version', '', i18n.get('adagio_minimum_version')),
     # Maximum version number required
-    ('maximum_version', '', i18n.get('ada_maximum_version')),
+    ('maximum_version', '', i18n.get('adagio_maximum_version')),
     # Exact version required
-    ('exact_version', '', i18n.get('ada_exact_version')),
+    ('exact_version', '', i18n.get('adagio_exact_version')),
     # Revisions to consider when executing rules
-    ('enabled_profiles', '', i18n.get('ada_enabled_profiles'))
+    ('enabled_profiles', '', i18n.get('adagio_enabled_profiles'))
      ]
 
 documentation = {
     'en': """
-<section id="ada_rule" xreflabel="Top of the Section">
-    <title>The <code>[ada]</code> rule</title>
+<section id="adagio_rule" xreflabel="Top of the Section">
+    <title>The <code>[adagio]</code> rule</title>
 
-    <para>The <code>[ada]</code> rule is an expception because it does not
+    <para>The <code>[adagio]</code> rule is an expception because it does not
     perform any specific task. It is simply a place holder for the
     definition of the following variables:</para>
     """ + rules.optionDoc(options) +
     """
     <para>The variables referring to versions are used to force the execution of
-    ADA only if the version number is after the minimun version, before the
+    Adagio only if the version number is after the minimun version, before the
     maximum version or a specific version (if any of the variable values is not
     empty.</para>
 
@@ -161,7 +161,7 @@ def initialize():
 
     ****************************************"""
 
-    userLog = open('adado.log', 'w')
+    userLog = open('adagio.log', 'w')
     userLog.write('Adagio execution started at ' + time.asctime() + '\n')
     userLog.flush()
 
@@ -202,37 +202,37 @@ def getConfigDefaults(path):
 
     return result
 
-def logFatal(tprefix, directory, msg):
+def logFatal(tprefix, dirObj, msg):
     """
     """
-    log(tprefix, directory, msg, sys._getframe().f_code.co_name)
+    log(tprefix, dirObj, msg, sys._getframe().f_code.co_name)
 
 
-def logError(tprefix, directory, msg):
+def logError(tprefix, dirObj, msg):
     """
     """
-    log(tprefix, directory, msg, sys._getframe().f_code.co_name)
+    log(tprefix, dirObj, msg, sys._getframe().f_code.co_name)
 
 
-def logWarn(tprefix, directory, msg):
+def logWarn(tprefix, dirObj, msg):
     """
     """
-    log(tprefix, directory, msg, sys._getframe().f_code.co_name)
+    log(tprefix, dirObj, msg, sys._getframe().f_code.co_name)
 
 
-def logInfo(tprefix, directory, msg):
+def logInfo(tprefix, dirObj, msg):
     """
     """
-    log(tprefix, directory, msg, sys._getframe().f_code.co_name)
+    log(tprefix, dirObj, msg, sys._getframe().f_code.co_name)
 
 
-def logDebug(tprefix, directory, msg):
+def logDebug(tprefix, dirObj, msg):
     """
     """
-    log(tprefix, directory, msg, sys._getframe().f_code.co_name)
+    log(tprefix, dirObj, msg, sys._getframe().f_code.co_name)
 
 
-def log(tprefix, directory, msg, fname = None):
+def log(tprefix, dirObj, msg, fname = None):
     """
     Function that dumps a message on the userLog file or stdout depending on the
     value of the option debug_value.
@@ -261,8 +261,8 @@ def log(tprefix, directory, msg, fname = None):
 
     # Check for debug levels
     threshold = config_defaults['debug_level'][0]
-    if directory != None:
-        threshold = directory.getProperty(module_prefix, 'debug_level')
+    if dirObj != None:
+        threshold = dirObj.getProperty(module_prefix, 'debug_level')
 
     try:
         threshold = int(threshold)
@@ -274,13 +274,13 @@ def log(tprefix, directory, msg, fname = None):
         output.write(tprefix + ':' + str(msg) + '\n')
         output.flush()
 
-def Execute(target, directory):
+def Execute(target, dirObj):
     """
     This rule is supposed to do nothing, it only contains auxiliary data
     """
     pass
 
-def clean(target, directory):
+def clean(target, dirObj):
     """
     This rule is supposed to do nothing
     """
@@ -292,39 +292,55 @@ def LoadDefaults(config):
     """
     global modules
     global config_defaults
+    global module_prefix
+    global options
+    global documentation
+
+    # Load the package generic default options
+    AppendOptions(config, module_prefix, options, documentation)
 
     # Traverse the modules and load the values in the "option" variable
     for moduleName in modules:
         # Get the three required values from the module
         sectionName = eval(moduleName + '.module_prefix')
-        options = eval(moduleName + '.options')
+        mOptions = eval(moduleName + '.options')
         documentation = eval(moduleName + '.documentation')
 
         # If any of these variables is None, bomb out.
-        if sectionName == None or options == None or documentation == None:
+        if sectionName == None or mOptions == None or documentation == None:
             raise TypeError, 'Incorrect type in LoadDefaults'
 
-        # If the section is already present in the config, never mind
-        try:
-            config.add_section(sectionName)
-        except ConfigParser.DuplicateSectionError:
-            pass
-
-        # Loop over all the default values and add them to the proper sections
-        for (vn, vv, msg) in options:
-            setProperty(config, sectionName, vn, vv,
-                        createSection = True, createOption = True)
-
-        # Add the string for the help
-        helpStr = documentation.get(config_defaults['languages'][0].split()[0])
-        if helpStr == None:
-            helpStr = documentation.get('en')
-        setProperty(config, sectionName, 'help', helpStr,
-                    createSection = True, createOption = True)
+        # Add the optios to the config object
+        AppendOptions(config, sectionName, mOptions, documentation)
 
     return
 
-def Execute(target, directory, pad = None):
+def AppendOptions(config, sectionName, options, documentation):
+    """
+    Function that incorporates to the given config a set of options as part of
+    the given section. The documentation string is added taking into account the
+    current languages.
+    """
+    # If the section is already present in the config, never mind
+    try:
+        config.add_section(sectionName)
+    except ConfigParser.DuplicateSectionError:
+        pass
+
+    # Loop over all the default values and add them to the proper sections
+    for (vn, vv, msg) in options:
+        properties.setProperty(config, sectionName, vn, vv,
+                               createSection = True, createOption = True)
+
+    # Add the string for the help
+    helpStr = documentation.get(config_defaults['languages'][0].split()[0])
+    if helpStr == None:
+        helpStr = documentation.get('en')
+    properties.setProperty(config, sectionName, 'help', helpStr,
+                           createSection = True, createOption = True)
+    return
+
+def Execute(target, dirObj, pad = None):
     """
     Given a target and a directory, it checks which rule needs to be invoked and
    performs the invokation.
@@ -337,7 +353,7 @@ def Execute(target, directory, pad = None):
 
     # Apply the alias expansion
     try:
-        target = expandAlias(target, directory.alias)
+        target = properties.expandAlias(target, dirObj.alias)
     except SyntaxError:
         print i18n.get('error_alias_expression')
         sys.exit(1)
@@ -351,9 +367,9 @@ def Execute(target, directory, pad = None):
         re.match('.+\.helpdump$', target)
 
     # Make sure the target is legal.
-    if not specialTarget and not directory.options.has_section(target):
+    if not specialTarget and not dirObj.options.has_section(target):
         print i18n.get('illegal_target_name').format(t = originalTarget,
-                                                     dl = directory.current_dir)
+                                                     dl = dirObj.current_dir)
         sys.exit(2)
 
     # Get the module prefix (everything up to the first dot) and the target
@@ -376,42 +392,66 @@ def Execute(target, directory, pad = None):
         if modulePrefix != eval(moduleName + '.module_prefix'):
             continue
 
-        logInfo(originalTarget, directory, 'Enter ' + directory.current_dir)
+        logInfo(originalTarget, dirObj, 'Enter ' + dirObj.current_dir)
 
         # Print msg when beginning to execute target in dir
         print pad + 'BB', originalTarget
 
         # Detect and execute "help/dump" targets
-        if specialTargets(target, directory, moduleName, pad):
+        if properties.specialTargets(target, dirObj, moduleName, pad):
             print pad + 'EE', originalTarget
-            logInfo(originalTarget, directory, 'Exit ' + directory.current_dir)
+            logInfo(originalTarget, dirObj, 'Exit ' + dirObj.current_dir)
             return
 
         # Check the condition
-        if not rules.evaluateCondition(targetPrefix, directory.options):
+        if not rules.evaluateCondition(targetPrefix, dirObj.options):
             return
 
         # Detect and execute "clean" targets
-        if cleanTargets(target, directory, moduleName, pad):
+        if cleanTargets(target, dirObj, moduleName, pad):
             print pad + 'EE', originalTarget
-            logInfo(originalTarget, directory, 'Exit ' + directory.current_dir)
+            logInfo(originalTarget, dirObj, 'Exit ' + dirObj.current_dir)
             return
 
         # Execute.
         if moduleName == 'gotodir':
             # gotodir must take into account padding
-            eval(moduleName + '.Execute(target, directory, pad)')
+            eval(moduleName + '.Execute(target, dirObj, pad)')
         else:
-            eval(moduleName + '.Execute(target, directory)')
+            eval(moduleName + '.Execute(target, dirObj)')
 
         # Detect if no module executed the target
         executed = True
 
         print pad + 'EE', originalTarget
 
-        logInfo(originalTarget, directory, 'Exit ' + directory.current_dir)
+        logInfo(originalTarget, dirObj, 'Exit ' + dirObj.current_dir)
 
     if not executed:
         print i18n.get('unknown_target').format(originalTarget)
         sys.exit(1)
+
+def cleanTargets(target, dirObj, moduleName, pad = None):
+    """
+    Execute the clean targets. Return True if a target has been executed
+    """
+
+    # CLEAN
+    if re.match('.+\.clean$', target):
+        eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
+             + '\', dirObj)')
+        return True
+
+    # DEEPCLEAN
+    if re.match('.+\.deepclean$', target):
+        if target.startswith('gotodir'):
+            # gotodir propagates the pad for the deep
+            eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', target)
+                 + '\', dirObj, True, pad)')
+        else:
+            eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', target)
+                 + '\', dirObj)')
+        return True
+
+    return False
 
