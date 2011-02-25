@@ -254,7 +254,7 @@ def log(tprefix, directory, msg, fname = None):
     try:
         threshold = int(threshold)
     except ValueError:
-        print I18n.get('incorrect_debug_option').format(threshold)
+        print I18n.get('incorrect_debug_option')
         sys.exit(1)
 
     if threshold >= int(current):
