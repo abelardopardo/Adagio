@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -28,45 +28,45 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl">
 
-  <xsl:import href="AdaProfile.xsl"/>
+  <xsl:import href="AdagioProfile.xsl"/>
 
-  <xsl:param name="ada.page.header.links"/>
+  <xsl:param name="adagio.page.header.links"/>
 
   <!-- Variable that takes either a para with
-       condition="ada.page.header.links" or the value of the parameter (in
+       condition="adagio.page.header.links" or the value of the parameter (in
        this order) -->
-  <xsl:template name="ada.insert.header.links">
-    <xsl:variable name="ada.page.header.links.var">
+  <xsl:template name="adagio.insert.header.links">
+    <xsl:variable name="adagio.page.header.links.var">
       <xsl:choose>
         <xsl:when
-          test="//*/note[@condition='AdminInfo']/para[@condition='ada.page.header.links']">
-            <xsl:copy-of select="//*/note[@condition='AdminInfo']/para[@condition='ada.page.header.links']"/>
+          test="//*/note[@condition='AdminInfo']/para[@condition='adagio.page.header.links']">
+            <xsl:copy-of select="//*/note[@condition='AdminInfo']/para[@condition='adagio.page.header.links']"/>
         </xsl:when>
         <xsl:otherwise><xsl:copy-of
-        select="exsl:node-set($ada.page.header.links)"/></xsl:otherwise>
+        select="exsl:node-set($adagio.page.header.links)"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    
-    <xsl:variable name="ada.page.header.links.class">
+
+    <xsl:variable name="adagio.page.header.links.class">
       <xsl:choose>
         <xsl:when
-          test="//*/note[@condition='AdminInfo']/para[@condition='ada.page.header.links']/@role">noprint <xsl:value-of
-        select="//*/note[@condition='AdminInfo']/para[@condition='ada.page.header.links']/@role"/></xsl:when>
+          test="//*/note[@condition='AdminInfo']/para[@condition='adagio.page.header.links']/@role">noprint <xsl:value-of
+        select="//*/note[@condition='AdminInfo']/para[@condition='adagio.page.header.links']/@role"/></xsl:when>
           <xsl:otherwise>noprint</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:if test="$ada.page.header.links.var and $ada.page.header.links.var != ''">
+    <xsl:if test="$adagio.page.header.links.var and $adagio.page.header.links.var != ''">
       <div class="noprint" id="header_links">
         <xsl:attribute name="class"><xsl:value-of
-        select="$ada.page.header.links.class"/></xsl:attribute>
-        <xsl:call-template name="ada.profile.subtree">
-          <xsl:with-param name="subtree" 
-            select="exsl:node-set($ada.page.header.links.var)"/>
+        select="$adagio.page.header.links.class"/></xsl:attribute>
+        <xsl:call-template name="adagio.profile.subtree">
+          <xsl:with-param name="subtree"
+            select="exsl:node-set($adagio.page.header.links.var)"/>
         </xsl:call-template>
       </div>
     </xsl:if>
   </xsl:template>
 
-  <xsl:template 
+  <xsl:template
     match="note[@condition='AdminInfo']"/>
 </xsl:stylesheet>

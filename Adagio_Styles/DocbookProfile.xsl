@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -28,18 +28,18 @@
   version="1.0" exclude-result-prefixes="exsl xi">
 
   <!-- This stylesheet is to include some default extensions when using docbook -->
-  <xsl:import 
+  <xsl:import
      href="http://docbook.sourceforge.net/release/xsl/current/xhtml/profile-docbook.xsl"/>
-  <xsl:import 
+  <xsl:import
      href="http://docbook.sourceforge.net/release/xsl/current/xhtml/manifest.xsl"/>
 
   <xsl:import href="es-modify.xsl"/>
 
-  <!-- 
+  <!--
        Allows the inclusion in the audience attribute a date/time range in which
-       the element is visible 
+       the element is visible
        -->
-  <xsl:import href="AdaProfile.xsl"/>
+  <xsl:import href="AdagioProfile.xsl"/>
 
   <!-- Allows the inclusion of Flash videos and MP3 -->
   <xsl:import href="FLVObj.xsl"/>

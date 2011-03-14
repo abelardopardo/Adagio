@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -28,16 +28,16 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl str xi">
 
-  <xsl:param name="ada.page.cssstyle.url"
+  <xsl:param name="adagio.page.cssstyle.url"
     description="Comma separated list of CSS files to include in the HTML
     head. Use file:media:title to specify media and title attribute"/>
 
-  <xsl:param name="ada.page.cssstyle.alternate.url"
+  <xsl:param name="adagio.page.cssstyle.alternate.url"
     description="Comma separated list of alternate CSS files to include in the HTML
     head. Use file:media:title to specify media and title attribute"/>
 
   <!-- Template to generate the CSS stylesheet links -->
-  <xsl:template name="ada_link_rel_css">
+  <xsl:template name="adagio_link_rel_css">
     <xsl:param name="node" select="."/>
     <xsl:param name="rel"  select="'stylesheet'"/>
     <xsl:if test="$node">
@@ -80,7 +80,7 @@
           select="$rel"/></xsl:attribute>
           <xsl:attribute name="href"><xsl:if
           test="not(starts-with($css_url_value, './'))"><xsl:value-of
-          select="$ada.project.home"/></xsl:if><xsl:value-of
+          select="$adagio.project.home"/></xsl:if><xsl:value-of
           select="$css_url_value"/></xsl:attribute>
           <xsl:attribute name="media"><xsl:value-of
           select="$media_attribute_value"/></xsl:attribute>

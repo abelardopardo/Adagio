@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -36,21 +36,21 @@
   <!-- Template to produce author box                                      -->
   <!--                                                                     -->
   <!-- ******************************************************************* -->
-  <xsl:template name="ada.asap.author.box">
-    <div class="ada_asap_author_box">
+  <xsl:template name="adagio.asap.author.box">
+    <div class="adagio_asap_author_box">
       <!-- for ( i = I ; i OPERATOR TESTVALUE; i += INCREMENT ) -->
       <!-- for ( i = 1 ; i &lt;= 4; i += 1 ) -->
       <xsl:call-template name="author.loop">
         <xsl:with-param name="i"         select="'1'"/>
         <xsl:with-param name="increment" select="'1'"/>
         <xsl:with-param name="operator"  select="'&lt;='"/>
-        <xsl:with-param name="testValue" select="$ada.asap.num.authors"/>
+        <xsl:with-param name="testValue" select="$adagio.asap.num.authors"/>
       </xsl:call-template>
-      <xsl:if test="$ada.asap.include.password = 'one'">
-        <div class="ada_asap_author_box_row_single_password">
-          <div class="ada_asap_author_box_data_a">
+      <xsl:if test="$adagio.asap.include.password = 'one'">
+        <div class="adagio_asap_author_box_row_single_password">
+          <div class="adagio_asap_author_box_data_a">
             <xsl:choose>
-              <xsl:when test="$ada.asap.num.authors &gt; 1">
+              <xsl:when test="$adagio.asap.num.authors &gt; 1">
                 <xsl:choose>
                   <xsl:when test="$profile.lang='en'">
                     Any author password
@@ -66,26 +66,26 @@
               </xsl:otherwise>
             </xsl:choose>
           </div>
-          <div class="ada_asap_author_box_data_b">
+          <div class="adagio_asap_author_box_data_b">
             <input type="password" name="asap:password_0" size="20"/>
             <xsl:text> </xsl:text>
           </div>
         </div>
       </xsl:if>
 
-      <xsl:if test="$ada.asap.include.groupname = 'yes'">
-        <div class="ada_asap_author_box_row_groupname">
-          <div class="ada_asap_author_box_data_a">
+      <xsl:if test="$adagio.asap.include.groupname = 'yes'">
+        <div class="adagio_asap_author_box_row_groupname">
+          <div class="adagio_asap_author_box_data_a">
             <xsl:choose>
               <xsl:when test="$profile.lang='en'">Group Nick</xsl:when>
               <xsl:otherwise>Nick de grupo</xsl:otherwise>
             </xsl:choose>
           </div>
-          <div class="ada_asap_author_box_data_b">
+          <div class="adagio_asap_author_box_data_b">
             <input type="text" name="__nick__" size="20">
-              <xsl:if test="$ada.asap.groupname.default.value != ''">
+              <xsl:if test="$adagio.asap.groupname.default.value != ''">
                 <xsl:attribute name="value">
-                  <xsl:value-of select="$ada.asap.groupname.default.value"/>
+                  <xsl:value-of select="$adagio.asap.groupname.default.value"/>
                 </xsl:attribute>
               </xsl:if>
             </input>
@@ -94,15 +94,15 @@
         </div>
       </xsl:if>
 
-      <xsl:if test="$ada.asap.confirmation.email = 'yes'">
-        <div class="ada_asap_author_box_row_confirmation_email">
-          <div class="ada_asap_author_box_data_a">
+      <xsl:if test="$adagio.asap.confirmation.email = 'yes'">
+        <div class="adagio_asap_author_box_row_confirmation_email">
+          <div class="adagio_asap_author_box_data_a">
             <xsl:choose>
               <xsl:when test="$profile.lang='en'">Confirmation Email</xsl:when>
               <xsl:otherwise>Email de confirmación</xsl:otherwise>
             </xsl:choose><sup>*</sup>
           </div>
-          <div class="ada_asap_author_box_data_b">
+          <div class="adagio_asap_author_box_data_b">
             <input type="text" name="asap:Email" size="40"/>
           </div>
         </div>
@@ -168,16 +168,16 @@
 
     <!-- Within a valid iteration -->
     <xsl:if test="$testPassed='true'">
-      <xsl:if test="$ada.asap.num.authors &gt; 1">
-        <div class="ada_asap_author_box_row_author">
-          <div class="ada_asap_author_box_data_a">
+      <xsl:if test="$adagio.asap.num.authors &gt; 1">
+        <div class="adagio_asap_author_box_row_author">
+          <div class="adagio_asap_author_box_data_a">
             <xsl:choose>
               <xsl:when test="$profile.lang='en'">Author <xsl:value-of
               select="$i" /></xsl:when>
               <xsl:otherwise>Autor <xsl:value-of select="$i"/></xsl:otherwise>
             </xsl:choose>
           </div>
-          <div class="ada_asap_author_box_data_b"/>
+          <div class="adagio_asap_author_box_data_b"/>
         </div>
       </xsl:if>
 
@@ -185,10 +185,10 @@
            always the possibility of having the value "none" which means,
            there should be no box with full name info
            -->
-      <div class="ada_asap_author_box_row_author_id">
+      <div class="adagio_asap_author_box_row_author_id">
         <xsl:choose>
-          <xsl:when test="$ada.asap.include.id = 'nia'">
-            <div class="ada_asap_author_box_data_a">
+          <xsl:when test="$adagio.asap.include.id = 'nia'">
+            <div class="adagio_asap_author_box_data_a">
               <xsl:choose>
                 <xsl:when test="$profile.lang='en'">
                   Student ID (9 digits)
@@ -196,7 +196,7 @@
                 <xsl:otherwise>NIA (9 dígitos)</xsl:otherwise>
               </xsl:choose>
             </div>
-            <div class="ada_asap_author_box_data_b">
+            <div class="adagio_asap_author_box_data_b">
               <xsl:element name="input">
                 <xsl:attribute name="type">text</xsl:attribute>
                 <xsl:attribute name="size">25</xsl:attribute>
@@ -205,15 +205,15 @@
               </xsl:element>
             </div>
           </xsl:when>
-          <xsl:when test="$ada.asap.include.id = 'email'">
-            <div class="ada_asap_author_box_data_a">
+          <xsl:when test="$adagio.asap.include.id = 'email'">
+            <div class="adagio_asap_author_box_data_a">
               <xsl:choose>
                 <xsl:when
                   test="$profile.lang='en'">Student Email</xsl:when>
                 <xsl:otherwise>Correo de alumno</xsl:otherwise>
               </xsl:choose>
             </div>
-            <div class="ada_asap_author_box_data_b">
+            <div class="adagio_asap_author_box_data_b">
               <xsl:element name="input">
                 <xsl:attribute name="type">text</xsl:attribute>
                 <xsl:attribute name="size">25</xsl:attribute>
@@ -222,17 +222,17 @@
               </xsl:element>
             </div>
           </xsl:when>
-          <xsl:when test="$ada.asap.include.id = 'custom'">
-            <div class="ada_asap_author_box_data_a">
-              <xsl:value-of select="$ada.asap.id.text"/>
+          <xsl:when test="$adagio.asap.include.id = 'custom'">
+            <div class="adagio_asap_author_box_data_a">
+              <xsl:value-of select="$adagio.asap.id.text"/>
             </div>
-            <div class="ada_asap_author_box_data_b">
+            <div class="adagio_asap_author_box_data_b">
               <xsl:element name="input">
                 <xsl:attribute name="type">text</xsl:attribute>
                 <xsl:attribute name="size"><xsl:value-of
-                select="$ada.asap.id.field.length"/></xsl:attribute>
+                select="$adagio.asap.id.field.length"/></xsl:attribute>
                 <xsl:attribute name="maxlength"><xsl:value-of
-                select="$ada.asap.id.field.length"/></xsl:attribute>
+                select="$adagio.asap.id.field.length"/></xsl:attribute>
                 <xsl:attribute name="name">asap:id_<xsl:value-of select="$i - 1"/></xsl:attribute>
               </xsl:element>
             </div>
@@ -240,15 +240,15 @@
         </xsl:choose>
       </div>
 
-      <xsl:if test="$ada.asap.include.password = 'all'">
-        <div class="ada_asap_author_box_row_password">
-          <div class="ada_asap_author_box_data_a">
+      <xsl:if test="$adagio.asap.include.password = 'all'">
+        <div class="adagio_asap_author_box_row_password">
+          <div class="adagio_asap_author_box_data_a">
             <xsl:choose>
               <xsl:when test="$profile.lang='en'">Password</xsl:when>
               <xsl:otherwise>Clave</xsl:otherwise>
             </xsl:choose>
           </div>
-          <div class="ada_asap_author_box_data_b">
+          <div class="adagio_asap_author_box_data_b">
             <xsl:element name="input">
               <xsl:attribute name="type">password</xsl:attribute>
               <xsl:attribute name="size">25</xsl:attribute>
@@ -258,15 +258,15 @@
           </div>
         </div>
       </xsl:if>
-      <xsl:if test="$ada.asap.include.fullname = 'yes'">
-        <div class="ada_asap_author_box_row ada_asap_author_box_fn">
-          <div class="ada_asap_author_box_data_a">
+      <xsl:if test="$adagio.asap.include.fullname = 'yes'">
+        <div class="adagio_asap_author_box_row adagio_asap_author_box_fn">
+          <div class="adagio_asap_author_box_data_a">
             <xsl:choose>
               <xsl:when test="$profile.lang='en'">First Name</xsl:when>
               <xsl:otherwise>Nombre</xsl:otherwise>
             </xsl:choose>
           </div>
-          <div class="ada_asap_author_box_data_b">
+          <div class="adagio_asap_author_box_data_b">
             <xsl:element name="input">
               <xsl:attribute name="type">text</xsl:attribute>
               <xsl:attribute name="size">20</xsl:attribute>
@@ -274,14 +274,14 @@
             </xsl:element>
           </div>
         </div>
-        <div class="ada_asap_author_box_row_ln">
-          <div class="ada_asap_author_box_data_a">
+        <div class="adagio_asap_author_box_row_ln">
+          <div class="adagio_asap_author_box_data_a">
             <xsl:choose>
               <xsl:when test="$profile.lang='en'">Last Name</xsl:when>
               <xsl:otherwise>Apellidos</xsl:otherwise>
             </xsl:choose>
           </div>
-          <div class="ada_asap_author_box_data_b">
+          <div class="adagio_asap_author_box_data_b">
             <xsl:element name="input">
               <xsl:attribute name="type">text</xsl:attribute>
               <xsl:attribute name="size">40</xsl:attribute>

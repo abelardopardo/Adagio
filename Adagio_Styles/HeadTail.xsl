@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -92,18 +92,18 @@
 
         <xsl:call-template name="body.attributes"/>
 
-        <div id="ada_body_container">
+        <div id="adagio_body_container">
 
-          <xsl:call-template name="ada_page_header_content">
+          <xsl:call-template name="adagio_page_header_content">
             <xsl:with-param name="node" select="$doc"/>
           </xsl:call-template>
 
-          <div id="ada_page_content">
-            <a name="ada_page_content_anchor"/>
+          <div id="adagio_page_content">
+            <a name="adagio_page_content_anchor"/>
             <xsl:apply-templates select="."/>
           </div>
 
-          <div id="ada_page_footer">
+          <div id="adagio_page_footer">
             <xsl:call-template name="user.footer.content">
               <xsl:with-param name="node" select="$doc"/>
             </xsl:call-template>
@@ -130,7 +130,7 @@
 
     <!-- Copy the id attribute from the root element -->
     <xsl:if test="/*[@id] and /*[@id] != ''">
-      <xsl:attribute name="id">adaroot_<xsl:value-of select="/*/@id"/></xsl:attribute>
+      <xsl:attribute name="id">adagioroot_<xsl:value-of select="/*/@id"/></xsl:attribute>
     </xsl:if>
   </xsl:template>
 
@@ -138,28 +138,28 @@
   <xsl:template name="user.head.content">
 
     <!-- Insert Dublin Core Metadata -->
-    <xsl:call-template name="ada.dc.insert.meta.elements"/>
+    <xsl:call-template name="adagio.dc.insert.meta.elements"/>
 
     <!-- Javascripts -->
-    <xsl:if test="$ada.head.javascripts">
-      <xsl:copy-of select="$ada.head.javascripts"/>
+    <xsl:if test="$adagio.head.javascripts">
+      <xsl:copy-of select="$adagio.head.javascripts"/>
     </xsl:if>
 
     <!-- FAVICON -->
-    <xsl:if test="$ada.project.icon">
+    <xsl:if test="$adagio.project.icon">
       <link rel="shortcut icon">
         <xsl:attribute name="href"><xsl:value-of
-        select="$ada.project.home"/><xsl:value-of
-        select="$ada.project.icon"/></xsl:attribute>
+        select="$adagio.project.home"/><xsl:value-of
+        select="$adagio.project.icon"/></xsl:attribute>
         <xsl:attribute name="type"><xsl:value-of
-        select="$ada.project.icon.type"/></xsl:attribute>
+        select="$adagio.project.icon.type"/></xsl:attribute>
       </link>
       <link rel="icon">
         <xsl:attribute name="href"><xsl:value-of
-        select="$ada.project.home"/><xsl:value-of
-        select="$ada.project.icon"/></xsl:attribute>
+        select="$adagio.project.home"/><xsl:value-of
+        select="$adagio.project.icon"/></xsl:attribute>
         <xsl:attribute name="type"><xsl:value-of
-        select="$ada.project.icon.type"/></xsl:attribute>
+        select="$adagio.project.icon.type"/></xsl:attribute>
       </link>
     </xsl:if>
 
@@ -175,8 +175,8 @@
               select="/*/*/authorgroup/author"/>
           </xsl:call-template>
         </xsl:when>
-        <xsl:when test="$ada.page.author">
-          <xsl:value-of select="$ada.page.author"/>
+        <xsl:when test="$adagio.page.author">
+          <xsl:value-of select="$adagio.page.author"/>
         </xsl:when>
       </xsl:choose>
     </xsl:variable>
@@ -203,31 +203,31 @@
     </xsl:element>
 
     <!-- Stick the javascript for the flash player -->
-    <xsl:if test="$ada.flv.player.js.file and ($ada.flv.player.js.file != '')
-                  and /*/para[@condition = 'ada.flv.player']">
+    <xsl:if test="$adagio.flv.player.js.file and ($adagio.flv.player.js.file != '')
+                  and /*/para[@condition = 'adagio.flv.player']">
       <script type="text/javascript" language="JavaScript">
         <xsl:attribute name="src"><xsl:value-of
-        select="$ada.flv.player.js.file"/></xsl:attribute>
+        select="$adagio.flv.player.js.file"/></xsl:attribute>
       </script>
     </xsl:if>
 
     <!-- If refresh rate has been given, include it -->
-    <xsl:if test="$ada.page.refresh.rate and ($ada.page.refresh.rate != '')">
+    <xsl:if test="$adagio.page.refresh.rate and ($adagio.page.refresh.rate != '')">
       <meta http-equiv="refresh">
         <xsl:attribute name="content"><xsl:value-of
-        select="$ada.page.refresh.rate"/></xsl:attribute>
+        select="$adagio.page.refresh.rate"/></xsl:attribute>
       </meta>
     </xsl:if>
 
     <!-- CSS styles -->
-    <xsl:if test="$ada.page.cssstyle.url">
-      <xsl:call-template name="ada_link_rel_css">
-        <xsl:with-param name="node" select="$ada.page.cssstyle.url"/>
+    <xsl:if test="$adagio.page.cssstyle.url">
+      <xsl:call-template name="adagio_link_rel_css">
+        <xsl:with-param name="node" select="$adagio.page.cssstyle.url"/>
       </xsl:call-template>
     </xsl:if>
-    <xsl:if test="$ada.page.cssstyle.alternate.url">
-      <xsl:call-template name="ada_link_rel_css">
-        <xsl:with-param name="node" select="$ada.page.cssstyle.alternate.url"/>
+    <xsl:if test="$adagio.page.cssstyle.alternate.url">
+      <xsl:call-template name="adagio_link_rel_css">
+        <xsl:with-param name="node" select="$adagio.page.cssstyle.alternate.url"/>
         <xsl:with-param name="rel" select="'alternate stylesheet'"/>
       </xsl:call-template>
     </xsl:if>
@@ -238,26 +238,26 @@
          -->
 
     <!-- Insert the reference to the RSS channel if given -->
-    <xsl:if test="$ada.rss.channel.url and ($ada.rss.channel.url != '')">
+    <xsl:if test="$adagio.rss.channel.url and ($adagio.rss.channel.url != '')">
       <link rel="alternate" type="application/rss+xml" title="rss">
         <xsl:attribute name="href"><xsl:value-of
-        select="$ada.rss.channel.url"/></xsl:attribute>
+        select="$adagio.rss.channel.url"/></xsl:attribute>
       </link>
     </xsl:if>
   </xsl:template>
 
-  <xsl:template name="ada_page_header_content">
+  <xsl:template name="adagio_page_header_content">
     <xsl:param name="node" select="."/>
 
     <!-- HIDDEN ELEMENTS -->
-    <div class="ada_hidden_elements" id="skip_links">
+    <div class="adagio_hidden_elements" id="skip_links">
       <ul>
         <li>
           <a>
             <xsl:attribute name="href"><xsl:value-of
-            select="normalize-space($ada.project.home)"/></xsl:attribute>
+            select="normalize-space($adagio.project.home)"/></xsl:attribute>
             <xsl:attribute name="accesskey"><xsl:value-of
-            select="$ada.page.navigation.home.accesskey"/></xsl:attribute>
+            select="$adagio.page.navigation.home.accesskey"/></xsl:attribute>
             <xsl:choose>
               <xsl:when test="$profile.lang='es'">Inicio</xsl:when>
               <xsl:otherwise>Home</xsl:otherwise>
@@ -265,21 +265,21 @@
           </a>
         </li>
         <li>
-          <a href="#ada_page_content">
+          <a href="#adagio_page_content">
             <xsl:attribute name="accesskey"><xsl:value-of
-            select="$ada.page.navigation.content.accesskey"/></xsl:attribute>
+            select="$adagio.page.navigation.content.accesskey"/></xsl:attribute>
             <xsl:choose>
               <xsl:when test="$profile.lang='es'">Ir a contenido</xsl:when>
               <xsl:otherwise>Skip to content</xsl:otherwise>
             </xsl:choose>
           </a>
         </li>
-        <xsl:if test="$ada.page.navigation and
-                      $ada.page.navigation != ''">
+        <xsl:if test="$adagio.page.navigation and
+                      $adagio.page.navigation != ''">
           <li>
-            <a href="#ada_navigation">
+            <a href="#adagio_navigation">
               <xsl:attribute name="accesskey"><xsl:value-of
-              select="$ada.page.navigation.navigation.accesskey"/></xsl:attribute>
+              select="$adagio.page.navigation.navigation.accesskey"/></xsl:attribute>
               <xsl:choose>
                 <xsl:when test="$profile.lang='es'">Ir a navegación</xsl:when>
                 <xsl:otherwise>Skip to navigation</xsl:otherwise>
@@ -288,72 +288,72 @@
           </li>
         </xsl:if>
       </ul>
-    </div> <!-- End of ada_hidden_elements -->
+    </div> <!-- End of adagio_hidden_elements -->
 
-    <!-- ADA PAGE HEADER LEVEL1 -->
-    <xsl:if test="$ada.page.header.level1">
-      <div id="ada_page_header_level1">
-        <xsl:copy-of select="$ada.page.header.level1"/>
+    <!-- Adagio PAGE HEADER LEVEL1 -->
+    <xsl:if test="$adagio.page.header.level1">
+      <div id="adagio_page_header_level1">
+        <xsl:copy-of select="$adagio.page.header.level1"/>
       </div>
     </xsl:if>
 
-    <!-- ADA PAGE HEADER LEVEL2 -->
-    <xsl:if test="$ada.page.header.level2">
-      <div id="ada_page_header_level2">
-        <xsl:copy-of select="$ada.page.header.level2"/>
+    <!-- Adagio PAGE HEADER LEVEL2 -->
+    <xsl:if test="$adagio.page.header.level2">
+      <div id="adagio_page_header_level2">
+        <xsl:copy-of select="$adagio.page.header.level2"/>
       </div>
     </xsl:if>
 
-    <!-- ADA PAGE HEADER LEVEL3 -->
-    <xsl:if test="$ada.page.header.level3">
-      <div id="ada_page_header_level3">
-        <xsl:copy-of select="$ada.page.header.level3"/>
+    <!-- Adagio PAGE HEADER LEVEL3 -->
+    <xsl:if test="$adagio.page.header.level3">
+      <div id="adagio_page_header_level3">
+        <xsl:copy-of select="$adagio.page.header.level3"/>
       </div>
     </xsl:if>
 
-    <!-- ADA PAGE HEADER LEVEL4 -->
-    <xsl:if test="$ada.page.header.level4">
-      <div id="ada_page_header_level4">
-        <xsl:copy-of select="$ada.page.header.level4"/>
+    <!-- Adagio PAGE HEADER LEVEL4 -->
+    <xsl:if test="$adagio.page.header.level4">
+      <div id="adagio_page_header_level4">
+        <xsl:copy-of select="$adagio.page.header.level4"/>
       </div>
     </xsl:if>
 
-    <!-- ADA.PAGE.NAVIGATION -->
-    <xsl:if test="$ada.page.navigation and
-                  $ada.page.navigation != ''">
-      <div id="ada_page_navigation">
-        <a name="ada_navigation"/>
-        <xsl:copy-of select="$ada.page.navigation"/>
-      </div> <!-- End of ada.page.navigation -->
+    <!-- Adagio.PAGE.NAVIGATION -->
+    <xsl:if test="$adagio.page.navigation and
+                  $adagio.page.navigation != ''">
+      <div id="adagio_page_navigation">
+        <a name="adagio_navigation"/>
+        <xsl:copy-of select="$adagio.page.navigation"/>
+      </div> <!-- End of adagio.page.navigation -->
     </xsl:if>
 
   </xsl:template>
 
   <!-- Footer-->
   <xsl:template name="user.footer.content">
-    <xsl:if test="$ada.page.footer and $ada.page.footer != ''">
-      <xsl:copy-of select="$ada.page.footer" />
+    <xsl:if test="$adagio.page.footer and $adagio.page.footer != ''">
+      <xsl:copy-of select="$adagio.page.footer" />
     </xsl:if>
 
     <!-- Insert Google Analytics snippet -->
-    <xsl:if test="$ada.page.google.analytics.account">
+    <xsl:if test="$adagio.page.google.analytics.account">
       <script type="text/javascript">
         var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
         document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
       </script>
       <script type="text/javascript">
-        var pageTracker = _gat._getTracker("<xsl:value-of select="$ada.page.google.analytics.account"/>");
+        var pageTracker = _gat._getTracker("<xsl:value-of select="$adagio.page.google.analytics.account"/>");
         pageTracker._trackPageview();
       </script>
     </xsl:if>
   </xsl:template>
 
   <xsl:template name="ggadgetlink">
-    <xsl:if test="$ada.page.google.gadget.url">
+    <xsl:if test="$adagio.page.google.gadget.url">
       <a>
         <xsl:attribute
           name="href">http://fusion.google.com/add?moduleurl=<xsl:value-of
-        select="$ada.page.google.gadget.url"/></xsl:attribute>
+        select="$adagio.page.google.gadget.url"/></xsl:attribute>
         <img
           src="http://buttons.googlesyndication.com/fusion/add.gif">
           <xsl:attribute name="alt"><xsl:choose>

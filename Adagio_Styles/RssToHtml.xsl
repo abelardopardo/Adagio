@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -54,14 +54,14 @@
         <meta name="Author" content="Carlos III University of Madrid"></meta>
         <meta http-equiv="Content-Style-Type" content="text/css"/>
 
-        <xsl:if test="$ada.page.cssstyle.url">
-          <xsl:call-template name="ada_link_rel_css">
-            <xsl:with-param name="node" select="$ada.page.cssstyle.url"/>
+        <xsl:if test="$adagio.page.cssstyle.url">
+          <xsl:call-template name="adagio_link_rel_css">
+            <xsl:with-param name="node" select="$adagio.page.cssstyle.url"/>
           </xsl:call-template>
         </xsl:if>
-        <xsl:if test="$ada.page.cssstyle.alternate.url">
-          <xsl:call-template name="ada_link_rel_css">
-            <xsl:with-param name="node" select="$ada.page.cssstyle.alternate.url"/>
+        <xsl:if test="$adagio.page.cssstyle.alternate.url">
+          <xsl:call-template name="adagio_link_rel_css">
+            <xsl:with-param name="node" select="$adagio.page.cssstyle.alternate.url"/>
             <xsl:with-param name="rel" select="'alternate stylesheet'"/>
           </xsl:call-template>
         </xsl:if>
@@ -229,9 +229,9 @@
           <td><xsl:value-of select="count(item)"/></td>
         </tr>
       </table>
-      
+
       <br/>
-      
+
       <xsl:apply-templates select="item">
         <xsl:sort select="position()" order="descending"
           data-type="number"/>

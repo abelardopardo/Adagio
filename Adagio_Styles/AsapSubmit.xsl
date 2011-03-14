@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -40,8 +40,8 @@
   <!--         Create a form to submit data through ASAP            -->
   <!--                                                              -->
   <!-- ============================================================ -->
-  <xsl:template match="chapter[contains(@condition, 'ada.asap.submission.page')]|
-                       section[contains(@condition, 'ada.asap.submission.page')]">
+  <xsl:template match="chapter[contains(@condition, 'adagio.asap.submission.page')]|
+                       section[contains(@condition, 'adagio.asap.submission.page')]">
     <div>
       <xsl:apply-templates select="." mode="class.attribute"/>
 
@@ -58,7 +58,7 @@
       <!-- Insert a header with the deadline if present in the document -->
       <xsl:if
         test="note[@condition='AdminInfo']/para[@condition='handindate']/text() != ''">
-        <h3 class="ada_asap_submit_deadline">
+        <h3 class="adagio_asap_submit_deadline">
           <xsl:choose>
             <xsl:when test="$profile.lang='es'">Fecha de entrega: </xsl:when>
             <xsl:otherwise>Deadline: </xsl:otherwise>
@@ -79,8 +79,8 @@
                       ' /')"/>
           </tokens>
         </xsl:variable>
-        <p class="ada_countdown">
-          <xsl:call-template name="ada.page.countdown.insert">
+        <p class="adagio_countdown">
+          <xsl:call-template name="adagio.page.countdown.insert">
             <xsl:with-param name="countdown.year">
               <xsl:value-of
                 select="exsl:node-set($deadlineparts)/tokens/token[position() =
@@ -111,14 +111,14 @@
       </xsl:if>
 
       <!-- Insert the defined header links in HeaderLinks -->
-      <xsl:call-template name="ada.insert.header.links"/>
+      <xsl:call-template name="adagio.insert.header.links"/>
 
       <!-- If a verification JS is given, insert the script element -->
-      <xsl:if test="$ada.submit.asap.verifyemail.js != ''">
+      <xsl:if test="$adagio.submit.asap.verifyemail.js != ''">
         <xsl:element name="script">
           <xsl:attribute name="type">text/javascript</xsl:attribute>
           <xsl:attribute name="src"><xsl:value-of
-          select="$ada.submit.asap.verifyemail.js"/></xsl:attribute>
+          select="$adagio.submit.asap.verifyemail.js"/></xsl:attribute>
           <xsl:text> </xsl:text>
         </xsl:element>
       </xsl:if>
@@ -133,7 +133,7 @@
             select="note[@condition='AdminInfo']/para[@condition='processor']/text()"/>
         </xsl:attribute>
         <!-- onsubmit is manipulated to execute the email verifier -->
-        <xsl:if test="$ada.submit.asap.verifyemail.js != ''">
+        <xsl:if test="$adagio.submit.asap.verifyemail.js != ''">
           <xsl:attribute name="onsubmit">return check_form(this)</xsl:attribute>
         </xsl:if>
         <xsl:attribute name="enctype">multipart/form-data</xsl:attribute>
@@ -146,12 +146,12 @@
           select="descendant::note[@condition='text.before.author.box']/node()"/>
 
         <!-- Create the author box -->
-        <xsl:call-template name="ada.asap.author.box"/>
+        <xsl:call-template name="adagio.asap.author.box"/>
 
         <!-- Div element with the payload to be submitted -->
         <xsl:variable name="submit.count"
-          select="count(//section[@condition='ada_submit_info']) +
-                  count(//note[@condition='ada_submit_info'])"/>
+          select="count(//section[@condition='adagio_submit_info']) +
+                  count(//note[@condition='adagio_submit_info'])"/>
 
         <xsl:if test="$submit.count != 0">
           <!--
@@ -161,21 +161,21 @@
           <xsl:apply-templates
             select="descendant::note[@condition='text.before.payload.box']/node()"/>
 
-          <div class="ada_asap_payload_box">
-            <xsl:for-each select="//section[@condition='ada_submit_info']|
-                                  //note[@condition='ada_submit_info']">
-              <div class="ada_asap_author_box_row_payload">
+          <div class="adagio_asap_payload_box">
+            <xsl:for-each select="//section[@condition='adagio_submit_info']|
+                                  //note[@condition='adagio_submit_info']">
+              <div class="adagio_asap_author_box_row_payload">
                 <xsl:choose>
                   <xsl:when test="$submit.count &gt; 1">
-                    <div class="ada_asap_author_box_data_a">
+                    <div class="adagio_asap_author_box_data_a">
                       <xsl:apply-templates select="title/node()"/>
                     </div>
-                    <div class="ada_asap_author_box_data_b">
+                    <div class="adagio_asap_author_box_data_b">
                       <xsl:apply-templates/>
                     </div>
                   </xsl:when>
                   <xsl:otherwise>
-                    <div class="ada_asap_author_box_data">
+                    <div class="adagio_asap_author_box_data">
                       <xsl:apply-templates/>
                     </div>
                   </xsl:otherwise>
@@ -186,8 +186,8 @@
         </xsl:if>
 
         <!-- If a generic comment text area is requested, introduce it -->
-        <xsl:if test="$ada.submit.add.textarea.comment = 'yes'">
-          <div class="ada_submit_textarea_comment">
+        <xsl:if test="$adagio.submit.add.textarea.comment = 'yes'">
+          <div class="adagio_submit_textarea_comment">
             <p>
               <xsl:choose>
                 <xsl:when test="$profile.lang='es'">Comentarios</xsl:when>
@@ -195,12 +195,12 @@
               </xsl:choose>
             </p>
 
-            <textarea name="ada_submit_form_remarks" cols="80" rows="5"/>
+            <textarea name="adagio_submit_form_remarks" cols="80" rows="5"/>
           </div>
         </xsl:if>
 
         <!-- Submit button -->
-        <div class="ada_asap_submit_button">
+        <div class="adagio_asap_submit_button">
           <xsl:choose>
             <xsl:when test="$profile.lang='es'">
               <input value="Enviar" type="submit" name="submit"></input>
@@ -213,8 +213,8 @@
       </xsl:element> <!-- End of form element -->
 
       <!-- If confirmation email has been inserted, render the explanation -->
-      <xsl:if test="$ada.asap.confirmation.email = 'yes'">
-        <div class="ada_asap_submit_confirmation_email">
+      <xsl:if test="$adagio.asap.confirmation.email = 'yes'">
+        <div class="adagio_asap_submit_confirmation_email">
           <sup>*</sup>
           <xsl:choose>
             <xsl:when test="$profile.lang='es'">

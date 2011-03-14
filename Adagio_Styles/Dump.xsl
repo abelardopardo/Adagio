@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -23,12 +23,12 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   version="1.0">
-  
-  <xsl:output method="xml" encoding="UTF-8" indent="yes"/>  
-  
-  <!-- 
+
+  <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
+
+  <!--
        Stylesheet to simply dump the input file. It is used to allow the
-       processor to expand all the xinclude elements 
+       processor to expand all the xinclude elements
   -->
 
   <xsl:param name="profile.lang"/>

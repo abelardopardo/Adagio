@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -27,17 +27,17 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi">
 
-  <xsl:import href="AdaProfile.xsl" />
+  <xsl:import href="AdagioProfile.xsl" />
 
   <xsl:param name="mergesheets.file.to.fold" select="''"/>
 
   <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 
-  <!-- Params needed by AdaProfile -->
+  <!-- Params needed by AdagioProfile -->
   <xsl:param name="stylesheet.result.type" select="'xhtml'"/>
   <xsl:param name="profile.baseuri.fixup" select="false()"/>
 
-  <xsl:param name="ada.profile.suppress.profiling.attributes">yes</xsl:param>
+  <xsl:param name="adagio.profile.suppress.profiling.attributes">yes</xsl:param>
 
   <xsl:template match="xsl:stylesheet">
     <xsl:variable name="mergesheet_files">
@@ -50,7 +50,7 @@
 
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      
+
       <xsl:element name="xsl:import">
         <xsl:attribute name="href">
           <xsl:value-of select="$mergesheets.file.to.fold"/>

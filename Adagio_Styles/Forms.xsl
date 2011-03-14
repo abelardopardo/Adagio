@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -37,15 +37,15 @@
   <!--                     Create Generic Form                      -->
   <!--                                                              -->
   <!-- ============================================================ -->
-  <xsl:template match="section[@condition='ada_submit_form']|
-                       para[@condition='ada_submit_form']|
-                       remark[@condition='ada_submit_textarea_form']|
-                       remark[@condition='ada_submit_form']">
+  <xsl:template match="section[@condition='adagio_submit_form']|
+                       para[@condition='adagio_submit_form']|
+                       remark[@condition='adagio_submit_textarea_form']|
+                       remark[@condition='adagio_submit_form']">
     <xsl:variable name="form-id">
       <xsl:choose>
         <xsl:when test="*[@condition='form-id']"><xsl:value-of
         select="*[@condition='form-id']/text()"/></xsl:when>
-        <xsl:otherwise>ada_submit_input</xsl:otherwise>
+        <xsl:otherwise>adagio_submit_input</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="form-method">
@@ -70,7 +70,7 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="form-action"><xsl:value-of
-    select="$ada.submit.action.prefix"/><xsl:value-of
+    select="$adagio.submit.action.prefix"/><xsl:value-of
     select="*[@condition='action-suffix']"/></xsl:variable>
 
     <!-- Create div element surrounding the form with class=@condition -->
@@ -88,21 +88,21 @@
 
         <!-- Select among the different single item forms -->
         <xsl:choose>
-          <xsl:when test="@condition='ada_submit_textarea_form'">
-            <xsl:call-template name="ada.submit.textarea.input"/>
+          <xsl:when test="@condition='adagio_submit_textarea_form'">
+            <xsl:call-template name="adagio.submit.textarea.input"/>
           </xsl:when>
-          <xsl:when test="@condition='ada_submit_form'">
+          <xsl:when test="@condition='adagio_submit_form'">
             <xsl:apply-templates />
           </xsl:when>
         </xsl:choose>
 
         <!-- Submit button -->
-        <div class="ada_submit_button">
+        <div class="adagio_submit_button">
           <input type="submit">
 	    <xsl:choose>
 	      <xsl:when test="phrase[@condition='hide'] = 'yes'">
 		<xsl:attribute
-		  name="onclick">this.form.target='ada_submit_form_hidden_iframe';this.form.style.display='none';<xsl:value-of select="$submit-onclick"/></xsl:attribute>
+		  name="onclick">this.form.target='adagio_submit_form_hidden_iframe';this.form.style.display='none';<xsl:value-of select="$submit-onclick"/></xsl:attribute>
 	      </xsl:when>
 	      <xsl:when test="$submit-onclick != ''">
 		<xsl:attribute name="onclick"><xsl:value-of
@@ -140,7 +140,7 @@
                received from the server
 
                -->
-          <iframe name="ada_submit_form_hidden_iframe" src="about:blank"
+          <iframe name="adagio_submit_form_hidden_iframe" src="about:blank"
             style="display:none; width:0px; height:0px"></iframe>
         </xsl:if>
       </xsl:element>
@@ -152,10 +152,10 @@
   <!--                  Process INPUT note/para/phrase              -->
   <!--                                                              -->
   <!-- ============================================================ -->
-  <xsl:template match="note[@condition='ada_submit_input']|
-                       para[@condition='ada_submit_input']|
-                       remark[@condition='ada_submit_input']">
-    <input class="ada_submit_form_input">
+  <xsl:template match="note[@condition='adagio_submit_input']|
+                       para[@condition='adagio_submit_input']|
+                       remark[@condition='adagio_submit_input']">
+    <input class="adagio_submit_form_input">
       <xsl:if test="*[@condition='type']">
         <xsl:attribute name="type">
           <xsl:value-of select="*[@condition='type']/text()"/>
@@ -199,20 +199,20 @@
   <!--    Process INPUT/RADIO note/para/remark in its own table     -->
   <!--                                                              -->
   <!-- ============================================================ -->
-  <xsl:template match="note[@condition='ada_submit_scale']|
-                       para[@condition='ada_submit_scale']|
-                       remark[@condition='ada_submit_scale']">
+  <xsl:template match="note[@condition='adagio_submit_scale']|
+                       para[@condition='adagio_submit_scale']|
+                       remark[@condition='adagio_submit_scale']">
 
     <!-- Name for the field -->
     <xsl:variable name="scale-name">
       <xsl:choose>
         <xsl:when test="*[@condition='name']"><xsl:value-of
         select="*[@condition='name']/text()"/></xsl:when>
-        <xsl:otherwise>ada_submit_scale_name</xsl:otherwise>
+        <xsl:otherwise>adagio_submit_scale_name</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
 
-    <div class="ada_submit_scale_table">
+    <div class="adagio_submit_scale_table">
       <table>
         <colgroup>
           <xsl:for-each select="phrase[@condition = 'value']">
@@ -237,7 +237,7 @@
           <tr>
             <xsl:for-each select="phrase[@condition = 'value']">
               <td>
-                <xsl:call-template name="ada_render_scale_elements">
+                <xsl:call-template name="adagio_render_scale_elements">
                   <xsl:with-param name="scale-name"><xsl:value-of
                   select="$scale-name"/></xsl:with-param>
                 </xsl:call-template>
@@ -254,20 +254,20 @@
   <!--               Process INPUT/RADIO basic element              -->
   <!--                                                              -->
   <!-- ============================================================ -->
-  <xsl:template match="para[@condition='ada_submit_scale_element']|
-                       remark[@condition='ada_submit_scale_element']|
-                       phrase[@condition='ada_submit_scale_element']"
-    name="ada_render_scale_elements">
+  <xsl:template match="para[@condition='adagio_submit_scale_element']|
+                       remark[@condition='adagio_submit_scale_element']|
+                       phrase[@condition='adagio_submit_scale_element']"
+    name="adagio_render_scale_elements">
     <!-- Name for the field -->
     <xsl:variable name="scale-name">
       <xsl:choose>
         <xsl:when test="*[@condition='name']"><xsl:value-of
         select="*[@condition='name']/text()"/></xsl:when>
-        <xsl:otherwise>ada_submit_scale_name</xsl:otherwise>
+        <xsl:otherwise>adagio_submit_scale_name</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
 
-    <input class="ada_submit_form_scale" type="radio">
+    <input class="adagio_submit_form_scale" type="radio">
       <xsl:attribute name="name"><xsl:value-of
       select="$scale-name"/></xsl:attribute>
       <xsl:attribute name="value"><xsl:apply-templates
@@ -282,10 +282,10 @@
   <!--                                                              -->
   <!-- ============================================================ -->
   <xsl:template
-    name="ada.submit.textarea.input"
-    match="note[@condition='ada_submit_textarea']|
-           para[@condition='ada_submit_textarea']|
-           remark[@condition='ada_submit_textarea']">
+    name="adagio.submit.textarea.input"
+    match="note[@condition='adagio_submit_textarea']|
+           para[@condition='adagio_submit_textarea']|
+           remark[@condition='adagio_submit_textarea']">
     <!-- Number of columns: default 80 -->
     <xsl:param name="textarea-cols">
       <xsl:choose>
@@ -307,7 +307,7 @@
       <xsl:choose>
         <xsl:when test="*[@condition='name']"><xsl:value-of
         select="*[@condition='name']/text()"/></xsl:when>
-        <xsl:otherwise>ada_submit_textarea_input</xsl:otherwise>
+        <xsl:otherwise>adagio_submit_textarea_input</xsl:otherwise>
       </xsl:choose>
     </xsl:param>
 
@@ -322,7 +322,7 @@
       select="*[@condition='onkeydown']/text()"/></xsl:if>
     </xsl:param>
 
-    <div class="ada_submit_form_textarea">
+    <div class="adagio_submit_form_textarea">
       <!-- Dump the element -->
       <xsl:element name="textarea"><xsl:attribute name="rows"><xsl:value-of
       select="$textarea-rows"/></xsl:attribute><xsl:attribute
@@ -345,19 +345,19 @@
   <!--                  Process SELECT note/para                    -->
   <!--                                                              -->
   <!-- ============================================================ -->
-  <xsl:template match="note[@condition='ada_submit_select']|
-                       para[@condition='ada_submit_select']">
+  <xsl:template match="note[@condition='adagio_submit_select']|
+                       para[@condition='adagio_submit_select']">
 
     <!-- Name for the field -->
     <xsl:variable name="select-name">
       <xsl:choose>
         <xsl:when test="@id"><xsl:value-of select="@id"/></xsl:when>
-        <xsl:otherwise>ada_submit_select_input</xsl:otherwise>
+        <xsl:otherwise>adagio_submit_select_input</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
 
-    <div class="ada_submit_form_select">
-      <xsl:call-template name="ada_select_basic_processing">
+    <div class="adagio_submit_form_select">
+      <xsl:call-template name="adagio_select_basic_processing">
         <xsl:with-param name="select-name">
           <xsl:value-of select="$select-name"/>
         </xsl:with-param>
@@ -370,13 +370,13 @@
   <!--           Process SELECT remark or basic elements            -->
   <!--                                                              -->
   <!-- ============================================================ -->
-  <xsl:template name="ada_select_basic_processing"
-    match="remark[@condition='ada_submit_select']">
+  <xsl:template name="adagio_select_basic_processing"
+    match="remark[@condition='adagio_submit_select']">
     <!-- Name for the field -->
     <xsl:param name="select-name">
       <xsl:choose>
         <xsl:when test="@id"><xsl:value-of select="@id"/></xsl:when>
-        <xsl:otherwise>ada_submit_select_input</xsl:otherwise>
+        <xsl:otherwise>adagio_submit_select_input</xsl:otherwise>
       </xsl:choose>
     </xsl:param>
 
@@ -405,7 +405,7 @@
   </xsl:template>
 
   <!-- The title of the section is to be ignored -->
-  <xsl:template match="section[@condition='ada_submit_form']/title"/>
+  <xsl:template match="section[@condition='adagio_submit_form']/title"/>
 
   <xsl:template
     match="phrase[@condition='action-suffix']|para[@condition='action-suffix']"/>
@@ -413,6 +413,6 @@
   <xsl:template match="phrase[@condition='hide']|para[@condition='hide']"/>
   <xsl:template match="phrase[@condition='submit-onclick']|para[@condition='submit-onclick']"/>
 
-  <xsl:template match="section[@condition = 'ada_submit_form']" mode="toc"/>
+  <xsl:template match="section[@condition = 'adagio_submit_form']" mode="toc"/>
 
 </xsl:stylesheet>

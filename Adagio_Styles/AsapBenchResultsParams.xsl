@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -29,6 +29,6 @@
   version="1.0" exclude-result-prefixes="exsl str xi">
 
   <!-- Flag to force an empty result table (initialization purposes) -->
-  <xsl:param name="ada.asapbenchresults.empty.data.table" select="'no'"/>
+  <xsl:param name="adagio.asapbenchresults.empty.data.table" select="'no'"/>
 
 </xsl:stylesheet>

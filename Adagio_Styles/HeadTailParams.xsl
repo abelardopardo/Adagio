@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -26,122 +26,122 @@
   xmlns:exsl="http://exslt.org/common"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi">
-  
+
   <xsl:import href="GeneralParams.xsl"/>
 
   <!-- Customization variables for Head and Tail -->
-  <xsl:param name="ada.page.author" 
+  <xsl:param name="adagio.page.author"
     description="Author to include in the meta element in HTML head"/>
 
-  <xsl:param name="ada.page.google.analytics.account" 
+  <xsl:param name="adagio.page.google.analytics.account"
     description="Account to include in the Google Analytics HTML snippet."/>
-  <xsl:param name="ada.page.google.gadget.url" 
+  <xsl:param name="adagio.page.google.gadget.url"
     description="Link pointing to a Google Gadget to be included in the upper
                  left corner of the page"/>
 
-  <xsl:param name="ada.head.javascripts"
+  <xsl:param name="adagio.head.javascripts"
 	     description="Javascripts to include in the document head"/>
 
-  <xsl:param name="ada.page.refresh.rate" 
+  <xsl:param name="adagio.page.refresh.rate"
     description="Include a refresh rate in the page header"/>
 
-  <xsl:param name="ada.page.header.level1">
-    <xsl:if test="$ada.institution.name and $ada.institution.name != ''">
-      <h1 id="ada_institution_name">
+  <xsl:param name="adagio.page.header.level1">
+    <xsl:if test="$adagio.institution.name and $adagio.institution.name != ''">
+      <h1 id="adagio_institution_name">
         <xsl:choose>
-          <xsl:when test="$ada.institution.url and $ada.institution.url != ''">
+          <xsl:when test="$adagio.institution.url and $adagio.institution.url != ''">
             <a>
               <xsl:attribute name="href"><xsl:value-of
-              select="$ada.institution.url"/></xsl:attribute>
+              select="$adagio.institution.url"/></xsl:attribute>
               <xsl:attribute name="title"><xsl:value-of
-              select="$ada.institution.name"/></xsl:attribute>
-              <xsl:value-of select="$ada.institution.name"/>
+              select="$adagio.institution.name"/></xsl:attribute>
+              <xsl:value-of select="$adagio.institution.name"/>
             </a>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="$ada.institution.name"/>
+            <xsl:value-of select="$adagio.institution.name"/>
           </xsl:otherwise>
         </xsl:choose>
       </h1>
     </xsl:if>
   </xsl:param>
 
-  <xsl:param name="ada.page.header.level2">
-    <xsl:if test="$ada.project.degree and $ada.project.degree != ''">
-      <h2 id="ada_degree_name">
+  <xsl:param name="adagio.page.header.level2">
+    <xsl:if test="$adagio.project.degree and $adagio.project.degree != ''">
+      <h2 id="adagio_degree_name">
         <xsl:choose>
-          <xsl:when test="$ada.project.degree.url and $ada.project.degree.url != ''">
+          <xsl:when test="$adagio.project.degree.url and $adagio.project.degree.url != ''">
             <a>
               <xsl:attribute name="href"><xsl:value-of
-              select="$ada.project.degree.url"/></xsl:attribute>
+              select="$adagio.project.degree.url"/></xsl:attribute>
               <xsl:attribute name="title"><xsl:value-of
-              select="$ada.project.degree"/></xsl:attribute>
-              <xsl:value-of select="$ada.project.degree"/>
+              select="$adagio.project.degree"/></xsl:attribute>
+              <xsl:value-of select="$adagio.project.degree"/>
             </a>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="$ada.project.degree"/>
+            <xsl:value-of select="$adagio.project.degree"/>
           </xsl:otherwise>
         </xsl:choose>
       </h2>
     </xsl:if>
   </xsl:param>
 
-  <xsl:param name="ada.page.header.level3">
-    <xsl:if test="$ada.project.name and $ada.project.name != ''">
-      <h3 id="ada_course_name">
+  <xsl:param name="adagio.page.header.level3">
+    <xsl:if test="$adagio.project.name and $adagio.project.name != ''">
+      <h3 id="adagio_course_name">
         <xsl:choose>
-          <xsl:when test="$ada.project.home.url and $ada.project.home.url != ''">
+          <xsl:when test="$adagio.project.home.url and $adagio.project.home.url != ''">
             <a>
               <xsl:attribute name="href"><xsl:value-of
-              select="$ada.project.home.url"/></xsl:attribute>
+              select="$adagio.project.home.url"/></xsl:attribute>
               <xsl:attribute name="title"><xsl:value-of
-              select="$ada.project.name"/></xsl:attribute>
-              <xsl:value-of select="$ada.project.name"/>
+              select="$adagio.project.name"/></xsl:attribute>
+              <xsl:value-of select="$adagio.project.name"/>
             </a>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="$ada.project.name"/>
+            <xsl:value-of select="$adagio.project.name"/>
           </xsl:otherwise>
         </xsl:choose>
       </h3>
     </xsl:if>
   </xsl:param>
 
-  <xsl:param name="ada.page.header.level4">
-    <xsl:if test="$ada.project.edition and $ada.project.edition != ''">
-      <h4 id="ada_course_edition">
+  <xsl:param name="adagio.page.header.level4">
+    <xsl:if test="$adagio.project.edition and $adagio.project.edition != ''">
+      <h4 id="adagio_course_edition">
         <xsl:choose>
-          <xsl:when test="$ada.project.edition.url and $ada.project.edition.url != ''">
+          <xsl:when test="$adagio.project.edition.url and $adagio.project.edition.url != ''">
             <a>
               <xsl:attribute name="href"><xsl:value-of
-              select="$ada.project.edition.url"/></xsl:attribute>
+              select="$adagio.project.edition.url"/></xsl:attribute>
               <xsl:attribute name="title"><xsl:value-of
-              select="$ada.project.edition.name"/></xsl:attribute>
-              <xsl:value-of select="$ada.project.edition"/>
+              select="$adagio.project.edition.name"/></xsl:attribute>
+              <xsl:value-of select="$adagio.project.edition"/>
             </a>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="$ada.project.edition"/>
+            <xsl:value-of select="$adagio.project.edition"/>
           </xsl:otherwise>
         </xsl:choose>
       </h4>
     </xsl:if>
   </xsl:param>
 
-  <xsl:param name="ada.page.navigation"
+  <xsl:param name="adagio.page.navigation"
     description="HTML with navigation links" />
 
-  <xsl:param name="ada.page.footer"
+  <xsl:param name="adagio.page.footer"
     description="Footer HTML snippet" />
 
-  <xsl:param name="ada.page.navigation.home.accesskey"
+  <xsl:param name="adagio.page.navigation.home.accesskey"
     description="Access key to go to the home page">1</xsl:param>
 
-  <xsl:param name="ada.page.navigation.content.accesskey"
+  <xsl:param name="adagio.page.navigation.content.accesskey"
     description="Access key to assign to the skip to content link">2</xsl:param>
 
-  <xsl:param name="ada.page.navigation.navigation.accesskey"
+  <xsl:param name="adagio.page.navigation.navigation.accesskey"
     description="Access key to assign to the skip to navigation link">3</xsl:param>
 
 </xsl:stylesheet>

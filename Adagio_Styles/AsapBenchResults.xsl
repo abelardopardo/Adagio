@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -35,9 +35,9 @@
 
   <xsl:variable name="testUnits" select="/chapter/testUnits"/>
   <xsl:variable name="profile.lang"      select="/chapter/@lang"/>
-  <xsl:variable name="columns"   
+  <xsl:variable name="columns"
     select="/chapter/columns[@lang = $profile.lang]"/>
-  <xsl:variable name="datadir"   
+  <xsl:variable name="datadir"
     select="/chapter/datadir[@lang = $profile.lang]/text()"/>
 
 
@@ -55,7 +55,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </h2>
-    
+
     <!-- Insert countdown here -->
     <xsl:if test="para[@condition='deadline.format']/text() != ''">
       <xsl:variable name="deadlineparts">
@@ -66,64 +66,64 @@
       </xsl:variable>
 
       <p style="text-align: center">
-        <xsl:call-template name="ada.page.countdown.insert">
+        <xsl:call-template name="adagio.page.countdown.insert">
           <xsl:with-param name="countdown.year">
             <xsl:value-of
               select="exsl:node-set($deadlineparts)/tokens/token[position() =
-                      4]/text()"/> 
+                      4]/text()"/>
           </xsl:with-param>
           <xsl:with-param name="countdown.month">
             <xsl:value-of
               select="exsl:node-set($deadlineparts)/tokens/token[position() =
-                      3]/text()"/> 
+                      3]/text()"/>
           </xsl:with-param>
           <xsl:with-param name="countdown.day">
             <xsl:value-of
               select="exsl:node-set($deadlineparts)/tokens/token[position() =
-                      2]/text()"/> 
+                      2]/text()"/>
           </xsl:with-param>
           <xsl:with-param name="countdown.hour">
             <xsl:value-of
               select="exsl:node-set($deadlineparts)/tokens/token[position() =
-                      5]/text()"/> 
+                      5]/text()"/>
           </xsl:with-param>
           <xsl:with-param name="countdown.minute">
             <xsl:value-of
               select="exsl:node-set($deadlineparts)/tokens/token[position() =
-                      6]/text()"/> 
+                      6]/text()"/>
           </xsl:with-param>
         </xsl:call-template>
       </p>
     </xsl:if>
-    
+
     <p align="center">
       <xsl:choose>
         <xsl:when test="$profile.lang = 'en'">
           Last update:
         </xsl:when>
         <xsl:otherwise>
-          Última actualización: 
+          Última actualización:
         </xsl:otherwise>
       </xsl:choose>
       <xsl:element name="script">
         <xsl:attribute name="language">JavaScript</xsl:attribute>
         <xsl:attribute name="type">text/javascript</xsl:attribute>
         <xsl:comment>
-          document.write(document.lastModified) 
+          document.write(document.lastModified)
           //</xsl:comment>
       </xsl:element>
     </p>
 
-    <xsl:call-template name="ada.insert.header.links"/>
+    <xsl:call-template name="adagio.insert.header.links"/>
 
     <xsl:if test="section[@condition = 'legend']">
       <xsl:apply-templates select="section[@condition = 'legend']"/>
     </xsl:if>
 
     <xsl:if test="referencedir/text() != ''">
-      <xsl:call-template name="ada.asap.results.dotable"/>
+      <xsl:call-template name="adagio.asap.results.dotable"/>
     </xsl:if>
-    
+
     <h3 align="center">
       <xsl:choose>
         <xsl:when test="$profile.lang = 'en'">
@@ -135,28 +135,28 @@
       </xsl:choose>
     </h3>
     <xsl:choose>
-      <xsl:when test="$ada.asapbenchresults.empty.data.table = 'yes'">
-        <xsl:call-template name="ada.asap.results.dotable" />
+      <xsl:when test="$adagio.asapbenchresults.empty.data.table = 'yes'">
+        <xsl:call-template name="adagio.asap.results.dotable" />
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="ada.asap.results.dotable">
+        <xsl:call-template name="adagio.asap.results.dotable">
           <xsl:with-param name="srcData" select="directoryfile[@lang = $profile.lang]"/>
           <xsl:with-param name="withOrdinal" select="'yes'"/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
-  <xsl:template name="ada.asap.results.dotable">
+
+  <xsl:template name="adagio.asap.results.dotable">
     <xsl:param name="withOrdinal">no</xsl:param>
     <xsl:param name="srcData"/>
 
-    <table style="page-break-inside: avoid; border: 1px solid black" 
+    <table style="page-break-inside: avoid; border: 1px solid black"
       cellpadding="5" align="center" width="95%">
 
       <!-- Generate the table head row -->
       <thead>
-        <xsl:call-template name="ada.asap.results.dotable.head">
+        <xsl:call-template name="adagio.asap.results.dotable.head">
           <xsl:with-param name="withOrdinal" select="$withOrdinal"/>
           <xsl:with-param name="srcData" select="$srcData"/>
         </xsl:call-template>
@@ -171,37 +171,37 @@
             <xsl:for-each select="$srcData/table/entry">
               <!-- Sort by rank field -->
               <xsl:sort data-type="number"
-                select="document(concat($datadir, '/sub.', @id, 
+                select="document(concat($datadir, '/sub.', @id,
                         '/bench.xml'))/testReport/rank/text()"/>
               <!-- If rank field is identical, go for sub.ID -->
               <xsl:sort data-type="text" select="@id"/>
               <!-- Removed this sort criteria because in the absence of rank
                    it shuffles completely the submissions. -->
               <!-- <xsl:sort select="users/user/id"/> -->
-              
+
               <xsl:variable name="userInfo" select="./users"/>
               <xsl:variable name="dirName" select="@id" />
               <xsl:variable name="date" select="@lastText" />
               <xsl:variable name="ordinal" select="position()"/>
-              <xsl:variable name="subDir" 
+              <xsl:variable name="subDir"
                 select="concat($datadir, '/sub.', $dirName)" />
-              <!-- CALL ada.asap.results.doentry TEMPLATE HERE  -->
-              <xsl:call-template name="ada.asap.results.doentry">
+              <!-- CALL adagio.asap.results.doentry TEMPLATE HERE  -->
+              <xsl:call-template name="adagio.asap.results.doentry">
                 <xsl:with-param name="withOrdinal" select="$withOrdinal"/>
                 <xsl:with-param name="ordinal" select="$ordinal"/>
                 <xsl:with-param name="userInfo" select="$userInfo"/>
                 <xsl:with-param name="date" select="$date"/>
                 <xsl:with-param name="subDir" select="$subDir"/>
               </xsl:call-template>
-              
+
             </xsl:for-each>
           </xsl:when>
           <xsl:otherwise>
-            <!-- CALL ada.asap.results.doentry TEMPLATE HERE -->
-            <xsl:call-template name="ada.asap.results.doentry">
+            <!-- CALL adagio.asap.results.doentry TEMPLATE HERE -->
+            <xsl:call-template name="adagio.asap.results.doentry">
               <xsl:with-param name="withOrdinal" select="$withOrdinal"/>
               <xsl:with-param name="ordinal" select="1"/>
-              <xsl:with-param name="subDir" 
+              <xsl:with-param name="subDir"
                 select="referencedir/text()"/>
             </xsl:call-template>
           </xsl:otherwise>
@@ -211,7 +211,7 @@
   </xsl:template>
 
   <!-- Template to generate a row in the table. Override to redefine. -->
-  <xsl:template name="ada.asap.results.doentry">
+  <xsl:template name="adagio.asap.results.doentry">
     <xsl:param name="rowPosition"/>
     <xsl:param name="withOrdinal"/>
     <xsl:param name="ordinal"/>
@@ -239,7 +239,7 @@
             </xsl:attribute>
             <xsl:choose>
               <xsl:when test="$userInfo">
-                <xsl:call-template name="ada.asap.results.user.info.cell">
+                <xsl:call-template name="adagio.asap.results.user.info.cell">
                   <xsl:with-param name="subDir" select="$subDir"/>
                   <xsl:with-param name="userInfo" select="$userInfo"/>
                   <xsl:with-param name="date" select="$date"/>
@@ -266,7 +266,7 @@
             <td style="border: 1px solid black" align="center">
               <xsl:if test="position() = 1">
                 <xsl:attribute name="colspan">
-                  <xsl:value-of select="1 + count($columns/*) 
+                  <xsl:value-of select="1 + count($columns/*)
                                         - count($resultInfo/*)"/>
                 </xsl:attribute>
               </xsl:if>
@@ -298,7 +298,7 @@
   </xsl:template>
 
   <!-- Template to generate table head. Override to redefine -->
-  <xsl:template name="ada.asap.results.dotable.head">
+  <xsl:template name="adagio.asap.results.dotable.head">
     <xsl:param name="withOrdinal">no</xsl:param>
     <xsl:param name="srcData"/>
     <tr class="blue1head">
@@ -335,7 +335,7 @@
   </xsl:template>
 
   <!-- Template to put the User Info in a cell. Override to redefine -->
-  <xsl:template name="ada.asap.results.user.info.cell">
+  <xsl:template name="adagio.asap.results.user.info.cell">
     <xsl:param name="subDir"/>
     <xsl:param name="userInfo"/>
     <xsl:param name="date"/>

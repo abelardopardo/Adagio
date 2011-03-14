@@ -2,7 +2,7 @@
 
 <!--
 Copyright (C) 2008 Carlos III University of Madrid
-This file is part of the ADA: Agile Distributed Authoring Toolkit
+This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -28,17 +28,17 @@ Boston, MA  02110-1301, USA.
                 xmlns:xi="http://www.w3.org/2001/XInclude"
                 version="1.0" exclude-result-prefixes="exsl str xi">
 
-  <xsl:param name="ada.submit.duration.phrase"/>
-  <xsl:param name="ada.submit.duration.ignore">no</xsl:param>
+  <xsl:param name="adagio.submit.duration.phrase"/>
+  <xsl:param name="adagio.submit.duration.ignore">no</xsl:param>
 
   <!-- ============================================================ -->
   <!--                                                              -->
   <!--                     Process Duration element                 -->
   <!--                                                              -->
   <!-- ============================================================ -->
-  <xsl:template name="ada.submit.duration.input"
-                match="remark[@condition='ada_submit_duration']|
-                       section[@condition='ada_submit_duration']">
+  <xsl:template name="adagio.submit.duration.input"
+                match="remark[@condition='adagio_submit_duration']|
+                       section[@condition='adagio_submit_duration']">
 
     <!-- Duration value -->
     <xsl:param name="duration-value">
@@ -50,17 +50,17 @@ Boston, MA  02110-1301, USA.
     </xsl:param>
 
     <xsl:param name="form-action"><xsl:value-of
-    select="$ada.submit.action.prefix"/><xsl:value-of
+    select="$adagio.submit.action.prefix"/><xsl:value-of
     select="*[@condition='action-suffix']"/></xsl:param>
 
     <!-- If the processing is enabled, proceed -->
-    <xsl:if test="$ada.submit.duration.ignore = 'no'">
+    <xsl:if test="$adagio.submit.duration.ignore = 'no'">
       <!-- Name for the field -->
       <xsl:variable name="hierarchy">
         <xsl:call-template name="getHierarchy"/>
       </xsl:variable>
 
-      <div class="ada_submit_form_duration_select">
+      <div class="adagio_submit_form_duration_select">
         <xsl:element name="form">
           <xsl:attribute name="id"><xsl:value-of
           select="$hierarchy"/></xsl:attribute>
@@ -69,9 +69,9 @@ Boston, MA  02110-1301, USA.
           <xsl:attribute name="action"><xsl:value-of
           select="$form-action"/></xsl:attribute>
           <xsl:choose>
-            <xsl:when test="$ada.submit.duration.phrase and
-                            ($ada.submit.duration.phrase != '')">
-              <xsl:value-of select="$ada.submit.duration.phrase"/><xsl:text> </xsl:text>
+            <xsl:when test="$adagio.submit.duration.phrase and
+                            ($adagio.submit.duration.phrase != '')">
+              <xsl:value-of select="$adagio.submit.duration.phrase"/><xsl:text> </xsl:text>
             </xsl:when>
             <xsl:otherwise>
               <xsl:choose>
@@ -149,7 +149,7 @@ Boston, MA  02110-1301, USA.
               <xsl:if test="not(phrase[@condition='hide']) or
                             (phrase[@condition='hide'] = 'yes')">
                 <xsl:attribute
-                  name="onclick">this.form.target='ada_submit_form_hidden_iframe_<xsl:value-of
+                  name="onclick">this.form.target='adagio_submit_form_hidden_iframe_<xsl:value-of
                   select="$hierarchy"/>';this.form.style.display='none';</xsl:attribute>
               </xsl:if>
               <xsl:attribute name="value">Ok</xsl:attribute>
@@ -163,7 +163,7 @@ Boston, MA  02110-1301, USA.
               <iframe src="about:blank"
                       style="display:none; width:0px; height:0px">
                 <xsl:attribute
-                  name="name">ada_submit_form_hidden_iframe_<xsl:value-of select="$hierarchy"/></xsl:attribute>
+                  name="name">adagio_submit_form_hidden_iframe_<xsl:value-of select="$hierarchy"/></xsl:attribute>
               </iframe>
             </xsl:if>
         </xsl:element>
@@ -184,6 +184,6 @@ Boston, MA  02110-1301, USA.
   </xsl:template>
 
   <!-- Ignore duration section for toc purposes -->
-  <xsl:template match="section[@condition = 'ada_submit_duration']" mode="toc"/>
+  <xsl:template match="section[@condition = 'adagio_submit_duration']" mode="toc"/>
 
 </xsl:stylesheet>

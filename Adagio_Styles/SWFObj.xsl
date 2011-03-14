@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -36,11 +36,11 @@
        id (optional)
     -->
 
-  <xsl:param name="ada.swf.player.default.width">480</xsl:param>
-  <xsl:param name="ada.swf.player.default.height">385</xsl:param>
+  <xsl:param name="adagio.swf.player.default.width">480</xsl:param>
+  <xsl:param name="adagio.swf.player.default.height">385</xsl:param>
 
-  <xsl:template match="para[@condition = 'ada_swf_player']|
-                       remark[@condition = 'ada_swf_player']">
+  <xsl:template match="para[@condition = 'adagio_swf_player']|
+                       remark[@condition = 'adagio_swf_player']">
     <xsl:if test="phrase[@condition = 'file'] != ''">
       <xsl:variable name="shockwave.width">
         <xsl:choose>
@@ -48,7 +48,7 @@
             <xsl:value-of select="phrase[@condition = 'width']/text()"/>
           </xsl:when>
           <xsl:otherwise><xsl:value-of
-          select="$ada.swf.player.default.width"/></xsl:otherwise>
+          select="$adagio.swf.player.default.width"/></xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
 
@@ -58,11 +58,11 @@
             <xsl:value-of select="phrase[@condition = 'height']/text()"/>
           </xsl:when>
           <xsl:otherwise><xsl:value-of
-          select="$ada.swf.player.default.height"/></xsl:otherwise>
+          select="$adagio.swf.player.default.height"/></xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
 
-      <div class="ada_swf_video">
+      <div class="adagio_swf_video">
         <!-- Pass the @id attribute to the div enclosing the swf -->
         <xsl:if test="@id">
           <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>

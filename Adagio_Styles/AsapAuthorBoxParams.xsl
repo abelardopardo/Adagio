@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -28,17 +28,16 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl str xi">
 
-  <xsl:param name="ada.asap.num.authors"       select="'2'"/>
+  <xsl:param name="adagio.asap.num.authors"       select="'2'"/>
   <!-- nia, email, custom, none -->
-  <xsl:param name="ada.asap.include.id"        select="'email'"/> 
-  <xsl:param name="ada.asap.id.text"           select="'ID'"/>
-  <xsl:param name="ada.asap.id.field.length"   select="9"/>
-  <xsl:param name="ada.asap.include.fullname"  select="'no'"/>
+  <xsl:param name="adagio.asap.include.id"        select="'email'"/>
+  <xsl:param name="adagio.asap.id.text"           select="'ID'"/>
+  <xsl:param name="adagio.asap.id.field.length"   select="9"/>
+  <xsl:param name="adagio.asap.include.fullname"  select="'no'"/>
   <!-- all, none, one -->
-  <xsl:param name="ada.asap.include.password"  select="'one'"/> 
-  <xsl:param name="ada.asap.include.groupname" select="'no'"/>
-  <xsl:param name="ada.asap.groupname.default.value"></xsl:param>
+  <xsl:param name="adagio.asap.include.password"  select="'one'"/>
+  <xsl:param name="adagio.asap.include.groupname" select="'no'"/>
+  <xsl:param name="adagio.asap.groupname.default.value"></xsl:param>
   <!-- yes, no -->
-  <xsl:param name="ada.asap.confirmation.email" select="'yes'"/>
-    
+  <xsl:param name="adagio.asap.confirmation.email" select="'yes'"/>
 </xsl:stylesheet>

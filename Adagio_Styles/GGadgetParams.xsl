@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -27,16 +27,16 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi">
 
-  <!-- Obtain other generic ada variables  -->
+  <!-- Obtain other generic adagio variables  -->
   <xsl:import href="GeneralParams.xsl"/>
 
-  <xsl:param name="ada.ggadget.title"><xsl:value-of
-  select="$ada.project.name"/></xsl:param>
+  <xsl:param name="adagio.ggadget.title"><xsl:value-of
+  select="$adagio.project.name"/></xsl:param>
 
-  <xsl:param name="ada.ggadget.thumb.url"/>
-  <xsl:param name="ada.ggadget.height"/>
-  <xsl:param name="ada.ggadget.screenshot.url"/>
-  <xsl:param name="ada.ggadget.author"/> <!-- Not used! Check why -->
-  <xsl:param name="ada.ggadget.google.analytics.gadgetpath"/>
-  <xsl:param name="ada.ggadget.site.url"><xsl:value-of select="$ada.project.home.url"/></xsl:param>
+  <xsl:param name="adagio.ggadget.thumb.url"/>
+  <xsl:param name="adagio.ggadget.height"/>
+  <xsl:param name="adagio.ggadget.screenshot.url"/>
+  <xsl:param name="adagio.ggadget.author"/> <!-- Not used! Check why -->
+  <xsl:param name="adagio.ggadget.google.analytics.gadgetpath"/>
+  <xsl:param name="adagio.ggadget.site.url"><xsl:value-of select="$adagio.project.home.url"/></xsl:param>
 </xsl:stylesheet>

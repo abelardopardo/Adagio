@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -30,7 +30,7 @@
   version="1.0" exclude-result-prefixes="exsl str xi suwl itunes">
 
   <!-- Templates to process docbook. The HTML are included to avoid the doctype -->
-  <xsl:import 
+  <xsl:import
      href="http://docbook.sourceforge.net/release/xsl/current/html/profile-docbook.xsl"/>
 
   <!-- Template with all the customization parameters -->
@@ -42,37 +42,37 @@
     <Module>
       <ModulePrefs scrolling="true">
         <xsl:attribute name="title"><xsl:value-of
-        select="$ada.ggadget.title"/></xsl:attribute>
-        <xsl:if test="$ada.ggadget.height">
+        select="$adagio.ggadget.title"/></xsl:attribute>
+        <xsl:if test="$adagio.ggadget.height">
           <xsl:attribute name="height"><xsl:value-of
-          select="$ada.ggadget.height"/></xsl:attribute>
+          select="$adagio.ggadget.height"/></xsl:attribute>
         </xsl:if>
-        <xsl:if test="$ada.ggadget.thumb.url">
+        <xsl:if test="$adagio.ggadget.thumb.url">
           <xsl:attribute name="thumbnail"><xsl:value-of
-          select="$ada.ggadget.thumb.url"/></xsl:attribute>
+          select="$adagio.ggadget.thumb.url"/></xsl:attribute>
         </xsl:if>
-        <xsl:if test="$ada.ggadget.screenshot.url">
+        <xsl:if test="$adagio.ggadget.screenshot.url">
           <xsl:attribute name="screenshot"><xsl:value-of
-          select="$ada.ggadget.screenshot.url"/></xsl:attribute>
+          select="$adagio.ggadget.screenshot.url"/></xsl:attribute>
         </xsl:if>
-        <xsl:if test="$ada.ggadget.site.url">
+        <xsl:if test="$adagio.ggadget.site.url">
           <xsl:attribute name="title_url"><xsl:value-of
-          select="$ada.ggadget.site.url"/></xsl:attribute>
+          select="$adagio.ggadget.site.url"/></xsl:attribute>
         </xsl:if>
-        <xsl:if test="$ada.page.google.analytics.account">
+        <xsl:if test="$adagio.page.google.analytics.account">
           <Require feature="analytics"/>
         </xsl:if>
       </ModulePrefs>
       <Content type="html">
         <xsl:text
           disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
-        <xsl:if test="$ada.page.google.analytics.account">
+        <xsl:if test="$adagio.page.google.analytics.account">
           <script>
             // Track this gadget using Google Analytics.
             _IG_Analytics("<xsl:value-of
-            select="$ada.page.google.analytics.account"/>", 
+            select="$adagio.page.google.analytics.account"/>",
             "<xsl:value-of
-            select="$ada.ggadget.google.analytics.gadgetpath"/>");
+            select="$adagio.ggadget.google.analytics.gadgetpath"/>");
           </script>
         </xsl:if>
 
@@ -93,7 +93,7 @@
           </xsl:choose>
         </legend>
         <a target="_blank">
-          <xsl:attribute name="href"><xsl:value-of 
+          <xsl:attribute name="href"><xsl:value-of
           select="rss/channel/item[position()=1]/link/text()"
           /></xsl:attribute>
           <xsl:value-of
@@ -115,10 +115,10 @@
           </xsl:attribute>
         </xsl:if>
         <xsl:attribute name="href"><xsl:if
-          test="not(starts-with(@url, 'http:'))  and 
-                not(starts-with(@url, 'https:')) and 
+          test="not(starts-with(@url, 'http:'))  and
+                not(starts-with(@url, 'https:')) and
                 not(starts-with(@url, 'irc:'))"><xsl:value-of
-        select="$ada.ggadget.site.url"/></xsl:if><xsl:value-of select="@url"/></xsl:attribute>
+        select="$adagio.ggadget.site.url"/></xsl:if><xsl:value-of select="@url"/></xsl:attribute>
         <xsl:if test="$ulink.target != ''">
           <xsl:attribute name="target">
             <xsl:value-of select="$ulink.target"/>
@@ -126,7 +126,7 @@
         </xsl:if>
         <xsl:choose>
           <xsl:when test="count(child::node())=0">
-            <xsl:value-of select="@url"/> 
+            <xsl:value-of select="@url"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates/>
@@ -134,7 +134,7 @@
         </xsl:choose>
       </a>
     </xsl:variable>
-    
+
     <xsl:choose>
       <xsl:when test="function-available('suwl:unwrapLinks')">
         <xsl:copy-of select="suwl:unwrapLinks($link)"/>
@@ -146,8 +146,8 @@
   </xsl:template>
 
   <xsl:template match="@fileref">
-    <xsl:value-of select="$ada.ggadget.site.url"/><xsl:value-of 
-    select="ancestor::*/ulink[@condition = 'itemlinkbase']/@url"/>/<xsl:value-of 
+    <xsl:value-of select="$adagio.ggadget.site.url"/><xsl:value-of
+    select="ancestor::*/ulink[@condition = 'itemlinkbase']/@url"/>/<xsl:value-of
     select="."/>
   </xsl:template>
 

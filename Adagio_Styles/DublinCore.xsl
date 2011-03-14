@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -28,47 +28,47 @@
   xmlns:date="http://exslt.org/dates-and-times"
   version="1.0" exclude-result-prefixes="exsl xi">
 
-  <xsl:param name="ada.dc.include.descriptors" 
+  <xsl:param name="adagio.dc.include.descriptors"
     description="yes/no contolling if the Dublin Core descriptors are included
                  in the page header">no</xsl:param>
 
-  <xsl:param name="ada.dc.title" 
+  <xsl:param name="adagio.dc.title"
     description="Dublin Core title descriptor (if no title element in root)" />
 
-  <xsl:param name="ada.dc.description" 
+  <xsl:param name="adagio.dc.description"
     description="Dublin Core description (if no *info/abstract element in root)" />
 
-  <xsl:param name="ada.dc.subject" description="Dublin Core subject
+  <xsl:param name="adagio.dc.subject" description="Dublin Core subject
                                                      descriptor" />
 
-  <xsl:param name="ada.dc.format" description="Dublin Core format
+  <xsl:param name="adagio.dc.format" description="Dublin Core format
                                                     descriptor (text/html default)" />
 
-  <xsl:param name="ada.dc.language" description="Dublin Core language
+  <xsl:param name="adagio.dc.language" description="Dublin Core language
                                                       descriptor" />
 
-  <xsl:param name="ada.dc.publisher" description="Dublin Core publisher
+  <xsl:param name="adagio.dc.publisher" description="Dublin Core publisher
                                                       descriptor" />
 
-  <xsl:param name="ada.dc.creator"/> 
+  <xsl:param name="adagio.dc.creator"/>
 
   <!-- User HEAD content -->
   <xsl:template name="user.head.content">
-    <xsl:call-template name="ada.dc.insert.meta.elements"/>
+    <xsl:call-template name="adagio.dc.insert.meta.elements"/>
   </xsl:template>
 
-  <xsl:template name="ada.dc.insert.meta.elements">
+  <xsl:template name="adagio.dc.insert.meta.elements">
 
-    <xsl:if test="$ada.dc.include.descriptors = 'yes'">
-      
+    <xsl:if test="$adagio.dc.include.descriptors = 'yes'">
+
       <!-- DC.title -->
       <xsl:variable name="dc.title">
         <xsl:choose>
           <xsl:when test="/*/title">
             <xsl:apply-templates select="/*/title/node()"/>
           </xsl:when>
-          <xsl:when test="$ada.dc.title and ($ada.dc.title != '')"><xsl:value-of
-          select="$ada.dc.title"/></xsl:when>
+          <xsl:when test="$adagio.dc.title and ($adagio.dc.title != '')"><xsl:value-of
+          select="$adgioa.dc.title"/></xsl:when>
         </xsl:choose>
       </xsl:variable>
       <meta name="DC.title"><xsl:attribute name="content"><xsl:value-of
@@ -80,9 +80,9 @@
           <xsl:when test="/*/*[contains(@condition, 'dc.info')]/abstract/*[name() != 'title']">
             <xsl:apply-templates select="/*/*[contains(@condition, 'dc.info')]/abstract/*[name() != 'title']"/>
           </xsl:when>
-          <xsl:when test="$ada.dc.description != ''">
+          <xsl:when test="$adagio.dc.description != ''">
             <meta name="DC.description"><xsl:attribute name="content"><xsl:value-of
-            select="$ada.dc.description"/></xsl:attribute></meta>
+            select="$adagio.dc.description"/></xsl:attribute></meta>
           </xsl:when>
         </xsl:choose>
       </xsl:variable>
@@ -97,15 +97,15 @@
 
       <!-- DC.format -->
       <xsl:choose>
-        <xsl:when test="$ada.dc.format != ''">
+        <xsl:when test="$adagio.dc.format != ''">
           <meta name="DC.format"><xsl:attribute name="content"><xsl:value-of
-          select="$ada.dc.format"/></xsl:attribute></meta>
+          select="$adagio.dc.format"/></xsl:attribute></meta>
         </xsl:when>
         <xsl:otherwise>
           <meta name="DC.format" content="text/html"/>
         </xsl:otherwise>
       </xsl:choose>
-      
+
       <!-- DC.lang -->
       <xsl:variable name="dc.lang">
         <xsl:choose>
@@ -113,22 +113,22 @@
           <xsl:when test="$profile.lang"><xsl:value-of select="$profile.lang"/></xsl:when>
           <xsl:when test="$l10n.gentext.default.language"><xsl:value-of
           select="$l10n.gentext.default.language"/></xsl:when>
-          <xsl:when test="$ada.dc.language != ''"><xsl:value-of
-          select="$ada.dc.language"/></xsl:when>
+          <xsl:when test="$adagio.dc.language != ''"><xsl:value-of
+          select="$adagio.dc.language"/></xsl:when>
         </xsl:choose>
       </xsl:variable>
       <meta name="DC.language"><xsl:attribute name="content"><xsl:value-of
       select="$dc.lang"/></xsl:attribute></meta>
-      
+
       <!-- DC.publisher -->
       <xsl:choose>
         <xsl:when test="/*/*[contains(@condition, 'dc.info')]/publisher/publishername">
           <meta name="DC.publisher"><xsl:attribute name="content"><xsl:value-of
           select="/*/*[contains(@condition, 'dc.info')]/publisher/publishername/text()"/></xsl:attribute></meta>
         </xsl:when>
-        <xsl:when test="$ada.dc.publisher != ''">
+        <xsl:when test="$adagio.dc.publisher != ''">
           <meta name="DC.publisher"><xsl:attribute name="content"><xsl:value-of
-          select="$ada.dc.publisher"/></xsl:attribute></meta>
+          select="$adagio.dc.publisher"/></xsl:attribute></meta>
         </xsl:when>
       </xsl:choose>
 
@@ -139,8 +139,8 @@
             <xsl:apply-templates select="/*/*[contains(@condition,
                                          'dc.info')]/author"/>
           </xsl:when>
-          <xsl:when test="$ada.dc.creator">
-            <xsl:value-of select="$ada.dc.creator"/>
+          <xsl:when test="$adagio.dc.creator">
+            <xsl:value-of select="$adagio.dc.creator"/>
           </xsl:when>
         </xsl:choose>
       </xsl:variable>
@@ -152,9 +152,9 @@
     </xsl:if>
   </xsl:template>
 
-  <!-- 
+  <!--
        Templates needed to bypass redering of *info elements with the dc.info
-       labels 
+       labels
        -->
   <xsl:template match="chapterinfo[contains(@condition, 'dc.info')]/pubdate|
                        chapterinfo[contains(@condition, 'dc.info')]/abstract|

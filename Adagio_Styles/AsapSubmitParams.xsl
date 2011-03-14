@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -28,7 +28,7 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl str xi">
 
-  <xsl:param name="ada.submit.add.textarea.comment" select="'no'"/>
-  <xsl:param name="ada.submit.asap.verifyemail.js"/>
+  <xsl:param name="adagio.submit.add.textarea.comment" select="'no'"/>
+  <xsl:param name="adagio.submit.asap.verifyemail.js"/>
 
 </xsl:stylesheet>

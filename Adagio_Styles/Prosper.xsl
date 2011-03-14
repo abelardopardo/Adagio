@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -26,36 +26,36 @@
   xmlns:str="http://exslt.org/strings"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi str">
-  
+
   <!-- Brings in all the default values -->
   <xsl:import href="Params.xsl"/>
 
-<!-- 
+<!--
     Prosper-specific params:
-        * ada.prosper.style: prosper style to apply.
-        * ada.prosper.lang: latex language to declare (e.g.: "es")
-        * ada.prosper.logo.enable: true to enable logo, false otherwise.
-        * ada.prosper.logo.width: scale the logo to the given width.
-        * ada.prosper.logo.pos: put the logo in the given position.
-        * ada.prosper.logo.file: eps/ps file of the logo.
+        * adagio.prosper.style: prosper style to apply.
+        * adagio.prosper.lang: latex language to declare (e.g.: "es")
+        * adagio.prosper.logo.enable: true to enable logo, false otherwise.
+        * adagio.prosper.logo.width: scale the logo to the given width.
+        * adagio.prosper.logo.pos: put the logo in the given position.
+        * adagio.prosper.logo.file: eps/ps file of the logo.
 -->
 
   <!-- Param defaults -->
-  <xsl:param name="ada.prosper.lang">en</xsl:param>
-  <xsl:param name="ada.prosper.logo.enable">no</xsl:param>
-  <xsl:param name="ada.prosper.logo.width">1cm</xsl:param>
-  <xsl:param name="ada.prosper.logo.pos">(-1.12,-1.25)</xsl:param>
+  <xsl:param name="adagio.prosper.lang">en</xsl:param>
+  <xsl:param name="adagio.prosper.logo.enable">no</xsl:param>
+  <xsl:param name="adagio.prosper.logo.width">1cm</xsl:param>
+  <xsl:param name="adagio.prosper.logo.pos">(-1.12,-1.25)</xsl:param>
 
 
   <xsl:output method="text" indent="no" encoding="UTF-8" />
 
   <xsl:template match="document">
-\documentclass[pdf,<xsl:value-of select="$ada.prosper.style"/>,slideColor,colorBG]{prosper}
+\documentclass[pdf,<xsl:value-of select="$adagio.prosper.style"/>,slideColor,colorBG]{prosper}
 
 \usepackage[utf8]{inputenc}
 
 
-<xsl:if test="$ada.prosper.lang='es'">
+<xsl:if test="$adagio.prosper.lang='es'">
 \usepackage[spanish,activeacute]{babel}
 </xsl:if>
 
@@ -68,13 +68,13 @@
 \newcommand{\todom}[1]{\green[#1]}
   <xsl:apply-templates select="title" />
 
-\subtitle{<xsl:value-of select="$ada.project.name"/> (<xsl:value-of select="$ada.project.edition"/>)}
+\subtitle{<xsl:value-of select="$adagio.project.name"/> (<xsl:value-of select="$adagio.project.edition"/>)}
 
   <xsl:apply-templates select="author" />
   <xsl:apply-templates select="institution" />
 
-<xsl:if test="$ada.prosper.logo.enable='true'">
-\Logo<xsl:value-of select="$ada.prosper.logo.pos"/>{\includegraphics[width=<xsl:value-of select="$ada.prosper.logo.width"/>]{<xsl:value-of select="$ada.prosper.logo.file"/>}}
+<xsl:if test="$adagio.prosper.logo.enable='true'">
+\Logo<xsl:value-of select="$adagio.prosper.logo.pos"/>{\includegraphics[width=<xsl:value-of select="$adagio.prosper.logo.width"/>]{<xsl:value-of select="$adagio.prosper.logo.file"/>}}
 </xsl:if>
 
 \begin{document}
@@ -88,7 +88,7 @@
   </xsl:template>
 
   <xsl:template match="author">
-\author{<xsl:value-of select="text()" /> 
+\author{<xsl:value-of select="text()" />
     <xsl:if test="count(@email) = 1">
 \\ <xsl:value-of select="@email" />
     </xsl:if>
@@ -96,7 +96,7 @@
   </xsl:template>
 
   <xsl:template match="institution">
-\institution{<xsl:value-of select="$ada.institution.name" />}
+\institution{<xsl:value-of select="$adagio.institution.name" />}
   </xsl:template>
 
   <xsl:template match="material">

@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -35,7 +35,7 @@
 
   <!-- This one for sure is needed in all documents -->
   <xsl:param name="xref.with.number.and.title" select="'0'"/>
-  <xsl:param name="ada.exam.author"/>
+  <xsl:param name="adagio.exam.author"/>
 
   <xsl:include href="ExamParams.xsl"/>
 
@@ -53,17 +53,17 @@
 
     <xsl:comment>Part heading</xsl:comment>
 
-    <div id="ada_exam_heading">
+    <div id="adagio_exam_heading">
       <!-- If cover is to be rendered in a single page, insert the page break -->
-      <xsl:if test="$ada.exam.render.separate.cover = 'yes'">
+      <xsl:if test="$adagio.exam.render.separate.cover = 'yes'">
         <xsl:attribute name="class">pageBreakAfter</xsl:attribute>
       </xsl:if>
 
       <!-- If the exam has a "part" label, stick it right at the top of the page -->
       <xsl:if test="$part">
-        <div id="ada_exam_part_label">
+        <div id="adagio_exam_part_label">
           <xsl:copy-of select="$part"/>
-          <xsl:if test="($ada.exam.include.id = 'yes') and (/section/@status)">
+          <xsl:if test="($adagio.exam.include.id = 'yes') and (/section/@status)">
             (<xsl:value-of select="/section/@status"/>)
           </xsl:if>
         </div>
@@ -72,17 +72,17 @@
       <!-- Include paragraph with duration, scoring, date and/or note -->
       <xsl:if test="$duration or $scoring or $date or $note">
         <xsl:comment>Duration/Score/Date</xsl:comment>
-        <div id="ada_exam_notes_block">
+        <div id="adagio_exam_notes_block">
           <!-- Duration -->
           <xsl:if test="$duration">
-            <div class="ada_exam_note_block">
-              <div class="ada_exam_note_title">
+            <div class="adagio_exam_note_block">
+              <div class="adagio_exam_note_title">
                 <xsl:choose>
                   <xsl:when test="$profile.lang='en'">Duration: </xsl:when>
                   <xsl:otherwise>Duración: </xsl:otherwise>
                 </xsl:choose>
               </div>
-              <div class="ada_exam_note_data">
+              <div class="adagio_exam_note_data">
                 <xsl:apply-templates select="$duration"/>
               </div>
             </div>
@@ -90,14 +90,14 @@
 
           <!-- Scoring -->
           <xsl:if test="$scoring">
-            <div class="ada_exam_note_block">
-              <div class="ada_exam_note_title">
+            <div class="adagio_exam_note_block">
+              <div class="adagio_exam_note_title">
                 <xsl:choose>
                   <xsl:when test="$profile.lang='en'">Score: </xsl:when>
                   <xsl:otherwise>Puntuación: </xsl:otherwise>
                 </xsl:choose>
               </div>
-              <div class="ada_exam_note_data">
+              <div class="adagio_exam_note_data">
                 <xsl:apply-templates select="$scoring"/>
               </div>
             </div>
@@ -105,14 +105,14 @@
 
           <!-- Date -->
           <xsl:if test="$date">
-            <div class="ada_exam_note_block">
-              <div class="ada_exam_note_title">
+            <div class="adagio_exam_note_block">
+              <div class="adagio_exam_note_title">
                 <xsl:choose>
                   <xsl:when test="$profile.lang='en'">Date: </xsl:when>
                   <xsl:otherwise>Fecha: </xsl:otherwise>
                 </xsl:choose>
               </div>
-              <div class="ada_exam_note_data">
+              <div class="adagio_exam_note_data">
                 <xsl:apply-templates select="$date"/>
               </div>
             </div>
@@ -120,14 +120,14 @@
 
           <!-- Note -->
           <xsl:if test="$note">
-            <div class="ada_exam_note_block">
-              <div class="ada_exam_note_title">
+            <div class="adagio_exam_note_block">
+              <div class="adagio_exam_note_title">
                 <xsl:choose>
                   <xsl:when test="$profile.lang='en'">Remarks: </xsl:when>
                   <xsl:otherwise>Nota: </xsl:otherwise>
                 </xsl:choose>
               </div>
-              <div class="ada_exam_note_data">
+              <div class="adagio_exam_note_data">
                 <xsl:apply-templates select="$note"/>
               </div>
             </div>
@@ -137,51 +137,51 @@
 
       <!-- Include a box to write the student first/last/id -->
       <xsl:if test="$name">
-        <div id="ada_exam_name_surname">
+        <div id="adagio_exam_name_surname">
           <!-- Last name -->
-          <div class="ada_exam_name_block">
-            <div class="ada_exam_name_title">
+          <div class="adagio_exam_name_block">
+            <div class="adagio_exam_name_title">
               <xsl:choose>
                 <xsl:when test="$profile.lang='en'">Last Name: </xsl:when>
                 <xsl:otherwise>Apellidos: </xsl:otherwise>
               </xsl:choose>
             </div>
-            <div class="ada_exam_name_data">
-              <xsl:if test="$ada.exam.student.lastname and
-                            ($ada.exam.student.lastname != '')">
-                <xsl:value-of select="$ada.exam.student.lastname"/>
+            <div class="adagio_exam_name_data">
+              <xsl:if test="$adagio.exam.student.lastname and
+                            ($adagio.exam.student.lastname != '')">
+                <xsl:value-of select="$adagio.exam.student.lastname"/>
               </xsl:if>
             </div>
           </div>
 
           <!-- First name -->
-          <div class="ada_exam_name_block">
-            <div class="ada_exam_name_title">
+          <div class="adagio_exam_name_block">
+            <div class="adagio_exam_name_title">
               <xsl:choose>
                 <xsl:when test="$profile.lang='en'">First Name: </xsl:when>
                 <xsl:otherwise>Nombre: </xsl:otherwise>
               </xsl:choose>
             </div>
-            <div class="ada_exam_name_data">
-              <xsl:if test="$ada.exam.student.name and
-                            ($ada.exam.student.name != '')">
-                <xsl:value-of select="$ada.exam.student.name"/>
+            <div class="adagio_exam_name_data">
+              <xsl:if test="$adagio.exam.student.name and
+                            ($adagio.exam.student.name != '')">
+                <xsl:value-of select="$adagio.exam.student.name"/>
               </xsl:if>
             </div>
           </div>
 
           <!-- Student ID -->
-          <div class="ada_exam_name_block">
-            <div class="ada_exam_name_title">
+          <div class="adagio_exam_name_block">
+            <div class="adagio_exam_name_title">
               <xsl:choose>
                 <xsl:when test="$profile.lang='en'">Student ID: </xsl:when>
                 <xsl:otherwise>NIA: </xsl:otherwise>
               </xsl:choose>
             </div>
-            <div class="ada_exam_name_data">
-              <xsl:if test="$ada.exam.student.id and
-                            ($ada.exam.student.id != '')">
-                <xsl:value-of select="$ada.exam.student.id"/>
+            <div class="adagio_exam_name_data">
+              <xsl:if test="$adagio.exam.student.id and
+                            ($adagio.exam.student.id != '')">
+                <xsl:value-of select="$adagio.exam.student.id"/>
               </xsl:if>
             </div>
           </div>
@@ -196,8 +196,8 @@
            total box for the final score. All this controlled by a parameter.
            -->
       <xsl:if test="$score">
-        <div id="ada_exam_score">
-          <div class="ada_exam_score_title">
+        <div id="adagio_exam_score">
+          <div class="adagio_exam_score_title">
             <div>
               <xsl:choose>
                 <xsl:when test="$profile.lang='en'">Correct</xsl:when>
@@ -223,7 +223,7 @@
               </xsl:choose>
             </div>
           </div>
-          <div class="ada_exam_score_data">
+          <div class="adagio_exam_score_data">
             <div/>
             <div/>
             <div/>
@@ -238,8 +238,8 @@
 
     <!-- Problems within a section element -->
     <xsl:for-each select="section/section">
-      <xsl:if test="$ada.exam.exercise.name">
-        <xsl:copy-of select="$ada.exam.exercise.name"/>
+      <xsl:if test="$adagio.exam.exercise.name">
+        <xsl:copy-of select="$adagio.exam.exercise.name"/>
         <xsl:if test="count(preceding-sibling::section) +
                       count(following-sibling::section) &gt;= 1">
           <xsl:value-of select="count(preceding-sibling::section) + 1"/>.

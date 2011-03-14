@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -27,8 +27,8 @@
   xmlns:str="http://exslt.org/strings"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi str">
-  
-  <xsl:param name="exercisesubmit.include.toc" 
+
+  <xsl:param name="exercisesubmit.include.toc"
     description="Yes/no variable to include a TOC a the top of the page">yes</xsl:param>
   <xsl:param name="exercisesubmit.submission.page.url"
     description="URL to the submission page (if not given, taken from the XML)"/>

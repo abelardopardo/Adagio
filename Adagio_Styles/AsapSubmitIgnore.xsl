@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -27,26 +27,26 @@
   exclude-result-prefixes="exsl" version="1.0">
 
   <!-- Prevent these sections from appearing in TOC -->
-  <xsl:template match="section[@condition='ada.asap.submission.page']"
+  <xsl:template match="section[@condition='adagio.asap.submission.page']"
                 mode="toc" />
-  <xsl:template match="section[@condition = 'ada_submit_info']" mode="toc" />
+  <xsl:template match="section[@condition = 'adagio_submit_info']" mode="toc" />
 
-  <xsl:template match="section[@condition='ada_submit_info']|
-                       note[@condition='ada_submit_info']"/>
+  <xsl:template match="section[@condition='adagio_submit_info']|
+                       note[@condition='adagio_submit_info']"/>
 
   <!-- this is in Forms, no longer in AsapSubmit
-  <xsl:template match="note[@condition='ada_submit_input']|
-                       para[@condition='ada_submit_input']|
-                       remark[@condition='ada_submit_input']"/>
+  <xsl:template match="note[@condition='adagio_submit_input']|
+                       para[@condition='adagio_submit_input']|
+                       remark[@condition='adagio_submit_input']"/>
 
-  <xsl:template match="remark[@condition='ada_submit_textarea_form']|
-                       remark[@condition='ada_submit_form']|
-                       remark[@condition='ada_submit_duration_form']"/>
+  <xsl:template match="remark[@condition='adagio_submit_textarea_form']|
+                       remark[@condition='adagio_submit_form']|
+                       remark[@condition='adagio_submit_duration_form']"/>
   -->
   <xsl:template match="note[@condition = 'AdminInfo']"/>
 
   <!-- skip entirely processing of the submit sections -->
-  <xsl:template match="section[@condition='ada.asap.submission.page']"/>
+  <xsl:template match="section[@condition='adagio.asap.submission.page']"/>
   <xsl:template match="note[@condition='text.before.author.box']"/>
   <xsl:template match="note[@condition='text.before.payload.box']"/>
 

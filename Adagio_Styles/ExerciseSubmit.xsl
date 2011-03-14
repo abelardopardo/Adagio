@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -27,7 +27,7 @@
   xmlns:str="http://exslt.org/strings"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi str">
-  
+
   <xsl:import href="ExerciseSubmitParams.xsl"/>
 
   <xsl:import href="CountDown.xsl"/>
@@ -68,7 +68,7 @@
 
       <xsl:if
         test="(note[@condition = 'AdminInfo']/para[@condition =
-              'handinlink']) and 
+              'handinlink']) and
               ($solutions.include.guide != 'yes')">
         <div class="noprint" id="handin_link">
           <p>
@@ -78,7 +78,7 @@
           </p>
         </div>
       </xsl:if>
-      
+
       <!-- Insert countdown here -->
       <xsl:if
         test="note[@condition='AdminInfo']/para[@condition =
@@ -93,7 +93,7 @@
         </xsl:variable>
 	<div id="countdown">
 	  <p>
-	    <xsl:call-template name="ada.page.countdown.insert">
+	    <xsl:call-template name="adagio.page.countdown.insert">
 	      <xsl:with-param name="countdown.year">
 		<xsl:value-of
 		  select="exsl:node-set($deadlineparts)/tokens/token[position()
@@ -129,8 +129,8 @@
                     (count(ancestor::*) = 0)">
         <xsl:call-template name="section.toc" mode="toc"/>
       </xsl:if>
-      
-      <xsl:call-template name="ada.insert.header.links"/>
+
+      <xsl:call-template name="adagio.insert.header.links"/>
 
       <!-- Main content -->
       <xsl:apply-templates/>

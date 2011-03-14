@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -27,9 +27,9 @@
   xmlns:str="http://exslt.org/strings"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl xi str">
-  
-  <xsl:variable name="ada.flv.player.swf.file">mediaplayer.swf</xsl:variable>
-  <xsl:variable name="ada.flv.player.js.file">swfobject.js</xsl:variable>
-  <xsl:variable name="ada.flv.player.pluginspace">http://www.macromedia.com/go/getflashplayer</xsl:variable>
-  <xsl:variable name="ada.flv.player.minimum.version">8</xsl:variable>
+
+  <xsl:variable name="adagio.flv.player.swf.file">mediaplayer.swf</xsl:variable>
+  <xsl:variable name="adagio.flv.player.js.file">swfobject.js</xsl:variable>
+  <xsl:variable name="adagio.flv.player.pluginspace">http://www.macromedia.com/go/getflashplayer</xsl:variable>
+  <xsl:variable name="adagio.flv.player.minimum.version">8</xsl:variable>
 </xsl:stylesheet>

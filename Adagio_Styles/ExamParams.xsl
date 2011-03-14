@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -22,54 +22,54 @@
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:exsl="http://exslt.org/common" 
+  xmlns:exsl="http://exslt.org/common"
   xmlns="http://www.w3.org/1999/xhtml" version="1.0">
 
   <xsl:param name="section.autolabel" select="0"/>
   <xsl:param name="chapter.autolabel" select="0"/>
 
   <!-- Control the font family and size -->
-  <xsl:param name="ada.exam.fontfamily" select="'Verdana'"/>
-  <xsl:param name="ada.exam.fontsize" select="'10pt'"/>
+  <xsl:param name="adagio.exam.fontfamily" select="'Verdana'"/>
+  <xsl:param name="adagio.exam.fontsize" select="'10pt'"/>
 
   <!-- Show the qandadiv ID -->
-  <xsl:param name="ada.exam.include.id" select="'no'"/>
+  <xsl:param name="adagio.exam.include.id" select="'no'"/>
 
   <!-- Insert a page break after the cover -->
-  <xsl:param name="ada.exam.render.separate.cover" select="'yes'"/>
+  <xsl:param name="adagio.exam.render.separate.cover" select="'yes'"/>
 
   <!-- Logo to use in the upper left corner -->
-  <xsl:param name="ada.exam.topleft.image"/>
-  <xsl:param name="ada.exam.topleft.image.alt"/>
+  <xsl:param name="adagio.exam.topleft.image"/>
+  <xsl:param name="adagio.exam.topleft.image.alt"/>
 
   <!-- Text to include in the top left (next to icon) -->
-  <xsl:param name="ada.exam.topleft.toptext"/>
+  <xsl:param name="adagio.exam.topleft.toptext"/>
 
   <!-- Text to include in the center left (next to icon) -->
-  <xsl:param name="ada.exam.topleft.centertext"/>
+  <xsl:param name="adagio.exam.topleft.centertext"/>
 
   <!-- Text to include in the bottom left (next to icon) -->
-  <xsl:param name="ada.exam.topleft.bottomtext"/>
+  <xsl:param name="adagio.exam.topleft.bottomtext"/>
 
   <!-- Text to include in the top right (next to icon) -->
-  <xsl:param name="ada.exam.topright.toptext"/>
+  <xsl:param name="adagio.exam.topright.toptext"/>
 
   <!-- Text to include in the center right (next to icon) -->
-  <xsl:param name="ada.exam.topright.centertext"/>
+  <xsl:param name="adagio.exam.topright.centertext"/>
 
   <!-- Text to include in the bottom right (next to icon) -->
-  <xsl:param name="ada.exam.topright.bottomtext"/>
+  <xsl:param name="adagio.exam.topright.bottomtext"/>
 
   <!-- Label to precede each exercise in a regular exam. -->
-  <xsl:param name="ada.exam.exercise.name">VALUE OF ada.exam.exercise.name</xsl:param>
+  <xsl:param name="adagio.exam.exercise.name">VALUE OF adagio.exam.exercise.name</xsl:param>
 
   <!-- Student name to insert in the name box data -->
-  <xsl:param name="ada.exam.student.name" value=""/>
+  <xsl:param name="adagio.exam.student.name" value=""/>
 
   <!-- Student lastnname to insert in the name box data -->
-  <xsl:param name="ada.exam.student.lastname" value=""/>
+  <xsl:param name="adagio.exam.student.lastname" value=""/>
 
   <!-- Student id to insert in the name box data -->
-  <xsl:param name="ada.exam.student.id" value=""/>
+  <xsl:param name="adagio.exam.student.id" value=""/>
 
 </xsl:stylesheet>

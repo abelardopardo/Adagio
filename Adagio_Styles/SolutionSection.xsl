@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -21,15 +21,15 @@
 
 -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  xmlns:exsl="http://exslt.org/common" 
-  xmlns="http://www.w3.org/1999/xhtml" 
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:exsl="http://exslt.org/common"
+  xmlns="http://www.w3.org/1999/xhtml"
   exclude-result-prefixes="exsl" version="1.0">
-  
+
   <!-- Do not force the title, it is controlled internally -->
   <xsl:param name="admon.textlabel" select="0"/>
 
-  <!-- Include the solutions for the exercises --> 
+  <!-- Include the solutions for the exercises -->
   <xsl:param name="solutions.include.guide" select="'no'"
     description="yes/no variable to show the solution in the document"/>
 
@@ -51,24 +51,24 @@
   <xsl:template match="section[@condition = 'solution']" mode="toc">
     <xsl:param name="toc-context" select="."/>
     <xsl:if test="$solutions.include.guide = 'yes'">
-      
+
       <xsl:call-template name="subtoc">
         <xsl:with-param name="toc-context" select="$toc-context"/>
-        <xsl:with-param name="nodes" 
+        <xsl:with-param name="nodes"
           select="section|bridgehead[$bridgehead.in.toc != 0]"/>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
-  
+
   <!-- Conditionally process section when chunked -->
   <xsl:template match="section[@condition = 'solution']">
     <xsl:if test="$solutions.include.guide = 'yes'">
       <xsl:variable name="depth" select="count(ancestor::section)+1"/>
-      
+
       <!-- Removed to preserve backward compatibility with 1.69
       <xsl:call-template name="id.warning"/>
       -->
-      
+
       <div class="{name(.)}_solution">
         <!-- Removed to preserve compatibility with 1.69 stylesheets.
         <xsl:apply-templates select="." mode="class.attribute"/>
@@ -79,17 +79,17 @@
         <xsl:call-template name="language.attribute"/>
 
         <xsl:call-template name="section.titlepage"/>
-        
+
         <xsl:variable name="toc.params">
           <xsl:call-template name="find.path.params">
             <xsl:with-param name="table" select="normalize-space($generate.toc)"/>
           </xsl:call-template>
         </xsl:variable>
-        
+
         <xsl:if test="contains($toc.params, 'toc')
                       and $depth &lt;= $generate.section.toc.level">
           <xsl:call-template name="section.toc">
-            <xsl:with-param name="toc.title.p" 
+            <xsl:with-param name="toc.title.p"
               select="contains($toc.params, 'title')"/>
           </xsl:call-template>
           <xsl:call-template name="section.toc.separator"/>
