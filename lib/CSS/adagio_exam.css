@@ -3,93 +3,93 @@
 /*                          CONTENT DIV                                       */
 /*                                                                            */
 /* -------------------------------------------------------------------------- */
-#ada_page_content
+#adagio_page_content
 {
   max-width: none;
   }
 
-#ada_exam_part_label
+#adagio_exam_part_label
 {
   clear: both;
   text-align: center;
   text-decoration: underline;
  }
 
-div#ada_exam_notes_block,
-div#ada_exam_name_surname,
-div#ada_exam_score
+div#adagio_exam_notes_block,
+div#adagio_exam_name_surname,
+div#adagio_exam_score
 {
   border-collapse: collapse;
   display: table;
   margin-bottom: 1em;
  }
 
-div#ada_exam_score
+div#adagio_exam_score
 {
   margin-left: auto;
   margin-right: auto;
  }
 
-div.ada_exam_note_block,
-div.ada_exam_name_block,
-div.ada_exam_score_title,
-div.ada_exam_score_data
+div.adagio_exam_note_block,
+div.adagio_exam_name_block,
+div.adagio_exam_score_title,
+div.adagio_exam_score_data
 {
   display: table-row;
 }
 
-div#ada_exam_name_surname
+div#adagio_exam_name_surname
 {
   width: 100%;
   margin-left: 0.5em;
  }
 
-div.ada_exam_note_data,
-div.ada_exam_note_title,
-div.ada_exam_name_data,
-div.ada_exam_name_title,
-div.ada_exam_score_title > div,
-div.ada_exam_score_data > div
+div.adagio_exam_note_data,
+div.adagio_exam_note_title,
+div.adagio_exam_name_data,
+div.adagio_exam_name_title,
+div.adagio_exam_score_title > div,
+div.adagio_exam_score_data > div
 {
   display: table-cell;
  }
 
-div.ada_exam_note_title,
-div.ada_exam_name_title,
-div.ada_exam_score_title > div
+div.adagio_exam_note_title,
+div.adagio_exam_name_title,
+div.adagio_exam_score_title > div
 {
   font-weight: bold;
   padding-left: 0.5em;
   padding-right: 0.5em;
  }
 
-div.ada_exam_name_title
+div.adagio_exam_name_title
 {
   padding-top: 1.0em;
   padding-bottom: 1.0em;
   width: 15%;
  }
 
-div.ada_exam_name_title,
-div.ada_exam_name_data,
-div.ada_exam_score_title > div,
-div.ada_exam_score_data > div
+div.adagio_exam_name_title,
+div.adagio_exam_name_data,
+div.adagio_exam_score_title > div,
+div.adagio_exam_score_data > div
 {
   border: thin solid black;
 }
 
-div.ada_exam_score_title > div
+div.adagio_exam_score_title > div
 {
   width: 10em;
   text-align: center;
 }
 
-div.ada_exam_score_data > div
+div.adagio_exam_score_data > div
 {
   height: 5em;
  }
 
-div.ada_exam_name_data
+div.adagio_exam_name_data
 {
   width: 100%;
 }
@@ -99,7 +99,7 @@ div.ada_exam_name_data
 /*                               QANDADIVS                                    */
 /*                                                                            */
 /* -------------------------------------------------------------------------- */
-div.ada_exam_qandadiv
+div.adagio_exam_qandadiv
 {
   border: thin solid black;
   margin-top: 1.0em;
@@ -108,21 +108,21 @@ div.ada_exam_qandadiv
   page-break-inside: avoid;
 }
 
-p.ada_exam_qandadiv_numbering
+p.adagio_exam_qandadiv_numbering
 {
   font-weight: bold;
   margin-top: 0.1em;
   margin-left: 0.5em;
  }
 
-div.ada_exam_qandadiv_prelude_text
+div.adagio_exam_qandadiv_prelude_text
 {
   margin-bottom: 0.5em;
   margin-left: 1.0em;
  }
 
-div.ada_exam_qandaentry_table_single,
-div.ada_exam_qandaentry_table_multiple
+div.adagio_exam_qandaentry_table_single,
+div.adagio_exam_qandaentry_table_multiple
 {
   display: table;
   margin-left: 1em;
@@ -130,49 +130,49 @@ div.ada_exam_qandaentry_table_multiple
   width: 98%
   }
 
-div.ada_exam_qandaentry_table_multiple div.ada_exam_question
+div.adagio_exam_qandaentry_table_multiple div.adagio_exam_question
 {
   border: thin solid black;
   }
 
-div.ada_exam_question
+div.adagio_exam_question
 {
   display: table-row-group;
   }
 
-div.ada_exam_question_tf_heading,
-div.ada_exam_question_tf_answer,
-div.ada_exam_question_mc_answer
+div.adagio_exam_question_tf_heading,
+div.adagio_exam_question_tf_answer,
+div.adagio_exam_question_mc_answer
 {
   display: table-row;
  }
 
-div.ada_exam_qandaentry_table_single div.ada_exam_question_mc_text
+div.adagio_exam_qandaentry_table_single div.adagio_exam_question_mc_text
 {
   margin-left: 0;
   margin-right: 0;
   }
 
-div.ada_exam_question_mc_text
+div.adagio_exam_question_mc_text
 {
   margin-left: 0.5em;
   margin-right: 0.5em;
  }
 
-div.ada_exam_question_mc_text,
-div.ada_exam_question_mc_answers
+div.adagio_exam_question_mc_text,
+div.adagio_exam_question_mc_answers
 {
   display: table;
  }
 
-div.ada_exam_question_mc_answers,
-div.ada_exam_question_tf_answer_text > *
+div.adagio_exam_question_mc_answers,
+div.adagio_exam_question_tf_answer_text > *
 {
   clear: left;
   float: left;
  }
 
-div.ada_exam_question_tf_answer_text
+div.adagio_exam_question_tf_answer_text
 {
   display: table-cell;
   padding-left: 0.5em;
@@ -181,7 +181,7 @@ div.ada_exam_question_tf_answer_text
   width: 98%;
  }
 
-div.ada_exam_question_tf_heading > div
+div.adagio_exam_question_tf_heading > div
 {
   display: table-cell;
   font-weight: bold;
@@ -190,23 +190,23 @@ div.ada_exam_question_tf_heading > div
   padding-right: 0.8em;
  }
 
-div.ada_exam_qandaentry_table_multiple div.ada_exam_question_tf_heading > div,
-div.ada_exam_qandaentry_table_multiple div.ada_exam_question_tf_answer > div
+div.adagio_exam_qandaentry_table_multiple div.adagio_exam_question_tf_heading > div,
+div.adagio_exam_qandaentry_table_multiple div.adagio_exam_question_tf_answer > div
 {
   border: thin solid black;
 }
 
-div.ada_exam_question_mc_answer_text
+div.adagio_exam_question_mc_answer_text
 {
   display: table-cell;
   }
-div.ada_exam_question_mc_answer_text *
+div.adagio_exam_question_mc_answer_text *
 {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
 
-div.ada_exam_answer_square
+div.adagio_exam_answer_square
 {
   display: table-cell;
   vertical-align: middle;
@@ -215,7 +215,7 @@ div.ada_exam_answer_square
   padding-right: 0.8em;
  }
 
-div.ada_exam_answer_square div
+div.adagio_exam_answer_square div
 {
   border: thin solid black;
   height: 10px;
@@ -229,9 +229,9 @@ div.solid_answer_square
   background-color: black;
  }
 
-table.ada_exam_question_history_table,
-table.ada_exam_question_history_table td,
-table.ada_exam_question_history_table th
+table.adagio_exam_question_history_table,
+table.adagio_exam_question_history_table td,
+table.adagio_exam_question_history_table th
 {
   border: thin solid black;
   border-collapse: collapse;
@@ -240,7 +240,7 @@ table.ada_exam_question_history_table th
   text-align: center;
  }
 
-div.ada_exam_question_metadata
+div.adagio_exam_question_metadata
 {
   clear: none;
   display: table;
@@ -251,9 +251,9 @@ div.ada_exam_question_metadata
   margin-top: 0.5em;
  }
 
-div.ada_exam_question_author,
-div.ada_exam_question_editions,
-div.ada_exam_question_history
+div.adagio_exam_question_author,
+div.adagio_exam_question_editions,
+div.adagio_exam_question_history
 {
   display: table-row;
   margin-right: auto;
@@ -262,9 +262,9 @@ div.ada_exam_question_history
   margin-bottom: 0.5em;
 }
 
-div.ada_exam_question_history p,
-div.ada_exam_question_author p,
-div.ada_exam_question_editions p
+div.adagio_exam_question_history p,
+div.adagio_exam_question_author p,
+div.adagio_exam_question_editions p
 {
   text-align: center;
   margin-top: 0.5em;

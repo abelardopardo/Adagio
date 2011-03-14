@@ -1,23 +1,44 @@
-/* 
- * Generic style file for Course Web Pages 
- * ADA: Agile Distributed Authoring. A set of rules to produce/combine resources
+/*
+ * Generic style file for Course Web Pages
+ * Adagio: Agile Distributed Authoring. A set of rules to produce/combine
+ * resources
  * Copyright (C) 2008 Abelardo Pardo, Carlos III University of Madrid
 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301, USA.
- * 
- * Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
  *
+ * Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
  */
+body {
+  /* Set font size/height and family */
+  /* font: 1em/1.2em sans-serif; */
+}
+
+h1 {
+  font-size: 1.4em;
+}
+	
+h2 {
+  font-size: 1.3em;
+}
+	
+h3 {
+  font-size: 1.2em;
+}
+
+h4 {
+  font-size: 1.1em;
+}
+

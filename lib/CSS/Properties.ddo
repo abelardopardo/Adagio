@@ -1,3 +1,3 @@
 [export]
-files = ada_asap_author_box.css ada_handheld.css ada_html.css 
-        ada_layout.css ada_rss_html.css ada_style.css ada_exam.css
+files = adagio_asap_author_box.css adagio_handheld.css adagio_html.css
+        adagio_layout.css adagio_rss_html.css adagio_style.css adagio_exam.css

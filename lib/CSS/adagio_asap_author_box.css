@@ -1,0 +1,77 @@
+div.adagio_asap_author_box,
+div.adagio_asap_payload_box
+{
+  border: thin solid black;
+  border-collapse: collapse;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80em;
+  }
+
+div.adagio_asap_payload_box
+{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+div.adagio_asap_author_box_row,
+div.adagio_asap_author_box_row_author,
+div.adagio_asap_author_box_row_author_id,
+div.adagio_asap_author_box_row_confirmation_email,
+div.adagio_asap_author_box_row_password,
+div.adagio_asap_author_box_row_groupname,
+div.adagio_asap_author_box_row_single_password,
+div.adagio_asap_author_box_row_payload
+{
+  display: table-row;
+  }
+
+div.adagio_asap_author_box_row_author,
+div.adagio_asap_author_box_row_single_password
+{
+  border-top: thin solid black;
+}
+
+div.adagio_asap_author_box_row_single_password,
+div.adagio_asap_author_box_row_payload
+{
+  border-bottom: thin solid black;
+ }
+
+div.adagio_asap_author_box_data,
+div.adagio_asap_author_box_data_a,
+div.adagio_asap_author_box_data_b
+{
+  display: table-cell;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  vertical-align: middle;
+  }
+
+div.adagio_asap_author_box_row_password,
+div.adagio_asap_author_box_row_confirmation_email
+{
+  text-align: left;
+  border-bottom: thin solid black;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+ }
+
+.adagio_asap_author_box_row_password .adagio_asap_author_box_data_b
+{
+  margin-right: 10px;
+ }
+
+
+div.adagio_asap_submit_button,
+div.adagio_asap_submit_confirmation_email
+{
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+  text-align: center;
+  }
+
+h3.adagio_asap_submit_deadline
+{
+  text-align: center;
+}
