@@ -229,7 +229,7 @@ def isUpToDate(fileName):
     return (os.path.getmtime(fileName) >= __NodeDate[addNode(fileName)])
 
 def locateFile(fileName, dirPrefix = None):
-    """Search an stylesheet in the dirs in local ADA dirs"""
+    """Search an stylesheet in the dirs in local Adagio dirs"""
 
     if dirPrefix == None:
         dirPrefix = os.getcwd()
@@ -240,7 +240,7 @@ def locateFile(fileName, dirPrefix = None):
     if os.path.exists(absName):
         return absName
 
-    localAdaStyle = os.path.join(adagio.home, 'ADA_Styles', fileName)
+    localAdaStyle = os.path.join(adagio.home, 'Adagio_Styles', fileName)
 
     if os.path.exists(localAdaStyle):
         return os.path.abspath(localAdaStyle)
