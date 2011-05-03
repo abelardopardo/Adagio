@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-#
 #
 # Copyright (C) 2010 Carlos III University of Madrid
-# This file is part of the ADA: Agile Distributed Authoring Toolkit
+# This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -23,7 +23,7 @@
 #
 import os, re, sys, glob
 
-import Ada, Directory, I18n, Dependency, AdaRule
+import adagio, directory, i18n, dependency, rules
 
 # Prefix to use for the options
 module_prefix = '@PREFIX@'
@@ -39,7 +39,7 @@ documentation = {
     @DESCRIBE HERE WHAT THIS RULE DOES@
     """}
 
-has_executable = AdaRule.which(next(b for (a, b, c) in options if a == 'exec'))
+has_executable = rules.which(next(b for (a, b, c) in options if a == 'exec'))
 
 def Execute(target, directory):
     """
@@ -56,7 +56,7 @@ def Execute(target, directory):
         return
 
     # Get the files to process, if empty, terminate
-    toProcess = AdaRule.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, directory)
     if toProcess == []:
         return
 
@@ -75,10 +75,10 @@ def clean(target, directory):
     Clean the files produced by this rule
     """
     
-    Ada.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(target, directory, 'Cleaning')
 
     # Get the files to process
-    toProcess = AdaRule.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(target, directory)
     if toProcess == []:
         return
 
