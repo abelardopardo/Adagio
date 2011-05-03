@@ -24,7 +24,7 @@
 import sys, os, copy, atexit
 from lxml import etree
 
-import rules, i18n
+import adagio, rules, i18n
 
 # A dictionary storing XML trees and XSLTProcs. The values are pairs (a, b)
 # where a is the tree without the includes expanded and b is the fully expanded
@@ -124,7 +124,7 @@ def findOrAddTransform(path):
         adagio.logDebug('treecache', None, 'HIT: ' + str(path))
         return transform
 
-    # Parse style file, insert name resolver to consider ADA local styles,
+    # Parse style file, insert name resolver to consider Adagio local styles,
     # expand includes and create transformation object
     styleParser = etree.XMLParser(load_dtd = True, no_network = True)
     styleParser.resolvers.add(rules.StyleResolver())
