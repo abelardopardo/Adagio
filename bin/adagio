@@ -54,7 +54,7 @@ def main():
 
     # Swallow the options
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "c:d:s:f:hxp", [])
+        opts, args = getopt.getopt(sys.argv[1:], "c:d:f:hps:x", [])
     except getopt.GetoptError, e:
         pydoc.pager(e.msg + '\n' + adagio.i18n.get('adagio.help'))
         sys.exit(2)
