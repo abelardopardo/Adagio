@@ -82,7 +82,7 @@ def dump(self):
 
     for (a, go), d in _createdDirs.items():
         print '### Dir: ', a
-        print '  Targets: ', d.executed_targets
+        print '  Rules: ', d.executed_rules
         print '  Prev dir: ', d.previous_dir
         print '  Given dict: ', go
         print '  Options:\n    ',
@@ -145,27 +145,27 @@ class Directory:
     # givenOptions:     list of options given from outside this dir
     # options:          ConfigParse with the options given in properties.ddo
     # alias:            Dictionary of 'aliasname': 'aliasvalue'
-    # section_list:     targets in the properties.ddo file
-    # current_section:  section being processed
+    # rule_list:        rules in the properties.ddo file
+    # current_rule:     rule being processed
     # executing:        true if in the middle of the "Execute" method
-    # executed_targets: set of targets executed with empty given directory
+    # executed_rules:   set of rules executed with empty given directory
     # option_files:     set of files providing options (to detect dependencies)
 
     # Change to the given dir and initlialize fields
     def __init__(self, path=os.getcwd(), givenOptions = []):
 
         # Initial values
-        self.previous_dir =     os.getcwd()
-        self.current_dir =      os.path.abspath(path)
-        self.givenOptions =     ''
-        self.options =          None
-        self.section_list =     []
-        self.alias =            {}
-        self.current_section =  None
+        self.previous_dir =    os.getcwd()
+        self.current_dir =     os.path.abspath(path)
+        self.givenOptions =    ''
+        self.options =         None
+        self.rule_list =    []
+        self.alias =           {}
+        self.current_rule = None
         # Boolean to detect if a directory has been visited twice
-        self.executing =        False
-        self.executed_targets = set([])
-        self.option_files =     set([])
+        self.executing =       False
+        self.executed_rules =  set([])
+        self.option_files =    set([])
 
         adagio.logInfo('Directory', None, 'New dir object in ' + self.current_dir)
 
@@ -229,23 +229,23 @@ class Directory:
                                                    adagioPropFile))
         if os.path.exists(propAbsFile):
             try:
-                (newFiles, sections) = properties.loadConfigFile(self.options,
-                                                                 propAbsFile,
-                                                                 self.alias)
+                (newFiles, confRules) = properties.loadConfigFile(self.options,
+                                                                  propAbsFile,
+                                                                  self.alias)
                 self.option_files.update(newFiles)
             except ValueError, e:
                 print i18n.get('severe_parse_error').format(propAbsFile)
                 print str(e)
                 sys.exit(3)
                 
-            self.section_list = sections
+            self.rule_list = confRules
         else:
-            # If there is no rule file, notify and execute help target
+            # If there is no rule file, notify and execute help rule
             adagio.logInfo('Directory', None, 'No ' + adagioPropFile + \
                             ' found in ' + self.current_dir)
             print i18n.get('cannot_find_properties').format(adagioPropFile,
                                                             self.current_dir)
-            self.section_list = []
+            self.rule_list = []
 
         #
         # STEP 5: Options given from outside the directory
@@ -272,12 +272,12 @@ class Directory:
             print i18n.get('incorrect_version').format(version)
             sys.exit(3)
 
-        self.current_section = None
+        self.current_rule = None
 
-        # Dump a debug message showing the list of sections detected in the
+        # Dump a debug message showing the list of rules detected in the
         # config file
         adagio.logDebug('Directory', None,
-                     'Sections: ' + ', '.join(self.section_list))
+                     'Sections: ' + ', '.join(self.rule_list))
 
         return
 
@@ -328,9 +328,9 @@ class Directory:
 
         return False
 
-    def Execute(self, targets = [], pad = ''):
+    def Execute(self, rules = [], pad = ''):
         """
-        properties.ddo has been parsed into a ConfigParse. Loop over the targets
+        properties.ddo has been parsed into a ConfigParse. Loop over the rules
         and execute all of them.
         """
 
@@ -354,72 +354,72 @@ class Directory:
             sys.exit(2)
         self.executing = True
 
-        # If no targets are given, choose the default ones, that is, ignore:
+        # If no rules are given, choose the default ones, that is, ignore:
         # - adagio
         # - clean*
         # - local*
         #
-        toExecTargets = [x for x in self.section_list
+        toExecRules = [x for x in self.rule_list
                          if not re.match('^adagio$', x) and
                          not re.match('^clean(\.?\S+)?$', x) and
                          not re.match('^local(\.?\S+)?$', x) and
                          not re.match('^rsync(\.?\S+)?$', x)]
 
-        # If no target is given, execute all except the filtered ones
-        if targets == []:
-            targets = toExecTargets
+        # If no rule is given, execute all except the filtered ones
+        if rules == []:
+            rules = toExecRules
 
-        # If any of the targets is dump, help, clean, expand the current targets
+        # If any of the rules is dump, help, clean, expand the current rules
         # to add them that suffix, otherwise simply accumulate
-        finalTargets = []
-        for target in targets:
-            if target == 'deepclean':
-                # Get all the targets
-                finalTargets.extend([x + '.deepclean' for x in toExecTargets])
-                finalTargets.reverse()
-            elif target == 'clean':
-                # Get all the targets except the "gotodir" ones
-                finalTargets.extend([x + '.clean' 
-                                     for x in toExecTargets])
-                finalTargets.reverse()
-            elif target == 'dump':
-                finalTargets.extend([x + '.dump' for x in toExecTargets])
-            elif target == 'help':
-                finalTargets.extend([x + '.help' for x in toExecTargets])
-            elif target == 'local':
-                finalTargets.extend([x for x in toExecTargets
+        finalRules = []
+        for rule in rules:
+            if rule == 'deepclean':
+                # Get all the rules
+                finalRules.extend([x + '.deepclean' for x in toExecRules])
+                finalRules.reverse()
+            elif rule == 'clean':
+                # Get all the rules except the "gotodir" ones
+                finalRules.extend([x + '.clean'
+                                     for x in toExecRules])
+                finalRules.reverse()
+            elif rule == 'dump':
+                finalRules.extend([x + '.dump' for x in toExecRules])
+            elif rule == 'help':
+                finalRules.extend([x + '.help' for x in toExecRules])
+            elif rule == 'local':
+                finalRules.extend([x for x in toExecRules
                                      if not x.startswith('gotodir')])
             else:
-                finalTargets.append(target)
+                finalRules.append(rule)
 
-        adagio.logDebug('Directory', self, '  Targets: ' + str(finalTargets))
+        adagio.logDebug('Directory', self, '  Rules: ' + str(finalRules))
 
-        # If after all these preparations, finalTargets is empty, help is
-        # needed, hardwire the target to adagio.help.
-        if finalTargets == []:
-            finalTargets = ['adagio.help']
+        # If after all these preparations, finalRules is empty, help is
+        # needed, hardwire the rule to adagio.help.
+        if finalRules == []:
+            finalRules = ['adagio.help']
 
         adagio.logDebug('Directory', self,
-                     ' to execute ' + ' '.join(finalTargets))
+                     ' to execute ' + ' '.join(finalRules))
 
-        for target_name in finalTargets:
+        for rule_name in finalRules:
 
-            # Check the cache to see if target has already been executed
-            if target_name in self.executed_targets:
+            # Check the cache to see if rule has already been executed
+            if rule_name in self.executed_rules:
                 adagio.logInfo('Directory', self,
-                            'Target HIT: ' + self.current_dir + ': ' + \
-                            target_name)
+                            'Rule HIT: ' + self.current_dir + ': ' + \
+                            rule_name)
                 continue
 
-            # Execute the target
-            adagio.Execute(target_name, self, pad)
+            # Execute the rule
+            adagio.Execute(rule_name, self, pad)
 
-            # Insert executed target in cache
-            self.executed_targets.add(target_name)
+            # Insert executed rule in cache
+            self.executed_rules.add(rule_name)
 
         self.executing = False
         adagio.logDebug('Directory', self,
-                     ' Executed Targets: ' + str(self.executed_targets))
+                     ' Executed Rules: ' + str(self.executed_rules))
 
         print pad + '-- ' +  showCurrentDir
 
@@ -428,13 +428,13 @@ class Directory:
 
         return
 
-    def getProperty(self, section, option):
+    def getProperty(self, rule, option):
         """
-        Try to get a pair section/option from the ConfigParser in the object. If
-        it does not exist, check if the section has the form name.subname. If
+        Try to get a pair rule/option from the ConfigParser in the object. If
+        it does not exist, check if the rule has the form name.subname. If
         so, check for the option name/option.
         """
-        return properties.getProperty(self.options, section, option)
+        return properties.getProperty(self.options, rule, option)
 
 ################################################################################
 

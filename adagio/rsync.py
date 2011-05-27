@@ -46,7 +46,7 @@ documentation = {
 
 has_executable = rules.which(next(b for (a, b, c) in options if a == 'exec'))
 
-def Execute(target, dirObj):
+def Execute(rule, dirObj):
     """
     Execute the rule in the given directory
     """
@@ -56,13 +56,13 @@ def Execute(target, dirObj):
     # If the executable is not present, notify and terminate
     if not has_executable:
         print i18n.get('no_executable').format(options['exec'])
-        if dirObj.options.get(target, 'partial') == '0':
+        if dirObj.options.get(rule, 'partial') == '0':
             sys.exit(1)
         return
 
     # Get the directories to synchronize, check if work is needed
-    srcDir = dirObj.getProperty(target, 'src_dir')
-    dstDir = dirObj.getProperty(target, 'dst_dir')
+    srcDir = dirObj.getProperty(rule, 'src_dir')
+    dstDir = dirObj.getProperty(rule, 'dst_dir')
     if srcDir == '' or dstDir == '' or srcDir == dstDir:
         return
 
@@ -72,35 +72,35 @@ def Execute(target, dirObj):
         sys.exit(1)
 
     # Prepare the command to execute
-    executable = dirObj.getProperty(target, 'exec')
-    extraArgs = dirObj.getProperty(target, 'extra_arguments')
+    executable = dirObj.getProperty(rule, 'exec')
+    extraArgs = dirObj.getProperty(rule, 'extra_arguments')
 
     command = [executable, '-avz']
     command.append(srcDir)
     command.append(dstDir)
 
-    adagio.logDebug(target, dirObj, ' EXEC ' + srcDir + ' ' + dstDir)
+    adagio.logDebug(rule, dirObj, ' EXEC ' + srcDir + ' ' + dstDir)
 
     # Perform the execution
-    rules.doExecution(target, dirObj, command, srcDir, None,
+    rules.doExecution(rule, dirObj, command, srcDir, None,
                         adagio.userLog, adagio.userLog)
 
     return
 
-def clean(target, dirObj):
+def clean(rule, dirObj):
     """
     Clean the files produced by this rule
     """
 
-    adagio.logInfo(target, dirObj, 'Cleaning')
+    adagio.logInfo(rule, dirObj, 'Cleaning')
 
     # Get the files to process
-    toProcess = rules.getFilesToProcess(target, dirObj)
+    toProcess = rules.getFilesToProcess(rule, dirObj)
     if toProcess == []:
         return
 
     # Get the dstDir
-    dstDir = dirObj.getProperty(target, 'dst_dir')
+    dstDir = dirObj.getProperty(rule, 'dst_dir')
 
     # If dist dir not found, terminate
     if not os.path.isdir(dstDir):
