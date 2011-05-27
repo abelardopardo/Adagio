@@ -23,11 +23,15 @@
 #
 
 msgs = {
-    'adado.help': """
-    Execute the given targets from the production rules described in a local
-    file. The invocation of this script must follow the structure:
+    'adagio.help': """
 
-    script [options] [target target ...]
+    adagio [options] [target target ....]
+
+    Adagio is a rule-based program (similar to "make") that given a file
+    containing the invocation of a set of rules, it automatically executes
+    them. Given a directory and a set of rule files, a new set of files are
+    created by applying the rules automatically.
+
 
     The script visits the current directory and executes the rules attached to
     the given targets. If no target is given, all of them are processed
@@ -49,7 +53,7 @@ msgs = {
       -f path_to_rule_file: Given a path to a rule file, execute ADA in the
        directory where that file is, and with the given file as the rule file
 
-      -h or -x: Shows this message
+      -h: Shows this message
 
       -p: Partial execution. Proceed even if some tools are not
           installed. Otherwise stop execution in the first missing tool.
@@ -60,6 +64,7 @@ msgs = {
                        this assignment will be visible to all the rules
                        executed.
 
+      -x: Shows this message
     """,
     # Explanations of the values in config_defaults
     'default_alias': 'Define a synonym for the current rule',
@@ -93,7 +98,7 @@ msgs = {
     'checking_configuration': 'Checking ADA configuration',
     'no_help_available': 'There is no documentation for this target.',
     'help_option': 'Text explaining the tasks carried by this rule.',
-    'fatal_error': 'Fatal error encountered. Attach "adado.log" to notification.',
+    'fatal_error': 'Fatal error encountered. Attach "adagio.log" to notification.',
     'file_not_found': 'File {0} not found',
     'dir_not_found': 'Directory {0} not found',
     'dir_created': 'Directory {0} created',
@@ -135,7 +140,7 @@ msgs = {
     'clean_function_name': 'Function to call in the script in target "clean"',
     'function_error': 'Error when executing function {0}',
     'severe_parse_error': 'Error while parsing {0}',
-    'severe_exec_error': 'Error while executing {0}. Check adado.log',
+    'severe_exec_error': 'Error while executing {0}. Check adagio.log',
     'exec_line': 'Invocation: {0}',
     'error_option_addition': 'Option {0} is empty. No addition allowed',
     'error_alias_expression': """Incorrect alias expression. Format: 'name': 'value', 'name': 'value'""",
