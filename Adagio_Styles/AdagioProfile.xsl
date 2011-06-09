@@ -53,23 +53,23 @@
   <xsl:param name="profile.baseuri.fixup" select="true()"/>
 
   <!-- This variable is supposed to have the format YYYY-MM-DDTHH:MM:SS -->
-  <xsl:param name="ada.current.datetime" select="''"/>
-  <xsl:param name="ada.audience.date.separator" select="'--'"/>
-  <xsl:param name="ada.audience.debug"/>
-  <xsl:param name="ada.profile.suppress.profiling.attributes">no</xsl:param>
+  <xsl:param name="adagio.current.datetime" select="''"/>
+  <xsl:param name="adagio.audience.date.separator" select="'--'"/>
+  <xsl:param name="adagio.audience.debug"/>
+  <xsl:param name="adagio.profile.suppress.profiling.attributes">no</xsl:param>
 
   <!--
        Translate the previous variable from its original format to
        YYYYMMDDHHMMSS to simplify comparison. If it is empty, obtain the current
        date/time
        -->
-  <xsl:variable name="ada.audience.date.now">
+  <xsl:variable name="adagio.audience.date.now">
     <xsl:call-template name="date.translate.to.simple.string">
       <xsl:with-param name="string.to.process">
         <xsl:choose>
-          <xsl:when test="($ada.current.datetime) and
-                          ($ada.current.datetime != '')">
-            <xsl:value-of select="$ada.current.datetime" />
+          <xsl:when test="($adagio.current.datetime) and
+                          ($adagio.current.datetime != '')">
+            <xsl:value-of select="$adagio.current.datetime" />
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="date:date-time()" />
@@ -279,7 +279,7 @@
                   $wordsize.ok and
                   $attribute.ok">
       <xsl:copy>
-        <xsl:if test="@*[($ada.profile.suppress.profiling.attributes = 'no')
+        <xsl:if test="@*[($adagio.profile.suppress.profiling.attributes = 'no')
                       or (local-name() != 'arch'
                       and local-name() != 'audience'
                       and local-name() != 'condition'
@@ -322,11 +322,11 @@
        Template the receives as parameter the value of the audience
        attribute. Such value is supposed to contain two date/times in the
        following format YYYY/mm/dd HH:MM[sep]YYYY/mm/dd HH:MM (where [sep] is
-       the value of the variable ada.audience.date.separator) and checks that the
-       value of the global variable ada.current.datetime is a date/time
+       the value of the variable adagio.audience.date.separator) and checks that the
+       value of the global variable adagio.current.datetime is a date/time
        contained in between the two given dates.
 
-       If ada.current.datetime is empty, then the current date/time is
+       If adagio.current.datetime is empty, then the current date/time is
        taken.
   -->
   <xsl:template name="audience.date.compare">
@@ -336,13 +336,13 @@
            Execute the transformation only if the audience.value has the format
            YYYY-MM-DDTHH:MM:SS
            -->
-      <xsl:when test="contains($audience.value, $ada.audience.date.separator)">
+      <xsl:when test="contains($audience.value, $adagio.audience.date.separator)">
         <!-- Translate the start date to YYYMMDDHHMMSS -->
         <xsl:variable name="audience.start.date">
           <xsl:call-template name="date.translate.to.simple.string">
             <xsl:with-param name="string.to.process">
               <xsl:value-of select="substring-before($audience.value,
-                                                     $ada.audience.date.separator)"/>
+                                                     $adagio.audience.date.separator)"/>
             </xsl:with-param>
           </xsl:call-template>
         </xsl:variable>
@@ -351,7 +351,7 @@
           <xsl:call-template name="date.translate.to.simple.string">
             <xsl:with-param name="string.to.process">
               <xsl:value-of select="substring-after($audience.value,
-                                                    $ada.audience.date.separator)"/>
+                                                    $adagio.audience.date.separator)"/>
             </xsl:with-param>
           </xsl:call-template>
         </xsl:variable>
@@ -361,30 +361,30 @@
              not, the result is empty and the content will be ignored
 
              ((audience.start.date = '' or
-               audience.start.date BEFORE ada.audience.date.now ))
+               audience.start.date BEFORE adagio.audience.date.now ))
              and
              ((audience.enddate = '' or
-               ada.audience.date.now BEFORE audience.end.date))
+               adagio.audience.date.now BEFORE audience.end.date))
              -->
-        <xsl:if test="$ada.audience.debug = 'true'">
+        <xsl:if test="$adagio.audience.debug = 'true'">
           <xsl:message>
             audience.value: <xsl:value-of select="$audience.value"/>
             audience.start.date:  <xsl:value-of select="$audience.start.date"/>
-            ada.audience.date.now:<xsl:value-of select="$ada.audience.date.now"/>
+            adagio.audience.date.now:<xsl:value-of select="$adagio.audience.date.now"/>
             audience.end.date:    <xsl:value-of select="$audience.end.date"/>
             Cnd1 : <xsl:value-of select="$audience.start.date = ''"/>
-            Cnd2 : <xsl:value-of select="$audience.start.date &lt;= $ada.audience.date.now"/>
+            Cnd2 : <xsl:value-of select="$audience.start.date &lt;= $adagio.audience.date.now"/>
             Cnd3 : <xsl:value-of select="$audience.end.date = ''"/>
-            Cnd4 : <xsl:value-of select="$ada.audience.date.now &lt;= $audience.end.date"/>
+            Cnd4 : <xsl:value-of select="$adagio.audience.date.now &lt;= $audience.end.date"/>
           </xsl:message>
         </xsl:if>
 
         <xsl:if test="(($audience.start.date = '')
-                        or ($audience.start.date &lt;= $ada.audience.date.now))
+                        or ($audience.start.date &lt;= $adagio.audience.date.now))
                       and
                       (($audience.end.date = '')
-                        or ($ada.audience.date.now &lt;= $audience.end.date))">
-          <xsl:value-of select="$ada.audience.date.now"/>
+                        or ($adagio.audience.date.now &lt;= $audience.end.date))">
+          <xsl:value-of select="$adagio.audience.date.now"/>
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
@@ -432,7 +432,7 @@
   </xsl:template>
 
   <!-- Template to profile-apply a subtree -->
-  <xsl:template name="ada.profile.subtree">
+  <xsl:template name="adagio.profile.subtree">
     <xsl:param name="subtree"/>
     <xsl:variable name="filtered">
       <xsl:apply-templates select="$subtree" mode="profile"/>
