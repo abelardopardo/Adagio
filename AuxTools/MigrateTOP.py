@@ -34,7 +34,7 @@ if enc is not None:
 def main(dataFile):
     """
     File that takes the file given as the only parameter and tries to migrate to
-    Properties.ini automatically. Script should be invoked:
+    Properties.dgo automatically. Script should be invoked:
 
     [script] Properties.txt
 

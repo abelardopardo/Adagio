@@ -42,7 +42,7 @@ msgs = {
 
     The script accepts the following options:
 
-      -c filename: File to read the configuration from (Properties.ini)
+      -c filename: File containing the rule (default {0})
 
       -d num: Debugging level. Used to control the amount of messages
        dumped. Possible values are:

@@ -71,7 +71,7 @@ config_defaults = {
     'partial':            ('0', i18n.get('default_partial')),
     'project_file':       ('Adagio.project', i18n.get('default_project_file')),
     'project_home':       (_currentDir, i18n.get('default_project_home')),
-    'property_file':      ('Properties.ddo', i18n.get('default_property_file')),
+    'property_file':      ('Properties.dgo', i18n.get('default_property_file')),
     'src_dir':            (_currentDir, i18n.get('default_src_dir')),
     'version':            ('11.02.1', i18n.get('default_version'))
 }
