@@ -52,11 +52,15 @@ def main():
     optionsToSet = []
     partial = 0
 
+    # Get the name of the property file
+    propertyFileName = adagio.config_defaults.get('property_file')[0]
+
     # Swallow the options
     try:
         opts, args = getopt.getopt(sys.argv[1:], "c:d:f:hps:x", [])
     except getopt.GetoptError, e:
-        pydoc.pager(e.msg + '\n' + adagio.i18n.get('adagio.help'))
+        pydoc.pager(e.msg + '\n' +
+                    adagio.i18n.get('adagio.help'.format(propertyFileName)))
         sys.exit(2)
 
     # Parse the options
@@ -97,7 +101,7 @@ def main():
 
         # Dump the manual page
         elif optstr == "-h" or optstr == "-x":
-            pydoc.pager(adagio.i18n.get('adagio.help'))
+            pydoc.pager(adagio.i18n.get('adagio.help').format(propertyFileName))
             sys.exit(3)
 
         # Allow for partial execution (if some tools are missing
@@ -110,8 +114,10 @@ def main():
             sname_value = value.split()
             # If incorrect number of arguments, stop processing
             if len(sname_value) != 3:
-                pydoc.pager(adagio.i18n.get('incorrect_arg_num').format('-s option')
-                               + '\n' + adagio.i18n.get('adagio.help'))
+                pydoc.pager(
+                    adagio.i18n.get('incorrect_arg_num').format('-s option')
+                    + '\n'
+                    + adagio.i18n.get('adagio.help').format(propertyFileName))
                 sys.exit(3)
             optionsToSet.append(' '.join(sname_value))
 
