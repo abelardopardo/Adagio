@@ -43,43 +43,43 @@ documentation = {
     Takes the "files" in "src_dir" and copies them to "dst_dir"
     """}
 
-def Execute(target, dirObj):
+def Execute(rule, dirObj):
     """
     Execute the rule in the given directory
     """
 
     # Get the files to process, if empty, terminate
-    toProcess = rules.getFilesToProcess(target, dirObj)
+    toProcess = rules.getFilesToProcess(rule, dirObj)
     if toProcess == []:
         return
 
     # Perform the copy
-    doCopy(target, dirObj, toProcess,
-           dirObj.getProperty(target, 'src_dir'),
-           dirObj.getProperty(target, 'dst_dir'))
+    doCopy(rule, dirObj, toProcess,
+           dirObj.getProperty(rule, 'src_dir'),
+           dirObj.getProperty(rule, 'dst_dir'))
 
     return
 
-def clean(target, dirObj):
+def clean(rule, dirObj):
     """
     Clean the files produced by this rule
     """
 
-    adagio.logInfo(target, dirObj, 'Cleaning')
+    adagio.logInfo(rule, dirObj, 'Cleaning')
 
     # Get the files to process
-    toProcess = rules.getFilesToProcess(target, dirObj)
+    toProcess = rules.getFilesToProcess(rule, dirObj)
     if toProcess == []:
         return
 
     # Loop over all source files to process
-    doClean(target, dirObj, toProcess,
-            dirObj.getProperty(target, 'src_dir'),
-            dirObj.getProperty(target, 'dst_dir'))
+    doClean(rule, dirObj, toProcess,
+            dirObj.getProperty(rule, 'src_dir'),
+            dirObj.getProperty(rule, 'dst_dir'))
 
     return
 
-def doCopy(target, dirObj, toProcess, srcDir, dstDir):
+def doCopy(rule, dirObj, toProcess, srcDir, dstDir):
     """
     Effectively perform the copy. The functionality is in this function because
     it is used also by the export rule.
@@ -95,7 +95,7 @@ def doCopy(target, dirObj, toProcess, srcDir, dstDir):
         # Remember if the source is a directory
         isDirectory = os.path.isdir(datafile)
 
-        adagio.logDebug(target, dirObj, ' EXEC ' + datafile)
+        adagio.logDebug(rule, dirObj, ' EXEC ' + datafile)
 
         # If source is not found, terminate
         if not os.path.exists(datafile):
@@ -131,7 +131,7 @@ def doCopy(target, dirObj, toProcess, srcDir, dstDir):
         print i18n.get('copying').format(os.path.basename(dstFile))
 
         # Copying the file/dir
-        adagio.logDebug(target, dirObj, 'Copy ' + datafile + ' ' +
+        adagio.logDebug(rule, dirObj, 'Copy ' + datafile + ' ' +
                      dstFile)
 
         if os.path.isdir(datafile):
@@ -155,7 +155,7 @@ def doCopy(target, dirObj, toProcess, srcDir, dstDir):
                 print str(e)
                 sys.exit(1)
 
-def doClean(target, dirObj, toProcess, srcDir, dstDir):
+def doClean(rule, dirObj, toProcess, srcDir, dstDir):
     """
     Function to execute the core of the clean operation. It is in its own
     function because it is used also by the export rule.
@@ -167,7 +167,7 @@ def doClean(target, dirObj, toProcess, srcDir, dstDir):
 
     for datafile in toProcess:
 
-        adagio.logDebug(target, dirObj, ' EXEC ' + datafile)
+        adagio.logDebug(rule, dirObj, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.exists(datafile):

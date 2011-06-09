@@ -72,44 +72,44 @@ documentation = {
   &lt;xsl:param name="nameN"&gt;valueN&lt;/xsl:param&gt;
 """}
 
-def Execute(target, dirObj):
+def Execute(rule, dirObj):
     """
     Execute the rule in the given directory
     """
 
     # Get the files to process, if empty, terminate
-    toProcess = rules.getFilesToProcess(target, dirObj)
+    toProcess = rules.getFilesToProcess(rule, dirObj)
     if toProcess == []:
         return
 
     # Prepare the style transformation
-    styleFiles = dirObj.getProperty(target, 'styles').split()
+    styleFiles = dirObj.getProperty(rule, 'styles').split()
     styleTransform = createStyleTransform(styleFiles)
     if styleTransform == None:
         print i18n.get('no_style_file')
         return
 
     # Create the dictionary of stylesheet parameters
-    styleParams = createParameterDict(target, dirObj)
+    styleParams = createParameterDict(rule, dirObj)
 
     doTransformations(styleFiles, styleTransform, styleParams,
-                      toProcess, target, dirObj)
+                      toProcess, rule, dirObj)
 
     return
 
-def clean(target, dirObj):
+def clean(rule, dirObj):
     """
     Clean the files produced by this rule
     """
 
-    adagio.logInfo(target, dirObj, 'Cleaning')
+    adagio.logInfo(rule, dirObj, 'Cleaning')
 
     # Get the files to process
-    toProcess = rules.getFilesToProcess(target, dirObj)
+    toProcess = rules.getFilesToProcess(rule, dirObj)
     if toProcess == []:
         return
 
-    doClean(target, dirObj, toProcess)
+    doClean(rule, dirObj, toProcess)
 
     return
 
@@ -153,7 +153,7 @@ def createStyleTransform(styleList, srcDir = None):
     # Get the transformation object
     return treecache.findOrAddTransform(styleFile)
 
-def createParameterDict(target, dirObj):
+def createParameterDict(rule, dirObj):
     """
     Function that creates the dictionary with all the parameters required to
     apply the stylesheet.
@@ -192,7 +192,7 @@ def createParameterDict(target, dirObj):
 
     # Parse the dictionary given in extra_arguments and fold it
     try:
-        extraDict = eval('{' + dirObj.getProperty(target,
+        extraDict = eval('{' + dirObj.getProperty(rule,
                                                      'extra_arguments') +
                          '}')
         for (k, v) in extraDict.items():
@@ -203,15 +203,15 @@ def createParameterDict(target, dirObj):
                 # If v has quotes, too bad...
                 styleParams[k] = '"' + v + '"'
     except SyntaxError, e:
-        print i18n.get('error_extra_args').format(target + '.extra_arguments')
+        print i18n.get('error_extra_args').format(rule + '.extra_arguments')
         print str(e)
         sys.exit(1)
 
-    adagio.logInfo(target, dirObj, 'StyleParmas: ' + str(styleParams))
+    adagio.logInfo(rule, dirObj, 'StyleParmas: ' + str(styleParams))
     return styleParams
 
 def doTransformations(styles, styleTransform, styleParams, toProcess,
-                      target, dirObj, paramDict = None):
+                      rule, dirObj, paramDict = None):
     """
     Function that given a style transformation, a set of style parameters, a
     list of pairs (parameter dicitonaries, suffix), and a list of files to
@@ -222,7 +222,7 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
 	paramDict = [({}, '')]
 
     # Obtain languages
-    languages = dirObj.getProperty(target, 'languages').split()
+    languages = dirObj.getProperty(rule, 'languages').split()
 
     # If languages is empty, insert an empty string to force one execution
     if languages == []:
@@ -235,14 +235,14 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
     styles = map(lambda x: os.path.abspath(x), styles)
 
     # Obtain the file extension to use
-    outputFormat = processOuputFormat(target, dirObj)
+    outputFormat = processOuputFormat(rule, dirObj)
 
     # Loop over all source files to process (processing one source file over
     # several languages gives us a huge speedup because the XML tree of the
     # source is built only once for all languages.
-    dstDir = dirObj.getProperty(target, 'dst_dir')
+    dstDir = dirObj.getProperty(rule, 'dst_dir')
     for datafile in toProcess:
-        adagio.logDebug(target, dirObj, ' EXEC ' + datafile)
+        adagio.logDebug(rule, dirObj, ' EXEC ' + datafile)
 
         # If file not found, terminate
         if not os.path.isfile(datafile):
@@ -284,7 +284,7 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
                 # it
                 dataTree = singleStyleApplication(datafile, styles,
                                                   styleTransform, styleParams,
-                                                  dstFile, target, dirObj,
+                                                  dstFile, rule, dirObj,
                                                   dataTree)
             # End of for language loop
 
@@ -301,7 +301,7 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
     # End of for each file
 
 def singleStyleApplication(datafile, styles, styleTransform,
-                           styleParams, dstFile, target,
+                           styleParams, dstFile, rule,
                            dirObj, dataTree = None):
     """
     Apply a transformation to a file with a dictionary
@@ -322,16 +322,16 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     # Parse the data file if needed
     if dataTree == None:
-        adagio.logInfo(target, dirObj, 'Parsing ' + datafile)
+        adagio.logInfo(rule, dirObj, 'Parsing ' + datafile)
         dataTree = treecache.findOrAddTree(datafile, True)
 
     # Apply the transformation
-    xsltprocEquivalent(target, dirObj, styleParams, datafile, dstFile)
+    xsltprocEquivalent(rule, dirObj, styleParams, datafile, dstFile)
     try:
         result = styleTransform(dataTree, **styleParams)
     except etree.XSLTApplyError, e:
         # ABEL: Fix. Try to detect when there is an error here!
-        print i18n.get('error_applying_xslt').format(target)
+        print i18n.get('error_applying_xslt').format(rule)
         print str(e)
         sys.exit(1)
 
@@ -358,7 +358,7 @@ def singleStyleApplication(datafile, styles, styleTransform,
 
     return dataTree
 
-def doClean(target, dirObj, toProcess, suffixes = None):
+def doClean(rule, dirObj, toProcess, suffixes = None):
     """
     Function to perform the cleanin step
     """
@@ -367,17 +367,17 @@ def doClean(target, dirObj, toProcess, suffixes = None):
 	suffixes = ['']
 
     # Split the languages and remember if the execution is multilingual
-    languages = dirObj.getProperty(target, 'languages').split()
+    languages = dirObj.getProperty(rule, 'languages').split()
     # If languages is empty, insert an empty string to force one execution
     if languages == []:
         languages = ['']
     multilingual = len(languages) > 1
 
     # Obtain the file extension to use
-    outputFormat = processOuputFormat(target, dirObj)
+    outputFormat = processOuputFormat(rule, dirObj)
 
     # Loop over all source files to process
-    dstDir = dirObj.getProperty(target, 'dst_dir')
+    dstDir = dirObj.getProperty(rule, 'dst_dir')
     for datafile in toProcess:
 
         # Loop over the different suffixes
@@ -401,7 +401,7 @@ def doClean(target, dirObj, toProcess, suffixes = None):
 
                 rules.remove(dstFile)
 
-def xsltprocEquivalent(target, dirObj, styleParams, datafile, dstFile):
+def xsltprocEquivalent(rule, dirObj, styleParams, datafile, dstFile):
     """
     Dump the xsltproc command line equivalent to the given transformation for
     debugging purposes
@@ -414,9 +414,9 @@ def xsltprocEquivalent(target, dirObj, styleParams, datafile, dstFile):
     msg += ' STYLE.xsl'
     msg += ' ' + datafile
 
-    adagio.logDebug(target, dirObj, 'XSLTPROC: ' + msg)
+    adagio.logDebug(rule, dirObj, 'XSLTPROC: ' + msg)
 
-def processOuputFormat(target, dirObj):
+def processOuputFormat(rule, dirObj):
     """
     Process output_format option. If it does not include a dot, it is inserted
     as first character. Otherwise, it is left untouched. That way, if the user
@@ -424,7 +424,7 @@ def processOuputFormat(target, dirObj):
     if the value is '_myversion.xml', the file is generated with a suffix and an
     extension without problems.
     """
-    outputFormat = dirObj.getProperty(target, 'output_format')
+    outputFormat = dirObj.getProperty(rule, 'output_format')
     if outputFormat.find('.') == -1:
         outputFormat = '.' + outputFormat
     return outputFormat

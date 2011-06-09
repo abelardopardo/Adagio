@@ -31,19 +31,19 @@ module_prefix = 'gotodir'
 # List of tuples (varname, default value, description string)
 options = [
     ('export_dst', '', i18n.get('export_dst')),
-    ('files_included_from', '', i18n.get('export_targets')),
-    ('targets', '', i18n.get('export_targets'))
+    ('files_included_from', '', i18n.get('export_rules')),
+    ('rules', '', i18n.get('export_rules'))
     ]
 
 documentation = {
     'en' : """
-    The execution of the "targets" is invoked in every directory in "files".
+    The execution of the "rules" is invoked in every directory in "files".
 
     If the value "exports_dst" is given, it overrides the value of
     export.dst_dir in the remote directory.
     """}
 
-def Execute(target, dirObj, pad = None):
+def Execute(rule, dirObj, pad = None):
     """
     Execute the rule in the given directory
     """
@@ -51,18 +51,18 @@ def Execute(target, dirObj, pad = None):
     if pad == 'None':
         pad = ''
 
-    (toProcess, remoteTargets,
-     optionsToSet, newExportDir) = prepareTarget(target, dirObj)
+    (toProcess, remoteRules,
+     optionsToSet, newExportDir) = prepareRule(rule, dirObj)
 
     # Loop over each directory
     for dirName in toProcess:
-        adagio.logInfo(target, dirObj, 'RECUR: ' + dirName)
+        adagio.logInfo(rule, dirObj, 'RECUR: ' + dirName)
         remoteDir = directory.getDirectoryObject(dirName, optionsToSet)
-        remoteDir.Execute(remoteTargets, pad + '  ')
+        remoteDir.Execute(remoteRules, pad + '  ')
 
     return
 
-def clean(target, dirObj, deepClean = False, pad = None):
+def clean(rule, dirObj, deepClean = False, pad = None):
     """
     Clean the files produced by this rule
     """
@@ -72,18 +72,18 @@ def clean(target, dirObj, deepClean = False, pad = None):
     if pad == None:
         pad = ''
 
-    adagio.logInfo(target, dirObj, 'Cleaning')
+    adagio.logInfo(rule, dirObj, 'Cleaning')
 
-    (toProcess, remoteTargets,
-     optionsToSet, newExportDir) = prepareTarget(target, dirObj)
+    (toProcess, remoteRules,
+     optionsToSet, newExportDir) = prepareRule(rule, dirObj)
 
-    # When cleaning, targets should be executed in reversed order
-    remoteTargets.reverse()
+    # When cleaning, rules should be executed in reversed order
+    remoteRules.reverse()
 
     if deepClean:
-        # If the clean is deep, attach .clean suffix to all remote targets
-        remoteTargets = [x + '.deepclean'
-                         for x in remoteTargets
+        # If the clean is deep, attach .clean suffix to all remote rules
+        remoteRules = [x + '.deepclean'
+                         for x in remoteRules
                          if not re.match('(.+\.)?help$', x) and \
                              not re.match('(.+\.)?clean$', x) and \
                              not re.match('(.+\.)?dumphelp$', x) and \
@@ -91,58 +91,58 @@ def clean(target, dirObj, deepClean = False, pad = None):
 
         # If no rule is obtained, deep clean, means simply execute the clean
         # rule
-        if remoteTargets == []:
-            remoteTargets = ['deepclean']
+        if remoteRules == []:
+            remoteRules = ['deepclean']
     else:
-        # If the clean is not deep, the target only propagates to those targets
+        # If the clean is not deep, the execution only propagates to those rules
         # of type export and if the newExportDir is this directory (to clean the
-        # current directory only). Otherwise, the target is simply ignore.
+        # current directory only). Otherwise, the rule is simply ignored.
         if newExportDir != dirObj.current_dir:
             return
 
-        remoteTargets = [x + '.clean'  for x in remoteTargets
+        remoteRules = [x + '.clean'  for x in remoteRules
                          if x.startswith('export')]
 
-    adagio.logInfo(target, dirObj,
-                'Remote Targets = ' + ' '.join(remoteTargets))
+    adagio.logInfo(rule, dirObj,
+                'Remote Rules = ' + ' '.join(remoteRules))
 
     # Loop over each directory
     for dirName in toProcess:
 
-        adagio.logInfo(target, dirObj, 'RECUR: ' + dirName)
+        adagio.logInfo(rule, dirObj, 'RECUR: ' + dirName)
         remoteObj = directory.getDirectoryObject(dirName, optionsToSet)
 
-        # If the clean is not deep and there is no given remote targets, we need
-        # to select as targets those that start with 'export'
-        if (not deepClean) and (remoteTargets == []):
-            remoteTargets = [x + '.clean' for x in remoteObj.section_list
+        # If the clean is not deep and there is no given remote rules, we need
+        # to select those that start with 'export'
+        if (not deepClean) and (remoteRules == []):
+            remoteRules = [x + '.clean' for x in remoteObj.rule_list
                              if re.match('^export(\..+)?$',
                                          properties.expandAlias(x,
                                                                 remoteObj.alias))]
 
-        # If remote targets is empty, there is nothing to process in the remote
+        # If remoteRules empty, there is nothing to process in the remote
         # directory.
-        if remoteTargets == []:
+        if remoteRules == []:
             continue
 
-        # Execute the remote targets
-        remoteObj.Execute(remoteTargets, pad + '  ')
+        # Execute the remote rules
+        remoteObj.Execute(remoteRules, pad + '  ')
 
     return
 
-def prepareTarget(target, dirObj):
+def prepareRule(rule, dirObj):
     """
-    Obtain the directories to process, calculate the optiost to set in the
-    remote execution and obtain the remote targets.
+    Obtain the directories to process, calculate the options to set in the
+    remote execution and obtain the remote rules.
 
     Return:
 
-    (list of dirs to process, remote targets, options to set in the remote exec)
+    (list of dirs to process, remote rules, options to set in the remote exec)
     """
 
     # Get the directories to process from the files option
     toProcess = []
-    for srcDir in dirObj.getProperty(target, 'files').split():
+    for srcDir in dirObj.getProperty(rule, 'files').split():
         newDirs = glob.glob(srcDir)
         if newDirs == []:
             print i18n.get('file_not_found').format(srcDir)
@@ -151,41 +151,40 @@ def prepareTarget(target, dirObj):
 
     # Add the files included in files_included_from
     filesIncluded = \
-        obtainXincludes(dirObj.getProperty(target,
-                                              'files_included_from').split())
+        obtainXincludes(dirObj.getProperty(rule, 'files_included_from').split())
 
     # The list of dirs is extended with a set to avoid duplications
     toProcess.extend(set(map(lambda x: os.path.dirname(x), filesIncluded)))
 
     # If there are no files to process stop
     if toProcess == []:
-        adagio.logDebug(target, dirObj, i18n.get('no_file_to_process'))
+        adagio.logDebug(rule, dirObj, i18n.get('no_file_to_process'))
         return (toProcess, [], None, '')
 
     # Translate all paths to absolute paths
     toProcess = map(lambda x: os.path.abspath(x), toProcess)
 
-    # Targets to execute in the remote directory
-    remoteTargets = dirObj.getProperty(target, 'targets').split()
+    # Rules to execute in the remote directory
+    remoteRules = dirObj.getProperty(rule, 'rules').split()
 
     # Create the option dict for the remote directories
     optionsToSet = []
-    newExportDir = dirObj.getProperty(target, 'export_dst')
+    newExportDir = dirObj.getProperty(rule, 'export_dst')
     if newExportDir != '':
         # If a new dst_dir has been specified, include the options to modify
-        # that variable for each of the targets
-        if remoteTargets != []:
-            # If there are some targets given, use them
+        # that variable for each of the rules
+        if remoteRules != []:
+            # If there are some given rules, use them
             optionsToSet = [x + ' dst_dir ' + newExportDir
-                            for x in remoteTargets if x.startswith('export')]
+                            for x in remoteRules if x.startswith('export')]
         else:
-            # If no target is given, leave the option in the export.dst_dir
-            # default
+            # If no rule is given, leave the option in the export.dst_dir
+            # to its default value default
             optionsToSet = ['export dst_dir ' + newExportDir]
 
-    adagio.logInfo(target, dirObj, 'NEW Options = ' + ', '.join(optionsToSet))
+    adagio.logInfo(rule, dirObj, 'NEW Options = ' + ', '.join(optionsToSet))
 
-    return (toProcess, remoteTargets, optionsToSet, newExportDir)
+    return (toProcess, remoteRules, optionsToSet, newExportDir)
 
 def obtainXincludes(files):
     """

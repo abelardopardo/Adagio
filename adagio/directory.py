@@ -277,7 +277,7 @@ class Directory:
         # Dump a debug message showing the list of rules detected in the
         # config file
         adagio.logDebug('Directory', None,
-                     'Sections: ' + ', '.join(self.rule_list))
+                     'Rules: ' + ', '.join(self.rule_list))
 
         return
 

@@ -51,19 +51,19 @@ def isProgramAvailable(executable):
 
     return None
 
-def getFilesToProcess(target, dirObj):
+def getFilesToProcess(rule, dirObj):
     """
     Get the files to process by expanding the expressions in "files" and
     concatenating the src_dir as prefix.
     """
 
     # Safety guard, if srcFiles is empty, no need to proceed. Silence.
-    srcFiles = dirObj.getProperty(target, 'files').split()
+    srcFiles = dirObj.getProperty(rule, 'files').split()
     if srcFiles == []:
-        adagio.logDebug(target, dirObj, i18n.get('no_file_to_process'))
+        adagio.logDebug(rule, dirObj, i18n.get('no_file_to_process'))
         return []
 
-    srcDir = dirObj.getProperty(target, 'src_dir')
+    srcDir = dirObj.getProperty(rule, 'src_dir')
     toProcess = []
     for srcFile in srcFiles:
         found = glob.glob(os.path.join(srcDir, srcFile))
@@ -82,7 +82,7 @@ def getFilesToProcess(target, dirObj):
 
     return toProcess
 
-def doExecution(target, dirObj, command, datafile, dstFile,
+def doExecution(rule, dirObj, command, datafile, dstFile,
                 stdout = None, stderr = None, stdin = None):
     """
     Function to execute a program using the subprocess.Popen method. The three
@@ -114,7 +114,7 @@ def doExecution(target, dirObj, command, datafile, dstFile,
         else:
             print i18n.get('processing').format(os.path.basename(dirObj.current_dir))
 
-    adagio.logDebug(target, dirObj, 'Popen: ' + ' '.join(command))
+    adagio.logDebug(rule, dirObj, 'Popen: ' + ' '.join(command))
 
     try:
         pr = subprocess.Popen(command, stdin = stdin, stdout = adagio.userLog,
@@ -142,7 +142,7 @@ def doExecution(target, dirObj, command, datafile, dstFile,
 
     return
 
-def evaluateCondition(target, options):
+def evaluateCondition(rule, options):
     """
     Evaluates the following condition with the given options (conjunction)
 
@@ -150,13 +150,13 @@ def evaluateCondition(target, options):
     2) option "enable_begin" is empty or is a datetime before now
     3) option "enable_end" is empty or is a datetime past now
     4) If "adagio.enabled_profiles" is empty or contains the value of option
-    "target.enable_profile"
+    "rule.enable_profile"
 
     The function returns the conjunction of these 5 rules.
     """
 
     # Check part 1 of the rule: open must be 1
-    if properties.getProperty(options, target, 'enable_open') != '1':
+    if properties.getProperty(options, rule, 'enable_open') != '1':
         print i18n.get('enable_not_open').format(openData)
         return False
 
@@ -164,29 +164,29 @@ def evaluateCondition(target, options):
     now = datetime.datetime.now()
 
     # Get the date_format
-    dateFormat = properties.getProperty(options, target, 'enable_date_format')
+    dateFormat = properties.getProperty(options, rule, 'enable_date_format')
 
     # Check part 2 of the rule: begin date is before current date
-    beginDate = properties.getProperty(options, target, 'enable_begin')
+    beginDate = properties.getProperty(options, rule, 'enable_begin')
     if beginDate != '':
         if checkDateFormat(beginDate, dateFormat) < now:
             print i18n.get('enable_closed_begin').format(beginDate)
             return False
 
     # Check part 3 of the rule: end date is after current date
-    endDate = properties.getProperty(options, target, 'enable_end')
+    endDate = properties.getProperty(options, rule, 'enable_end')
     if endDate != '':
         if now < checkDateFormat(endDate, dateFormat):
             print i18n.get('enable_closed_end').format(endDate)
             return False
 
-    # Check part 4 of the rule: target.enable_profile must be in
+    # Check part 4 of the rule: rule.enable_profile must be in
     # adagio.enabled_profiles
     revisionsData = properties.getProperty(options, 'adagio', 'enabled_profiles')
-    thisRevision = properties.getProperty(options, target, 'enable_profile')
+    thisRevision = properties.getProperty(options, rule, 'enable_profile')
     if revisionsData != '' and thisRevision != '':
         if not (thisRevision in set(revisionsData.split())):
-            print i18n.get('enable_not_revision').format(target)
+            print i18n.get('enable_not_revision').format(rule)
             return False
 
     return True

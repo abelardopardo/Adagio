@@ -69,30 +69,30 @@ documentation = {
 # Possible values of the 'produce' option for this rule
 _produce_values = set(['regular', 'solution', ' pguide', ' submit'])
 
-def Execute(target, dirObj):
+def Execute(rule, dirObj):
     """
     Execute the rule in the given directory
     """
 
     # Get the files to process, if empty, terminate
-    toProcess = rules.getFilesToProcess(target, dirObj)
+    toProcess = rules.getFilesToProcess(rule, dirObj)
     if toProcess == []:
         return
 
     # Prepare the style transformation
-    styleFiles = dirObj.getProperty(target, 'styles')
+    styleFiles = dirObj.getProperty(rule, 'styles')
     styleTransform = xsltproc.createStyleTransform(styleFiles.split())
     if styleTransform == None:
         print i18n.get('no_style_file')
         return
 
     # Create the dictionary of stylesheet parameters
-    styleParams = xsltproc.createParameterDict(target, dirObj)
+    styleParams = xsltproc.createParameterDict(rule, dirObj)
 
     # Create a list with the param dictionaries to use in the different versions
     # to be created.
     paramDict = []
-    produceValues = set(dirObj.getProperty(target, 'produce').split())
+    produceValues = set(dirObj.getProperty(rule, 'produce').split())
     if 'regular' in produceValues:
         # Create the regular version, no additional parameters needed
         paramDict.append(({}, ''))
@@ -106,7 +106,7 @@ def Execute(target, dirObj):
 
     # Apply all these transformations.
     xsltproc.doTransformations(styleFiles.split(), styleTransform, styleParams,
-                               toProcess, target, dirObj, paramDict)
+                               toProcess, rule, dirObj, paramDict)
 
     # If 'submit' is also in the produce values, apply that transformation as
     # well (an optimization could be applied here such that if the same style is
@@ -116,37 +116,37 @@ def Execute(target, dirObj):
     if 'submit' in produceValues:
 
         # Prepare the style transformation
-        styleFiles = dirObj.getProperty(target, 'submit_styles')
+        styleFiles = dirObj.getProperty(rule, 'submit_styles')
         styleTransform = xsltproc.createStyleTransform(styleFiles.split())
         if styleTransform == None:
             print i18n.get('no_style_file')
             return
 
         # Create the dictionary of stylesheet parameters
-        styleParams = xsltproc.createParameterDict(target, dirObj)
+        styleParams = xsltproc.createParameterDict(rule, dirObj)
 
         # Apply the transformation and produce '_submit' file
         xsltproc.doTransformations(styleFiles.split(), styleTransform,
-                                   styleParams, toProcess, target, dirObj,
+                                   styleParams, toProcess, rule, dirObj,
                                    [({}, '_submit')])
 
     return
 
-def clean(target, dirObj):
+def clean(rule, dirObj):
     """
     Clean the files produced by this rule
     """
 
-    adagio.logInfo(target, dirObj, 'Cleaning')
+    adagio.logInfo(rule, dirObj, 'Cleaning')
 
     # Get the files to process
-    toProcess = rules.getFilesToProcess(target, dirObj)
+    toProcess = rules.getFilesToProcess(rule, dirObj)
     if toProcess == []:
         return
 
     # Create a list with the suffixes to consider
     suffixes = []
-    produceValues = set(dirObj.getProperty(target, 'produce').split())
+    produceValues = set(dirObj.getProperty(rule, 'produce').split())
     if 'regular' in produceValues:
         # Delete the regular version
         suffixes.append('')
@@ -160,7 +160,7 @@ def clean(target, dirObj):
         # Delete the submission file
         suffixes.append('_submit')
 
-    xsltproc.doClean(target, dirObj, toProcess, suffixes)
+    xsltproc.doClean(rule, dirObj, toProcess, suffixes)
 
     return
 

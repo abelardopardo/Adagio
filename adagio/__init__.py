@@ -274,13 +274,13 @@ def log(tprefix, dirObj, msg, fname = None):
         output.write(tprefix + ':' + str(msg) + '\n')
         output.flush()
 
-def Execute(target, dirObj):
+def Execute(rule, dirObj):
     """
     This rule is supposed to do nothing, it only contains auxiliary data
     """
     pass
 
-def clean(target, dirObj):
+def clean(rule, dirObj):
     """
     This rule is supposed to do nothing
     """
@@ -330,56 +330,56 @@ def AppendOptions(config, sectionName, options, documentation):
     # Loop over all the default values and add them to the proper sections
     for (vn, vv, msg) in options:
         properties.setProperty(config, sectionName, vn, vv,
-                               createSection = True, createOption = True)
+                               createRule = True, createOption = True)
 
     # Add the string for the help
     helpStr = documentation.get(config_defaults['languages'][0].split()[0])
     if helpStr == None:
         helpStr = documentation.get('en')
     properties.setProperty(config, sectionName, 'help', helpStr,
-                           createSection = True, createOption = True)
+                           createRule = True, createOption = True)
     return
 
-def Execute(target, dirObj, pad = None):
+def Execute(rule, dirObj, pad = None):
     """
-    Given a target and a directory, it checks which rule needs to be invoked and
+    Given a rule and a directory, it checks which rule needs to be invoked and
    performs the invokation.
     """
 
     global modules
 
-    # Keep a copy of the target before applying aliases
-    originalTarget = target
+    # Keep a copy of the rule before applying aliases
+    originalRule = rule
 
     # Apply the alias expansion
     try:
-        target = properties.expandAlias(target, dirObj.alias)
+        rule = properties.expandAlias(rule, dirObj.alias)
     except SyntaxError:
         print i18n.get('error_alias_expression')
         sys.exit(1)
 
-    # Detect help, dump or clean targets
-    specialTarget = re.match('.+\.dump$', target) or \
-        re.match('.+\.help$', target) or \
-        re.match('.+\.clean$', target) or \
-        re.match('.+\.deepclean$', target) or \
-        re.match('.+\.dumphelp$', target) or \
-        re.match('.+\.helpdump$', target)
+    # Detect help, dump or clean rule
+    specialRule = re.match('.+\.dump$', rule) or \
+        re.match('.+\.help$', rule) or \
+        re.match('.+\.clean$', rule) or \
+        re.match('.+\.deepclean$', rule) or \
+        re.match('.+\.dumphelp$', rule) or \
+        re.match('.+\.helpdump$', rule)
 
-    # Make sure the target is legal.
-    if not specialTarget and not dirObj.options.has_section(target):
-        print i18n.get('illegal_target_name').format(t = originalTarget,
+    # Make sure the rule is legal.
+    if not specialRule and not dirObj.options.has_section(rule):
+        print i18n.get('illegal_rule_name').format(t = originalRule,
                                                      dl = dirObj.current_dir)
         sys.exit(2)
 
-    # Get the module prefix (everything up to the first dot) and the target
-    # prefix (dropping any special target suffix)
-    targetParts = target.split('.')
-    modulePrefix = targetParts[0]
-    if specialTarget:
-        targetPrefix = '.'.join(targetParts[:-1])
+    # Get the module prefix (everything up to the first dot) and the rule prefix
+    # (dropping any special rule suffix)
+    ruleParts = rule.split('.')
+    modulePrefix = ruleParts[0]
+    if specialRule:
+        rulePrefix = '.'.join(ruleParts[:-1])
     else:
-        targetPrefix = target
+        rulePrefix = rule
 
     if pad == None:
 	pad = ''
@@ -388,68 +388,68 @@ def Execute(target, dirObj, pad = None):
     executed = False
     for moduleName in modules:
 
-        # If the target does not belong to this module, keep iterating
+        # If the rule does not belong to this module, keep iterating
         if modulePrefix != eval(moduleName + '.module_prefix'):
             continue
 
-        logInfo(originalTarget, dirObj, 'Enter ' + dirObj.current_dir)
+        logInfo(originalRule, dirObj, 'Enter ' + dirObj.current_dir)
 
-        # Print msg when beginning to execute target in dir
-        print pad + 'BB', originalTarget
+        # Print msg when beginning to execute a rule in dir
+        print pad + 'BB', originalRule
 
-        # Detect and execute "help/dump" targets
-        if properties.specialTargets(target, dirObj, moduleName, pad):
-            print pad + 'EE', originalTarget
-            logInfo(originalTarget, dirObj, 'Exit ' + dirObj.current_dir)
+        # Detect and execute "help/dump" rules
+        if properties.specialRules(rule, dirObj, moduleName, pad):
+            print pad + 'EE', originalRule
+            logInfo(originalRule, dirObj, 'Exit ' + dirObj.current_dir)
             return
 
         # Check the condition
-        if not rules.evaluateCondition(targetPrefix, dirObj.options):
+        if not rules.evaluateCondition(rulePrefix, dirObj.options):
             return
 
-        # Detect and execute "clean" targets
-        if cleanTargets(target, dirObj, moduleName, pad):
-            print pad + 'EE', originalTarget
-            logInfo(originalTarget, dirObj, 'Exit ' + dirObj.current_dir)
+        # Detect and execute "clean" rules
+        if cleanRules(rule, dirObj, moduleName, pad):
+            print pad + 'EE', originalRule
+            logInfo(originalRule, dirObj, 'Exit ' + dirObj.current_dir)
             return
 
         # Execute.
         if moduleName == 'gotodir':
             # gotodir must take into account padding
-            eval(moduleName + '.Execute(target, dirObj, pad)')
+            eval(moduleName + '.Execute(rule, dirObj, pad)')
         else:
-            eval(moduleName + '.Execute(target, dirObj)')
+            eval(moduleName + '.Execute(rule, dirObj)')
 
-        # Detect if no module executed the target
+        # Detect if no module executed the rule
         executed = True
 
-        print pad + 'EE', originalTarget
+        print pad + 'EE', originalRule
 
-        logInfo(originalTarget, dirObj, 'Exit ' + dirObj.current_dir)
+        logInfo(originalRule, dirObj, 'Exit ' + dirObj.current_dir)
 
     if not executed:
-        print i18n.get('unknown_target').format(originalTarget)
+        print i18n.get('unknown_rule').format(originalRule)
         sys.exit(1)
 
-def cleanTargets(target, dirObj, moduleName, pad = None):
+def cleanRules(rule, dirObj, moduleName, pad = None):
     """
-    Execute the clean targets. Return True if a target has been executed
+    Execute the clean rules. Return True if a rule has been executed
     """
 
     # CLEAN
-    if re.match('.+\.clean$', target):
-        eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', target)
+    if re.match('.+\.clean$', rule):
+        eval(moduleName + '.clean(\'' + re.sub('\.clean$', '', rule)
              + '\', dirObj)')
         return True
 
     # DEEPCLEAN
-    if re.match('.+\.deepclean$', target):
-        if target.startswith('gotodir'):
+    if re.match('.+\.deepclean$', rule):
+        if rule.startswith('gotodir'):
             # gotodir propagates the pad for the deep
-            eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', target)
+            eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', rule)
                  + '\', dirObj, True, pad)')
         else:
-            eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', target)
+            eval(moduleName + '.clean(\'' + re.sub('\.deepclean$', '', rule)
                  + '\', dirObj)')
         return True
 

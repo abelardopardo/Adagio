@@ -41,7 +41,7 @@ documentation = {
     - "enable_begin" is empty or the current time is greater than "enable_begin"
     - "enable_end" is empty or the current time is less than "enable_end"
     - "enable_open" has the value 1
-    - "adagio.enabled_profiles" is empty or contains target.enable_profile
+    - "adagio.enabled_profiles" is empty or contains rule.enable_profile
 
     The default values of these variables are:
     - enable_open : '1'
@@ -54,52 +54,52 @@ documentation = {
     So, in principle, if an export section is defined without touching these
     variables, it is performing the export.
 
-    These conditions apply also to the "clean" target.
+    These conditions apply also to the "clean" rule.
     """}
 
-def Execute(target, dirObj):
+def Execute(rule, dirObj):
     """
     Execute the rule in the given directory
     """
 
     # Get the files to process, if empty, terminate
-    toProcess = rules.getFilesToProcess(target, dirObj)
+    toProcess = rules.getFilesToProcess(rule, dirObj)
     if toProcess == []:
         return
 
     # Check if dstDir is empty, in which case, there is nothing to do
-    dstDir = dirObj.getProperty(target, 'dst_dir')
+    dstDir = dirObj.getProperty(rule, 'dst_dir')
     if dstDir == '':
         print i18n.get('export_no_dst')
         return
 
     # If we are here, the export may proceed!
-    srcDir = dirObj.getProperty(target, 'src_dir')
-    filecopy.doCopy(target, dirObj, toProcess, srcDir, dstDir)
+    srcDir = dirObj.getProperty(rule, 'src_dir')
+    filecopy.doCopy(rule, dirObj, toProcess, srcDir, dstDir)
 
     return
 
-def clean(target, dirObj):
+def clean(rule, dirObj):
     """
-    Clean the files produced by this rule. The target is executed under the same
-    rules explained in the documentation.
+    Clean the files produced by this rule. The rule is executed under the same
+    conditions explained in the documentation variable.
     """
 
-    adagio.logInfo(target, dirObj, 'Cleaning')
+    adagio.logInfo(rule, dirObj, 'Cleaning')
 
     # Get the files to process
-    toProcess = rules.getFilesToProcess(target, dirObj)
+    toProcess = rules.getFilesToProcess(rule, dirObj)
     if toProcess == []:
         return
 
     # Check the condition
-    dstDir = dirObj.getProperty(target, 'dst_dir')
+    dstDir = dirObj.getProperty(rule, 'dst_dir')
     if dstDir == '':
         return
 
     # If we are here, the export may proceed!
-    filecopy.doClean(target, dirObj, toProcess,
-                 dirObj.getProperty(target, 'src_dir'), dstDir)
+    filecopy.doClean(rule, dirObj, toProcess,
+                 dirObj.getProperty(rule, 'src_dir'), dstDir)
 
     return
 

@@ -25,16 +25,17 @@
 msgs = {
     'adagio.help': """
 
-    adagio [options] [target target ....]
+    adagio [options] [rule rule ....]
 
     Adagio is a rule-based program (similar to "make") that given a file
-    containing the invocation of a set of rules, it automatically executes
-    them. Given a directory and a set of rule files, a new set of files are
-    created by applying the rules automatically.
+    containing a set of rules, it automatically executes them. Given a directory
+    and a set of rules, a new set of files are created by applying the rules
+    automatically.
 
 
-    The script visits the current directory and executes the rules attached to
-    the given targets. If no target is given, all of them are processed
+    The script visits the current directory and process the rule file included
+    in that directory. If no rule is given when invoking adagio, all of the
+    rules in the file are executed.
 
     The script accepts the following options:
 
@@ -58,11 +59,11 @@ msgs = {
       -p: Partial execution. Proceed even if some tools are not
           installed. Otherwise stop execution in the first missing tool.
 
-      -s 'section name value': Executes the application by first storing in the
-                       environment the assignment name = value. This means that,
-                       unless overwritten by definitions in the properties file,
-                       this assignment will be visible to all the rules
-                       executed.
+      -s 'rule name value': Executes the application by first storing in the
+                       environment the assignment name = value as part of a
+                       rule. This means that, unless overwritten by definitions
+                       in the properties file, this assignment will be visible
+                       to all the rules executed.
 
       -x: Shows this message
     """,
@@ -96,7 +97,7 @@ msgs = {
     'lxml_not_installed': 
     'Python library lxml is not installed. Check configuration',
     'checking_configuration': 'Checking ADA configuration',
-    'no_help_available': 'There is no documentation for this target.',
+    'no_help_available': 'There is no documentation for this rule.',
     'help_option': 'Text explaining the tasks carried by this rule.',
     'fatal_error': 'Fatal error encountered. Attach "adagio.log" to notification.',
     'file_not_found': 'File {0} not found',
@@ -110,21 +111,19 @@ msgs = {
     'xslt_empty_result': 'XSLT transformation result is empty',
     'no_file_to_process' : 'No file given to process',
     'no_dir_to_process' : 'No directory given to process',
-    'no_targets_to_clean' : 'No targets to clean in {0}',
     'no_style_file' : 'No style file given.',
     'no_doc_for_rule': 'No documentation for rule {0}',
     'no_executable': 'Application {0} not present in the system.',
     'doc_preamble' : '===== {0} Processing Rules =====',
     'var_preamble' : '===== {0} Variables        =====',
     'cannot_open_file': 'Cannot open file {0}',
-    'line_in_no_section': 'Line {ln} of {pfile} is outside a section',
     'circular_include': 'Circular chain of templates detected:',
     'circular_alias': 'Circular chain of aliases detected:',
     'included_from': 'Included from:',
     'prefix': 'Prefix',
     'files': 'Files',
     'template_error': 'Incorrect template in file {0}.\n' + 
-    'Target must define only the variable "files"',
+    'Rule must define only the variable "files"',
     'incorrect_assignment': 'Incorrect assignment in line {ln} of {pfile}',
     'incorrect_version_format': 
     'Incorrect version {0}. Should have major.minor.patch structure',
@@ -132,12 +131,11 @@ msgs = {
         'ada.exact_version, ada.minimum_version and ' + \
         'ada.maximum_version',
     'incorrect_variable_reference': 'Incorrect reference in value {0}',
-    'incorrect_section': 'Incorrect section {0}',
     'import_error': 'Error while importing script in {0}',
     'import_collision': 
     'Script {0} collides with another ADA script. Name change required',
     'build_function_name': 'Function to call in the script.',
-    'clean_function_name': 'Function to call in the script in target "clean"',
+    'clean_function_name': 'Function to call in the script in rule "clean"',
     'function_error': 'Error when executing function {0}',
     'severe_parse_error': 'Error while parsing {0}',
     'severe_exec_error': 'Error while executing {0}. Check adagio.log',
@@ -145,10 +143,10 @@ msgs = {
     'error_option_addition': 'Option {0} is empty. No addition allowed',
     'error_alias_expression': """Incorrect alias expression. Format: 'name': 'value', 'name': 'value'""",
     'severe_option_error': 'Error in configuration file',
-    'error_applying_xslt': 'Error while applying style in target {0}',
+    'error_applying_xslt': 'Error while applying style in rule {0}',
     'error_extra_args': """Incorrect argument in variable {0}.
 The format must be 'name1': 'value2', 'name2': 'value2'...""",
-    'unknown_target': 'Unknown target {0}.',
+    'unknown_rule': 'Unknown rule {0}.',
     'file_uptodate': '{0} up to date. Bypassing.',
     'not_enough_params': 'Not enough params for {0}',
     'no_var_value': 'No value given in variable {0}',
@@ -175,7 +173,7 @@ The format must be 'name1': 'value2', 'name2': 'value2'...""",
     'script_output_file': 'File to write the srcipt output',
     'script_error_file': 'File to write the script errors',
     'output_format': 'Extension to use when creating the new files.',
-    'empty_output_format': 'Option output_format in target {0} cannot be empty.',
+    'empty_output_format': 'Option output_format in rule {0} cannot be empty.',
     'gimp_script': 'Script to process gimp files in batch mode',
     'extra_arguments':
     """Extra arguments passed directly to {0}. 
@@ -190,7 +188,7 @@ The format must be 'name1': 'value2', 'name2': 'value2'...""",
     'exercise_produce': 
     'Exercise versions produced. Any subset of {regular, solution, pguide, submit}',
     'export_dst': 'Destination of the exports',
-    'export_targets': 'Targets to execute in the destination directories',
+    'export_rules': 'Rules to execute in the destination directories',
     'export_begin': 'Date/time beyond which the export is allowed.',
     'export_end': 'Date/time until the export is allowed.',
     'export_open': 'If the export is enabled (must be "0" or "1").',
@@ -222,8 +220,7 @@ The format must be 'name1': 'value2', 'name2': 'value2'...""",
     'Circular dependency to directory {0}.',
     'circular_execute_directory':
     'Circular execution dependency to directory {0}.',
-    'illegal_target_prefix': 'Illegal target name {0}.',
-    'illegal_target_name': 'The target {t} is not known in dir {dl}.',
+    'illegal_rule_name': 'Rule {t} is not known in dir {dl}.',
     'incorrect_debug_option' : 'Debug option requires an integer as parameter',
     'ada_version_option' : 'Current ADA version',
     'ada_locale_option' : 'Locale used while executing ADA',

@@ -41,7 +41,7 @@ documentation = {
 
 has_executable = rules.which(next(b for (a, b, c) in options if a == 'exec'))
 
-def Execute(target, directory):
+def Execute(rule, directory):
     """
     Execute the rule in the given directory
     """
@@ -51,17 +51,17 @@ def Execute(target, directory):
     # If the executable is not present, notify and terminate
     if not has_executable:
         print I18n.get('no_executable').format(options['exec'])
-        if directory.options.get(target, 'partial') == '0':
+        if directory.options.get(rule, 'partial') == '0':
             sys.exit(1)
         return
 
     # Get the files to process, if empty, terminate
-    toProcess = rules.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(rule, directory)
     if toProcess == []:
         return
 
-    executable = directory.getProperty(target, 'exec')
-    outputFormat = directory.getProperty(target, 'output_format')
+    executable = directory.getProperty(rule, 'exec')
+    outputFormat = directory.getProperty(rule, 'output_format')
     if not outputFormat in set([]):
         print I18n.get('program_incorrect_format').format(executable, 
                                                           outputFormat)
@@ -70,15 +70,15 @@ def Execute(target, directory):
     # Prepare the command to execute
     return
 
-def clean(target, directory):
+def clean(rule, directory):
     """
     Clean the files produced by this rule
     """
     
-    adagio.logInfo(target, directory, 'Cleaning')
+    adagio.logInfo(rule, directory, 'Cleaning')
 
     # Get the files to process
-    toProcess = rules.getFilesToProcess(target, directory)
+    toProcess = rules.getFilesToProcess(rule, directory)
     if toProcess == []:
         return
 

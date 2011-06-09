@@ -35,7 +35,7 @@ module_prefix = 'properties'
 # orderedict.OrderedDict))
 _configParsers = {}
 
-_adagio_given_definiton_section_name = "__ADAGIO_GIVEN_DEFINITIONS_SECTION_NAME__"
+_adagio_given_definiton_rule_name = "__ADAGIO_GIVEN_DEFINITIONS_RULE_NAME__"
 
 def getConfigParser(fileName):
     """
@@ -87,7 +87,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
     of files to detect circual includes (and to notify the path to a missing
     file)
 
-    Returns a pair (set of files finally loaded, list of targets detected)
+    Returns a pair (set of files finally loaded, list of rules detected)
     """
 
     adagio.logDebug('properties', None, 'Parsing ' + filename)
@@ -121,7 +121,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
     # Get the ConfigParser for the input file
     newOptions = getConfigParser(filename)
 
-    # Move defaults to the original config passing them to a [DEFAULT] section
+    # Move defaults to the original config passing them to a [DEFAULT] rule
     defaultsIO = StringIO.StringIO()
     defaultsIO.write('[DEFAULT]\n')
     for (on, ov) in newOptions.defaults().items():
@@ -141,7 +141,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
         # Get the prefix
         sprefix = sname.split('.')[0]
 
-        # Treat the special case of a template section that needs to be expanded
+        # Treat the special case of a template rule that needs to be expanded
         if sprefix == 'template':
             (a, b) = treatTemplate(config, filename, newOptions, sname,
                                    aliasDict, includeChain)
@@ -201,7 +201,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
             if oname == 'alias':
                 for keyValue in finalValue.split():
                     aliasDict[keyValue] = sname
-        # Add the original target ot the result
+        # Add the original rule ot the result
         result[1].append(sname)
 
     return result
@@ -232,13 +232,13 @@ def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
     - Config what you have so far
     - filename file where the template is found
     - NewOptions is the new config
-    - sname is the section name where the template was detected
+    - sname is the rule name where the template was detected
     - includeChain are the files that are included
 
-    Returns the pair (set of files processed, list of targets detected)
+    Returns the pair (set of files processed, list of rules detected)
     """
 
-    # Get the pairs in the template section that are not in the defaults
+    # Get the pairs in the template rule that are not in the defaults
     # dictionary
     fileItem = [(a, b) for (a, b) in newOptions.items(sname)
                 if not a in newOptions.defaults()]
@@ -254,13 +254,13 @@ def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
                                                           filename)
         sys.exit(1)
 
-    # Add template section to the given config to evaluate the files assignment
+    # Add template rule to the given config to evaluate the files assignment
     templateFiles = setProperty(config, sname, 'files', fileItem[0][1],
                                 fileName = filename,
-                                createSection = True,
+                                createRule = True,
                                 createOption = True).split()
 
-    # Remove section from the original config:
+    # Remove rule from the original config:
     config.remove_section(sname)
 
     # Process the template files recursively!
@@ -277,9 +277,9 @@ def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
         result[1].extend(b)
     return result
 
-def specialTargets(target, dirObj, moduleName, pad = None):
+def specialRules(rule, dirObj, moduleName, pad = None):
     """
-    Check if the requested target is special:
+    Check if the requested rule is special:
     - dump
     - help
     - clean
@@ -288,18 +288,18 @@ def specialTargets(target, dirObj, moduleName, pad = None):
     Return boolean stating if any of them has been executed
     """
 
-    # Detect if any of the special target has been detected
+    # Detect if any of the special rule has been detected
     hit = False
 
-    # Calculate the target prefix (up to the last dot)
-    (prefix, b, c) = target.rpartition('.')
+    # Calculate the rule prefix (up to the last dot)
+    (prefix, b, c) = rule.rpartition('.')
 
     # Remember if it is one of the helpdump or dumphelp
-    doubleTarget = re.match('.+\.helpdump$', target) or \
-        re.match('.+\.dumphelp$', target)
+    doubleRule = re.match('.+\.helpdump$', rule) or \
+        re.match('.+\.dumphelp$', rule)
 
     # If requesting help, dump msg and terminate
-    if doubleTarget or re.match('.+\.help$', target):
+    if doubleRule or re.match('.+\.help$', rule):
         msg = etree.fromstring('<book>' +
                                 getProperty(dirObj.options, prefix,
                                             'help') + '</book>')
@@ -309,23 +309,23 @@ def specialTargets(target, dirObj, moduleName, pad = None):
         hit = True
 
     # If requesting var dump, do it and finish
-    if doubleTarget or re.match('.+\.dump$', target):
-        dumpOptions(target, dirObj, prefix)
+    if doubleRule or re.match('.+\.dump$', rule):
+        dumpOptions(rule, dirObj, prefix)
         hit =  True
 
     return hit
 
-def expandAlias(target, aliasDict):
+def expandAlias(rule, aliasDict):
     """
-    Given a target a.b.c, apply the alias values contained in the given
+    Given a rule a.b.c, apply the alias values contained in the given
     dictionary. The values are applied hierarchically. That is, the alias is
-    looked up starting with the whole target and then removing the suffixes one
+    looked up starting with the whole rule and then removing the suffixes one
     by one. Once an alias is found, it is applied and the process is repeated
-    with the new target. Loops in the alias expansion are detected.
+    with the new rule. Loops in the alias expansion are detected.
     """
 
-    # Split the target in two halfs to separate suffixes
-    head = target
+    # Split the rule in two halfs to separate suffixes
+    head = rule
     oldHead = None
 
     # Set to store the applied rules
@@ -339,7 +339,7 @@ def expandAlias(target, aliasDict):
 
         tail = ''
         while head != '':
-            # Look up the target
+            # Look up the rule
             newHead = aliasDict.get(head)
             if newHead != None:
                 # HIT: Apply the alias
@@ -363,68 +363,68 @@ def expandAlias(target, aliasDict):
 
     return head
 
-def getProperty(config, section, option):
+def getProperty(config, rule, option):
     """
-    Function that given a section name of the form 'a.b.c.d' and an option name,
+    Function that given a rule name of the form 'a.b.c.d' and an option name,
     gets the value obtained from the given config. The procedure works
-    hierarchically. It first checks for the option value in the given section,
-    and if not found, it keeps asking for the values in the sections obtained by
-    dropping the last suffix (from the last dot until the end of the section
+    hierarchically. It first checks for the option value in the given rule,
+    and if not found, it keeps asking for the values in the rules obtained by
+    dropping the last suffix (from the last dot until the end of the rule
     name.
     """
 
-    global _adagio_given_definiton_section_name
+    global _adagio_given_definiton_rule_name
 
-    # If the section is a.b.c, loop asking if we have the option a.b.c.option,
+    # If the rule is a.b.c, loop asking if we have the option a.b.c.option,
     # then a.b.option, and then a.option.
-    partialSection = section
-    while partialSection != '':
-        if config.has_option(_adagio_given_definiton_section_name,
-                             partialSection + '.' + option):
-            result = config.get(partialSection, option)
+    partialRule = rule
+    while partialRule != '':
+        if config.has_option(_adagio_given_definiton_rule_name,
+                             partialRule + '.' + option):
+            result = config.get(partialRule, option)
             return result
-        partialSection = partialSection.rpartition('.')[0]
+        partialRule = partialRule.rpartition('.')[0]
 
     # If no hit so far, need to make one more test to see if the value is in the
-    # DEFAULT section
+    # DEFAULT rule
     try:
-        result = config.get(section, option)
+        result = config.get(rule, option)
         # Yes, the value is stored as in  DEFAULT
         return result
     except ConfigParser.InterpolationMissingOptionError, e:
         print i18n.get('incorrect_variable_reference').format(option)
         sys.exit(1)
     except ConfigParser.NoSectionError:
-        print i18n.get('unknown_target').format(section)
+        print i18n.get('unknown_rule').format(rule)
         sys.exit(1)
 
     # Weird case, bomb out to notify error
     raise ConfigParser.NoOptionError
 
-def setProperty(config, section, option, value, fileName = None,
-                createSection = None, createOption = None):
+def setProperty(config, rule, option, value, fileName = None,
+                createRule = None, createOption = None):
     """
-    Function that sets the given value for the section.option in the given
-    config and returns the resulting value (after interpolation). createSection
+    Function that sets the given value for the rule.option in the given
+    config and returns the resulting value (after interpolation). createRule
     and createOption is the boolean allowing the creation of both.
     """
 
-    # Obtain the section prefix
-    sectionPrefix = section.split('.')[0]
+    # Obtain the rule prefix
+    rulePrefix = rule.split('.')[0]
 
-    # Check if the section is allowed,
-    if (not createSection) and (not config.has_section(sectionPrefix)):
-        # Section prefix does not exist in config, and creation is not allowed
+    # Check if the rule is allowed,
+    if (not createRule) and (not config.has_section(rulePrefix)):
+        # Rule prefix does not exist in config, and creation is not allowed
         raise ValueError
 
-    # Create the section if needed
-    if not config.has_section(section):
-        config.add_section(section)
+    # Create the rule if needed
+    if not config.has_section(rule):
+        config.add_section(rule)
 
     # See if the option is already present in the config
     try:
         optionPresent = True
-        getProperty(config, section, option)
+        getProperty(config, rule, option)
     except ConfigParser.NoOptionError:
         optionPresent = False
 
@@ -434,15 +434,15 @@ def setProperty(config, section, option, value, fileName = None,
         raise ValueError
 
     # Insert the option
-    config.set(section, option, value)
+    config.set(rule, option, value)
 
-    # Register the section.option also in the __ADAGIO_GIVEN_SECTION__
-    config.set(_adagio_given_definiton_section_name,
-               section + '.' + option, value)
+    # Register the rule.option also in the __ADAGIO_GIVEN_RULE_NAME
+    config.set(_adagio_given_definiton_rule_name,
+               rule + '.' + option, value)
 
     # Get the option just inserted to verify interpolation errors
     try:
-        finalValue = config.get(section, option)
+        finalValue = config.get(rule, option)
     except (ConfigParser.InterpolationDepthError,
             ConfigParser.InterpolationMissingOptionError), e:
         if fileName != None:
@@ -455,28 +455,28 @@ def setProperty(config, section, option, value, fileName = None,
 def initialConfig(configDefaults):
     """
     Given a dictiornary with a set of pairs (name, value), return a ConfigParser
-    in which all these values are stored in a special section with a special
+    in which all these values are stored in a special rule with a special
     name to be treated as default values. The reason for not using the DEFAULT
-    section of ConfigParser is because there is no way to know if a section.name
+    rule of ConfigParser is because there is no way to know if a rule.name
     has a value that appeared explicitly in a config file, or it derives from
-    the DEFAULT. However, both sections are kept (DEFAULTS and the Adagio
+    the DEFAULT. However, both rules are kept (DEFAULTS and the Adagio
     internal) because interpolations may require values in DEFAULS"""
 
-    global _adagio_given_definiton_section_name
+    global _adagio_given_definiton_rule_name
 
     result = ConfigParser.SafeConfigParser(configDefaults,
                                            ordereddict.OrderedDict)
 
-    # Add the special section for Adagio defaults
-    result.add_section(_adagio_given_definiton_section_name)
+    # Add the special rule for Adagio defaults
+    result.add_section(_adagio_given_definiton_rule_name)
 
-    # Add the 'adagio' section as well and set the first property
+    # Add the 'adagio' rule as well and set the first property
     result.add_section(adagio.module_prefix)
     result.set(adagio.module_prefix, 'home', adagio.home)
 
     return result
 
-def dumpOptions(target, dirObj, prefix):
+def dumpOptions(rule, dirObj, prefix):
     """
     Dump the value of the options affecting the computations
     """
@@ -485,11 +485,11 @@ def dumpOptions(target, dirObj, prefix):
 
     print i18n.get('var_preamble').format(prefix)
 
-    # Remove the .dump from the end of the target to fish for options
-    target = re.sub('\.?dump$', '', target)
-    if target == '':
-        target = prefix
+    # Remove the .dump from the end of the rule to fish for options
+    rule = re.sub('\.?dump$', '', rule)
+    if rule == '':
+        rule = prefix
 
-    for (on, ov) in sorted(dirObj.options.items(target)):
+    for (on, ov) in sorted(dirObj.options.items(rule)):
         print ' -', on, '=', ov
 

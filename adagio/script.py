@@ -41,39 +41,39 @@ options = [
 documentation = {
     'en' : """
 
-    Executes "build_function" (or "clean_function" when processing target
+    Executes "build_function" (or "clean_function" when processing rule
     "clean") of the scripts given in "files". The invocation of the script can
     be done redirecting stdin, stdout and/or stderr to the corresponding
     variables (they are assumed to be files) and the script is invoked with the
     given arguments.
     """}
 
-def Execute(target, dirObj):
+def Execute(rule, dirObj):
     """
     Execute the rule in the given directory
     """
 
-    prepareExecution(target, dirObj, 'build_function')
+    prepareExecution(rule, dirObj, 'build_function')
 
     return
-def clean(target, dirObj):
+def clean(rule, dirObj):
     """
     Clean the files produced by this rule
     """
     
-    adagio.logInfo(target, dirObj, 'Cleaning')
+    adagio.logInfo(rule, dirObj, 'Cleaning')
 
-    prepareExecution(target, dirObj, 'clean_function')
+    prepareExecution(rule, dirObj, 'clean_function')
 
     return
 
-def prepareExecution(target, dirObj, functionOption):
+def prepareExecution(rule, dirObj, functionOption):
     """
     Redirect stdin, stdout, stderr + set argv to new values.
     """
 
     # Get the files to process, if empty, terminate
-    toProcess = rules.getFilesToProcess(target, dirObj)
+    toProcess = rules.getFilesToProcess(rule, dirObj)
     if toProcess == []:
         return
 
@@ -81,15 +81,15 @@ def prepareExecution(target, dirObj, functionOption):
     toProcess = map(lambda x: os.path.splitext(x)[0], toProcess)
 
     # Get the function to execute
-    functionName = dirObj.getProperty(target, functionOption)
+    functionName = dirObj.getProperty(rule, functionOption)
 
     # Modify input/output/error channels
     oldStdin = sys.stdin
     oldStdout = sys.stdout
     oldStderr = sys.stderr
-    newStdin = dirObj.getProperty(target, 'stdin')
-    newStdout = dirObj.getProperty(target, 'stdout')
-    newStderr = dirObj.getProperty(target, 'stderr')
+    newStdin = dirObj.getProperty(rule, 'stdin')
+    newStdout = dirObj.getProperty(rule, 'stdout')
+    newStderr = dirObj.getProperty(rule, 'stderr')
     if newStdin != '':
         if not os.path.exists(newStdin):
             print i18n.get('file_not_found').format(newStdin)
@@ -101,7 +101,7 @@ def prepareExecution(target, dirObj, functionOption):
         sys.stderr = codecs.open(newStderr, 'w')
         
     # Execute the 'main' function
-    executeFunction(toProcess, target, dirObj, functionName)
+    executeFunction(toProcess, rule, dirObj, functionName)
 
     # Restore
     sys.stdin = oldStdin
@@ -111,7 +111,7 @@ def prepareExecution(target, dirObj, functionOption):
     return
 
 
-def executeFunction(toProcess, target, dirObj, functionName):
+def executeFunction(toProcess, rule, dirObj, functionName):
     """
     Execute the given function of the module
     """
@@ -127,7 +127,7 @@ def executeFunction(toProcess, target, dirObj, functionName):
 
     # Loop over the given source files
     for datafile in toProcess:
-        adagio.logDebug(target, dirObj, ' EXEC ' + datafile)
+        adagio.logDebug(rule, dirObj, ' EXEC ' + datafile)
 
         (head, tail) = os.path.split(datafile)
 
@@ -149,7 +149,7 @@ def executeFunction(toProcess, target, dirObj, functionName):
 
         # Replace argv
         oldArgv = sys.argv
-        newArgv = dirObj.getProperty(target, 'arguments')
+        newArgv = dirObj.getProperty(rule, 'arguments')
         if newArgv != '':
             sys.argv = [datafile] + newArgv.split() 
 
