@@ -32,6 +32,9 @@ msgs = {
     and a set of rules, a new set of files are created by applying the rules
     automatically.
 
+    The rules are all included in a file with name {0}. The file is
+    written in INI format. A rule is defined with a name in brackets at the
+    begining of a line. Each rule has a set of name = value assignments.
 
     The script visits the current directory and process the rule file included
     in that directory. If no rule is given when invoking adagio, all of the
@@ -66,6 +69,60 @@ msgs = {
                        to all the rules executed.
 
       -x: Shows this message
+
+    Adagio processes the following rules. For each of them a more detailed
+    description can be obtained by executing the adagio with the rule
+    "rulename.help" (where rulename is any of the following):
+
+      * convert: Convert, resize, crop images in different formats.
+
+      * dblatex: Executes dblatex over a set of Docbook files to translate them
+        to LaTeX
+
+      * dvips: Executes dvips over a set of given DVI files
+
+      * exam: Typeset a Docbook file with a specific format into an exam.
+
+      * exercise: Typeset a Docbook file and produce a hand out for students and
+        (optionally) a solution document, professor guide, and submission form.
+
+      * export: Copy a set of files from a source directory to a (possibly given
+        from other execution) destination directory. The copy is executed if a
+        set of conditions are fullfilled.
+
+      * filecopy: Copy files from a source directory.
+
+      * gimp: Transform all files in format *.xcf to PNG.
+
+      * gotodir: Invoke the execution of Adagio in a different directory
+        (recursively).
+
+      * inkscape: Transform a SVG file created by Inkscape into PNG, EPS, PS or
+        PDF
+
+      * latex: Execute LaTeX over a set of give *.tex files.
+
+      * office2pdf: Produce a PDF file from a given set of Office files (Word or
+        PowerPoint).
+
+      * pdfnup: Execute pdfnup over a set of PDF files to create n-up handouts.
+
+      * rsync: Executes rsync to synchronize a source and a destination dir.
+
+      * script: Executes an extra rule given as a Python script.
+
+      * testexam: Typesets a Docbook document in a special format containing a
+        set of multiple choice tests into an HTML document. The rule shuffles
+        the questions and creates several versions.
+
+      * xfig: Transform figures created with xfig into PNG format.
+
+      * xsltproc: Applies a XSL style sheet to a given XML file.
+
+    If you execute adagio with a single parameter made of a rule name followed
+    by the suffix ".help" it provides a more detailed description of the
+    operations contained in the rule.
+
     """,
     # Explanations of the values in config_defaults
     'default_alias': 'Define a synonym for the current rule',
