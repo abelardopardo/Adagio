@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -24,8 +24,8 @@
 "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd">
 
 <article xmlns="http://docbook.org/ns/docbook">
-  <title>ADA Frequently Asked Questions <phrase
-  condition="ada_version"/></title> 
+  <title>Adagio Frequently Asked Questions <phrase
+  condition="adagio_version"/></title>
   <articleinfo condition="dc.info">
     <publisher>
       <publishername>Carlos III University of Madrid</publishername>
@@ -39,7 +39,7 @@
       </author>
     </authorgroup>
     <abstract>
-      <para>Frequently Asked Questions of ADA</para>
+      <para>Frequently Asked Questions of Adagio</para>
     </abstract>
     <copyright>
       <year><link linkend="gfdl">2010, 2011</link></year>
@@ -52,10 +52,10 @@
   
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                         WHAT IS ADA                          -->
+  <!--                      WHAT IS Adagio                          -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="About_ADA.xml"
+  <xi:include href="About_Adagio.xml"
               parse="xml"
               xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
@@ -64,7 +64,7 @@
   <!--                    INSTALLATION IN WINDOWS                   -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <!-- <xi:include href="Installing_ADA_in_Windows.xml" -->
+  <!-- <xi:include href="Installing_Adagio_in_Windows.xml" -->
   <!--             parse="xml" -->
   <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
@@ -73,7 +73,7 @@
   <!--                    INSTALLATION IN LINUX                     -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Installing_ADA_in_Linux.xml"
+  <xi:include href="Installing_Adagio_in_Linux.xml"
               parse="xml"
               xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
@@ -83,7 +83,7 @@
   <!--                    PROCESSING RESOURCES                      -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <!-- <xi:include href="Processing_resources_with_ADA.xml" -->
+  <!-- <xi:include href="Processing_resources_with_Adagio.xml" -->
   <!--             parse="xml" -->
   <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
@@ -252,6 +252,6 @@
 
 <!--
 Local Variables: 
-compile-command: "adado" 
+compile-command: "adagio"
 End:
 -->
