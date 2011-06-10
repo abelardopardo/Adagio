@@ -31,17 +31,37 @@ if m != None:
     localePrefix = m.group(1)
 else:
     localePrefix = 'en'
-
+    
 dictionary_en = {
     'checking_configuration': 'Checking Adagio configuration',
     'lxml_not_installed': 
-    'Python library lxml is not installed. Check configuration',
+    'Python library lxml is not installed. Check configuration.',
+    'docbook_not_installed':
+        'Package docbook-xml is not installed. Check configuration.',
+    'docbookxsl_not_installed':
+        'Package docbook-xsl is not installed. Check configuration.',
+    'adagio_not_installed':
+        'Unable to load adagio package. Check configuration.',
+    'active_rules':
+        'Rules that can be executed:',
+    'disabled': '-- Disabled -- Install program {0}.',
+    'installed': 'Installed'
     }
 
 dictionary_es = {
-  'checking_configuration': 'Comprobando la configuración de Adagio',
-  'lxml_not_installed': 
-  'La biblioteca python-lxml no está instalada. Comprueba la configuración.',
+    'checking_configuration': 'Comprobando la configuración de Adagio',
+    'lxml_not_installed': 
+    'La biblioteca python-lxml no está instalada. Comprueba la configuración.',
+    'docbook_not_installed':
+        'El paquete docbook-xml no está instalado. Comprueba la configuración.',
+    'docbookxsl_not_installed':
+        'El paquete docbook-xsl no está instalado. Comprueba la configuración.',
+    'adagio_not_installed':
+        'El paquete adagio no puede cargarse. Comprueba la configuración.',
+    'active_rules':
+        'Reglas que puedes ejecutar:',
+    'disabled': 'Inhabilitado. Instala el programa {0}.',
+    'installed': 'Instalado'
 }
 
 all_dicts = { 'en': dictionary_en,
@@ -58,6 +78,14 @@ print dictionary.get('checking_configuration')
 print
 
 #
+# Check adagio home directory
+#
+print ' - Adagio directory: ',
+adagioDir = os.path.dirname(__file__)
+adagioDir = os.path.abspath(os.path.join(adagioDir, '..'))
+print adagioDir
+
+#
 # Verify that the lxml library is installed
 #
 print ' - python-lxml: ',
@@ -67,14 +95,75 @@ except ImportError:
     print
     print '***', dictionary.get('lxml_not_installed')
     sys.exit(1)
-print 'OK'
+print dictionary.get('installed')
 
 #
-# Check adagio home directory
+# Check if docbook and the XSLT sheets are properly installed. This is
+# tricky. If the packages are not properly installed, the XSLT processing still
+# works by fetching all the styles and DTDs from the network, which is terribly
+# slow. We run the risk of a user not installing these packages and seeing that
+# the tool has a terrible performance.
 #
-print ' - Adagio directory: ',
-adagioDir = os.path.dirname(__file__)
-adagioDir = os.path.abspath(os.path.join(adagioDir, '..'))
-print adagioDir
+print ' - Docbook XML: ',
+parser = etree.XMLParser(dtd_validation = True, 
+                         load_dtd = True, no_network = True)
+fileToParse = os.path.join(adagioDir, 'doc', 'About_Adagio.xml')
+try:
+    dataTree = etree.parse(fileToParse, parser)
+except etree.XMLSyntaxError, e:
+    print
+    print '***', dictionary.get('docbook_not_installed')
+    sys.exit(1)
+print dictionary.get('installed')
+
+print ' - Docbook XSL: ',
+styleParser = etree.XMLParser(load_dtd = True, no_network = True)
+fileToParse = os.path.join(adagioDir, 'Adagio_Styles', 'DocbookProfile.xsl')
+accessControl = etree.XSLTAccessControl(read_network = False)
+try:
+    transform = etree.parse(fileToParse, styleParser)
+    transform = etree.XSLT(transform, access_control = accessControl)
+    transform(dataTree)
+except (etree.XMLSyntaxError, etree.XSLTApplyError), e:
+    print
+    print '***', dictionary.get('docbookxsl_not_installed')
+    sys.exit(1)
+print dictionary.get('installed')
+
+print ' - Adagio package: ',
+# Try to import the adagio package
+_dirName = os.path.dirname(__file__)
+_dirName = os.path.abspath(os.path.join(_dirName, '..'))
+sys.path.insert(0, _dirName)
+sys.path.insert(0, os.path.join(_dirName, 'adagio'))
+try:
+    import adagio
+except ImportError:
+    print
+    print '***', dictionary.get('adagio_not_installed')
+    sys.exit(1)
+print dictionary.get('installed')
+
+# Traverse all the modules and for those that need an executale installed, check
+# if it is present. If not installed, suggest the name of the executable to
+# install. For the rest (those with no executable required), say simply that it
+# is OK.
+print
+print dictionary.get('active_rules')
+print
+for moduleName in sorted(adagio.modules):
+    print ' -', moduleName, ':',
+    try:
+        executable = eval('adagio.' + moduleName + '.has_executable')
+    except AttributeError, e:
+        print 'OK'
+        continue
+    
+    if executable != None:
+        print 'OK'
+    else:
+        options = eval('adagio.' + moduleName + '.options')
+        program = next(b for (a, b, c) in options if a == 'exec')
+        print dictionary.get('disabled').format(program)
 
 sys.exit(0)
