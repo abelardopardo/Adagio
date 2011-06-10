@@ -35,19 +35,42 @@
   <qandaset>
     <qandaentry>
       <question>
-        <para>Which packages are needed in a Linux system before installing
-        ADA?</para>
+        <para>Which packages are required in Linux to use Adagio?</para>
       </question>
       <answer>
-        <para>ADA needs some extra programs installed in your computer in order
-        to work properly. The toolkit is installed using the version control
-        system <command>git</command>. The minimum required packages to install
-        (with their correspondign dependencies) are:</para>
+        <para>Adagio is installed using the version control system
+        <command>git</command>. The required packages are:</para>
 
-	<xi:include
-	  href="Installing_ADA_in_Windows.xml"
-	  xpointer="xpointer(//*[@id='tool_requirements']/node())"
-	  parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+        <itemizedlist id="tool_requirements">
+          <listitem>
+            <para><command>git-core</command>: The version control system GIT
+            used to download, install and upgrade Adagio.</para>
+          </listitem>
+	  <listitem>
+	    <para><command>python</command>: the interpreter and libraries (any
+	    version older than 3.0).</para>
+	  </listitem>
+	  <listitem>
+	    <para><command>python-lxml</command>: Python bindings for
+	    <command>libxml2</command> and <command>libxslt</command>
+	    libraries.</para>
+	  </listitem>
+	  <listitem>
+	    <para><command>python-libxml2</command>: Python bindings for the
+	    GNOME XML library.</para>
+	  </listitem>
+          <listitem>
+            <para><command>docbook-xml</command>: Docbook XML DTDs.</para>
+          </listitem>
+          <listitem>
+            <para><command>docbook-xsl</command>: XSL stylesheets to process
+            DocBook.</para>
+          </listitem>
+          <listitem>
+            <para><command>openssh-client</command>: SSH client program to
+            connect to remote sites.</para>
+          </listitem>
+        </itemizedlist>
 
         <para>ADA provides rules to automatically process the files produced by
 	a set of tools. To fully exploit these rules, some additional tools need
@@ -67,7 +90,7 @@
         you want ADA to be installed and type:</para>
 
         <programlisting><xi:include
-	href="Installing_ADA_in_Windows.xml"
+	href="Installing_Adagio_in_Windows.xml"
 	xpointer="xpointer(//*[@id='git_install_command_windows']/node())"
 	parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
 

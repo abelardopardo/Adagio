@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2008 Carlos III University of Madrid
-# This file is part of the ADA: Agile Distributed Authoring Toolkit
+# This file is part of the Adagio: Agile Distributed Authoring Toolkit
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
@@ -15,7 +15,7 @@
 # Boston, MA  02110-1301, USA.
 # Variables to define the processing step
 #
-# See ada.home/AntImports/Properties.txt for the complete list of these
+# See adagio.home/AntImports/Properties.txt for the complete list of these
 # variables as well as an explanation.
 #
 [gotodir.export]
@@ -35,7 +35,7 @@ extra_arguments = 'chapter.autolabel': 0,
                   'section.autolabel': 1,
 	          'section.toc.depth': 0,
                   'html.stylesheet': 'style.css',
-                  'ada.version': '%(version)s'
+                  'adagio.version': '%(version)s'
 
 # [copy]
 # src_dir = ../AntImports
@@ -50,4 +50,4 @@ files = FAQ.html
 
 # [rsync]
 # src_dir = scratch/
-# dst_dir = abel@varpa.it.uc3m.es:lib/www/ADA/doc
+# dst_dir = abel@varpa.it.uc3m.es:lib/www/Adagio/doc

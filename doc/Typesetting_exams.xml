@@ -264,19 +264,19 @@
         <itemizedlist>
           <listitem>
             <para>
-              <varname>ada.exam.fontfamily</varname>: Font family used in the
+              <varname>adagio.exam.fontfamily</varname>: Font family used in the
               HTML head section (default to Verdana).
             </para>
           </listitem>
           <listitem>
             <para>
-              <varname>ada.exam.fontsize</varname>: Font size used in the
+              <varname>adagio.exam.fontsize</varname>: Font size used in the
               HTML head section (default to 10pt).
             </para>
           </listitem>
           <listitem>
             <para>
-              <varname>ada.exam.render.separate.cover</varname>: Boolean to
+              <varname>adagio.exam.render.separate.cover</varname>: Boolean to
               force a pagebreak after the exam cover (if value is
               <quote>yes</quote>), or include the exam content right after the
               head (any value different from <quote>yes</quote>.
@@ -284,13 +284,13 @@
           </listitem>
           <listitem>
             <para>
-              <varname>ada.exam.author</varname>: Author name to include in the
+              <varname>adagio.exam.author</varname>: Author name to include in the
               HTML head section.
             </para>
           </listitem>
           <listitem>
             <para>
-              <varname>ada.exam.include.id</varname>: Boolean to control the
+              <varname>adagio.exam.include.id</varname>: Boolean to control the
               inclusion of an ID identifying the exam right below the
               <quote>part</quote> variable in the version including the
               solutions. The parameter takes values <quote>yes/no</quote>, and
@@ -364,15 +364,15 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   xmlns="http://www.w3.org/1999/xhtml" version="1.0">
 
-  <xsl:param name="ada.exam.include.id" select="'no'"/>
-  <xsl:param name="ada.exam.render.separate.cover" select="'yes'"/>
-  <xsl:param name="ada.exam.author">Author that created the exam</xsl:param>
-  <xsl:param name="ada.exam.topleft.image">Logo.png</xsl:param>
-  <xsl:param name="ada.exam.topleft.image.alt">My Logo</xsl:param>
-  <xsl:param name="ada.exam.topleft.toptext">The degree name</xsl:param>
-  <xsl:param name="ada.exam.topleft.centertext">Course name</xsl:param>
-  <xsl:param name="ada.exam.topleft.centertext.en">Date</xsl:param>
-  <xsl:param name="ada.exam.topleft.bottomtext">Some other message</xsl:param>
+  <xsl:param name="adagio.exam.include.id" select="'no'"/>
+  <xsl:param name="adagio.exam.render.separate.cover" select="'yes'"/>
+  <xsl:param name="adagio.exam.author">Author that created the exam</xsl:param>
+  <xsl:param name="adagio.exam.topleft.image">Logo.png</xsl:param>
+  <xsl:param name="adagio.exam.topleft.image.alt">My Logo</xsl:param>
+  <xsl:param name="adagio.exam.topleft.toptext">The degree name</xsl:param>
+  <xsl:param name="adagio.exam.topleft.centertext">Course name</xsl:param>
+  <xsl:param name="adagio.exam.topleft.centertext.en">Date</xsl:param>
+  <xsl:param name="adagio.exam.topleft.bottomtext">Some other message</xsl:param>
   ...
 </xsl:stylesheet>]]></programlisting>
 
