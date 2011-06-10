@@ -151,8 +151,6 @@ msgs = {
     'default_src_dir': 'Directory from where to take the source files',
     'default_version': 'Current ADA version',
     ## End of config_defaults
-    'lxml_not_installed': 
-    'Python library lxml is not installed. Check configuration',
     'checking_configuration': 'Checking ADA configuration',
     'no_help_available': 'There is no documentation for this rule.',
     'help_option': 'Text explaining the tasks carried by this rule.',

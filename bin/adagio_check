@@ -24,13 +24,6 @@
 
 import sys, locale, re, os
 
-# Import the Adagio package
-_dirName = os.path.dirname(__file__)
-_dirName = os.path.abspath(os.path.join(_dirName, '..'))
-sys.path.insert(0, _dirName)
-sys.path.insert(0, os.path.join(_dirName, 'adagio'))
-import adagio
-
 # Get locale info and infer language from it
 locale = locale.getdefaultlocale()[0]
 m = re.match('^([^_]+)_.+$', locale)
@@ -40,11 +33,15 @@ else:
     localePrefix = 'en'
 
 dictionary_en = {
-  'checking_configuration': 'Checking Adagio configuration'
-}
+    'checking_configuration': 'Checking Adagio configuration',
+    'lxml_not_installed': 
+    'Python library lxml is not installed. Check configuration',
+    }
 
 dictionary_es = {
-  'checking_configuration': 'Comprobando la configuración de Adagio'
+  'checking_configuration': 'Comprobando la configuración de Adagio',
+  'lxml_not_installed': 
+  'La biblioteca lxml no está instalada. Comprueba la configuración.',
 }
 
 all_dicts = { 'en': dictionary_en,
@@ -68,7 +65,7 @@ try:
     from lxml import etree as etree
 except ImportError:
     print
-    print '***', adagio.i18n.get('lxml_not_installed')
+    print '***', dictionary.get('lxml_not_installed')
     sys.exit(1)
 print 'OK'
 
