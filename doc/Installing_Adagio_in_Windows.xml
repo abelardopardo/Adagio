@@ -122,10 +122,7 @@
         created. The computer needs to be connected to the net. Execute the
         command:</para>
 
-        <programlisting id="git_install_command_windows">$ <command>git clone <xi:include href="Params.xml"
-        xpointer="xmlns(xsl=http://www.w3.org/1999/XSL/Transform)xpointer(//*/xsl:param[@name='ADA_DOWNLOAD_URL']/text())"
-        parse="xml"
-        xmlns:xi="http://www.w3.org/2001/XInclude"/></command></programlisting>
+        <programlisting id="git_install_command_windows">$ <command>git clone http://flautin.it.uc3m.es/abel/Adagio</command></programlisting>
 
         <para>A list of messages appear on the screen. After a while (depending
         on the speed of your net connection), the command terminates and a new
