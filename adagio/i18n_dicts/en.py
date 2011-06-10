@@ -198,7 +198,9 @@ msgs = {
     'error_option_addition': 'Option {0} is empty. No addition allowed',
     'error_alias_expression': """Incorrect alias expression. Format: 'name': 'value', 'name': 'value'""",
     'severe_option_error': 'Error in configuration file',
-    'error_applying_xslt': 'Error while applying style in rule {0}',
+    'error_applying_xslt': 
+    """Error while applying style in rule {0}. 
+Check if docbook-xsl and docbook-xml are properly installed.""",
     'error_extra_args': """Incorrect argument in variable {0}.
 The format must be 'name1': 'value2', 'name2': 'value2'...""",
     'unknown_rule': 'Unknown rule {0}.',

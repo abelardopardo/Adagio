@@ -330,7 +330,6 @@ def singleStyleApplication(datafile, styles, styleTransform,
     try:
         result = styleTransform(dataTree, **styleParams)
     except etree.XSLTApplyError, e:
-        # ABEL: Fix. Try to detect when there is an error here!
         print i18n.get('error_applying_xslt').format(rule)
         print str(e)
         sys.exit(1)

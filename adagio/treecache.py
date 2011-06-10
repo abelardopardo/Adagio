@@ -35,6 +35,11 @@ _createdTrees = {}
 # StringIO or the absolute path given as parameter.
 _createdTransforms = {}
 
+# Object to control the type of accesses allowed when applying a
+# transformation. The network is not allowed to detect anomalies in the catalogs
+# and resolvers.
+_accessControl = etree.XSLTAccessControl(read_network = False)
+
 def flushData():
     """
     Flush both caches
@@ -136,7 +141,7 @@ def findOrAddTransform(path):
         sys.exit(1)
 
     transform.xinclude()
-    transform = etree.XSLT(transform)
+    transform = etree.XSLT(transform, access_control = _accessControl)
     _createdTransforms[theKey] = transform
 
     return transform
