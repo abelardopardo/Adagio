@@ -41,7 +41,7 @@ dictionary_en = {
 dictionary_es = {
   'checking_configuration': 'Comprobando la configuración de Adagio',
   'lxml_not_installed': 
-  'La biblioteca lxml no está instalada. Comprueba la configuración.',
+  'La biblioteca python-lxml no está instalada. Comprueba la configuración.',
 }
 
 all_dicts = { 'en': dictionary_en,
@@ -60,7 +60,7 @@ print
 #
 # Verify that the lxml library is installed
 #
-print ' - lxml: ',
+print ' - python-lxml: ',
 try:
     from lxml import etree as etree
 except ImportError:
