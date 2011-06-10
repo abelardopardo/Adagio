@@ -75,5 +75,6 @@ print 'OK'
 print ' - Adagio directory: ',
 adaDir = os.path.dirname(__file__)
 adaDir = os.path.abspath(os.path.join(adaDir, '..'))
+print adaDir
 
 sys.exit(0)
