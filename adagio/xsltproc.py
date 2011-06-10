@@ -201,7 +201,7 @@ def createParameterDict(rule, dirObj):
                 styleParams[k] = etree.XSLT.strparam(str(v))
             else:
                 # If v has quotes, too bad...
-                styleParams[k] = '"' + v + '"'
+                styleParams[k] = '"' + str(v) + '"'
     except SyntaxError, e:
         print i18n.get('error_extra_args').format(rule + '.extra_arguments')
         print str(e)
