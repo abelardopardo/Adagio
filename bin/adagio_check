@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-#
 #
 # Copyright (C) 2010 Carlos III University of Madrid
-# This file is part of the ADA: Agile Distributed Authoring Toolkit
+# This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -24,6 +24,13 @@
 
 import sys, locale, re, os
 
+# Import the Adagio package
+_dirName = os.path.dirname(__file__)
+_dirName = os.path.abspath(os.path.join(_dirName, '..'))
+sys.path.insert(0, _dirName)
+sys.path.insert(0, os.path.join(_dirName, 'adagio'))
+import adagio
+
 # Get locale info and infer language from it
 locale = locale.getdefaultlocale()[0]
 m = re.match('^([^_]+)_.+$', locale)
@@ -33,11 +40,11 @@ else:
     localePrefix = 'en'
 
 dictionary_en = {
-  'checking_configuration': 'Checking ADA configuration'
+  'checking_configuration': 'Checking Adagio configuration'
 }
 
 dictionary_es = {
-  'checking_configuration': 'Comprobando la configuración de ADA'
+  'checking_configuration': 'Comprobando la configuración de Adagio'
 }
 
 all_dicts = { 'en': dictionary_en,
@@ -61,14 +68,14 @@ try:
     from lxml import etree as etree
 except ImportError:
     print
-    print '***', I18n.get('lxml_not_installed')
+    print '***', adagio.i18n.get('lxml_not_installed')
     sys.exit(1)
 print 'OK'
 
 #
 # Check ada.home directory
 #
-print ' - ADA directory: ',
+print ' - Adagio directory: ',
 adaDir = os.path.dirname(__file__)
 adaDir = os.path.abspath(os.path.join(adaDir, '..'))
 
