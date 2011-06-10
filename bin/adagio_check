@@ -70,11 +70,11 @@ except ImportError:
 print 'OK'
 
 #
-# Check ada.home directory
+# Check adagio home directory
 #
 print ' - Adagio directory: ',
-adaDir = os.path.dirname(__file__)
-adaDir = os.path.abspath(os.path.join(adaDir, '..'))
-print adaDir
+adagioDir = os.path.dirname(__file__)
+adagioDir = os.path.abspath(os.path.join(adagioDir, '..'))
+print adagioDir
 
 sys.exit(0)
