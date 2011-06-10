@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of the Adagio: Agile Distributed Authoring Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -28,9 +28,9 @@
 <!--                    INSTALLATION IN LINUX                     -->
 <!--                                                              -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<section id="Installing_ADA_in_Linux"
+<section id="Installing_Adagio_in_Linux"
          xreflabel="Top of the Section">
-  <title>Installing ADA in Linux</title>
+  <title>Installing Adagio in Linux</title>
 
   <qandaset>
     <qandaentry>
@@ -62,19 +62,21 @@
           <listitem>
             <para><command>docbook-xml</command>: Docbook XML DTDs.</para>
           </listitem>
+
           <listitem>
             <para><command>docbook-xsl</command>: XSL stylesheets to process
             DocBook.</para>
           </listitem>
+
           <listitem>
             <para><command>openssh-client</command>: SSH client program to
             connect to remote sites.</para>
           </listitem>
         </itemizedlist>
 
-        <para>ADA provides rules to automatically process the files produced by
-	a set of tools. To fully exploit these rules, some additional tools need
-	to be installed. See <xref linkend="run_adacheck"/> for more
+        <para>Adagio provides rules to automatically process the files produced
+        by a set of tools. To fully exploit these rules, some additional tools
+        need to be installed. See <xref linkend="run_adacheck"/> for more
         details.</para>
       </answer>
     </qandaentry>
@@ -82,39 +84,50 @@
     <qandaentry>
       <question>
         <para>All the required packages are installed. How do I install
-        ADA?</para>
+        Adagio?</para>
       </question>
       <answer>
-        <para>ADA is installed using the Version Control System tool
+        <para>Adagio is installed using the Version Control System tool
         <command>git</command>. Open a command terminal, go to the folder where
-        you want ADA to be installed and type:</para>
+        you want Adagio to be installed and type (a folder with name
+	<filename>Adagio</filename> will be created):</para>
 
         <programlisting><xi:include
 	href="Installing_Adagio_in_Windows.xml"
 	xpointer="xpointer(//*[@id='git_install_command_windows']/node())"
 	parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
 
-        <para>A new directory with name <filename>ADA</filename> is created. In
+        <para>A new folder with name <filename>Adagio</filename> is created. In
         order to make the application available for execution, you need to
         include the path to the <filename>bin</filename> directory as part of
         your <varname>PATH</varname> environment variable. This can be done, for
-	example, inserting the following command in the
-	<filename>.bashrc</filename> file in your home directory:</para>
+        example, inserting the following command in the
+        <filename>.bashrc</filename> file in your home directory:</para>
 
-	<programlisting>PATH=/&lt;PATH_TO_ADA_FOLDER&gt;/ADA/bin:$PATH</programlisting>
+	<programlisting>PATH=/&lt;PATH_TO_ADAGIO_FOLDER&gt;/Adagio/bin:$PATH</programlisting>
+
+	<para>After these changes, open a new shell window and type the command
+	<command>which adagio</command>. A full path pointing to the file
+	<filename>adagio</filename> in the <filename>bin</filename> folder of
+	the recently created <filename>Adagio</filename> folder has to appear on
+	the screen similar to what is shown in the following figure:</para>
+
+	<programlisting>$ which adagio
+/home/youruser/Adagio/bin/adagio
+$</programlisting>
       </answer>
     </qandaentry>
 
     <qandaentry>
       <xi:include
-        href="Installing_ADA_in_Windows.xml"
+        href="Installing_Adagio_in_Windows.xml"
         xpointer="xpointer(//*[@id='no_catalogs']/node())"
         parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
     </qandaentry>
 
     <qandaentry>
       <xi:include
-        href="Installing_ADA_in_Windows.xml"
+        href="Installing_Adagio_in_Windows.xml"
         xpointer="xpointer(//*[@id='new_version_upgrade']/node())"
         parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
     </qandaentry>
