@@ -57,7 +57,9 @@
 	  </listitem>
 	  <listitem>
 	    <para><command>python-libxml2</command>: Python bindings for the
-	    GNOME XML library.</para>
+	    GNOME XML library (needed by <command>python-lxml</command> and
+	    therefore installed automatically as a dependency when installing
+	    <command>python-lxml</command>).</para>
 	  </listitem>
           <listitem>
             <para><command>docbook-xml</command>: Docbook XML DTDs.</para>
@@ -65,19 +67,15 @@
 
           <listitem>
             <para><command>docbook-xsl</command>: XSL stylesheets to process
-            DocBook.</para>
+            DocBook documents</para>
           </listitem>
 
-          <listitem>
-            <para><command>openssh-client</command>: SSH client program to
-            connect to remote sites.</para>
-          </listitem>
+          <!-- <listitem> -->
+          <!--   <para><command>openssh-client</command>: SSH client program to -->
+          <!--   connect to remote sites.</para> -->
+          <!-- </listitem> -->
         </itemizedlist>
 
-        <para>Adagio provides rules to automatically process the files produced
-        by a set of tools. To fully exploit these rules, some additional tools
-        need to be installed. See <xref linkend="run_adacheck"/> for more
-        details.</para>
       </answer>
     </qandaentry>
 
@@ -115,14 +113,10 @@
 	<programlisting>$ which adagio
 /home/youruser/Adagio/bin/adagio
 $</programlisting>
-      </answer>
-    </qandaentry>
 
-    <qandaentry>
-      <xi:include
-        href="Installing_Adagio_in_Windows.xml"
-        xpointer="xpointer(//*[@id='no_catalogs']/node())"
-        parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+        <para>To make sure that the entire toolkit is properly installed and
+	check which rules are active see <xref linkend="run_adagiocheck"/>.</para>
+      </answer>
     </qandaentry>
 
     <qandaentry>
@@ -135,3 +129,8 @@ $</programlisting>
   </qandaset>
 </section>
 
+<!--
+Local Variables:
+compile-command: "adagio"
+End:
+-->

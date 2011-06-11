@@ -32,7 +32,7 @@
          xreflabel="Top of the Section">
   <title>Processing resources with ADA</title>
   <qandaset>
-    <qandaentry id="run_adacheck" xreflabel="Which resources are processed by ADA">
+    <qandaentry id="run_adagiocheck" xreflabel="Which resources are processed by ADA">
       <question>
         <para>What kind of resources can be processed by ADA?</para>
       </question>
