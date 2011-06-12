@@ -1,5 +1,5 @@
-Adagio: Agile Distributed Authoring Toolkit
-===========================================
+Adagio: Agile Distributed Authoring Integrated Toolkit
+======================================================
 
 * Author:   Abelardo Pardo <abelardo.pardo@uc3m.es>
 * Website:   <http://www.it.uc3m.es/abel/Adagio/FAQ.html>
@@ -25,9 +25,9 @@ Usage:
 
 The script accepts the following options:
 
-  -c filename: File containing the rule (default {0})
+  `-c filename`: File containing the rule (default {0})
 
-  -d num: Debugging level. Used to control the amount of messages
+  `-d num`: Debugging level. Used to control the amount of messages
    dumped. Possible values are:
 
           CRITICAL/FATAL = 5
@@ -37,21 +37,21 @@ The script accepts the following options:
           DEBUG =          1
           NOTSET =         0
 
-  -f path_to_rule_file: Given a path to a rule file, execute ADA in the
+  `-f path_to_rule_file`: Given a path to a rule file, execute ADA in the
    directory where that file is, and with the given file as the rule file
 
-  -h: Shows this message
+  `-h`: Shows this message
 
-  -p: Partial execution. Proceed even if some tools are not
+  `-p`: Partial execution. Proceed even if some tools are not
       installed. Otherwise stop execution in the first missing tool.
 
-  -s 'rule name value': Executes the application by first storing in the
+  `-s 'rule name value'`: Executes the application by first storing in the
                    environment the assignment name = value as part of a
                    rule. This means that, unless overwritten by definitions
                    in the properties file, this assignment will be visible
                    to all the rules executed.
 
-  -x: Shows this message
+  `-x`: Shows this message
 
 Rules:
 ------

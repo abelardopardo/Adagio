@@ -2,7 +2,7 @@
 
 <!--
   Copyright (C) 2008 Carlos III University of Madrid
-  This file is part of the ADA: Agile Distributed Authoring Toolkit
+  This file is part of Adagio: Agile Distributed Authoring Integrated Toolkit
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public License
@@ -34,7 +34,7 @@
   <qandaset>
     <qandaentry id="cleaning">
       <question>
-        <para>How to clean the files produced by the ADA rules?</para>
+        <para>How to clean the files produced by Adagio rules?</para>
       </question>
       <answer>
         <para>The rules used by ADA to create resources are prepared to be
