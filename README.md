@@ -1,4 +1,4 @@
-Adagio: Agile Distributed Authoring Integrated Toolkit
+Adagio: Agile Distributed AuthorinG Integrated tOolkit
 ======================================================
 
 * Author:   Abelardo Pardo <abelardo.pardo@uc3m.es>
