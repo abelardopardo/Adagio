@@ -1,0 +1,30 @@
+
+Checking Adagio configuration
+
+ - Adagio directory:  /home/abel/Courses/Adagio
+ - python-lxml:  Installed
+ - Docbook XML:  Installed
+ - Docbook XSL:  Installed
+ - Adagio package:  Installed
+
+Rules that can be executed:
+
+ - convert : OK
+ - dblatex : OK
+ - dvips : OK
+ - exam : OK
+ - exercise : OK
+ - export : OK
+ - filecopy : OK
+ - gimp : OK
+ - gotodir : OK
+ - inkscape : OK
+ - latex : OK
+ - office2pdf : OK
+ - pdfnup : OK
+ - rsync : OK
+ - script : OK
+ - testexam : OK
+ - xfig : OK
+ - xsltproc : OK
+
