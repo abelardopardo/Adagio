@@ -22,7 +22,7 @@
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 
-import sys, locale, re, os
+import sys, locale, re, os, platform
 
 # Get locale info and infer language from it
 locale = locale.getdefaultlocale()[0]
@@ -76,6 +76,14 @@ if dictionary == None:
 print
 print dictionary.get('checking_configuration')
 print
+
+#
+# Check platform
+#
+print ' - Machine: ', platform.machine()
+print ' - System: ', platform.system()
+print ' - System Version: ', platform.version()
+print ' - Python version: ', platform.python_version()
 
 #
 # Check adagio home directory
@@ -166,4 +174,5 @@ for moduleName in sorted(adagio.modules):
         program = next(b for (a, b, c) in options if a == 'exec')
         print dictionary.get('disabled').format(program)
 
+print
 sys.exit(0)
