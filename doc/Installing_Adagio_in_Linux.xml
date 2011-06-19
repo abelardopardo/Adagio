@@ -39,7 +39,8 @@
       </question>
       <answer>
         <para>Adagio is installed using the version control system
-        <command>git</command>. The required packages are:</para>
+        <command>git</command>. The minimum set of packages to install and use
+        Adagio are:</para>
 
         <itemizedlist id="tool_requirements">
           <listitem>
@@ -76,19 +77,23 @@
           <!-- </listitem> -->
         </itemizedlist>
 
+	<para>Use the software management application included in your Linux
+	distribution to install these packages (the names are as they appear in
+	the software repositories).</para>
       </answer>
     </qandaentry>
 
     <qandaentry>
       <question>
-        <para>All the required packages are installed. How do I install
-        Adagio?</para>
+        <para>I got all the required packages. How do I install Adagio
+        then?</para>
       </question>
       <answer>
         <para>Adagio is installed using the Version Control System tool
-        <command>git</command>. Open a command terminal, go to the folder where
-        you want Adagio to be installed and type (a folder with name
-	<filename>Adagio</filename> will be created):</para>
+        <command>git</command>. Your computer needs to be connected to
+        Internet. Open a command terminal, go to the folder where you want
+        Adagio to be installed and type (a folder with name
+        <filename>Adagio</filename> will be created):</para>
 
         <programlisting><xi:include
 	href="Installing_Adagio_in_Windows.xml"
@@ -104,11 +109,12 @@
 
 	<programlisting>PATH=/&lt;PATH_TO_ADAGIO_FOLDER&gt;/Adagio/bin:$PATH</programlisting>
 
-	<para>After these changes, open a new shell window and type the command
-	<command>which adagio</command>. A full path pointing to the file
-	<filename>adagio</filename> in the <filename>bin</filename> folder of
-	the recently created <filename>Adagio</filename> folder has to appear on
-	the screen similar to what is shown in the following figure:</para>
+	<para>After these changes, <emphasis>open a new shell window</emphasis>
+	and type the command <command>which adagio</command>. A full path
+	pointing to the file <filename>adagio</filename> in the
+	<filename>bin</filename> folder of the recently created
+	<filename>Adagio</filename> folder has to appear on the screen similar
+	to what is shown in the following figure:</para>
 
 	<programlisting>$ which adagio
 /home/youruser/Adagio/bin/adagio

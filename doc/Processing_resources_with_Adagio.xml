@@ -28,53 +28,54 @@
 <!--                    PROCESSING RESOURCES                      -->
 <!--                                                              -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<section id="Processing_resources_with_ADA"
+<section id="Processing_resources_with_Adagio"
          xreflabel="Top of the Section">
-  <title>Processing resources with ADA</title>
+  <title>Processing resources with Adagio</title>
   <qandaset>
-    <qandaentry id="run_adagiocheck" xreflabel="Which resources are processed by ADA">
+    <qandaentry id="run_adagiocheck" xreflabel="Which resources are processed by Adagio">
       <question>
-        <para>What kind of resources can be processed by ADA?</para>
+        <para>What kind of resources can be processed by Adagio?</para>
       </question>
       <answer>
-        <para>ADA is a building tool, and to <quote>build</quote> a resource it
-        needs some applications to be properly installed in your computer. To
-        see what tools are managed by ADA and available, open a shell (a regular
-        shell in Linux or a Cygwin shell in Windows) and type the
+        <para>Adagio is a building tool, and to <quote>build</quote> a resource
+        it needs some applications to be properly installed in your computer. To
+        see what tools are managed by Adagio and available, open a shell (a
+        regular shell in Linux or a Cygwin shell in Windows) and type the
         command:</para>
 
-        <programlisting>$ <command>adacheck</command></programlisting>
+        <programlisting>$ <command>adagiocheck</command></programlisting>
         
-        <para>ADA prints the value of some relevant variables followed by the
+        <para>Adagio prints the value of some relevant variables followed by the
         list of the tools that are available. For example:</para>
 
-        <programlisting><xi:include href="AdaCheck.txt"
+        <programlisting><xi:include href="AdagioCheckOut.txt"
         parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
 
-        <para>This listing shows the tools that ADA is capable of using. If you
-        don't have all of them available, don't worry, ADA is capable of working
-        with a subset of these tools (although your functionality will be
-        reduced).</para>
+        <para>This listing shows the tools that Adagio is capable of using. If
+        you don't have all of them available, don't worry, Adagio is capable of
+        working with a subset of these tools (although your functionality will
+        be reduced).</para>
       </answer>
     </qandaentry>
 
-    <qandaentry id="how_to_run_ada" xreflabel="How to define which files to process">
+    <qandaentry id="how_to_run_adagio" xreflabel="How to define which files to process">
       <question>
-        <para>How to tell ADA which files should process and how?</para>
+        <para>How to tell Adagio which files should process and how?</para>
       </question>
       <answer>
-        <para>ADA needs from the user the set of files to apply a set of
+        <para>Adagio needs from the user the set of files to apply a set of
         pre-defined production rules.  This information should all be contained
         in a regular text file with name <filename>Properties.txt</filename> in
         the same directory where your files are located. The format of this file
         is very simple: any line starting with the symbol <quote>#</quote> or
         empty is ignored. The rest of lines should have the structure
         <command>name=value</command>. The names that can be used are
-        pre-defined by ADA. The following sections of this document describe the
-        available variables and explain the values that can be assigned.</para>
+        pre-defined by Adagio. The following sections of this document describe
+        the available variables and explain the values that can be
+        assigned.</para>
 
         <para>The following figure illustrates at a certain level of abstraction
-        how ADA uses this file to process your files and produce the
+        how Adagio uses this file to process your files and produce the
         resources.</para>
 
         <informalfigure>
@@ -83,7 +84,7 @@
               <imagedata fileref="images/Rules.png" format="PNG"/>
             </imageobject>
             <textobject>
-              <phrase>Rules used by ADA</phrase>
+              <phrase>Rules used by Adagio</phrase>
             </textobject>
           </mediaobject>
         </informalfigure>
@@ -107,16 +108,16 @@
         files with extension <filename>*.png</filename> are to be copied to such
         remote location.</para>
 
-        <para>All rules present in ADA have default values assigned with the
+        <para>All rules present in Adagio have default values assigned with the
         most common behavior. This means that in most cases, by including a
         small set of definitions in the <filename>Properties.txt</filename>
-        file, ADA will perform the appropriate operations.</para>
+        file, Adagio will perform the appropriate operations.</para>
       </answer>
     </qandaentry>
 
-    <qandaentry id="adado" xreflabel="How to execute ADA">
+    <qandaentry id="adagio" xreflabel="How to execute Adagio">
       <question>
-        <para>How to tell ADA to build all the resources?</para>
+        <para>How to tell Adagio to build all the resources?</para>
       </question>
       <answer>
         <para>Once the <filename>Properties.txt</filename> file with the
@@ -124,9 +125,9 @@
         a shell (regular shell in Unix or a Cygwin shell in Windows) and, in the
         correct directory type the following command:</para>
 
-        <programlisting>$ <command>adado</command></programlisting>
+        <programlisting>$ <command>adagio</command></programlisting>
 
-        <para>A few lines will then appear on the screen. ADA is writing the
+        <para>A few lines will then appear on the screen. Adagio is writing the
         rules that is applying as well as the directories in which the
         processing is taking place. For example:</para>
 
@@ -141,18 +142,19 @@ Total time: 4 seconds</programlisting>
         <para>The previous execution shows the result of applying the <ulink
         url="Samples/SimpleDoc/Properties.txt"><filename>Properties.txt</filename>
         file</ulink> shown in the question on <xref
-        linkend="run_adacheck"/>. Two rules are executed within the current
+        linkend="run_adagiocheck"/>. Two rules are executed within the current
         directory.</para>
 
-        <para>If an error appears while ADA executes the rules, the information
-        about the anomaly is stored in the file <filename>build.out</filename>
-        and the first lines are shown on the screen:</para>
+        <para>If an error appears while Adagio executes the rules, the
+        information about the anomaly is stored in the file
+        <filename>build.out</filename> and the first lines are shown on the
+        screen:</para>
 
         <programlisting>     [echo] BEGIN /path to current dir]/SimpleDoc
      [echo] inkscape.processing         RUN
      [echo] xsltproc.processing.nopre   RUN
 
----------------------------------- ADA ERROR ----------------------------------
+---------------------------------- Adagio ERROR ----------------------------------
 
 -- Full error information in file:
    ./build.out
@@ -190,7 +192,7 @@ unable to parse /[path to a file]/index.xml
           <filename>Properties.txt</filename>?</para>
         </question>
         <answer>
-          <para>Yes. ADA allows two regular expression patterns.</para>
+          <para>Yes. Adagio allows two regular expression patterns.</para>
           <itemizedlist>
             <listitem>
               <para><quote>*</quote> matches zero or more characters</para>
@@ -217,7 +219,7 @@ unable to parse /[path to a file]/index.xml
       <qandaentry id="property_in_command_line" xreflabel="How to execute with
                                                            one variable modified">
         <question>
-	  <para>Can I execute the <command>adado</command> once but with one
+	  <para>Can I execute the <command>adagio</command> once but with one
 	  single variable modified from the definition in
 	  <filename>Properties.txt</filename>?</para>
         </question>
@@ -233,14 +235,14 @@ unable to parse /[path to a file]/index.xml
 
           <programlisting>'-Dpropertyname="propertyvalue with spaces"'</programlisting>
 
-          <para>Any argument written beyond <command>adado</command> is directly
+          <para>Any argument written beyond <command>adagio</command> is directly
           passed to an invocation of Ant (the rule processing engine used by
-          ADA). See the Ant manual for a detailed discussion of the available
+          Adagio). See the Ant manual for a detailed discussion of the available
           options.</para>
         </answer>
       </qandaentry>
 
-      <qandaentry id="ada_course_home"
+      <qandaentry id="adagio_course_home"
                   xreflabel="How to re-use definitions across an entire project">
         <question>
           <para>Can I have definitions or use certain files that are used in
@@ -248,24 +250,25 @@ unable to parse /[path to a file]/index.xml
         </question>
         <answer>
           <para>Yes. Although there is no formal definition of
-          <quote>project</quote> within ADA, it is very common to have files or
-          definitions that apply to all files included in a set of
-          directories. The way this is solved in ADA is by detecting a special
-          directory in the hierarchy called the <emphasis>course home</emphasis>
-          directory. The idea is for users to have multiple of these directories
-          one for each large project of shared resources.</para>
+          <quote>project</quote> within Adagio, it is very common to have files
+          or definitions that apply to all files included in a set of
+          directories. The way this is solved in Adagio is by detecting a
+          special directory in the hierarchy called the <emphasis>course
+          home</emphasis> directory. The idea is for users to have multiple of
+          these directories one for each large project of shared
+          resources.</para>
 
-          <para>ADA tries to provide the least invasive solution, so rather than
-          requiring an extra definition with the location of this course home
-          directory, it detects it automatically by searching for the file with
-          name <filename>AdaCourseParams.xml</filename> in up to ten levels of
-          directories above the current one. If a file with this name is found,
-          the variable <varname>ada.course.home</varname> is then assinged the
-          directory where the file is located.</para>
+          <para>Adagio tries to provide the least invasive solution, so rather
+          than requiring an extra definition with the location of this course
+          home directory, it detects it automatically by searching for the file
+          with name <filename>AdagioProjectParams.xml</filename> in up to ten
+          levels of directories above the current one. If a file with this name
+          is found, the variable <varname>adagio.course.home</varname> is then
+          assinged the directory where the file is located.</para>
           
           <para>For example, let us assume that your project contains some
           stylesheet to be used in multiple locations. You may give this file
-          the name <filename>AdaCourseParams.xml</filename> and place it at the
+          the name <filename>AdagioProjectParams.xml</filename> and place it at the
           highest level in your hierarchy of directories. From any directory you
           may refer to such file in the <filename>Properties.txt</filename> file
           as shown in the following example.</para>

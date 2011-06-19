@@ -28,25 +28,25 @@
 <!--                    INSTALLATION IN WINDOWS                   -->
 <!--                                                              -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<section id="Installing_ADA_in_Windows"
+<section id="Installing_Adagio_in_Windows"
          xreflabel="Top of the Section">
-  <title>Installing ADA in Windows</title>
+  <title>Installing Adagio in Windows</title>
   <qandaset>
     <qandaentry id="requiredapplicationsinwindows">
       <question>
         <para>Which packages are needed in a Windows system before installing
-	ADA?</para>
+	Adagio?</para>
       </question>
       <answer>
-        <para>ADA needs some extra programs installed in your computer in order
-        to work properly. The toolkit is installed using the version control
-        system <command>git</command>. The minimum required packages to install
-        (with their correspondign dependencies) are:</para>
+        <para>Adagio needs some extra programs installed in your computer in
+        order to work properly. The toolkit is installed using the version
+        control system <command>git</command>. The minimum required packages to
+        install (with their correspondign dependencies) are:</para>
 
         <itemizedlist id="tool_requirements">
           <listitem>
             <para><command>git</command>: Fast version control system used to
-            download the latest ADA version.</para>
+            download the latest Adagio version.</para>
           </listitem>
 	  <listitem>
 	    <para><command>Python</command>: the interpreter and
@@ -76,8 +76,8 @@
 
 	<para>TO REWRITE</para>
 
-        <para>Aside from these three tools, ADA allows to process certain file
-        types if some additional programs are installed. For example,
+        <para>Aside from these three tools, Adagio allows to process certain
+        file types if some additional programs are installed. For example,
         translating figures from <ulink
         url="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</ulink>
         to <ulink url="en.wikipedia.org/wiki/PNG">PNG</ulink> can be done using
@@ -99,7 +99,7 @@
     <qandaentry id="howtoinstallpackages" xreflabel="How to install other packages">
       <question>
         <para>I got Java already installed, What else is required to run
-        ADA?</para>
+        Adagio?</para>
       </question>
       <answer>
 	<para>TO BE REWRITTEN</para>
@@ -113,44 +113,45 @@
     <qandaentry id="Fetch_ada_in_windows">
       <question>
         <para>All the required packages are installed. How do I install
-        ADA?</para>
+        Adagio?</para>
       </question>
       <answer>
 	<para>TO BE REWRITTEN</para>
         <para>Open a Cygwin shell and go to the directory where you want ADA
-        installed (a directory with name <filename>ADA</filename> will be
+        installed (a directory with name <filename>Adagio</filename> will be
         created. The computer needs to be connected to the net. Execute the
         command:</para>
 
-        <programlisting id="git_install_command_windows">$ <command>git clone https://abelardopardo@github.com/abelardopardo/Adagio.git</command></programlisting>
+        <programlisting id="git_install_command_windows">$ <command>git clone https://github.com/abelardopardo/Adagio.git</command></programlisting>
 
         <para>A list of messages appear on the screen. After a while (depending
         on the speed of your net connection), the command terminates and a new
-        directory with name <filename>ADA</filename> has been created containing
-        all the required files.</para>
-        <para>In order to make ADA available, the PATH environment variable
+        directory with name <filename>Adagio</filename> has been created
+        containing all the required files.</para>
+        <para>In order to make Adagio available, the PATH environment variable
         needs to be modified by adding the path to the <filename>bin</filename>
         directory. You may follow the same procedure described in the <xref
         linkend="install_ant"/>.</para>
 
         <para>Once the environment variable <command>PATH</command> has been
-        modified to include the <filename>bin</filename> directory within ADA,
-        open a brand new Cygwin shell and type the following command</para>
+        modified to include the <filename>bin</filename> directory within
+        Adagio, open a brand new Cygwin shell and type the following
+        command</para>
         
-        <programlisting>$ <command>which adado</command></programlisting>
+        <programlisting>$ <command>which adagio</command></programlisting>
         
         <para>As in the case of the <xref linkend="install_ant"/>, if the answer
-        is a single path to the <filename>adado</filename> file similar
-        to</para>
+        is a single path to the <filename>adagio</filename> file similar
+        to:</para>
 
-        <programlisting>/home/.../.../ADA/bin/adado</programlisting>
+        <programlisting>/home/youruser/Adagio/bin/adado</programlisting>
         
-        <para>ADA is properly installed. If the message says <quote>which: no
-        adado in (/usr/local/bin:/usr/bin:/....)</quote>, ADA is not available
-        for execution and you need to review your installation.</para>
+        <para>Adagio is properly installed. If the message says <quote>which: no
+        adagio in (/usr/local/bin:/usr/bin:/....)</quote>, Adagio is not
+        available for execution and you need to review your installation.</para>
 
-        <para>The final step to make sure that the commands provided by ADA are
-        available is to <xref linkend="run_adacheck"/>.</para>
+        <para>The final step to make sure that the commands provided by Adagio
+        are available is to <xref linkend="run_adacheck"/>.</para>
       </answer>
     </qandaentry>
 
@@ -171,19 +172,19 @@
         <para>The command will inform in some fairly cryptic way of the changes
         that are taking place. In principle, if the source files have not been
         modified, the change will go smoothly. If you have some personal
-        modifications in the source files (which we strongly advice against it!)
+        modifications in the source files (which we strongly advice against!)
         , you need first to tell <command>git</command> to store those
         changes. You need to execute the command:</para>
 
         <programlisting>$ <command>git commit -a -m "Your message here"</command></programlisting>
 
         <para>Try again to execute <command>git pull</command>. This time, the
-          update process should go smoothly. There could be some conflicts
-          when <command>git</command> tries to merge these changes with the
-          ones you introduced. If such situation happens, it is called a
-          <quote>merge conflict</quote> and it needs to be solved manually by
-          the user. If you touched the source code of ADA, then we assume that
-          you know how to solve merge conflicts.</para>
+        update process should go smoothly. There could be some conflicts when
+        <command>git</command> tries to merge these changes with the ones you
+        introduced. If such situation happens, it is called a <quote>merge
+        conflict</quote> and it needs to be solved manually by the user. If you
+        touched Adagio source code, then we assume that you know how to solve
+        merge conflicts.</para>
       </answer>
     </qandaentry>
   </qandaset>
