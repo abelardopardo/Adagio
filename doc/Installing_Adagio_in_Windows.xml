@@ -110,14 +110,14 @@
       </answer>
     </qandaentry>
 
-    <qandaentry id="Fetch_ada_in_windows">
+    <qandaentry id="Fetch_adagio_in_windows">
       <question>
         <para>All the required packages are installed. How do I install
         Adagio?</para>
       </question>
       <answer>
 	<para>TO BE REWRITTEN</para>
-        <para>Open a Cygwin shell and go to the directory where you want ADA
+        <para>Open a Cygwin shell and go to the directory where you want Adagio
         installed (a directory with name <filename>Adagio</filename> will be
         created. The computer needs to be connected to the net. Execute the
         command:</para>
@@ -144,14 +144,14 @@
         is a single path to the <filename>adagio</filename> file similar
         to:</para>
 
-        <programlisting>/home/youruser/Adagio/bin/adado</programlisting>
+        <programlisting>/home/youruser/Adagio/bin/adagio</programlisting>
         
         <para>Adagio is properly installed. If the message says <quote>which: no
         adagio in (/usr/local/bin:/usr/bin:/....)</quote>, Adagio is not
         available for execution and you need to review your installation.</para>
 
         <para>The final step to make sure that the commands provided by Adagio
-        are available is to <xref linkend="run_adacheck"/>.</para>
+        are available is to <xref linkend="run_adagiocheck"/>.</para>
       </answer>
     </qandaentry>
 
