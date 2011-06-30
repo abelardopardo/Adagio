@@ -1,8 +1,12 @@
 *~
-adado.log
+adagio.log
 /sandbox
 /HAT
 /SampleCourse/Admin/scratch
 /adado.log
 /AuxTools
 /README.html
+/docbook-xml
+/docbook-xsl
+/docbook-xml-*.*.zip
+/docbook-xsl-*.zip
