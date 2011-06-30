@@ -2,7 +2,6 @@
 <!DOCTYPE catalog PUBLIC "-//OASIS//DTD XML Catalogs V1.0//EN"
   "file:///usr/share/xml/schema/xml-core/catalog.dtd">
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-
   <!--
   <delegateURI uriStartString="http://docbook.sourceforge.net/release/xsl/" 
                catalog="file:///etc/xml/docbook-xsl.xml"/>
@@ -14,4 +13,10 @@
     uriStartString="http://www.w3.org/TR/xhtml1/DTD/" 
     rewritePrefix="./"/>
   <nextCatalog  catalog="/etc/xml/catalog" />
+
+  <!-- Hook on the DocBook XML and XSL catalogs if /etc/xml/catalog is not
+       properly deployed (for windows platforms) -->
+
+  <nextCatalog  catalog="../docbook-xml/catalog.xml" />
+  <nextCatalog  catalog="../docbook-xsl/catalog.xml" />
 </catalog>
