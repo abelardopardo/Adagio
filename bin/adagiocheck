@@ -36,8 +36,14 @@ dictionary_en = {
     'checking_configuration': 'Checking Adagio configuration',
     'lxml_not_installed': 
     'Python library lxml is not installed. Check configuration.',
+    'docbook_dir_not_created':
+    """Docbook-xml incorrectly installed. It should be inside an Adagio folder. 
+     Check configuration.""",
     'docbook_not_installed':
         'Package docbook-xml is not installed. Check configuration.',
+    'docbookxsl_dir_not_created':
+        """Docbook-xsl incorrectly installed. It should be inside an Adagio folder. 
+     Check configuration.""",
     'docbookxsl_not_installed':
         'Package docbook-xsl is not installed. Check configuration.',
     'adagio_not_installed':
@@ -52,8 +58,14 @@ dictionary_es = {
     'checking_configuration': 'Comprobando la configuración de Adagio',
     'lxml_not_installed': 
     'La biblioteca python-lxml no está instalada. Comprueba la configuración.',
+    'docbook_dir_not_created':
+        """Docbook-xml mal instalado. Debe estar en una carpeta dentro de Adagio.
+     Comprueba la configuración.""",
     'docbook_not_installed':
         'El paquete docbook-xml no está instalado. Comprueba la configuración.',
+    'docbookxsl_dir_not_created':
+     """Docbook-xsl mal instalado. Debe estar en una carpeta dentro de Adagio. 
+     Comprueba la configuración.""",
     'docbookxsl_not_installed':
         'El paquete docbook-xsl no está instalado. Comprueba la configuración.',
     'adagio_not_installed':
@@ -80,6 +92,7 @@ print
 #
 # Check platform
 #
+currentSystem = platform.system()
 print ' - Machine: ', platform.machine()
 print ' - System: ', platform.system()
 print ' - System Version: ', platform.version()
@@ -113,6 +126,13 @@ print dictionary.get('installed')
 # the tool has a terrible performance.
 #
 print ' - Docbook XML: ',
+if currentSystem == 'Windows':
+    if not os.path.exists(os.path.join(adagioDir, 'docbook-xml',
+                                       'catalog.xml')):
+        print
+        print '***', dictionary.get('docbook_dir_not_created')
+        sys.exit(1)
+
 parser = etree.XMLParser(dtd_validation = True, 
                          load_dtd = True, no_network = True)
 fileToParse = os.path.join(adagioDir, 'doc', 'About_Adagio.xml')
@@ -125,6 +145,13 @@ except etree.XMLSyntaxError, e:
 print dictionary.get('installed')
 
 print ' - Docbook XSL: ',
+if currentSystem == 'Windows':
+    if not os.path.exists(os.path.join(adagioDir, 'docbook-xsl',
+                                       'catalog.xml')):
+        print
+        print '***', dictionary.get('docbookxsl_dir_not_created')
+        sys.exit(1)
+
 styleParser = etree.XMLParser(load_dtd = True, no_network = True)
 fileToParse = os.path.join(adagioDir, 'Adagio_Styles', 'DocbookProfile.xsl')
 accessControl = etree.XSLTAccessControl(read_network = False)
@@ -138,7 +165,7 @@ except (etree.XMLSyntaxError, etree.XSLTApplyError), e:
     sys.exit(1)
 print dictionary.get('installed')
 
-print ' - Adagio package: ',
+print ' - Adagio python package: ',
 # Try to import the adagio package
 _dirName = os.path.dirname(__file__)
 _dirName = os.path.abspath(os.path.join(_dirName, '..'))
