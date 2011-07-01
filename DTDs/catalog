@@ -17,6 +17,24 @@
   <!-- Hook on the DocBook XML and XSL catalogs if /etc/xml/catalog is not
        properly deployed (for windows platforms) -->
 
+  <system systemId="http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd"
+	  uri="../docbook-xml/docbookx.dtd"/>
+
+  <system systemId="http://docbook.org/xml/4.3/docbookx.dtd"
+	  uri="../docbook-xml/docbookx.dtd"/>
+
+  <system systemId="http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+	  uri="../docbook-xml/docbookx.dtd"/>
+
+  <system systemId="http://docbook.org/xml/4.4/docbookx.dtd"
+	  uri="../docbook-xml/docbookx.dtd"/>
+
+  <system systemId="http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
+	  uri="../docbook-xml/docbookx.dtd"/>
+
+  <system systemId="http://docbook.org/xml/4.5/docbookx.dtd"
+	  uri="../docbook-xml/docbookx.dtd"/>
+
   <nextCatalog  catalog="../docbook-xml/catalog.xml" />
   <nextCatalog  catalog="../docbook-xsl/catalog.xml" />
 </catalog>
