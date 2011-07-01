@@ -96,13 +96,13 @@ def findProjectDir(pfile, startdir):
 
     WARNING: This function returns always an ABSOLUTE path
     """
-    currentDir = '.'
+    currentDir = startdir
 
-    while (os.path.abspath(currentDir) != '/') and \
+    while (os.path.splitdrive(currentDir)[1] != os.sep) and \
             (not os.path.exists(os.path.join(currentDir, pfile))):
-        currentDir = os.path.join(currentDir, "..")
+        currentDir = os.path.abspath(os.path.join(currentDir, ".."))
 
-    return os.path.normpath(os.path.join(startdir, currentDir))
+    return currentDir
 
 def flushCreatedDirs():
     """
