@@ -125,6 +125,7 @@ print dictionary.get('installed')
 # slow. We run the risk of a user not installing these packages and seeing that
 # the tool has a terrible performance.
 #
+os.environ["XML_CATALOG_FILES"] = os.path.join(adagioDir, 'DTDs', 'catalog')
 print ' - Docbook XML: ',
 if currentSystem == 'Windows':
     if not os.path.exists(os.path.join(adagioDir, 'docbook-xml',
