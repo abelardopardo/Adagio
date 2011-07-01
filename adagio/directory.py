@@ -92,7 +92,7 @@ def dump(self):
 def findProjectDir(pfile, startdir):
     """
     Function that traverses the directories upward until the file name given by
-    the option adagio.projectfile is found.
+    the option adagio.project_file is found.
 
     WARNING: This function returns always an ABSOLUTE path
     """
