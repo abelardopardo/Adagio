@@ -38,19 +38,38 @@
 	Adagio?</para>
       </question>
       <answer>
-        <para>Adagio needs some extra programs installed in your computer in
-        order to work properly. The toolkit is installed using the version
-        control system <command>git</command>. The minimum required packages to
-        install (with their correspondign dependencies) are:</para>
+        <para>Adagio is installed using the version control system
+        <command>git</command>. The minimum set of packages to install and use
+        Adagio are:</para>
 
         <itemizedlist id="tool_requirements">
           <listitem>
-            <para><command>git</command>: Fast version control system used to
-            download the latest Adagio version.</para>
+            <para><command>msysgit</command>: The windows version of GIT a Fast
+            version control system used to download the latest Adagio
+            version.</para>
+
+	    <para>Go to the <ulink
+	    url="http://code.google.com/p/msysgit/">msysgit project
+	    page</ulink>, download the installer (link to a file with extention
+	    <quote>exe</quote> in the left side of the page), execute it in your
+	    machine and you have GIT already installed.</para>
+
           </listitem>
 	  <listitem>
-	    <para><command>Python</command>: the interpreter and
-	    libraries.</para>
+	    <para><command>Python</command>: A language interpreter and its
+	    corresponding libraries.</para>
+
+	    <para>Go to the page to <ulink
+	    url="http://www.python.org/getit/">download python</ulink>. Download
+	    the windows installer for version 2.7.2 (do NOT download any version
+	    beyon this one). Check that python is properly installed by opening
+	    a command windows and typing the command</para>
+
+	    <programlisting>$ <command>python --version</command>
+Python 2.7.2
+$</programlisting>
+
+            <para>The current Python version should appear on the screen.</para>
 	  </listitem>
 	  <listitem>
 	    <para><command>python-lxml</command>: Python bindings for
