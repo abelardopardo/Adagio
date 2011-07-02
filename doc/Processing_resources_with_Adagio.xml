@@ -38,10 +38,10 @@
       </question>
       <answer>
         <para>Adagio is a building tool, and to <quote>build</quote> a resource
-        it needs some applications to be properly installed in your computer. To
-        see what tools are managed by Adagio and available, open a shell (a
-        regular shell in Linux or a Cygwin shell in Windows) and type the
-        command:</para>
+        needs some applications to be properly installed in your computer. To
+        see what tools are managed by Adagio and available in your computer,
+        open a shell (a regular shell in Linux or a Cygwin shell in Windows) and
+        type the command:</para>
 
         <programlisting>$ <command>adagiocheck</command></programlisting>
         
@@ -51,12 +51,15 @@
         <programlisting><xi:include href="AdagioCheckOut.txt"
         parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
 
-        <para>This listing shows the tools that Adagio is capable of using. If
-        you don't have all of them available, don't worry, Adagio is capable of
-        working with a subset of these tools (although your functionality will
-        be reduced).</para>
+        <para>This listing shows the tools available to Adagio. If you don't
+        have all of them, you may install them with your software management
+        application. Still, Adagio can work with a subset of these tools by
+        skipping those rules for which the applications are not
+        installed.</para>
       </answer>
     </qandaentry>
+
+    <!-- **************** REWRITE REQUIRED FROM HERE ********************** -->
 
     <qandaentry id="how_to_run_adagio" xreflabel="How to define which files to process">
       <question>
