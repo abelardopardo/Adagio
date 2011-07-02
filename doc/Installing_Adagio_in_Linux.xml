@@ -95,10 +95,7 @@
         Adagio to be installed and type (a folder with name
         <filename>Adagio</filename> will be created):</para>
 
-        <programlisting><xi:include
-	href="Installing_Adagio_in_Windows.xml"
-	xpointer="xpointer(//*[@id='git_install_command_windows']/node())"
-	parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+        <programlisting>$ <command>git clone https://github.com/abelardopardo/Adagio.git</command></programlisting>
 
         <para>A new folder with name <filename>Adagio</filename> is created. In
         order to make the application available for execution, you need to
