@@ -275,16 +275,40 @@ def optionDoc(options):
 class StyleResolver(etree.Resolver):
     """
     Resolver to use with XSLT stylesheets and force the detection of stylesheets
-    in the Adagio home directory
+    in the Adagio home directory. Only URLs starting with "file://" or absolute
+    paths are processed.
+
+    If the URL points to a file that does not exist, it is redirected to point
+    to the directory of Adagio_Styles included in Adagio.
     """
     def __init__(self):
         self.styleDir = 'file://' + os.path.join(adagio.home, 'Adagio_Styles')
 
     def resolve(self, url, pubid, context):
-        if url.startswith('file://') or url.startswith('/'):
+        newURL = url
+        result = None
+
+        # If the URL is a file or an absolute path, redirect resolver
+        if url.startswith('file://') or os.path.isabs(url):
+
+            # Remove file:// prefix if present
             if url.startswith('file://'):
-                url = url[7:];
-            if not os.path.exists(url):
-                newURL = os.path.join(self.styleDir, os.path.basename(url))
-                return self.resolve_filename(newURL, context)
+                newURL = url[7:];
+
+            newURL = os.path.normpath(newURL)
+
+            # If the path starts with a backslash, it has just been normalized
+            # and it is a windows absolute path, thus, it should have the drive
+            # letter. Remove the first character.
+            if newURL[0] == '\\':
+                newURL = newURL[1:]
+
+            # If the requested file does not exist, it is redirected to the
+            # adagio style directory.
+            if not os.path.exists(newURL):
+                newURL = os.path.join(self.styleDir, os.path.basename(newURL))
+
+            result = self.resolve_filename(newURL, context)
+
+        return result
 
