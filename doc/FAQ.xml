@@ -64,9 +64,9 @@
   <!--                    INSTALLATION IN WINDOWS                   -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <!-- <xi:include href="Installing_Adagio_in_Windows.xml" -->
-  <!--             parse="xml" -->
-  <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
+  <xi:include href="Installing_Adagio_in_Windows.xml"
+              parse="xml"
+              xmlns:xi="http://www.w3.org/2001/XInclude"/>
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
