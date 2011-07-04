@@ -6,3 +6,6 @@
 #
 [inkscape]
 files = *.svg
+
+[export]
+files = *.png *.jpeg
