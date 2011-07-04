@@ -61,15 +61,6 @@
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                    INSTALLATION IN WINDOWS                   -->
-  <!--                                                              -->
-  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xi:include href="Installing_Adagio_in_Windows.xml"
-              parse="xml"
-              xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-  <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <!--                                                              -->
   <!--                    INSTALLATION IN LINUX                     -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -80,9 +71,18 @@
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->
-  <!--                    PROCESSING RESOURCES                      -->
+  <!--                    INSTALLATION IN WINDOWS                   -->
   <!--                                                              -->
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xi:include href="Installing_Adagio_in_Windows.xml"
+              parse="xml"
+              xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+                     PROCESSING RESOURCES
+  
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   <xi:include href="Processing_resources_with_Adagio.xml"
               parse="xml"
               xmlns:xi="http://www.w3.org/2001/XInclude"/>

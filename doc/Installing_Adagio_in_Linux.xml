@@ -39,8 +39,8 @@
       </question>
       <answer>
         <para>Adagio is installed using the version control system
-        <command>git</command>. The minimum set of packages to install and use
-        Adagio are:</para>
+        <command>git</command>. The <emphasis>minimum</emphasis> set of packages
+        to install and use Adagio are:</para>
 
         <itemizedlist id="tool_requirements">
           <listitem>
@@ -80,6 +80,11 @@
 	<para>Use the software management application included in your Linux
 	distribution to install these packages (the names are as they appear in
 	the software repositories).</para>
+
+	<para>Aside from these packages, there are certain tools that Adagio can
+	use automatically to produce web content. See the type of resources that
+	can be processed in <xref linkend="Processing_resources_with_Adagio"
+	endterm="Processing_resources_with_Adagio_title"/>.</para>
       </answer>
     </qandaentry>
 
@@ -122,11 +127,38 @@ $</programlisting>
       </answer>
     </qandaentry>
 
-    <qandaentry>
-      <xi:include
-        href="Installing_Adagio_in_Windows.xml"
-        xpointer="xpointer(//*[@id='new_version_upgrade']/node())"
-        parse="xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+    <qandaentry id="new_version_upgrade_cli" xreflabel="How to update Adagio
+      from the command interpreter">
+      <question>
+        <para>A new version of Adagio has been published, how do I
+        upgrade?</para>
+      </question>
+      <answer>
+        <para>Adagio is distributed using the tool <command>git</command> which
+        keeps track of the files you already have and the changes that need to
+        be applied to upgrade to the latest version. The upgrade process
+        requires simply to open a shell window, go to the directory where Adagio
+        is installed and execute the command:</para>
+
+        <programlisting>$ <command>git pull</command></programlisting>
+
+        <para>The command will inform in some fairly cryptic way of the changes
+        that are taking place. In principle, if the source files have not been
+        modified, the change will go smoothly. If you have some personal
+        modifications in the source files (which we strongly advice against!)
+        , you need first to tell <command>git</command> to store those
+        changes. You need to execute the command:</para>
+
+        <programlisting>$ <command>git commit -a -m "Your message here"</command></programlisting>
+
+        <para>Try again to execute <command>git pull</command>. This time, the
+        update process should go smoothly. There could be some conflicts when
+        <command>git</command> tries to merge these changes with the ones you
+        introduced. If such situation happens, it is called a <quote>merge
+        conflict</quote> and it needs to be solved manually by the user. If you
+        touched Adagio source code, then we assume that you know how to solve
+        merge conflicts.</para>
+      </answer>
     </qandaentry>
 
   </qandaset>

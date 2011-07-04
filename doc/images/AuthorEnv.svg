@@ -193,7 +193,7 @@
     <linearGradient inkscape:collect="always" xlink:href="#linearGradient887" id="linearGradient5801" gradientUnits="userSpaceOnUse" gradientTransform="matrix(7.5570984e-4,0,0,7.6858667e-4,181.39334,425.60788)" x1="7.7008834" y1="7.5277405" x2="417.07153" y2="7.5277405" />
     <linearGradient inkscape:collect="always" xlink:href="#linearGradient883" id="linearGradient5803" gradientUnits="userSpaceOnUse" gradientTransform="matrix(7.2676771e-4,0,0,7.9919407e-4,181.39334,425.60788)" x1="207.05359" y1="157.93449" x2="312.3335" y2="324.66733" />
   </defs>
-  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" gridtolerance="10000" guidetolerance="10" objecttolerance="10" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="2.4216233" inkscape:cx="308.67725" inkscape:cy="133.71732" inkscape:document-units="pc" inkscape:current-layer="layer1" width="1052.36px" height="744.09px" inkscape:window-width="1585" inkscape:window-height="1167" inkscape:window-x="43" inkscape:window-y="0" showgrid="false" inkscape:window-maximized="0" />
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" gridtolerance="10000" guidetolerance="10" objecttolerance="10" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="1.2108116" inkscape:cx="189.9769" inkscape:cy="232.66762" inkscape:document-units="pc" inkscape:current-layer="layer1" width="1052.36px" height="744.09px" inkscape:window-width="1585" inkscape:window-height="1053" inkscape:window-x="43" inkscape:window-y="0" showgrid="false" inkscape:window-maximized="0" />
   <metadata id="metadata7">
     <rdf:RDF>
       <cc:Work rdf:about="">
@@ -427,12 +427,10 @@
     </g>
     <g id="g4680" transform="matrix(0.5630922,0,0,0.5630922,108.43582,37.382216)">
       <rect transform="translate(23.897213,124.55677)" y="14.474924" x="135.28487" height="157.55399" width="104.10811" id="rect4674" style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.77590799;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <text id="text4676" y="127.34041" x="169.90117" style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Verdana" xml:space="preserve"><tspan y="127.34041" x="169.90117" id="tspan4678" sodipodi:role="line">Properties.ddo</tspan></text>
+      <text id="text4676" y="127.34041" x="169.90117" style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Verdana" xml:space="preserve"><tspan y="127.34041" x="169.90117" id="tspan4678" sodipodi:role="line">Properties.dgo</tspan></text>
     </g>
-    <g id="g4703" transform="translate(-27.279665,-34.517127)">
-      <rect ry="23.939299" rx="23.939299" y="272.08966" x="204.27704" height="72.374619" width="100.76774" id="rect4685" style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <text id="text4687" y="315.54749" x="233.27419" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana" xml:space="preserve"><tspan y="315.54749" x="233.27419" id="tspan4689" sodipodi:role="line">ADA</tspan></text>
-    </g>
+    <rect style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" id="rect4685" width="100.76774" height="72.374619" x="176.99738" y="237.57254" rx="23.939299" ry="23.939299" />
+    <text xml:space="preserve" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Verdana" x="193.63612" y="281.03036" id="text4687"><tspan sodipodi:role="line" id="tspan4689" x="193.63612" y="281.03036">Adagio</tspan></text>
     <path style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1" d="M 226.63522,204.7552 L 226.63522,235.68349" id="path4932" />
     <text xml:space="preserve" style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana" x="-77.903465" y="115.64912" id="text5132"><tspan sodipodi:role="line" id="tspan5134" x="-77.903465" y="115.64912">Source Files</tspan></text>
     <path style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" d="M 17.782013,382.36462 C 121.21865,335.09085 117.00107,331.50341 162.89408,282.74135 L 162.89408,292.54882 L 176.23858,274.19374 L 162.89408,259.58101 L 162.89408,269.01089 C 162.89408,269.01089 130.64449,249.05436 121.30901,209.44341 C 112.92497,173.86947 143.93707,141.61701 86.950496,124.68622" id="path5503" sodipodi:nodetypes="ccccccsc" />
@@ -474,5 +472,6 @@
         </g>
       </g>
     </g>
+    <text xml:space="preserve" style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Verdana;-inkscape-font-specification:Verdana" x="467.86798" y="6.9339118" id="text3237" sodipodi:linespacing="100%" transform="translate(-218.83613,104.14085)"><tspan sodipodi:role="line" id="tspan3239"></tspan></text>
   </g>
 </svg>

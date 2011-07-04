@@ -401,7 +401,7 @@
     <linearGradient inkscape:collect="always" xlink:href="#linearGradient887" id="linearGradient14562" gradientUnits="userSpaceOnUse" gradientTransform="matrix(7.5570984e-4,0,0,7.6858667e-4,181.39334,425.60788)" x1="7.7008834" y1="7.5277405" x2="417.07153" y2="7.5277405" />
     <linearGradient inkscape:collect="always" xlink:href="#linearGradient883" id="linearGradient14564" gradientUnits="userSpaceOnUse" gradientTransform="matrix(7.2676771e-4,0,0,7.9919407e-4,181.39334,425.60788)" x1="207.05359" y1="157.93449" x2="312.3335" y2="324.66733" />
   </defs>
-  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" gridtolerance="10000" guidetolerance="10" objecttolerance="10" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="1.8768928" inkscape:cx="398.26462" inkscape:cy="234.16678" inkscape:document-units="px" inkscape:current-layer="layer1" width="1052.3622px" height="744.09448px" inkscape:window-width="1585" inkscape:window-height="1167" inkscape:window-x="43" inkscape:window-y="0" showgrid="false" inkscape:window-maximized="0" />
+  <sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" gridtolerance="10000" guidetolerance="10" objecttolerance="10" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="1.8768928" inkscape:cx="325.53804" inkscape:cy="234.16678" inkscape:document-units="px" inkscape:current-layer="layer1" width="1052.3622px" height="744.09448px" inkscape:window-width="1585" inkscape:window-height="1053" inkscape:window-x="43" inkscape:window-y="0" showgrid="false" inkscape:window-maximized="0" />
   <metadata id="metadata5810">
     <rdf:RDF>
       <cc:Work rdf:about="">
@@ -1666,17 +1666,15 @@
     <path style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.80000001;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 297.1562,488.07321 C 314.35792,492.25526 331.75506,500.15181 340.77962,519.80483 C 351.05463,542.181 373.66004,556.23398 397.68069,557.56846" id="path14182" sodipodi:nodetypes="csc" />
     <path style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.80000001;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 297.26923,606.01646 C 314.47406,594.55486 306.58611,584.33608 331.64133,573.04679 C 359.51928,560.48564 367.09592,562.62896 397.6762,561.98894" id="path14184" sodipodi:nodetypes="csc" />
     <path style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.80000001;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 368.10077,579.8491 C 373.55109,577.51285 374.0772,573.34537 378.20328,569.8091 C 382.97947,565.71565 389.44148,566.26447 397.64111,566.20462" id="path14186" sodipodi:nodetypes="csc" />
-    <g id="g14409" transform="translate(386.96429,154.80383)">
-      <g transform="matrix(0.5630922,0,0,0.5630922,108.43582,37.382216)" id="g14468">
-        <rect style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.77590799;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="rect14470" width="104.10811" height="157.55399" x="135.28487" y="14.474924" transform="translate(23.897213,124.55677)" />
-        <text xml:space="preserve" style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Verdana" x="169.90117" y="127.34041" id="text14472"><tspan sodipodi:role="line" id="tspan14474" x="169.90117" y="127.34041">Properties.ddo</tspan></text>
-      </g>
-      <g transform="translate(-27.279665,-34.517127)" id="g14476">
-        <rect style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="rect14478" width="100.76774" height="72.374619" x="204.27704" y="272.08966" rx="23.939299" ry="23.939299" />
-        <text xml:space="preserve" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Verdana" x="233.27419" y="315.54749" id="text14480"><tspan sodipodi:role="line" id="tspan14482" x="233.27419" y="315.54749">ADA</tspan></text>
-      </g>
-      <path id="path14484" d="M 226.63522,204.7552 L 226.63522,235.68349" style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Mend);stroke-opacity:1" />
+    <g id="g14468" transform="matrix(0.5630922,0,0,0.5630922,495.40011,192.18605)">
+      <rect transform="translate(23.897213,124.55677)" y="14.474924" x="135.28487" height="157.55399" width="104.10811" id="rect14470" style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.77590799;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text id="text14472" y="127.34041" x="169.90117" style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Verdana" xml:space="preserve"><tspan y="127.34041" x="169.90117" id="tspan14474" sodipodi:role="line">Properties.dgo</tspan></text>
     </g>
+    <g id="g14476" transform="translate(359.68462,120.2867)">
+      <rect ry="23.939299" rx="23.939299" y="272.08966" x="204.27704" height="72.374619" width="100.76774" id="rect14478" style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <text id="text14480" y="315.54749" x="220.91579" style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Verdana" xml:space="preserve"><tspan y="315.54749" x="220.91579" id="tspan14482" sodipodi:role="line">Adagio</tspan></text>
+    </g>
+    <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Mend)" d="m 613.59951,359.55903 0,30.92829" id="path14484" />
     <path style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.60000002;stroke-linecap:butt;stroke-linejoin:miter;marker-end:url(#Arrow2Lend);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M 664.59267,428.59186 L 704.75168,428.59186" id="path14486" />
     <g id="g14488" transform="translate(386.96429,191.69407)">
       <text id="text14490" y="184.12665" x="338.7515" style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Verdana" xml:space="preserve"><tspan y="184.12665" x="338.7515" id="tspan14492" sodipodi:role="line">Project</tspan></text>

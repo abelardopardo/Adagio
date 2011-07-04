@@ -174,36 +174,20 @@ $</programlisting>
       </answer>
     </qandaentry>
 
-    <qandaentry id="new_version_upgrade">
+    <qandaentry>
       <question>
         <para>A new version of Adagio has been published, how do I
         upgrade?</para>
       </question>
+
       <answer>
-        <para>Adagio is distributed using the tool <command>git</command> which
-        keeps track of the files you already have and the changes that need to
-        be applied to upgrade to the latest version. The upgrade process
-        requires simply to open a shell window, go to the directory where Adagio
-        is installed and execute the command:</para>
+	<para>There are two ways to obtain the new version: using the command
+	interpreter and with the graphic interface. To update using the command
+	interpreter read <xref linkend="new_version_upgrade_cli"/>.</para>
 
-        <programlisting>$ <command>git pull</command></programlisting>
-
-        <para>The command will inform in some fairly cryptic way of the changes
-        that are taking place. In principle, if the source files have not been
-        modified, the change will go smoothly. If you have some personal
-        modifications in the source files (which we strongly advice against!)
-        , you need first to tell <command>git</command> to store those
-        changes. You need to execute the command:</para>
-
-        <programlisting>$ <command>git commit -a -m "Your message here"</command></programlisting>
-
-        <para>Try again to execute <command>git pull</command>. This time, the
-        update process should go smoothly. There could be some conflicts when
-        <command>git</command> tries to merge these changes with the ones you
-        introduced. If such situation happens, it is called a <quote>merge
-        conflict</quote> and it needs to be solved manually by the user. If you
-        touched Adagio source code, then we assume that you know how to solve
-        merge conflicts.</para>
+	<para>To update Adagio using the graphic interface, open the repository
+	where Adagio is installed. Select the menu option
+	<command>Remote-&gt;fetch from-&gt;origin</command>.</para>
       </answer>
     </qandaentry>
   </qandaset>

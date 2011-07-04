@@ -25,36 +25,36 @@
 
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!--                                                              -->
-<!--                         WHAT IS ADA                          -->
+<!--                         WHAT IS Adagio                       -->
 <!--                                                              -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<section id="About_ADA" xreflabel="Top of the Section">
-  <title>About ADA</title>
+<section id="About_Adagio" xreflabel="Top of the Section">
+  <title>About Adagio</title>
 
   <qandaset>
-    <qandaentry id="whatisada">
+    <qandaentry id="whatisadagio">
       <question>
-        <para>What is ADA?</para>
+        <para>What is Adagio?</para>
       </question>
       <answer>
-        <para>ADA is a tool to support <quote>Agile and Distributed
+        <para>Adagio is a toolkit to integrate the <quote>Agile and Distributed
         Authoring</quote> of web material. The ideal scenario for the tool is a
         set of authors each of them producing a large number of web resources
         that require a significant amount of post-processing. These authors
         share a common working area divided into multiple sub-areas where the
-        resources are designed. ADA allows the definition of rules to assemble
-        and produce a set of resources suitable to be published on the
+        resources are designed. Adagio allows the definition of rules to
+        assemble and produce a set of resources suitable to be published on the
         net.</para>
 
         <para>The challenge in this scenario is to be able to deal with a large
         number of different resources, organized in a non-trivial structure and
         allow for efficient distributed work.</para>
 
-        <para>ADA facilitates content production by offering a set of
-        pre-defined rules that are automatically executed and process the source
-        files for a resource to obtain the version to be published in the
-        net. The following figure gives an overview of the authoring environment
-        and the support provided by ADA.</para>
+        <para>Adagio facilitates content production by offering a set of
+        pre-defined rules that automatically process the source files of a
+        resource to obtain the version to be published in the net. The following
+        figure gives an overview of the authoring environment and the support
+        provided by Adagio.</para>
 
         <informalfigure>
           <mediaobject>
@@ -81,16 +81,16 @@
               <imagedata fileref="images/Kitchen.png" format="PNG"/>
             </imageobject>
             <textobject>
-              <phrase>Combining resources with ADA</phrase>
+              <phrase>Combining resources with Adagio</phrase>
             </textobject>
           </mediaobject>
         </informalfigure>
 
-        <para>ADA offers support in two steps of this production flow.</para>
+        <para>Adagio offers support in two steps of this production flow.</para>
 
         <itemizedlist>
           <listitem>
-            <para>To the author: ADA defines rules to automate content
+            <para>To the author: Adagio defines rules to automate content
             production from source files. As a consequence, authors may focus
             mostly on content and leave the external appearance and overall
             structure to be created automatically. The set of pre-defined rules
@@ -98,16 +98,16 @@
             same time.</para>
           </listitem>
           <listitem>
-            <para>In the production phase: ADA allows the description of a
+            <para>In the production phase: Adagio allows the description of a
             hierarchical production flow that automatically assembles a large
             web-site from the multiple resources available in a
             repository.</para>
           </listitem>
         </itemizedlist>
 
-        <para>The main ADA element in the author working directory is the so
+        <para>The main Adagio element in the author working directory is the so
         called <emphasis>rule file</emphasis>. This file has the name
-        <filename>Properties.ddo</filename> (although it can be changed) and
+        <filename>Properties.dgo</filename> (although it can be changed) and
         contains the set of rules and the order in which they need to be
         executed to obtain the final version of the resources.</para>
 
@@ -118,7 +118,7 @@
 	are translated from their original format to PNG. These transformations
 	can be done once at the begining of your project, but typically, as the
 	project evolves, changes are required in the original documents, and the
-	production phase needs to be repeated several times. ADA offers the
+	production phase needs to be repeated several times. Adagio offers the
 	possibility of executing automatically a set of pre-defined rules that
 	make the production phase transparent allowing authors to work directly
 	over the source documents without worrying about how all parts are
@@ -126,38 +126,38 @@
       </answer>
     </qandaentry>
 
-    <qandaentry id="whatisnotada">
+    <qandaentry id="whatisnotadagio">
       <question>
-        <para>What ADA is not?</para>
+        <para>What Adagio is not?</para>
       </question>
       <answer>
-        <para>ADA is not a text editor, nor a graphic editor, nor an integrated
-        creative environment. The author may use auxiliary tools to create the
-        resources, and ADA is used to automatically combine them by means of
-        production rules into a global repository.</para>
+        <para>Adagio is not a text editor, nor a graphic editor, nor an
+        integrated creative environment. The author must use auxiliary tools to
+        create the resources. Adagio is used to automatically combine them by
+        executing the production rules and create a global repository.</para>
 
-        <para>To use an analogy, ADA offers a very efficient courier service
+        <para>To use an analogy, Adagio offers a very efficient courier service
         that, if you comply with certain requirements when creating resources,
         it takes them very quickly to the assembling plant, combines them with
         other resources contributed by other authors and automatically creates a
         final collection of resources suitable to be published.</para>
       </answer>
     </qandaentry>
-    <qandaentry id="whyisadaneeded">
+    <qandaentry id="whyisadagioneeded">
       <question>
-        <para>Why is ADA needed?</para>
+        <para>Why is Adagio needed?</para>
       </question>
       <answer>
-        <para>ADA is oriented toward reducing the creation/modification cycle of a
-          set of resources with a non-trivial organization. In the information
-          era, the creation process is changing radically. Authors are no
-          longer required to use a concrete tool, but instead, certain formats
-          are used to easily publish content. But what really takes a
-          multi-user distributed authoring scenario to a new dimension is a
-          <emphasis>simple modification cycle</emphasis>. Think Wikipedia, its
-          distributed authoring paradigm has consolidated beyond any doubt,
-          but in order for those authors to contribute effectively, resources
-          are extremely easy to modify.</para>
+        <para>Adagio is oriented toward reducing the creation/modification cycle
+        of a set of resources with a non-trivial organization. In the
+        information era, the creation process is changing radically. Authors are
+        no longer required to use a concrete tool, but instead, certain formats
+        are used to easily publish content. But what really takes a multi-user
+        distributed authoring scenario to a new dimension is a <emphasis>simple
+        modification cycle</emphasis>. Think Wikipedia, its distributed
+        authoring paradigm has consolidated beyond any doubt, but in order for
+        those authors to contribute effectively, resources are extremely easy to
+        modify.</para>
 
         <para>A typical situation when a number of authors contribute toward a
           common resource is illustrated in the following figure. There is
@@ -178,13 +178,13 @@
           </mediaobject>
         </informalfigure>
 
-        <para>The following picture illustrates the change in methodology that can
-          be achieved with the help of ADA. By providing a fast two-way
-          information channel between creation and production, the management
-          of a set of resources can be truly improved. ADA provides the rules
-          that automatically connect the source documents with the final
-          published resources such that changes can be performed at a very
-          low turnaround cost.</para>
+        <para>The following picture illustrates the change in methodology that
+        can be achieved with the help of Adagio. By providing a fast two-way
+        information channel between creation and production, the management of a
+        set of resources can be truly improved. Adagio provides the rules that
+        automatically connect the source documents with the final published
+        resources such that changes can be performed at a very low turnaround
+        cost.</para>
 
         <informalfigure>
           <mediaobject>
@@ -197,17 +197,16 @@
           </mediaobject>
         </informalfigure>
         
-        <para>But aside from the turnaround time for changes, resources tend to be
-          built hierarchically from the multiple sources. The internal
-          organization of a resource can be often replicated in the process in
-          which it is built. For example, to create the electronic version of
-          a book, there is certain amount of work that can be done for each
-          chapter individually accompanied by certain inter-chapter
-          processing. The rules defined in ADA are prepared to be applied
-          hierarchically at different points of the overall production
-          procedure. The following picture illustrates a hypothetical scenario
-          in which a resource is built by combining resources from four
-          authors in three gradual stages.</para>
+        <para>But aside from the turnaround time for changes, resources tend to
+        be built hierarchically from the multiple sources. The internal
+        organization of a resource can be often replicated in the process in
+        which it is built. For example, to create the electronic version of a
+        book, there is certain amount of work that can be done for each chapter
+        individually accompanied by certain inter-chapter processing. The rules
+        defined in Adagio are prepared to be applied hierarchically at different
+        points of the overall production procedure. The following picture
+        illustrates a hypothetical scenario in which a resource is built by
+        combining resources from four authors in three gradual stages.</para>
 
         <informalfigure>
           <mediaobject>
@@ -215,7 +214,7 @@
               <imagedata fileref="images/ProductionCycle.png" format="PNG"/>
             </imageobject>
             <textobject>
-              <phrase>Full production cycle with ADA</phrase>
+              <phrase>Full production cycle with Adagio</phrase>
             </textobject>
           </mediaobject>
         </informalfigure>

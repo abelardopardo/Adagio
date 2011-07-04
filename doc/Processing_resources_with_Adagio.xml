@@ -30,7 +30,8 @@
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <section id="Processing_resources_with_Adagio"
          xreflabel="Top of the Section">
-  <title>Processing resources with Adagio</title>
+  <title id="Processing_resources_with_Adagio_title">Processing resources with
+  Adagio</title>
   <qandaset>
     <qandaentry id="run_adagiocheck" xreflabel="Which resources are processed by Adagio">
       <question>
