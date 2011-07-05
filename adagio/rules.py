@@ -100,9 +100,10 @@ def doExecution(rule, dirObj, command, datafile, dstFile,
         pr = subprocess.Popen(command, stdin = stdin, stdout = adagio.userLog,
                               stderr = stderr)
         pr.wait()
-    except:
+    except Exception, e:
         print i18n.get('severe_exec_error').format(command[0])
         print i18n.get('exec_line').format(' '.join(command))
+        print e
         sys.exit(1)
 
     # If dstFile is given, update dependencies
