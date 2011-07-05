@@ -56,12 +56,11 @@ def Execute(rule, dirObj):
     global has_executable
 
     if has_executable == '':
-	has_executable = adagio.findExecutable(rule, dirObj)
+        has_executable = adagio.findExecutable(rule, dirObj)
 
     # If the executable is not present, notify and terminate
     if not has_executable:
-        program = next(b for (a, b, c) in options if a == 'exec')
-        print i18n.get('no_executable').format(program)
+        print i18n.get('no_executable').format(dirObj.options.get(rule, 'exec'))
         if dirObj.options.get(rule, 'partial') == '0':
             sys.exit(1)
         return
@@ -76,7 +75,6 @@ def Execute(rule, dirObj):
     if not os.path.isfile(scriptFileName):
         print i18n.get('file_not_found').format(scriptFileName)
         sys.exit(1)
-    scriptFile = open(scriptFileName, 'r')
 
     # Loop over the source files to see if an execution is needed
     dstFiles = []
@@ -123,8 +121,10 @@ def Execute(rule, dirObj):
         command = [executable, '--no-data', '--no-fonts', '--no-interface', 
                    '-b', '-']
 
+        scriptFile = open(scriptFileName, 'r')
         rules.doExecution(rule, dirObj, command, None, None,
                             stdout = adagio.userLog, stdin = scriptFile)
+        scriptFile.close()
 
         # If dstFile does not exist, something went wrong
         if next((x for x in dstFiles if not os.path.exists(x)), None):

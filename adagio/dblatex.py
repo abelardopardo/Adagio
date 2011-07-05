@@ -61,8 +61,7 @@ def Execute(rule, dirObj):
 
     # If the executable is not present, notify and terminate
     if not has_executable:
-        program = next(b for (a, b, c) in options if a == 'exec')
-        print i18n.get('no_executable').format(program)
+        print i18n.get('no_executable').format(dirObj.options.get(rule, 'exec'))
         if dirObj.options.get(rule, 'partial') == '0':
             sys.exit(1)
         return
