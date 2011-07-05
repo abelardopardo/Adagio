@@ -88,7 +88,8 @@
       </answer>
     </qandaentry>
 
-    <qandaentry>
+    <qandaentry id="install_adagio_cli" xreflabel="How to install Adagio from
+      the command interpreter">
       <question>
         <para>I got all the required packages. How do I install Adagio
         then?</para>

@@ -33,7 +33,8 @@
   <title id="Processing_resources_with_Adagio_title">Processing resources with
   Adagio</title>
   <qandaset>
-    <qandaentry id="run_adagiocheck" xreflabel="Which resources are processed by Adagio">
+    <qandaentry id="run_adagiocheck" 
+		xreflabel="Which resources are processed by Adagio">
       <question>
         <para>What kind of resources can be processed by Adagio?</para>
       </question>
@@ -57,6 +58,11 @@
         application. Still, Adagio can work with a subset of these tools by
         skipping those rules for which the applications are not
         installed.</para>
+
+	<para>If a tool is installed but its path to the executable is not part
+	of the <command>PATH</command> environment variable, Adagio will rule it
+	as <quote>disabled</quote>. Make sure you add the appropriate paths to
+	the environment variable.</para>
       </answer>
     </qandaentry>
 
@@ -399,3 +405,9 @@ export.dst.dir=${ada.course.home}scratch</programlisting>
     -->
   </qandaset>
 </section>
+
+<!--
+Local Variables: 
+compile-command: "adagio"
+End:
+-->

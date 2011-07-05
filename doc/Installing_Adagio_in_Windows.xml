@@ -32,145 +32,214 @@
          xreflabel="Top of the Section">
   <title>Installing Adagio in Windows</title>
   <qandaset>
-    <qandaentry id="requiredapplicationsinwindows">
+    <qandaentry id="requiredapplicationsinwindows" xreflabel="Basic packages to
+      run Adagio">
       <question>
-        <para>Which packages are needed in a Windows system before installing
-	Adagio?</para>
+        <para>Which packages are needed in Windows before installing
+        Adagio?</para>
       </question>
       <answer>
-        <para>Adagio is installed using the version control system
-        <command>git</command>. The minimum set of packages to install and use
-        Adagio are:</para>
+        <para>Adagio is installed, updated, managed and executed using the
+        version control system <command>git</command>. The minimum set of
+        packages to use Adagio are:</para>
 
         <itemizedlist id="tool_requirements">
           <listitem>
             <para><command>msysgit</command>: The windows version of GIT a Fast
-            version control system used to download the latest Adagio
-            version.</para>
+            version control system used to download the latest Adagio version
+            and its command interpreter is used to execute adagio.</para>
 
 	    <para>Go to the <ulink
 	    url="http://code.google.com/p/msysgit/">msysgit project
 	    page</ulink>, download the installer (link to a file with extention
 	    <quote>exe</quote> in the left side of the page), execute it in your
-	    machine and you have GIT already installed.</para>
+	    machine and you have GIT installed.</para>
 
+	    <para>There are two possible execution modes: a command interpreter
+	    (icon with name <quote>Git Bash</quote>), and a graphical interface
+	    (icon with name <quote>Git Gui</quote>). All Git operations can be
+	    done with both interfaces. However, the command interface has a
+	    configuration that, when combined with the following packages,
+	    creates the ideal setting to use Adagio. For this reason, all the
+	    commands to perform operations with Adagio must be executed using
+	    the interpreter provided by GIT.</para>
           </listitem>
-	  <listitem>
-	    <para><command>Python</command>: A language interpreter and its
-	    corresponding libraries.</para>
 
-	    <para>Go to the page to <ulink
-	    url="http://www.python.org/getit/">download python</ulink>. Download
-	    the windows installer for version 2.7.2 (do NOT download any version
-	    beyon this one). Check that python is properly installed by opening
-	    a command windows and typing the command</para>
+	  <listitem>
+	    <para><command>Python</command>: The interpreter of a programming
+	    language and its corresponding libraries.</para>
+
+	    <para>Go to the <ulink url="http://www.python.org/getit/">Python
+	    download page</ulink>. Download the windows installer for version
+	    2.7.2 (do NOT download any version beyond this one) and perform the
+	    installation by executing it. Python is ready to be executed in your
+	    computer.</para>
+
+	    <para>But Adagio needs the Python installation directory to be part
+	    of the <command>PATH</command> environment variable. If Python is
+	    installed in the folder <filename>C:\Python27</filename>, the string
+	    <quote>;C:\Python27</quote> must be appended to the
+	    <command>PATH</command> environment variable. See <xref
+	    linkend="manage_environment_variables_windows"/> and follow the
+	    steps to perform this configuration.</para>
+
+	    <para>Once the environment variable has been modified, we check that
+	    Python is properly installed by opening the Git Bash window and
+	    typing the command:</para>
 
 	    <programlisting>$ <command>python --version</command>
 Python 2.7.2
 $</programlisting>
 
-            <para>The current Python version should appear on the screen.</para>
+            <para>The current Python version number should appear on the
+            screen.</para>
+
+	    <para>Next, we need to enhance the Python installation with
+	    capability to import some additional libraries. Download the <ulink
+	    url="http://peak.telecommunity.com/dist/ez_setup.py"><filename>ez_setup.py</filename></ulink>
+	    to a known location in your computer. Open the Git Bash, go to the
+	    folder where the scripit <filename>ez_setup.py</filename> is stored
+	    and type the command:</para>
+
+	    <programlisting>python ez_setup.py</programlisting>
+
+	    <para>Several messages appear on the screen notifying that some
+	    additional scripts are being installed, as shown in the following
+	    figure.</para>
+
+	    <informalfigure>
+	      <mediaobject>
+		<imageobject>
+		  <imagedata fileref="images/ez_install.jpeg"/>
+		</imageobject>
+		<textobject>
+		  <phrase>Installation of the <filename>ez_install</filename>
+		  script.</phrase>
+		</textobject>
+	      </mediaobject>
+	    </informalfigure>
+	
+	    <para>Your Python installation is now ready to install some
+	    additional libraries.</para> 
 	  </listitem>
+
 	  <listitem>
-	    <para><command>python-lxml</command>: Python bindings for
-	    <command>libxml2</command> and <command>libxslt</command>
-	    libraries.</para>
+	    <para><command>python-lxml</command> and
+	    <command>python-libxml2</command>: Python bindings for
+	    <command>libxml2</command>, the GNOME XML library and
+	    <command>libxslt</command> libraries.</para>
+
+	    <para>Open the Git Bash and go to the folder
+	    <filename>Scripts</filename> inside the folder where Python has been
+	    installed (something similar to
+	    <filename>/c/Python27/Scripts</filename>). Execute the following
+	    command:</para>
+	    
+	    <programlisting>easy_install lxml</programlisting>
+
+	    <para>A few messages appear on the screen notifying that the
+	    <filename>lxml</filename> library is installed as shown in the
+	    following figure.</para>
+
+	    <informalfigure>
+	      <mediaobject>
+		<imageobject>
+		  <imagedata fileref="images/install_lxml.jpeg"/>
+		</imageobject>
+		<textobject>
+		  <phrase>Installation of the <filename>lxml</filename>
+		  library.</phrase>
+		</textobject>
+	      </mediaobject>
+	    </informalfigure>
+	
+	    <para>Python is now fully installed and ready to be used by
+	    Adagio.</para>
 	  </listitem>
-	  <listitem>
-	    <para><command>python-libxml2</command>: Python bindings for the
-	    GNOME XML library.</para>
-	  </listitem>
+
           <listitem>
             <para><command>docbook-xml</command>: Docbook XML DTDs.</para>
+
+	    <para>Download <ulink
+	    url="http://www.docbook.org/xml/4.5/docbook-xml-4.5.zip">version 4.5
+	    of the Docbook DTDs</ulink> and expand its content in a folder named
+	    <filename>docbook-xml</filename> inside the folder where Adagio has
+	    been installed. Verify that the file
+	    <filename>docbookx.dtd</filename> is present in the path
+	    <filename>/c/Users/you.../Adagio/docbook-xml/docbookx.dtd</filename>.</para>
           </listitem>
+
           <listitem>
             <para><command>docbook-xsl</command>: XSL stylesheets to process
             DocBook.</para>
+
+	    <para>Download <ulink
+	    url="http://sourceforge.net/projects/docbook/files/docbook-xsl/">the
+	    latest version of the Docbook XSL stylesheets</ulink>. Select the
+	    proper folder and download the file with name similar to
+	    <filename>docbook-xsl-*.*.zip</filename>. Expand its content into a
+	    folder with name <filename>docbook-xsl</filename> also inside the
+	    folder where Adagio is installed.</para>
+
+	    <para>After this step, the files in the folder where Adagio is
+	    installed should look similar to the following figure.</para>
+
+	    <informalfigure>
+	      <mediaobject>
+		<imageobject>
+		  <imagedata fileref="images/adagio_folder_with_extras.jpeg"/>
+		</imageobject>
+		<textobject>
+		  <phrase>Installation of the <filename>lxml</filename>
+		  library.</phrase>
+		</textobject>
+	      </mediaobject>
+	    </informalfigure>
           </listitem>
-          <listitem>
-            <para><command>openssh-client</command>: SSH client program to
-            connect to remote sites.</para>
-          </listitem>
+          <!-- <listitem> -->
+          <!--   <para><command>openssh-client</command>: SSH client program to -->
+          <!--   connect to remote sites.</para> -->
+          <!-- </listitem> -->
         </itemizedlist>
 
-	<para>TO REWRITE</para>
-
-        <para>Aside from these three tools, Adagio allows to process certain
-        file types if some additional programs are installed. For example,
-        translating figures from <ulink
-        url="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</ulink>
-        to <ulink url="en.wikipedia.org/wiki/PNG">PNG</ulink> can be done using
-        <command>Inkscape</command> but it needs to be properly installed and
-        available for execution.</para>
-      </answer>
-    </qandaentry>
-
-    <qandaentry id="how_to_install_python"
-		xreflabel="Python has been installed">
-      <question>
-        <para>How to install Python in Windows?</para>
-      </question>
-      <answer>
-	<para>TO BE WRITTEN</para>
+	<para>Aside from these packages, there are certain tools that Adagio can
+	use automatically to produce web content. See the type of resources that
+	can be processed in <xref linkend="Processing_resources_with_Adagio"
+	endterm="Processing_resources_with_Adagio_title"/>.</para>
       </answer>
     </qandaentry>
 
     <qandaentry id="howtoinstallpackages" xreflabel="How to install other packages">
       <question>
-        <para>I got Java already installed, What else is required to run
+        <para>I got all the required packages. What else is required to run
         Adagio?</para>
       </question>
       <answer>
-	<para>TO BE REWRITTEN</para>
-        <para>Once <xref linkend="how_to_install_jre"/>, the next step is to
-        download the <command>Cygwin</command> tool, a Linux-like environment
-        for Windows. Once downloaded, the initial page of the installer is shown
-        in the following figure.</para>
-      </answer>
-    </qandaentry>
+        <para>Once all the packages described in <xref
+        linkend="requiredapplicationsinwindows"/> are installed, you need to
+        install the Adagio toolkit using GIT. This installation can be done
+        either with the GIT Bash interface (see <xref
+        linkend="install_adagio_cli"/>) or using the graphical interface as
+        described next.</para>
 
-    <qandaentry id="Fetch_adagio_in_windows">
-      <question>
-        <para>All the required packages are installed. How do I install
-        Adagio?</para>
-      </question>
-      <answer>
-	<para>TO BE REWRITTEN</para>
-        <para>Open a Cygwin shell and go to the directory where you want Adagio
-        installed (a directory with name <filename>Adagio</filename> will be
-        created. The computer needs to be connected to the net. Execute the
-        command:</para>
+	<para>Open the GIT Gui, select the option to clone a remote
+	repository. Type the following URL as Source Location:</para>
 
-        <programlisting id="git_install_command_windows">$ <command>git clone https://github.com/abelardopardo/Adagio.git</command></programlisting>
+	<programlisting>https://github.com/abelardopardo/Adagio.git</programlisting>
+	<para>Select the name of a folder to be created when installing
+	Adagio.</para>
+	
+	<para>Proceed with the cloning. After a while a new folder is created in
+	the location you specified containing the toolkit and the graphical
+	interface window is ready to execute any operation.</para>
 
-        <para>A list of messages appear on the screen. After a while (depending
-        on the speed of your net connection), the command terminates and a new
-        directory with name <filename>Adagio</filename> has been created
-        containing all the required files.</para>
-        <para>In order to make Adagio available, the PATH environment variable
-        needs to be modified by adding the path to the <filename>bin</filename>
-        directory. You may follow the same procedure described in the <xref
-        linkend="install_ant"/>.</para>
-
-        <para>Once the environment variable <command>PATH</command> has been
-        modified to include the <filename>bin</filename> directory within
-        Adagio, open a brand new Cygwin shell and type the following
-        command</para>
-        
-        <programlisting>$ <command>which adagio</command></programlisting>
-        
-        <para>As in the case of the <xref linkend="install_ant"/>, if the answer
-        is a single path to the <filename>adagio</filename> file similar
-        to:</para>
-
-        <programlisting>/home/youruser/Adagio/bin/adagio</programlisting>
-        
-        <para>Adagio is properly installed. If the message says <quote>which: no
-        adagio in (/usr/local/bin:/usr/bin:/....)</quote>, Adagio is not
-        available for execution and you need to review your installation.</para>
-
-        <para>The final step to make sure that the commands provided by Adagio
-        are available is to <xref linkend="run_adagiocheck"/>.</para>
+	<para>We need to add the folder <filename>bin</filename> to the
+	<command>PATH</command> environment variable. If you installed Adagio,
+	for example, in <filename>C:\Users\you\Adagio</filename>, you need to
+	add the string <quote>;C:\Users\you\Adagio\bin</quote> to the
+	<command>PATH</command> variable. See <xref
+	linkend="manage_environment_variables_windows"/> and follow the steps to
+	perform this configuration.</para>
       </answer>
     </qandaentry>
 
@@ -181,13 +250,86 @@ $</programlisting>
       </question>
 
       <answer>
-	<para>There are two ways to obtain the new version: using the command
-	interpreter and with the graphic interface. To update using the command
-	interpreter read <xref linkend="new_version_upgrade_cli"/>.</para>
+	<para>There are two ways to obtain the new version: using the Git Bash
+	and with the graphic interface. To update using the Git Bash read <xref
+	linkend="new_version_upgrade_cli"/>.</para>
 
 	<para>To update Adagio using the graphic interface, open the repository
 	where Adagio is installed. Select the menu option
-	<command>Remote-&gt;fetch from-&gt;origin</command>.</para>
+	<command>Remote-&gt;Fetch from-&gt;origin</command>. A screen similar to
+	the one shown in the following figure will appear.</para>
+
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/GitFetchGUI.jpeg"/>
+            </imageobject>
+            <textobject>
+              <phrase>Result of the <quote>fetch</quote> operation.</phrase>
+            </textobject>
+          </mediaobject>
+        </informalfigure>
+
+	<para>This <quote>fetch</quote> step brings the changes to you computer
+	but does not merge them with your current version. To perform this
+	merging you need to select the option <command>Merge-&gt;Local
+	merge...</command> and select the remote branch identified by
+	<command>origin/master</command> as shown in the following
+	figure.</para>
+
+        <informalfigure>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/GitMergeGUI.jpeg"/>
+            </imageobject>
+            <textobject>
+              <phrase>Result of the <quote>merge</quote> operation.</phrase>
+            </textobject>
+          </mediaobject>
+        </informalfigure>
+
+	<para>As a result, your Adagio code will be set to the latest released
+	version of the toolkit.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="manage_environment_variables_windows"
+		xreflabel="How to add, remove or edit environment variables in Windows">
+      <question>
+	<para>How to add, remove or edit environment variables in
+	Windows?</para>
+      </question>
+      <answer>
+	<orderedlist>
+	  <listitem>
+	    <para>Open the file explorer, right click in the computer item and
+	    select the <quote>Properties</quote> option. The
+	    <quote>System</quote> window will appear.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>Select the <quote>Advanced system settings</quote> in the left
+	    pane. The <quote>System Properties</quote> window will
+	    appear.</para>
+	  </listitem>
+	  <listitem>
+	    <para>Select the <quote>Advanced</quote> tab and click on
+	    <quote>Environment Variables</quote>. A new window appears showing
+	    the user variables at the top, and the system variables at the
+	    bottom.</para>
+	  </listitem>
+	  <listitem>
+	    <para>Click on <quote>New...</quote> to add a new variable, select
+	    one variable and click on <quote>Edit...</quote> to change its
+	    value, or select one variable and delete it by clicking on
+	    <quote>Delete</quote>.</para>
+	  </listitem>
+	  <listitem>
+	    <para>Click the <quote>OK</quote> button in the Environment
+	    Variables window, then on the System Properties window, and then
+	    close the system window.</para>
+	  </listitem>
+	</orderedlist>
       </answer>
     </qandaentry>
   </qandaset>
