@@ -39,7 +39,7 @@ documentation = {
     Executes Dvips with the given extra arguments over "files".
     """}
 
-has_executable = rules.which(next(b for (a, b, c) in options if a == 'exec'))
+has_executable = ''
 
 def Execute(rule, dirObj):
     """
