@@ -194,22 +194,30 @@ def evaluateCondition(rule, options):
 def which(program):
     """
     Function to search if an executable is available in the machine. Lifted from
-    StackOverflow.
+    StackOverflow and modified to account for possible executable suffixes
+    stored in Windows in the environment variable PATHEXT.
     """
-    def is_exe(fpath):
-        return os.path.exists(fpath) and os.access(fpath, os.X_OK)
+
+    suffixes = ['']
+    pext = os.environ.get("PATHEXT")
+    if pext:
+        suffixes = pext.split(';')
+
+    def is_exe(fpath, suffixes):
+        # Return the first executable when concatenating a suffix
+        return next((fpath for s in suffixes \
+                        if os.path.exists(fpath + s) and \
+                         os.access(fpath + s, os.X_OK)), None)
 
     fpath, fname = os.path.split(program)
     if fpath:
-        if is_exe(program):
-            return program
-    else:
-        for path in os.environ["PATH"].split(os.pathsep):
-            exe_file = os.path.join(path, program)
-            if is_exe(exe_file):
-                return exe_file
+        return is_exe(program, suffixes)
 
-    return None
+    # Return the first executable when traversing the path
+    return next((os.path.join(path, program) \
+                for path in os.environ["PATH"].split(os.pathsep) \
+                if is_exe(os.path.join(path, program), suffixes) != None), 
+                None)
 
 def remove(fileName):
     """
