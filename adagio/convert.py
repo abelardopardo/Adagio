@@ -59,8 +59,7 @@ def Execute(rule, dirObj):
     global has_executable
 
     if has_executable == '':
-	has_executable = adagio.findExecutable(next(b for (a, b, c) in options \
-                                                      if a == 'exec'))
+	has_executable = adagio.findExecutable(rule, dirObj)
 
     # If the executable is not present, notify and terminate
     if not has_executable:

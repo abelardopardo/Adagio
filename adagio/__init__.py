@@ -455,12 +455,15 @@ def cleanRules(rule, dirObj, moduleName, pad = None):
 
     return False
 
-def findExecutable(program):
+def findExecutable(rule, dirObj):
     """
     Function to search if an executable is available in the machine. Lifted from
     StackOverflow and modified to account for possible executable suffixes
     stored in Windows in the environment variable PATHEXT.
     """
+
+    # Get the program name
+    program = properties.getProperty(dirObj.options, rule, 'exec')
 
     suffixes = ['']
     pext = os.environ.get("PATHEXT")
