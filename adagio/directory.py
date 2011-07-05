@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: UTF-8 -*-#
 #
 # Copyright (C) 2010 Carlos III University of Madrid
@@ -188,7 +188,8 @@ class Directory:
         #
         # STEP 2: Load the ~/.adagiorc if any
         #
-        userAdagioConfig = os.path.expanduser('~/.adagiorc')
+        userAdagioConfig = os.path.join(os.path.expanduser('~'),
+	                                os.sep, '.adagiorc')
         if os.path.isfile(userAdagioConfig):
             # Swallow user file on top of global options, and if trouble, report
             # up

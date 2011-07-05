@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # Copyright (C) 2010 Carlos III University of Madrid
 # This file is part of Adagio: Agile Distributed Authoring Integrated Toolkit
