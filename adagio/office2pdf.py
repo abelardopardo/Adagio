@@ -41,7 +41,7 @@ documentation = {
     SaveAsPDF.
     """}
 
-has_executable = rules.which(next(b for (a, b, c) in options if a == 'exec'))
+has_executable = ''
 
 def Execute(rule, dirObj):
     """
@@ -49,6 +49,10 @@ def Execute(rule, dirObj):
     """
 
     global has_executable
+
+    if has_executable == '':
+	has_executable = adagio.findExecutable(next(b for (a, b, c) in options \
+                                                      if a == 'exec'))
 
     # If the executable is not present, notify and terminate
     if not has_executable:

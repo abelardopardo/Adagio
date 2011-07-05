@@ -180,6 +180,13 @@ except ImportError:
     sys.exit(1)
 print dictionary.get('installed')
 
+# Run the regular initialization
+adagio.initialize()
+
+# Create a directory object with the current directory (parses config files)
+print
+dirObject = adagio.directory.getDirectoryObject(os.getcwd(), [])
+
 # Traverse all the modules and for those that need an executale installed, check
 # if it is present. If not installed, suggest the name of the executable to
 # install. For the rest (those with no executable required), say simply that it
@@ -189,18 +196,16 @@ print dictionary.get('active_rules')
 print
 for moduleName in sorted(adagio.modules):
     print ' -', moduleName, ':',
-    try:
-        executable = eval('adagio.' + moduleName + '.has_executable')
-    except AttributeError, e:
+
+    if not dirObject.options.has_option(moduleName, 'exec'):
         print 'OK'
         continue
-    
+
+    executable = adagio.findExecutable(dirObject.options.get(moduleName, 'exec'))
     if executable != None:
         print 'OK'
     else:
-        options = eval('adagio.' + moduleName + '.options')
-        program = next(b for (a, b, c) in options if a == 'exec')
-        print dictionary.get('disabled').format(program)
+        print dictionary.get('disabled').format(executable)
 
 print
 sys.exit(0)

@@ -455,3 +455,31 @@ def cleanRules(rule, dirObj, moduleName, pad = None):
 
     return False
 
+def findExecutable(program):
+    """
+    Function to search if an executable is available in the machine. Lifted from
+    StackOverflow and modified to account for possible executable suffixes
+    stored in Windows in the environment variable PATHEXT.
+    """
+
+    suffixes = ['']
+    pext = os.environ.get("PATHEXT")
+    if pext:
+        suffixes = pext.split(';')
+
+    def is_exe(fpath, suffixes):
+        # Return the first executable when concatenating a suffix
+        return next((fpath for s in suffixes \
+                        if os.path.exists(fpath + s) and \
+                         os.access(fpath + s, os.X_OK)), None)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        return is_exe(program, suffixes)
+
+    # Return the first executable when traversing the path
+    return next((os.path.join(path, program) \
+                for path in os.environ["PATH"].split(os.pathsep) \
+                if is_exe(os.path.join(path, program), suffixes) != None), 
+                None)
+

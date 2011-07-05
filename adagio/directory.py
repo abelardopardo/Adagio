@@ -240,7 +240,7 @@ class Directory:
                 
             self.rule_list = confRules
         else:
-            # If there is no rule file, notify and execute help rule
+            # If there is no rule file, notify
             adagio.logInfo('Directory', None, 'No ' + adagioPropFile + \
                             ' found in ' + self.current_dir)
             print i18n.get('cannot_find_properties').format(adagioPropFile,
