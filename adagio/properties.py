@@ -272,7 +272,9 @@ def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
         else:
             templateFile = os.path.abspath(os.path.join(os.path.dirname(filename), fname))
 
-        (a, b) = loadConfigFile(config, templateFile, aliasDict, includeChain)
+        (a, b) = loadConfigFile(config, 
+                                os.path.normpath(templateFile), 
+                                aliasDict, includeChain)
         result[0].update(a)
         result[1].extend(b)
     return result
