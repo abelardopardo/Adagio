@@ -91,6 +91,8 @@ def doCopy(rule, dirObj, toProcess, srcDir, dstDir):
 
     # Loop over all source files to process
     for datafile in toProcess:
+        # Normalize to avoid surprises
+        datafile = os.path.normpath(datafile)
 
         # Remember if the source is a directory
         isDirectory = os.path.isdir(datafile)
@@ -106,7 +108,7 @@ def doCopy(rule, dirObj, toProcess, srcDir, dstDir):
         dstFile = datafile.replace(srcDir, '', 1)
         # If the result has a slash (could be a directory to copy or a file with
         # a directory path), remove it
-        if dstFile[0] == '/':
+        if dstFile[0] == os.sep:
             dstFile = dstFile[1:]
 
         # Derive the destination file name
