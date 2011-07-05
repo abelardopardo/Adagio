@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, re, sys, StringIO
+import os, re, sys, StringIO, urllib
 from lxml import etree
 
 import adagio, directory, i18n, dependency, rules, treecache
@@ -144,7 +144,9 @@ def createStyleTransform(styleList, srcDir = None):
 ''')
         result.seek(0, os.SEEK_END)
         for sFile in styles:
-            result.write('''  <xsl:import href="file://''' + sFile + '''"/>\n''')
+            result.write('''  <xsl:import href="file:''' + 
+                         urllib.pathname2url(sFile) + 
+                         '''"/>\n''')
         result.write('</xsl:stylesheet>')
         result.seek(0)
         styleFile = result
