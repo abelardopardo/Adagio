@@ -472,7 +472,7 @@ def findExecutable(rule, dirObj):
 
     def is_exe(fpath, suffixes):
         # Return the first executable when concatenating a suffix
-        return next((fpath for s in suffixes \
+        return next((fpath + s for s in suffixes \
                         if os.path.exists(fpath + s) and \
                          os.access(fpath + s, os.X_OK)), None)
 
@@ -481,8 +481,12 @@ def findExecutable(rule, dirObj):
         return is_exe(program, suffixes)
 
     # Return the first executable when traversing the path
-    return next((os.path.join(path, program) \
-                for path in os.environ["PATH"].split(os.pathsep) \
-                if is_exe(os.path.join(path, program), suffixes) != None), 
-                None)
+    for path in os.environ["PATH"].split(os.pathsep):
+        executable = is_exe(os.path.join(path, program), suffixes)
+        # If found, return it
+        if executable != None:
+            properties.setProperty(dirObj.options, rule, 'exec', executable) 
+            return executable
+
+    return None
 
