@@ -190,7 +190,6 @@ class Directory:
         #
         userAdagioConfig = os.path.normpath(os.path.join(os.path.expanduser('~'),
                                                          '.adagiorc'))
-        print 'XXX', userAdagioConfig
         if os.path.isfile(userAdagioConfig):
             # Swallow user file on top of global options, and if trouble, report
             # up
