@@ -188,8 +188,9 @@ class Directory:
         #
         # STEP 2: Load the ~/.adagiorc if any
         #
-        userAdagioConfig = os.path.join(os.path.expanduser('~'),
-	                                os.sep, '.adagiorc')
+        userAdagioConfig = os.path.normpath(os.path.join(os.path.expanduser('~'),
+                                                         '.adagiorc'))
+        print 'XXX', userAdagioConfig
         if os.path.isfile(userAdagioConfig):
             # Swallow user file on top of global options, and if trouble, report
             # up
