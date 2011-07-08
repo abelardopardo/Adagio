@@ -32,11 +32,10 @@ import sys, locale, os, re
 locale = locale.getdefaultlocale()[0]
 
 # Get the locale prefix
+localePrefix = 'en'
 m = re.match('^([^_]+)_.+$', locale)
 if m != None:
     localePrefix = m.group(1)
-else:
-    localePrefix = 'en'
 
 # This is the main dictionary
 dictionary = {}
@@ -49,13 +48,12 @@ i18nHome = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])),
                         '..', 'adagio', 'i18n_dicts')
 
 # First, use the locale as is
+file = 'en'
 if os.path.exists(os.path.join(i18nHome, locale + '.py')):
     file = locale
 # Take the locale prefix (everything up to the first _ and use it as filename)
 elif os.path.exists(os.path.join(i18nHome, localePrefix + '.py')):
     file = localePrefix
-else:
-    file = 'en'
 
 try:
     # Insert this directory in the path to load scripts as the first one
