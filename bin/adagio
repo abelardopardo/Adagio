@@ -101,7 +101,11 @@ def main():
 
         # Dump the manual page
         elif optstr == "-h" or optstr == "-x":
-            pydoc.pager(adagio.i18n.get('adagio.help').format(propertyFileName))
+            if adagio.documentation.has_key(adagio.i18n.localePrefix):
+                lprefix = adagio.i18n.localePrefix
+            else:
+                lprefix = 'en'
+            pydoc.pager(adagio.documentation[lprefix].format(propertyFileName))
             sys.exit(3)
 
         # Allow for partial execution (if some tools are missing
