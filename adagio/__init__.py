@@ -98,20 +98,28 @@ documentation = {
     and a set of rules, a new set of files are created by applying the rules
     automatically.
 
-    The rules are all included in a file with name {0}. The file is
-    written in INI format. A rule is defined with a name in brackets at the
-    begining of a line. Each rule has a set of name = value assignments.
+    The rules are all included in a file with name {0}. The file is written in
+    INI format. A rule is defined with a name in brackets at the begining of a
+    line. Each rule has a set of name = value assignments. For example:
 
-    The script visits the current directory and process the rule file included
-    in that directory. If no rule is given when invoking adagio, all of the
-    rules in the file are executed.
+    [inkscape]
+    files = *.svg
 
-    The script accepts the following options:
+    These two lines invoke the "inkscape" rule that processes all files given in
+    its "files" variable and transforms them into PNG images.
 
-      -c filename: File containing the rules (default {0})
+    When executing, Adagio reads the rule file in the current directory and
+    process the rules included in it. If no rules are given when invoking the
+    program, all of the rules in the file are executed in the order they appear.
 
-      -d num: Debugging level. Used to control the amount of messages
-       dumped. Possible values are:
+    OPTIONS
+    
+    Adagio accepts the following command line options:
+
+      -c filename: Specify the file containing the rules (default {0})
+
+      -d num: Debugging level to control the amount of messages dumped. Possible
+       values are:
 
               CRITICAL/FATAL = 5
               ERROR =          4
@@ -120,37 +128,44 @@ documentation = {
               DEBUG =          1
               NOTSET =         0
 
-      -f path_to_rule_file: Given a path to a rule file, execute ADA in the
-       directory where that file is, and with the given file as the rule file
+      -f path_to_rule_file: Execute Adagio with the rules in the given file and
+       in the directory where that file is.
 
       -h: Shows this message
 
-      -p: Partial execution. Proceed even if some tools are not
-          installed. Otherwise stop execution in the first missing tool.
+      -p: Partial execution. Proceed with the rules even if some tools are not
+          installed. Otherwise Adagio stops execution upon finding the first
+          missing tool.
 
-      -s 'rule name value': Executes the application by first storing in the
-                       environment the assignment name = value as part of a
-                       rule. This means that, unless overwritten by definitions
-                       in the properties file, this assignment will be visible
-                       to all the rules executed.
+      -s 'rule name value': Executes the rules but first stores in the
+                       environment the assignment name = value as part of the
+                       given rule. This means that, unless overwritten by
+                       definitions in the properties file, this assignment will
+                       be visible to all the rules.
 
       -x: Shows this message
 
-    Adagio processes the following rules. For each of them a more detailed
-    description can be obtained by executing the adagio with the rule
-    "rulename.help" (where rulename is any of the following):
+    RULES
 
-      * convert: Convert, resize, crop images in different formats.
+    Adagio contains support for several rules. For each of them a more detailed
+    description can be obtained by executing the adagio with the rule
+    "rulename.help", where rulename is any of the following:
+
+      * convert: Use the ImageMagik library to perform operations over images
+        such as format conversion, resize or crop (needs ImageMagik installed)
 
       * dblatex: Executes dblatex over a set of Docbook files to translate them
-        to LaTeX
+        to LaTeX (needs dblatex and LaTeX installed)
 
-      * dvips: Executes dvips over a set of given DVI files
+      * dvips: Executes dvips over a set of given DVI files to translate them to
+        Postscript (needs dvips installed)
 
-      * exam: Typeset a Docbook file with a specific format into an exam.
+      * exam: Typeset a Docbook file with a specific format into an exam (needs
+        Docbook and Docbook XSLT installed)
 
       * exercise: Typeset a Docbook file and produce a hand out for students and
-        (optionally) a solution document, professor guide, and submission form.
+        (optionally) a solution document, professor guide, and submission form
+        (needs Docbook and Docbook XSLT installed)
 
       * export: Copy a set of files from a source directory to a (possibly given
         from other execution) destination directory. The copy is executed if a
@@ -158,36 +173,46 @@ documentation = {
 
       * filecopy: Copy files from a source directory.
 
-      * gimp: Transform all files in format *.xcf to PNG.
+      * gimp: Transform all files in a directory in *.xcf format to PNG
+        (needs Gimp installed)
 
       * gotodir: Invoke the execution of Adagio in a different directory
         (recursively).
 
-      * inkscape: Transform a SVG file created by Inkscape into PNG, EPS, PS or
-        PDF
+      * inkscape: Transforms SVG files created by Inkscape into PNG, EPS, PS or
+        PDF (needs Inkscape installed)
 
-      * latex: Execute LaTeX over a set of give *.tex files.
+      * latex: Execute LaTeX over a set of give *.tex files (needs LaTeX
+        installed)
 
-      * office2pdf: Produce a PDF file from a given set of Office files (Word or
-        PowerPoint).
+      * office2pdf: Produce a PDF file from a given set of Office Word or
+        PowerPoint files (needs OpenOffice installed).
 
-      * pdfnup: Execute pdfnup over a set of PDF files to create n-up handouts.
+      * pdfnup: Execute pdfnup over a set of PDF files to create n-up handouts
+        (needs pdfnup installed)
 
-      * rsync: Executes rsync to synchronize a source and a destination dir.
+      * rsync: Executes rsync to synchronize a source and a destination dir
+        (needs rsync installed)
 
       * script: Executes an extra rule given as a Python script.
 
       * testexam: Typesets a Docbook document in a special format containing a
         set of multiple choice tests into an HTML document. The rule shuffles
-        the questions and creates several versions.
+        the questions and creates several versions (needs Docbook and Docbook
+        XSLT installed)
 
-      * xfig: Transform figures created with xfig into PNG format.
+      * xfig: Transform figures created with xfig into PNG format (needs xfig
+        installed)
 
       * xsltproc: Applies a XSL style sheet to a given XML file.
 
     If you execute adagio with a single parameter made of a rule name followed
     by the suffix ".help" it provides a more detailed description of the
-    operations contained in the rule.
+    operations contained in the rule. For example:
+
+    adagio inkscape.help
+
+    will print more detailed information about the "inkscape" rule.
     """}
 
 #
