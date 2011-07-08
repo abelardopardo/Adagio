@@ -22,7 +22,7 @@
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 import sys, os, re, datetime, ConfigParser, StringIO, ordereddict, atexit
-import codecs
+import codecs, pydoc
 from lxml import etree
 
 import adagio, i18n
@@ -302,12 +302,8 @@ def specialRules(rule, dirObj, moduleName, pad = None):
 
     # If requesting help, dump msg and terminate
     if doubleRule or re.match('.+\.help$', rule):
-        msg = etree.fromstring('<book>' +
-                                getProperty(dirObj.options, prefix,
-                                            'help') + '</book>')
-        print i18n.get('doc_preamble').format(prefix) + '\n' + \
-            etree.tostring(msg, encoding = "UTF-8",
-                           method = "text").decode("utf8") + '\n'
+        pydoc.pager(i18n.get('doc_preamble').format(prefix) + '\n' + \
+            getProperty(dirObj.options, prefix, 'help'))
         hit = True
 
     # If requesting var dump, do it and finish
@@ -492,6 +488,8 @@ def dumpOptions(rule, dirObj, prefix):
     if rule == '':
         rule = prefix
 
+    # Concatenate all the variable values and pass through pager
+    str = ''
     for (on, ov) in sorted(dirObj.options.items(rule)):
-        print ' -', on, '=', ov
-
+        str += ' - ' + on + ' = ' + ov + '\n'
+    pydoc.pager(str)
