@@ -96,11 +96,15 @@ def findProjectDir(pfile, startdir):
 
     WARNING: This function returns always an ABSOLUTE path
     """
-    currentDir = startdir
+    currentDir = os.path.abspath(startdir)
 
     while (os.path.splitdrive(currentDir)[1] != os.sep) and \
             (not os.path.exists(os.path.join(currentDir, pfile))):
         currentDir = os.path.abspath(os.path.join(currentDir, ".."))
+
+    # If nothing found, return the given path
+    if not os.path.exists(os.path.join(currentDir, pfile)):
+        return os.path.abspath(startdir)
 
     return currentDir
 
@@ -206,8 +210,7 @@ class Directory:
         #
         # STEP 3: Options given in the project file
         #
-        adagioProjFile = os.path.join(self.current_dir,
-                                      configDefaults['project_home'],
+        adagioProjFile = os.path.join(configDefaults['project_home'],
                                       self.options.get(adagio.module_prefix,
                                                        'project_file'))
         if os.path.isfile(adagioProjFile):
