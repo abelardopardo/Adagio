@@ -373,8 +373,8 @@ class Directory:
         if rules == []:
             rules = toExecRules
 
-        # If any of the rules is dump, help, clean, expand the current rules
-        # to add them that suffix, otherwise simply accumulate
+        # If any of the rules is help, clean, expand the current rules to add
+        # them that suffix, otherwise simply accumulate
         finalRules = []
         for rule in rules:
             if rule == 'deepclean':
@@ -386,9 +386,8 @@ class Directory:
                 finalRules.extend([x + '.clean'
                                      for x in toExecRules])
                 finalRules.reverse()
-            elif rule == 'dump':
-                finalRules.extend([x + '.dump' for x in toExecRules])
             elif rule == 'help':
+                finalRules.append('adagio.help')
                 finalRules.extend([x + '.help' for x in toExecRules])
             elif rule == 'local':
                 finalRules.extend([x for x in toExecRules

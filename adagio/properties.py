@@ -110,7 +110,7 @@ def loadConfigFile(config, filename, aliasDict, includeChain = None):
     # Insert the filename in the includeChain
     includeChain.append(os.path.normpath(filename))
 
-    # If file not found dump also the include stack
+    # If file not found write also the include stack
     if not os.path.isfile(filename):
         print i18n.get('cannot_open_file').format(filename)
         if includeChain[:-1] != []:
@@ -279,15 +279,11 @@ def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
         result[1].extend(b)
     return result
 
-def specialRules(rule, dirObj, moduleName, pad = None):
+def helpRule(rule, dirObj, moduleName, pad = None):
     """
-    Check if the requested rule is special:
-    - dump
-    - help
-    - clean
-    - deepclean
+    Check if the requested rule is help
 
-    Return boolean stating if any of them has been executed
+    Return boolean stating if it has been executed
     """
 
     # Detect if any of the special rule has been detected
@@ -296,20 +292,12 @@ def specialRules(rule, dirObj, moduleName, pad = None):
     # Calculate the rule prefix (up to the last dot)
     (prefix, b, c) = rule.rpartition('.')
 
-    # Remember if it is one of the helpdump or dumphelp
-    doubleRule = re.match('.+\.helpdump$', rule) or \
-        re.match('.+\.dumphelp$', rule)
-
-    # If requesting help, dump msg and terminate
-    if doubleRule or re.match('.+\.help$', rule):
+    if re.match('.+\.help$', rule):
         pydoc.pager(i18n.get('doc_preamble').format(prefix) + '\n' + \
-            getProperty(dirObj.options, prefix, 'help'))
+                        getProperty(dirObj.options, prefix, 
+                                    'help') + '\n' + \
+                    dumpOptions(rule, dirObj, prefix))
         hit = True
-
-    # If requesting var dump, do it and finish
-    if doubleRule or re.match('.+\.dump$', rule):
-        dumpOptions(rule, dirObj, prefix)
-        hit =  True
 
     return hit
 
@@ -483,13 +471,17 @@ def dumpOptions(rule, dirObj, prefix):
 
     print i18n.get('var_preamble').format(prefix)
 
-    # Remove the .dump from the end of the rule to fish for options
-    rule = re.sub('\.?dump$', '', rule)
+    # Remove the .help from the end of the rule to fish for options
+    rule = re.sub('\.?help$', '', rule)
     if rule == '':
         rule = prefix
 
-    # Concatenate all the variable values and pass through pager
+    # Concatenate all the variable values and pass through pager (skip help
+    # because it is supposed to be printed outside this function
     str = ''
     for (on, ov) in sorted(dirObj.options.items(rule)):
+        if on == 'help':
+            continue
         str += ' - ' + on + ' = ' + ov + '\n'
-    pydoc.pager(str)
+        
+    return str

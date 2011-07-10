@@ -85,9 +85,7 @@ def clean(rule, dirObj, deepClean = False, pad = None):
         remoteRules = [x + '.deepclean'
                          for x in remoteRules
                          if not re.match('(.+\.)?help$', x) and \
-                             not re.match('(.+\.)?clean$', x) and \
-                             not re.match('(.+\.)?dumphelp$', x) and \
-                             not re.match('(.+\.)?helpdump$', x)]
+                             not re.match('(.+\.)?clean$', x)]
 
         # If no rule is obtained, deep clean, means simply execute the clean
         # rule

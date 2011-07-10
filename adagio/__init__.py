@@ -118,8 +118,8 @@ documentation = {
 
       -c filename: Specify the file containing the rules (default {0})
 
-      -d num: Debugging level to control the amount of messages dumped. Possible
-       values are:
+      -d num: Debugging level to control the amount of messages
+       printed. Possible values are:
 
               CRITICAL/FATAL = 5
               ERROR =          4
@@ -227,7 +227,7 @@ if not os.path.isdir(home):
 config_defaults['home'] = (home, b)
 
 #
-# File object where to dump the log of the execution
+# File object where to write the execution log
 #
 userLog = None
 
@@ -339,8 +339,8 @@ def logDebug(tprefix, dirObj, msg):
 
 def log(tprefix, dirObj, msg, fname = None):
     """
-    Function that dumps a message on the userLog file or stdout depending on the
-    value of the option debug_value.
+    Function that writes a message on the userLog file or stdout depending on
+    the value of the option debug_value.
     """
     global module_prefix
     global config_defaults
@@ -464,13 +464,10 @@ def Execute(rule, dirObj, pad = None):
         print i18n.get('error_alias_expression')
         sys.exit(1)
 
-    # Detect help, dump or clean rule
-    specialRule = re.match('.+\.dump$', rule) or \
-        re.match('.+\.help$', rule) or \
+    # Detect help or clean rule
+    specialRule = re.match('.+\.help$', rule) or \
         re.match('.+\.clean$', rule) or \
-        re.match('.+\.deepclean$', rule) or \
-        re.match('.+\.dumphelp$', rule) or \
-        re.match('.+\.helpdump$', rule)
+        re.match('.+\.deepclean$', rule)
 
     # Make sure the rule is legal.
     if not specialRule and not dirObj.options.has_section(rule):
@@ -503,8 +500,8 @@ def Execute(rule, dirObj, pad = None):
         # Print msg when beginning to execute a rule in dir
         print pad + 'BB', originalRule
 
-        # Detect and execute "help/dump" rules
-        if properties.specialRules(rule, dirObj, moduleName, pad):
+        # Detect and execute "help" rule
+        if properties.helpRule(rule, dirObj, moduleName, pad):
             print pad + 'EE', originalRule
             logInfo(originalRule, dirObj, 'Exit ' + dirObj.current_dir)
             return
@@ -537,8 +534,8 @@ def Execute(rule, dirObj, pad = None):
     if modulePrefix == 'adagio':
         print pad + 'BB', originalRule
 
-        # Detect and execute "help/dump" rules
-        if properties.specialRules(rule, dirObj, 'adagio', pad):
+        # Detect and execute "help" rule
+        if properties.helpRule(rule, dirObj, 'adagio', pad):
             print pad + 'EE', originalRule
             logInfo(originalRule, dirObj, 'Exit ' + dirObj.current_dir)
             return
