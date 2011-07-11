@@ -66,10 +66,10 @@ documentation = {
   These definitions are identical to including in the stylesheet the
   definitions:
 
-  &lt;xsl:param name="name1"&gt;value1&lt;/xsl:param&gt;
-  &lt;xsl:param name="name2"&gt;value2&lt;/xsl:param&gt;
+  <xsl:param name="name1">value1</xsl:param>
+  <xsl:param name="name2">value2</xsl:param>
   ...
-  &lt;xsl:param name="nameN"&gt;valueN&lt;/xsl:param&gt;
+  <xsl:param name="nameN">valueN</xsl:param>
 """}
 
 def Execute(rule, dirObj):
