@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import os, re, glob, sys, subprocess, shutil, ConfigParser, pydoc, datetime
+import os, re, glob, sys, subprocess, shutil, ConfigParser, datetime
 
 # Import conditionally either regular xml support or lxml if present
 try:
