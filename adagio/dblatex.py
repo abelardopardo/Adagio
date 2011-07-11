@@ -34,7 +34,7 @@ options = [
     ('output_format', 'pdf', i18n.get('output_format')),
     ('extra_arguments', '', i18n.get('extra_arguments').format('Dblatex')),
     ('extra_xslt_arguments', '', i18n.get('extra_arguments').format('Xsltproc')),
-    ('compliant_mode', '0', i18n.get('').format('Xsltproc'))
+    ('compliant_mode', '0', i18n.get('dblatex_compliant'))
     ]
 
 documentation = {
