@@ -215,6 +215,9 @@ documentation = {
     will print more detailed information about the "inkscape" rule.
     """}
 
+# Dictionary storing pairs (variable name, variable help message)
+variable_help_messages = {}
+
 #
 # Directory where Adagio is installed
 #
@@ -288,9 +291,14 @@ def getConfigDefaults(path):
     """
 
     global config_defaults
+    global variable_help_messages
 
     result = {}
     for (n, v) in config_defaults.items():
+
+        # Add the help message to the variable_help_messages dir
+        variable_help_messages[n] = v[1]
+
         if n == 'basedir' or n == 'src_dir' or n == 'dst_dir':
             # If any of these options, set it to the path
             v = path
@@ -427,6 +435,8 @@ def AppendOptions(config, sectionName, options, documentation):
     the given section. The documentation string is added taking into account the
     current languages.
     """
+    
+    global variable_help_messages
     # If the section is already present in the config, never mind
     try:
         config.add_section(sectionName)
@@ -437,7 +447,9 @@ def AppendOptions(config, sectionName, options, documentation):
     for (vn, vv, msg) in options:
         properties.setProperty(config, sectionName, vn, vv,
                                createRule = True, createOption = True)
-
+        
+        variable_help_messages[sectionName + '.' + vn] = msg
+        
     # Add the string for the help
     helpStr = documentation.get(config_defaults['languages'][0].split()[0])
     if helpStr == None:
@@ -470,6 +482,7 @@ def Execute(rule, dirObj, pad = None):
         re.match('.+\.deepclean$', rule)
 
     # Make sure the rule is legal.
+    print 'BBB', rule
     if not specialRule and not dirObj.options.has_section(rule):
         print i18n.get('illegal_rule_name').format(t = originalRule,
                                                      dl = dirObj.current_dir)
@@ -501,7 +514,7 @@ def Execute(rule, dirObj, pad = None):
         print pad + 'BB', originalRule
 
         # Detect and execute "help" rule
-        if properties.helpRule(rule, dirObj, moduleName, pad):
+        if helpRule(rule, dirObj, moduleName, pad):
             print pad + 'EE', originalRule
             logInfo(originalRule, dirObj, 'Exit ' + dirObj.current_dir)
             return
@@ -535,7 +548,7 @@ def Execute(rule, dirObj, pad = None):
         print pad + 'BB', originalRule
 
         # Detect and execute "help" rule
-        if properties.helpRule(rule, dirObj, 'adagio', pad):
+        if helpRule(rule, dirObj, 'adagio', pad):
             print pad + 'EE', originalRule
             logInfo(originalRule, dirObj, 'Exit ' + dirObj.current_dir)
             return
@@ -602,4 +615,28 @@ def findExecutable(rule, dirObj):
             return executable
 
     return None
+
+def helpRule(rule, dirObj, moduleName, pad = None):
+    """
+    Check if the requested rule is help
+
+    Return boolean stating if it has been executed
+    """
+
+    # Detect if any of the special rule has been detected
+    hit = False
+
+    # Calculate the rule prefix (up to the last dot)
+    (prefix, b, c) = rule.rpartition('.')
+
+    if re.match('.+[^\.]\.help$', rule):
+        print i18n.get('doc_preamble').format(prefix) + '\n' + \
+            properties.getProperty(dirObj.options, prefix, 'help') + '\n' + \
+            dirObj.dumpOptions(rule, prefix)
+        hit = True
+    else:
+        print i18n.get('illegal_rule_name').format(t = rule,
+                                                   dl = dirObj.current_dir)
+
+    return hit
 

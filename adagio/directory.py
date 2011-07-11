@@ -148,8 +148,8 @@ class Directory:
     # current_dir:      dir represented by this object
     # givenOptions:     list of options given from outside this dir
     # options:          ConfigParse with the options given in properties.ddo
-    # alias:            Dictionary of 'aliasname': 'aliasvalue'
     # rule_list:        rules in the properties.ddo file
+    # alias:            Dictionary of 'aliasname': 'aliasvalue'
     # current_rule:     rule being processed
     # executing:        true if in the middle of the "Execute" method
     # executed_rules:   set of rules executed with empty given directory
@@ -166,12 +166,12 @@ class Directory:
         self.rule_list =    []
         self.alias =           {}
         self.current_rule = None
-        # Boolean to detect if a directory has been visited twice
         self.executing =       False
         self.executed_rules =  set([])
         self.option_files =    set([])
 
-        adagio.logInfo('Directory', None, 'New dir object in ' + self.current_dir)
+        adagio.logInfo('Directory', None, 
+                       'New dir object in ' + self.current_dir)
 
         configDefaults = adagio.getConfigDefaults(self.current_dir)
 
@@ -438,6 +438,42 @@ class Directory:
         so, check for the option name/option.
         """
         return properties.getProperty(self.options, rule, option)
+
+
+    def dumpOptions(self, rule, prefix):
+        """
+        Print the value of the options affecting the computations
+        """
+
+
+        # Remove the .help from the end of the rule to fish for options
+        rule = re.sub('\.?help$', '', rule)
+        if rule == '':
+            rule = prefix
+        basicPrefix = rule.split('.')[0]
+
+        # Concatenate all the variable values and pass through pager (skip help
+        # because it is supposed to be printed outside this function
+        str = i18n.get('var_preamble').format(prefix) + '\n\n'
+        for (on, ov) in sorted(self.options.items(rule)):
+            if on == 'help':
+                continue
+            
+            # Get the help_message from the global dict (try first with the rule
+            # name, and if not found, without it to find generic variables)
+            help_message = adagio.variable_help_messages.get(basicPrefix + 
+                                                             '.' + on)
+            if help_message == None:
+                help_message = adagio.variable_help_messages.get(on)
+
+            # Create the string: value + help message
+            str += ' - ' + on + ' = ' + ov + '\n'
+            if help_message != None:
+                str += '   ' + help_message + '\n'
+            else:
+                str += '   ' + i18n.get('user_defined_variable') + '\n'
+
+        return str
 
 ################################################################################
 

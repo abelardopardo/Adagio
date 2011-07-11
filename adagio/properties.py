@@ -22,7 +22,7 @@
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 import sys, os, re, datetime, ConfigParser, StringIO, ordereddict, atexit
-import codecs, pydoc
+import codecs
 from lxml import etree
 
 import adagio, i18n
@@ -279,28 +279,6 @@ def treatTemplate(config, filename, newOptions, sname, aliasDict, includeChain):
         result[1].extend(b)
     return result
 
-def helpRule(rule, dirObj, moduleName, pad = None):
-    """
-    Check if the requested rule is help
-
-    Return boolean stating if it has been executed
-    """
-
-    # Detect if any of the special rule has been detected
-    hit = False
-
-    # Calculate the rule prefix (up to the last dot)
-    (prefix, b, c) = rule.rpartition('.')
-
-    if re.match('.+\.help$', rule):
-        pydoc.pager(i18n.get('doc_preamble').format(prefix) + '\n' + \
-                        getProperty(dirObj.options, prefix, 
-                                    'help') + '\n' + \
-                    dumpOptions(rule, dirObj, prefix))
-        hit = True
-
-    return hit
-
 def expandAlias(rule, aliasDict):
     """
     Given a rule a.b.c, apply the alias values contained in the given
@@ -462,26 +440,3 @@ def initialConfig(configDefaults):
 
     return result
 
-def dumpOptions(rule, dirObj, prefix):
-    """
-    Dump the value of the options affecting the computations
-    """
-
-    global options
-
-    print i18n.get('var_preamble').format(prefix)
-
-    # Remove the .help from the end of the rule to fish for options
-    rule = re.sub('\.?help$', '', rule)
-    if rule == '':
-        rule = prefix
-
-    # Concatenate all the variable values and pass through pager (skip help
-    # because it is supposed to be printed outside this function
-    str = ''
-    for (on, ov) in sorted(dirObj.options.items(rule)):
-        if on == 'help':
-            continue
-        str += ' - ' + on + ' = ' + ov + '\n'
-        
-    return str
