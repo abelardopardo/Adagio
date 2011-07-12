@@ -201,7 +201,8 @@ for moduleName in sorted(adagio.modules):
         print 'OK'
         continue
 
-    executable = adagio.findExecutable(dirObject.options.get(moduleName, 'exec'))
+#    executable = adagio.findExecutable(dirObject.options.get(moduleName, 'exec'))
+    executable = adagio.findExecutable(moduleName, dirObject)
     if executable != None:
         print 'OK'
     else:
