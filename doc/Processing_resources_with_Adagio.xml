@@ -55,7 +55,7 @@
 
         <para>This listing shows the tools available to Adagio. If you don't
         have all of them, you may install them with your software management
-        application. Still, Adagio can work with a subset of these tools by
+        application. Adagio still can work with a subset of these tools by
         skipping those rules for which the applications are not
         installed.</para>
 
@@ -66,62 +66,181 @@
       </answer>
     </qandaentry>
 
-    <!-- **************** REWRITE REQUIRED FROM HERE ********************** -->
-
     <qandaentry id="how_to_run_adagio" xreflabel="How to define which files to process">
       <question>
-        <para>How to tell Adagio which files should process and how?</para>
+        <para>How to tell Adagio which files should be processed?</para>
       </question>
       <answer>
-        <para>Adagio needs from the user the set of files to apply a set of
-        pre-defined production rules.  This information should all be contained
-        in a regular text file with name <filename>Properties.txt</filename> in
-        the same directory where your files are located. The format of this file
-        is very simple: any line starting with the symbol <quote>#</quote> or
-        empty is ignored. The rest of lines should have the structure
-        <command>name=value</command>. The names that can be used are
-        pre-defined by Adagio. The following sections of this document describe
-        the available variables and explain the values that can be
-        assigned.</para>
+        <para>Adagio asumes that there is a text file with name
+        <filename>Properties.dgo</filename> containing the rules to process the
+        files in that folder. The format of this file is as follows (based on
+        the <filename>INI</filename> format used in Microsoft products):</para>
 
-        <para>The following figure illustrates at a certain level of abstraction
-        how Adagio uses this file to process your files and produce the
-        resources.</para>
+	<itemizedlist>
+	  <listitem>
+	    <para>A rule is included surrounded by square brackets at the
+	    begining of a line. The set of rules are fixed in advance by
+	    Adagio. Open the command interpreter and type <command>adagio
+	    help</command> for a list of the rules available. A rule applies a
+	    fixed set of operations to the values stored in a pre-defined set of
+	    variables. These variables can be modified in the rule file by
+	    writing the variable name followed by an equal sign and the values
+	    to assign. Rules names may be followed by an arbitrary set of
+	    additional names separated by dots. By using these names, a rule
+	    file may have multiple rules of the same type. For example:</para>
+	    
+	    <programlisting># Process remote location 1
+[gotodir.placeA]
+dst_dir = ../placeA
 
-        <informalfigure>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/Rules.png" format="PNG"/>
-            </imageobject>
-            <textobject>
-              <phrase>Rules used by Adagio</phrase>
-            </textobject>
-          </mediaobject>
-        </informalfigure>
-        
-        <para>An example of a <ulink
-        url="Samples/SimpleDoc/Properties.txt"><filename>Properties.txt</filename>
-        file</ulink> content is shown in the following figure:</para>
-        
-        <programlisting><xi:include href="Samples/SimpleDoc/Properties.txt"
-        parse="text" xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
-        
-        <para>The first definition simply states that all files with the
-        <filename>*.svg</filename> extension should be processed by
-        inkscape. The default behavior of this rule is to produce a file in PNG
-        format. The second variable assignment states that the <ulink
-        url="Samples/SimpleDoc/index.xml"><filename>index.xml</filename>
-        file</ulink> should be processed with the <command>xsltproc</command>
-        rule, which means that a default stylesheet is applied. Finally, the
-        last assignment states that if this directory is required to
-        <quote>produce</quote> resources from a different location, only the
-        files with extension <filename>*.png</filename> are to be copied to such
-        remote location.</para>
+# Process remote location 2
+[gotodir.placeB]
+dst_dir = ../../placeB
 
-        <para>All rules present in Adagio have default values assigned with the
-        most common behavior. This means that in most cases, by including a
-        small set of definitions in the <filename>Properties.txt</filename>
-        file, Adagio will perform the appropriate operations.</para>
+# Transform local files to PNG
+[inkscape.local]
+files = file*.svg figure*.svg
+
+# Transform remote files and leave PNGs in this folder
+[inkscape.non_local]
+src_dir = ../../otherfigures
+files = f1.svg f2.svg
+
+# Files to export when this directory is invoked from a remote location	      
+[export]
+files = file*.png f*.png</programlisting>
+
+            <para>Comments can be inserted in the rule file by starting the
+            lines with the symbol <quote>#</quote>. The first rule is of type
+            <quote>gotodir</quote> and has name <quote>placeA</quote>. Upon
+            execution, Adagio changes to the directories given in the variable
+            <code>dst_dir</code> and executes the rule file (if any) there. The
+            second rule is of the same type, with name <quote>placeB</quote> and
+            performs the same task on directory
+            <filename>../../placeB</filename>.</para>
+
+	    <para>Rules third and fourth use the program
+	    <command>inkscape</command> to transform files in
+	    <filename>SVG</filename> format into <filename>PNG</filename>. The
+	    first rule (with name <quote>local</quote>) applies this
+	    transformation to all files in the current directory that match the
+	    two given expressions. The second inkscape rule (with name
+	    <quote>non_local</quote>) sets variable <command>src_dir</command>
+	    to point to a different directory, processes the files specified by
+	    variable <code>files</code> and leaves the result in the current
+	    directory.</para>
+
+	    <para>The last rule defines the set of files that should be exported
+	    from this directory in case Adagio is invoked from a different
+	    location using the <quote>gotodir</quote> rule.</para>
+
+	    <para>Several files can be specified using <quote>*</quote> and
+	    <quote>?</quote> in the file names.</para>
+	  </listitem>
+
+	  <listitem>
+	    <para>Rules are executed in the order in which they appear in the
+	    rule file. When Adagio is invoked with no parameters, all rules
+	    (except those of type <code>rsync</code>) are executed. The
+	    <code>rsync</code> file is only executed if explicitly given when
+	    invoking Adagio. If rule names are given in the command line as
+	    parameters, only those rules in the orden in which they are given
+	    are executed. For example:</para>
+
+	    <programlisting><command>adagio gotodir.placeB inkscape.non_local</command></programlisting>
+	    
+	    <para>Executes only two of the rules in the previous file.</para>
+	  </listitem>
+
+	  <listitem>
+	    <para>All rules have a set of variables from which the values to
+	    perform the operations are taken. All these variables have default
+	    values. For every rule available in Adagio, the rule
+	    <command>rule.help</command> explains the procedure executed by the
+	    rule and the variables used.</para>
+	  </listitem>
+
+	  <listitem>
+	    <para>The rule <quote>DEFAULT</quote> can be included at any point
+	    in a rule file and contains definitions of variables that are not
+	    attached to any rule and therefore are global to all of them. These
+	    variables can be used in the values assigned to other variables by
+	    including their names with the prefix <quote>%(</quote> and the
+	    suffix <quote>)s</quote>. For example:</para>
+
+	    <programlisting>[DEFAULT]
+material_dir = /user/myhome/myproject
+
+[xslt]
+file = index.xml
+styles = %(material_dir)s/mystyle.xsl</programlisting>
+
+            <para>Variable <code>material_dir</code> is defined in the
+	    <command>[DEFAULT]</command> rule and is then used in the
+	    <command>xslt</command> rule. This mechanism is useful to collect
+	    definitions of values common to several rules and store them in
+	    global variables.</para>
+	  </listitem>
+	</itemizedlist>
+      </answer>
+    </qandaentry>
+    
+    <qandaentry id="rule_files_read" xreflabel="Which rule files are processed">
+      <question>
+	<para>Which rules files are processed by Adagio and in which
+	order?</para>
+      </question>
+      <answer>
+	<para>Although the main rule file is in the current directory, Adagio
+	checks for the following additional rule files in the given
+	order:</para>
+
+	<itemizedlist>
+	  <listitem>
+	    <para>Default values for all variables hardwired in the Adagio
+	    code.</para>
+	  </listitem>
+	  <listitem>
+	    <para>Rule file with name <filename>.adagiorc</filename> in the user
+	    home directory if it exists. This file can be used to include rules
+	    and variable values that apply to the environment of a particular
+	    user. For example, if a user has installed the tool Gimp and the
+	    executable is called <filename>gimp-2.6</filename> (instead of
+	    <filename>gimp</filename> which is the default value of the
+	    <command>executable</command> variable in the Gimp rule), the value
+	    can be changed for that user by including the following definition
+	    in the <filename>.adagiorc</filename> file:</para>
+
+	    <programlisting>[gimp]
+executable = gimp-2.6</programlisting>
+	  </listitem>
+
+	  <listitem>
+	    <para>Rule file with name <filename>Adagio.project</filename> if it
+	    exists in any of the directories above the current one. Adagio
+	    checks for the existence of this file in the current folder, then in
+	    the parent folder, and so on. If a file with that name is found, all
+	    the definitions are considered.</para>
+
+	    <para>The purpose of this file is to store project-wide
+	    definitions. These are variables and values that are relevant for a
+	    project. The idea is to place this file at the root folder of that
+	    project and Adagio automatically detects it and reads its
+	    content.</para>
+	  </listitem>
+	  
+	  <listitem>
+	    <para>Rule file in the current directory.</para>
+	  </listitem>
+
+	  <listitem>
+	    <para>Assignments given in the command line when executing
+	    Adagio.</para>
+	  </listitem>
+	</itemizedlist>
+
+	<para>If a variable is assigned a value in more than one of these files,
+	only the last assignment is considered.</para>
       </answer>
     </qandaentry>
 
@@ -130,275 +249,200 @@
         <para>How to tell Adagio to build all the resources?</para>
       </question>
       <answer>
-        <para>Once the <filename>Properties.txt</filename> file with the
-        required assignments has been created, to apply these rules simply open
-        a shell (regular shell in Unix or a Cygwin shell in Windows) and, in the
-        correct directory type the following command:</para>
+        <para>Once the file <filename>Properties.dgo</filename> with the
+        required rules is present in a directory, to execute these rules simply
+        open the git command interpreter, go to the proper directory and type
+        the following command:</para>
 
         <programlisting>$ <command>adagio</command></programlisting>
 
-        <para>A few lines will then appear on the screen. Adagio is writing the
-        rules that is applying as well as the directories in which the
-        processing is taking place. For example:</para>
+        <para>The messages on the screen include the directories visited by
+	Adagio as well as the rules executed in each of them.For example:</para>
 
-        <programlisting>     [echo] BEGIN [path to your current dir]
-     [echo] inkscape.processing         RUN
-     [echo] xsltproc.processing.nopre   RUN
-     [echo] END [path to your current dir]
-
-BUILD SUCCESSFUL
-Total time: 4 seconds</programlisting>
+        <programlisting>$ <command>adagio</command>
+++ /home/you/YourDirectory/YourMaterial
+BB inkscape
+Producing figure.png
+EE inkscape
+BB xslt
+Producing index.html
+EE xslt
+BB export
+No destination for export. Bypassing.
+EE export
+-- /home/you/YourDirectory/YourMaterial
+$</programlisting>
         
-        <para>The previous execution shows the result of applying the <ulink
-        url="Samples/SimpleDoc/Properties.txt"><filename>Properties.txt</filename>
-        file</ulink> shown in the question on <xref
-        linkend="run_adagiocheck"/>. Two rules are executed within the current
-        directory.</para>
+        <para>The previous figure shows the result of applying the rules in
+        <ulink
+        url="Samples/SimpleDoc/Properties.dgo"><filename>Properties.dgo</filename></ulink>. Every
+        time Adagio visits a directory, a line starting with <quote>++</quote>
+        followed by the directory name is written. Whenever a rule is executed,
+        a line starting with <quote>BB</quote> followed by the rule name is
+        written. Analogously, when the target finished execution, a line with
+        the prefix <quote>EE</quote> is written, and when all rules in a
+        directory have been executed, a line with the prefix <quote>--</quote>
+        followed by the directory name is written. If the execution of Adagio in
+        a remote directory is invoked with the rule <command>gotodir</command>,
+        the messages are indented two spaces. With this notation (indented
+        messages at when entering/leaving a directory and when
+        starting/finishing a rule) the user can easily locate which rule in
+        which directory is being executed.</para>
 
-        <para>If an error appears while Adagio executes the rules, the
+	<para>In the previous example four rules were executed in the current
+	directory: <command>inkscape</command>, <command>xslt</command>, and
+	<command>export</command>. The last one of them though, had no effect
+	because no export destination was specified.</para>
+
+        <para>If an error occurs while Adagio executes the rules, the
         information about the anomaly is stored in the file
         <filename>build.out</filename> and the first lines are shown on the
-        screen:</para>
+        screen as ilustrated in the following example:</para>
 
-        <programlisting>     [echo] BEGIN /path to current dir]/SimpleDoc
-     [echo] inkscape.processing         RUN
-     [echo] xsltproc.processing.nopre   RUN
+        <programlisting>$ <command>adagio</command>
+++ /home/you/YourDirectory/YourMaterial
+BB inkscape
+figure.png up to date. Bypassing.
+EE inkscape
+BB xslt
+Error while parsing /home/you/YourDirectory/YourMaterial/index.xml
+Opening and ending tag mismatch: informalfigure line 21 and section, line 44, column 11
+$</programlisting>
 
----------------------------------- Adagio ERROR ----------------------------------
-
--- Full error information in file:
-   ./build.out
-
-                            ==== Error excerpt ====
-/[path to a file]/index.xml:45: parser error : expected '&gt;'
-
-^
-unable to parse /[path to a file]/index.xml
-                            =======================
-
--------------------------------------------------------------------------------</programlisting>
+        <para>Additionally, all the internal operations executed by Adagio are
+	stored in the file <filename>adagio.log</filename> in the current
+	directory. The amount of information in that file is controlled by the
+	option <command>-d debuglevel</command> or the default variable
+	<command>debug_level</command>.</para>
       </answer>
     </qandaentry>
         
-    <qandaentry id="variable_catalog">
+    <!-- **************** REWRITE REQUIRED FROM HERE ********************** -->
+
+    <qandaentry id="property_in_command_line" xreflabel="How to execute with
+							 one variable modified">
       <question>
-        <para>Which variables can be used in the
-        <filename>Properties.txt</filename> file?</para>
+	<para>Can I execute the <command>adagio</command> once but with one
+	single variable modified from the definition in
+	<filename>Properties.dgo</filename>?</para>
+      </question>
+      <answer>
+	<para>Yes. In fact, you may include as many variable definitions in
+	the command line as you see fit. They need to be provided with the
+	following format:</para>
+	
+	<programlisting>-s 'rule name value'</programlisting>
+	
+	<para>Note that with this notation, the value cannot contain
+	spaces.</para>
+	
+      </answer>
+    </qandaentry>
+    
+    <qandaentry id="adagio_project_home"
+		xreflabel="How to re-use definitions across an entire project">
+      <question>
+	<para>Can I have variables that are used in different locations within a
+	<quote>project</quote>?</para>
+      </question>
+      <answer>
+	<para>Yes. Although there is no formal definition of
+	<quote>project</quote> within Adagio, it is very common to have
+	variables that are used in several files within a project. The is solved
+	in Adagio is by detecting a special directory in the hierarchy called
+	the <emphasis>project home</emphasis> directory. The idea is for users
+	to have multiple of these directories, one for each large project of
+	shared resources.</para>
+	
+	<para>Adagio tries to provide the least invasive solution, so rather
+	than requiring an extra definition with the location of this project
+	home directory, it detects it automatically by searching for the file
+	with name <filename>Adagio.project</filename> in up to ten levels of
+	directories above the current one. If a file with this name is found,
+	the global variable <varname>project_home</varname> is then assinged the
+	directory where the file is located.</para>
+	
+	<para>For example, let us assume that your project uses a stylesheet to
+	process files in multiple locations. You may include the following
+	definition in <filename>Adagio.project</filename>:</para>
+
+	<programlisting>[xslt]
+styles = %(project_home)s/MyStyleDir/style.xsl</programlisting>
+
+        <para>All <command>xslt</command> rules defined in your project will
+	have the variable <command>styles</command> with this value, unless it
+	is overwritten by a definition in the local file.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="extending_vars" 
+		xreflabel="How to append values to a variable">
+      <question>
+	<para>A variable contains a set of values, but I would like to add some
+	more. How can I extend the values assigned to a variable?</para>
+      </question>
+      <answer>
+	<para>New values can be appended to any variable in Adagio (as if they
+	were written separated by a space at the end of the current value) by
+	using the following syntax:</para>
+
+	<programlisting>var<command>+</command> = new values</programlisting>
+
+	<para>An assignment with the variable name terminated with the
+	<quote>+</quote> symbol is taken as an addition to the current
+	value.</para>
+
+	<para>For example, variable <quote>foo</quote> has been defined with the
+	following assignment within a rule:</para>
+
+	<programlisting>foo = a b c d</programlisting>
+
+	<para>and then, the following assignment/extension is included:</para>
+
+	<programlisting>foo+ = e f g</programlisting>
+
+	<para>the final value of the variable is <quote>a b c d e f
+	g</quote>.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry id="rule_alias" xreflabel="Can I give a name to a rule">
+      <question>
+	<para>Once a rule has been defined, Can I assign a different name to
+	it?</para>
+      </question>
+      <answer>
+	<para>Yes. For every rule you may define the variable
+	<quote>alias</quote> with an alternative name for that rule. For
+	example, in the following rule file, an alias is defined for the
+	<command>xslt</command> rule:</para>
+
+	<programlisting>[xslt.auxiliary_document]
+alias = auxiliary_document
+style = %(project_home)/Styles/AuxStyle.xsl</programlisting>
+
+        <para>The rule can now be referred simply as
+	<quote>auxiliary_document</quote>.</para>
+      </answer>
+    </qandaentry>
+
+    <qandaentry>
+      <question>
+	<para>Can I include other files in a rule file?</para>
       </question>
 
       <answer>
-        <para>The complete collection of variables that can be included in a
-        <filename>Properties.txt</filename> file are contained in the <ulink
-        url="Properties_sample.txt">sample of
-        <filename>Properties.txt</filename> file</ulink>. Remember, however,
-        that only those variables that include a definition different from the
-        default need to be included in that file.</para>
+	<para>Yes. You may include <quote>in place</quote> any file by using the
+	special rule <command>template</command>. This rule only admits the
+	assignment of a single variable <command>files</command> containing the
+	files that are included on that point. For example:</para>
+
+	<programlisting>[template]
+files = %(project_home)s/Templates/t1.ini %(project_home)s/Templates/t2.ini</programlisting>
+        <para>includes two files from a remote directory in place of the
+	<command>template</command> rule.</para>
       </answer>
     </qandaentry>
-
-      <qandaentry id="using_regexp_for_files">
-        <question>
-          <para>Can I specify a set of files using a regular expression in
-          <filename>Properties.txt</filename>?</para>
-        </question>
-        <answer>
-          <para>Yes. Adagio allows two regular expression patterns.</para>
-          <itemizedlist>
-            <listitem>
-              <para><quote>*</quote> matches zero or more characters</para>
-            </listitem>
-            <listitem>
-              <para><quote>?</quote> matches one character</para>
-            </listitem>
-          </itemizedlist>
-
-          <para>For example, if you have several figures and each of them with a
-          version with a suffix <command>_en.svg</command> and a suffix
-          <command>_es.svg</command>), you may select all of them with the
-          expression <command>*_e?.xml</command>. These patterns may be used
-          anywhere file lists are required unless otherwise noted. Regular
-          expressions are not allowed when specifying sets of files to delete
-          for security reasons.</para>
-
-          <para>If you want this type of rule to be applied, not only to all the
-          files matching this pattern in this directory, but to all directories,
-          see <xref linkend="global_rule"/>.</para>
-        </answer>
-      </qandaentry>
-
-      <qandaentry id="property_in_command_line" xreflabel="How to execute with
-                                                           one variable modified">
-        <question>
-	  <para>Can I execute the <command>adagio</command> once but with one
-	  single variable modified from the definition in
-	  <filename>Properties.txt</filename>?</para>
-        </question>
-        <answer>
-          <para>Yes. In fact, you may include as many variable definitions in
-          the command line as you see fit. They need to be provided with the
-          following format:</para>
-
-          <programlisting>-Dpropertyname=propertyvalue</programlisting>
-
-	  <para>If tye property value contains spaces, then the parameter needs
-	  to be given with the following syntax:</para>
-
-          <programlisting>'-Dpropertyname="propertyvalue with spaces"'</programlisting>
-
-          <para>Any argument written beyond <command>adagio</command> is directly
-          passed to an invocation of Ant (the rule processing engine used by
-          Adagio). See the Ant manual for a detailed discussion of the available
-          options.</para>
-        </answer>
-      </qandaentry>
-
-      <qandaentry id="adagio_course_home"
-                  xreflabel="How to re-use definitions across an entire project">
-        <question>
-          <para>Can I have definitions or use certain files that are used in
-          different locations within a <quote>project</quote>?</para>
-        </question>
-        <answer>
-          <para>Yes. Although there is no formal definition of
-          <quote>project</quote> within Adagio, it is very common to have files
-          or definitions that apply to all files included in a set of
-          directories. The way this is solved in Adagio is by detecting a
-          special directory in the hierarchy called the <emphasis>course
-          home</emphasis> directory. The idea is for users to have multiple of
-          these directories one for each large project of shared
-          resources.</para>
-
-          <para>Adagio tries to provide the least invasive solution, so rather
-          than requiring an extra definition with the location of this course
-          home directory, it detects it automatically by searching for the file
-          with name <filename>AdagioProjectParams.xml</filename> in up to ten
-          levels of directories above the current one. If a file with this name
-          is found, the variable <varname>adagio.course.home</varname> is then
-          assinged the directory where the file is located.</para>
-          
-          <para>For example, let us assume that your project contains some
-          stylesheet to be used in multiple locations. You may give this file
-          the name <filename>AdagioProjectParams.xml</filename> and place it at the
-          highest level in your hierarchy of directories. From any directory you
-          may refer to such file in the <filename>Properties.txt</filename> file
-          as shown in the following example.</para>
-
-          <example>
-            <title>Example of use of <varname>ada.course.home</varname></title>
-            <programlisting>mergestyles.master.style=${ada.course.home}AdaCourseParams.xml
-export.dst.dir=${ada.course.home}scratch</programlisting>
-          </example>
-
-          <para>The variable <varname>ada.course.home</varname> is used to
-          access the common stylesheet as well as a prefix to a directory where
-          to export resources.</para>
-
-          <para>Variable <varname>ada.course.home</varname> is one of the global
-          variables that ADA defines. The entire list is:</para>
-
-          <informaltable frame="all" id="global_vars_table">
-            <tgroup rowsep="1" colsep="1" cols="3">
-              <colspec colnum="1" colname="col1" align="left"></colspec>
-              <colspec colnum="2" colname="col2" align="left"></colspec>
-              <colspec colnum="3" colname="col3" align="center"></colspec>
-              <thead>
-                <row>
-                  <entry align="center">Variable name</entry>
-                  <entry align="center">Description</entry>
-                  <entry align="center">Default</entry>
-                </row>
-              </thead>
-              <tbody>
-                <row>
-                  <entry><varname>basedir</varname></entry>
-                  <entry>The directory where the rules are being applied</entry>
-                  <entry>Initially, current directory</entry>
-                </row>
-                <row>
-                  <entry><varname>user.dir</varname></entry>
-                  <entry>Directory from where ADA has been invoked</entry>
-                  <entry>Current directory</entry>
-                </row>
-                <row>
-                  <entry><varname>user.home</varname></entry>
-                  <entry>Home directory for the user</entry>
-                  <entry>System dependent</entry>
-                </row>
-                <row>
-                  <entry><varname>ada.home</varname></entry>
-                  <entry>Directory where ADA is installed</entry>
-                  <entry>System dependent</entry>
-                </row>
-              </tbody>
-            </tgroup>
-          </informaltable>
-
-          <para>If what you want is not a variable definition valid for an
-          entire project, but a variable for all the projects, check <xref
-          linkend="global_rule"/>.</para>
-        </answer>
-      </qandaentry>
-
-    <qandaentry id="global_rule" 
-                xreflabel="How to make a variable declaration valid for all projects">
-      <question>
-        <para>Can I have a variable declaration for all the projects?</para>
-        
-        <para>The file <filename>Properties.txt</filename> contains variable
-        assignments only valid for the current directory. Is it possible to
-        define a variable such that the definition is used in all the
-        directories of all the projects processed by ADA?</para>
-      </question>
-      <answer>
-        <para>Yes. You may have this type of assignments in two additional files
-        that are read by ADA:</para>
-
-        <itemizedlist>
-          <listitem>
-            <para>The file with name <filename>Ada.properties</filename> if
-            present in the ADA Course Home directory (see <xref
-            linkend="ada_course_home"/> to know where is this directory.)</para>
-          </listitem>
-          <listitem>
-            <para>The <filename>.ant.properties</filename> file if present in
-            your home directory (see <xref linkend="run_adacheck"/> to find out
-            where Ant assumes where is this directory.)</para>
-          </listitem>
-        </itemizedlist>
-
-        <para>The order in which these files are processed is:
-        <filename>Ada.properties</filename>,
-        <filename>Properties.txt</filename>, and
-        <filename>.ant.properties</filename>. If a variable is defined in more
-        than one file, only the <emphasis>first definition</emphasis> is taken
-        into account. As a consequence, you may have general definitions in the
-        <filename>.ant.properties</filename> of your home directory that may be
-        overwritten by definitions in the <filename>Properties.txt</filename>
-        file in the local directory, and these can be overwritten by the
-        <filename>Ada.properties</filename> file in the project home. The
-        following figure shows the effect of reading these files in this
-        order:</para>
-        
-        <informalfigure>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/GlobalRule.png" format="PNG"/>
-            </imageobject>
-            <textobject>
-              <phrase>Definition file processing</phrase>
-            </textobject>
-          </mediaobject>
-        </informalfigure>
-
-        <para>The value of <varname>Var1</varname> is taken from the
-        <filename>Ada.properties</filename> file, <varname>Var2</varname> is
-        taken from the <filename>Properties.txt</filename> file, and
-        <varname>Var3</varname> is taken from the
-        <filename>.ant.properties</filename> file in the user home
-        directory.</para>
-      </answer>
-    </qandaentry>
-
     <!--
     <qandaentry id="global_vars" xreflabel="Which variables are already defined">
     </qandaentry>

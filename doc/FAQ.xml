@@ -177,22 +177,6 @@
   <!--             parse="xml" -->
   <!--             xmlns:xi="http://www.w3.org/2001/XInclude"/> -->
 
-  <!-- 
-  RSS:
-    RssIgnore.xsl
-    RssToHtml.xsl
-    Rss.xsl
-    Rss.xml
-
-  GoogleGadget:
-    GGadget.xsl
-
-  Cleaning
-
-  JAF?
-    XhtmlAdaFilter.xsl
-
--->
 
   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <!--                                                              -->

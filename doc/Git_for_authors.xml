@@ -29,57 +29,45 @@
 <!--                                                              -->
 <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <section id="Git_for_authors" xreflabel="Top of the Section">
-  <title>Using Git as an author with ADA</title>
+  <title>Using Git as an author with Adagio</title>
 
   <qandaset>
     <qandaentry id="what_is_VCS">
       <question>
-        <para>
-          What is a <ulink
+        <para>What is a <ulink
           url="en.wikipedia.org/wiki/Revision_control">version control
-          system</ulink>?
-        </para>
+          system</ulink>?</para>
       </question>
       <answer>
-        <para>
-          A Version Control System (VCS) is a tool that allows the manipulation of
-          different versions of information units (typically files) by
-          multiple users.
-        </para>
+        <para>A Version Control System (VCS) is a tool that allows the
+        manipulation of different versions of information units (typically
+        files) by multiple users.</para>
+	
+        <para>Files change over time, and current file systems store only the
+        last version. Version control systems, on the other hand store (almost)
+        all the different versions that files have over time. The location where
+        these versions are stored is commonly known as a
+        <emphasis>repository</emphasis>. But on top of storing versions, these
+        tools also offer multiple operations to manipulate them. The two most
+        common operations are sending a new version of the files to the
+        repository and getting the latest version of the repository.</para>
+	
+        <para>But when a set of users is sharing files, version management may
+        become difficult. What happens if two users have the same file and both
+        modify it? Who has the latest version? How is this situation managed?
+        Actual VCS tools have very sophisticated techniques to solve these
+        situations and offer users a comfortable environment to manipulate
+        multiple versions of large sets of files.</para>
 
-        <para>
-          Files change over time, and current file systems store only the last
-          version. Version control systems, on the other hand store (almost)
-          all the different versions that files have over time. The location
-          where these versions are stored is commonly known as a
-          <emphasis>repository</emphasis>. But on top of storing versions,
-          these tools also offer multiple operations to manipulate them. The
-          two most common operations amount to send a new version of the files
-          to the repository and get the latest version of the repository.
-        </para>
-
-        <para>
-          But when a set of users is sharing files, version management may
-          become specially complicated. What happens if two users have the
-          same file and both modify it? Who has the latest version? How is this
-          situation managed? Actual VCS tools have very sophisticated
-          techniques to solve these situations and offer users a comfortable
-          environment to manipulate complicated multiple versions of large
-          sets of files.
-        </para>
-
-        <para>
-          As with almost any application, there are multiple VCS, both open
-          source and commercial. ADA is itself managed using
-          <command>GIT</command>, an open source VCS, and the authoring
-          environment proposed relies also in the use of the same tool. The
-          problem of version control is orthogonal to authoring. In other
-          words, any distributed authoring environment probably has some
-          degree of file sharing and version management. If you solve this
-          problem with <command>git</command> or any other tool is independent
-          of the problem of creating and assembling resources as supported by
-          ADA.
-        </para>
+        <para>As with almost any application, there are multiple VCS, both open
+        source and commercial. Adagio is managed using <command>GIT</command>,
+        an open source VCS, and the authoring environment proposed relies also
+        in the use of the same tool. The problem of version control is
+        orthogonal to authoring. In other words, any distributed authoring
+        environment probably has some degree of file sharing and version
+        management. If you solve this problem with <command>git</command> or any
+        other tool is independent of the problem of creating and assembling
+        resources as supported by Adagio.</para>
       </answer>
     </qandaentry>
 
@@ -88,29 +76,23 @@
         <para>What is Git?</para>
       </question>
       <answer>
-        <para>
-          Git is a modern, fast, open-source distributed version control
-          system, originally developed by Linus Torvalds.  It is being used in
-          large-scale open-source projects like, for example, the Linux Kernel
-          and the X Window System <emphasis>X.org</emphasis>, although it is
-          suitable also for small projects.
-        </para>
+        <para>Git is a modern, fast, open-source distributed version control
+        system, originally developed by Linus Torvalds.  It is being used in
+        large-scale open-source projects like, for example, the Linux Kernel and
+        the X Window System <emphasis>X.org</emphasis>, although it is suitable
+        also for small projects.</para>
 
-        <para>
-          Unlike other well-known version control systems like CVS and
-          Subversion (which rely on a central repository), Git uses a
-          distributed repository. A central repository is not necessary because
-          each developer can have her own repository with the full history of
-          the project. Changes done by a developer in her repository can be
-          easily copied to other repositories.
-        </para>
+        <para>Unlike previous version control systems like CVS and Subversion
+        (which rely on a central repository), Git uses a distributed
+        repository. A central repository is not necessary because each developer
+        can have her own repository with the full history of the
+        project. Changes done by a developer in her repository can be easily
+        copied to other repositories.</para>
 
-        <para>
-          GIT approaches the problem of managing versions of a set of files
-          from the point of view of four locations as shown in the following
-          figure (derived from an excellent post by <ulink
-          url="http://osteele.com">Oliver Steel's Blog</ulink>).
-        </para>
+        <para>GIT approaches the problem of managing versions of a set of files
+        from the point of view of four locations as shown in the following
+        figure (derived from an excellent post by <ulink
+        url="http://osteele.com">Oliver Steel's Blog</ulink>).</para>
 
         <informalfigure>
           <mediaobject>
@@ -123,51 +105,40 @@
           </mediaobject>
         </informalfigure>
         
-        <para>
-          The user works with her files normally. The <quote>index</quote> is
-          similar to a container in which the changes to the files can be
-          deposited gradually to later be packed and sent to the local
-          repository. As it can be seen in the figure, there are commands to
-          send changes from the files to the index, from the index to the
-          local repository or even directly from the files to the repository.
-        </para>
+        <para>The user works with her files normally. The <quote>index</quote>
+        is similar to a container in which the changes to the files can be
+        deposited gradually to later be packed and sent to the local
+        repository. As it can be seen in the figure, there are commands to send
+        changes from the files to the index, from the index to the local
+        repository or even directly from the files to the repository.</para>
 
-        <para>
-          This workflow can be done entirely in a local machine with no
-          information exchange with any other repository. However, if the
-          different versions need to be shared through an external repository,
-          <command>git</command> offers commands to send these changes or
-          update the local files with the latest revision respect to the
-          remote repository. These commands are explained in the
-          following questions.
-        </para>
+        <para>This workflow can be done entirely in a local machine with no
+        information exchange with any other repository. However, if the
+        different versions need to be shared through an external repository,
+        <command>git</command> offers commands to send these changes or update
+        the local files with the latest revision respect to the remote
+        repository. These commands are explained in the following
+        questions.</para>
 
-        <para>
-          But aside from this four-location scenario, Git, as all VCS tools,
-          offers a very powerful functionality to group and manage versions
-          into what are called <emphasis>branches</emphasis>. Branches are
-          different views of the local repository that contain different
-          versions of the files in the repository. At any point in time, the
-          work directory and the index are pointing to one and only one branch
-          of the repository. It then appears the notion of <quote>being placed
-          in a branch</quote> (or should we say <quote>perched</quote>) while
-          working with our local files managed by git.
-        </para>
+        <para>But aside from this four-location scenario, Git, as all VCS tools,
+        offers a very powerful functionality to group and manage versions into
+        what are called <emphasis>branches</emphasis>. Branches are different
+        views of the local repository that contain different versions of the
+        files in the repository. At any point in time, the work directory and
+        the index are pointing to one and only one branch of the repository. It
+        then appears the notion of <quote>being placed in a branch</quote> (or
+        should we say <quote>perched</quote>) while working with our local files
+        managed by git.</para>
 
-        <para>
-          The most commonly used operations with branches are: create a branch
-          with a name (simply duplicate the content of the current branch),
-          change the current branch, and merge the content of one branch with
-          the current branch. Branches might be a bit counterintiutive at
-          first, but together with an extremely powerful merge capability,
-          offer an effective way to organize multiple versions in a complex
-          set of files.
-        </para>
+        <para>The most commonly used operations with branches are: create a
+        branch with a name (simply duplicate the content of the current branch),
+        change the current branch, and merge the content of one branch with the
+        current branch. Branches might be a bit counterintiutive at first, but
+        together with an extremely powerful merge capability, offer an effective
+        way to organize multiple versions in a complex set of files.</para>
 
-        <para>
-          For further information about Git, go to the <ulink
-          url="http://git.or.cz/">official Git Web site</ulink>.
-        </para>
+        <para>For further information about Git, go to the <ulink
+        url="http://git-scm.com/">official Git Web site</ulink>.</para>
       </answer>
     </qandaentry>
 
@@ -176,29 +147,19 @@
         <para>How do I install Git?</para>
       </question>
       <answer>
-        <para>
-          Git is multi-platform. It can be installed on Windows, Linux and Mac
-          systems.
-        </para>
+        <para>Git is multi-platform. It can be installed on Windows, Linux and
+        Mac systems.</para>
 
         <itemizedlist>
           <listitem>
-            <para>
-              On Windows, you have two options: the software is already
-              installed as part of Cygwin (see <xref
-              linkend="howtoinstallcygwin"/>) or as an standalone windows
-              program called <ulink
-              url="http://code.google.com/p/msysgit/">msys-git
-              installer</ulink>. If you choose the later option,
-              the first step is to download the installer
-              from the project page. 
-            </para>
+            <para>The windows version of Git is called <ulink
+            url="http://code.google.com/p/msysgit/">msys-git
+            installer</ulink>. You may download the installer from the project
+            page.</para>
 
-            <para>
-              Start the installer and advance on the required steps until the
-              system tries to adjust the <varname>PATH</varname> environment
-              as shown in the following figure:
-            </para>
+            <para>Start the installer and advance on the required steps until
+            the system tries to adjust the <varname>PATH</varname> environment
+            as shown in the following figure:</para>
 
             <informalfigure>
               <mediaobject>
@@ -211,43 +172,20 @@
               </mediaobject>
             </informalfigure>
 
-            <para>
-              The option of installing Git Bash Only needs to be select to
-              avoid conflicts with the Git version already installed as part
-              of the Cygwin environment.
-            </para>
+            <para>The option of installing Git Bash Only needs to be select to
+            avoid conflicts with the Git version already installed as part of
+            the Cygwin environment.</para>
 
-            <para>
-              Git needs an additional program to transfer data to and from a
-              remote repository. When selecting the SSH executable, select
-              OpenSSH as shown in the following figure.
-            </para>
+            <para>Once the installation has finished, you have two options to
+            work with Git, either a shell terminal which opens if you execute
+            the installed program named <command>Git Bash</command>, or a
+            graphical user interface named <command>Git GUI</command>. This last
+            interface offers the initial commands to clone, create or open a
+            repository.</para>
 
-            <informalfigure>
-              <mediaobject>
-                <imageobject>
-                  <imagedata fileref="images/GitWindowsInstall2.png" format="PNG"/>
-                </imageobject>
-                <textobject>
-                  <phrase>Git Setup SSH Tool</phrase>
-                </textobject>
-              </mediaobject>
-            </informalfigure>
-
-            <para>
-              Once the installation has finished, you have two options to work
-              with Git, either a shell terminal which opens if you execute the
-              installed program named <command>Git Bash</command>, or a
-              graphical user interface named <command>Git GUI</command>. This
-              last interface offers the initial commands to clone, create or
-              open a repository.
-            </para>
-
-            <para>
-              After selecting a repository, Git GUI allows you to create a
-              link to start the GUI directly manipulating that repository as
-              shown in the following figure.
-            </para>
+            <para>After selecting a repository, Git GUI allows you to create a
+            link to start the GUI directly manipulating that repository as shown
+            in the following figure.</para>
 
             <informalfigure>
               <mediaobject>
@@ -262,21 +200,15 @@
           </listitem>
 
           <listitem>
-            <para>
-              On Linux, it should be available as a regular package in your
-              distribution. For example, the main Git package in Debian is
-              called <command>git-core</command>. It can be installed using
-              <emphasis>Aptitude</emphasis> or any other available package
-              manager.
-            </para>
+            <para>On Linux, Git is available through the package
+            <command>git-core</command>. It can be installed using the softwar
+            management application offerd by each distribution.</para>
           </listitem>
 
           <listitem>
-            <para>
-              On Mac, the <ulink
-              url="http://code.google.com/p/git-osx-installer/">Git OS X
-              installer</ulink> is available.
-            </para>
+            <para>On Mac, the <ulink
+            url="http://code.google.com/p/git-osx-installer/">Git OS X
+            installer</ulink> is available.</para>
           </listitem>
         </itemizedlist>
       </answer>
@@ -284,54 +216,43 @@
 
     <qandaentry id="gitrepositories">
       <question>
-        <para>
-          My Git repository is local to my machine, but how is the content
-          shared with other authors and course coordinators?
-        </para>
+        <para>My Git repository is local to my machine, but how is the content
+        shared with other authors and course coordinators?</para>
       </question>
       <answer>
-        <para>
-          The distributed model offered by Git allows several workflows. One
-          possible workflow is presented here, but different alternatives are
-          also possible. It is assumed that a set of authors create content
-          for a course that is ultimately combined in a common location by a
-          person called the <emphasis>coordinator</emphasis> to produce the
-          final version to be published in the Web.
-        </para>
+        <para>The distributed model offered by Git allows several workflows. One
+        possible workflow is presented here, but different alternatives are also
+        possible. It is assumed that a set of authors create content for a
+        course that is ultimately combined in a common location by a person
+        called the <emphasis>coordinator</emphasis> to produce the final version
+        to be published in the Web.</para>
 
-        <para>
-          Also, a repository for the course material (and optionally course
-          administration files) must be installed in an location associated to
-          the course and such that all the authors must be able to exchange
-          files (for example through SSH). This repository will be referred to
-          as the <emphasis>shared repository</emphasis> in some parts of this
-          FAQ.
-        </para>
+        <para>Also, a repository for the course material (and optionally course
+        administration files) must be installed in an location associated to the
+        course and such that all the authors must be able to exchange files (for
+        example through SSH). This repository will be referred to as the
+        <emphasis>shared repository</emphasis> in some parts of this FAQ.</para>
 
-        <para>
-          The course coordinator sets up an initial version of the shared
-          repository. Git repositories allow for versions to be grouped in
-          what is called a <emphasis>branch</emphasis>. Branches are copies of
-          the repository such that versions can be selected from any of them
-          to manipulate. There is always a branch called
-          <filename>master</filename> and the coordinator should use it as the
-          <emphasis>official</emphasis> one containing the course material (if
-          you are a course coordinator, see <xref
-          linkend="git-admin-shared-repo"/>).  Published material is intended
-          to be built from the contents of this branch.  The course
-          coordinator is the person in charge of combining the changes from
-          all the authors into this branch. In order to maintain the new
-          versions produced by the authors properly contained, a branch should
-          be created for each author that is going to use the
-          repository. Authors will modify files in their respective local
-          repositories and eventually upload a new version of their files to
-          the proper branch of the shared repository. The coordinator takes
-          authors' contributions from their branches and merges them into this
-          repository (if you are a course coordinator, see <xref
-          linkend="git-admin-merge"/>). The following figure illustrates the
-          interaction between authors and course coordinator through the
-          shared repository.
-        </para>
+        <para>The course coordinator sets up an initial version of the shared
+        repository. Git repositories allow for versions to be grouped in what is
+        called a <emphasis>branch</emphasis>. Branches are copies of the
+        repository such that versions can be selected from any of them to
+        manipulate. There is always a branch called <filename>master</filename>
+        and the coordinator should use it as the <emphasis>official</emphasis>
+        one containing the course material (if you are a course coordinator, see
+        <xref linkend="git-admin-shared-repo"/>).  Published material is
+        intended to be built from the contents of this branch.  The course
+        coordinator is the person in charge of combining the changes from all
+        the authors into this branch. In order to maintain the new versions
+        produced by the authors properly contained, a branch should be created
+        for each author that is going to use the repository. Authors will modify
+        files in their respective local repositories and eventually upload a new
+        version of their files to the proper branch of the shared
+        repository. The coordinator takes authors' contributions from their
+        branches and merges them into this repository (if you are a course
+        coordinator, see <xref linkend="git-admin-merge"/>). The following
+        figure illustrates the interaction between authors and course
+        coordinator through the shared repository.</para>
 
         <informalfigure>
           <mediaobject>
@@ -344,85 +265,67 @@
           </mediaobject>
         </informalfigure>
 
-        <para>
-          As it can be seen, in addition to the course shared repository,
-          authors have their own local repository in their workspace (their
-          laptop, corporate user account, etc.) These repositories can be
-          easily set up by cloning the course repository (see <xref
-          linkend="gitclone" />). Authors then edit and store their versions
-          in their local repositories, and when the new version is ready to be
-          shared with the rest of authors, they push the changes to the proper
-          author branch in the shared repository (see <xref
-          linkend="gitpush"/>).
-        </para>
+        <para>As it can be seen, in addition to the course shared repository,
+        authors have their own local repository in their workspace (their
+        laptop, corporate user account, etc.) These repositories can be easily
+        set up by cloning the course repository (see <xref linkend="gitclone"
+        />). Authors then edit and store their versions in their local
+        repositories, and when the new version is ready to be shared with the
+        rest of authors, they push the changes to the proper author branch in
+        the shared repository (see <xref linkend="gitpush"/>).</para>
       </answer>
     </qandaentry>
 
     <qandaentry id="gitclone" xreflabel="How to clone a repository">
       <question>
-        <para>
-          How do I create my local repository from the 
-          shared repository?
-        </para>
+        <para>How do I create my local repository from the shared
+        repository?</para>
 
-        <para>
-          The course coordinator gave me the URL to access the shared
-          repository. How do I obtain the initial files from that repository
-          before starting to work?. How do I set-up my local Git repository
-          from it?
-        </para>
+        <para>The course coordinator gave me the URL to access the shared
+        repository. How do I obtain the initial files from that repository
+        before starting to work?. How do I set-up my local Git repository from
+        it?</para>
       </question>
 
       <answer>
-        <para>
-          A repository containing a copy of another repository is obtained
-          using the <command>clone</command> command. Let us suppose that the
-          shared repository is available through SSH with the following
-          parameters:
-        </para>
+        <para>A repository containing a copy of another repository is obtained
+        using the <command>clone</command> command. Let us suppose that the
+        shared repository is available through SSH with the following
+        parameters:</para>
 
         <itemizedlist>
           <listitem>
-            <para>
-              Remote host where the course account is available:
-              <command>accounts.example.com</command>.
-            </para>
+            <para>Remote host where the course account is available:
+            <command>accounts.example.com</command>.</para>
           </listitem>
           <listitem>
-            <para>
-              User name of the course account: <command>mycourse</command>.
-            </para>
+            <para>User name of the course account:
+            <command>mycourse</command>.</para>
           </listitem>
           <listitem>
-            <para>
-              Path within the course account where the shared repository
-              resides: <command>/home/mycourse/repository/material</command>.
-            </para>
+            <para>Path within the course account where the shared repository
+            resides:
+            <command>/home/mycourse/repository/material</command>.</para>
           </listitem>
           <listitem>
-            <para>
-              Name of your branch in the shared repository:
-              <command>john</command>.
-            </para>
+            <para>Name of your branch in the shared repository:
+            <command>john</command>.</para>
           </listitem>
         </itemizedlist>
 
-        <para>
-          Open a Git Shell window (see <xref linkend="gitinstall"/>). Go to
-          the directory where you want to store your repository (take into
-          account that git will create a new folder with the name
-          <filename>material</filename>). Execute the following command:
-        </para>
+        <para>Open a Git Shell window (see <xref linkend="gitinstall"/>). Go to
+        the directory where you want to store your repository (take into account
+        that git will create a new folder with the name
+        <filename>material</filename>). Execute the following command:</para>
 
         <programlisting>$ <command>git clone ssh://mycourse@accounts.example.com/home/mycourse/repository/material</command></programlisting>
 
-        <para>
-          You will be asked to authenticate with <command>mycourse</command>'s
-          password. The program will then print several messages and after a
-          while a clone of the shared repository should appear now in a new
-          sub-directory called <command>material</command> inside your current
-          directory. The following figure illustrates this process.
-        </para>
+        <para>You will be asked to authenticate with
+        <command>mycourse</command>'s password. The program will then print
+        several messages and after a while a clone of the shared repository
+        should appear now in a new sub-directory called
+        <command>material</command> inside your current directory. The following
+        figure illustrates this process.</para>
 
         <informalfigure>
           <mediaobject>
@@ -435,76 +338,38 @@
           </mediaobject>
         </informalfigure>
 
-        <para>
-          With the previous command you may have downloaded a self-contained
-          directory, in which case, all the files are already available for
-          regular use, or a directory with references to some complementary
-          material. These directories are called <quote>submodules</quote> and
-          need a special treatment. A directory contains these modules if the
-          file <filename>.gitmodules</filename> is present in the top
-          directory.
-        </para>
-
-        <para>
-          In the presence of modules, there are two additional commands that
-          need to be executed in order to obtain the
-          <emphasis>entire</emphasis> repository.
-        </para>
-
-        <programlisting>$ <command>git submodule init</command>
-$ <command>git submodule update</command></programlisting>
-
-        <para>
-          The first command simply inserts the submodule declaration as part
-          of the repository (a simple declaration is downloaded with the first
-          <command>clone</command> command). The second effectively clones the
-          additional modules.
-        </para>
-
-        <para>
-          You may now enter in the top directory of the cloned copy and type
-          <command>git status</command>:
-        </para>
+        <para>With the previous command you have downloaded a self-contained
+        directory with all the files available for regular use. With the command
+        interpreter, go to the newly created directory and type <command>git
+        status</command>:</para>
 
         <programlisting>$ <command>git status</command>
 # On branch master
 nothing to commit (working directory clean)</programlisting>
 
-        <para>
-          As you can see, the repository has been successfully downloaded, you
-          are in the <filename>master</filename> branch and the working
-          directory is clean of any changes. If the command says that you are
-          placed on a branch different from <command>master</command>, then
-          you just must change to that branch with the command:
-        </para>
+        <para>As you can see, the repository has been successfully downloaded,
+        you are in the <filename>master</filename> branch and the working
+        directory is clean of any changes. If the command says that you are
+        placed on a branch different from <command>master</command>, then you
+        must change to the master branch with the command:</para>
 
         <programlisting>$ <command>git checkout master</command></programlisting>
 
-        <para>
-          If you are not placed on the <command>master</command> branch and
-          the previous command failed, it means that the
-          <command>master</command> branch was not cloned. To create it you
-          must type:
-        </para>
+        <para>If you are not placed on the <command>master</command> branch and
+        the previous command failed, it means that the <command>master</command>
+        branch was not cloned. To create it you must type:</para>
 
         <programlisting>$ <command>git checkout -b master origin/master</command></programlisting>
 
-        <para>
-          Your repository should now be placed on branch
-          <command>master</command> as illustrated in the following figure.
-        </para>
-
-        <para>
-          Before beginning to work, you need to edit the configuration file of
-          your repository to simplify the exchange of information with your
-          author branch in the shared repository. Open the file
-          <filename>.git/config</filename> in your repository directory with a
-          plain text editor and add the line <command>push =
-          master:john</command> at the end of the <command>remote
-          "origin"</command> section. Remember that <command>john</command> is
-          the name of your branch in the shared repository in this
-          example. The file should now look something like this:
-        </para>
+        <para>Before beginning to work, you need to edit the configuration file
+        of your repository to simplify the exchange of information with your
+        author branch in the shared repository. Open the file
+        <filename>.git/config</filename> in your repository directory with a
+        plain text editor and add the line <command>push = master:john</command>
+        at the end of the <command>remote "origin"</command> section. Remember
+        that <command>john</command> is the name of your branch in the shared
+        repository in this example. The file should now look something like
+        this:</para>
 
         <programlisting>$ <command>cat .git/config</command>
 [core]
@@ -520,17 +385,15 @@ nothing to commit (working directory clean)</programlisting>
         remote = origin
         merge = refs/heads/master</programlisting>
         
-        <para>
-          Now your local repository is ready to work. Go ahead and modify your
-          files in this repository, and eventually send the changes first to
-          the index (if you need to do so) and then to your local repository
-          (see <xref linkend="gitcommit" />). Whenever you think appropriate
-          push your changes to your branch in the shared repository (see <xref
-          linkend="gitpush" />), and to obtain the latest version from the
-          repository, update from time to time your local repository(see <xref
-          linkend="gitpull" />).
-          
-        </para>
+        <para>Now your local repository is ready to work. Go ahead and modify
+        your files in this repository, and eventually send the changes first to
+        the index (if you need to do so) and then to your local repository (see
+        <xref linkend="gitcommit" />). Whenever you think appropriate push your
+        changes to your branch in the shared repository (see <xref
+        linkend="gitpush" />), and to obtain the latest version from the
+        repository, update from time to time your local repository(see <xref
+        linkend="gitpull" />).
+          </para>
       </answer>
     </qandaentry>
 
@@ -539,35 +402,29 @@ nothing to commit (working directory clean)</programlisting>
         <para>How do I commit changes to my local git repository?</para>
       </question>
       <answer>
-        <para>
-          <quote>Commits</quote> are the basic unit used by Git to keep track
-          of the different versions of the contents it manages. Only the
-          versions committed into the repository are available later for
-          reverting changes, examining history, computing differences between
-          versions, etc. In other words, if you never commit files, it is like
-          working with no VCS at all. So, commit often, in an orderly fashion
-          (this takes some experience) and trying to separate changes in
-          logical units (this takes even more experience).
-        </para>
+        <para><quote>Commits</quote> are the basic unit used by Git to keep
+        track of the different versions of the contents it manages. Only the
+        versions committed into the repository are available later for reverting
+        changes, examining history, computing differences between versions,
+        etc. In other words, if you never commit files, it is like working with
+        no VCS at all. So, commit often, in an orderly fashion (this takes some
+        experience) and trying to separate changes in logical units (this takes
+        even more experience).</para>
 
-        <para>
-          Authors make continuous changes to their content. After changing
-          some files, typically when they finish a logical unit of work
-          (e.g. finish writing or reviewing a document section, including a
-          figure in a document, finish a draft they want to share with others,
-          etc.), authors send the new version to the local repository. The
-          action of sending a new version into the local repository is called
-          a <emphasis>commit</emphasis>.  For each commit, Git stores the
-          differences between the files now and the files in
-          the previous commit.
-        </para>
+        <para>Authors make continuous changes to their content. After changing
+        some files, typically when they finish a logical unit of work
+        (e.g. finish writing or reviewing a document section, including a figure
+        in a document, finish a draft they want to share with others, etc.),
+        authors send the new version to the local repository. The action of
+        sending a new version into the local repository is called a
+        <emphasis>commit</emphasis>.  For each commit, Git stores the
+        differences between the files now and the files in the previous
+        commit.</para>
 
-        <para>
-          When you have a new version of the files you want to commit, it
-          helps sometimes to take a look at those changes before sending them
-          to the repository. This is achieved with the <command>git
-          status</command> command:
-        </para>
+        <para>When you have a new version of the files you want to commit, it
+        helps sometimes to take a look at those changes before sending them to
+        the repository. This is achieved with the <command>git status</command>
+        command:</para>
 
         <programlisting>$ <command>git status</command>
 # On branch master
@@ -588,49 +445,39 @@ nothing to commit (working directory clean)</programlisting>
 #       <command>MyCoolReource.pdf</command>
 #       <command>build.out</command></programlisting>
 
-        <para>
-          The text dumped on the screen is the way Git has to tell us what is
-          the situation between your files, the index and the local repository
-          (refresh your memory with <xref linkend="gitwhatis"/>). It first
-          shows those files that are already inside the index and ready to be
-          committed (in the example
-          <filename>images/ReallyCoolImage.svg</filename>). It then shows the
-          files that have changed but are not inside the index (in this case
-          <filename>MyCoolResource.xml</filename>). And it finally shows those
-          files that Git knows nothing about them, or in other words, are
-          ignored
-          by git or <emphasis>untracked</emphasis>. If you need a much more
-          detailed report on the changes made, use the command <command>git
-          diff</command>, which shows the lines that changed (were added,
-          removed or modified) in all the modified files.
-        </para>
+        <para>The text dumped on the screen is the way Git has to tell us what
+        is the situation between your files, the index and the local repository
+        (refresh your memory with <xref linkend="gitwhatis"/>). It first shows
+        those files that are already inside the index and ready to be committed
+        (in the example <filename>images/ReallyCoolImage.svg</filename>). It
+        then shows the files that have changed but are not inside the index (in
+        this case <filename>MyCoolResource.xml</filename>). And it finally shows
+        those files that Git knows nothing about them, or in other words, are
+        ignored by git or <emphasis>untracked</emphasis>. If you need a much
+        more detailed report on the changes made, use the command <command>git
+        diff</command>, which shows the lines that changed (were added, removed
+        or modified) in all the modified files.</para>
 
-        <para>
-          There are two typical ways to send changes to the local
-          repository. If you want to send only the files in the index, then
-          the command is <command>git commit</command>. In order to be
-          considered as changes, files need to be explicitly placed in the
-          index with the command <command>git add file</command>. If this
-          concept of the index is too confusing, forget about it for the time
-          being and use it only once you feed the need for it.
-        </para>
+        <para>There are two ways to send changes to the local repository. If you
+        want to send only the files in the index, then the command is
+        <command>git commit</command>. In order to be considered as changes,
+        files need to be explicitly placed in the index with the command
+        <command>git add file</command>. If this concept of the index is too
+        confusing, forget about it for the time being and use it only once you
+        feed the need for it.</para>
 
-        <para>
-          The alternative way of doing a commit is to ignore the index and
-          simply send the changes in all the files (the second section on the
-          report shown by <command>git status</command>). To achieve this,
-          just type <command>git commit -a</command>. This command commits all
-          the files that have been modified since the last commit
-          (independently of being in the index or not).
-        </para>
+        <para>The alternative way of doing a commit is to ignore the index and
+        simply send the changes in all the files (the second section on the
+        report shown by <command>git status</command>). To achieve this, just
+        type <command>git commit -a</command>. This command commits all the
+        files that have been modified since the last commit (independently of
+        being in the index or not).</para>
 
-        <para>
-          The <command>commit</command> command always asks for a message
-          describing the changes that are being sent to the repository. There
-          is this unwritten convention that says that comments should include
-          a summary (similar to an email subject) in the first line, then an
-          empty line and then a longer description of the changes if needed.
-        </para>
+        <para>The <command>commit</command> command always asks for a message
+        describing the changes that are being sent to the repository. There is
+        this unwritten convention that says that comments should include a
+        summary (similar to an email subject) in the first line, then an empty
+        line and then a longer description of the changes if needed.</para>
 
         <example>
           <title>Example of a comment attached to a git commit</title>
@@ -641,50 +488,41 @@ backwards and added some colors so make it more intuitive.
        <command>modified:   MyCoolResource.xml</command></programlisting>
         </example>
 
-        <para>
-          Git places several lines in the editor as part of the message. But
-          all of them start with the <quote>#</quote> symbol that says that it
-          will be ignored. Git places them there just in case you want to
-          include any of them, and saves you the time to type it (as the last
-          line in the example)
-        </para>
+        <para>Git places several lines in the editor as part of the message. But
+        all of them start with the <quote>#</quote> symbol that says that it
+        will be ignored. Git places them there just in case you want to include
+        any of them, and saves you the time to type it (as the last line in the
+        example)</para>
 
-        <para>
-          If you create a new file, Git ignores its presence and is listed as
-          <emphasis>untracked</emphasis>. If you want that file to be part of
-          the versions managed by Git you must include it explicitly with the
-          command <command>git add &lt;filename&gt;</command>. This command also
-          includes the new file in the index. The next time you commit your
-          changes, the file will be considered by Git. After adding a file you
-          may check the status of your working files with the command
-          <command>git status</command>.
-        </para>
+        <para>If you create a new file, Git ignores its presence and is listed
+        as <emphasis>untracked</emphasis>. If you want that file to be part of
+        the versions managed by Git you must include it explicitly with the
+        command <command>git add &lt;filename&gt;</command>. This command also
+        includes the new file in the index. The next time you commit your
+        changes, the file will be considered by Git. After adding a file you may
+        check the status of your working files with the command <command>git
+        status</command>.</para>
 
-        <para>
-          Sometimes, but only sometimes, you've modified lots of files, and
-          instead of creating a new version with all the changes, you would
-          like to document the changes separately by grouping some files. For
-          example, you made two clearly identified changes. One in files
-          <filename>f1</filename> and <filename>f2</filename>, and the second
-          in files <filename>f3</filename> and <filename>f4</filename>. The
-          command <command>git commit -a</command> will send the new versions
-          of all four files to the repository, but you would like to send the
-          first two with a message and the second two with another message in
-          separated commits.
-        </para>
+        <para>Sometimes you modified a large number of files, and instead of
+        creating a new version with all the changes, you would like to document
+        the changes separately by grouping some files. For example, you made two
+        clearly identified changes. One in files <filename>f1</filename> and
+        <filename>f2</filename>, and the second in files <filename>f3</filename>
+        and <filename>f4</filename>. The command <command>git commit
+        -a</command> will send the new versions of all four files to the
+        repository, but you would like to send the first two with a message and
+        the second two with another message in separated commits.</para>
 
-        <para>
-          This is precisely the purpose of the index! The index is this
-          fictitious box in which files are prepared and packed to be sent to
-          the local repository. By using the command <command>git add
-          &lt;filenames></command>, you can place the files you want in the
-          index. Once you have the right files, run the command <command>git
-          commit</command> (without the <command>-a</command> option!) and the
-          files in the index, and only them, are sent to the repository. No
-          other changes in your local files are considered and the index
-          appears now as empty. You can then proceed to place in the index the
-          second set of files and execute the second commit.
-        </para>
+        <para>This is precisely the purpose of the index! The index is this
+        fictitious box in which files are prepared and packed to be sent to the
+        local repository. By using the command <command>git add
+        &lt;filenames></command>, you can place the files you want in the
+        index. Once you have the right files, run the command <command>git
+        commit</command> (without the <command>-a</command> option!) and the
+        files in the index, and only them, are sent to the repository. No other
+        changes in your local files are considered and the index appears now as
+        empty. You can then proceed to place in the index the second set of
+        files and execute the second commit.</para>
       </answer>
     </qandaentry>
 
@@ -693,150 +531,114 @@ backwards and added some colors so make it more intuitive.
         <para>What files should be added into the Git repository?</para>
       </question>
       <answer>
-        <para>
-          Source code management tools, like Git, are designed to
-          track <emphasis>source files</emphasis>.
-          Files produced automatically by compilers, stylesheets,
-          image transformation programs, etc. should not be tracked.
-        </para>
-        <para>
-          This does not mean that untracked files cannot be inside
-          your working directory, they can, but just that they
-          should not be added
-          into the Git repository. Do not worry about having them in
-          your  working directory, because only files that are
-          added explicitly with the <command>git add &lt;filename></command>
-          command are tracked by Git. Be careful when you add
-          a directory with <command>git add</command>, because it
-          adds all the files inside it into the repository.
-          If there are files in that directory that should not be
-          added, it is better to list the files to be added explicitly. 
-        </para>
-        <para>
-          In the case of ADA, add into the Git repository your Docbook source
-          files, your figures in the vector format produced by your
-          favorite drawing program (normally SVG files), configuration files
-          like <filename>Properties.txt</filename> and
-          <filename>Params.xml</filename> and, in general, any other resources
-          that are not generated automatically by ADA.
-        </para>
-        <para>
-          In general, do not include into the Git repository 
-          files like PDFs and HTMLs
-          produced from Docbook or LaTex sources,
-          PNG images produced from SVG figures, the backup files
-          that are saved by some editors, etc.
-        </para>
+        <para>Source code management tools, like Git, are designed to track
+        <emphasis>source files</emphasis>.  Files produced automatically by
+        compilers, stylesheets, image transformation programs, etc. should not
+        be tracked.</para>
+        <para>This does not mean that untracked files cannot be inside your
+        working directory, they can, but just that they should not be added into
+        the Git repository. Do not worry about having them in your working
+        directory, because only files that are added explicitly with the
+        <command>git add &lt;filename></command> command are tracked by Git. Be
+        careful when you add a directory with <command>git add</command>,
+        because it adds all the files inside it into the repository.  If there
+        are files in that directory that should not be added, it is better to
+        list the files to be added explicitly. </para>
+
+        <para>In the case of Adagio, add into the Git repository your Docbook
+        source files, your figures in the vector format produced by your
+        favorite drawing program (normally SVG files), configuration files like
+        <filename>Properties.txt</filename> and <filename>Params.xml</filename>
+        and, in general, any other resources that are not generated
+        automatically by Adagio.</para>
+
+        <para>In general, do not include into the Git repository files like PDFs
+        and HTMLs produced from Docbook or LaTex sources, PNG images produced
+        from SVG figures, the backup files that are saved by some editors,
+        etc.</para>
       </answer>
     </qandaentry>
 
     <qandaentry id="gitcommitlocal">
       <question>
-        <para>
-          I have just committed some changes, why are they not visible in the
-          shared repository?
-        </para>
+        <para>I have just committed some changes, why are they not visible in
+        the shared repository?</para>
       </question>
       <answer>
-        <para>
-          When you commit changes, they are only stored in your local
-          repository. Remember, you own your repository. If you want those
-          changes to be stored also in the shared repository, you have to
-          explicitly send them (or push them!) to that repository after
-          committing. See <xref linkend="gitpush"/> for further explanation.
-        </para>
+        <para>When you commit changes, they are only stored in your local
+        repository. Remember, you own your repository. If you want those changes
+        to be stored also in the shared repository, you have to explicitly send
+        them (or push them!) to that repository after committing. See <xref
+        linkend="gitpush"/> for further explanation.</para>
       </answer>
     </qandaentry>
 
     <qandaentry id="gitpull" 
                 xreflabel="How to update your local repository with others' changes">
       <question>
-        <para>
-          How do I update my local repository to see the latest changes
-          published on the course shared repository?
-        </para>
+        <para>How do I update my local repository to see the latest changes
+        published on the course shared repository?</para>
       </question>
 
       <answer>
-        <para>
-          Make sure your are placed in your <command>master</command> branch
-          and type the command:
-        </para>
+        <para>Make sure your are placed in your <command>master</command> branch
+        and type the command:</para>
 
         <programlisting>$ <command>git pull</command></programlisting>
 
-        <para>
-          If there have been any changes in the course repository (ore more
-          precisely in its <command>master</command> branch) they are now
-          included in your repository.
-        </para>
+        <para>If there have been any changes in the course repository (ore more
+        precisely in its <command>master</command> branch) they are now included
+        in your repository.</para>
 
-        <para>
-          The <command>pull</command> can only be executed if your index is
-          empty. Remember that empty box in <xref linkend="gitwhatis"/>? To
-          make sure you have no pending changes, commit them before executing
-          <command>git pull</command>.
-        </para>
+        <para>The <command>pull</command> can only be executed if your index is
+        empty. Remember that empty box in <xref linkend="gitwhatis"/>? To make
+        sure you have no pending changes, commit them before executing
+        <command>git pull</command>.</para>
       </answer>
     </qandaentry>
 
     <qandaentry id="gitpush" 
                 xreflabel="How to send changes to the shared repository">
       <question>
-        <para>
-          How do I send the changes in my local repository to the shared
-          repository?
-        </para>
-        <para>
-          I have created some cool resources and they are committed into my
-          local repository, and now I want to share them with the rest of
-          authors.  How do I upload the new files to the shared repository?
-        </para>
+        <para>How do I send the changes in my local repository to the shared
+        repository?</para>
+        <para>I have created some cool resources and they are committed into my
+        local repository, and now I want to share them with the rest of authors.
+        How do I upload the new files to the shared repository?</para>
       </question>
 
       <answer>
-        <para>
-          If your changes have been committed into your the
-          <command>master</command> branch and you have set-up your local
-          repository following the instructions in <xref linkend="gitclone"/>,
-          you just have to execute:
-        </para>
+        <para>If your changes have been committed into your the
+        <command>master</command> branch and you have set-up your local
+        repository following the instructions in <xref linkend="gitclone"/>, you
+        just have to execute:</para>
 
         <programlisting>$ <command>git push</command></programlisting>
 
-        <para>
-          Your changes should be now on your branch in the
-          shared repository. If your modifications are ready to
-          be reviewed by the course coordinator,
-          you may tell her that there are new contents there.
-          The course coordinator will review them and,
-          if they are all right, put them into the official branch. 
-        </para>
+        <para>Your changes should be now on your branch in the shared
+        repository. If your modifications are ready to be reviewed by the course
+        coordinator, you may tell her that there are new contents there.  The
+        course coordinator will review them and, if they are all right, put them
+        into the official branch. </para>
       </answer>
     </qandaentry>
 
     <qandaentry id="git_author_triangle_flow"
                 xreflabel="How to exchange files with the shared repository">
       <question>
-        <para>
-          I got a clone of the shared repository and know a few commands. How
-          is the interaction then taking place?
-        </para>
+        <para>I got a clone of the shared repository and know a few
+        commands. How is the interaction then taking place?</para>
 
-        <para>
-          After cloning, and modified files, I sent the new version to my
-          local repository, I <quote>pulled</quote> new versions from the
-          shared repository and I see how new files appear/dissapear/change,
-          and I even <quote>pushed</quote> some changes of my own to that
-          repository, can I see the big picture now?
-        </para>
+        <para>After cloning, and modified files, I sent the new version to my
+        local repository, I <quote>pulled</quote> new versions from the shared
+        repository and I see how new files appear/dissapear/change, and I even
+        <quote>pushed</quote> some changes of my own to that repository, can I
+        see the big picture now?</para>
       </question>
       
       <answer>
-        <para>
-          The proposed workflow (there are many others possible) is
-          illustrated in the following figure.
-        </para>
+        <para>The proposed workflow (there are many others possible) is
+        illustrated in the following figure.</para>
 
         <informalfigure>
           <mediaobject>
@@ -849,24 +651,19 @@ backwards and added some colors so make it more intuitive.
           </mediaobject>
         </informalfigure>
 
-        <para>
-          You initiated the process by cloning the shared repository (see
-          <xref linkend="gitclone"/>), then modified your own files and first
-          committed those new versions to your local repository (see <xref
-          linkend="gitclone"/>), once these changes were ready to be shared
-          you pushed them to the shared repository (see <xref
-          linkend="gitpush"/>) and where stored in a different branch
-          specially reserved for your changes. Somebody else, after inspecting
-          (or not) your changes, took them and promoted them to the master
-          branch by a <quote>merge</quote> operation. If any other file has
-          changed in the shared repository, you may pull them (see <xref
-          linkend="gitpull"/>.
-        </para>
+        <para>You initiated the process by cloning the shared repository (see
+        <xref linkend="gitclone"/>), then modified your own files and first
+        committed those new versions to your local repository (see <xref
+        linkend="gitclone"/>), once these changes were ready to be shared you
+        pushed them to the shared repository (see <xref linkend="gitpush"/>) and
+        where stored in a different branch specially reserved for your
+        changes. Somebody else, after inspecting (or not) your changes, took
+        them and promoted them to the master branch by a <quote>merge</quote>
+        operation. If any other file has changed in the shared repository, you
+        may pull them (see <xref linkend="gitpull"/>.</para>
 
-        <para>
-          So, a hypothetical sequence of commands in your regular day to day
-          work as an author would be:
-        </para>
+        <para>So, a hypothetical sequence of commands in your regular day to day
+        work as an author would be:</para>
 
         <programlisting>$ <command>git pull</command> # (Get the latest files)
 ... Work on your material and produce really cool stuff ...
