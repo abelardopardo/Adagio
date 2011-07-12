@@ -379,7 +379,7 @@ def setProperty(config, rule, option, value, fileName = None,
     # Check if the rule is allowed,
     if (not createRule) and (not config.has_section(rulePrefix)):
         # Rule prefix does not exist in config, and creation is not allowed
-        raise ValueError
+        raise ValueError('Rule ' + rulePrefix + ' not allowed.')
 
     # Create the rule if needed
     if not config.has_section(rule):
@@ -395,7 +395,7 @@ def setProperty(config, rule, option, value, fileName = None,
     # Check if option is allowed
     if (not createOption) and (not optionPresent):
         # Option does not exist in config, and creation is not allowed
-        raise ValueError
+        raise ValueError('Option ' + option + ' not allowed.')
 
     # Insert the option
     config.set(rule, option, value)
