@@ -482,7 +482,6 @@ def Execute(rule, dirObj, pad = None):
         re.match('.+\.deepclean$', rule)
 
     # Make sure the rule is legal.
-    print 'BBB', rule
     if not specialRule and not dirObj.options.has_section(rule):
         print i18n.get('illegal_rule_name').format(t = originalRule,
                                                      dl = dirObj.current_dir)
@@ -634,9 +633,6 @@ def helpRule(rule, dirObj, moduleName, pad = None):
             properties.getProperty(dirObj.options, prefix, 'help') + '\n' + \
             dirObj.dumpOptions(rule, prefix)
         hit = True
-    else:
-        print i18n.get('illegal_rule_name').format(t = rule,
-                                                   dl = dirObj.current_dir)
 
     return hit
 
