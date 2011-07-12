@@ -20,14 +20,14 @@
 # variables as well as an explanation.
 #
 [gotodir.export]
-export_dst = %(basedir)s
+export_dst = %(basedir)s/scratch/images
 files = images 
 #         ../bin
 #         VarTables
 #         ParamTables
 
-[gotodir]
-files = Samples
+# [gotodir]
+# files = Samples
 
 [xslt]
 files = FAQ.xml
@@ -38,10 +38,6 @@ extra_arguments = 'chapter.autolabel': 0,
                   'html.stylesheet': 'style.css',
                   'adagio.version': '%(version)s'
 
-# [copy]
-# src_dir = ../AntImports
-# files = Properties_sample.txt
-
 [export]
 dst_dir = scratch
 files = FAQ.html 
@@ -49,6 +45,6 @@ files = FAQ.html
         style.css 
         Properties_sample.txt
 
-# [rsync]
-# src_dir = scratch/
-# dst_dir = abel@varpa.it.uc3m.es:lib/www/Adagio/doc
+[rsync]
+src_dir = scratch/
+dst_dir = abel@varpa.it.uc3m.es:lib/www/Adagio
