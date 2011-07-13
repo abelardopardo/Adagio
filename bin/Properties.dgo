@@ -9,7 +9,7 @@
 # value". Values may span over several lines as long as the lines start with a
 # space.
 #
-# All rules except [ada] can be "named" or "unmamed". A named rule is a rule
+# All rules except [adagio] can be "named" or "unmamed". A named rule is a rule
 # that contains a .<name> suffix. For example [xslt.first] is a rule of type
 # xslt with name "first". This allows multiple rules of the same type to be
 # included in the file.
@@ -107,7 +107,7 @@ version			= (current ada version)
 #
 # Rules with their specific variables (the defaults are available in all
 #
-[ada]
+[adagio]
 # Minimum version required to execute ADA
 minimum_version		=
 # Maximum version allowed to exsecute ADA
@@ -138,7 +138,7 @@ extra_arguments		=
 
 [gotodir]
 files			= d1 d2   # Space separated lists of dirs to process recursively
-targets			= t1 t2 # List of rules to execute in the remote dir
+rules			= t1 t2 # List of rules to execute in the remote dir
 
 [gimp]
 # Executable to invoke
