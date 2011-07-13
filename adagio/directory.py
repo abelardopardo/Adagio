@@ -472,9 +472,9 @@ class Directory:
             # Create the string: value + help message
             str += ' - ' + on + ' = ' + ov + '\n'
             if help_message != None:
-                str += '   ' + help_message + '\n'
+                str += '   ' + help_message + '\n\n'
             else:
-                str += '   ' + i18n.get('user_defined_variable') + '\n'
+                str += '   ' + i18n.get('user_defined_variable') + '\n\n'
 
         return str
 
