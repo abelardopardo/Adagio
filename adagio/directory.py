@@ -373,8 +373,8 @@ class Directory:
         if rules == []:
             rules = toExecRules
 
-        # If any of the rules is help, clean, expand the current rules to add
-        # them that suffix, otherwise simply accumulate
+        # If any of the rules is help, vars or clean, expand the current rules
+        # to add them that suffix, otherwise simply accumulate
         finalRules = []
         for rule in rules:
             if rule == 'deepclean':
@@ -389,6 +389,9 @@ class Directory:
             elif rule == 'help':
                 finalRules.append('adagio.help')
                 finalRules.extend([x + '.help' for x in toExecRules])
+            elif rule == 'vars':
+                finalRules.append('adagio.vars')
+                finalRules.extend([x + '.vars' for x in toExecRules])
             elif rule == 'local':
                 finalRules.extend([x for x in toExecRules
                                      if not x.startswith('gotodir')])
@@ -446,14 +449,14 @@ class Directory:
         """
 
 
-        # Remove the .help from the end of the rule to fish for options
-        rule = re.sub('\.?help$', '', rule)
+        # Remove the .vars from the end of the rule to fish for options
+        rule = re.sub('\.?vars$', '', rule)
         if rule == '':
             rule = prefix
         basicPrefix = rule.split('.')[0]
 
         # Concatenate all the variable values and pass through pager (skip help
-        # because it is supposed to be printed outside this function
+        # because it is supposed to be printed outside this function)
         str = i18n.get('var_preamble').format(prefix) + '\n\n'
         for (on, ov) in sorted(self.options.items(rule)):
             if on == 'help':

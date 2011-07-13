@@ -213,6 +213,10 @@ documentation = {
     adagio inkscape.help
 
     will print more detailed information about the "inkscape" rule.
+
+    Analogously, if the suffix ".vars" is used, all the variables, their
+    assigned values and a brief explanation is printed.
+
     """}
 
 # Dictionary storing pairs (variable name, variable help message)
@@ -476,8 +480,9 @@ def Execute(rule, dirObj, pad = None):
         print i18n.get('error_alias_expression')
         sys.exit(1)
 
-    # Detect help or clean rule
+    # Detect help, vars or clean rule
     specialRule = re.match('.+\.help$', rule) or \
+        re.match('.+\.vars$', rule) or \
         re.match('.+\.clean$', rule) or \
         re.match('.+\.deepclean$', rule)
 
@@ -518,6 +523,12 @@ def Execute(rule, dirObj, pad = None):
             logInfo(originalRule, dirObj, 'Exit ' + dirObj.current_dir)
             return
 
+        # Detect and execute "vars" rule
+        if varsRule(rule, dirObj, moduleName, pad):
+            print pad + 'EE', originalRule
+            logInfo(originalRule, dirObj, 'Exit ' + dirObj.current_dir)
+            return
+
         # Check the condition
         if not rules.evaluateCondition(rulePrefix, dirObj.options):
             return
@@ -548,6 +559,12 @@ def Execute(rule, dirObj, pad = None):
 
         # Detect and execute "help" rule
         if helpRule(rule, dirObj, 'adagio', pad):
+            print pad + 'EE', originalRule
+            logInfo(originalRule, dirObj, 'Exit ' + dirObj.current_dir)
+            return
+
+        # Detect and execute "vars" rule
+        if varsRule(rule, dirObj, 'adagio', pad):
             print pad + 'EE', originalRule
             logInfo(originalRule, dirObj, 'Exit ' + dirObj.current_dir)
             return
@@ -629,9 +646,27 @@ def helpRule(rule, dirObj, moduleName, pad = None):
     (prefix, b, c) = rule.rpartition('.')
 
     if re.match('.+[^\.]\.help$', rule):
-        print i18n.get('doc_preamble').format(prefix) + '\n' + \
-            properties.getProperty(dirObj.options, prefix, 'help') + '\n' + \
-            dirObj.dumpOptions(rule, prefix)
+        print i18n.get('doc_preamble').format(prefix)
+        print properties.getProperty(dirObj.options, prefix, 'help')
+        hit = True
+
+    return hit
+
+def varsRule(rule, dirObj, moduleName, pad = None):
+    """
+    Check if the requested rule is vars
+
+    Return boolean stating if it has been executed
+    """
+
+    # Detect if any of the special rule has been detected
+    hit = False
+
+    # Calculate the rule prefix (up to the last dot)
+    (prefix, b, c) = rule.rpartition('.')
+
+    if re.match('.+[^\.]\.vars$', rule):
+        print dirObj.dumpOptions(rule, prefix)
         hit = True
 
     return hit
