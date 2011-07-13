@@ -33,47 +33,114 @@ else:
     localePrefix = 'en'
     
 dictionary_en = {
-    'checking_configuration': 'Checking Adagio configuration',
-    'lxml_not_installed': 
-    'Python library lxml is not installed. Check configuration.',
-    'docbook_dir_not_created':
-    """Docbook-xml incorrectly installed. It should be inside an Adagio folder. 
-     Check configuration.""",
-    'docbook_not_installed':
-        'Package docbook-xml is not installed. Check configuration.',
-    'docbookxsl_dir_not_created':
-        """Docbook-xsl incorrectly installed. It should be inside an Adagio folder. 
-     Check configuration.""",
-    'docbookxsl_not_installed':
-        'Package docbook-xsl is not installed. Check configuration.',
-    'adagio_not_installed':
-        'Unable to load adagio package. Check configuration.',
-    'active_rules':
-        'Rules that can be executed:',
-    'disabled': '-- Disabled -- Install program {0}.',
-    'installed': 'Installed'
-    }
+'checking_configuration': 'Checking Adagio configuration',
+
+'lxml_not_installed': 
+'Python library lxml is not installed. Check configuration.',
+
+'docbook_dir_not_created':
+"""Docbook-xml incorrectly installed. It should be inside an Adagio folder. 
+Check configuration.""",
+
+'docbook_not_installed':
+'Package docbook-xml is not installed. Check configuration.',
+
+'docbookxsl_dir_not_created':
+"""Docbook-xsl incorrectly installed. It should be inside an Adagio folder. 
+ Check configuration.""",
+
+'docbookxsl_not_installed':
+'Package docbook-xsl is not installed. Check configuration.',
+
+'adagio_not_installed':
+'Unable to load adagio package. Check configuration.',
+
+'active_rules':
+'Rules that can be executed:',
+
+'disabled': '-- Disabled -- Install program {0}.',
+
+'installed': 'Installed',
+
+'missing_application':
+"""If an application is ruled as "disabled" it may be because several reasons:
+
+  - If the application is not installed, go ahead and install it.
+
+  - If your application is installed, check if the name of the executable that
+    Adagio mentions is the same as the one offered by the application. If not,
+    open the text file .adagiorc in your user home directory and insert a rule
+    with the name of the application and assign to variable "exec" the right
+    name for the executable. For example:
+
+    [gimp]
+    exec = gimp-2.6
+
+    This example changes the executable that Adagio must use from the default
+    (gimp) to gimp-2.6
+
+  - If the application is installed in your machine and the name of the
+    executable is correct, then make sure the path to that executable is in the
+    environment variable PATH. Check the Adagio FAQ on how to change the
+    environment variables."""
+}
 
 dictionary_es = {
-    'checking_configuration': 'Comprobando la configuración de Adagio',
-    'lxml_not_installed': 
-    'La biblioteca python-lxml no está instalada. Comprueba la configuración.',
-    'docbook_dir_not_created':
-        """Docbook-xml mal instalado. Debe estar en una carpeta dentro de Adagio.
-     Comprueba la configuración.""",
-    'docbook_not_installed':
-        'El paquete docbook-xml no está instalado. Comprueba la configuración.',
-    'docbookxsl_dir_not_created':
-     """Docbook-xsl mal instalado. Debe estar en una carpeta dentro de Adagio. 
-     Comprueba la configuración.""",
-    'docbookxsl_not_installed':
-        'El paquete docbook-xsl no está instalado. Comprueba la configuración.',
-    'adagio_not_installed':
-        'El paquete adagio no puede cargarse. Comprueba la configuración.',
-    'active_rules':
-        'Reglas que puedes ejecutar:',
-    'disabled': 'Inhabilitado. Instala el programa {0}.',
-    'installed': 'Instalado'
+'checking_configuration': 
+'Comprobando la configuración de Adagio',
+
+'lxml_not_installed': 
+'La biblioteca python-lxml no está instalada. Comprueba la configuración.',
+
+'docbook_dir_not_created':
+"""Docbook-xml mal instalado. Debe estar en una carpeta dentro de Adagio.
+Comprueba la configuración.""",
+
+'docbook_not_installed':
+'El paquete docbook-xml no está instalado. Comprueba la configuración.',
+
+'docbookxsl_dir_not_created':
+"""Docbook-xsl mal instalado. Debe estar en una carpeta dentro de Adagio. 
+Comprueba la configuración.""",
+
+'docbookxsl_not_installed':
+'El paquete docbook-xsl no está instalado. Comprueba la configuración.',
+
+'adagio_not_installed':
+'El paquete adagio no puede cargarse. Comprueba la configuración.',
+
+'active_rules':
+'Reglas que puedes ejecutar:',
+
+'disabled': 
+'Inhabilitado. Instala el programa {0}.',
+
+'installed': 
+'Instalado',
+
+'missing_application':
+"""Si un programa Adagio lo marca como "Inhabilitado" puede ser debido a varias
+razones:
+
+  - Si la aplicación no está instalada, instálala y vuelve a ejecutar el script.
+
+  - Si la aplicación está instalada, comprueba que el nombre del ejecutable que
+    menciona Adagio en su mensaje es idéntico al que ofrece la aplicación. Si no
+    es así, abre el fichero de texto .adagiorc en la carpeta raíz del usuario,
+    inserta una regla con el nombre de la aplicación y asigna a la variable
+    "exec" el nombre correcto de ese ejecutable. Por ejemplo:
+
+    [gimp]
+    exec = gimp-2.6
+
+    Este ejemplo cambia el ejecutable de la regla gimp que tiene en cuenta
+    Adagio de su valor por defecto (gimp) a gimp-2.6.
+
+  - Si la aplicación está instalada en el ordenador y el nombre del ejecutable
+    es correcto, asegúrate de que la ruta a ese ejecutable está en la variable
+    de entorno PATH. Consulta el FAQ de Adagio para ver cómo se cambian los
+    valores de las variables de entorno."""
+
 }
 
 all_dicts = { 'en': dictionary_en,
@@ -180,6 +247,9 @@ except ImportError:
     sys.exit(1)
 print dictionary.get('installed')
 
+# Load some other packages
+import properties
+
 # Run the regular initialization
 adagio.initialize()
 
@@ -194,6 +264,7 @@ dirObject = adagio.directory.getDirectoryObject(os.getcwd(), [])
 print
 print dictionary.get('active_rules')
 print
+allInstalled = True
 for moduleName in sorted(adagio.modules):
     print ' -', moduleName, ':',
 
@@ -201,12 +272,19 @@ for moduleName in sorted(adagio.modules):
         print 'OK'
         continue
 
-#    executable = adagio.findExecutable(dirObject.options.get(moduleName, 'exec'))
     executable = adagio.findExecutable(moduleName, dirObject)
     if executable != None:
         print 'OK'
     else:
+        # One application is missing, get the executable name
+        allInstalled = False
+        executable = properties.getProperty(dirObject.options, moduleName, 
+                                            'exec')
         print dictionary.get('disabled').format(executable)
 
+# If something is missing, explain a bit more what to do
 print
+if not allInstalled:
+    print dictionary.get('missing_application')
+
 sys.exit(0)
