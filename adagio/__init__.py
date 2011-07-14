@@ -553,6 +553,9 @@ def Execute(rule, dirObj, pad = None):
 
         logInfo(originalRule, dirObj, 'Exit ' + dirObj.current_dir)
 
+        # Once the rule executed, no need to keep checking for the rest of modules
+        break
+
     # Special case of targets of the "default" module.
     if modulePrefix == 'adagio':
         print pad + 'BB', originalRule
