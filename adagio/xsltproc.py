@@ -153,7 +153,7 @@ def createStyleTransform(styleList, srcDir = None):
         adagio.logDebug('Xsltproc', None, 'Applying ' + styleFile.getvalue())
 
     # Get the transformation object
-    return treecache.findOrAddTransform(styleFile)
+    return treecache.findOrAddTransform(styleFile, styles)
 
 def createParameterDict(rule, dirObj):
     """

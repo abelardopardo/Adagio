@@ -244,7 +244,7 @@ executable = gimp-2.6</programlisting>
       </answer>
     </qandaentry>
 
-    <qandaentry id="adagio" xreflabel="How to execute Adagio">
+    <qandaentry id="adagio_execute" xreflabel="How to execute Adagio">
       <question>
         <para>How to tell Adagio to build all the resources?</para>
       </question>
@@ -317,8 +317,6 @@ $</programlisting>
       </answer>
     </qandaentry>
         
-    <!-- **************** REWRITE REQUIRED FROM HERE ********************** -->
-
     <qandaentry id="property_in_command_line" xreflabel="How to execute with
 							 one variable modified">
       <question>
@@ -426,7 +424,7 @@ style = %(project_home)/Styles/AuxStyle.xsl</programlisting>
       </answer>
     </qandaentry>
 
-    <qandaentry>
+    <qandaentry id="include_rule_files">
       <question>
 	<para>Can I include other files in a rule file?</para>
       </question>
@@ -443,10 +441,6 @@ files = %(project_home)s/Templates/t1.ini %(project_home)s/Templates/t2.ini</pro
 	<command>template</command> rule.</para>
       </answer>
     </qandaentry>
-    <!--
-    <qandaentry id="global_vars" xreflabel="Which variables are already defined">
-    </qandaentry>
-    -->
   </qandaset>
 </section>
 

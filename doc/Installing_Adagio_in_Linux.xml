@@ -33,7 +33,7 @@
   <title>Installing Adagio in Linux</title>
 
   <qandaset>
-    <qandaentry>
+    <qandaentry id="linux_required_packages">
       <question>
         <para>Which packages are required in Linux to use Adagio?</para>
       </question>

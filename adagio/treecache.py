@@ -26,9 +26,18 @@ from lxml import etree
 
 import adagio, rules, i18n
 
-# A dictionary storing XML trees and XSLTProcs. The values are pairs (a, b)
-# where a is the tree without the includes expanded and b is the fully expanded
-# tree.
+# Implement two dictionaries to store XML trees and XSLT transformations.
+#
+# The first dictionary stores values as:
+# absolute path: (a, b, c)
+# where the key is the path to a XML file, a is the XML tree without the
+# includes expanded, b is the fully expanded tree and c is a timestamp to detect
+# file changes.
+#
+# The second dictionary stores values as:
+# absolute path: (a, b)
+# where the key is the absolute path to a stylesheet, a is the StyleTransform
+# object, and b is a timestampto detect file changes.
 _createdTrees = {}
 
 # Dictionary storing XSL transformations. The key is either the text of a
@@ -65,14 +74,24 @@ def findOrAddTree(path, expanded = True):
 
     theKey = os.path.abspath(path)
 
-    (simpleTree, expandedTree) = _createdTrees.get(theKey, (None, None))
-    if expanded and expandedTree != None:
+    # Get the last modification time of the given file to detect changes
+    ftime = os.path.getmtime(path)
+
+    (simpleTree, expandedTree, tstamp) = _createdTrees.get(theKey, 
+                                                           (None, None, None))
+
+    if expanded and (expandedTree != None) and (ftime <= tstamp):
         # HIT
         return expandedTree
-    if not expanded and simpleTree != None:
+    if not expanded and (simpleTree != None) and (ftime <= tstamp):
         # HIT
         return simpleTree
 
+    # If file changed from the last time, void the partial results
+    if (tstamp != None) and (ftime > tstamp):
+        simpleTree = None
+        expandedTree = None
+        
     # Missing tree
     if not expanded:
         # Create the simpleTree and update
@@ -104,29 +123,31 @@ def findOrAddTree(path, expanded = True):
                 print i18n.get('severe_parse_error').format(path)
                 print str(e)
                 sys.exit(1)
+
     # Update the cache
-    _createdTrees[theKey] = (simpleTree, expandedTree)
+    _createdTrees[theKey] = (simpleTree, expandedTree, ftime)
     
     if expanded:
         return expandedTree
     
     return simpleTree
 
-def findOrAddTransform(path):
+def findOrAddTransform(styleFile, styleList):
     """
-    Simple dictionary storing XSL Transforms. The key is the given path (which
+    Simple dictionary storing XSL Transforms. The key is the given styleFile (which
     could be a string)
     """
     global _createdTransforms
 
-    theKey = path
-    if (type(path) != str) and (type(path) != unicode):
-        theKey = path.getvalue()
+    theKey = ' '.join(styleList)
 
-    transform = _createdTransforms.get(theKey)
-    if transform != None:
+    # Get the last modification time of the given file to detect changes
+    ftime = max([os.path.getmtime(x) for x in styleList])
+
+    (transform, tstamp) = _createdTransforms.get(theKey, (None, None))
+    if (transform != None) and (ftime <= tstamp):
         # HIT
-        adagio.logDebug('treecache', None, 'HIT: ' + str(path))
+        adagio.logDebug('treecache', None, 'HIT: ' + str(styleFile))
         return transform
 
     # Parse style file, insert name resolver to consider Adagio local styles,
@@ -134,14 +155,14 @@ def findOrAddTransform(path):
     styleParser = etree.XMLParser(load_dtd = True, no_network = True)
     styleParser.resolvers.add(rules.StyleResolver())
     try:
-        transform = etree.parse(path, styleParser)
+        transform = etree.parse(styleFile, styleParser)
     except etree.XMLSyntaxError, e:
-        print i18n.get('severe_parse_error').format(path)
+        print i18n.get('severe_parse_error').format(styleFile)
         print str(e)
         sys.exit(1)
 
     transform.xinclude()
     transform = etree.XSLT(transform, access_control = _accessControl)
-    _createdTransforms[theKey] = transform
+    _createdTransforms[theKey] = (transform, ftime)
 
     return transform
