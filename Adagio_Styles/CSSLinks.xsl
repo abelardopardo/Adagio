@@ -28,13 +28,13 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   version="1.0" exclude-result-prefixes="exsl str xi">
 
-  <xsl:param name="adagio.page.cssstyle.url"
-    description="Comma separated list of CSS files to include in the HTML
-    head. Use file:media:title to specify media and title attribute"/>
+  <!-- Comma separated list of CSS files to include in the HTML -->
+  <!-- head. Use file:media:title to specify media and title attribute -->
+  <xsl:param name="adagio.page.cssstyle.url"/>
 
-  <xsl:param name="adagio.page.cssstyle.alternate.url"
-    description="Comma separated list of alternate CSS files to include in the HTML
-    head. Use file:media:title to specify media and title attribute"/>
+  <!-- Comma separated list of alternate CSS files to include in the HTML
+       head. Use file:media:title to specify media and title attribute -->
+  <xsl:param name="adagio.page.cssstyle.alternate.url"/>
 
   <!-- Template to generate the CSS stylesheet links -->
   <xsl:template name="adagio_link_rel_css">
