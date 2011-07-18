@@ -202,8 +202,15 @@ The template rule must define only the variable 'files'""",
 'Error in configuration file',
 
 'error_applying_xslt': 
-"""Error while applying style in rule {0}. 
-Check if docbook-xsl and docbook-xml are properly installed.""",
+"""Error while applying the following styles: 
+{0} 
+to file 
+{1}
+in rule {2}.""",
+
+'error_in_xslt': 
+"""Error while parsing style files:
+{0}""",
 
 'error_extra_args': 
 """Incorrect argument in variable {0}.
