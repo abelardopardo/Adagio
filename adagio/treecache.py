@@ -162,7 +162,15 @@ def findOrAddTransform(styleFile, styleList):
         sys.exit(1)
 
     transform.xinclude()
-    transform = etree.XSLT(transform, access_control = _accessControl)
+
+    try:
+        transform = etree.XSLT(transform, access_control = _accessControl)
+    except Exception, e:
+	print
+        print i18n.get('error_in_xslt').format('\n'.join(styleList))
+        print str(e)
+        sys.exit(1)
+
     _createdTransforms[theKey] = (transform, ftime)
 
     return transform
