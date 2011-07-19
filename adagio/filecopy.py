@@ -105,7 +105,7 @@ def doCopy(rule, dirObj, toProcess, srcDir, dstDir):
             sys.exit(1)
 
         # Remove the srcDir prefix
-        dstFile = datafile.replace(srcDir, '', 1)
+        dstFile = datafile.replace(os.path.normpath(srcDir), '', 1)
         # If the result has a slash (could be a directory to copy or a file with
         # a directory path), remove it
         if dstFile[0] == os.sep:
