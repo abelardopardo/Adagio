@@ -44,22 +44,101 @@ options = [
 documentation = {
     'en' : """
     Rule to process XML files containing exercises. For each file, the following
-    documents can (optionally be created):
+    documents can (optionally) be created:
 
-    - Regular document for the students
+    - Regular document for the students: Elements with the condition attribute
+      equal to "solution", "professorguide" or ... are ignored.
 
-    - Document with the solutions (elements with condition=solution)
+    - Document with the solutions: The parts of the document included in the
+      previous version plus those (elements with condition=solution
 
-    - Document with the professor guide (elements with condition =
-      professorguide)
+    - Document with the professor guide: The parts of the document included in
+      the previous version (the solutions as well) plus those elements with
+      condition=professorguide.
 
-    - Document cotaining a form to submit answers (different stylesheet)
+    - Document containing forms to submit answers: This version is produced by
+      processing only a subset of the elements in the source file. These
+      elements and the information the could contain are:
+    
+        * A note element with the condition attribute equals to "AdminInfo" is
+          transformed into. Inside this element, the following elements are
+          also rendered:
+
+          . Paragraph with condition attribute equals to "handindate" is
+            rendered as a deadline header.
+
+          . Paragraph with the condition attribute equals to "handinlink" is
+            taken as the URL to use for the submission destination (in the form
+            element).
+
+          . Paragraph with the condition attribute equals to "deadline.format"
+            is the format in which the deadline date was given to introduce a
+            javascript countdown.
+
+        * A section, para or remarks element with attribute
+          condition="adagio_submit_form", or a remark element with the attribute
+          condition="adagio_submit_textarea_form". Inside this element the
+          following elements are also rendered:
+
+          . The content of any element with condition="form-id" is assigned as
+            the id attribute of the form element.
+
+          . The conent of any element with condition="form-method" is taken as
+            the method for the submission. The default is "post".
+
+          . The content of any element with condition="form-enctype" is taken as
+            the attribute enctype in the form element. The default value is
+            multipart/form-data.
+
+          . The content of any element with condition="submit-onclick" is taken
+            as the value of the attribute onClick of the generated form. The
+            default value is empty.
+
+          . If there is a phrase element with condition="hide", then a hidden
+            frame is included. The answer obtained from the server when the
+            submission is done is shown in that frame, and therefore, is
+            invisible.
+
+          . If there is an element with condition="submit", its text is taken as
+            the submission buton text.
+
+          If the remark element has the attribute
+          condition="adagio_submit_textarea_form, then a text area box is
+          created.
+
+        * The destination URL for the submission is created concatenating the
+          value of the variable adagio.submit.action.prefix and the value of any
+          element with the attribute action-suffix. This is useful to define a
+          common prefix which is valid project wide, and then each submission
+          may add a suffix that points to the right entry point in the server
+          receiving the data.
+
+    The previous parameters customize the form surrounding the data to be
+    submitted. Each submission field is created in Docbook with a note, para or
+    remark element with condition="adagio_submit_input". Each element with this
+    attribute is translated into a new field in the submission form. HTML input
+    fields accept various attributes. Among them, type, size, maxlength, accept,
+    name, id and value can be configured by including in the Docbook any element
+    with the condition attribute equal to its name. For example, the following
+    Docbook markup in a source document:
+
+    <note condition="adagio_submit_input">
+      <para condition="type">text</para>
+      <para condition="size">10</para>
+      <para condition="maxlength">10</para>
+      <para condition="name">FIELD_1</para>
+      <para condition="id"/>FIELD_1_ID</para>
+      <para condition="value">Default</para>
+    </note>
+    
+    Renders as an input field with all the values of the para elements as
+    attributes.
 
     The generation of these documents is controlled with the following
     convention.
 
     - The "files" in "src_dir" are processed as many times as specified by the
-    "languages" variable and the created files are created in the "dst_dir".
+    "languages" variable and the new files are created in the "dst_dir".
 
     - All the created files will have the extension given in "output_format"
 
