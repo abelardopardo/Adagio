@@ -59,7 +59,7 @@ documentation = {
     - Document containing forms to submit answers: This version is produced by
       processing only a subset of the elements in the source file. These
       elements and the information the could contain are:
-    
+
         * A note element with the condition attribute equals to "AdminInfo" is
           transformed into. Inside this element, the following elements are
           also rendered:
@@ -113,26 +113,50 @@ documentation = {
           may add a suffix that points to the right entry point in the server
           receiving the data.
 
-    The previous parameters customize the form surrounding the data to be
-    submitted. Each submission field is created in Docbook with a note, para or
-    remark element with condition="adagio_submit_input". Each element with this
-    attribute is translated into a new field in the submission form. HTML input
-    fields accept various attributes. Among them, type, size, maxlength, accept,
-    name, id and value can be configured by including in the Docbook any element
-    with the condition attribute equal to its name. For example, the following
-    Docbook markup in a source document:
+    - The previous parameters customize the form surrounding the data to be
+      submitted. Each submission field is created in Docbook with a note, para
+      or remark element with condition="adagio_submit_input". Each element with
+      this attribute is translated into a new field in the submission form. HTML
+      input fields accept various attributes. Among them, type, size, maxlength,
+      accept, name, id and value can be configured by including in the Docbook
+      any element with the condition attribute equal to its name. For example,
+      the following Docbook markup in a source document:
 
-    <note condition="adagio_submit_input">
-      <para condition="type">text</para>
-      <para condition="size">10</para>
-      <para condition="maxlength">10</para>
-      <para condition="name">FIELD_1</para>
-      <para condition="id"/>FIELD_1_ID</para>
-      <para condition="value">Default</para>
-    </note>
-    
-    Renders as an input field with all the values of the para elements as
-    attributes.
+      <note condition="adagio_submit_input">
+        <para condition="type">text</para>
+        <para condition="size">10</para>
+        <para condition="maxlength">10</para>
+        <para condition="name">FIELD_1</para>
+        <para condition="id"/>FIELD_1_ID</para>
+        <para condition="value">Default</para>
+      </note>
+
+      Renders as an input field with all the values of the para elements as
+      attributes.
+
+    - A special markup is considered for select buttons. Any note, para or
+      remark element with condition="adagio_submit_scale" is rendered as
+      drop-down select menu. The following internal elements are also processed:
+
+      * The content of any element with condition="name" is taken as the
+        selection name.
+
+      * The content of each phrase element with condition="value" is rendered as
+        a choice in the selection menu.
+
+    - A special markup is considered to render text area form elements. The
+      element must be a note, para or remark with
+      condition="adagio_submit_textarea". The content of any element with
+      condition equal to the following values is directly translated into HTML
+      input attributes:
+
+      * textarea-cols, textarea-rows: content is taken as value of attributes
+        cols and rows in HTML respectively.
+
+      * textarea-name: content is taken as the name attribute in HTML.
+
+      * onkeyup, onkeydown: content is taken as value of attributes onKeyUp and
+        onKeyDown in HTML respectively.
 
     The generation of these documents is controlled with the following
     convention.
@@ -143,6 +167,7 @@ documentation = {
     - All the created files will have the extension given in "output_format"
 
     - All files are processed as many times as specified by "language"
+
     """}
 
 # Possible values of the 'produce' option for this rule

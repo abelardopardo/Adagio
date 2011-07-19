@@ -196,7 +196,7 @@
 
   <!-- ============================================================ -->
   <!--                                                              -->
-  <!--    Process INPUT/RADIO note/para/remark in its own table     -->
+  <!--        Process select note/para/remark in its own table      -->
   <!--                                                              -->
   <!-- ============================================================ -->
   <xsl:template match="note[@condition='adagio_submit_scale']|
@@ -276,6 +276,7 @@
       select="@id"/></xsl:attribute></xsl:if>
     </input>
   </xsl:template>
+
   <!-- ============================================================ -->
   <!--                                                              -->
   <!--               Process TEXTAREA note/para/phrase              -->
