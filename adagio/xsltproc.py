@@ -173,9 +173,10 @@ def createParameterDict(rule, dirObj):
     relProjectHome = os.path.relpath(dirObj.getProperty(adagio.module_prefix,
                                                               'project_home'),
                                      dirObj.current_dir)
+
     # Attach always the slash at the end to allow the stylesheets to assume it
     # and that way, they work in the case of an empty path.
-    relProjectHome += '/'
+    relProjectHome = urllib.pathname2url(relProjectHome) + '/'
 
     # If the project home is the current one, return the empty string
     if relProjectHome == './':
