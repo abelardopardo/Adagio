@@ -71,12 +71,12 @@ def doExecution(rule, dirObj, command, datafile, dstFile,
 
     # Check for dependencies if dstFile is given
     if dstFile != None:
-        srcDeps = dirObj.option_files
+        srcDeps = set(dirObj.option_files)
         if datafile != None:
             srcDeps.add(datafile)
 
         try:
-            dependency.update(dstFile, set(srcDeps))
+            dependency.update(dstFile, srcDeps)
         except etree.XMLSyntaxError, e:
             print i18n.get('severe_parse_error').format(fName)
             print str(e)
