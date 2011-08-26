@@ -103,19 +103,3 @@ def clean(rule, dirObj):
 
     return
 
-def checkDateFormat(d, f):
-    """
-    Check if the date d is compliant with the format f. If not, terminate with a
-    message.
-
-    Returns the datetime object with the date
-    """
-    try:
-       result = datetime.datetime.strptime(d, f)
-    except ValueError, e:
-       print i18n.get('date_incorrect_format').format(d, f)
-       print str(e)
-       sys.exit(1)
-
-    return result
-
