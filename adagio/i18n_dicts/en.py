@@ -312,8 +312,9 @@ Format: comma separated list of pairs name: value""",
 'Rule not executed because variable "open" has value {0}',
 
 'enable_not_revision': 
-"""Rule not executed. The value of "{0}.enable_profile" is not in
-the set defined by variable "adagio.enabled_profiles".""",
+"""Rule not executed. Variable "{0}.enable_profile"
+has value "{1}" which is not contained in
+"{2}", the value of "adagio.enabled_profiles".""",
 
 'enable_closed_begin': 
 'Rule not executed because it is before {0}',
