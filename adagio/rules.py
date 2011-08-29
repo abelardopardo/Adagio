@@ -167,7 +167,9 @@ def evaluateCondition(rule, options):
     thisRevision = properties.getProperty(options, rule, 'enable_profile')
     if revisionsData != '' and thisRevision != '':
         if not (thisRevision in set(revisionsData.split())):
-            print i18n.get('enable_not_revision').format(rule)
+            print i18n.get('enable_not_revision').format(rule,
+                                                         thisRevision,
+                                                         revisionsData)
             return False
 
     return True
