@@ -55,7 +55,7 @@ config_defaults = {
     'debug_level':        ('0', i18n.get('default_debug_level')),
     'dst_dir':            (_currentDir, i18n.get('default_dst_dir')),
     'enable_begin':       ('', i18n.get('default_enable_begin')),
-    'enable_date_format': ('%Y/%m/%d %H:%M:%S',
+    'enable_date_format': ('yyyy/MM/dd HH:mm:ss',
                            i18n.get('default_enable_date_format')),
     'enable_end':         ('', i18n.get('default_enable_end')),
     'enable_open':        ('1', i18n.get('default_enable_open')),
