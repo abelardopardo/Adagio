@@ -39,6 +39,64 @@
   <xsl:param name="adagio.swf.player.default.width">480</xsl:param>
   <xsl:param name="adagio.swf.player.default.height">385</xsl:param>
 
+  <!--
+       Template to introduce an iframe containing a URL to visualize a
+       video. Youtube and Vimeo use this trick to provide videos for different
+       devices.
+  -->
+  <xsl:template match="para[@condition = 'adagio_if_player']|
+                       remark[@condition = 'adagio_if_player']">
+    <xsl:if test="phrase[@condition = 'url'] != ''">
+      <xsl:variable name="iframe.width">
+        <xsl:choose>
+          <xsl:when test="phrase[@condition = 'width'] != ''">
+            <xsl:value-of select="phrase[@condition = 'width']/text()"/>
+          </xsl:when>
+          <xsl:otherwise><xsl:value-of
+          select="$adagio.swf.player.default.width"/></xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+
+      <xsl:variable name="iframe.height">
+        <xsl:choose>
+          <xsl:when test="phrase[@condition = 'height'] != ''">
+            <xsl:value-of select="phrase[@condition = 'height']/text()"/>
+          </xsl:when>
+          <xsl:otherwise><xsl:value-of
+          select="$adagio.swf.player.default.height"/></xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+
+      <div class="adagio_if_video">
+	<iframe>
+	  <!-- Pass the @id attribute to the iframe -->
+	  <xsl:if test="@id">
+	    <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+	  </xsl:if>
+	  <xsl:attribute name="src"><xsl:value-of
+	  select="phrase[@condition = 'url']/text()"/></xsl:attribute>
+	  <xsl:attribute name="height"><xsl:value-of
+	  select="$iframe.height"/></xsl:attribute>
+	  <xsl:attribute name="width"><xsl:value-of
+	  select="$iframe.width"/></xsl:attribute>
+	  <xsl:if test="phrase[@condition = 'allowFullScreen']">
+	    <xsl:attribute name="allowFullScreen"><xsl:value-of
+	    select="phrase[@condition =
+	    'allowFullScreen']/text()"/></xsl:attribute>
+	  </xsl:if>
+	  <!--
+	       Apply the templates to whatever element remains in the paragraph
+	  -->
+	  <xsl:apply-templates
+	    select="*[not(@condition='url') and
+		    not(@condition='height') and
+		    not(@condition='width') and
+		    not(@condition='allowFullScreen')]"/>
+	</iframe>
+      </div>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template match="para[@condition = 'adagio_swf_player']|
                        remark[@condition = 'adagio_swf_player']">
     <xsl:if test="phrase[@condition = 'file'] != ''">
