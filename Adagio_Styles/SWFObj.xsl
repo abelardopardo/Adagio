@@ -67,7 +67,7 @@
         </xsl:choose>
       </xsl:variable>
 
-      <div class="adagio_if_video">
+      <div class="adagio_if_video noprint">
 	<iframe>
 	  <!-- Pass the @id attribute to the iframe -->
 	  <xsl:if test="@id">
