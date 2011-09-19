@@ -28,7 +28,7 @@ try:
 except ImportError:
     import xml.etree.ElementTree as etree
 
-import directory, i18n, rules, xsltproc, testshuffle, dependency
+import adagio, directory, i18n, rules, xsltproc, testshuffle, dependency
 import treecache
 
 # Prefix to use for the options
@@ -172,8 +172,11 @@ def doShuffle(toProcess, dirObj):
             continue
 
         print i18n.get('testexam_shuffling').format(fname)
-        testshuffle.main(fname, adagio.userLog)
+        permutations = testshuffle.main(fname, adagio.userLog)
 
+        if permutations == 0:
+            print i18n.get('testexam_no_permutations').format(fname)
+            sys.exit(1)
     return rawFiles
 
 def doGetShuffledFiles(fname):

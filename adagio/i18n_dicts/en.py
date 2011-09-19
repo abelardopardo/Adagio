@@ -328,6 +328,10 @@ has value "{1}" which is not contained in
 'testexam_shuffling': 
 'Shuffling questions in file {0}',
 
+'testexam_no_permutations':
+"""No questions detected in file {0}.
+No quandaset under root element.""",
+
 'adagio_enabled_profiles':
 'Space separated list of values to use to enable rule execution',
 
