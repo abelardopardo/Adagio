@@ -23,7 +23,7 @@
 #
 import os, re, sys, glob
 
-import directory, i18n, rules, xsltproc
+import adagio, directory, i18n, rules, xsltproc
 
 # Prefix to use for the options
 module_prefix = 'exam'
