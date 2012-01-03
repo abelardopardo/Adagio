@@ -225,7 +225,7 @@ $</programlisting>
 	<para>Open the GIT Gui, select the option to clone a remote
 	repository. Type the following URL as Source Location:</para>
 
-	<programlisting>git@github.com:abelardopardo/Adagio.git</programlisting>
+	<programlisting>https://abelardopardo@github.com/abelardopardo/Adagio.git</programlisting>
 	<para>Select the name of a folder to be created when installing
 	Adagio.</para>
 	

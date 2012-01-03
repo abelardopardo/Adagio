@@ -101,7 +101,7 @@
         Adagio to be installed and type (a folder with name
         <filename>Adagio</filename> will be created):</para>
 
-        <programlisting>$ <command>git clone git@github.com:abelardopardo/Adagio.git</command></programlisting>
+        <programlisting>$ <command>git clone https://abelardopardo@github.com/abelardopardo/Adagio.git</command></programlisting>
 
         <para>A new folder with name <filename>Adagio</filename> is created. In
         order to make the application available for execution, you need to
