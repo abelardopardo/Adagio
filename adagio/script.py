@@ -151,7 +151,7 @@ def executeFunction(toProcess, rule, dirObj, functionName):
         oldArgv = sys.argv
         newArgv = dirObj.getProperty(rule, 'arguments')
         if newArgv != '':
-            sys.argv = [datafile] + newArgv.split() 
+            sys.argv = [datafile] + newArgv.replace('\n', ' ').split()
 
         # If the import has been successfull, go ahead and execute the main
         try:
