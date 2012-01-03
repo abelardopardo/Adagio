@@ -231,6 +231,10 @@ def isUpToDate(fileName):
 def locateFile(fileName, dirPrefix = None):
     """Search an stylesheet in the dirs in local Adagio dirs"""
 
+    # No check is done for URLs, the error will pop up sometime later
+    if fileName.startswith('http'):
+        return fileName
+
     if dirPrefix == None:
         dirPrefix = os.getcwd()
 
