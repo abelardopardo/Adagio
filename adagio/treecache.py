@@ -141,8 +141,12 @@ def findOrAddTransform(styleFile, styleList):
 
     theKey = ' '.join(styleList)
 
-    # Get the last modification time of the given file to detect changes
-    ftime = max([os.path.getmtime(x) for x in styleList])
+    # Get the last modification time of the given file to detect changes. First
+    # filter files because there could be some URLs
+    fileStyleList = [x for x in styleList if os.path.exists(x)]
+    ftime = sys.float_info.max
+    if fileStyleList != []:
+        ftime = max([os.path.getmtime(x) for x in fileStyleList])
 
     (transform, tstamp) = _createdTransforms.get(theKey, (None, None))
     if (transform != None) and (ftime <= tstamp):
