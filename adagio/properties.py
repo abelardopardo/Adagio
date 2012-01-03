@@ -418,7 +418,7 @@ def setProperty(config, rule, option, value, fileName = None,
 
 def initialConfig(configDefaults):
     """
-    Given a dictiornary with a set of pairs (name, value), return a ConfigParser
+    Given a dictionary with a set of pairs (name, value), return a ConfigParser
     in which all these values are stored in a special rule with a special
     name to be treated as default values. The reason for not using the DEFAULT
     rule of ConfigParser is because there is no way to know if a rule.name
