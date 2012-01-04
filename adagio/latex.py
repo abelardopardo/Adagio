@@ -25,6 +25,8 @@ import os, sys, glob
 
 import directory, i18n, rules
 
+import adagio
+
 # Prefix to use for the options
 module_prefix = 'latex'
 
