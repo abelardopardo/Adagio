@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-#
+# -*- coding: utf-8 -*-#
 #
 # Copyright (C) 2010 Carlos III University of Madrid
 # This file is part of Adagio: Agile Distributed Authoring Integrated Toolkit
@@ -66,16 +66,16 @@ def Execute(rule, dirObj):
 
     executable = dirObj.getProperty(rule, 'exec')
     outputFormat = dirObj.getProperty(rule, 'output_format')
-    if not outputFormat in set(['dvi', 'pdf']):
+    if not outputFormat in set(['dvi', 'pdf', 'dvipdf']):
         print i18n.get('program_incorrect_format').format(executable,
                                                           outputFormat)
         sys.exit(1)
 
-
     # Prepare the command to execute
     dstDir = dirObj.getProperty(rule, 'dst_dir')
-    commandPrefix = [executable, '-output-dirObj=' + dstDir,
-                     '-output-format=' + outputFormat]
+    commandPrefix = [executable, '-output-directory=' + dstDir]
+    if outputFormat != 'dvipdf':
+        commandPrefix.append('-output-format=' + outputFormat)
     commandPrefix.extend(dirObj.getProperty(rule,
                                                   'extra_arguments').split())
 
@@ -89,8 +89,12 @@ def Execute(rule, dirObj):
             sys.exit(1)
 
         # Derive the destination file name
-        dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-            '.' + outputFormat
+        baseName = os.path.splitext(os.path.basename(datafile))[0]
+        if outputFormat != 'dvipdf':
+            dstFile = baseName + '.' + outputFormat
+        else:
+            dstFile = baseName + '.dvi'
+            pdfFile = baseName + '.pdf'
         dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
         # Add the input file to the command
@@ -99,7 +103,9 @@ def Execute(rule, dirObj):
         # Perform the execution
         rules.doExecution(rule, dirObj, command, datafile, dstFile,
                             adagio.userLog)
-
+        if outputFormat == 'dvipdf':
+            rules.doExecution(rule, dirObj, ['dvipdf', dstFile], datafile,
+                              pdfFile, adagio.userLog)
     return
 
 def clean(rule, dirObj):
@@ -128,8 +134,15 @@ def clean(rule, dirObj):
         dstPrefix = os.path.splitext(os.path.basename(datafile))[0]
         dstPrefix = os.path.join(dstDir, dstPrefix)
 
-        for fmt in [outputFormat, 'out', 'aux', 'log', 'bbl', 'blg', 'idx',
-                    'ilg', 'ind', 'lof', 'lot', 'toc']:
+        extensionsToClean = ['out', 'aux', 'log', 'bbl', 'blg', 'idx',
+                             'ilg', 'ind', 'lof', 'lot', 'toc']
+        if outputFormat != 'dvipdf':
+            extensionsToClean.append(outputFormat)
+        else:
+            extensionsToClean.append('dvi')
+            extensionsToClean.append('pdf')
+
+        for fmt in extensionsToClean:
             dstFile = dstPrefix + '.' + fmt
 
             if not os.path.exists(dstFile):
