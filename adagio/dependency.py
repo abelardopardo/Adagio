@@ -44,6 +44,13 @@ __IDXToName = []
 __NodeDate = []
 __NodeOutEdges = []
 
+# Some regular expressions for matching includes in LaTeX files:
+_re_latex_comment = re.compile(r'(?<!\\)#|^#')
+_re_latex_include = re.compile(r'\\include[ ]*\{([^\}]+)\}')
+_re_latex_input = re.compile(r'\\input[ ]*\{([^\}]+)\}')
+_re_latex_graphics = re.compile((r'\\includegraphics[ ]*(?:\[[^\]]*\])?[ ]*'
+                                 r'\{([^\}]+)\}'))
+
 def flushData():
     global __FileNameToNodeIDX
     global __IDXToName
@@ -61,12 +68,17 @@ def flushData():
 #
 atexit.register(flushData)
 
-def addNode(fileName):
+def addNode(fileName, baseDir=None):
     """
     Given a fileName creates (if needed) the node in the graph. It adds a new
     entry to the FileNameToIDX dictionary, the reverse info in IDXToName,
     appends its st_mtime to NodeDate and an empty set to the adjancency
     lists.
+
+    If baseDir is set, this directory name is used for expanding
+    relative paths while parsing dependencies. Useful for LaTeX, for
+    example. If not set, relative file names take as base the location
+    of fileName.
 
     Returns the node index of the given file
     """
@@ -98,18 +110,27 @@ def addNode(fileName):
             if ext == '.xml' or ext == '.xsl':
                 x = getIncludes(fileName)
                 update(nodeIdx, x)
-
+            elif ext == '.tex':
+                if baseDir is None:
+                    baseDir = os.path.dirname(fileName)
+                x = getIncludesLatex(fileName, baseDir)
+                update(nodeIdx, x, baseDir)
         else:
             __NodeDate.append(0)
 
     # Return the index associated with the given file
     return nodeIdx
 
-def update(dst, srcSet = None):
+def update(dst, srcSet = None, baseDir=None):
     """
     Modifies the graph to reflect the addition of edges from each of the
     elements in srcSet to dst. If srcSet is empty it only updates the date of
     dst with the st_mtime value and propagates the result.
+
+    If baseDir is set, this directory name is used for expanding
+    relative paths while parsing dependencies. Useful for LaTeX, for
+    example. If not set, relative file names take as base the location
+    of fileName.
 
     Returns the index of the destination node
     """
@@ -123,7 +144,7 @@ def update(dst, srcSet = None):
 
     # If a string is given, translate to index
     if (type(dst) == str) or (type(dst) == unicode):
-        dstIDX = addNode(dst)
+        dstIDX = addNode(dst, baseDir=baseDir)
     else:
         dstIDX = dst
 
@@ -141,7 +162,7 @@ def update(dst, srcSet = None):
     # Loop over the nodes in the source set
     for node in srcSet:
         if type(node) == str or type(node) == unicode:
-            srcIDX = addNode(node)
+            srcIDX = addNode(node, baseDir=baseDir)
         else:
             srcIDX = node
 
@@ -157,7 +178,7 @@ def update(dst, srcSet = None):
     if moreRecentDate > __NodeDate[dstIDX]:
         __NodeDate[dstIDX] = moreRecentDate
         for fanoutIDX in __NodeOutEdges[dstIDX]:
-            update(fanoutIDX, set([dstIDX]))
+            update(fanoutIDX, set([dstIDX]), baseDir=baseDir)
 
     return dstIDX
 
@@ -210,6 +231,37 @@ def getIncludes(fName):
     for element in [e for e in allRSS if 'file' in e.attrib]:
         result.add(os.path.abspath(os.path.join(fDir,
                                                 element.attrib['file'])))
+
+    # Return the result set
+    return result
+
+def getIncludesLatex(fName, baseDir):
+    """
+    Get resources included with \input or \include in a LaTeX file
+
+    returns the set of absolute files that are included
+    """
+
+    # Turn the name into absolute path and get the directory part
+    fName = os.path.abspath(fName)
+
+    # Parse the document and look for \input and \include
+    result = set()
+    file_ = open(fName, 'r')
+    for line in file_:
+        # First, remove comments
+        match = _re_latex_comment.search(line)
+        if match is not None:
+            line = line[:match.start()]
+        # Look for input and include commands
+        for include in (_re_latex_include.findall(line)
+                        + _re_latex_input.findall(line)):
+            if not include.endswith('.tex'):
+                include = include + '.tex'
+            result.add(os.path.abspath(os.path.join(baseDir, include)))
+        for graphic in _re_latex_graphics.findall(line):
+            result.add(os.path.abspath(os.path.join(baseDir, graphic)))
+    file_.close()
 
     # Return the result set
     return result
