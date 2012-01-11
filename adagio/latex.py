@@ -75,7 +75,8 @@ def Execute(rule, dirObj):
 
     # Prepare the command to execute
     dstDir = dirObj.getProperty(rule, 'dst_dir')
-    commandPrefix = [executable, '-output-directory=' + dstDir]
+    commandPrefix = [executable, '-output-directory=' + dstDir,
+                     '-interaction=nonstopmode']
     if outputFormat != 'dvipdf':
         commandPrefix.append('-output-format=' + outputFormat)
     commandPrefix.extend(dirObj.getProperty(rule,
