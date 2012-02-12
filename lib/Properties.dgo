@@ -5,4 +5,4 @@
 # variables as well as an explanation.
 #
 [export]
-	files = countdown.js
+files = countdown.js
