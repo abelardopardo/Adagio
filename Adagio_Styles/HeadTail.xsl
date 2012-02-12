@@ -67,7 +67,8 @@
   <!-- This one for sure is needed in all documents -->
   <xsl:param name="xref.with.number.and.title" select="'0'"/>
 
-  <!-- Template processing the root. Need to overwrite to include div elements -->
+  <!-- Template processing the root. Need to overwrite to include div elements
+  -->
   <xsl:template match="*" mode="process.root">
     <xsl:variable name="doc" select="self::*"/>
 
@@ -91,24 +92,17 @@
       <body>
 
         <xsl:call-template name="body.attributes"/>
+	<xsl:call-template name="user.header.navigation"/>
+	<xsl:call-template name="user.header.content"/>
 
-        <div id="adagio_body_container">
+	<div id="adagio_page_content">
+	  <a name="adagio_page_content_anchor"/>
+	  <xsl:apply-templates select="."/>
+	</div>
 
-          <xsl:call-template name="adagio_page_header_content">
-            <xsl:with-param name="node" select="$doc"/>
-          </xsl:call-template>
-
-          <div id="adagio_page_content">
-            <a name="adagio_page_content_anchor"/>
-            <xsl:apply-templates select="."/>
-          </div>
-
-          <div id="adagio_page_footer">
-            <xsl:call-template name="user.footer.content">
-              <xsl:with-param name="node" select="$doc"/>
-            </xsl:call-template>
-          </div>
-        </div>
+	<xsl:call-template name="user.footer.content">
+	  <xsl:with-param name="node" select="$doc"/>
+	</xsl:call-template>
       </body>
     </html>
     <xsl:value-of select="$html.append"/>
@@ -246,9 +240,8 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template name="adagio_page_header_content">
-    <xsl:param name="node" select="."/>
-
+  <xsl:template name="user.header.navigation">
+  <!-- <xsl:template name="adagio_page_header_content"> -->
     <!-- HIDDEN ELEMENTS -->
     <div class="adagio_hidden_elements" id="skip_links">
       <ul>
@@ -290,6 +283,18 @@
       </ul>
     </div> <!-- End of adagio_hidden_elements -->
 
+    <!-- Adagio.PAGE.NAVIGATION -->
+    <xsl:if test="$adagio.page.navigation and
+                  $adagio.page.navigation != ''">
+      <div id="adagio_page_navigation">
+        <a name="adagio_navigation"/>
+        <xsl:copy-of select="$adagio.page.navigation"/>
+      </div> <!-- End of adagio.page.navigation -->
+    </xsl:if>
+
+  </xsl:template>
+
+  <xsl:template name="user.header.content">
     <!-- Adagio PAGE HEADER LEVEL1 -->
     <xsl:if test="$adagio.page.header.level1">
       <div id="adagio_page_header_level1">
@@ -318,34 +323,27 @@
       </div>
     </xsl:if>
 
-    <!-- Adagio.PAGE.NAVIGATION -->
-    <xsl:if test="$adagio.page.navigation and
-                  $adagio.page.navigation != ''">
-      <div id="adagio_page_navigation">
-        <a name="adagio_navigation"/>
-        <xsl:copy-of select="$adagio.page.navigation"/>
-      </div> <!-- End of adagio.page.navigation -->
-    </xsl:if>
-
   </xsl:template>
 
   <!-- Footer-->
   <xsl:template name="user.footer.content">
-    <xsl:if test="$adagio.page.footer and $adagio.page.footer != ''">
-      <xsl:copy-of select="$adagio.page.footer" />
-    </xsl:if>
+    <div id="adagio_page_footer">
+      <xsl:if test="$adagio.page.footer and $adagio.page.footer != ''">
+	<xsl:copy-of select="$adagio.page.footer" />
+      </xsl:if>
 
-    <!-- Insert Google Analytics snippet -->
-    <xsl:if test="$adagio.page.google.analytics.account">
-      <script type="text/javascript">
-        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-      </script>
-      <script type="text/javascript">
-        var pageTracker = _gat._getTracker("<xsl:value-of select="$adagio.page.google.analytics.account"/>");
-        pageTracker._trackPageview();
-      </script>
-    </xsl:if>
+      <!-- Insert Google Analytics snippet -->
+      <xsl:if test="$adagio.page.google.analytics.account">
+	<script type="text/javascript">
+	  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+	  var pageTracker = _gat._getTracker("<xsl:value-of select="$adagio.page.google.analytics.account"/>");
+	  pageTracker._trackPageview();
+	</script>
+      </xsl:if>
+    </div>
   </xsl:template>
 
   <xsl:template name="ggadgetlink">
