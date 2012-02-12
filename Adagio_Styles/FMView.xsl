@@ -36,7 +36,7 @@
   <xsl:param name="adagio.fm.scriptable">false</xsl:param>
   <xsl:param
     name="adagio.fm.modes">freemind.modes.browsemode.BrowseMode</xsl:param>
-  <xsl:param name="adagio.fm.browsemode_initial_map">./YOURFILE.mm</xsl:param>
+  <xsl:param name="adagio.fm.map">./YOURFILE.mm</xsl:param>
   <xsl:param name="adagio.fm.initial_mode">Browse</xsl:param>
   <xsl:param
     name="adagio.fm.selection_method">selection_method_direct</xsl:param>
@@ -44,6 +44,14 @@
   <xsl:template match="para[@condition = 'adagio.fm.browser']">
     <!-- Take the value given in phrase, or the default value for all 10
     parameters -->
+    <xsl:variable name="fm.id">
+      <xsl:choose>
+	<xsl:when test="@id">
+	  <xsl:value-of select="@id"/>
+	</xsl:when>
+	<xsl:otherwise/>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:variable name="fm.code">
       <xsl:choose>
 	<xsl:when test="phrase[@condition = 'fm.code']">
@@ -102,14 +110,14 @@
 	<xsl:otherwise><xsl:value-of select="$adagio.fm.modes"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:variable name="fm.browsemode_initial_map">
+    <xsl:variable name="fm.map">
       <xsl:choose>
-	<xsl:when test="phrase[@condition = 'fm.browsemode_initial_map']">
+	<xsl:when test="phrase[@condition = 'fm.map']">
 	  <xsl:value-of select="phrase[@condition =
-				'fm.browsemode_initial_map']"/>
+				'fm.map']"/>
 	</xsl:when>
 	<xsl:otherwise><xsl:value-of
-	select="$adagio.fm.browsemode_initial_map"/></xsl:otherwise>
+	select="$adagio.fm.map"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="fm.initial_mode">
@@ -131,46 +139,52 @@
       </xsl:choose>
     </xsl:variable>
 
-    <applet>
-      <xsl:attribute name="code"><xsl:value-of
-      select="$fm.code"/></xsl:attribute>
-      <xsl:attribute name="archive"><xsl:value-of
-      select="fm.archive"/></xsl:attribute>
-      <xsl:attribute name="eidth"><xsl:value-of
-      select="fm.width"/></xsl:attribute>
-      <xsl:attribute name="height"><xsl:value-of
-      select="fm.height"/></xsl:attribute>
-      <param>
-	<xsl:attribute name="name">type</xsl:attribute>
-	<xsl:attribute name="value"><xsl:value-of
-	select="$fm.type"/></xsl:attribute>
-      </param>
-      <param>
-	<xsl:attribute name="name">scriptable</xsl:attribute>
-	<xsl:attribute name="value"><xsl:value-of
-	select="$fm.scriptable"/></xsl:attribute>
-      </param>
-      <param>
-	<xsl:attribute name="name">modes</xsl:attribute>
-	<xsl:attribute name="value"><xsl:value-of
-	select="$fm.modes"/></xsl:attribute>
-      </param>
-      <param>
-	<xsl:attribute name="name">browsemode_initial_map</xsl:attribute>
-	<xsl:attribute name="value"><xsl:value-of
-	select="$fm.browsemode_initial_map"/></xsl:attribute>
-      </param>
-      <param>
-	<xsl:attribute name="name">initial_mode</xsl:attribute>
-	<xsl:attribute name="value"><xsl:value-of
-				      select="$fm.initial_mode"/></xsl:attribute>
-      </param>
-      <param>
-	<xsl:attribute name="name">selection_mode</xsl:attribute>
-	<xsl:attribute
-	  name="value"><xsl:value-of
-	  select="$fm.selection_mode"/></xsl:attribute>
-      </param>
-    </applet>
-  </xsl:template>
+    <div class="adagio_fm_browser">
+      <applet>
+	<xsl:if test="$fm.id != ''">
+	  <xsl:attribute name="id"><xsl:value-of
+	  select="$fm.id"/></xsl:attribute>
+	</xsl:if>
+	<xsl:attribute name="code"><xsl:value-of
+	select="$fm.code"/></xsl:attribute>
+	<xsl:attribute name="archive"><xsl:value-of
+	select="$fm.archive"/></xsl:attribute>
+	<xsl:attribute name="width"><xsl:value-of
+	select="$fm.width"/></xsl:attribute>
+	<xsl:attribute name="height"><xsl:value-of
+	select="$fm.height"/></xsl:attribute>
+	<param>
+	  <xsl:attribute name="name">type</xsl:attribute>
+	  <xsl:attribute name="value"><xsl:value-of
+	  select="$fm.type"/></xsl:attribute>
+	</param>
+	<param>
+	  <xsl:attribute name="name">scriptable</xsl:attribute>
+	  <xsl:attribute name="value"><xsl:value-of
+	  select="$fm.scriptable"/></xsl:attribute>
+	</param>
+	<param>
+	  <xsl:attribute name="name">modes</xsl:attribute>
+	  <xsl:attribute name="value"><xsl:value-of
+	  select="$fm.modes"/></xsl:attribute>
+	</param>
+	<param>
+	  <xsl:attribute name="name">browsemode_initial_map</xsl:attribute>
+	  <xsl:attribute name="value"><xsl:value-of
+	  select="$fm.map"/></xsl:attribute>
+	</param>
+	<param>
+	  <xsl:attribute name="name">initial_mode</xsl:attribute>
+	  <xsl:attribute name="value"><xsl:value-of
+	  select="$fm.initial_mode"/></xsl:attribute>
+	</param>
+	<param>
+	  <xsl:attribute name="name">selection_method</xsl:attribute>
+	  <xsl:attribute
+	    name="value"><xsl:value-of
+	    select="$fm.selection_method"/></xsl:attribute>
+	</param>
+      </applet>
+    </div>
+    </xsl:template>
 </xsl:stylesheet>
