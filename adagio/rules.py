@@ -251,7 +251,7 @@ def optionDoc(options):
 
     return result
 
-class StyleResolver(etree.Resolver):
+class XMLResolver(etree.Resolver):
     """
     Resolver to use with XSLT stylesheets and force the detection of stylesheets
     in the Adagio home directory. Only URLs starting with "file://" or absolute

@@ -96,8 +96,10 @@ def findOrAddTree(path, expanded = True):
     if not expanded:
         # Create the simpleTree and update
         try:
-            simpleTree = etree.parse(path, etree.XMLParser(load_dtd = True, 
-                                                           no_network = True))
+            local_parser = etree.XMLParser(load_dtd = True,
+                                           no_network = True)
+	    local_parser.resolvers.add(rules.XMLResolver())
+            simpleTree = etree.parse(path, local_parser)
         except etree.XMLSyntaxError, e:
             print i18n.get('severe_parse_error').format(path)
             print str(e)
@@ -157,7 +159,7 @@ def findOrAddTransform(styleFile, styleList):
     # Parse style file, insert name resolver to consider Adagio local styles,
     # expand includes and create transformation object
     styleParser = etree.XMLParser(load_dtd = True, no_network = True)
-    styleParser.resolvers.add(rules.StyleResolver())
+    styleParser.resolvers.add(rules.XMLResolver())
     try:
         transform = etree.parse(styleFile, styleParser)
     except etree.XMLSyntaxError, e:
