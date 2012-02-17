@@ -156,8 +156,7 @@ class Directory:
     # option_files:     set of files providing options (to detect dependencies)
 
     # Change to the given dir and initlialize fields
-    def __init__(self, path=os.getcwd(), givenOptions = []):
-
+    def __init__(self, path = os.getcwd(), givenOptions = []):
         # Initial values
         self.previous_dir =    os.getcwd()
         self.current_dir =     os.path.abspath(path)
