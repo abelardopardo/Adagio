@@ -76,6 +76,9 @@ msgs = {
 'default_partial': 
 """0/1 value stating if Adagio continues when a rule cannot be executed""",
 
+'default_xml_paths':
+"""Semicolon-separated list of directories to search for XML files""",
+
 'default_project_file': 
 'Name of the file containing the project-wide declarations',
 

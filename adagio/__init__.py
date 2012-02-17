@@ -68,6 +68,7 @@ config_defaults = {
     'home':               (_currentDir, i18n.get('default_home')),
     'languages':          (lang[0:2], i18n.get('default_languages')),
     'partial':            ('0', i18n.get('default_partial')),
+    'xml_paths':          ('', i18n.get('default_xml_paths')),
     'project_file':       ('Adagio.project', i18n.get('default_project_file')),
     'project_home':       (_currentDir, i18n.get('default_project_home')),
     'property_file':      ('Properties.dgo', i18n.get('default_property_file')),
