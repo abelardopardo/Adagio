@@ -22,6 +22,7 @@
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
 import os, re, glob, sys, subprocess, shutil, ConfigParser, datetime
+import urlparse
 
 # Import conditionally either regular xml support or lxml if present
 try:
@@ -208,7 +209,7 @@ def remove(fileName):
 
         # If a directory, nuke the entire tree
         shutil.rmtree(fileName)
-        
+
     return
 
 def optionDoc(options):
@@ -217,7 +218,7 @@ def optionDoc(options):
     documentation) creates a Docbook snippet with the documentation about the
     variables.
     """
-    
+
     result = """<informaltable frame="all">
   <tgroup rowsep="1" colsep="1" cols="3">
     <colspec colnum="1" colname="col1" align="left"></colspec>
@@ -260,21 +261,25 @@ class XMLResolver(etree.Resolver):
     If the URL points to a file that does not exist, it is redirected to point
     to the directory of Adagio_Styles included in Adagio.
     """
-    def __init__(self):
-        self.styleDir = 'file://' + os.path.join(adagio.home, 'Adagio_Styles')
+    def __init__(self, paths = None):
+        if paths == None:
+	    paths = []
+
+        # list of directories where to look for any URL in Adagio
+        paths.append(os.path.join(adagio.home, 'Adagio_Styles'))
+        self.dirList = paths
 
     def resolve(self, url, pubid, context):
         newURL = url
         result = None
 
-        # If the URL is a file or an absolute path, redirect resolver
-        if url.startswith('file://') or os.path.isabs(url):
+	# Parse URL to determine which kind of resource referred
+        url_chunks = urlparse.urlparse(url)
 
-            # Remove file:// prefix if present
-            if url.startswith('file://'):
-                newURL = url[7:];
+        # Resolver intervenes only if a file URL is given
+        if url_chunks.scheme == 'file' or url_chunks.scheme == '':
 
-            newURL = os.path.normpath(newURL)
+            newURL = os.path.normpath(url_chunks.path)
 
             # If the path starts with a backslash, it has just been normalized
             # and it is a windows absolute path, thus, it should have the drive
@@ -282,12 +287,15 @@ class XMLResolver(etree.Resolver):
             if newURL[0] == '\\':
                 newURL = newURL[1:]
 
-            # If the requested file does not exist, it is redirected to the
-            # adagio style directory.
+            # If the file does not exist as it is, search in the paths
             if not os.path.exists(newURL):
-                newURL = os.path.join(self.styleDir, os.path.basename(newURL))
+                # Loop over the prefixes
+                for dir_prefix in self.dirList:
+                    tryURL = os.path.join(dir_prefix, os.path.basename(newURL))
+                    if os.path.exists(tryURL):
+			# File found in one of the dirs, terminate loop
+                        newURL = tryURL
+                        break
 
-            result = self.resolve_filename(newURL, context)
-
+            result = self.resolve_filename('file://' + newURL, context)
         return result
-
