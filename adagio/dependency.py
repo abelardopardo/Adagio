@@ -68,7 +68,7 @@ def flushData():
 #
 atexit.register(flushData)
 
-def addNode(fileName, baseDir=None):
+def addNode(fileName, baseDir = None):
     """
     Given a fileName creates (if needed) the node in the graph. It adds a new
     entry to the FileNameToIDX dictionary, the reverse info in IDXToName,
