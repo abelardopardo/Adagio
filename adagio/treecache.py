@@ -21,7 +21,7 @@
 #
 # Author: Abelardo Pardo (abelardo.pardo@uc3m.es)
 #
-import sys, os, copy, atexit
+import sys, os, copy, atexit, glob
 from lxml import etree
 
 import adagio, rules, i18n
@@ -49,6 +49,10 @@ _createdTransforms = {}
 # and resolvers.
 _accessControl = etree.XSLTAccessControl(read_network = False)
 
+# Parser object to use in this module. Only one of them is needed, therefore, it
+# is a static var. A default resolver is created
+_xml_parser = None
+
 def flushData():
     """
     Flush both caches
@@ -65,12 +69,36 @@ def flushData():
 #
 atexit.register(flushData)
 
-def findOrAddTree(path, expanded = True):
+def setResolver(paths = None):
+    """
+    Given a colon-separated list of paths, create and set the global XML parser
+    and set this list to be used by the resolver.
+    """
+
+    global _xml_parser
+
+    _xml_parser = etree.XMLParser(load_dtd = True, no_network = True)
+
+    param = None
+    if paths != None and paths != '':
+        # For each value, strip space, apply global wildcards and transform in
+        # absolute path
+        param = []
+        for value in map(lambda x: x.strip(), paths.split(':')):
+            param.extend(map(lambda x: os.path.abspath(x), glob.glob(value)))
+
+    # Create the resolver with the list of dir locations
+    _xml_parser.resolvers.add(rules.XMLResolver(param))
+
+    return
+
+def findOrAddTree(path, expanded = True, paths = None):
     """
     Check if the tree corresponding to the given path is in the dictionary, and
     if not, create it and assign it.  """
     
     global _createdTrees
+    global _xml_parser
 
     theKey = os.path.abspath(path)
 
@@ -92,14 +120,12 @@ def findOrAddTree(path, expanded = True):
         simpleTree = None
         expandedTree = None
         
-    # Missing tree
-    if not expanded:
-        # Create the simpleTree and update
+    # Missing tree. Proceed to create it
+
+    if simpleTree == None:
+        # Create the simpleTree
         try:
-            local_parser = etree.XMLParser(load_dtd = True,
-                                           no_network = True)
-	    local_parser.resolvers.add(rules.XMLResolver())
-            simpleTree = etree.parse(path, local_parser)
+            simpleTree = etree.parse(path, _xml_parser)
         except etree.XMLSyntaxError, e:
             print i18n.get('severe_parse_error').format(path)
             print str(e)
@@ -107,24 +133,13 @@ def findOrAddTree(path, expanded = True):
 
     if expanded:
         # Create the expandedTree (check if the simpleTree can be used
-        if simpleTree != None:
-            expandedTree = copy.deepcopy(simpleTree)
-            try:
-                expandedTree.xinclude()
-            except (etree.XMLSyntaxError, etree.XIncludeError), e:
-                print i18n.get('severe_parse_error').format(path)
-                print str(e)
-                sys.exit(1)
-        else:
-            try:
-                expandedTree = etree.parse(path, 
-                                           etree.XMLParser(load_dtd = True, 
-                                                           no_network = True))
-                expandedTree.xinclude()
-            except (etree.XMLSyntaxError, etree.XIncludeError), e:
-                print i18n.get('severe_parse_error').format(path)
-                print str(e)
-                sys.exit(1)
+        expandedTree = copy.deepcopy(simpleTree)
+        try:
+            expandedTree.xinclude()
+        except (etree.XMLSyntaxError, etree.XIncludeError), e:
+            print i18n.get('severe_parse_error').format(path)
+            print str(e)
+            sys.exit(1)
 
     # Update the cache
     _createdTrees[theKey] = (simpleTree, expandedTree, ftime)
@@ -134,13 +149,14 @@ def findOrAddTree(path, expanded = True):
     
     return simpleTree
 
-def findOrAddTransform(styleFile, styleList):
+def findOrAddTransform(styleFile, styleList, paths = None):
     """
     Simple dictionary storing XSL Transforms. The key is the given styleFile (which
     could be a string)
     """
     global _createdTransforms
-
+    global _xml_parser
+    
     theKey = ' '.join(styleList)
 
     # Get the last modification time of the given file to detect changes. First
@@ -156,12 +172,9 @@ def findOrAddTransform(styleFile, styleList):
         adagio.logDebug('treecache', None, 'HIT: ' + str(styleFile))
         return transform
 
-    # Parse style file, insert name resolver to consider Adagio local styles,
     # expand includes and create transformation object
-    styleParser = etree.XMLParser(load_dtd = True, no_network = True)
-    styleParser.resolvers.add(rules.XMLResolver())
     try:
-        transform = etree.parse(styleFile, styleParser)
+        transform = etree.parse(styleFile, _xml_parser)
     except etree.XMLSyntaxError, e:
         print i18n.get('severe_parse_error').format(styleFile)
         print str(e)

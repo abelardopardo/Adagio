@@ -23,7 +23,7 @@
 #
 import sys, os, re, ConfigParser, atexit
 
-import adagio, properties, i18n
+import adagio, properties, i18n, treecache
 
 # Table to store tuples:
 #   path: Directory object
@@ -158,16 +158,16 @@ class Directory:
     # Change to the given dir and initlialize fields
     def __init__(self, path = os.getcwd(), givenOptions = []):
         # Initial values
-        self.previous_dir =    os.getcwd()
-        self.current_dir =     os.path.abspath(path)
-        self.givenOptions =    ''
-        self.options =         None
-        self.rule_list =    []
-        self.alias =           {}
-        self.current_rule = None
-        self.executing =       False
-        self.executed_rules =  set([])
-        self.option_files =    set([])
+        self.previous_dir =   os.getcwd()
+        self.current_dir =    os.path.abspath(path)
+        self.givenOptions =   ''
+        self.options =        None
+        self.rule_list =      []
+        self.alias =          {}
+        self.current_rule =   None
+        self.executing =      False
+        self.executed_rules = set([])
+        self.option_files =   set([])
 
         adagio.logInfo('Directory', None, 
                        'New dir object in ' + self.current_dir)
@@ -407,6 +407,11 @@ class Directory:
         adagio.logDebug('Directory', self,
                      ' to execute ' + ' '.join(finalRules))
 
+        # Set the XML resolver
+        treecache.setResolver(self.options.get(adagio.module_prefix, 
+                                               'xml_paths'))
+
+        # Loop over all the rules and execute them
         for rule_name in finalRules:
 
             # Check the cache to see if rule has already been executed

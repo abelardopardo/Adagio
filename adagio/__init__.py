@@ -255,6 +255,7 @@ def initialize():
     directory.flushCreatedDirs()
     properties.flushConfigParsers()
     treecache.flushData()
+    treecache.setResolver()
 
     # Insert the definition of catalogs in the environment
     os.environ["XML_CATALOG_FILES"] = os.path.join(home, 'DTDs',
