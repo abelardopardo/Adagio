@@ -76,9 +76,6 @@ msgs = {
 'default_partial': 
 """0/1 value stating if Adagio continues when a rule cannot be executed""",
 
-'default_xml_paths':
-"""Semicolon-separated list of directories to search for XML files""",
-
 'default_project_file': 
 'Name of the file containing the project-wide declarations',
 
@@ -88,11 +85,17 @@ msgs = {
 'default_property_file': 
 'File name containing the rules',
 
+'default_relative_basedir':
+'Relative path between the current dir and the project_home directory',
+
 'default_src_dir': 
 'Directory from where the source files are taken',
 
 'default_version': 
 'Current Adagio version',
+
+'default_xml_paths':
+"""Semicolon-separated list of directories to search for XML files""",
 
 ## End of config_defaults
 

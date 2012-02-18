@@ -176,9 +176,16 @@ class Directory:
 
         # Compute the project home
         os.chdir(self.current_dir)
-        configDefaults['project_home'] = \
-            findProjectDir(configDefaults['project_file'], self.current_dir)
+        detected_project_home = findProjectDir(configDefaults['project_file'], 
+                                               self.current_dir)
+        configDefaults['project_home'] = detected_project_home
         os.chdir(self.previous_dir)
+
+        # Compute the relative_basedir (relative path from basedir to
+        # project_home
+        configDefaults['relative_basedir'] = \
+            os.path.relpath(self.current_dir, detected_project_home)
+        print 'AAA', configDefaults['relative_basedir']
 
         # Safe parser to store the options, the defaults are loaded here
         self.options = properties.initialConfig(configDefaults)
