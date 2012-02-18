@@ -185,7 +185,6 @@ class Directory:
         # project_home
         configDefaults['relative_basedir'] = \
             os.path.relpath(self.current_dir, detected_project_home)
-        print 'AAA', configDefaults['relative_basedir']
 
         # Safe parser to store the options, the defaults are loaded here
         self.options = properties.initialConfig(configDefaults)
