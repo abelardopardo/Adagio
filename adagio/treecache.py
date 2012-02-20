@@ -50,8 +50,11 @@ _createdTransforms = {}
 _accessControl = etree.XSLTAccessControl(read_network = False)
 
 # Parser object to use in this module. Only one of them is needed, therefore, it
-# is a static var. A default resolver is created
+# is a static var.
 _xml_parser = None
+
+# Resolver to search for XML urls
+xml_resolver = None
 
 def flushData():
     """
@@ -76,6 +79,7 @@ def setResolver(paths = None):
     """
 
     global _xml_parser
+    global xml_resolver
 
     _xml_parser = etree.XMLParser(load_dtd = True, no_network = True)
 
@@ -88,7 +92,8 @@ def setResolver(paths = None):
             param.extend(map(lambda x: os.path.abspath(x), glob.glob(value)))
 
     # Create the resolver with the list of dir locations
-    _xml_parser.resolvers.add(rules.XMLResolver(param))
+    xml_resolver = rules.XMLResolver(param)
+    _xml_parser.resolvers.add(xml_resolver)
 
     return
 

@@ -212,11 +212,8 @@ def getIncludes(fName):
 
     # Loop over all the includes, and imports of XML and XSL
     for element in [e for e in allIncludes if 'href' in e.attrib]:
-        hrefValue = locateFile(
-            os.path.join(
-                element.attrib.get('{http://www.w3.org/XML/1998/namespace}base', 
-                                   '') + 
-                element.attrib.get('href')), fDir)
+        hrefValue = \
+            treecache.xml_resolver.resolve_file(element.attrib.get('href'))
 
         if hrefValue != None:
             result.add(hrefValue)
@@ -280,28 +277,29 @@ def isUpToDate(fileName):
 
     return (os.path.getmtime(fileName) >= __NodeDate[addNode(fileName)])
 
-def locateFile(fileName, dirPrefix = None):
-    """Search an stylesheet in the dirs in local Adagio dirs"""
-
-    # No check is done for URLs, the error will pop up sometime later
-    if fileName.startswith('http'):
-        return fileName
-
-    if dirPrefix == None:
-        dirPrefix = os.getcwd()
-
-    absName = os.path.abspath(os.path.join(dirPrefix, fileName))
-
-    # If it exists in the given dir, return
-    if os.path.exists(absName):
-        return absName
-
-    localAdaStyle = os.path.join(adagio.home, 'Adagio_Styles', fileName)
-
-    if os.path.exists(localAdaStyle):
-        return os.path.abspath(localAdaStyle)
-
-    return None
+# def locateFile(fileName, paths = None):
+#     """Search an stylesheet in the dirs in local Adagio dirs"""
+#
+#
+#    # No check is done for URLs, the error will pop up sometime later
+#    if fileName.startswith('http'):
+#        return fileName
+#
+#    if paths == None:
+#        paths = [os.getcwd()]
+#
+#    absName = os.path.abspath(os.path.join(paths[0], fileName))
+#
+#    # If it exists in the given dir, return
+#    if os.path.exists(absName):
+#        return absName
+#
+#    localAdagioStyle = os.path.join(adagio.home, 'Adagio_Styles', fileName)
+#
+#    if os.path.exists(localAdagioStyle):
+#        return os.path.abspath(localAdagioStyle)
+#
+#    return None
 
 def dumpGraph():
     global __FileNameToNodeIDX

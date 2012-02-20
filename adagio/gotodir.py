@@ -57,6 +57,9 @@ def Execute(rule, dirObj, pad = None):
     # Loop over each directory
     for dirName in toProcess:
         adagio.logInfo(rule, dirObj, 'RECUR: ' + dirName)
+        if not os.path.isdir(dirName):
+            print i18n.get('not_a_directory').format(dirName)
+            sys.exit(1)
         remoteDir = directory.getDirectoryObject(dirName, optionsToSet)
         remoteDir.Execute(remoteRules, pad + '  ')
 
@@ -218,7 +221,8 @@ def obtainXincludes(files):
         # Traverse all the include files
         for includeFile in includeFiles:
             # Locate the file applying ADA search rules
-            locatedFile = dependency.locateFile(includeFile, fDir)
+            # locatedFile = dependency.locateFile(includeFile, [fDir])
+            locatedFile = treecache.xml_resolver.resolve_file(includeFile)
 
             # If not found, notify and terminate
             if locatedFile == None:

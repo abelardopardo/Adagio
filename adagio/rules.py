@@ -269,6 +269,41 @@ class XMLResolver(etree.Resolver):
         paths.append(os.path.join(adagio.home, 'Adagio_Styles'))
         self.dirList = paths
 
+    def resolve_file(self, file_name):
+        """
+        Given a file name, see if it exists in any of the paths included
+        in the dirList variable.
+        """
+
+        fname = os.path.normpath(file_name)
+
+        # If the path starts with a backslash, it has just been normalized
+        # and it is a windows absolute path, thus, it should have the drive
+        # letter. Remove the first character.
+        if fname[0] == '\\':
+            fname = fname[1:]
+
+        # If the file exist as given, return
+        if os.path.exists(fname):
+	    # print '222', fname
+	    return fname
+
+        # If given an abs path, we don't try any prefixes
+	# if os.path.isabs(fname):
+	#    print '333', file_name
+	#    return None
+
+        # The given path is relative and not found directly. Try the values in
+        # dirList
+        for dir_prefix in self.dirList:
+	    # print '111', dir_prefix
+            try_file = os.path.join(dir_prefix, os.path.basename(fname))
+            if os.path.exists(try_file):
+	        # File found in one of the dirs, terminate loop
+                return try_file
+
+        return None
+
     def resolve(self, url, pubid, context):
         newURL = url
         result = None
@@ -279,23 +314,13 @@ class XMLResolver(etree.Resolver):
         # Resolver intervenes only if a file URL is given
         if url_chunks.scheme == 'file' or url_chunks.scheme == '':
 
-            newURL = os.path.normpath(url_chunks.path)
+	    file_name = self.resolve_file(url_chunks.path)
 
-            # If the path starts with a backslash, it has just been normalized
-            # and it is a windows absolute path, thus, it should have the drive
-            # letter. Remove the first character.
-            if newURL[0] == '\\':
-                newURL = newURL[1:]
+	    if file_name == None:
+		# Nothing found, leave untouched
+                result = self.resolve_filename(newURL, context)
+            else:
+		# File found, resolve as file URL
+                result = self.resolve_filename('file://' + file_name, context)
 
-            # If the file does not exist as it is, search in the paths
-            if not os.path.exists(newURL):
-                # Loop over the prefixes
-                for dir_prefix in self.dirList:
-                    tryURL = os.path.join(dir_prefix, os.path.basename(newURL))
-                    if os.path.exists(tryURL):
-			# File found in one of the dirs, terminate loop
-                        newURL = tryURL
-                        break
-
-            result = self.resolve_filename('file://' + newURL, context)
         return result

@@ -123,7 +123,8 @@ def createStyleTransform(styleList, srcDir = None):
     # Prepare style files (locate styles in HOME/Adagio_Styles if needed
     styles = []
     for name in styleList:
-        styles.append(dependency.locateFile(name, srcDir))
+        styles.append(treecache.xml_resolver.resolve_file(name))
+        # styles.append(dependency.locateFile(name, [srcDir]))
         if styles[-1] == None:
             print i18n.get('file_not_found').format(name)
             sys.exit(1)
