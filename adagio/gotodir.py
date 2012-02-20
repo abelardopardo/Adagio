@@ -216,7 +216,9 @@ def obtainXincludes(files):
                                  ''),
                     x.attrib.get('href'))
                  for x in root.findall(includePath)
-                 if x.attrib.get('href') != None])
+                 if x.attrib.get('href') != None and \
+                     (x.attrib.get('parse') == None or
+                      x.attrib.get('parse') == 'xml')])
 
         # Traverse all the include files
         for includeFile in includeFiles:
