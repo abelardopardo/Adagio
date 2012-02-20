@@ -71,7 +71,7 @@ def Execute(rule, dirObj):
 
     # If source directory does not exist, terminate
     if not os.path.isdir(srcDir):
-        print i18n.get('not_a_directory')
+        print i18n.get('not_a_directory').format(srcDir)
         sys.exit(1)
 
     # Prepare the command to execute
