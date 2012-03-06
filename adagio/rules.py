@@ -285,18 +285,11 @@ class XMLResolver(etree.Resolver):
 
         # If the file exist as given, return
         if os.path.exists(fname):
-	    # print '222', fname
-	    return fname
-
-        # If given an abs path, we don't try any prefixes
-	# if os.path.isabs(fname):
-	#    print '333', file_name
-	#    return None
+	    return os.path.abspath(fname)
 
         # The given path is relative and not found directly. Try the values in
         # dirList
         for dir_prefix in self.dirList:
-	    # print '111', dir_prefix
             try_file = os.path.join(dir_prefix, os.path.basename(fname))
             if os.path.exists(try_file):
 	        # File found in one of the dirs, terminate loop
