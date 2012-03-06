@@ -74,7 +74,7 @@ config_defaults = {
     'relative_basedir':   ('.',
                            i18n.get('default_relative_basedir')),
     'src_dir':            (_currentDir, i18n.get('default_src_dir')),
-    'version':            ('12.01.1', i18n.get('default_version')),
+    'version':            ('12.03.1', i18n.get('default_version')),
     'xml_paths':          ('', i18n.get('default_xml_paths'))
 }
 
