@@ -31,12 +31,12 @@ module_prefix = 'office2pdf'
 # List of tuples (varname, default value, description string)
 options = [
     ('exec', 'soffice', i18n.get('name_of_executable')),
-    ('extra_arguments', '', i18n.get('extra_arguments').format('OpenOffice'))
+    ('extra_arguments', '', i18n.get('extra_arguments').format('LibreOffice'))
     ]
 
 documentation = {
     'en' : """
-    This rule invokes OpenOffice to obtain a PDF version of the given
+    This rule invokes LibreOffice to obtain a PDF version of the given
     files. It assumes that there is a Macro already installed with name
     SaveAsPDF.
     """}
@@ -69,7 +69,10 @@ def Execute(rule, dirObj):
     # Loop over all source files to process
     executable = dirObj.getProperty(rule, 'exec')
     extraArgs = dirObj.getProperty(rule, 'extra_arguments')
-    command = [executable, '-nologo', '-invisible', '-headless']
+    # The command is soffice --nologo --invisible --headless
+    #                        --convert-to pdf *.doc
+    command = [executable, '--nologo', '--invisible', '--headless',
+               '--convert-to', 'pdf']
     command.extend(extraArgs.split())
     dstDir = dirObj.getProperty(rule, 'src_dir')
     for datafile in toProcess:
@@ -86,7 +89,8 @@ def Execute(rule, dirObj):
         dstFile = os.path.abspath(os.path.join(dstDir, dstFileName))
 
         # Perform the execution
-        command.append('macro:///Tools.MSToPDF.ConvertMSToPDF(' + datafile + ')')
+        command.append(datafile)
+        # command.append('macro:///Tools.MSToPDF.ConvertMSToPDF(' + datafile + ')')
 
         rules.doExecution(rule, dirObj, command, datafile, dstFile,
                             stdout = adagio.userLog)

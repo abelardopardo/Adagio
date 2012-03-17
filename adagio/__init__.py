@@ -188,7 +188,7 @@ documentation = {
         installed)
 
       * office2pdf: Produce a PDF file from a given set of Office Word or
-        PowerPoint files (needs OpenOffice installed).
+        PowerPoint files (needs LibreOffice installed).
 
       * pdfnup: Execute pdfnup over a set of PDF files to create n-up handouts
         (needs pdfnup installed)
