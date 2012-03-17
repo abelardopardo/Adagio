@@ -285,6 +285,15 @@ The format must be 'name1': 'value2', 'name2': 'value2'...""",
 'output_format': 
 'Extension to use when producing the new files (without dot).',
 
+'language_as':
+
+"""If value is suffix (default), the files for the different languages are
+produced extending the base name of the file with underscore and the two letter
+language abbreviation. Example: new_document.xml is transformed into
+new_document_en.html. If value is prefix, the file names are created by
+inserting the two letter language abbreviation and underscore at the beginning
+of the file name""",
+
 'empty_output_format': 
 'Option output_format in rule {0} cannot be empty.',
 

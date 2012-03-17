@@ -35,6 +35,7 @@ options = [
      '%(home)s%(file_separator)sAdagio_Styles%(file_separator)sDocbookProfile.xsl',
      i18n.get('xslt_style_file')),
     ('output_format', 'html', i18n.get('output_format')),
+    ('language_as', 'suffix', i18n.get('language_as')),
     ('extra_arguments', '', i18n.get('extra_arguments').format('Xsltproc'))
     ]
 
@@ -225,8 +226,9 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
     if paramDict == None:
 	paramDict = [({}, '')]
 
-    # Obtain languages
+    # Obtain languages and language prefix/suffix.
     languages = dirObj.getProperty(rule, 'languages').split()
+    language_as = dirObj.getProperty(rule, 'language_as').split()
 
     # If languages is empty, insert an empty string to force one execution
     if languages == []:
@@ -269,19 +271,25 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
             # Loop over languages
             for language in languages:
                 # If processing multilingual, create the appropriate suffix
+                lang_name = ''
                 if multilingual:
-                    langSuffix = '_' + language
-
-                else:
-                    langSuffix = ''
+                    if language_as == 'suffix':
+                        lang_name = '_' + language
+                    else:
+                        lang_name = language + '_'
 
                 # Insert the appropriate language parameters
                 styleParams['profile.lang'] = "\'" + language + "\'"
                 styleParams['l10n.gentext.language'] = "\'" + language + "\'"
 
                 # Derive the destination file name
-                dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-                    langSuffix + psuffix + outputFormat
+                if language_as == 'suffix':
+                    dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
+                        lang_name + psuffix + outputFormat
+                else:
+                    dstFile = lang_name + \
+                        os.path.splitext(os.path.basename(datafile))[0] + \
+                        psuffix + outputFormat
                 dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
                 # Apply style and store the result, get the data tree to recycle
@@ -373,6 +381,8 @@ def doClean(rule, dirObj, toProcess, suffixes = None):
 
     # Split the languages and remember if the execution is multilingual
     languages = dirObj.getProperty(rule, 'languages').split()
+    language_as = dirObj.getProperty(rule, 'language_as').split()
+
     # If languages is empty, insert an empty string to force one execution
     if languages == []:
         languages = ['']
@@ -391,14 +401,21 @@ def doClean(rule, dirObj, toProcess, suffixes = None):
             # Loop over languages
             for language in languages:
                 # If processing multilingual, create the appropriate suffix
+                lang_name = ''
                 if multilingual:
-                    langSuffix = '_' + language
-                else:
-                    langSuffix = ''
+                    if language_as == 'suffix':
+                        lang_name = '_' + language
+                    else:
+                        lang_name = language + '_'
 
                 # Derive the destination file name
-                dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-                    langSuffix + psuffix + outputFormat
+                if language_as == 'suffix':
+                    dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
+                        lang_name + psuffix + outputFormat
+                else:
+                    dstFile = lang_name + \
+                        os.path.splitext(os.path.basename(datafile))[0] + \
+                        psuffix + outputFormat
                 dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
                 if not os.path.exists(dstFile):
