@@ -206,7 +206,7 @@ documentation = {
       * xfig: Transform figures created with xfig into PNG format (needs xfig
         installed)
 
-      * xsltproc: Applies a XSL style sheet to a given XML file.
+      * xslt: Applies a XSL style sheet to a given XML file.
 
     If you execute adagio with a single parameter made of a rule name followed
     by the suffix ".help" it provides a more detailed description of the
