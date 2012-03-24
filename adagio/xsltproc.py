@@ -274,9 +274,9 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
                 lang_name = ''
                 if multilingual:
                     if language_as == 'suffix':
-                        lang_name = '_' + language
-                    else:
                         lang_name = language + '_'
+                    else:
+                        lang_name = '_' + language
 
                 # Insert the appropriate language parameters
                 styleParams['profile.lang'] = "\'" + language + "\'"
@@ -284,12 +284,13 @@ def doTransformations(styles, styleTransform, styleParams, toProcess,
 
                 # Derive the destination file name
                 if language_as == 'suffix':
-                    dstFile = os.path.splitext(os.path.basename(datafile))[0] + \
-                        lang_name + psuffix + outputFormat
-                else:
                     dstFile = lang_name + \
                         os.path.splitext(os.path.basename(datafile))[0] + \
                         psuffix + outputFormat
+                else:
+                    dstFile = os.path.splitext(os.path.basename(datafile))[0] \
+                        + lang_name + psuffix + outputFormat
+
                 dstFile = os.path.abspath(os.path.join(dstDir, dstFile))
 
                 # Apply style and store the result, get the data tree to recycle
