@@ -194,14 +194,18 @@ def obtainXincludes(files):
     with the absolute filenames
     """
 
+    # Remember the old current directory because we are going to modify it
+    old_cwd = os.getcwd()
+
     result = set([])
     for fileName in files:
         # We only accept absolute paths
         if not os.path.isabs(fileName):
             fileName = os.path.abspath(fileName)
 
-        # Get the directory where the file is located
+        # Get the directory where the file is located and change cwd
         fDir = os.path.dirname(fileName)
+	os.chdir(fDir)
 
         # Get the file parsed without expanding the xincludes
         root = treecache.findOrAddTree(fileName, False)
@@ -222,7 +226,7 @@ def obtainXincludes(files):
 
         # Traverse all the include files
         for includeFile in includeFiles:
-            # Locate the file applying ADA search rules
+            # Locate the file applying Adagio search rules
             # locatedFile = dependency.locateFile(includeFile, [fDir])
             locatedFile = treecache.xml_resolver.resolve_file(includeFile)
 
@@ -238,6 +242,9 @@ def obtainXincludes(files):
             else:
                 # If in another dir, append to the result
                 result.add(os.path.abspath(locatedFile))
+
+    # restore the original cwd
+    os.chdir(old_cwd)
 
     return result
 
