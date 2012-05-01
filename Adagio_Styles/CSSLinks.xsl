@@ -76,12 +76,17 @@
         </xsl:variable>
 
         <link type="text/css">
-          <xsl:attribute name="rel"><xsl:value-of
-          select="$rel"/></xsl:attribute>
-          <xsl:attribute name="href"><xsl:if
-          test="not(starts-with($css_url_value, './'))"><xsl:value-of
-          select="$adagio.project.home"/></xsl:if><xsl:value-of
-          select="$css_url_value"/></xsl:attribute>
+          <xsl:attribute name="rel"><xsl:value-of select="$rel"/></xsl:attribute>
+          <xsl:attribute name="href">
+	    <xsl:choose>
+	      <xsl:when test="starts-with($css_url_value, './')">
+		<xsl:value-of select="substring-after($css_url_value, '/')"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="$adagio.project.home"/><xsl:value-of select="$css_url_value"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
           <xsl:attribute name="media"><xsl:value-of
           select="$media_attribute_value"/></xsl:attribute>
           <xsl:if test="$title_attribute_value and $title_attribute_value != ''">
