@@ -124,6 +124,10 @@ def doCopy(rule, dirObj, toProcess, srcDir, dstDir):
             print str(e)
             sys.exit(1)
 
+        # Copying the file/dir
+        adagio.logDebug(rule, dirObj, 'Copy? ' + datafile + ' ' +
+                     dstFile)
+
         # If the destination file is up to date, skip the execution
         if (not isDirectory) and dependency.isUpToDate(dstFile):
             print i18n.get('file_uptodate').format(os.path.basename(dstFile))
