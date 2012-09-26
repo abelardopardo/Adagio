@@ -34,6 +34,7 @@ options = [
      '%(home)s%(file_separator)sAdagio_Styles%(file_separator)sExam.xsl',
      i18n.get('xslt_style_file')),
     ('output_format', 'html', i18n.get('output_format')),
+    ('language_as', 'suffix', i18n.get('language_as')),
     ('extra_arguments', '', i18n.get('extra_arguments').format('Xsltproc')),
     ('produce', 'regular', i18n.get('exercise_produce'))
     ]
