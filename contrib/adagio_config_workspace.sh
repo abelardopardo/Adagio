@@ -161,7 +161,9 @@ cat >$course_dir/.git/config <<EOF
 	merge = refs/heads/master
 EOF
 
-cat >$HOME/.gitconfig <<EOF
+if [ ! -e $HOME/.gitconfig ]
+then
+    cat >$HOME/.gitconfig <<EOF
 [user]
         name = $fullname
         email = $email
@@ -183,6 +185,7 @@ cat >$HOME/.gitconfig <<EOF
        changed = green
        untracked = cyan
 EOF
+fi
 
 if [[ x$adagio_dir != x && -d $adagio_dir ]]
 then
