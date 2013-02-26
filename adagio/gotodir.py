@@ -61,6 +61,12 @@ def Execute(rule, dirObj, pad = None):
             print i18n.get('not_a_directory').format(dirName)
             sys.exit(1)
         remoteDir = directory.getDirectoryObject(dirName, optionsToSet)
+
+	if remoteDir.rule_list == []:
+	    # If rule_list is empty, there is no Properties.dgo in that dir, skip execution
+            continue
+
+        # Execute the targets in the remote directory
         remoteDir.Execute(remoteRules, pad + '  ')
 
     return
