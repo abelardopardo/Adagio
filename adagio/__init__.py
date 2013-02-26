@@ -425,14 +425,14 @@ def LoadDefaults(config):
         # Get the three required values from the module
         sectionName = eval(moduleName + '.module_prefix')
         mOptions = eval(moduleName + '.options')
-        documentation = eval(moduleName + '.documentation')
+        local_documentation = eval(moduleName + '.documentation')
 
         # If any of these variables is None, bomb out.
-        if sectionName == None or mOptions == None or documentation == None:
+        if sectionName == None or mOptions == None or local_documentation == None:
             raise TypeError, 'Incorrect type in LoadDefaults'
 
         # Add the optios to the config object
-        AppendOptions(config, sectionName, mOptions, documentation)
+        AppendOptions(config, sectionName, mOptions, local_documentation)
 
     return
 
