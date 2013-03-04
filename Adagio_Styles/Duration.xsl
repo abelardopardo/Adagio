@@ -30,6 +30,8 @@
 
   <xsl:param name="adagio.submit.duration.phrase"/>
   <xsl:param name="adagio.submit.duration.ignore">no</xsl:param>
+  <xsl:param name="adagio.submit.duration.where">where</xsl:param>
+  <xsl:param name="adagio.submit.duration.howlong">how_long</xsl:param>
 
   <!-- ============================================================ -->
   <!--                                                              -->
@@ -80,9 +82,19 @@
               </xsl:choose>
             </xsl:otherwise>
           </xsl:choose>
+
+	  <input type="hidden">
+            <xsl:attribute name="name">
+              <xsl:value-of select="$adagio.submit.duration.where"/>
+            </xsl:attribute>
+            <xsl:attribute name="value">
+              <xsl:value-of select="$hierarchy"/>
+            </xsl:attribute>
+	  </input>
+
           <select>
             <xsl:attribute name="name">
-              <xsl:value-of select="$hierarchy"/>
+              <xsl:value-of select="$adagio.submit.duration.howlong"/>
             </xsl:attribute>
 
             <!-- Less than haf of value -->
