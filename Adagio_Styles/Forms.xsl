@@ -92,7 +92,11 @@
             <xsl:call-template name="adagio.submit.textarea.input"/>
           </xsl:when>
           <xsl:when test="@condition='adagio_submit_form'">
-            <xsl:apply-templates />
+            <xsl:apply-templates select="*[@condition != 'form-id' and
+					 @condition != 'form-method' and
+					 @condition != 'form-enctype' and
+					 @condition != 'submit-onclick' and
+					 @condition != 'action-suffix']"/>
           </xsl:when>
         </xsl:choose>
 
