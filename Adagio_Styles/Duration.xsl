@@ -88,7 +88,7 @@
               <xsl:value-of select="$adagio.submit.duration.where"/>
             </xsl:attribute>
             <xsl:attribute name="value">
-              <xsl:value-of select="$hierarchy"/>
+              duration_<xsl:value-of select="$hierarchy"/>
             </xsl:attribute>
 	  </input>
 
