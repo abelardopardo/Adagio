@@ -312,7 +312,7 @@
       <xsl:choose>
         <xsl:when test="*[@condition='name']"><xsl:value-of
         select="*[@condition='name']/text()"/></xsl:when>
-        <xsl:otherwise>adagio_submit_textarea_input</xsl:otherwise>
+        <xsl:otherwise><xsl:value-of select="$adagio.submit.fieldname.value"/></xsl:otherwise>
       </xsl:choose>
     </xsl:param>
 
@@ -327,7 +327,25 @@
       select="*[@condition='onkeydown']/text()"/></xsl:if>
     </xsl:param>
 
+    <!-- Context ID -->
+    <xsl:param name="contextid">
+      <xsl:if test="*[@condition='contextid']"><xsl:value-of
+      select="*[@condition='contextid']/text()"/></xsl:if>
+    </xsl:param>
+
     <div class="adagio_submit_form_textarea">
+      <xsl:if test="$contextid != ''">
+	<!-- Hidden input element with the name of the context -->
+	<input type="hidden">
+	  <xsl:attribute name="name">
+	    <xsl:value-of select="$adagio.submit.fieldname.contextid"/>
+	  </xsl:attribute>
+	  <xsl:attribute name="value">
+	    duration_<xsl:value-of select="$contextid"/>
+	  </xsl:attribute>
+	</input>
+      </xsl:if>
+
       <!-- Dump the element -->
       <xsl:element name="textarea"><xsl:attribute name="rows"><xsl:value-of
       select="$textarea-rows"/></xsl:attribute><xsl:attribute

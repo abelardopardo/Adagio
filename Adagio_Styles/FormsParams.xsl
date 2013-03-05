@@ -29,5 +29,7 @@
   version="1.0" exclude-result-prefixes="exsl str xi">
 
   <xsl:param name="adagio.submit.action.prefix"/>
+  <xsl:param name="adagio.submit.fieldname.contextid"/>
+  <xsl:param name="adagio.submit.fieldname.value"/>
 
 </xsl:stylesheet>
