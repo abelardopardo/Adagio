@@ -292,46 +292,37 @@
            para[@condition='adagio_submit_textarea']|
            remark[@condition='adagio_submit_textarea']">
     <!-- Number of columns: default 80 -->
-    <xsl:param name="textarea-cols">
-      <xsl:choose>
-        <xsl:when test="*[@condition='cols']"><xsl:value-of
-        select="*[@condition='cols']/text()"/></xsl:when>
-        <xsl:otherwise>80</xsl:otherwise>
-      </xsl:choose>
-    </xsl:param>
+    <xsl:param name="textarea-cols"><xsl:choose>
+      <xsl:when test="*[@condition='cols']"><xsl:value-of
+      select="*[@condition='cols']/text()"/></xsl:when>
+      <xsl:otherwise>80</xsl:otherwise>
+    </xsl:choose></xsl:param>
     <!-- Number of rows: default 20 -->
-    <xsl:param name="textarea-rows">
-      <xsl:choose>
-        <xsl:when test="*[@condition='rows']"><xsl:value-of
-        select="*[@condition='rows']/text()"/></xsl:when>
-        <xsl:otherwise>20</xsl:otherwise>
-      </xsl:choose>
-    </xsl:param>
+    <xsl:param name="textarea-rows"><xsl:choose>
+      <xsl:when test="*[@condition='rows']"><xsl:value-of
+      select="*[@condition='rows']/text()"/></xsl:when>
+      <xsl:otherwise>20</xsl:otherwise>
+    </xsl:choose></xsl:param>
     <!-- Name for the field -->
-    <xsl:param name="textarea-name">
-      <xsl:choose>
-        <xsl:when test="*[@condition='name']"><xsl:value-of
-        select="*[@condition='name']/text()"/></xsl:when>
-        <xsl:otherwise><xsl:value-of select="$adagio.submit.fieldname.value"/></xsl:otherwise>
-      </xsl:choose>
-    </xsl:param>
+    <xsl:param name="textarea-name"><xsl:choose>
+      <xsl:when test="*[@condition='name']"><xsl:value-of
+      select="*[@condition='name']/text()"/></xsl:when>
+      <xsl:otherwise><xsl:value-of
+      select="$adagio.submit.fieldname.value"/></xsl:otherwise></xsl:choose></xsl:param>
 
     <!-- On key up -->
-    <xsl:param name="onKeyUp">
-      <xsl:if test="*[@condition='onkeyup']"><xsl:value-of
-      select="*[@condition='onkeyup']/text()"/></xsl:if>
-    </xsl:param>
+    <xsl:param name="onKeyUp"><xsl:if
+				test="*[@condition='onkeyup']"><xsl:value-of
+				select="*[@condition='onkeyup']/text()"/></xsl:if></xsl:param>
     <!-- On key down -->
-    <xsl:param name="onKeyDown">
-      <xsl:if test="*[@condition='onkeydown']"><xsl:value-of
-      select="*[@condition='onkeydown']/text()"/></xsl:if>
-    </xsl:param>
+    <xsl:param name="onKeyDown"><xsl:if
+				  test="*[@condition='onkeydown']"><xsl:value-of
+				  select="*[@condition='onkeydown']/text()"/></xsl:if></xsl:param>
 
     <!-- Context ID -->
-    <xsl:param name="contextid">
-      <xsl:if test="*[@condition='contextid']"><xsl:value-of
-      select="*[@condition='contextid']/text()"/></xsl:if>
-    </xsl:param>
+    <xsl:param name="contextid"><xsl:if
+				  test="*[@condition='contextid']"><xsl:value-of
+				  select="*[@condition='contextid']/text()"/></xsl:if></xsl:param>
 
     <div class="adagio_submit_form_textarea">
       <xsl:if test="$contextid != ''">
@@ -340,9 +331,8 @@
 	  <xsl:attribute name="name">
 	    <xsl:value-of select="$adagio.submit.fieldname.contextid"/>
 	  </xsl:attribute>
-	  <xsl:attribute name="value">
-	    duration_<xsl:value-of select="$contextid"/>
-	  </xsl:attribute>
+	  <xsl:attribute name="value"><xsl:value-of
+	  select="$contextid"/></xsl:attribute>
 	</input>
       </xsl:if>
 
